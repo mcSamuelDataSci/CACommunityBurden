@@ -1,0 +1,543 @@
+MSSA_ID,changeCode,changeSystem,adjustedID,adjustedID2,adjustedMSSA_NAME,CNTY_FIPS,COUNTY,MSSA_NAME,DEFINITION,POPDENSITY,AREA_SQMI,POP,POP_CIV
+1.1,0,1.1,1.1,1.1,Livermore Central and West/Spring Town,1,Alameda,Livermore Central and West/Spring Town,Urban,1657.610562,31.352961,51971,51731
+1.2,0,1.2,1.2,1.2,Altamont/Livermore East/Midway/Mountain House/Scotts Corner,1,Alameda,Altamont/Livermore East/Midway/Mountain House/Scotts Corner,Rural,111.10332,326.470891,36272,36228
+2a,0,2a,2a,2a,Berkeley South and West/Emeryville/Oakland Northwest,1,Alameda,Berkeley South and West/Emeryville/Oakland Northwest,Urban,7246.479672,11.67215,84582,73765
+2b,0,2b,2b,2b,Albany/Berkeley East and North/Claremont/Cragmont/Forest Park/Rockridge/Temescal/Thousand Oaks,1,Alameda,Albany/Berkeley East and North/Claremont/Cragmont/Forest Park/Rockridge/Temescal/Thousand Oaks,Urban,7095.027191,14.948216,106058,104466
+2c,0,2c,2c,2c,Oakland West Central,1,Alameda,Oakland West Central,Urban,7859.963359,9.953863,78237,76915
+2d,0,2d,2d,2d,Fruitvale/Melrose/Oakland Airport,1,Alameda,Fruitvale/Melrose/Oakland Airport,Urban,6426.660195,19.90863,127946,126849
+2e,0,2e,2e,2e,Alameda/Jack London Square/Oakland Inner Harbor,1,Alameda,Alameda/Jack London Square/Oakland Inner Harbor,Urban,4145.275764,16.137647,66895,66228
+2f,0,2f,2f,2f,Castro Valley Central and North/Oak Knoll/San Leandro Northeast/Sheffield Village/Union City East,1,Alameda,Castro Valley Central and North/Oak Knoll/San Leandro Northeast/Sheffield Village/Union City East,Urban,1062.89155,94.625834,100577,99039
+2g,0,2g,2g,2g,San Leandro West/San Lorenzo West/Hayward West,1,Alameda,San Leandro West/San Lorenzo West/Hayward West,Urban,2528.508067,37.486137,94784,94258
+2h,0,2h,2h,2h,Ashland/Brookfield Village/Castro Valley South/Elmhurst/Hayward Northeast/San Leandro North Central/San Lorenzo East,1,Alameda,Ashland/Brookfield Village/Castro Valley South/Elmhurst/Hayward Northeast/San Leandro North Central/San Lorenzo East,Urban,9853.839947,10.68487,105287,104062
+2i,0,2i,2i,2i,Fremont South/Mission San Jose/Newark South/Warm Springs,1,Alameda,Fremont South/Mission San Jose/Newark South/Warm Springs,Urban,1319.889319,67.626882,89260,88393
+2j,0,2j,2j,2j,Centerville/Fremont West/Irvington/Newark East Central,1,Alameda,Centerville/Fremont West/Irvington/Newark East Central,Urban,9829.183167,8.645581,84979,84306
+2k,0,2k,2k,2k,Dublin/Pleasanton/Santa Rita/Sunol,1,Alameda,Dublin/Pleasanton/Santa Rita/Sunol,Urban,1723.370579,61.053032,105217,99129
+2l,0,2l,2l,2l,Fremont East/Niles/Union City Central,1,Alameda,Fremont East/Niles/Union City Central,Urban,4394.826707,25.621715,112603,111763
+2m,0,2m,2m,2m,Dimond/Montclair/Oakland East/Oakmore/Piedmont/Piedmont Pines/Trestle Glen,1,Alameda,Dimond/Montclair/Oakland East/Oakmore/Piedmont/Piedmont Pines/Trestle Glen,Urban,6827.28128,17.241709,117714,116000
+2n,0,2n,2n,2n,Hayward Central,1,Alameda,Hayward Central,Urban,8187.484226,14.118866,115598,114392
+3,2,"3,4,5,6",4plusALPINE,4plus,Alpine Village/Bear Valley/Kirkwood/Markleeville/Mesa Valley/Woodfords/Ione/Jackson/Pine Grove/Sutter Creek/Plymouth/Pioneer,3,Alpine,Alpine Village/Bear Valley/Kirkwood/Markleeville/Mesa Valley/Woodfords,Frontier,1.582376,743.185778,1176,1176
+4,1,"3,4,5,6",4plus,4plus,Alpine Village/Bear Valley/Kirkwood/Markleeville/Mesa Valley/Woodfords/Ione/Jackson/Pine Grove/Sutter Creek/Plymouth/Pioneer,5,Amador,Ione/Jackson/Pine Grove/Sutter Creek,Rural,98.571654,277.595016,27363,22974
+5,2,"3,4,5,6",4plus,4plus,Alpine Village/Bear Valley/Kirkwood/Markleeville/Mesa Valley/Woodfords/Ione/Jackson/Pine Grove/Sutter Creek/Plymouth/Pioneer,5,Amador,Plymouth,Rural,39.114164,124.814119,4882,4882
+6,2,"3,4,5,6",4plus,4plus,Alpine Village/Bear Valley/Kirkwood/Markleeville/Mesa Valley/Woodfords/Ione/Jackson/Pine Grove/Sutter Creek/Plymouth/Pioneer,5,Amador,Pioneer,Rural,29.881291,203.538726,6082,6082
+10,1,"9,10,11",10plus,10plus,Oroville/Palermo/Thermalito/Berry Creek/Brownsville/Concow/Feather Falls/Forbestown/Biggs/East Biggs/Gridley,7,Butte,Oroville/Palermo/Thermalito,Rural,174.013078,277.473396,48284,46769
+11,2,"9,10,11",10plus,10plus,Oroville/Palermo/Thermalito/Berry Creek/Brownsville/Concow/Feather Falls/Forbestown/Biggs/East Biggs/Gridley,7,Butte,Berry Creek/Brownsville/Concow/Feather Falls/Forbestown,Frontier,10.923847,444.715113,4858,4858
+7.1,0,7.1,7.1,7.1,Chapmantown/Chico,7,Butte,Chapmantown/Chico,Urban,2612.82511,35.963754,93967,90919
+7.2,2,"7.2,7.3,7.4,8",8plus,8plus,Capay/Lake/Nord/Butte Meadows/Cohasset/Forest Ranch/Durham/Magalia/Paradise/Stirling City,7,Butte,Capay/Lake/Nord,Rural,47.429551,125.364879,5946,5946
+7.3,2,"7.2,7.3,7.4,8",8plus,8plus,Capay/Lake/Nord/Butte Meadows/Cohasset/Forest Ranch/Durham/Magalia/Paradise/Stirling City,7,Butte,Butte Meadows/Cohasset/Forest Ranch,Rural,23.933781,215.720192,5163,5163
+7.4,2,"7.2,7.3,7.4,8",8plus,8plus,Capay/Lake/Nord/Butte Meadows/Cohasset/Forest Ranch/Durham/Magalia/Paradise/Stirling City,7,Butte,Durham,Rural,38.746532,136.786433,5300,5259
+8,1,"7.2,7.3,7.4,8",8plus,8plus,Capay/Lake/Nord/Butte Meadows/Cohasset/Forest Ranch/Durham/Magalia/Paradise/Stirling City,7,Butte,Magalia/Paradise/Stirling City,Rural,173.29824,238.923372,41405,40958
+9,2,"9,10,11",10plus,10plus,Oroville/Palermo/Thermalito/Berry Creek/Brownsville/Concow/Feather Falls/Forbestown/Biggs/East Biggs/Gridley,7,Butte,Biggs/East Biggs/Gridley,Rural,67.821711,202.177144,13712,13648
+12,0,12,12,12,Angels Camp/Arnold/Copperopolis/Mountain Ranch/Murphys/San Andreas/Valley Springs/West Point,9,Calaveras,Angels Camp/Arnold/Copperopolis/Mountain Ranch/Murphys/San Andreas/Valley Springs/West Point,Rural,44.356219,1036.923349,45994,45769
+15,1,"15,16.1,16.2,16.3",15plus,15plus,Colusa/Williams/Loduga/Maxwell/Princeton/Stonyford/Arbuckle/Grimes,11,Colusa,Colusa,Rural,51.026941,151.096651,7710,7626
+16.1,2,"15,16.1,16.2,16.3",15plus,15plus,Colusa/Williams/Loduga/Maxwell/Princeton/Stonyford/Arbuckle/Grimes,11,Colusa,Williams,Rural,16.329311,367.927333,6008,5280
+16.2,2,"15,16.1,16.2,16.3",15plus,15plus,Colusa/Williams/Loduga/Maxwell/Princeton/Stonyford/Arbuckle/Grimes,11,Colusa,Loduga/Maxwell/Princeton/Stonyford,Frontier,5.400911,418.262753,2259,2220
+16.3,2,"15,16.1,16.2,16.3",15plus,15plus,Colusa/Williams/Loduga/Maxwell/Princeton/Stonyford/Arbuckle/Grimes,11,Colusa,Arbuckle/Grimes,Rural,23.682267,219.066863,5188,5188
+17,0,17,17,17,Brentwood East/Byron/Discovery Bay/Knightsen,13,Contra Costa,Brentwood East/Byron/Discovery Bay/Knightsen,Urban,337.141247,143.485854,48375,48099
+18a,0,18a,18a,18a,Crockett/Hercules/Martinez West/Pinole/Port Costa/Richmond Northeast/Rodeo,13,Contra Costa,Crockett/Hercules/Martinez West/Pinole/Port Costa/Richmond Northeast/Rodeo,Urban,986.585416,87.32442,86153,84509
+18b,0,18b,18b,18b,Concord West/Martinez East/Martinez Waterfront/Pacheco/Pleasant Hill East,13,Contra Costa,Concord West/Martinez East/Martinez Waterfront/Pacheco/Pleasant Hill East,Urban,3648.510093,20.950743,76439,74183
+18c,0,18c,18c,18c,Avon/Clyde/Concord Central/Pittsburg Southwest,13,Contra Costa,Avon/Clyde/Concord Central/Pittsburg Southwest,Urban,1738.492546,50.123309,87139,86517
+18d,0,18d,18d,18d,Antioch North and West/Nichols/Pittsburg Central and East/West Pittsburg,13,Contra Costa,Antioch North and West/Nichols/Pittsburg Central and East/West Pittsburg,Urban,3117.809854,30.559272,95278,94963
+18e,0,18e,18e,18e,Brentwood Central and West/Oakley,13,Contra Costa,Brentwood Central and West/Oakley,Urban,1487.437937,82.574201,122824,122478
+18f,0,18f,18f,18f,Richmond Central/San Pablo Central,13,Contra Costa,Richmond Central/San Pablo Central,Urban,3687.340494,25.790403,95098,93907
+18g,0,18g,18g,18g,El Cerrito/El Sobrante/Kensington/Richmond North/Richmond Southeast/Wildcat Canyon,13,Contra Costa,El Cerrito/El Sobrante/Kensington/Richmond North/Richmond Southeast/Wildcat Canyon,Urban,4220.095458,18.409299,77689,77239
+18h,0,18h,18h,18h,Alamo/Danville/Diablo/San Ramon,13,Contra Costa,Alamo/Danville/Diablo/San Ramon,Urban,767.547363,168.362248,129226,128556
+18i,0,18i,18i,18i,Lafayette/Martinez South/Moraga/Orinda/Pleasant Hill/Rheem Valley/Rossmoor Leisure World/Walnut Creek Southwest,13,Contra Costa,Lafayette/Martinez South/Moraga/Orinda/Pleasant Hill/Rheem Valley/Rossmoor Leisure World/Walnut Creek Southwest,Urban,1417.559656,77.040143,109209,106446
+18j,0,18j,18j,18j,Clayton/Concord South/Walnut Creek Central and East,13,Contra Costa,Clayton/Concord South/Walnut Creek Central and East,Urban,1475.859662,65.981205,97379,96657
+19,0,19,19,19,Crescent City/Gasquet/Klamath/Smith River,15,Del Norte,Crescent City/Gasquet/Klamath/Smith River,Rural,27.009447,1054.112627,28471,25321
+22,2,"22,23.2",23.2plus,23.2plus,Garden Valley/Georgetown/Greenwood/Kelsey/Volcanoville/Camino/Pollock Pines,17,El Dorado,Garden Valley/Georgetown/Greenwood/Kelsey/Volcanoville,Rural,15.286596,619.03902,9463,9221
+23.1,0,23.1,23.1,23.1,Cameron Park/El Dorado Hills/Shingle Springs,17,El Dorado,Cameron Park/El Dorado Hills/Shingle Springs,Urban,734.476759,89.810874,65964,65964
+23.2,1,"22,23.2",23.2plus,23.2plus,Garden Valley/Georgetown/Greenwood/Kelsey/Volcanoville/Camino/Pollock Pines,17,El Dorado,Camino/Pollock Pines,Rural,41.020949,583.872393,23951,23834
+23.3,0,23.3,23.3,23.3,Cool/Diamond Springs/Latrobe/Pilot Hill/Placerville,17,El Dorado,Cool/Diamond Springs/Latrobe/Pilot Hill/Placerville,Rural,180.637324,272.568252,49236,48677
+24,0,24,24,24,South Lake Tahoe,17,El Dorado,South Lake Tahoe,Rural,180.073105,169.036902,30439,30140
+25,1,"25,26",25plus,25plus,Firebaugh/Mendota/Cantua Creek/San Joaquin/Tranquility,19,Fresno,Firebaugh/Mendota,Rural,27.301887,755.075996,20615,20615
+26,2,"25,26",25plus,25plus,Firebaugh/Mendota/Cantua Creek/San Joaquin/Tranquility,19,Fresno,Cantua Creek/San Joaquin/Tranquility,Rural,20.717119,316.935949,6566,6566
+27,1,"27,28",27plus,27plus,Coalinga/Huron,19,Fresno,Coalinga,Rural,21.149496,713.917716,15099,9308
+28,2,"27,28",27plus,27plus,Coalinga/Huron,19,Fresno,Huron,Rural,25.73231,315.439999,8117,8097
+29,0,29,29,29,Biola/Herndon/Highway City/Kerman,19,Fresno,Biola/Herndon/Highway City/Kerman,Rural,145.215764,240.13233,34871,34477
+30,0,30,30,30,Bowles/Caruthers/Easton/Kingsburg/Lanare/Laton/Raisin City/Riverdale/Selma,19,Fresno,Bowles/Caruthers/Easton/Kingsburg/Lanare/Laton/Raisin City/Riverdale/Selma,Rural,187.378605,474.696669,88948,87438
+31,0,31,31,31,Auberry/Calwa/Centerville/Clovis East/Del Rey/Fowler/Friant/Sanger/Shaver Lake,19,Fresno,Auberry/Calwa/Centerville/Clovis East/Del Rey/Fowler/Friant/Sanger/Shaver Lake,Rural,43.16847,2107.950501,90997,90536
+32,0,32,32,32,Orange Cove/Parlier/Reedley/Squaw Valley/Tivy Valley/Wonder Valley,19,Fresno,Orange Cove/Parlier/Reedley/Squaw Valley/Tivy Valley/Wonder Valley,Rural,64.365505,947.836885,61008,59441
+35a,0,35a,35a,35a,Fresno Northwest,19,Fresno,Fresno Northwest,Urban,3372.963417,39.810393,134279,134125
+35b,0,35b,35b,35b,Clovis West/Fresno East,19,Fresno,Clovis West/Fresno East,Urban,2781.370058,33.763216,93908,93425
+35c,0,35c,35c,35c,Fresno West Central,19,Fresno,Fresno West Central,Urban,6936.823245,12.264836,85079,81366
+35d,0,35d,35d,35d,Fresno East Central,19,Fresno,Fresno East Central,Urban,7517.987437,13.476346,101315,99848
+35e,0,35e,35e,35e,Fresno South and West,19,Fresno,Fresno South and West,Urban,3790.140505,23.338712,88457,87625
+35f,0,35f,35f,35f,Fresno North Central,19,Fresno,Fresno North Central,Urban,4848.688921,16.410828,79571,77710
+36.1,1,"36.1,36.2,37",36.1plus,36.1plus,Orland/Hamilton City/Artois/Elk Creek/Glenn/Grindstone Indian Rancheria/Willows,21,Glenn,Orland,Rural,228.068948,58.644546,13375,13375
+36.2,2,"36.1,36.2,37",36.1plus,36.1plus,Orland/Hamilton City/Artois/Elk Creek/Glenn/Grindstone Indian Rancheria/Willows,21,Glenn,Hamilton City,Rural,53.299753,62.964643,3356,3356
+37,2,"36.1,36.2,37",36.1plus,36.1plus,Orland/Hamilton City/Artois/Elk Creek/Glenn/Grindstone Indian Rancheria/Willows,21,Glenn,Artois/Elk Creek/Glenn/Grindstone Indian Rancheria/Willows,Frontier,9.295131,1205.362221,11204,11204
+38,2,"38,40",40plus,40plus,Hoopa/Willow Creek/Bluelake/McKinleyville/Orick/Trinidad,23,Humboldt,Hoopa/Willow Creek,Frontier,5.291503,927.335699,4907,4907
+39,0,39,39,39,Arcata/Eureka,23,Humboldt,Arcata/Eureka,Rural,154.438076,466.225699,72003,69157
+40,1,"38,40",40plus,40plus,Hoopa/Willow Creek/Bluelake/McKinleyville/Orick/Trinidad,23,Humboldt,Bluelake/McKinleyville/Orick/Trinidad,Rural,43.73999,536.53418,23468,23468
+42,1,"42,44",42plus,42plus,Ferndale/Fortuna/Rio Dell/Scotia/Garberville/Redway,23,Humboldt,Ferndale/Fortuna/Rio Dell/Scotia,Rural,26.822569,973.02387,26099,25521
+44,2,"42,44",42plus,42plus,Ferndale/Fortuna/Rio Dell/Scotia/Garberville/Redway,23,Humboldt,Garberville/Redway,Frontier,8.903572,739.141511,6581,6127
+46,2,"46,47,50",50plus,50plus,Bard/Winterhaven/Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach/Brawley/Westmorland,25,Imperial,Bard/Winterhaven,Rural,74.784197,45.196714,3380,3380
+47,2,"46,47,50",50plus,50plus,Bard/Winterhaven/Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach/Brawley/Westmorland,25,Imperial,Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach,Frontier,5.684669,2820.040611,16031,11897
+48,0,48,48,48,El Centro/Heber/Holtville/Imperial/Seeley,25,Imperial,El Centro/Heber/Holtville/Imperial/Seeley,Rural,237.206585,332.199883,78800,77707
+49,0,49,49,49,Calexico/Ocotillo,25,Imperial,Calexico/Ocotillo,Rural,41.97732,1007.901391,42309,37572
+50,1,"46,47,50",50plus,50plus,Bard/Winterhaven/Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach/Brawley/Westmorland,25,Imperial,Brawley/Westmorland,Rural,99.633892,276.331671,27532,27295
+53,1,"53,54,55,102,103",53plusINYO,53plus,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson/Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence/Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville/Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker/Mammoth Lakes,27,Inyo,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson,Rural,17.480259,735.629806,12859,12859
+54,2,"53,54,55,102,103",53plusINYO,53plus,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson/Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence/Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville/Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker/Mammoth Lakes,27,Inyo,Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence,Frontier,0.88248,2624.420506,2316,2316
+55,2,"53,54,55,102,103",53plusINYO,53plus,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson/Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence/Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville/Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker/Mammoth Lakes,27,Inyo,Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville,Frontier,0.4746,6866.827614,3259,3259
+57.1,2,"57.1,57.2,59",57.2plus,57.2plus,Fort Tejon/Frazier Park/Lebec/Pine Mountain/Blackwells Corners/Ford City/Maricopa/McKittrick/Taft/Buttonwillow,29,Kern,Fort Tejon/Frazier Park/Lebec/Pine Mountain,Rural,18.031923,429.516019,7745,7745
+57.2,1,"57.1,57.2,59",57.2plus,57.2plus,Fort Tejon/Frazier Park/Lebec/Pine Mountain/Blackwells Corners/Ford City/Maricopa/McKittrick/Taft/Buttonwillow,29,Kern,Blackwells Corners/Ford City/Maricopa/McKittrick/Taft,Rural,29.271945,721.134177,21109,18509
+58.1,0,58.1,58.1,58.1,Shafter,29,Kern,Shafter,Rural,130.042158,161.801374,21041,18635
+58.2,0,58.2,58.2,58.2,Lost Hills/Wasco,29,Kern,Lost Hills/Wasco,Rural,30.93057,945.666371,29250,23518
+59,2,"57.1,57.2,59",57.2plus,57.2plus,Fort Tejon/Frazier Park/Lebec/Pine Mountain/Blackwells Corners/Ford City/Maricopa/McKittrick/Taft/Buttonwillow,29,Kern,Buttonwillow,Rural,20.596596,186.729877,3846,3744
+60,0,60,60,60,Delano/McFarland,29,Kern,Delano/McFarland,Urban,295.872706,225.299591,66660,54786
+61,0,61,61,61,Arvin/Lamont/Weed Patch,29,Kern,Arvin/Lamont/Weed Patch,Rural,205.956355,197.852597,40749,40654
+62,0,62,62,62,Bear Valley Springs/Keene/Stallion Springs/Tehachapi,29,Kern,Bear Valley Springs/Keene/Stallion Springs/Tehachapi,Rural,27.10022,1325.192168,35913,29433
+63,2,"63,64",64plus,64plus,Alta Sierra/Bodfish/Glennville/Kernville/Lake Isabella/Weldon/Wofford Heights/Inyokern/Ridgecrest,29,Kern,Alta Sierra/Bodfish/Glennville/Kernville/Lake Isabella/Weldon/Wofford Heights,Frontier,9.422211,1683.787231,15865,15675
+64,1,"63,64",64plus,64plus,Alta Sierra/Bodfish/Glennville/Kernville/Lake Isabella/Weldon/Wofford Heights/Inyokern/Ridgecrest,29,Kern,Inyokern/Ridgecrest,Rural,84.249889,400.249783,33721,33289
+65,0,65,65,65,Boron/California City/Desert Lake/Mojave/North Edwards/Rosamond,29,Kern,Boron/California City/Desert Lake/Mojave/North Edwards/Rosamond,Rural,30.71091,1409.271143,43280,41154
+66a,0,66a,66a,66a,Bakersfield Northeast/Oildale,29,Kern,Bakersfield Northeast/Oildale,Urban,606.570966,168.099044,101964,100091
+66b,0,66b,66b,66b,Bakersfield East/Lakeview/La Loma,29,Kern,Bakersfield East/Lakeview/La Loma,Urban,3585.65856,38.31681,137391,135672
+66c,0,66c,66c,66c,Bakersfield Southwest,29,Kern,Bakersfield Southwest,Urban,737.864682,194.818919,143750,143087
+66d,0,66d,66d,66d,Bakersfield Northwest/Rosedale,29,Kern,Bakersfield Northwest/Rosedale,Urban,1514.47495,74.883377,113409,112950
+67,2,"67,68",68plus,68plus,Avenal/Corcoran/Kettleman City/Stratford,31,Kings,Avenal,Rural,51.545348,305.536783,15749,15007
+68,1,"67,68",68plus,68plus,Avenal/Corcoran/Kettleman City/Stratford,31,Kings,Corcoran/Kettleman City/Stratford,Rural,44.416024,678.313739,30128,18016
+69,0,69,69,69,Armona/Hanford/Lemoore,31,Kings,Armona/Hanford/Lemoore,Urban,258.158325,407.67618,105245,100858
+70.1,1,"70.1,70.2",70.1plus,70.1plus,Kelseyville/Lakeport/Lucerne/Nice/Upper Lake,33,Lake,Kelseyville/Lakeport,Rural,135.86913,118.84966,16148,15530
+70.2,2,"70.1,70.2",70.1plus,70.1plus,Kelseyville/Lakeport/Lucerne/Nice/Upper Lake,33,Lake,Lucerne/Nice/Upper Lake,Rural,13.0723,632.252921,8265,8265
+71.1,1,"71.1,71.2,71.3",71.1plus,71.1plus,Clearlake/Clearlake Oaks/Lower Lake/Cobb/Hidden Valley/Middletown,33,Lake,Clearlake/Clearlake Oaks,Rural,96.221402,188.835326,18170,18013
+71.2,2,"71.1,71.2,71.3",71.1plus,71.1plus,Clearlake/Clearlake Oaks/Lower Lake/Cobb/Hidden Valley/Middletown,33,Lake,Lower Lake,Rural,48.248819,195.548826,9435,9435
+71.3,2,"71.1,71.2,71.3",71.1plus,71.1plus,Clearlake/Clearlake Oaks/Lower Lake/Cobb/Hidden Valley/Middletown,33,Lake,Cobb/Hidden Valley/Middletown,Rural,63.698217,193.930074,12353,12353
+72,1,"72,73,74,75,191",72plusLASSEN,72plus,Susanville/Bieber/Madeline/Nubieber/Doyle/Westwood/Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville,35,Lassen,Susanville,Rural,58.656234,421.012368,24695,19708
+73,2,"72,73,74,75,191",72plusLASSEN,72plus,Susanville/Bieber/Madeline/Nubieber/Doyle/Westwood/Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville,35,Lassen,Bieber/Madeline/Nubieber,Frontier,1.841175,2936.168415,5406,1147
+74,2,"72,73,74,75,191",72plusLASSEN,72plus,Susanville/Bieber/Madeline/Nubieber/Doyle/Westwood/Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville,35,Lassen,Doyle,Frontier,5.141764,599.988629,3085,1721
+75,2,"72,73,74,75,191",72plusLASSEN,72plus,Susanville/Bieber/Madeline/Nubieber/Doyle/Westwood/Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville,35,Lassen,Westwood,Frontier,2.483854,762.927052,1895,1895
+76.1a,0,76.1a,76.1a,76.1a,Canyon Country/Santa Clarita West/Saugus,37,Los Angeles,Canyon Country/Santa Clarita West/Saugus,Urban,1289.153745,95.686026,123354,114607
+76.1b,0,76.1b,76.1b,76.1b,Newhall/Santa Clarita East/Valencia,37,Los Angeles,Newhall/Santa Clarita East/Valencia,Urban,1760.559029,64.683431,113879,111656
+76.2,0,76.2,76.2,76.2,Castaic/Val Verde,37,Los Angeles,Castaic/Val Verde,Rural,63.5816,390.584691,24834,24269
+77.1a,0,77.1a,77.1a,77.1a,Palmdale Central,37,Los Angeles,Palmdale Central,Urban,1633.820515,57.363094,93721,93677
+77.1b,0,77.1b,77.1b,77.1b,Desert View Highlands/Lancaster West/Palmdale Northwest/Quartz Hill,37,Los Angeles,Desert View Highlands/Lancaster West/Palmdale Northwest/Quartz Hill,Urban,2391.597106,43.173659,103254,98645
+77.1c,0,77.1c,77.1c,77.1c,Lancaster Central/Palmdale North Central,37,Los Angeles,Lancaster Central/Palmdale North Central,Urban,1607.787931,64.083078,103032,102082
+77.2,1,"77.2,77.3",77.2plus,77.2plus,Lake Los Angeles/Juniper Hills/Littlerock/Longview/Pearblossom/Valyermo,37,Los Angeles,Lake Los Angeles,Rural,46.743212,382.451245,17877,17775
+77.3,2,"77.2,77.3",77.2plus,77.2plus,Lake Los Angeles/Juniper Hills/Littlerock/Longview/Pearblossom/Valyermo,37,Los Angeles,Juniper Hills/Littlerock/Longview/Pearblossom/Valyermo,Rural,78.395823,200.99285,15757,15640
+77.4,2,"77.4,77.5",77.5plus,77.5plus,Acton/Ravenna/Elizabeth Lake/Gorman/Green Valley/Lake Hughes/Leona Valley/Neenach,37,Los Angeles,Acton/Ravenna,Rural,48.532643,224.61171,10901,10725
+77.5,1,"77.4,77.5",77.5plus,77.5plus,Acton/Ravenna/Elizabeth Lake/Gorman/Green Valley/Lake Hughes/Leona Valley/Neenach,37,Los Angeles,Elizabeth Lake/Gorman/Green Valley/Lake Hughes/Leona Valley/Neenach,Rural,56.908576,411.976568,23445,23374
+78.1,2,"78.1,78.2gggg",78.2ggggplus,78.2ggggplus,Avalon/Altadena East/Angeles National Forest East/Azusa North/Duarte North/Glendora/Pasadena East,37,Los Angeles,Avalon,Frontier,7.417387,555.856067,4123,3938
+78.2a,0,78.2a,78.2a,78.2a,Echo Park/Hollywood North Central/Silverlake South,37,Los Angeles,Echo Park/Hollywood North Central/Silverlake South,Urban,14103.37417,5.83137,82242,80328
+78.2aa,0,78.2aa,78.2aa,78.2aa,Bel Air/Beverly Glen/Beverly Hills/Brentwood/Malibu/Pacific Palisades/Santa Monica Northwest/Topanga,37,Los Angeles,Bel Air/Beverly Glen/Beverly Hills/Brentwood/Malibu/Pacific Palisades/Santa Monica Northwest/Topanga,Urban,721.123966,138.451923,99841,96559
+78.2aaaa,0,78.2aaaa,78.2aaaa,78.2aaaa,Harbor Gateway South/Lomita/Torrance East Central,37,Los Angeles,Harbor Gateway South/Lomita/Torrance East Central,Urban,6183.120029,18.36128,113530,112367
+78.2b,0,78.2b,78.2b,78.2b,Pico-Union,37,Los Angeles,Pico-Union,Urban,31287.28107,4.824931,150959,144016
+78.2bb,0,78.2bb,78.2bb,78.2bb,North Hollywood Central and North,37,Los Angeles,North Hollywood Central and North,Urban,12962.78271,7.63586,98982,98348
+78.2bbb,0,78.2bbb,78.2bbb,78.2bbb,Compton East,37,Los Angeles,Compton East,Urban,11407.85909,7.781214,88767,88264
+78.2bbbb,0,78.2bbbb,78.2bbbb,78.2bbbb,Gardena West/Hawthorne,37,Los Angeles,Gardena West/Hawthorne,Urban,14202.83763,5.458557,77527,76757
+78.2c,0,78.2c,78.2c,78.2c,Bell Northeast/Bell Gardens/Commerce/Maywood/Montebello South,37,Los Angeles,Bell Northeast/Bell Gardens/Commerce/Maywood/Montebello South,Urban,7681.911541,15.412309,118396,116007
+78.2cc,0,78.2cc,78.2cc,78.2cc,Van Nuys Central,37,Los Angeles,Van Nuys Central,Urban,14599.93469,7.168525,104660,103753
+78.2ccc,0,78.2ccc,78.2ccc,78.2ccc,Huntington Park/South Gate West/Walnut Park,37,Los Angeles,Huntington Park/South Gate West/Walnut Park,Urban,20334.15307,5.220478,106154,105549
+78.2cccc,0,78.2cccc,78.2cccc,78.2cccc,Chatsworth,37,Los Angeles,Chatsworth,Urban,3933.259121,26.764064,105270,102639
+78.2d,0,78.2d,78.2d,78.2d,City Terrace East/East Los Angeles,37,Los Angeles,City Terrace East/East Los Angeles,Urban,15800.4024,5.808333,91774,91148
+78.2dd,0,78.2dd,78.2dd,78.2dd,Burbank South/Eagle Rock/Glendale Northwest,37,Los Angeles,Burbank South/Eagle Rock/Glendale Northwest,Urban,4202.675812,25.88684,108794,105584
+78.2ddd,0,78.2ddd,78.2ddd,78.2ddd,Bell Southwest/Cudahy/Vernon,37,Los Angeles,Bell Southwest/Cudahy/Vernon,Urban,9043.095552,9.059066,81922,81832
+78.2dddd,0,78.2dddd,78.2dddd,78.2dddd,Arcadia Southeast/San Gabriel North,37,Los Angeles,Arcadia Southeast/San Gabriel North,Urban,7377.606486,14.003457,103312,102462
+78.2e,0,78.2e,78.2e,78.2e,Country Club Park/Koreatown/Mid-City East,37,Los Angeles,Country Club Park/Koreatown/Mid-City East,Urban,26758.7728,5.009123,134038,132804
+78.2ee,0,78.2ee,78.2ee,78.2ee,Atwater Village/Glendale Central/Glendale Southwest/Griffith Park,37,Los Angeles,Atwater Village/Glendale Central/Glendale Southwest/Griffith Park,Urban,6188.771936,15.530544,96115,94355
+78.2eee,0,78.2eee,78.2eee,78.2eee,Downey Northeast,37,Los Angeles,Downey Northeast,Urban,8320.162549,9.606903,79931,79651
+78.2eeee,0,78.2eeee,78.2eeee,78.2eeee,Alhambra/El Sereno South/San Gabriel Central,37,Los Angeles,Alhambra/El Sereno South/San Gabriel Central,Urban,10581.10655,10.434541,110409,107841
+78.2f,0,78.2f,78.2f,78.2f,Hollywood Hills/Hollywood West/Mount Olympus/West Hollywood,37,Los Angeles,Hollywood Hills/Hollywood West/Mount Olympus/West Hollywood,Urban,9966.387365,9.103198,90726,89809
+78.2ff,0,78.2ff,78.2ff,78.2ff,Glassell Park/Glendale Southeast/Silverlake North,37,Los Angeles,Glassell Park/Glendale Southeast/Silverlake North,Urban,9818.347415,9.936499,97560,96491
+78.2fff,0,78.2fff,78.2fff,78.2fff,Firestone/Florence South/Watts,37,Los Angeles,Firestone/Florence South/Watts,Urban,18566.60324,6.972519,129456,129191
+78.2ffff,0,78.2ffff,78.2ffff,78.2ffff,Boyle Heights Northwest/Chinatown/Downtown Northwest/Little Tokyo/Westlake,37,Los Angeles,Boyle Heights Northwest/Chinatown/Downtown Northwest/Little Tokyo/Westlake,Urban,15530.60183,6.462853,100372,86852
+78.2g,0,78.2g,78.2g,78.2g,Hollywood South Central/Inner Sunset,37,Los Angeles,Hollywood South Central/Inner Sunset,Urban,22638.34344,5.13845,116326,112132
+78.2gg,0,78.2gg,78.2gg,78.2gg,Angeles National Forest West/Kagel Canyon/Lake View Terrace/San Fernando East/Sylmar,37,Los Angeles,Angeles National Forest West/Kagel Canyon/Lake View Terrace/San Fernando East/Sylmar,Urban,692.944984,140.237684,97177,95032
+78.2ggg,0,78.2ggg,78.2ggg,78.2ggg,South Central Northeast,37,Los Angeles,South Central Northeast,Urban,17880.28873,7.235509,129373,129152
+78.2gggg,1,"78.1,78.2gggg",78.2ggggplus,78.2ggggplus,Avalon/Altadena East/Angeles National Forest East/Azusa North/Duarte North/Glendora/Pasadena East,37,Los Angeles,Altadena East/Angeles National Forest East/Azusa North/Duarte North/Glendora/Pasadena East,Rural,181.137051,495.635758,89778,87039
+78.2h,0,78.2h,78.2h,78.2h,Boyle Heights Central/City Terrace West,37,Los Angeles,Boyle Heights Central/City Terrace West,Urban,17017.28021,5.602422,95338,94815
+78.2hh,0,78.2hh,78.2hh,78.2hh,Granada Hills/Mission Hills/Porter Ranch,37,Los Angeles,Granada Hills/Mission Hills/Porter Ranch,Urban,3510.916159,23.84876,83731,82626
+78.2hhh,0,78.2hhh,78.2hhh,78.2hhh,Altadena West/Pasadena Northwest,37,Los Angeles,Altadena West/Pasadena Northwest,Urban,7649.662438,12.47519,95431,90704
+78.2hhhh,0,78.2hhhh,78.2hhhh,78.2hhhh,Canoga Park Northeast/Winnetka,37,Los Angeles,Canoga Park Northeast/Winnetka,Urban,12926.50128,7.322244,94651,94066
+78.2i,0,78.2i,78.2i,78.2i,El Sereno North/Highland Park/Montecito Heights/Monterey Hills,37,Los Angeles,El Sereno North/Highland Park/Montecito Heights/Monterey Hills,Urban,12450.23288,10.055795,125197,123532
+78.2ii,0,78.2ii,78.2ii,78.2ii,Reseda South/Van Nuys Southwest,37,Los Angeles,Reseda South/Van Nuys Southwest,Urban,6758.32276,12.970673,87660,86640
+78.2iii,0,78.2iii,78.2iii,78.2iii,North Long Beach,37,Los Angeles,North Long Beach,Urban,12501.72814,7.388978,92375,92063
+78.2iiii,0,78.2iiii,78.2iiii,78.2iiii,Gardena Southeast/Harbor Gateway Central/Lawndale South/Moneta/Redondo Beach North/Torrance North,37,Los Angeles,Gardena Southeast/Harbor Gateway Central/Lawndale South/Moneta/Redondo Beach North/Torrance North,Urban,9008.748578,12.250203,110359,109412
+78.2j,0,78.2j,78.2j,78.2j,Baldwin Hills/Culver City South/Fox Hills/Ladera Heights/Marina del Rey/View Park/Windsor Hills,37,Los Angeles,Baldwin Hills/Culver City South/Fox Hills/Ladera Heights/Marina del Rey/View Park/Windsor Hills,Urban,6171.086396,20.157876,124396,121226
+78.2jj,0,78.2jj,78.2jj,78.2jj,Sherman Oaks/Studio City/Valley Village,37,Los Angeles,Sherman Oaks/Studio City/Valley Village,Urban,6580.033994,18.877714,124216,122536
+78.2jjj,0,78.2jjj,78.2jjj,78.2jjj,Long Beach West Central,37,Los Angeles,Long Beach West Central,Urban,21819.73966,5.159135,112571,110527
+78.2jjjj,0,78.2jjjj,78.2jjjj,78.2jjjj,Norwalk/Studebaker,37,Los Angeles,Norwalk/Studebaker,Urban,10813.97304,9.789741,105866,104206
+78.2k,0,78.2k,78.2k,78.2k,South Central Northwest,37,Los Angeles,South Central Northwest,Urban,12379.40942,6.367024,78820,78726
+78.2kk,0,78.2kk,78.2kk,78.2kk,North Hills/Northridge North,37,Los Angeles,North Hills/Northridge North,Urban,8196.039266,13.181854,108039,107175
+78.2kkk,0,78.2kkk,78.2kkk,78.2kkk,Belmont Shore/Long Beach East/Long Beach Shoreline/Los Altos/Naples,37,Los Angeles,Belmont Shore/Long Beach East/Long Beach Shoreline/Los Altos/Naples,Urban,5199.064439,24.460362,127171,123824
+78.2kkkk,0,78.2kkkk,78.2kkkk,78.2kkkk,Santa Monica Central/Sawtelle/West Los Angeles,37,Los Angeles,Santa Monica Central/Sawtelle/West Los Angeles,Urban,12756.55796,6.470867,82546,80754
+78.2l,0,78.2l,78.2l,78.2l,Exposition Park/Leimert Park,37,Los Angeles,Exposition Park/Leimert Park,Urban,16912.0456,5.687721,96191,88562
+78.2ll,0,78.2ll,78.2ll,78.2ll,Arleta/Pacoima West/Panorama City/San Fernando West,37,Los Angeles,Arleta/Pacoima West/Panorama City/San Fernando West,Urban,13501.87765,9.109621,122997,122689
+78.2lll,0,78.2lll,78.2lll,78.2lll,Bixby Knolls/Long Beach Central,37,Los Angeles,Bixby Knolls/Long Beach Central,Urban,7424.527256,14.57911,108243,105780
+78.2m,0,78.2m,78.2m,78.2m,Bellflower/Paramount South,37,Los Angeles,Bellflower/Paramount South,Urban,12015.20963,8.25745,99215,98589
+78.2mm,0,78.2mm,78.2mm,78.2mm,Pasadena South/San Marino/South Pasadena,37,Los Angeles,Pasadena South/San Marino/South Pasadena,Urban,5133.803434,19.678782,101027,98776
+78.2mmm,0,78.2mmm,78.2mmm,78.2mmm,Downtown Southeast/Florence North,37,Los Angeles,Downtown Southeast/Florence North,Urban,11261.46678,8.327156,93776,88575
+78.2n,0,78.2n,78.2n,78.2n,Cerritos/Hawaiian Gardens,37,Los Angeles,Cerritos/Hawaiian Gardens,Urban,8027.660082,13.437788,107874,107736
+78.2nn,0,78.2nn,78.2nn,78.2nn,Montebello North/Monterey Park/South San Gabriel,37,Los Angeles,Montebello North/Monterey Park/South San Gabriel,Urban,6779.911717,11.852956,80362,79711
+78.2nnn,0,78.2nnn,78.2nnn,78.2nnn,Crenshaw/Culver City East/Mid-City South/West Adams,37,Los Angeles,Crenshaw/Culver City East/Mid-City South/West Adams,Urban,16577.29247,6.624302,109813,108133
+78.2o,0,78.2o,78.2o,78.2o,Miraleste/Palo Verdes Estates/Portuguese Bend/Rancho Palos Verdes/Rolling Hills/San Pedro West,37,Los Angeles,Miraleste/Palo Verdes Estates/Portuguese Bend/Rancho Palos Verdes/Rolling Hills/San Pedro West,Urban,3138.987952,38.588552,121129,120526
+78.2oo,0,78.2oo,78.2oo,78.2oo,El Monte/Five Points,37,Los Angeles,El Monte/Five Points,Urban,12075.23072,8.243734,99545,98057
+78.2ooo,0,78.2ooo,78.2ooo,78.2ooo,Paramount North/Willowbrook,37,Los Angeles,Paramount North/Willowbrook,Urban,12264.77461,10.777613,132185,126182
+78.2p,0,78.2p,78.2p,78.2p,Long Beach Port/San Pedro East/Wilmington,37,Los Angeles,Long Beach Port/San Pedro East/Wilmington,Urban,3428.79419,33.313752,114226,111398
+78.2pp,0,78.2pp,78.2pp,78.2pp,Hacienda Heights/Industry Central,37,Los Angeles,Hacienda Heights/Industry Central,Urban,3240.335252,31.370519,101651,101651
+78.2ppp,0,78.2ppp,78.2ppp,78.2ppp,Pacoima East/Sun Valley West,37,Los Angeles,Pacoima East/Sun Valley West,Urban,6865.114968,14.800771,101609,100742
+78.2q,0,78.2q,78.2q,78.2q,Del Aire/Inglewood West/Los Angeles International Airport,37,Los Angeles,Del Aire/Inglewood West/Los Angeles International Airport,Urban,4824.471111,20.820106,100446,99048
+78.2qq,0,78.2qq,78.2qq,78.2qq,Asuza/Charter Oak/Covina,37,Los Angeles,Asuza/Charter Oak/Covina,Urban,6717.088981,17.582021,118100,115427
+78.2qqq,0,78.2qqq,78.2qqq,78.2qqq,Rosemead/San Gabriel South/South El Monte West/Temple City West,37,Los Angeles,Rosemead/San Gabriel South/South El Monte West/Temple City West,Urban,10345.88465,8.76619,90694,89391
+78.2r,0,78.2r,78.2r,78.2r,Inglewood East/Lennox,37,Los Angeles,Inglewood East/Lennox,Urban,12191.89259,6.33913,77286,76965
+78.2rr,0,78.2rr,78.2rr,78.2rr,Glendale Northeast/La Canada-Flintridge/La Crescenta/Montrose/Sunland/Tujunga/Verdugo City,37,Los Angeles,Glendale Northeast/La Canada-Flintridge/La Crescenta/Montrose/Sunland/Tujunga/Verdugo City,Urban,2883.642533,38.695156,111583,110012
+78.2rrr,0,78.2rrr,78.2rrr,78.2rrr,La Mirada/Santa Fe Springs South,37,Los Angeles,La Mirada/Santa Fe Springs South,Urban,5725.77095,18.057655,103394,100701
+78.2s,0,78.2s,78.2s,78.2s,South Central Southwest,37,Los Angeles,South Central Southwest,Urban,17679.75323,4.873258,86158,85732
+78.2ss,0,78.2ss,78.2ss,78.2ss,Pomona East and South,37,Los Angeles,Pomona East and South,Urban,8313.736093,13.893753,115509,114052
+78.2sss,0,78.2sss,78.2sss,78.2sss,Downey Southwest/Lynwood North Central/South Gate East,37,Los Angeles,Downey Southwest/Lynwood North Central/South Gate East,Urban,10479.17898,9.141078,95791,93911
+78.2t,0,78.2t,78.2t,78.2t,Hermosa Beach/Lawndale North/Manhattan Beach/Redondo Beach North,37,Los Angeles,Hermosa Beach/Lawndale North/Manhattan Beach/Redondo Beach North,Urban,9253.577843,10.091123,93379,93166
+78.2tt,0,78.2tt,78.2tt,78.2tt,Claremont/La Verne/Pomona Northwest/San Dimas,37,Los Angeles,Claremont/La Verne/Pomona Northwest/San Dimas,Urban,2589.134978,45.265697,117199,108577
+78.2ttt,0,78.2ttt,78.2ttt,78.2ttt,Burbank North/North Hollywood South,37,Los Angeles,Burbank North/North Hollywood South,Urban,6076.295351,20.813504,126469,125723
+78.2u,0,78.2u,78.2u,78.2u,Redondo Beach Central and South/Torrance West Central,37,Los Angeles,Redondo Beach Central and South/Torrance West Central,Urban,8332.030519,10.974035,91436,90741
+78.2uu,0,78.2uu,78.2uu,78.2uu,La Habra Heights/Whittier,37,Los Angeles,La Habra Heights/Whittier,Urban,4310.107783,19.740341,85083,83447
+78.2uuu,0,78.2uuu,78.2uuu,78.2uuu,Athens/Gardena Northeast/Harbor Gateway North,37,Los Angeles,Athens/Gardena Northeast/Harbor Gateway North,Urban,7617.101504,11.2103,85390,84826
+78.2v,0,78.2v,78.2v,78.2v,Carson/Compton West/Rancho Dominguez,37,Los Angeles,Carson/Compton West/Rancho Dominguez,Urban,4753.405508,22.586753,107364,106413
+78.2vv,0,78.2vv,78.2vv,78.2vv,Los Nietos/Santa Fe Springs Northeast,37,Los Angeles,Los Nietos/Santa Fe Springs Northeast,Urban,6536.279222,13.365096,87358,86304
+78.2vvv,0,78.2vvv,78.2vvv,78.2vvv,Diamond Bar/Industry East/Phillips Ranch/Pomona West/Walnut,37,Los Angeles,Diamond Bar/Industry East/Phillips Ranch/Pomona West/Walnut,Urban,2766.859289,41.791066,115630,112880
+78.2w,0,78.2w,78.2w,78.2w,Century City/Cheviot Hills/Rancho Park/West Los Angeles/Westwood,37,Los Angeles,Century City/Cheviot Hills/Rancho Park/West Los Angeles/Westwood,Urban,10161.11763,12.227493,124245,113910
+78.2ww,0,78.2ww,78.2ww,78.2ww,Pico Rivera/Santa Fe Springs Northwest,37,Los Angeles,Pico Rivera/Santa Fe Springs Northwest,Urban,8180.790603,12.209333,99882,98941
+78.2www,0,78.2www,78.2www,78.2www,Valinda/West Covina,37,Los Angeles,Valinda/West Covina,Urban,7194.157983,17.578151,126460,125674
+78.2x,0,78.2x,78.2x,78.2x,Hancock Park/Mid-City West/Park La Brea,37,Los Angeles,Hancock Park/Mid-City West/Park La Brea,Urban,12696.48836,9.822873,124716,123028
+78.2xx,0,78.2xx,78.2xx,78.2xx,Agoura Hills/Calabasas/Hidden Hills/West Hills/Westlake,37,Los Angeles,Agoura Hills/Calabasas/Hidden Hills/West Hills/Westlake,Urban,1174.079181,97.473834,114442,113774
+78.2xxx,0,78.2xxx,78.2xxx,78.2xxx,Arcadia Central and Northeast/Bradbury/Monrovia/Sierra Madre,37,Los Angeles,Arcadia Central and Northeast/Bradbury/Monrovia/Sierra Madre,Urban,3710.880077,27.044797,100360,99296
+78.2y,0,78.2y,78.2y,78.2y,Culver City North/Palms,37,Los Angeles,Culver City North/Palms,Urban,11537.14254,8.231674,94970,93822
+78.2yy,0,78.2yy,78.2yy,78.2yy,Encino/Tarzana/Warner Center/Woodland Hills,37,Los Angeles,Encino/Tarzana/Warner Center/Woodland Hills,Urban,3333.117186,23.869247,79559,79097
+78.2yyy,0,78.2yyy,78.2yyy,78.2yyy,Bassett/Industry West/La Puente,37,Los Angeles,Bassett/Industry West/La Puente,Urban,5117.19703,23.513067,120321,119842
+78.2z,0,78.2z,78.2z,78.2z,Mar Vista/Ocean Park/Santa Monica South/Venice,37,Los Angeles,Mar Vista/Ocean Park/Santa Monica South/Venice,Urban,11458.83075,6.668568,76414,74533
+78.2zz,0,78.2zz,78.2zz,78.2zz,Northridge South/Reseda North,37,Los Angeles,Northridge South/Reseda North,Urban,9025.065611,12.019303,108475,107860
+78.2zzz,0,78.2zzz,78.2zzz,78.2zzz,Baldwin Park/Irwindale,37,Los Angeles,Baldwin Park/Irwindale,Urban,5086.353179,20.51863,104365,101838
+79.1,0,79.1,79.1,79.1,Oakhurst/Yosemite Lakes,39,Madera,Oakhurst/Yosemite Lakes,Rural,20.757025,1379.870144,28642,28510
+79.2,0,79.2,79.2,79.2,Chowchilla,39,Madera,Chowchilla,Rural,145.308562,156.632201,22760,15092
+80,0,80,80,80,Madera,39,Madera,Madera,Rural,156.192493,616.777398,96336,95114
+81,2,"81,82",82plus,82plus,Bolinas/Dillon Beach/Inverness/Point Reyes Station/Stinson Beach/Tomales/Angel Island/Belvedere/Marin City/Sausalito/Strawberry Manor/Tiburon,41,Marin,Bolinas/Dillon Beach/Inverness/Point Reyes Station/Stinson Beach/Tomales,Rural,36.037082,375.446599,13530,13515
+82,1,"81,82",82plus,82plus,Bolinas/Dillon Beach/Inverness/Point Reyes Station/Stinson Beach/Tomales/Angel Island/Belvedere/Marin City/Sausalito/Strawberry Manor/Tiburon,41,Marin,Angel Island/Belvedere/Marin City/Sausalito/Strawberry Manor/Tiburon,Urban,656.854159,80.708935,53014,52985
+83a,0,83a,83a,83a,Corte Madera/Fairfax/Kentfield/Larkspur/Marinwood/Mill Valley/Ross/San Anselmo/San Rafael West/Terra Linda,41,Marin,Corte Madera/Fairfax/Kentfield/Larkspur/Marinwood/Mill Valley/Ross/San Anselmo/San Rafael West/Terra Linda,Urban,1455.972636,59.107566,86059,79969
+83b,0,83b,83b,83b,Bel Marin Keys/Black Point/Ignacio/Novato/San Rafael East/Santa Venetia,41,Marin,Bel Marin Keys/Black Point/Ignacio/Novato/San Rafael East/Santa Venetia,Urban,1610.415559,59.6107,95998,93165
+85,1,"85,86,235",85plusMARIPOSA,85plus,Bootjack/Catheys Valley/Coulterville/Don Pedro/El Portal/Fish Camp/Mariposa/Yosemite Valley/Big Oak Flat/Groveland,43,Mariposa,Bootjack/Catheys Valley/Coulterville/Don Pedro/El Portal/Fish Camp/Mariposa,Rural,15.771791,1066.968192,16828,16822
+86,2,"85,86,235",85plusMARIPOSA,85plus,Bootjack/Catheys Valley/Coulterville/Don Pedro/El Portal/Fish Camp/Mariposa/Yosemite Valley/Big Oak Flat/Groveland,43,Mariposa,Yosemite Valley,Frontier,3.693346,395.846959,1462,769
+87.1,2,"87.1,87.2,88,89",89plus,89plus,Boonville/Navarro/Philo/Yorkville/Elk/Little River/Mendocino/Anchor Bay/Gualala/Manchester/Point Arena/Fort Bragg/Westport,45,Mendocino,Boonville/Navarro/Philo/Yorkville,Rural,12.221423,251.28005,3071,3042
+87.2,2,"87.1,87.2,88,89",89plus,89plus,Boonville/Navarro/Philo/Yorkville/Elk/Little River/Mendocino/Anchor Bay/Gualala/Manchester/Point Arena/Fort Bragg/Westport,45,Mendocino,Elk/Little River/Mendocino,Rural,40.770924,185.156457,7549,7549
+88,2,"87.1,87.2,88,89",89plus,89plus,Boonville/Navarro/Philo/Yorkville/Elk/Little River/Mendocino/Anchor Bay/Gualala/Manchester/Point Arena/Fort Bragg/Westport,45,Mendocino,Anchor Bay/Gualala/Manchester/Point Arena,Rural,11.289258,330.756895,3734,3734
+89,1,"87.1,87.2,88,89",89plus,89plus,Boonville/Navarro/Philo/Yorkville/Elk/Little River/Mendocino/Anchor Bay/Gualala/Manchester/Point Arena/Fort Bragg/Westport,45,Mendocino,Fort Bragg/Westport,Rural,60.387514,191.479979,11563,11074
+90,0,90,90,90,Laytonville/Leggett/Piercy,45,Mendocino,Laytonville/Leggett/Piercy,Frontier,4.475947,749.56191,3355,3355
+91,0,91,91,91,Brooktrails/Pine Mountain/Willits,45,Mendocino,Brooktrails/Pine Mountain/Willits,Rural,43.850914,296.915127,13020,13020
+92,0,92,92,92,Covelo/Dos Rios,45,Mendocino,Covelo/Dos Rios,Frontier,3.361957,778.415507,2617,2617
+93.1,1,"93.1,93.2,93.3,93.4,93.5",93.1plus,93.1plus,Ukiah/Redwood Valley/Potter Valley/Talmage/Hopland,45,Mendocino,Ukiah,Rural,115.39911,244.256648,28187,27836
+93.2,2,"93.1,93.2,93.3,93.4,93.5",93.1plus,93.1plus,Ukiah/Redwood Valley/Potter Valley/Talmage/Hopland,45,Mendocino,Redwood Valley,Rural,86.641511,70.497385,6108,6108
+93.3,2,"93.1,93.2,93.3,93.4,93.5",93.1plus,93.1plus,Ukiah/Redwood Valley/Potter Valley/Talmage/Hopland,45,Mendocino,Potter Valley,Rural,15.915045,120.326392,1915,1815
+93.4,2,"93.1,93.2,93.3,93.4,93.5",93.1plus,93.1plus,Ukiah/Redwood Valley/Potter Valley/Talmage/Hopland,45,Mendocino,Talmage,Rural,60.585181,69.984109,4240,3484
+93.5,2,"93.1,93.2,93.3,93.4,93.5",93.1plus,93.1plus,Ukiah/Redwood Valley/Potter Valley/Talmage/Hopland,45,Mendocino,Hopland,Frontier,8.387049,253.724506,2128,2128
+94,0,94,94,94,Dos Palos/Gustine/Los Banos,47,Merced,Dos Palos/Gustine/Los Banos,Rural,61.00329,936.605217,57136,56907
+95,0,95,95,95,Ballico/Cressey/Delhi/Hilmar/Livingston,47,Merced,Ballico/Cressey/Delhi/Hilmar/Livingston,Rural,208.050772,190.862064,39709,39568
+96,0,96,96,96,Atwater/Snelling/Winton,47,Merced,Atwater/Snelling/Winton,Rural,175.708019,281.512478,49464,48103
+97.1,0,97.1,97.1,97.1,Merced Central and North/Merced Southeast,47,Merced,Merced Central and North/Merced Southeast,Urban,1383.516239,50.814726,70303,69178
+97.2,1,"97.2,97.3",97.2plus,97.2plus,El Nido/Merced Southwest/Le Grand/Planada,47,Merced,El Nido/Merced Southwest,Rural,85.907407,303.699073,26090,25398
+97.3,2,"97.2,97.3",97.2plus,97.2plus,El Nido/Merced Southwest/Le Grand/Planada,47,Merced,Le Grand/Planada,Rural,37.194026,215.007646,7997,7997
+100,0,100,98plusMODOC,100,Adin/Lookout/Newell/Alturas/Canby/Surprise Valley,49,Modoc,Adin/Lookout/Newell,Frontier,2.392822,944.909101,2261,2261
+98,0,98,98plusMODOC,98,Adin/Lookout/Newell/Alturas/Canby/Surprise Valley,49,Modoc,Alturas/Canby,Frontier,2.358295,2567.108836,6054,5731
+99,0,99,98plusMODOC,99,Adin/Lookout/Newell/Alturas/Canby/Surprise Valley,49,Modoc,Surprise Valley,Frontier,1.865856,691.37155,1290,1290
+102,2,"53,54,55,102,103",53plusMONO,53plus,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson/Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence/Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville/Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker/Mammoth Lakes,51,Mono,Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker,Frontier,1.90606,3065.485264,5843,5812
+103,2,"53,54,55,102,103",53plusMONO,53plus,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson/Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence/Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville/Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker/Mammoth Lakes,51,Mono,Mammoth Lakes,Rural,121.446424,66.383181,8062,7977
+104,2,"104,105,106,107",107plus,107plus,Big Sur/Lucia/King City/San Lucas/Bradley/San Ardo/Chualar/Gonzalez/Greenfield/Soledad,53,Monterey,Big Sur/Lucia,Frontier,7.504602,259.041024,1944,1142
+105,2,"104,105,106,107",107plus,107plus,Big Sur/Lucia/King City/San Lucas/Bradley/San Ardo/Chualar/Gonzalez/Greenfield/Soledad,53,Monterey,King City/San Lucas,Rural,34.327273,451.536001,15500,15500
+106,2,"104,105,106,107",107plus,107plus,Big Sur/Lucia/King City/San Lucas/Bradley/San Ardo/Chualar/Gonzalez/Greenfield/Soledad,53,Monterey,Bradley/San Ardo,Frontier,2.138582,1435.062433,3069,3069
+107,1,"104,105,106,107",107plus,107plus,Big Sur/Lucia/King City/San Lucas/Bradley/San Ardo/Chualar/Gonzalez/Greenfield/Soledad,53,Monterey,Chualar/Gonzalez/Greenfield/Soledad,Rural,107.896219,489.525957,52818,42163
+108,0,108,108,108,Carmel Valley/Castroville/Marina/Moss Landing/Ord,53,Monterey,Carmel Valley/Castroville/Marina/Moss Landing/Ord,Rural,162.375226,344.147326,55881,54817
+109.1,0,109.1,109.1,109.1,Aromas/Las Lomas/Pajaro/Prunedale,53,Monterey,Aromas/Las Lomas/Pajaro/Prunedale,Rural,190.094019,211.469041,40199,40126
+109.2,0,109.2,109.2,109.2,Salinas/Spreckels,53,Monterey,Salinas/Spreckels,Urban,3814.738303,38.710388,147670,146090
+110,0,110,110,110,Carmel/Del Rey Oaks/Monterey/Pacific Grove/Sand City/Seaside,53,Monterey,Carmel/Del Rey Oaks/Monterey/Pacific Grove/Sand City/Seaside,Urban,895.317522,100.918386,90354,87049
+111.1,2,"111.1,111.2,111.3,112.2",112.2plus,112.2plus,Angwin/Deer Park/St. Helena/Calistoga/Berryessa/Napa Northeast/Rutherford/Yountville,55,Napa,Angwin/Deer Park/St. Helena,Rural,108.947776,126.950732,13831,12091
+111.2,2,"111.1,111.2,111.3,112.2",112.2plus,112.2plus,Angwin/Deer Park/St. Helena/Calistoga/Berryessa/Napa Northeast/Rutherford/Yountville,55,Napa,Calistoga,Rural,84.407978,71.130716,6004,6004
+111.3,2,"111.1,111.2,111.3,112.2",112.2plus,112.2plus,Angwin/Deer Park/St. Helena/Calistoga/Berryessa/Napa Northeast/Rutherford/Yountville,55,Napa,Berryessa,Frontier,5.551844,293.055741,1627,1627
+112.1,1,"112.1,112.3",112.1plus,112.1plus,Napa Central/American Canyon,55,Napa,Napa Central,Urban,3207.020018,19.843967,63640,61003
+112.2,1,"111.1,111.2,111.3,112.2",112.2plus,112.2plus,Angwin/Deer Park/St. Helena/Calistoga/Berryessa/Napa Northeast/Rutherford/Yountville,55,Napa,Napa Northeast/Rutherford/Yountville,Rural,130.89555,232.414317,30422,29329
+112.3,2,"112.1,112.3",112.1plus,112.1plus,Napa Central/American Canyon,55,Napa,American Canyon,Urban,410.04953,45.182346,18527,18527
+113,2,"113,114",114plus,114plus,Grass Valley/Nevada City/Penn Valley/Rough and Ready/Wildwood/North Bloomfield/North San Juan/Truckee,57,Nevada,Grass Valley/Nevada City/Penn Valley/Rough and Ready/Wildwood,Rural,191.847219,411.35858,78918,78125
+114,1,"113,114",114plus,114plus,Grass Valley/Nevada City/Penn Valley/Rough and Ready/Wildwood/North Bloomfield/North San Juan/Truckee,57,Nevada,North Bloomfield/North San Juan/Truckee,Rural,34.258205,562.434604,19268,19268
+115.1,0,115.1,115.1,115.1,Dana Point/San Clemente/San Juan Capistrano,59,Orange,Dana Point/San Clemente/San Juan Capistrano,Urban,3207.92798,34.353015,110202,109643
+115.2a,0,115.2a,115.2a,115.2a,Lake Forest East/Mission Viejo Central and South,59,Orange,Lake Forest East/Mission Viejo Central and South,Urban,5009.929668,21.716272,108797,108474
+115.2b,0,115.2b,115.2b,115.2b,Coto de Caza/Las Flores/Mission Viejo Northwest/Rancho Santa Margarita/Trabuco Canyon,59,Orange,Coto de Caza/Las Flores/Mission Viejo Northwest/Rancho Santa Margarita/Trabuco Canyon,Urban,642.098383,205.871877,132190,131963
+115.2c,0,115.2c,115.2c,115.2c,Aliso Viejo/Laguna Hills/Laguna Niguel,59,Orange,Aliso Viejo/Laguna Hills/Laguna Niguel,Urban,4098.01293,29.929383,122651,122425
+115.2d,0,115.2d,115.2d,115.2d,Laguna Beach/Laguna Woods,59,Orange,Laguna Beach/Laguna Woods,Urban,3149.278751,23.875307,75190,74561
+116a,0,116a,116a,116a,Buena Park/La Palma,59,Orange,Buena Park/La Palma,Urban,7855.25767,10.096549,79311,78570
+116b,0,116b,116b,116b,Santa Ana Central,59,Orange,Santa Ana Central,Urban,19068.53133,6.061347,115581,112449
+116c,0,116c,116c,116c,Anaheim West,59,Orange,Anaheim West,Urban,10958.5285,11.14082,122087,120151
+116d,0,116d,116d,116d,Irvine South/Newport Beach/Newport Coast/San Joaquin Hills,59,Orange,Irvine South/Newport Beach/Newport Coast/San Joaquin Hills,Urban,2504.817601,58.095248,145518,134408
+116e,0,116e,116e,116e,Cypress/Los Alamitos/Rossmoor,59,Orange,Cypress/Los Alamitos/Rossmoor,Urban,6015.598338,18.900198,113696,112314
+116f,0,116f,116f,116f,Fullerton Central and South,59,Orange,Fullerton Central and South,Urban,5851.247143,17.744764,103829,101572
+116g,0,116g,116g,116g,Santa Ana South,59,Orange,Santa Ana South,Urban,10430.86694,11.182867,116647,115621
+116h,0,116h,116h,116h,City of Orange South/Santa Ana North/Tustin Foothills/Tustin West,59,Orange,City of Orange South/Santa Ana North/Tustin Foothills/Tustin West,Urban,5583.124531,23.327797,130242,128128
+116i,0,116i,116i,116i,Garden Grove South/Santa Ana West,59,Orange,Garden Grove South/Santa Ana West,Urban,11894.68371,9.75772,116065,114671
+116j,0,116j,116j,116j,Fountain Valley/Huntington Beach Central,59,Orange,Fountain Valley/Huntington Beach Central,Urban,6232.983102,12.390375,77229,76441
+116k,0,116k,116k,116k,Brea West/Fullerton North/La Habra,59,Orange,Brea West/Fullerton North/La Habra,Urban,5775.293403,18.756276,108323,108065
+116l,0,116l,116l,116l,Anaheim Central,59,Orange,Anaheim Central,Urban,10933.79146,8.826306,96505,95224
+116m,0,116m,116m,116m,Brea East/Placentia Central and North/Yorba Linda,59,Orange,Brea East/Placentia Central and North/Yorba Linda,Urban,2799.803992,48.139084,134780,134667
+116n,0,116n,116n,116n,Anaheim Hills/City of Orange East/Villa Park,59,Orange,Anaheim Hills/City of Orange East/Villa Park,Urban,1823.052051,70.459315,128451,128208
+116o,0,116o,116o,116o,Irvine Central/Tustin East,59,Orange,Irvine Central/Tustin East,Urban,6534.142586,13.21122,86324,86324
+116p,0,116p,116p,116p,Costa Mesa,59,Orange,Costa Mesa,Urban,5558.639445,19.644735,109198,105736
+116q,0,116q,116q,116q,Anaheim East/City of Orange North/Placentia Southwest,59,Orange,Anaheim East/City of Orange North/Placentia Southwest,Urban,6255.458532,18.19307,113806,111909
+116r,0,116r,116r,116r,Garden Grove North/Stanton,59,Orange,Garden Grove North/Stanton,Urban,10380.28621,12.124232,125853,122309
+116s,0,116s,116s,116s,Huntington Beach North/Seal Beach East/Westminster,59,Orange,Huntington Beach North/Seal Beach East/Westminster,Urban,9527.004986,13.064546,124466,123607
+116t,0,116t,116t,116t,Huntington Beach South,59,Orange,Huntington Beach South,Urban,6178.38298,13.10796,80986,80961
+116u,0,116u,116u,116u,Huntington Beach West/Seal Beach West,59,Orange,Huntington Beach West/Seal Beach West,Urban,3277.210562,26.215282,85913,85542
+116v,0,116v,116v,116v,Foothill Ranch/IrvineNortheast/Lake Forest West/Portola Hills/Tustin East,59,Orange,Foothill Ranch/IrvineNortheast/Lake Forest West/Portola Hills/Tustin East,Urban,1824.718577,55.726401,101685,100939
+117,2,"117,118,120",118plus,118plus,Dollar Point/Kings Beach/Sunnyside/Tahoe City/Tahoe Vista/Colfax/Meadow Vista/Foresthill,61,Placer,Dollar Point/Kings Beach/Sunnyside/Tahoe City/Tahoe Vista,Rural,46.841645,249.009186,11664,11664
+118,1,"117,118,120",118plus,118plus,Dollar Point/Kings Beach/Sunnyside/Tahoe City/Tahoe Vista/Colfax/Meadow Vista/Foresthill,61,Placer,Colfax/Meadow Vista,Rural,133.610129,199.303751,26629,26019
+119,0,119,119,119,Auburn/Newcastle/Lincoln/Sheridan,61,Placer,Auburn/Newcastle/Lincoln/Sheridan,Urban,278.599882,293.941258,81892,80845
+120,2,"117,118,120",118plus,118plus,Dollar Point/Kings Beach/Sunnyside/Tahoe City/Tahoe Vista/Colfax/Meadow Vista/Foresthill,61,Placer,Foresthill,Frontier,10.733547,566.634664,6082,6082
+121.1,0,121.1,121.1,121.1,Roseville,61,Placer,Roseville,Urban,3171.765731,32.700397,103718,102871
+121.2,0,121.2,121.2,121.2,Rocklin/Granite Bay,61,Placer,Rocklin/Granite Bay,Urban,1268.551091,83.947742,106492,106100
+122,2,"122,123.1,123.2,124,125",124plus,124plus,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain/Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden/Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk/Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton/Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,63,Plumas,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain,Frontier,3.6721,706.407698,2594,2594
+123.1,2,"122,123.1,123.2,124,125",124plus,124plus,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain/Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden/Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk/Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton/Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,63,Plumas,Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden,Frontier,10.175636,642.908168,6542,6542
+123.2,2,"122,123.1,123.2,124,125",124plus,124plus,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain/Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden/Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk/Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton/Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,63,Plumas,Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk,Rural,14.074128,131.0916,1845,1845
+124,1,"122,123.1,123.2,124,125",124plus,124plus,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain/Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden/Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk/Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton/Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,63,Plumas,Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton,Frontier,8.02345,662.807143,5318,5197
+125,2,"122,123.1,123.2,124,125",124plus,124plus,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain/Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden/Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk/Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton/Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,63,Plumas,Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,Frontier,8.704451,470.2192,4093,4093
+126,1,"126,127,130",126plus,126plus,Blythe/Chiriaco Summit/Desert Center/Eagle Mountain/Idyllwild/Pine Cove,65,Riverside,Blythe,Rural,86.906813,168.559856,14649,14432
+127,2,"126,127,130",126plus,126plus,Blythe/Chiriaco Summit/Desert Center/Eagle Mountain/Idyllwild/Pine Cove,65,Riverside,Chiriaco Summit/Desert Center/Eagle Mountain,Frontier,2.672362,3838.925599,10259,2082
+128,0,128,128,128,Arabia/Coachella/Desert Beach/Flowing Wells/Indio South/La Quinta East/Mecca/Oasis/Thermal,65,Riverside,Arabia/Coachella/Desert Beach/Flowing Wells/Indio South/La Quinta East/Mecca/Oasis/Thermal,Urban,318.708128,304.658059,97097,96494
+129.1,0,129.1,129.1,129.1,Bermuda Dunes South/Indian Wells/La Quinta West/Palm Desert/Rancho Mirage Central and South,65,Riverside,Bermuda Dunes South/Indian Wells/La Quinta West/Palm Desert/Rancho Mirage Central and South,Urban,935.262369,105.863341,99010,98679
+129.2,0,129.2,129.2,129.2,Bermuda Dunes North/Indio North,65,Riverside,Bermuda Dunes North/Indio North,Urban,828.918695,60.78642,50387,50281
+129.3,0,129.3,129.3,129.3,Agua Caliente/Palm Springs Central,65,Riverside,Agua Caliente/Palm Springs Central,Urban,299.039629,101.698895,30412,30412
+129.4,0,129.4,129.4,129.4,Cathedral City Southeast/Palm Desert North/Palm Springs South/Rancho Mirage North,65,Riverside,Cathedral City Southeast/Palm Desert North/Palm Springs South/Rancho Mirage North,Urban,438.011069,292.058828,127925,127164
+130,2,"126,127,130",126plus,126plus,Blythe/Chiriaco Summit/Desert Center/Eagle Mountain/Idyllwild/Pine Cove,65,Riverside,Idyllwild/Pine Cove,Rural,14.480561,837.881893,12133,12133
+131a,0,131a,131a,131a,Lake Elsinore/Murrieta West/Sedco Hills/Wildomar,65,Riverside,Lake Elsinore/Murrieta West/Sedco Hills/Wildomar,Urban,813.436241,165.583967,134692,134412
+131b,0,131b,131b,131b,French Valley/Murrieta East/Temecula/Winchester,65,Riverside,French Valley/Murrieta East/Temecula/Winchester,Urban,809.193385,166.76854,134948,134031
+131c,0,131c,131c,131c,Temecula South,65,Riverside,Temecula South,Urban,485.046964,154.100541,74746,74746
+132,0,132,132,132,East Hemet/Hemet/Valle Vista,65,Riverside,East Hemet/Hemet/Valle Vista,Urban,1296.035356,107.963103,139924,138534
+133.1,0,133.1,133.1,133.1,Canyon Lake/Perris/Quail Valley/Romoland/Sun City/Winchester,65,Riverside,Canyon Lake/Perris/Quail Valley/Romoland/Sun City/Winchester,Urban,1114.087273,145.082888,161635,160898
+133.2,0,133.2,133.2,133.2,Homeland/Lakeview/San Jacinto,65,Riverside,Homeland/Lakeview/San Jacinto,Urban,336.421392,71.529339,24064,23855
+133.3,0,133.3,133.3,133.3,Glen Valley/Mead Valley,65,Riverside,Glen Valley/Mead Valley,Rural,242.436951,94.915399,23011,22826
+134,0,134,134,134,Banning/Beaumont/Cabizon/Calimesa/Cherry Valley,65,Riverside,Banning/Beaumont/Cabizon/Calimesa/Cherry Valley,Urban,400.824356,333.280645,133587,131504
+135a,0,135a,135a,135a,Eastside/Fairmont Park/Riverside Downtown/Rubidoux/University,65,Riverside,Eastside/Fairmont Park/Riverside Downtown/Rubidoux/University,Urban,2918.480495,35.638751,104011,100045
+135b,0,135b,135b,135b,Edgemont/Orange Crest/Woodcrest,65,Riverside,Edgemont/Orange Crest/Woodcrest,Urban,1712.828573,93.148259,159547,159262
+135c,0,135c,135c,135c,Casablanca/Riverside Central,65,Riverside,Casablanca/Riverside Central,Urban,4592.927173,18.747521,86106,84208
+135d,0,135d,135d,135d,Arlington/Corona East/Home Gardens/La Sierra/Riverside Southwest,65,Riverside,Arlington/Corona East/Home Gardens/La Sierra/Riverside Southwest,Urban,3000.222674,38.979773,116948,114714
+135e,0,135e,135e,135e,Corona North/Glen Avon/Jurupa/Norco,65,Riverside,Corona North/Glen Avon/Jurupa/Norco,Urban,2626.559584,63.423651,166586,162038
+135f,0,135f,135f,135f,Corona South/El Cerrito/Temescal,65,Riverside,Corona South/El Cerrito/Temescal,Urban,1525.721328,78.342615,119529,119257
+135g,0,135g,135g,135g,Moreno Valley,65,Riverside,Moreno Valley,Urban,3515.127244,25.108052,88258,88076
+136,1,"136,137,138",136plus,136plus,Clay/Galt/Herald/Wilton/Clarksburg/Hood/Isleton/Locke/Walnut Grove/Rancho Murieta/Sloughhouse,67,Sacramento,Clay/Galt/Herald/Wilton,Rural,175.964065,204.172367,35927,35777
+137,2,"136,137,138",136plus,136plus,Clay/Galt/Herald/Wilton/Clarksburg/Hood/Isleton/Locke/Walnut Grove/Rancho Murieta/Sloughhouse,67,Sacramento,Clarksburg/Hood/Isleton/Locke/Walnut Grove,Rural,31.948955,163.260424,5216,5216
+138,2,"136,137,138",136plus,136plus,Clay/Galt/Herald/Wilton/Clarksburg/Hood/Isleton/Locke/Walnut Grove/Rancho Murieta/Sloughhouse,67,Sacramento,Rancho Murieta/Sloughhouse,Rural,120.2977,157.775252,18980,18864
+139a,0,139a,139a,139a,Elverta/Natomas/North Highlands/Rio Linda,67,Sacramento,Elverta/Natomas/North Highlands/Rio Linda,Urban,1959.557468,91.362974,179031,178361
+139b,0,139b,139b,139b,Carmichael/Fair Oaks/Gold River,67,Sacramento,Carmichael/Fair Oaks/Gold River,Urban,3646.002884,25.073211,91417,89853
+139c,0,139c,139c,139c,Antelope/Citrus Heights/Foothill Farms,67,Sacramento,Antelope/Citrus Heights/Foothill Farms,Urban,6143.781844,19.567426,120218,119658
+139d,0,139d,139d,139d,Arcade/Arden/Town and Country Village,67,Sacramento,Arcade/Arden/Town and Country Village,Urban,4382.744754,17.166183,75235,74421
+139e,0,139e,139e,139e,Folsom/Orangevale,67,Sacramento,Folsom/Orangevale,Urban,2539.656329,42.931793,109032,98573
+139f,0,139f,139f,139f,Florin/Fruitridge/Oak Park/Parkway/South Sacramento,67,Sacramento,Florin/Fruitridge/Oak Park/Parkway/South Sacramento,Urban,6596.756156,17.814058,117515,116697
+139g,0,139g,139g,139g,East Sacramento/La Riviera/Mather/Rancho Cordova/Rosemont,67,Sacramento,East Sacramento/La Riviera/Mather/Rancho Cordova/Rosemont,Urban,1897.313448,65.96854,125163,123077
+139h,0,139h,139h,139h,Elk Grove/Laguna/Laguna West/Lakeside,67,Sacramento,Elk Grove/Laguna/Laguna West/Lakeside,Urban,4250.362363,17.197121,73094,72534
+139i,0,139i,139i,139i,Greenhaven/Land Park/Midtown/Pocket/Riverside/Sutterville,67,Sacramento,Greenhaven/Land Park/Midtown/Pocket/Riverside/Sutterville,Urban,5685.743328,15.011053,85349,84127
+139j,0,139j,139j,139j,Capitol Park/Del Paso Heights/Downtown/Gardenland/North Sacramento,67,Sacramento,Capitol Park/Del Paso Heights/Downtown/Gardenland/North Sacramento,Urban,3810.243131,32.466957,123707,119307
+139k,0,139k,139k,139k,Freeport/Meadowview,67,Sacramento,Freeport/Meadowview,Urban,5724.739205,14.617259,83680,82275
+139l,0,139l,139l,139l,Vineyard,67,Sacramento,Vineyard,Urban,1594.342414,47.380035,75540,75291
+139m,0,139m,139m,139m,Central South Elk Grove/Franklin,67,Sacramento,Central South Elk Grove/Franklin,Urban,1221.551968,62.248681,76040,72670
+140,0,140,140,140,Hollister/Paicines/Panoche/San Juan Bautista,69,San Benito,Hollister/Paicines/Panoche/San Juan Bautista,Rural,39.189671,1390.468402,54492,52768
+142,2,"142,143,150",150plus,150plus,Argus/Borosalvay/Trona/Big River/Needles/Baker/Harvard/Newberry Springs,71,San Bernardino,Argus/Borosalvay/Trona,Frontier,1.954647,1360.34727,2659,2659
+143,2,"142,143,150",150plus,150plus,Argus/Borosalvay/Trona/Big River/Needles/Baker/Harvard/Newberry Springs,71,San Bernardino,Big River/Needles,Frontier,2.286196,2907.44885,6647,6647
+144.1,2,"144.1,144.3",144.3plus,144.3plus,USMC Air-Ground Combat Training Center/Cadiz/Twentynine Palms,71,San Bernardino,USMC Air-Ground Combat Training Center,Rural,12.296884,931.292817,11452,5321
+144.2,0,144.2,144.2,144.2,Joshua Tree/Landers/Morongo Valley/Rimrock/Yucca Valley,71,San Bernardino,Joshua Tree/Landers/Morongo Valley/Rimrock/Yucca Valley,Rural,44.502506,920.35266,40958,40737
+144.3,1,"144.1,144.3",144.3plus,144.3plus,USMC Air-Ground Combat Training Center/Cadiz/Twentynine Palms,71,San Bernardino,Cadiz/Twentynine Palms,Rural,12.039078,1594.723398,19199,19199
+145.1a,0,145.1a,145.1a,145.1a,Hesperia West/Mountain View Acres/Victorville Central and South,71,San Bernardino,Hesperia West/Mountain View Acres/Victorville Central and South,Urban,977.365958,174.822949,170866,170197
+145.1b,0,145.1b,145.1b,145.1b,Apple Valley/Hesperia East,71,San Bernardino,Apple Valley/Hesperia East,Urban,758.298565,146.591336,111160,110784
+145.2,0,145.2,145.2,145.2,Adelanto/Phelan/Pinon Hills/Victorville Northwest,71,San Bernardino,Adelanto/Phelan/Pinon Hills/Victorville Northwest,Rural,174.873538,310.647342,54324,49689
+145.3,2,145.3/146,146plus,146plus,Lucerne Valley/Big Bear Lake/Fawnskin/Moorridge/Running Springs/Sugarloaf,71,San Bernardino,Lucerne Valley,Rural,51.393075,84.096931,4322,4322
+146,1,145.3/146,146plus,146plus,Lucerne Valley/Big Bear Lake/Fawnskin/Moorridge/Running Springs/Sugarloaf,71,San Bernardino,Big Bear Lake/Fawnskin/Moorridge/Running Springs/Sugarloaf,Rural,44.991342,541.615308,24368,23977
+147,1,"147,148",147plus,147plus,Blue Jay/Crestline/Lake Arrowhead/Skyforest/Twin Peaks/Lytle Creek/Wrightwood,71,San Bernardino,Blue Jay/Crestline/Lake Arrowhead/Skyforest/Twin Peaks,Rural,122.335272,162.643198,19897,19897
+148,2,"147,148",147plus,147plus,Blue Jay/Crestline/Lake Arrowhead/Skyforest/Twin Peaks/Lytle Creek/Wrightwood,71,San Bernardino,Lytle Creek/Wrightwood,Rural,36.08286,178.145522,6428,6428
+149,0,149,149,149,Barstow/Daggett/Lenwood/Nebo Center/Oro Grande/Yermo,71,San Bernardino,Barstow/Daggett/Lenwood/Nebo Center/Oro Grande/Yermo,Rural,22.057097,2312.770301,51013,50542
+150,1,"142,143,150",150plus,150plus,Argus/Borosalvay/Trona/Big River/Needles/Baker/Harvard/Newberry Springs,71,San Bernardino,Baker/Harvard/Newberry Springs,Frontier,1.711662,7991.059651,13678,12216
+151a,0,151a,151a,151a,Chino Hills/Chino West Central/Los Serranos/Sleepy Hollow,71,San Bernardino,Chino Hills/Chino West Central/Los Serranos/Sleepy Hollow,Urban,2009.272346,62.437031,125453,118516
+151b,0,151b,151b,151b,Ontario Northeast/Rancho Cucamonga South,71,San Bernardino,Ontario Northeast/Rancho Cucamonga South,Urban,5205.090862,18.369708,95616,95453
+151c,0,151c,151c,151c,Montclair/Ontario Northwest/Upland South,71,San Bernardino,Montclair/Ontario Northwest/Upland South,Urban,6440.152588,19.349075,124611,123594
+151d,0,151d,151d,151d,Rancho Cucamonga Northwest/San Antonio Heights/Upland North,71,San Bernardino,Rancho Cucamonga Northwest/San Antonio Heights/Upland North,Urban,3802.808609,22.440782,85338,85161
+151e,0,151e,151e,151e,Fontana North/Rancho Cucamonga Northwest/Rialto Northeast,71,San Bernardino,Fontana North/Rancho Cucamonga Northwest/Rialto Northeast,Urban,2637.661793,66.810688,176224,175823
+151f,0,151f,151f,151f,Bloomington/Colton Central and West/Fontana South/Rialto South,71,San Bernardino,Bloomington/Colton Central and West/Fontana South/Rialto South,Urban,3455.356843,41.66545,143969,143194
+151g,0,151g,151g,151g,Muscoy/San Bernardino Central,71,San Bernardino,Muscoy/San Bernardino Central,Urban,5073.777544,24.843028,126048,124134
+151h,0,151h,151h,151h,Fontana Central/Rialto Central,71,San Bernardino,Fontana Central/Rialto Central,Urban,7112.568016,18.501756,131595,131508
+151i,0,151i,151i,151i,Colton Southeast/Grand Terrace/Loma Linda/Redlands North,71,San Bernardino,Colton Southeast/Grand Terrace/Loma Linda/Redlands North,Urban,2070.04852,48.631227,100669,99126
+151j,0,151j,151j,151j,Mentone/Redlands South/Yucaipa,71,San Bernardino,Mentone/Redlands South/Yucaipa,Urban,1346.871735,74.205284,99945,97378
+151k,0,151k,151k,151k,Highland/San Bernardino East,71,San Bernardino,Highland/San Bernardino East,Urban,4239.826208,28.39338,120383,115016
+151l,0,151l,151l,151l,Chino Northeast/Fontana Southwest/Ontario South,71,San Bernardino,Chino Northeast/Fontana Southwest/Ontario South,Urban,2200.578651,62.922086,138465,132409
+152,2,"152,153.1,153.2,154",153.2plus,153.2plus,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs/Pala/Pauma Valley/Rincon/San Pasqual/Valley Center/Barona/Moreno,73,San Diego,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs,Frontier,5.277398,1788.002239,9436,9436
+153.1,2,"152,153.1,153.2,154",153.2plus,153.2plus,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs/Pala/Pauma Valley/Rincon/San Pasqual/Valley Center/Barona/Moreno,73,San Diego,Pala/Pauma Valley,Rural,61.942344,112.976026,6998,6922
+153.2,1,"152,153.1,153.2,154",153.2plus,153.2plus,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs/Pala/Pauma Valley/Rincon/San Pasqual/Valley Center/Barona/Moreno,73,San Diego,Rincon/San Pasqual/Valley Center,Rural,166.981876,94.776752,15826,15826
+154,2,"152,153.1,153.2,154",153.2plus,153.2plus,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs/Pala/Pauma Valley/Rincon/San Pasqual/Valley Center/Barona/Moreno,73,San Diego,Barona/Moreno,Rural,48.445447,48.054051,2328,2328
+155,0,155,155,155,Alpine/Blossom Valley/Crest/Descanso/Glen Oaks/Harbison Canyon/Japatul/Palo Verde,73,San Diego,Alpine/Blossom Valley/Crest/Descanso/Glen Oaks/Harbison Canyon/Japatul/Palo Verde,Rural,222.228317,142.794583,31733,31135
+156a,0,156a,156a,156a,Encinitas Central/Leucadia/Oceanside North and West/San Luis Rey/South Oceanside,73,San Diego,Encinitas Central/Leucadia/Oceanside North and West/San Luis Rey/South Oceanside,Urban,4606.019617,23.728513,109294,108585
+156b,0,156b,156b,156b,Carlsbad East/Encinitas East/Oceanside East,73,San Diego,Carlsbad East/Encinitas East/Oceanside East,Urban,2964.572984,35.736006,105942,105899
+156c,0,156c,156c,156c,Cardiff by the Sea/Eden Gardens/Harmony Grove/La Costa/Ocean Hills/Lomas Santa Fe/Olivehain/Rancho Santa Fe/San Marcos South/Solana Beach/Vista South,73,San Diego,Cardiff by the Sea/Eden Gardens/Harmony Grove/La Costa/Ocean Hills/Lomas Santa Fe/Olivehain/Rancho Santa Fe/San Marcos South/Solana Beach/Vista South,Urban,1776.189926,82.19166,145988,145560
+156d,0,156d,156d,156d,Oceanside East/San Marcos West/Vista,73,San Diego,Oceanside East/San Marcos West/Vista,Urban,2239.092223,54.392132,121789,116996
+156e,0,156e,156e,156e,Escondido Central and South/San Marcos Central and East,73,San Diego,Escondido Central and South/San Marcos Central and East,Urban,5025.134307,25.610459,128696,125694
+156f,0,156f,156f,156f,Escondido East/Hidden Meadows/Poway North,73,San Diego,Escondido East/Hidden Meadows/Poway North,Urban,733.028198,135.123042,99049,96991
+157,1,"157,159",157plus,157plus,Dulzura/Engineer Springs/Indian Springs/Jamacha/Jamul/Buckman Springs/Canyon City/Jacumba/Morena Village/Tecate,73,San Diego,Dulzura/Engineer Springs/Indian Springs/Jamacha/Jamul,Rural,79.130024,208.252177,16479,14706
+158.1,1,"158.1,158.2",158.1plus,158.1plus,Ramona/Rock Haven/Rosemont/Ballena/Four Corners/San Diego Country Estates,73,San Diego,Ramona/Rock Haven/Rosemont,Rural,239.901496,102.291983,24540,24307
+158.2,2,"158.1,158.2",158.1plus,158.1plus,Ramona/Rock Haven/Rosemont/Ballena/Four Corners/San Diego Country Estates,73,San Diego,Ballena/Four Corners/San Diego Country Estates,Urban,342.071961,33.715128,11533,11533
+159,2,"157,159",157plus,157plus,Dulzura/Engineer Springs/Indian Springs/Jamacha/Jamul/Buckman Springs/Canyon City/Jacumba/Morena Village/Tecate,73,San Diego,Buckman Springs/Canyon City/Jacumba/Morena Village/Tecate,Rural,16.376666,452.167731,7405,6477
+160,0,160,160,160,Bonsall/Camp Pendleton/Fallbrook/Live Oak Park/Rainbow/San Luis Rey Heights/Winterwarm,73,San Diego,Bonsall/Camp Pendleton/Fallbrook/Live Oak Park/Rainbow/San Luis Rey Heights/Winterwarm,Urban,255.526777,340.257881,86945,69236
+161a,0,161a,161a,161a,Clairemont/Fiesta Shores/Linda Vista/Mission Beach/Sorrento/University City,73,San Diego,Clairemont/Fiesta Shores/Linda Vista/Mission Beach/Sorrento/University City,Urban,4399.79849,32.242613,141861,141545
+161b,0,161b,161b,161b,Bay Park/Five Points/Hillcrest Northwest/Mission Hills/Mission Valley/Morena/Normal Heights/Old Town/Serra Mesa,73,San Diego,Bay Park/Five Points/Hillcrest Northwest/Mission Hills/Mission Valley/Morena/Normal Heights/Old Town/Serra Mesa,Urban,4964.795896,18.91981,93933,89388
+161c,0,161c,161c,161c,Downtown/Golden Hill/Logan Heights,73,San Diego,Downtown/Golden Hill/Logan Heights,Urban,8839.547692,9.326608,82443,71865
+161d,0,161d,161d,161d,Chollas Creek/City Heights/East San Diego/North Park/Oak Park/South Park,73,San Diego,Chollas Creek/City Heights/East San Diego/North Park/Oak Park/South Park,Urban,12405.44416,7.591747,94179,92976
+161e,0,161e,161e,161e,College Heights/Hillcrest Southeast/Kensington/Rolando North/University Heights,73,San Diego,College Heights/Hillcrest Southeast/Kensington/Rolando North/University Heights,Urban,10803.55263,8.355214,90266,83809
+161f,0,161f,161f,161f,La Mesa/Rolando South,73,San Diego,La Mesa/Rolando South,Urban,6851.753147,11.411823,78191,76879
+161g,0,161g,161g,161g,Encanto/Lemon Grove Northwest/Lincoln Acres/National City East/Paradise Hills Southwest,73,San Diego,Encanto/Lemon Grove Northwest/Lincoln Acres/National City East/Paradise Hills Southwest,Urban,7841.158398,11.887784,93214,92295
+161h,0,161h,161h,161h,El Cajon Central and South/Fletcher Hills,73,San Diego,El Cajon Central and South/Fletcher Hills,Urban,7475.904164,11.198377,83718,81637
+161i,0,161i,161i,161i,Calavo Gardens/Casa de Oro/Cottonwood/Grossmont/Homelands/Lemon Grove Central and North/Mount Helix/Rancho San Diego/Spring Valley,73,San Diego,Calavo Gardens/Casa de Oro/Cottonwood/Grossmont/Homelands/Lemon Grove Central and North/Mount Helix/Rancho San Diego/Spring Valley,Urban,3890.926688,20.804555,80949,80318
+161j,0,161j,161j,161j,Castle Park/Chula Vista Southwest/Imperial Beach West/Nestor East/Palm City/San Ysidro/South San Diego,73,San Diego,Castle Park/Chula Vista Southwest/Imperial Beach West/Nestor East/Palm City/San Ysidro/South San Diego,Urban,2292.724794,61.752723,141582,136145
+161k,0,161k,161k,161k,Chula Vista Central and Northwest/National City West,73,San Diego,Chula Vista Central and Northwest/National City West,Urban,5386.175795,14.246285,76733,73033
+161l,0,161l,161l,161l,Lemon Grove South/Paradise Hills,73,San Diego,Lemon Grove South/Paradise Hills,Urban,8971.490653,9.000176,80745,80359
+161m,0,161m,161m,161m,Carlton Hills/El Cajon North/Eucalyptus Hills/Lake Murray/Loma Portal/San Carlos/Santee,73,San Diego,Carlton Hills/El Cajon North/Eucalyptus Hills/Lake Murray/Loma Portal/San Carlos/Santee,Urban,2303.675171,37.802204,87084,84866
+161n,0,161n,161n,161n,Civic Center/Coronado/Harbor Island/Imperial Beach East/Nestor West/Ocean Beach/Point Loma/Silver Strand,73,San Diego,Civic Center/Coronado/Harbor Island/Imperial Beach East/Nestor West/Ocean Beach/Point Loma/Silver Strand,Urban,4829.227374,13.1315,63415,54335
+161o,0,161o,161o,161o,Allied Gardens/Del Cerro/Grantville/Miramar/Tierrasanta,73,San Diego,Allied Gardens/Del Cerro/Grantville/Miramar/Tierrasanta,Urban,1124.113546,76.047477,85486,80684
+161p,0,161p,161p,161p,Carmel Valley/Del Dios/Escondido South/Fairbanks Ranch/Poway Southeast/Rancho Bernardo Southeast/Rancho Penasquitos,73,San Diego,Carmel Valley/Del Dios/Escondido South/Fairbanks Ranch/Poway Southeast/Rancho Bernardo Southeast/Rancho Penasquitos,Urban,2132.659763,67.802188,144599,144177
+161q,0,161q,161q,161q,Poway Central/Poway Grove/Rancho Bernardo Southwest/Sabre Springs,73,San Diego,Poway Central/Poway Grove/Rancho Bernardo Southwest/Sabre Springs,Urban,1802.259594,42.290799,76219,75765
+161r,0,161r,161r,161r,Crown Point/Del Mar/La Jolla/Pacific Beach,73,San Diego,Crown Point/Del Mar/La Jolla/Pacific Beach,Urban,4103.332951,20.082211,82404,72830
+161s,0,161s,161s,161s,Cockatoo Grove/Eastlake Greens/Otay Mesa,73,San Diego,Cockatoo Grove/Eastlake Greens/Otay Mesa,Urban,3674.642146,37.030272,136073,129859
+161t,0,161t,161t,161t,Bonita/Chula Vista East/Eastlake/La Presa/Lynwood Hills/Rancho del Rey/Sunnyside/Sunny Vista,73,San Diego,Bonita/Chula Vista East/Eastlake/La Presa/Lynwood Hills/Rancho del Rey/Sunnyside/Sunny Vista,Urban,3209.032741,28.53352,91565,91207
+161u,0,161u,161u,161u,Bostonia/Glenview/Granite Hills/Hillsdale/Johnstown/Lakeside/Riverview/Winter Gardens,73,San Diego,Bostonia/Glenview/Granite Hills/Hillsdale/Johnstown/Lakeside/Riverview/Winter Gardens,Urban,3437.373065,24.142564,82987,81761
+161v,0,161v,161v,161v,Mira Mesa/Scripps Miramar Ranch,73,San Diego,Mira Mesa/Scripps Miramar Ranch,Urban,4053.652126,27.34349,110841,110757
+162a,0,162a,162a,162a,Chinatown/Civic Center/Inner Mission/North Beach/South of Market/Tenderloin/Western Addition,75,San Francisco,Chinatown/Civic Center/Inner Mission/North Beach/South of Market/Tenderloin/Western Addition,Urban,1905.509378,53.226187,101423,96949
+162b,0,162b,162b,162b,Cow Hollow/Financial District/Marina/Nob Hill/Pacific Heights/Russian Hill/Seacliff,75,San Francisco,Cow Hollow/Financial District/Marina/Nob Hill/Pacific Heights/Russian Hill/Seacliff,Urban,6102.002329,14.484917,88387,87908
+162c,0,162c,162c,162c,Bernal Heights/Mission District/Potrero Hill,75,San Francisco,Bernal Heights/Mission District/Potrero Hill,Urban,19600.46743,5.388289,105613,104748
+162e,0,162e,162e,162e,Golden Gate Park/Parkside/Sunset/West Portal,75,San Francisco,Golden Gate Park/Parkside/Sunset/West Portal,Urban,11873.21859,6.626341,78676,78222
+162f,0,162f,162f,162f,Bayview/Candlestick/Hunters Point/Portola/Visitacion Valley,75,San Francisco,Bayview/Candlestick/Hunters Point/Portola/Visitacion Valley,Urban,8760.701829,9.008182,78918,78730
+162g,0,162g,162g,162g,Buena Vista/Castro/Eureka Valley/Forest Hill/Haight-Ashbury/Noe Valley/West of Twin Peaks,75,San Francisco,Buena Vista/Castro/Eureka Valley/Forest Hill/Haight-Ashbury/Noe Valley/West of Twin Peaks,Urban,22305.03023,5.262131,117372,114835
+162h,0,162h,162h,162h,Laurel Heights/Ocean Beach North/Richmond/Sutro Heights,75,San Francisco,Laurel Heights/Ocean Beach North/Richmond/Sutro Heights,Urban,17977.20118,5.158366,92733,89425
+162d,0,162d,162d,162d,Excelsior/Glen Park/Ingleside/Lake Merced/Merced Heights/Ocean Beach South/Park Merced/Saint Francis Wood/Westwood Park,75,San Francisco,Excelsior/Glen Park/Ingleside/Lake Merced/Merced Heights/Ocean Beach South/Park Merced/Saint Francis Wood/Westwood Park,Urban,12871.47164,9.792975,126050,123574
+163,0,163,163,163,Tracy,77,San Joaquin,Tracy,Urban,1080.452809,86.172204,93105,92996
+164.1,0,164.1,164.1,164.1,Lathrop/Manteca,77,San Joaquin,Lathrop/Manteca,Urban,2050.367988,35.999879,73813,73429
+164.2,0,164.2,164.2,164.2,Banta/Escalon/Ripon/Vernalis,77,San Joaquin,Banta/Escalon/Ripon/Vernalis,Rural,137.931321,387.642193,53468,48730
+165,2,"165,167",167plus,167plus,Farmington/Linden/Lockeford/North Woodbridge,77,San Joaquin,Farmington/Linden,Rural,34.133839,140.769398,4805,4805
+166,0,166,166,166,Lodi,77,San Joaquin,Lodi,Urban,1930.358182,34.361498,66330,64311
+167,1,"165,167",167plus,167plus,Farmington/Linden/Lockeford/North Woodbridge,77,San Joaquin,Lockeford/North Woodbridge,Rural,145.29617,256.269658,37235,35340
+168,0,168,168,168,South Woodbridge/Thornton,77,San Joaquin,South Woodbridge/Thornton,Rural,66.677522,363.480811,24236,24118
+169a,0,169a,169a,169a,Stockton North Central/Stockton Northeast,77,San Joaquin,Stockton North Central/Stockton Northeast,Urban,7015.233985,13.876657,97348,95566
+169b,0,169b,169b,169b,French Camp/Stockton South/Stockton Southeast,77,San Joaquin,French Camp/Stockton South/Stockton Southeast,Urban,1534.029392,89.166479,136784,131836
+169c,0,169c,169c,169c,Stockton Northwest/Stockton West,77,San Joaquin,Stockton Northwest/Stockton West,Urban,4612.315247,18.751753,86489,83061
+170,0,170,170,170,Atascadero/Templeton,79,San Luis Obispo,Atascadero/Templeton,Urban,259.651249,144.436046,37503,34821
+171,0,171,171,171,Arroyo Grande/Nipomo/Oceano/Pismo Beach,79,San Luis Obispo,Arroyo Grande/Nipomo/Oceano/Pismo Beach,Rural,148.708645,537.077044,79868,79526
+172,0,172,172,172,San Luis Obispo,79,San Luis Obispo,San Luis Obispo,Rural,50.559447,1258.716298,63640,51096
+173,0,173,173,173,El Paso de Robles/Lake Nacimiento/San Miguel/Shandon,79,San Luis Obispo,El Paso de Robles/Lake Nacimiento/San Miguel/Shandon,Rural,48.166174,1000.556932,48193,48164
+174,0,174,174,174,Baywood/Cambria/Cayucos/Morro Bay/Los Osos,79,San Luis Obispo,Baywood/Cambria/Cayucos/Morro Bay/Los Osos,Rural,90.480957,401.996185,36373,35099
+175.1,1,"175.1,175.2",175.1plus,175.1plus,El Granada/Half Moon Bay/Miramar/Montara/Moss Beach/Princeton by the Sea/Skyline/La Honda/Loma Mar/Pescadero/San Gregorio/Sky Londa,81,San Mateo,El Granada/Half Moon Bay/Miramar/Montara/Moss Beach/Princeton by the Sea/Skyline,Rural,234.933045,100.577592,23629,23444
+175.2,2,"175.1,175.2",175.1plus,175.1plus,El Granada/Half Moon Bay/Miramar/Montara/Moss Beach/Princeton by the Sea/Skyline/La Honda/Loma Mar/Pescadero/San Gregorio/Sky Londa,81,San Mateo,La Honda/Loma Mar/Pescadero/San Gregorio/Sky Londa,Rural,23.021349,187.391277,4314,3960
+175.3,0,175.3,175.3,175.3,Pacifica/Rockaway Beach/San Pedro Terrace/Sharp Park/Vallemar,81,San Mateo,Pacifica/Rockaway Beach/San Pedro Terrace/Sharp Park/Vallemar,Urban,2192.832771,16.869959,36993,36729
+176a,0,176a,176a,176a,Brisbane/Burlingame Northeast/Colma/Daly City East/Millbrae East/San Bruno/South San Francisco,81,San Mateo,Brisbane/Burlingame Northeast/Colma/Daly City East/Millbrae East/San Bruno/South San Francisco,Urban,2981.986841,30.889136,92111,91777
+176b,0,176b,176b,176b,East Menlo Park/East Palo Alto/North Fair Oaks/Redwood City East,81,San Mateo,East Menlo Park/East Palo Alto/North Fair Oaks/Redwood City East,Urban,2935.26501,25.375221,74483,73894
+176c,0,176c,176c,176c,Atherton/Lindenwood/Menlo Oaks/Menlo Park/Redwood City Central/Sharon Heights/West Menlo Park/Woodside/Woodside Hills,81,San Mateo,Atherton/Lindenwood/Menlo Oaks/Menlo Park/Redwood City Central/Sharon Heights/West Menlo Park/Woodside/Woodside Hills,Urban,1565.249122,51.745756,80995,78207
+176d,0,176d,176d,176d,Broadmoor Village/Daly City West/San Bruno Northwest/Serramonte/Westborough,81,San Mateo,Broadmoor Village/Daly City West/San Bruno Northwest/Serramonte/Westborough,Urban,10469.0085,11.28359,118128,117318
+176e,0,176e,176e,176e,Burlingame Hills/Burlingame Southwest/Hillsborough/Hillsdale/Millbrae West/San Bruno Central/San Mateo West,81,San Mateo,Burlingame Hills/Burlingame Southwest/Hillsborough/Hillsdale/Millbrae West/San Bruno Central/San Mateo West,Urban,5176.134377,18.384955,95163,93347
+176f,0,176f,176f,176f,Foster City/Redwood Shores/San Mateo East,81,San Mateo,Foster City/Redwood Shores/San Mateo East,Urban,6771.818592,12.996508,88010,87523
+176g,0,176g,176g,176g,Belmont/Devonshire/Emerald Lake/Farm Hills/Palomar Park/San Carlos West/The Highlands,81,San Mateo,Belmont/Devonshire/Emerald Lake/Farm Hills/Palomar Park/San Carlos West/The Highlands,Urban,3818.229114,23.702349,90501,89243
+177,1,"177,178.1,178.2",177plus,177plus,Carpinteria/New Cuyama/Summerland/Toro Canyon/Buellton/Los Olivos/Santa Ynez/Solvang/Los Alamos,83,Santa Barbara,Carpinteria/New Cuyama/Summerland/Toro Canyon,Rural,15.009712,1220.14328,18314,18300
+178.1,2,"177,178.1,178.2",177plus,177plus,Carpinteria/New Cuyama/Summerland/Toro Canyon/Buellton/Los Olivos/Santa Ynez/Solvang/Los Alamos,83,Santa Barbara,Buellton/Los Olivos/Santa Ynez/Solvang,Rural,27.375489,633.778624,17350,17040
+178.2,2,"177,178.1,178.2",177plus,177plus,Carpinteria/New Cuyama/Summerland/Toro Canyon/Buellton/Los Olivos/Santa Ynez/Solvang/Los Alamos,83,Santa Barbara,Los Alamos,Rural,43.48238,162.479606,7065,7065
+179,0,179,179,179,Lompoc/Mission Hills/Vandenberg,83,Santa Barbara,Lompoc/Mission Hills/Vandenberg,Rural,123.859112,463.187558,57370,54051
+180.1,1,"180.1,180.2",180.1plus,180.1plus,Orcutt/Santa Maria/Guadalupe,83,Santa Barbara,Orcutt/Santa Maria,Urban,596.617589,213.900834,127617,126213
+180.2,2,"180.1,180.2",180.1plus,180.1plus,Orcutt/Santa Maria/Guadalupe,83,Santa Barbara,Guadalupe,Rural,113.858818,64.49215,7343,7343
+181a,0,181a,181a,181a,Goleta South/Isla Vista/Santa Barbara South,83,Santa Barbara,Goleta South/Isla Vista/Santa Barbara South,Urban,4192.986769,23.359482,97946,88896
+181b,0,181b,181b,181b,Goleta North/Mission Canyon/Montecito/Riviera/Santa Barbara North,83,Santa Barbara,Goleta North/Mission Canyon/Montecito/Riviera/Santa Barbara North,Urban,1054.31707,78.767575,83046,79119
+182,0,182,182,182,Gilroy/Morgan Hill/Rucker/San Martin,85,Santa Clara,Gilroy/Morgan Hill/Rucker/San Martin,Rural,129.45933,814.070333,105389,102191
+183a,0,183a,183a,183a,Los Altos/Los Altos Hills/Palo Alto Central/Stanford,85,Santa Clara,Los Altos/Los Altos Hills/Palo Alto Central/Stanford,Urban,1632.93405,78.390183,128006,118425
+183b,0,183b,183b,183b,Berryessa/East San Jose/Milpitas East,85,Santa Clara,Berryessa/East San Jose/Milpitas East,Urban,4303.183953,27.931643,120195,119752
+183c,0,183c,183c,183c,Sunnyvale South,85,Santa Clara,Sunnyvale South,Urban,9152.744526,9.562049,87519,86848
+183d,0,183d,183d,183d,Downtown San Jose,85,Santa Clara,Downtown San Jose,Urban,9656.932438,7.212953,69655,67155
+183e,0,183e,183e,183e,Alum Rock South/San Jose East,85,Santa Clara,Alum Rock South/San Jose East,Urban,10217.99752,11.478472,117287,115834
+183f,0,183f,183f,183f,Cupertino/Rancho Rinconada/San Jose West/Saratoga,85,Santa Clara,Cupertino/Rancho Rinconada/San Jose West/Saratoga,Urban,3459.917035,32.045277,110874,110305
+183g,0,183g,183g,183g,Cambrian Village East/San Jose South Central,85,Santa Clara,Cambrian Village East/San Jose South Central,Urban,7178.926656,15.889979,114073,113704
+183h,0,183h,183h,183h,San Jose Southeast,85,Santa Clara,San Jose Southeast,Urban,9470.137257,13.415961,127051,126752
+183i,0,183i,183i,183i,New Almaden/San Jose Southwest,85,Santa Clara,New Almaden/San Jose Southwest,Urban,1783.7288,60.871921,108579,108532
+183j,0,183j,183j,183j,San Jose Northwest,85,Santa Clara,San Jose Northwest,Urban,8810.7696,9.695974,85429,81948
+183k,0,183k,183k,183k,Evergreen/San Jose East Central,85,Santa Clara,Evergreen/San Jose East Central,Urban,2332.997408,43.757442,102086,101998
+183l,0,183l,183l,183l,Alviso/Palo Alto Bayshore/Santa Clara Northwest/Sunnyvale North,85,Santa Clara,Alviso/Palo Alto Bayshore/Santa Clara Northwest/Sunnyvale North,Urban,2038.667898,58.853136,119982,117432
+183m,0,183m,183m,183m,Cambrian Village West/Campbell South/Los Gatos/Monte Sereno/San Tomas,85,Santa Clara,Cambrian Village West/Campbell South/Los Gatos/Monte Sereno/San Tomas,Urban,1215.328059,82.179456,99875,98997
+183n,0,183n,183n,183n,Santa Clara South and West,85,Santa Clara,Santa Clara South and West,Urban,9183.495955,13.334464,122457,121517
+183o,0,183o,183o,183o,Milpitas West/Santa Clara Northeast,85,Santa Clara,Milpitas West/Santa Clara Northeast,Urban,4769.354993,25.357516,120939,116354
+184,0,184,184,184,Freedom/Watsonville,87,Santa Cruz,Freedom/Watsonville,Urban,6043.647709,8.780955,53069,52700
+185.1,0,185.1,185.1,185.1,Aptos/Capitola/Live Oak/Rio del Mar/Santa Cruz,87,Santa Cruz,Aptos/Capitola/Live Oak/Rio del Mar/Santa Cruz,Urban,3526.32245,32.64449,115115,107299
+185.2,2,"185.2,185.4",185.4plus,185.4plus,Davenport/Boulder Creek,87,Santa Cruz,Davenport,Rural,40.453605,117.591496,4757,3979
+185.5,0,185.5,185.5,185.5,Amesti/Corralitos/Day Valley/Interlaken/Pajaro Dunes,87,Santa Cruz,Amesti/Corralitos/Day Valley/Interlaken/Pajaro Dunes,Rural,191.826368,144.031293,27629,27582
+185.3,0,185.3,185.3,185.3,Ben Lomond/Felton/Scotts Valley,87,Santa Cruz,Ben Lomond/Felton/Scotts Valley,Urban,592.219058,67.917435,40222,38934
+185.4,1,"185.2,185.4",185.4plus,185.4plus,Davenport/Boulder Creek,87,Santa Cruz,Boulder Creek,Rural,186.909666,86.186018,16109,16109
+186,0,186,186,186,Anderson/Cottonwood/French Gulch/Happy Valley/Igo/Ono/Platina/Shasta,89,Shasta,Anderson/Cottonwood/French Gulch/Happy Valley/Igo/Ono/Platina/Shasta,Rural,44.617278,722.993453,32258,32258
+187,2,"187,188.1,188.2,189.1,190",190plus,190plus,Castella/Lakehead/OBrien/Big Bend/Montgomery Creek/Oak Run/Round Mountain/Manton/Millville/Shingletown/Viola/Palo Cedro/Burney/Cassel/Fall River Mills/Hat Creek/McArthur,89,Shasta,Castella/Lakehead/OBrien,Frontier,2.795249,490.117297,1370,1370
+188.1,2,"187,188.1,188.2,189.1,190",190plus,190plus,Castella/Lakehead/OBrien/Big Bend/Montgomery Creek/Oak Run/Round Mountain/Manton/Millville/Shingletown/Viola/Palo Cedro/Burney/Cassel/Fall River Mills/Hat Creek/McArthur,89,Shasta,Big Bend/Montgomery Creek/Oak Run/Round Mountain,Frontier,5.388573,922.878734,4973,4893
+188.2,2,"187,188.1,188.2,189.1,190",190plus,190plus,Castella/Lakehead/OBrien/Big Bend/Montgomery Creek/Oak Run/Round Mountain/Manton/Millville/Shingletown/Viola/Palo Cedro/Burney/Cassel/Fall River Mills/Hat Creek/McArthur,89,Shasta,Manton/Millville/Shingletown/Viola,Frontier,10.609551,590.222852,6262,6262
+189.1,2,"187,188.1,188.2,189.1,190",190plus,190plus,Castella/Lakehead/OBrien/Big Bend/Montgomery Creek/Oak Run/Round Mountain/Manton/Millville/Shingletown/Viola/Palo Cedro/Burney/Cassel/Fall River Mills/Hat Creek/McArthur,89,Shasta,Palo Cedro,Rural,181.773992,25.768262,4684,4684
+189.2,0,189.2,189.2,189.2,Redding,89,Shasta,Redding,Urban,992.971799,99.86487,99163,96906
+189.3,0,189.3,189.3,189.3,Bella Vista/City of Shasta Lake,89,Shasta,Bella Vista/City of Shasta Lake,Rural,208.519379,99.789286,20808,20808
+190,1,"187,188.1,188.2,189.1,190",190plus,190plus,Castella/Lakehead/OBrien/Big Bend/Montgomery Creek/Oak Run/Round Mountain/Manton/Millville/Shingletown/Viola/Palo Cedro/Burney/Cassel/Fall River Mills/Hat Creek/McArthur,89,Shasta,Burney/Cassel/Fall River Mills/Hat Creek/McArthur,Frontier,8.247874,895.745962,7388,7199
+191,2,"72,73,74,75,191",72plusSIERRA,72plus,Susanville/Bieber/Madeline/Nubieber/Doyle/Westwood/Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville,91,Sierra,Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville,Frontier,3.498377,962.160368,3366,3366
+193,2,"193,194,195,223,224,225,226",195plusSISKIYOU,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,93,Siskiyou,Happy Camp,Frontier,1.642698,1235.771879,2030,2030
+194,2,"193,194,195,223,224,225,226",195plusSISKIYOU,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,93,Siskiyou,Etna/Fort Jones/Greenview,Frontier,3.393496,1453.957576,4934,4745
+195,1,"193,194,195,223,224,225,226",195plusSISKIYOU,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,93,Siskiyou,Gazelle/Grenada/Hilt/Hornbrook/Yreka,Rural,15.630841,1054.069913,16476,16188
+196,2,"196,197,198,199,200",197plus,197plus,Tulelake/Carrick/Edgewood/Mount Shasta/Weed/Dunsmuir/McCloud/Tennant/Dorris/Macdoel/Mount Hebron,93,Siskiyou,Tulelake,Frontier,3.959498,349.2867,1383,1383
+197,1,"196,197,198,199,200",197plus,197plus,Tulelake/Carrick/Edgewood/Mount Shasta/Weed/Dunsmuir/McCloud/Tennant/Dorris/Macdoel/Mount Hebron,93,Siskiyou,Carrick/Edgewood/Mount Shasta/Weed,Rural,35.34897,398.427448,14084,13611
+198,2,"196,197,198,199,200",197plus,197plus,Tulelake/Carrick/Edgewood/Mount Shasta/Weed/Dunsmuir/McCloud/Tennant/Dorris/Macdoel/Mount Hebron,93,Siskiyou,Dunsmuir,Rural,26.486566,90.53646,2398,2398
+199,2,"196,197,198,199,200",197plus,197plus,Tulelake/Carrick/Edgewood/Mount Shasta/Weed/Dunsmuir/McCloud/Tennant/Dorris/Macdoel/Mount Hebron,93,Siskiyou,McCloud/Tennant,Frontier,1.262157,1235.186644,1559,1559
+200,2,"196,197,198,199,200",197plus,197plus,Tulelake/Carrick/Edgewood/Mount Shasta/Weed/Dunsmuir/McCloud/Tennant/Dorris/Macdoel/Mount Hebron,93,Siskiyou,Dorris/Macdoel/Mount Hebron,Frontier,3.44455,530.112722,1826,1826
+201,0,201,201,201,Dixon,95,Solano,Dixon,Rural,113.785669,182.17584,20729,20729
+202a,0,202a,202a,202a,Vacaville,95,Solano,Vacaville,Urban,713.144689,139.438744,99440,90202
+202b,0,202b,202b,202b,Fairfield,95,Solano,Fairfield,Urban,1998.243779,54.067977,108041,106410
+203.1,1,"203.1,203.2",203.1plus,203.1plus,Benicia/Collinsville/Suisun City/Rio Vista,95,Solano,Benicia/Collinsville/Suisun City,Rural,150.354277,218.211283,32809,32809
+203.2,2,"203.1,203.2",203.1plus,203.1plus,Benicia/Collinsville/Suisun City/Rio Vista,95,Solano,Rio Vista,Rural,32.194398,233.89162,7530,7447
+204,0,204,204,204,Vallejo,95,Solano,Vallejo,Urban,1804.684668,78.40317,141493,140367
+205.1,1,"205.1,206",205.1plus,205.1plus,Geyserville/Healdsburg/Cloverdale,97,Sonoma,Geyserville/Healdsburg,Rural,139.115691,114.96187,15993,15817
+205.2,0,205.2,205.2,205.2,Windsor,97,Sonoma,Windsor,Urban,676.008384,41.168128,27830,27717
+206,2,"205.1,206",205.1plus,205.1plus,Geyserville/Healdsburg/Cloverdale,97,Sonoma,Cloverdale,Rural,46.954335,307.575432,14442,13969
+207,0,207,207,207,Forestville/Fort Ross/Guerneville/Jenner/Monte Rio/Occidental/Sea Ranch,97,Sonoma,Forestville/Fort Ross/Guerneville/Jenner/Monte Rio/Occidental/Sea Ranch,Rural,47.227502,513.471995,24250,23320
+208,0,208,208,208,Boyes Hot Springs/Glen Ellen/Kenwood/Sonoma/Vineburg,97,Sonoma,Boyes Hot Springs/Glen Ellen/Kenwood/Sonoma/Vineburg,Urban,250.792255,159.646077,40038,38472
+209.1,0,209.1,209.1,209.1,Petaluma,97,Sonoma,Petaluma,Urban,928.683942,143.142347,132934,131027
+209.2,2,"209.2,210.2",210.2plus,210.2plus,Two Rock/Valley Ford/Bodega/Sebastopol,97,Sonoma,Two Rock/Valley Ford,Rural,221.359275,58.172398,12877,12497
+210.1,0,210.1,210.1,210.1,Santa Rosa,97,Sonoma,Santa Rosa,Urban,1066.826348,174.515749,186178,182301
+210.2,1,"209.2,210.2",210.2plus,210.2plus,Two Rock/Valley Ford/Bodega/Sebastopol,97,Sonoma,Bodega/Sebastopol,Rural,180.397968,108.12206,19505,19152
+211,0,211,211,211,Oakdale/Riverbank,99,Stanislaus,Oakdale/Riverbank,Rural,191.41336,283.031445,54176,53918
+212.1,0,212.1,212.1,212.1,Denair/Turlock,99,Stanislaus,Denair/Turlock,Urban,1456.231835,49.612292,72247,71252
+212.2,2,"212.2,212.3",212.3plus,212.3plus,Keyes/Salida,99,Stanislaus,Keyes,Rural,199.543027,77.091142,15383,15383
+212.3,1,"212.2,212.3",212.3plus,212.3plus,Keyes/Salida,99,Stanislaus,Salida,Rural,191.555609,131.705879,25229,24765
+213,0,213,213,213,Crows Landing/Empire/Grayson/Newman/Patterson/Westley,99,Stanislaus,Crows Landing/Empire/Grayson/Newman/Patterson/Westley,Rural,62.873121,613.903031,38598,37120
+214,0,214,214,214,Hughson,99,Stanislaus,Hughson,Rural,149.115683,294.871733,43970,43561
+215a,0,215a,215a,215a,Modesto West,99,Stanislaus,Modesto West,Urban,2560.074046,31.409638,80411,79773
+215b,0,215b,215b,215b,Modesto East,99,Stanislaus,Modesto East,Urban,5848.409362,15.494469,90618,89472
+215c,0,215c,215c,215c,Ceres/Modesto South Central,99,Stanislaus,Ceres/Modesto South Central,Urban,5093.990321,17.481383,89050,86704
+216,1,"216,217,218",216plus,216plus,Meridian/Robbins/Yuba City/Nicolaus/Pleasant Grove/Live Oak,101,Sutter,Meridian/Robbins/Yuba City,Rural,189.207469,425.876421,80579,80088
+217,2,"216,217,218",216plus,216plus,Meridian/Robbins/Yuba City/Nicolaus/Pleasant Grove/Live Oak,101,Sutter,Nicolaus/Pleasant Grove,Rural,19.37004,132.885629,2574,2574
+218,2,"216,217,218",216plus,216plus,Meridian/Robbins/Yuba City/Nicolaus/Pleasant Grove/Live Oak,101,Sutter,Live Oak,Rural,206.47219,49.725824,10267,9874
+219,2,"219,220,222",222plus,222plus,Paskenta/Rancho Tehama/Dairyville/Manton/Mineral/Paynes Creek/Corning/Los Molinos/Tehama/Vina,103,Tehama,Paskenta/Rancho Tehama,Frontier,3.129319,1287.500425,4029,3932
+220,2,"219,220,222",222plus,222plus,Paskenta/Rancho Tehama/Dairyville/Manton/Mineral/Paynes Creek/Corning/Los Molinos/Tehama/Vina,103,Tehama,Dairyville/Manton/Mineral/Paynes Creek,Frontier,4.062846,1158.793524,4708,4454
+221,0,221,221,221,Gerber/Los Flores/Proberta/Red Bluff,103,Tehama,Gerber/Los Flores/Proberta/Red Bluff,Rural,131.102343,272.954692,35785,34711
+222,1,"219,220,222",222plus,222plus,Paskenta/Rancho Tehama/Dairyville/Manton/Mineral/Paynes Creek/Corning/Los Molinos/Tehama/Vina,103,Tehama,Corning/Los Molinos/Tehama/Vina,Rural,74.318442,242.914132,18053,17951
+223,2,"193,194,195,223,224,225,226",195plusTRINITY,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,105,Trinity,Junction City/Salyer,Frontier,3.407931,749.721679,2555,2161
+224,2,"193,194,195,223,224,225,226",195plusTRINITY,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,105,Trinity,Douglas City/Lewiston/Trinity Center/Weaverville,Frontier,7.525528,1024.911468,7713,7394
+225,2,"193,194,195,223,224,225,226",195plusTRINITY,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,105,Trinity,Forest Glen/Hayfork/Hyampom/Peanut,Frontier,4.48061,600.14141,2689,2689
+226,2,"193,194,195,223,224,225,226",195plusTRINITY,195plus,Happy Camp/Etna/Fort Jones/Greenview/Gazelle/Grenada/Hilt/Hornbrook/Yreka/Junction City/Salyer/Douglas City/Lewiston/Trinity Center/Weaverville/Forest Glen/Hayfork/Hyampom/Peanut/Kettenpom/Mad River/Ruth/Xenia,105,Trinity,Kettenpom/Mad River/Ruth/Xenia,Frontier,0.893346,832.823526,744,744
+227.1,1,"227.1,227.2",227.1plus,227.1plus,Dinuba/Cutler-Orosi,107,Tulare,Dinuba,Urban,274.400866,117.710998,32300,31540
+227.2,2,"227.1,227.2",227.1plus,227.1plus,Dinuba/Cutler-Orosi,107,Tulare,Cutler-Orosi,Urban,251.05854,73.460954,18443,18443
+228.1,2,"228.1,228.2,229",228.2plus,228.2plus,Ivanhoe/Woodlake/Exeter/Lemon Cove/Lindsay/Strathmore/Three Rivers,107,Tulare,Ivanhoe/Woodlake,Rural,208.149736,75.969349,15813,15813
+228.2,1,"228.1,228.2,229",228.2plus,228.2plus,Ivanhoe/Woodlake/Exeter/Lemon Cove/Lindsay/Strathmore/Three Rivers,107,Tulare,Exeter/Lemon Cove/Lindsay/Strathmore,Rural,249.232936,168.521065,42001,41809
+229,2,"228.1,228.2,229",228.2plus,228.2plus,Ivanhoe/Woodlake/Exeter/Lemon Cove/Lindsay/Strathmore/Three Rivers,107,Tulare,Three Rivers,Frontier,4.431714,1057.829772,4688,4644
+230,0,230,230,230,Tipton/Tulare/Woodville,107,Tulare,Tipton/Tulare/Woodville,Rural,209.663243,345.048558,72344,72102
+231,1,"231,232",231plus,231plus,Alpaugh/Earlimart/Pixley/Porterville/Rich Grove/Terra Bella/Springville,107,Tulare,Alpaugh/Earlimart/Pixley/Porterville/Rich Grove/Terra Bella,Rural,151.332555,641.540742,97086,95985
+232,2,"231,232",231plus,231plus,Alpaugh/Earlimart/Pixley/Porterville/Rich Grove/Terra Bella/Springville,107,Tulare,Springville,Frontier,2.56891,2202.101243,5657,5607
+233,0,233,233,233,Farmersville/Goshen/Visalia,107,Tulare,Farmersville/Goshen/Visalia,Urban,901.591856,156.469913,141072,138128
+234.1,2,"234.1,234.2",234.2plus,234.2plus,Chinese Camp/Columbia/Jamestown/Sonora,109,Tuolumne,Chinese Camp,Rural,29.64935,211.505478,6271,1713
+234.2,1,"234.1,234.2",234.2plus,234.2plus,Chinese Camp/Columbia/Jamestown/Sonora,109,Tuolumne,Columbia/Jamestown/Sonora,Rural,48.578434,427.576564,20771,20285
+235,2,"85,86,235",85plusTUOLUMNE,85plus,Bootjack/Catheys Valley/Coulterville/Don Pedro/El Portal/Fish Camp/Mariposa/Yosemite Valley/Big Oak Flat/Groveland,109,Tuolumne,Big Oak Flat/Groveland,Frontier,4.225292,848.935248,3587,3368
+236,0,236,236,236,East Sonora/Mi-Wuk Village/Soulsbyville/Tuolumne City/Twain Harte,109,Tuolumne,East Sonora/Mi-Wuk Village/Soulsbyville/Tuolumne City/Twain Harte,Rural,32.355172,786.427583,25445,25236
+237,0,237,237,237,Fillmore/Los Padres National Forest/Piru/Santa Paula/Saticoy,111,Ventura,Fillmore/Los Padres National Forest/Piru/Santa Paula/Saticoy,Rural,58.85758,1133.227018,66699,65111
+238,0,238,238,238,Meiners Oaks/Oak View/Ojai,111,Ventura,Meiners Oaks/Oak View/Ojai,Rural,163.90526,193.105455,31651,31384
+239,0,239,239,239,Camarillo/Moorpark,111,Ventura,Camarillo/Moorpark,Urban,710.731912,144.736711,102869,102177
+240a,0,240a,240a,240a,Simi Valley East,111,Ventura,Simi Valley East,Urban,1032.498523,86.346854,89153,89109
+240b,0,240b,240b,240b,Thousand Oaks Central and West,111,Ventura,Thousand Oaks Central and West,Urban,805.073387,136.868267,110189,108346
+240c,0,240c,240c,240c,Simi Valley West/Thousand Oaks East,111,Ventura,Simi Valley West/Thousand Oaks East,Urban,2101.430487,41.160057,86495,86367
+241a,0,241a,241a,241a,Oxnard East/Oxnard West/Oxnard South Central/Port Hueneme,111,Ventura,Oxnard East/Oxnard West/Oxnard South Central/Port Hueneme,Urban,1380.928198,78.995417,109087,106772
+241b,0,241b,241b,241b,Oxnard North Central,111,Ventura,Oxnard North Central,Urban,5990.334408,20.799506,124596,122757
+241c,0,241c,241c,241c,Ventura,111,Ventura,Ventura,Urban,2686.559669,32.882575,88341,86812
+242,2,"242,243,246.1,246.2",246.1plus,246.1plus,Winters/Esparto/Rumsey/Woodland/Knights Landing,113,Yolo,Winters,Rural,70.525653,112.200307,7913,7913
+243,2,"242,243,246.1,246.2",246.1plus,246.1plus,Winters/Esparto/Rumsey/Woodland/Knights Landing,113,Yolo,Esparto/Rumsey,Rural,14.084647,322.549776,4543,4543
+244,0,244,244,244,Davis,113,Yolo,Davis,Urban,1043.445315,69.26477,72274,64105
+245,0,245,245,245,Bryte/Broderick/Clarksburg/Riverview/West Sacramento,113,Yolo,Bryte/Broderick/Clarksburg/Riverview/West Sacramento,Urban,271.120945,186.027678,50436,50311
+246.1,1,"242,243,246.1,246.2",246.1plus,246.1plus,Winters/Esparto/Rumsey/Woodland/Knights Landing,113,Yolo,Woodland,Urban,511.274881,112.941202,57744,56647
+246.2,2,"242,243,246.1,246.2",246.1plus,246.1plus,Winters/Esparto/Rumsey/Woodland/Knights Landing,113,Yolo,Knights Landing,Rural,15.905837,220.547956,3508,3508
+247,2,"247,248,249",249plus,249plus,Browns Valley/Brownsville/Dobbins/Oregon House/Wheatland/Marysville,115,Yuba,Browns Valley/Brownsville/Dobbins/Oregon House,Rural,21.613392,222.547199,4810,4795
+248,2,"247,248,249",249plus,249plus,Browns Valley/Brownsville/Dobbins/Oregon House/Wheatland/Marysville,115,Yuba,Wheatland,Rural,106.861338,42.09193,4498,4498
+249,1,"247,248,249",249plus,249plus,Browns Valley/Brownsville/Dobbins/Oregon House/Wheatland/Marysville,115,Yuba,Marysville,Rural,163.126681,379.165439,61852,60190
