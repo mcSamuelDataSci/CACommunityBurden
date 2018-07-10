@@ -6,6 +6,8 @@
 ####  check myCon="Yes" verus myCon=TRUE
 
 
+# THIS IS IN THE TEMP BANCH
+
 cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon="Yes",myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
   #use these values to see the error bleow  
