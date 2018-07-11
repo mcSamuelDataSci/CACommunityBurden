@@ -58,7 +58,7 @@ hpi.t3    <- hpi.t1 %>% group_by(region,county) %>%
   
 hpi.t1 <- select(hpi.t1,year,GEOID,county,region,pop,lessBachelor,belowPov,hpiScore)
 
-load(paste0(myPlace,"/myData/datCounty.R"))
+#load(paste0(myPlace,"/myData/datCounty.R"))
 
 f   <- list(family = "Arial", size = 18, color = "blue")            
 pal <- c("red", "blue", "green")

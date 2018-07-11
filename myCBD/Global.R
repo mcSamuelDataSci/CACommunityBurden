@@ -79,10 +79,10 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
   whichData  <-  "fake"
  
-  load(paste0(myPlace,"/myData/",whichData,"datTract.R"))
-  load(paste0(myPlace,"/myData/",whichData,"datComm.R"))
-  load(paste0(myPlace,"/myData/",whichData,"datCounty.R"))
-  load(paste0(myPlace,"/myData/",whichData,"datState.R"))
+  load(path(myPlace,"/myData/",whichData,"datTract.R"))
+  load(path(myPlace,"/myData/",whichData,"datComm.R"))
+  load(path(myPlace,"/myData/",whichData,"datCounty.R"))
+  load(path(myPlace,"/myData/",whichData,"datState.R"))
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 
