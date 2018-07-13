@@ -219,7 +219,7 @@ datAA2 <- filter(datAA2,comID != "")
 ageComm   <- merge(fullMatComm,datAA2,by = c("comID","yearG","ageG","CAUSE"),all=TRUE)
 ageComm   <- filter(ageComm,yearG == "2011-2015")
 
-popCommAge <- readRDS(paste0(upPlace,"/upData/popTractAgeG2013.RDS")) 
+#popCommAge <- readRDS(paste0(upPlace,"/upData/popTractAgeG2013.RDS")) 
 
 popCommAge <-  readRDS(paste0(upPlace,"/upData/popTractAgeG2013.RDS")) %>%
                group_by(comID,yearG,ageG) %>%
