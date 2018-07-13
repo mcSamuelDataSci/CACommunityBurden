@@ -31,7 +31,7 @@ acs.poverty.varlist <- sprintf("B17001_%03dE",c(1:59))                          
 
 ## 2.2 	2015 Poverty ACS variable descriptive labels. 
 ## csv from API ACS 5 year 2015 data page:"https://www.census.gov/data/developers/data-sets.html"
-acs.poverty.labels <- setDT (read_csv("Pov12m_B17001_2015_labels.csv"),key="Name")
+acs.poverty.labels <- setDT (read_csv("upInfo/Pov12m_B17001_2015_labels.csv"),key="Name")
 #MCS
 labels2            <- read_csv("Pov12m_B17001_2015_labels.csv")
 

@@ -29,7 +29,7 @@ acs.education.varlist <- c(sprintf("B15002_%03dE", c(1:35)))                    
 
 ## 2.2 	2015 Education ACS variable descriptive labels. 
 ## csv derived from ACS API variables html.
-acs.education.labels <- setDT (read_csv("EduAttain_B15.C15_2015_labels.csv"),        
+acs.education.labels <- setDT (read_csv("upInfo/EduAttain_B15.C15_2015_labels.csv"),        
                                key="Name")                                                   # Define Name as the key for this file
 
 ## 2.3 	ACS data: tract-level population by age/sex (long format, count and MOE in columns)
