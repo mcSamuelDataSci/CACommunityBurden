@@ -117,7 +117,9 @@ popTractAgeG2013$ageG  <- aLabs[aMark]
 
 linker           <- as.data.frame(cbd.link)[,-1] # removes year
 popTractAgeG2013 <- merge(popTractAgeG2013,linker,by=c("GEOID"),all=TRUE)
-popTractAgeG2013 <- popTractAgeG2013 %>% group_by(yearG,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
+popTractAgeG2013 <- rbind(popTractAgeG2013 %>% group_by(yearG,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate)),
+                          popTractAgeG2013 %>% group_by(yearG,GEOID,comID,ageG) %>% summarise(pop=sum(estimate)))
+popTractAgeG2013$sex[is.na(popTractAgeG2013$sex)]<-"Total"
 
 saveRDS(popTractAgeG2013, file=paste0(upPlace,"/upData/popTractAgeG2013.RDS"))
 
