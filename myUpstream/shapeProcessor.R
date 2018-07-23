@@ -13,7 +13,7 @@ library(tigris) # Other general area functions: block_groups, blocks, counties, 
 library(dplyr)
 library(sf)
 library(fs) # just for path function
-
+library(rmapshaper)
 
 #-- Read Info file --------------------------------------------------------------------------------
 
@@ -26,21 +26,22 @@ bad <- c(c("06081990100","06083990000","06111990100","06037990300","06001990000"
 # -- Read, process, and write CA Tract File -------------------------------------------------------------------------------
 
 options(tigris_class = "sf")
-shape_Tract <- tracts(state = "CA", cb = TRUE)  # 8043 tracts
+shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts
+
+shape_Tract  <- ms_filter_islands(shape_Tract,min_area = 100000000) 
 
 teale       <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 shape_Tract <- st_transform(shape_Tract,crs= teale)
 
-shape_Tract <- shape_Tract %>% full_join(cbdLinkCA, by="GEOID") %>%   # consider tigris "geo_join"?
+shape_Tract <- shape_Tract %>% geo_join(cbdLinkCA, by="GEOID") %>%   # tigris "geo_join"?
                                filter(!(GEOID %in% bad)) %>% 
-                               select(GEOID,comID,county,geometry) # 8034 tracts
+                               select(GEOID,comID,COUNTYFP,county,geometry) # 8034 tracts
 
 # write out as uncompressed RDS
 st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE)
 
 #-- Create new Community shape file based on MSSAs --------------------------------------------------------------------------
 
-#st_disolove? 
 shape_Comm  <- shape_Tract %>% group_by(county,comID) %>% summarize() %>% ungroup()
 st_write(shape_Comm,path(myPlace,"/myData/shape_Comm.shp"),delete_layer=TRUE)
 
@@ -48,8 +49,6 @@ st_write(shape_Comm,path(myPlace,"/myData/shape_Comm.shp"),delete_layer=TRUE)
 
 shape_County <- shape_Tract %>% group_by(county) %>% summarize()
 st_write(shape_County,path(myPlace,"/myData/shape_County.shp"),delete_layer=TRUE)
-
-# compare to:  shapeX_County <- counties(state = "CA", cb = TRUE) 
 
 
  # MAKE SMALLER SHAPE FILES!? ================================================================================================

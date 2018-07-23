@@ -28,7 +28,7 @@ library(readr)
 
 #-- Read in variable mapping file -----------------------------------------------------------
 
-varInfo <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/death.File.Vars.xlsx"), sheet="variableNames"))   
+varInfo <- as.data.frame(read_excel(paste0(upPlace,"/upInfo/death.File.Vars.xlsx"), sheet="variableNames"))   
 
 # === Process 2005 - 2015 files ==============================================================
 
