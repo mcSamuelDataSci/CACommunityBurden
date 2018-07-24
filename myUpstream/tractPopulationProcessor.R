@@ -36,14 +36,14 @@ list.sex  <- c("B01001_001E","B01001_002E", "B01001_026E")    # B01001_002E,026E
 
 # make year an iinput...?
 
-makePop <- function(inList) {
+makePop <- function(inList,inyear,yearlabel) {
 
 acs.varlist <- inList  
   
 options(tigris_use_cache = TRUE)
-workDat   <- get_acs(geography = "tract", variables = acs.varlist, state = "CA",year=2013)  # GEOID is 11 digit character string - 2011-2015 - N=8057
+workDat   <- get_acs(geography = "tract", variables = acs.varlist, state = "CA",year=inyear)  # GEOID is 11 digit character string - 2011-2015 - N=8057
 
-.acsvariables <- load_variables(2013,"acs5")
+.acsvariables <- load_variables(inyear,"acs5")
 mylabels      <- .acsvariables
 names(mylabels)[names(mylabels) == "name"] = "variable"                                                       # rename variable to Name (to merge with labels)
 mylabels<-mylabels[ (substr(mylabels$variable,0,7)==substring(acs.varlist,0,7)) &
@@ -52,7 +52,7 @@ mylabels$variable <- substr(mylabels$variable,1,nchar(mylabels$variable)-1)
 workDat <- merge(workDat,mylabels)
 
 cbdLinkCA <- read.csv(path(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "character") # maps census tracts to MSSAs and counties - N= 8036
-workDat   <- workDat %>% mutate(yearG = "2011-2015",  
+workDat   <- workDat %>% mutate(yearG = paste0(yearlabel),  
                                 comID  = cbdLinkCA[match(workDat$GEOID,cbdLinkCA[,"GEOID"]),"comID"],
                                 county = cbdLinkCA[match(workDat$GEOID,cbdLinkCA[,"GEOID"]),"county"],
                                 pop    = estimate              ) %>%
