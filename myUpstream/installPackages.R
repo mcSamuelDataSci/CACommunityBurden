@@ -1,32 +1,51 @@
 # -- INSTALL PACKAGES ----------------------------------------------------------------------
 # -----------------------------------------------------------------------------------------
-# CBD requires installation of the following packages 
+# CBD including Upstream requires installation of the following packages 
+ 
+  install.packages("tidyverse") # OR install individual packages (much quicker)
+ #install.packages("dplyr")   # data manipulation
+ #Reading Data
+ #install.packages("readr")   # read .csv and others
+ #install.packages(haven)     # read SAS files
+ #install.packages(readxl)    # read Excel
+ #Graphing
+ #install.packages(ggplot2)
+
+  # MAPPING/GIS
+ install.packages("maptools"); 
+ #install.packages("maps");
+  install.packages("sf")         # to read and write shape files
+  install.packages("tmap")
+  install.packages("leaflet") ;
+  install.packages("tidycensus")
+  install.packages("tigris")
+  install.packages("rmapshaper")
+ #install.packages("acs") # still used?
+ 
+#Analysis and Graphing Tools 
+  install.packages("classInt"); 
+ #install.packages("scatterD3") ; # not used?
+  install.packages("epitools")
+  install.packages("sqldf")
+  install.packages("plotly")
+ 
+  install.packages("fs")         # for path() function
+  
+     
+#SHINY
+  install.packages(shiny)
+  install.packages(shinythemes)
+  install.packages(shinyWidgets)
+ 
+ 
+ 
+ 
+ 
+ 
  
 
- install.packages("shiny")
-
- install.packages("tidyverse") # OR install individual packages (much quicker)
- # install.packages("dplyr")  in tidyverse
- # install.packages("readxl") in tidyverse
- # install.packages("readr")  in tidyverse
+ # materials
  
- 
- install.packages("maptools"); install.packages("maps");
- install.packages("leaflet") ;
- install.packages("tidycensus")
- 
- install.packages("tigris")
- install.packages("acs") # still used?
- 
- install.packages("classInt"); 
- # install.packages("scatterD3") ; # not used?
- 
- install.packages("epitools")
- install.packages("sqldf")
- install.packages("plotly")
- 
-
- materials""
  
  
  # -----------------------------------------------------------------------------------------
