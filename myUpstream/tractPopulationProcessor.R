@@ -24,7 +24,12 @@ myDrive  <- "E:"
 myPlace  <- path(myDrive,"/0.CBD/myCBD///")  
 upPlace  <- path(myDrive,"/0.CBD/myUpstream")  
 
+#.path  <- "H:/Ben's Work file/Projects/CBD/Education and Poverty"
+#setwd(.path)
+#census_api_key(read_file("census.api.key.txt"),install=T)
+
 #-- Set API ACS Table/variable list ----------------------------------------------------------------------
+
 # B01001_*E except totals   MCS FIXED FROM ---- c(3:26,28:49))
 
 list.tot  <- "B01003_001"                                     # B01003_001       total: census tract x year
@@ -60,7 +65,7 @@ workDat   <- workDat %>% mutate(yearG = paste0(yearlabel),
 
 }
 
-tDat <- makePop(list.sex)                                                   # edit "sex" or "race" as appropate
+tDat <- makePop(list.sex,2013,"2011-2015")                                                   # edit "sex" or "race" as appropate
 tDat <- tDat %>%  
                 # filter(label !="Total:") %>%
                   transform(label = str_replace(label, ":", "")) %>%
