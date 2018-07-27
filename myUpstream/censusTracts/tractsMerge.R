@@ -20,3 +20,17 @@ if e then inCensus2000=1;
 if f then inCensus2010=1; 
 run;
 
+library(fs)
+library(readr)
+library(dplyr)
+
+myDrive  <- "e:"                            
+myPlace  <- paste0(myDrive,"/0.CBD/myUpstream")  
+
+d.correct <- read_csv(path(myPlace,"censusTracts/myData","Deaths_County_Corrected.csv"),col_types = "ccnnn")
+
+
+#make geoid 11 digist with 0
+d.raw      <- read_csv(path(myPlace,"censusTracts/myData","rawDeaths.csv"),col_types = "ncnc") %>%
+                group_by(GEOID,county) %>%
+                summarize(n=sum(Ndeaths))
