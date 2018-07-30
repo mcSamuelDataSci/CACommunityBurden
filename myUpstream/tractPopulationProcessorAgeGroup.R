@@ -122,5 +122,3 @@ popTractAgeG2013 <- rbind(popTractAgeG2013 %>% group_by(yearG,GEOID,comID,ageG,s
 popTractAgeG2013$sex[is.na(popTractAgeG2013$sex)]<-"Total"
 
 saveRDS(popTractAgeG2013, file=paste0(upPlace,"/upData/popTractAgeG2013.RDS"))
-
-#small change
