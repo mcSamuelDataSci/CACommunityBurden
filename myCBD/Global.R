@@ -54,9 +54,6 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   
  
  
- 
- 
- 
 # --- CBD Key Inputs --------------------------------------------------------------------------------------
 
  #  myProj             <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"                            # Key line for Happy GIS
@@ -68,6 +65,15 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
  shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
  shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
+ 
+ 
+ shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+ shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))   # Read Shape Files
+ shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
+ 
+ 
+ 
+ 
  
  #simple feature objects
 # shape_Tract        <- read_rds(path(myPlace,"/myData/shape_Tract.rds"))
@@ -81,7 +87,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #library(sf)
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
-  whichData  <-  "fake"
+  whichData  <-  "real"
  
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
   load(path(myPlace,"/myData/",whichData,"datComm.R"))

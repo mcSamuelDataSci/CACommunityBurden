@@ -45,7 +45,8 @@ if (myCon)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
 }
   
 if (!myCon)  {myrange <- c(0,mydat)
-            myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
+       #     myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
+             myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
 }
 
 

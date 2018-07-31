@@ -31,8 +31,8 @@ shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts
 
 shape_Tract  <- ms_filter_islands(shape_Tract,min_area = 100000000) 
 
-teale       <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
-shape_Tract <- st_transform(shape_Tract,crs= teale)
+# teale       <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
+# shape_Tract <- st_transform(shape_Tract,crs= teale)
 
 shape_Tract <- shape_Tract %>% geo_join(cbdLinkCA, by="GEOID") %>%   # tigris "geo_join"?
                                filter(!(GEOID %in% bad)) %>% 
@@ -40,20 +40,20 @@ shape_Tract <- shape_Tract %>% geo_join(cbdLinkCA, by="GEOID") %>%   # tigris "g
 
 
  write_rds(shape_Tract,path(myPlace,"/myData/shape_Tract.rds"),compress="none")
-#st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE)
+st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE)
 
 #-- Create new Community shape file based on MSSAs --------------------------------------------------------------------------
 
 shape_Comm  <- shape_Tract %>% group_by(county,comID) %>% summarize() %>% ungroup()
 
  write_rds(shape_Tract,path(myPlace,"/myData/shape_Comm.rds"),compress="none")
-#st_write(shape_Comm,path(myPlace,"/myData/shape_Comm.shp"),delete_layer=TRUE)
+st_write(shape_Comm,path(myPlace,"/myData/shape_Comm.shp"),delete_layer=TRUE)
 
 #-- Create County shape file based same approach as above----------------------------------------------------------------
 
 shape_County <- shape_Tract %>% group_by(county) %>% summarize()
  write_rds(shape_Tract,path(myPlace,"/myData/shape_County.rds"),compress="none")
-#st_write(shape_County,path(myPlace,"/myData/shape_County.shp"),delete_layer=TRUE)
+st_write(shape_County,path(myPlace,"/myData/shape_County.shp"),delete_layer=TRUE)
 
 
  # MAKE SMALLER SHAPE FILES!? ================================================================================================
@@ -63,7 +63,7 @@ library(tmap)
 tM <- function(sIn) {tm_shape(sIn) +  tm_polygons("county", title="County") }
 tM(shape_Tract)
 
-shape_S     <- st_simplify(shape_Tract,  dTolerance = 1000, preserveTopology = TRUE) ; tM(shape_S)
+ shape_S     <- st_simplify(shape_Tract,  dTolerance = 1000, preserveTopology = TRUE) ; tM(shape_S)
 
 library(rmapshaper)
 # object_size package
