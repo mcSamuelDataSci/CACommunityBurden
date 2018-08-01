@@ -39,16 +39,40 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   mydat <-     eval(parse(text=paste0("map.1$",myMeasure)))
   mydat[is.na(mydat)] <- 0
 
-if (myCon)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
-  #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
-  myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-}
-  
-if (!myCon)  {myrange <- c(0,mydat)
-       #     myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
-             myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-}
+# if (myCon)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
+#   #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
+#   myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+# }
+#   
+# if (!myCon)  {myrange <- c(0,mydat)
+#        #     myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
+# 
+#              myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+# }
 
+  
+ myrange <- c(0,mydat)
+ # myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
+ myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+  
+ 
+  
+  if (myCon)   {
+    myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
+  #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
+    myCutsT <- myCuts
+    myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+    myCuts$brks[6] <- max(myCutsT$brks[6],myCuts$brks[6])
+  }
+  
+  
+    
+  
+  
+  
+  
+  
+  
 
 #if (myMeasure=="med.age") {myColor1 <- rev(myColor1)}
 palette(myColor1)
