@@ -83,7 +83,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #library(sf)
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
-  whichData  <-  "real"
+  whichData  <-  "fake"
  
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
   load(path(myPlace,"/myData/",whichData,"datComm.R"))
