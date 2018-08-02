@@ -62,20 +62,16 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  #  
  # shape_Tract        <- readShapePoly(paste0(myPlace,"/myData/shape_Tract"),proj4string=CRS(myProj))  
 
- shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
- shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
- shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
- 
+ # shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
+ # shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
+ # shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
+ # 
  
  shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
  shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))   # Read Shape Files
  shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
- 
- 
- 
- 
- #simple feature objects
+  #simple feature objects
 # shape_Tract        <- read_rds(path(myPlace,"/myData/shape_Tract.rds"))
 # shape_Comm         <- read_rds(path(myPlace,"/myData/shape_Comm.rds"))
 # shape_County       <- read_rds(path(myPlace,"/myData/shape_County.rds"))
