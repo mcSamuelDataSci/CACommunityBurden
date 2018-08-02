@@ -11,8 +11,10 @@
 cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon="Yes",myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
   #use these values to see the error bleow  
- #  myLHJ = "Colusa"; myCause=104; myYear=2015;myLabName=FALSE; myCon=TRUE;myGeo="Census Tract";cZoom=TRUE;    myMeasure = "Ndeaths";myLabNum=FALSE
+ # myLHJ = "Amador"; myCause=104; myYear=2015;myLabName=FALSE; myCon=TRUE;myGeo="Community";cZoom=TRUE;    myMeasure = "aRate";myLabNum=FALSE
   
+  
+    if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
     #county data for just 2011-2015
     dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA STATE")
@@ -30,7 +32,8 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
     if (myGeo == "Community") {
     dat.1    <- filter(datComm,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
     map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
-    yearLab <- yG    }  
+    yearLab <- yG  
+    }  
   
   if (cZoom) {map.1   <- map.1[map.1$county == myLHJ,]}
 
@@ -52,8 +55,8 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
 
   
  myrange <- c(0,mydat)
- # myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
- myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+  myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
+ # myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
   
  
   
@@ -62,7 +65,7 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
     myCutsT <- myCuts
     myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-    myCuts$brks[6] <- max(myCutsT$brks[6],myCuts$brks[6])
+    myCuts$brks[6] <- max(myCutsT$brks[length(myCutsT$brks)],myCuts$brks[length(myCuts$brks)])
   }
   
   

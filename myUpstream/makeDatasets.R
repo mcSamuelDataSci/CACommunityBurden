@@ -19,8 +19,8 @@ library(readxl)
 #-- LOAD MAIN DATA SET, AND "INFO FILES", BEGIN KEY TRANSFORMATIONS------------------------
 
 # CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
-# load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
-  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
+ load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
+#  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
   cbdDat0 <- cbdDat0FULL    
 
 # Load FAKE Data --- COMMENT OUT these two lines if using REAL DATA
@@ -85,7 +85,11 @@ cbdDat0$gbd3    <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[is.na(gbdMap0$L2)     ,
 cbdDat0$gbdSpec <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[ (gbdMap0$L2 %in% c(2,6,8,11,13,14,15,16,21,22) & !is.na(gbdMap0$L3) & is.na(gbdMap0$L4) & is.na(gbdMap0$list36) )    ,c("gbdCode","regEx10")])      
 
 
-popTractTot2013 <- readRDS(paste0(upPlace,"/upData/popTractTot2013.RDS"))
+#popTractTot2013 <- readRDS(paste0(upPlace,"/upData/popTractTot2013.RDS"))
+popTractSex2013 <- readRDS(paste0(upPlace,"/upData/popTractSex2013.RDS"))
+popTractTot2013 <- filter(popTractSex2013,sex=="Total")
+
+
 
 #---------------
 

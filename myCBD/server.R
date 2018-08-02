@@ -2,8 +2,15 @@
 shinyServer(function(input, output) {
  
  output$cbdMap0   <- renderLeaflet(cbdMap0Leaflet(input$myLHJ,  input$myCAUSE, input$myMeasure, input$myYear, input$myGeo                                           ))  
- output$cbdMap1   <- renderPlot(   cbdMap0(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
- output$rankCause <- renderPlot(   rankCause(     input$myLHJ,                 input$myMeasure, input$myYear,                           input$myN                   ))
+
+ 
+  output$cbdMap1   <- 
+    #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
+    renderPlot(cbdMap0(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
+    #})
+ 
+  
+   output$rankCause <- renderPlot(   rankCause(     input$myLHJ,                 input$myMeasure, input$myYear,                           input$myN                   ))
  output$rankCauseT<- renderDataTable(rankCauseTab(input$myLHJ, input$myYear),option=list(columnDefs=list(list(targets=3:5, class="dt-right")),
                                                        pageLength = 60)) #DT::
  
