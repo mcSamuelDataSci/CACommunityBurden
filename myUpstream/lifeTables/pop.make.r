@@ -1,5 +1,3 @@
-this one
-
 # title: pop.make.r
 # purpose: datasets of population denominators for CBD project (state, county, tract, mssa)
 # notes:
