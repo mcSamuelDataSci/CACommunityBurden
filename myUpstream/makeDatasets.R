@@ -18,14 +18,20 @@ library(readxl)
 
 #-- LOAD MAIN DATA SET, AND "INFO FILES", BEGIN KEY TRANSFORMATIONS------------------------
 
-# CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
- load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
-#  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
-  cbdDat0 <- cbdDat0FULL    
+whichDat <- "fake"
 
+if (whichDat == "real") {
+# CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
+# load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
+#  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
+#  cbdDat0 <- cbdDat0FULL    
+}
+ 
+if (whichDat == "fake") { 
 # Load FAKE Data --- COMMENT OUT these two lines if using REAL DATA
-#   load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))      
-#   cbdDat0 <- cbdDat0SAMP
+   load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))      
+   cbdDat0 <- cbdDat0SAMP
+}
 
    
    #forEthan <- sample_n(cbdDat0SAMP,100000)
@@ -461,14 +467,17 @@ datCounty <- filter(datCounty,!(CAUSE %in% xCause0))
 
 # Output Files ------------------------------------------------------------------------------------
 
-#write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
-#write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
-write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
-#write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
+# write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
+# write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
+# write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
+# write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
 
-save(datTract,  file= paste0(myPlace,"/myData/datTract.R"))
-save(datComm,   file= paste0(myPlace,"/myData/datComm.R"))
-save(datCounty, file= paste0(myPlace,"/myData/datCounty.R"))
-save(datState,  file= paste0(myPlace,"/myData/datState.R"))
+save(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.R"))
+save(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.R"))
+save(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.R"))
+save(datState,  file= path(myPlace,"/myData/",whichDat,"datState.R"))
+
+
+
 
 # END
