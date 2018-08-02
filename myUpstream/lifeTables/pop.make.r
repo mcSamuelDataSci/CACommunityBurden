@@ -1,3 +1,5 @@
+this one
+
 # title: pop.make.r
 # purpose: datasets of population denominators for CBD project (state, county, tract, mssa)
 # notes:
@@ -13,24 +15,27 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
+
+
+## 1.2  packages
+.pkg	<- c("data.table","tidycensus","readr","stringr","fs") 
+.inst   <- .pkg %in% installed.packages() 
+if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
+lapply(.pkg, require, character.only=TRUE)           
+
 ## 1.1  path and globals
-.path      <- "d:/"
+.path      <- "e:/"
 setwd(.path)
 myPlace    <- path(.path,"0.CBD/myCBD")
 upPlace    <- path(.path,"0.CBD/myUpstream")
 .ckey 	   <- read_file(path(upPlace,"census.api.key.txt"))						# raw text file containing API key.
 
-## 1.2  packages
-.pkg	<- c("data.table","tidycensus","readr","stringr") 
-.inst   <- .pkg %in% installed.packages() 
-if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
-lapply(.pkg, require, character.only=TRUE)           
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
 ## 2.1 	tract-to-MSSA crosswalk
 cbd.link <- setDT(
-	read_csv("cbdLinkCA.csv"),                    # !! update path
+	read_csv(path(myPlace,"myInfo","cbdLinkCA.csv")),                    # !! update path
 	key="GEOID"	                                  # set key for merging later
 )
 
