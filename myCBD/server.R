@@ -1,6 +1,9 @@
 #library(DT)
 shinyServer(function(input, output) {
  
+  
+  
+ output$homeText  <- renderText("Hello")  
  output$cbdMap0   <- renderLeaflet(cbdMap0Leaflet(input$myLHJ,  input$myCAUSE, input$myMeasure, input$myYear, input$myGeo                                           ))  
 
  

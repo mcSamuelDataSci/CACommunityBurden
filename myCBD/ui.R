@@ -38,7 +38,7 @@ sidebarPanel(
  conditionalPanel(condition = paste("(input.cZoom | input.gZoom) && ", fC(c(3,6))), selectInput(   "myLHJX",    "County?",               choices=lList,selected=1)),
 
  hr(), 
-
+ conditionalPanel(condition = fC(c(0)), 
  helpText(n1), br(),
  helpText(n2,style="color:red"),br(),
  helpText("LINKS",tags$a(href="https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-and-Statistics-.aspx", 
@@ -57,12 +57,14 @@ sidebarPanel(
    br(),
    HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
    #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center"
+ )
  
  ),
  
 mainPanel(
   hr(), 
   tabsetPanel(type = "tabs",
+   tabPanel("Home Page",         textOutput("HomeText"                             ),   value =  0),
    tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
    tabPanel("Map (interactive)", htmlOutput(      "map_title"                      ),
                                  leafletOutput(   "cbdMap0",             height=700),   value =  1),
