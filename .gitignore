@@ -2,3 +2,4 @@
 *.Rproj
 myCBD/myData/real/*.*
 myUpstream/census.api.key.txt
+myCBD/rsconnect/*.*
