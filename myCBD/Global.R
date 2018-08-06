@@ -118,6 +118,8 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   source(paste0(myPlace,"/myFunctions/cbdCutPoint0.R"))
   
   source(paste0(myPlace,"/myFunctions/cbdMap0.R"))
+  source(paste0(myPlace,"/myFunctions/cbdMapX.R"))
+  
   source(paste0(myPlace,"/myFunctions/cbdMap0Leaflet.R"))
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))

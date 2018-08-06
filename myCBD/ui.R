@@ -22,27 +22,27 @@ tags$h3(mTitle),
 # navBarPanel 
 
 sidebarPanel( 
- conditionalPanel(condition = fC(c(1,3,6,8,9)),       selectInput(  "myCAUSE",   "Cause",                 choices=causeNum36,selected=0)),
+ conditionalPanel(condition = fC(c(1,3, 33,6,8,9)),       selectInput(  "myCAUSE",   "Cause",                 choices=causeNum36,selected=0)),
  conditionalPanel(condition = fC(c(1,2,4,5,55,8)),    selectInput(  "myLHJ",     "County",                choices=lList,selected=1)),
- conditionalPanel(condition = fC(c(1,3,8,9)),         selectInput(  "myGeo",     "Geo Level",             choices=c("County","Community","Census Tract"))),
+ conditionalPanel(condition = fC(c(1,3, 33,8,9)),         selectInput(  "myGeo",     "Geo Level",             choices=c("County","Community","Census Tract"))),
 
  conditionalPanel(condition = paste("!( input.myGeo == 'Community' | input.myGeo == 'Census Tract')  && "
                                     
-                                    , fC(c(1,3,5,55,6))),      numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
+                                    , fC(c(1,3, 33,5,55,6))),      numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
  
- #conditionalPanel(condition = fC(c(1,3,5,55,6)),      numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
+ #conditionalPanel(condition = fC(c(1,3, 33,5,55,6)),      numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
 
 
- conditionalPanel(condition = fC(c(1,3)),             checkboxInput("myCon",     "State-based cutpoints", value=TRUE)),
+ conditionalPanel(condition = fC(c(1,3, 33)),             checkboxInput("myCon",     "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(2,4,5,7)),         numericInput( "myN",       "How Many",              value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(1,3,5,55,6,7,8,9)),selectInput(  "myMeasure", "What Measure",          choices=lMeasures,selected="YLLper")),
- conditionalPanel(condition = fC(c(3)),               checkboxInput("myLabName", "Geo Names",             value=FALSE)),
- conditionalPanel(condition = fC(c(3)),               checkboxInput("cZoom",     "Zoom to County",        value=FALSE)),
+ conditionalPanel(condition = fC(c(1,3, 33,5,55,6,7,8,9)),selectInput(  "myMeasure", "What Measure",          choices=lMeasures,selected="YLLper")),
+ conditionalPanel(condition = fC(c(3, 33)),               checkboxInput("myLabName", "Geo Names",             value=FALSE)),
+ conditionalPanel(condition = fC(c(3, 33)),               checkboxInput("cZoom",     "Zoom to County",        value=FALSE)),
  conditionalPanel(condition = fC(c(6)),               checkboxInput("gZoom",     "Comunity Level",        value=FALSE)),
  conditionalPanel(condition = fC(c(6)),               checkboxInput("myCI",      "95% CIs?",              value=TRUE)),
  conditionalPanel(condition = fC(c(9)),               selectInput(  "myX",       "SDOH Variable",        choices=varVec)),
 
- conditionalPanel(condition = paste("(input.cZoom | input.gZoom) && ", fC(c(3,6))), selectInput(   "myLHJX",    "County",               choices=lList,selected=1)),
+ conditionalPanel(condition = paste("(input.cZoom | input.gZoom) && ", fC(c(3, 33,6))), selectInput(   "myLHJX",    "County",               choices=lList,selected=1)),
 
  hr(), 
  conditionalPanel(condition = fC(c(0)), 
@@ -72,7 +72,10 @@ mainPanel(
   hr(), 
   tabsetPanel(type = "tabs",
    tabPanel("Home Page",         textOutput("HomeText"                             ),   value =  0),
-   tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
+   tabPanel("Map (tmap)",      plotOutput(      "cbdMapX",   width=700,height=700),   value =  33),
+   
+    tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
+   
    tabPanel("Map (interactive)", htmlOutput(      "map_title"                      ),
                                  leafletOutput(   "cbdMap0",             height=700),   value =  1),
    tabPanel("Rank Causes",       plotOutput(      "rankCause",  width=700,height=700),  value =  5),

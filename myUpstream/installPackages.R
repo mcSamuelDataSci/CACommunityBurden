@@ -37,9 +37,9 @@
  #install.packages("scatterD3")  # not used? 
 
 #-For SHINY----------------------------------------------------------------------------------------- 
-  install.packages(shiny)
-  install.packages(shinythemes)
-  install.packages(shinyWidgets)
+  install.packages("shiny")
+  install.packages("shinythemes")
+  install.packages("shinyWidgets")
  #materials
  
  # this part is required for publication of the app to shiny.io and will be documented seperately

@@ -13,6 +13,12 @@ shinyServer(function(input, output) {
     #})
  
   
+  output$cbdMapX   <- 
+    #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
+    renderPlot(cbdMapX(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
+  #})
+  
+  
    output$rankCause <- renderPlot(   rankCause(     input$myLHJ,                 input$myMeasure, input$myYear,                           input$myN                   ))
  output$rankCauseT<- renderDataTable(rankCauseTab(input$myLHJ, input$myYear),option=list(columnDefs=list(list(targets=3:5, class="dt-right")),
                                                        pageLength = 60)) #DT::
