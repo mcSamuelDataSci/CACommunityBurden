@@ -19,25 +19,32 @@
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","tidyr") 
+.pkg	<- c("data.table","tidyr","fs") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  path and globals
-.path   <- "d:/Users/fieshary/projects/mortality_ccb_lt/ccb_lifetables"		# !! update path to working dir
+# .path   <- "d:/Users/fieshary/projects/mortality_ccb_lt/ccb_lifetables"		# !! update path to working dir
+# setwd(.path)
+
+.path      <- "e:/"
 setwd(.path)
+myPlace    <- path(.path,"0.CBD/myCBD")
+upPlace    <- path(.path,"0.CBD/myUpstream")
+
+.outPath <- path(upPlace,"lifeTables","lifeWork")
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
 ## 2.1 	deaths (death.make.r)
 ## 		comID year sex (char) age17 dx 
-dx.mssa	<-readRDS("dxMSSA-ccb.rds") 			# VR
+dx.mssa	<-readRDS(path(.outPath,"dxMSSA-ccb.rds")) 			# VR
 
 ## 2.2	population (pop.make.r)
 ## 		comID year sex (char) age23 estimate
 #nx.mssa	<-readRDS("LTnxMSSA-ccb.rds") 		# DEC (datum 4/1/2010)
-nx.mssa	<- readRDS("popMSSA.rds") 				# ACS 2010-15 (datum 7/1/2015)
+nx.mssa	<- readRDS(path(.outPath,"popMSSA.rds")) 				# ACS 2010-15 (datum 7/1/2015)
 setnames(nx.mssa,"estimate","nx")				# rename ACS variable for consistency
 .datum <- max(nx.mssa$year) 					# most recent date in dataset
 
@@ -256,6 +263,7 @@ for (j in 1:lt.mssa[x==0,.N]) {
 	)
 	setTxtProgressBar(.pb,j)												
 }
+
 close(.pb)
 names(ltci.mssa)[names(ltci.mssa) == "j"] = "i"					# rename j column to i (ID of mx file)
 names(ltci.mssa)[names(ltci.mssa) == "which.x"] = "x"			# rename to agell
@@ -284,4 +292,4 @@ ltci.mssa<-ltci.mssa[mx.mssa[x==0,c("i","x","sex","comID")],nomatch=0]	# add MSS
 
 # 5		export data
 
-saveRDS(ltci.mssa, file="LTciMSSA.rds")		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
+saveRDS(ltci.mssa, file=path(.outPath,"LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high

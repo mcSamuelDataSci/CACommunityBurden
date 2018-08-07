@@ -27,7 +27,6 @@ setwd(.path)
 myPlace    <- path(.path,"0.CBD/myCBD")
 upPlace    <- path(.path,"0.CBD/myUpstream")
 .ckey 	   <- read_file(path(upPlace,"census.api.key.txt"))						# raw text file containing API key.
-.ckey 	   <- read_file(path(upPlace,"censusKey.txt"))						# raw text file containing API key.
 
 
 ## 2	DATASETS	----------------------------------------------------------------------

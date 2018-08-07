@@ -36,8 +36,8 @@ load("f:/0.Secure.Data/myData/cbdDat0FULL.R")
 .deaths <- cbdDat0FULL
 # FAKE!
 #.deaths <- load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))    
-load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))  
-.deaths <- cbdDat0SAMP
+# load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))  
+# .deaths <- cbdDat0SAMP
 
 
 
