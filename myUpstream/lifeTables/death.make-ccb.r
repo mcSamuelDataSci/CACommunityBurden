@@ -19,9 +19,9 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  path and globals
-.deaths <- "forEthan.RDS"											# !! update filename
+#.deaths <- "forEthan.RDS"											# !! update filename
 
-.path   <- "d:/Users/fieshary/projects/mortality_ccb_lt/ccb_lifetables"		# !! update path to working dir
+#.path   <- "d:/Users/fieshary/projects/mortality_ccb_lt/ccb_lifetables"		# !! update path to working dir
 
 .path  <- "e:/0.CBD"  ### MICHAEL
 
@@ -32,7 +32,7 @@ myPlace    <- path(.path,"myCBD")
 upPlace    <- path(.path,"myUpstream")
 
 # REAL !!!
-load("H:/0.Secure.Data/myData/cbdDat0FULL.R")    
+load("f:/0.Secure.Data/myData/cbdDat0FULL.R")    
 .deaths <- cbdDat0FULL
 # FAKE!
 #.deaths <- load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))    
@@ -112,7 +112,7 @@ ccb.dead.tracts<-ccb.dead.tracts[!is.na(as.numeric(GEOID))][,		# drop missing GE
 
 
 # MICHAEL
-.outPath <- path(upPlace,"lifeTables","lifeOut")
+.outPath <- path(upPlace,"lifeTables","lifeWork")
 
 saveRDS(ccb.dead.tracts, file=path(.outPath,"dxTract.rds"))		# GEOID date sex (char) age17 dx (for LT)
 saveRDS(ccb.dead.mssa,   file=path(.outPath,"dxMSSA-ccb.rds"))		# comID date sex (char) age17 dx (for LT)

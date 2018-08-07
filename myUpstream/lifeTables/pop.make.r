@@ -256,20 +256,22 @@ dec.pop.state <- dec.pop.county[,.(nx=sum(nx)),						# collapse state detail fro
 #		SAVE AS RDA: save(acs.pop.mssa, file=paste0(upPlace,"/upData/popCensusCom.rda"))  save R dataset using load()
 #		SAVE AS RDS: saveRDS(acs.pop.county, file=paste0(upPlace,"/upData/popCensusCounty.rds")) # save R data object using readRDS()
 
+.outPath <- path(upPlace,"lifeTables","lifeWork")
+
 ##	4.2	export results for CCB calculations: county, tract, MSSA level datasets
 ##		age17: 0,5,10,15,...85+
 ##		age18: 0,1,5,10,15,...85+
 ##		age23: 0,5,10,15,20,21,22,25,...60,62,65,67,70,...85+
 ##	  	age 111: 0,1,2,3,4,...110+
-saveRDS(acs.pop.tracts, file=path(upPlace,"lifeTables","lifeWork","popTract.rds"))  		# GEOID year sex (char) age17 estimate
-saveRDS(acs.pop.mssa,   file=path(upPlace,"lifeTables","lifeWork","popMSSA.rds"))  		# comID year sex (char) age17 estimate
-saveRDS(dof.pop.county, file=path(upPlace,"lifeTables","lifeWork","popCounty.rds")) 		# GEOID year sex (char) age111 estimate
-saveRDS(dof.pop.state,  file=path(upPlace,"lifeTables","lifeWork","popState.rds"))  		# GEOID year sex (char) age111 estimate
+saveRDS(acs.pop.tracts, file=path(.outPath,"popTract.rds"))  		# GEOID year sex (char) age17 estimate
+saveRDS(acs.pop.mssa,   file=path(.outPath,"popMSSA.rds"))  		# comID year sex (char) age17 estimate
+saveRDS(dof.pop.county, file=path(.outPath,"popCounty.rds")) 		# GEOID year sex (char) age111 estimate
+saveRDS(dof.pop.state,  file=path(.outPath,"popState.rds"))  		# GEOID year sex (char) age111 estimate
 
 ##	4.3	export datasets for lifetables using DEC.
-saveRDS(dec.pop.tracts, file=path(upPlace,"lifeTables","lifeWork","decTract.rds"))		# GEOID year sex (char) age23 nx (for LT)
-saveRDS(dec.pop.mssa,   file=path(upPlace,"lifeTables","lifeWork","decMSSA.rds"))			# comID year sex (char) age23 nx (for LT)
-saveRDS(dec.pop.county, file=path(upPlace,"lifeTables","lifeWork","decCounty.rds"))		# GEOID year sex (char) age23 nx (for LT)
-saveRDS(dec.pop.state,  file=path(upPlace,"lifeTables","lifeWork","decState.rds"))		# GEOID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.tracts, file=path(.outPath,"decTract.rds"))		# GEOID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.mssa,   file=path(.outPath,"decMSSA.rds"))			# comID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.county, file=path(.outPath,"decCounty.rds"))		# GEOID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.state,  file=path(.outPath,"decState.rds"))		# GEOID year sex (char) age23 nx (for LT)
 
 # END
