@@ -27,6 +27,7 @@ setwd(.path)
 myPlace    <- path(.path,"0.CBD/myCBD")
 upPlace    <- path(.path,"0.CBD/myUpstream")
 .ckey 	   <- read_file(path(upPlace,"census.api.key.txt"))						# raw text file containing API key.
+.ckey 	   <- read_file(path(upPlace,"censusKey.txt"))						# raw text file containing API key.
 
 
 ## 2	DATASETS	----------------------------------------------------------------------
@@ -50,7 +51,7 @@ acs.varlist <- sprintf("B01001_%03dE",c(3:25,27:49)) 		# B01001_*E except totals
 ## 2.3 	ACS variable descriptive labels (e.g., "B01001_003E = Estimates of Male Population Under 5 years ... " )
 ##		downloaded from API documentation page and pasted into a .csv
 acs.labels <- setDT (
-	read_csv("B01001_labels.csv"),                # !! update path
+	read_csv(path(upPlace,"upinfo","B01001_labels.csv")),                # !! update path
 	key="Name"                                    # define Name as the key for this file
 )
 
@@ -98,7 +99,7 @@ dec.varlist <- sprintf("PCT012%04d",c(3:104,106:209))          # PCT012* except 
 ## 		beware: as of 2018, the API is returning erroneous labels for the female total pop. 
 ##		https://api.census.gov/data/2010/sf1/variables.html. the csv file is fixed.
 dec.labels <- setDT(
-	read_csv("PCT012_labels.csv", col_names=TRUE),              # !! update path
+	read_csv(path(upPlace,"upinfo","PCT012_labels.csv"), col_names=TRUE),              # !! update path
 	key="Name"                                					# define Name as the key for this file
 )
 
@@ -260,15 +261,15 @@ dec.pop.state <- dec.pop.county[,.(nx=sum(nx)),						# collapse state detail fro
 ##		age18: 0,1,5,10,15,...85+
 ##		age23: 0,5,10,15,20,21,22,25,...60,62,65,67,70,...85+
 ##	  	age 111: 0,1,2,3,4,...110+
-saveRDS(acs.pop.tracts, file="popTract.rds")  		# GEOID year sex (char) age17 estimate
-saveRDS(acs.pop.mssa,   file="popMSSA.rds")  		# comID year sex (char) age17 estimate
-saveRDS(dof.pop.county, file="popCounty.rds") 		# GEOID year sex (char) age111 estimate
-saveRDS(dof.pop.state,  file="popState.rds")  		# GEOID year sex (char) age111 estimate
+saveRDS(acs.pop.tracts, file=path(upPlace,"lifeTables","lifeWork","popTract.rds"))  		# GEOID year sex (char) age17 estimate
+saveRDS(acs.pop.mssa,   file=path(upPlace,"lifeTables","lifeWork","popMSSA.rds"))  		# comID year sex (char) age17 estimate
+saveRDS(dof.pop.county, file=path(upPlace,"lifeTables","lifeWork","popCounty.rds")) 		# GEOID year sex (char) age111 estimate
+saveRDS(dof.pop.state,  file=path(upPlace,"lifeTables","lifeWork","popState.rds"))  		# GEOID year sex (char) age111 estimate
 
 ##	4.3	export datasets for lifetables using DEC.
-saveRDS(dec.pop.tracts, file="decTract.rds")		# GEOID year sex (char) age23 nx (for LT)
-saveRDS(dec.pop.mssa,   file="decMSSA.rds")			# comID year sex (char) age23 nx (for LT)
-saveRDS(dec.pop.county, file="decCounty.rds")		# GEOID year sex (char) age23 nx (for LT)
-saveRDS(dec.pop.state,  file="decState.rds")		# GEOID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.tracts, file=path(upPlace,"lifeTables","lifeWork","decTract.rds"))		# GEOID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.mssa,   file=path(upPlace,"lifeTables","lifeWork","decMSSA.rds"))			# comID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.county, file=path(upPlace,"lifeTables","lifeWork","decCounty.rds"))		# GEOID year sex (char) age23 nx (for LT)
+saveRDS(dec.pop.state,  file=path(upPlace,"lifeTables","lifeWork","decState.rds"))		# GEOID year sex (char) age23 nx (for LT)
 
 # END
