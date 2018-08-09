@@ -1,4 +1,9 @@
 
+# tmap:
+# https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Exploring-and-presenting-maps-with-tmap
+
+
+
 
 cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon="Yes",myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
