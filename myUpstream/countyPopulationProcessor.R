@@ -36,7 +36,7 @@ names(tDat) <- c("county","year","sex","age","raceE","OrigPop","pop" )
 # tDat        <- filter(tDat, year %in% 2000:2015 & !(county %in% c("Alameda HD","Berkeley","Pasadena","Long Beach","Los Angeles HD")))
 
 
-tDat        <- filter(tDat, year %in% 2000:2015 & !(county %in% c("Alameda HD","Berkeley","Pasadena","Long Beach","Los Angeles HD")))
+tDat        <- filter(tDat, year %in% 2000:2017 & !(county %in% c("Alameda HD","Berkeley","Pasadena","Long Beach","Los Angeles HD")))
 
 library(readr)
 # could use DOF data instead, downloaded from their Open Data Site
@@ -50,7 +50,7 @@ tDatDOF$county <- capwords(tDatDOF$county,strict=TRUE)
 # -- Make and save file with County (and California Total) Pop by year 2000-2015 -----------------------------------------------------------
 
 popCountyTot2000to2015 <- tDat %>% group_by(year, county) %>% summarize(pop  = sum(pop))
-saveRDS(popCountyTot2000to2015, file= paste0(upPlace,"/upData/popCountyTot2000to2015.RDS"))
+saveRDS(popCountyTot2000to2015, file= paste0(upPlace,"/upData/popCountyTot2000to2017.RDS"))
 
 # -- Construct age groups, stratify pop file by age group and save ---------------------------------------------------------------------------
 

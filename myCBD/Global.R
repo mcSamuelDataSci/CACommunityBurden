@@ -1,6 +1,3 @@
-# test less
-
-
 # =====================================================================================
 # "Global.R" file                                                                     |
 #            designate folder locations                                               |
@@ -57,9 +54,6 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   
  
  
- 
- 
- 
 # --- CBD Key Inputs --------------------------------------------------------------------------------------
 
  #  myProj             <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"                            # Key line for Happy GIS
@@ -68,11 +62,16 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  #  
  # shape_Tract        <- readShapePoly(paste0(myPlace,"/myData/shape_Tract"),proj4string=CRS(myProj))  
 
- shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
- shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
- shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
+ # shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
+ # shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
+ # shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
+ # 
  
- #simple feature objects
+ shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+ shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))   # Read Shape Files
+ shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
+ 
+  #simple feature objects
 # shape_Tract        <- read_rds(path(myPlace,"/myData/shape_Tract.rds"))
 # shape_Comm         <- read_rds(path(myPlace,"/myData/shape_Comm.rds"))
 # shape_County       <- read_rds(path(myPlace,"/myData/shape_County.rds"))
@@ -119,6 +118,8 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   source(paste0(myPlace,"/myFunctions/cbdCutPoint0.R"))
   
   source(paste0(myPlace,"/myFunctions/cbdMap0.R"))
+  source(paste0(myPlace,"/myFunctions/cbdMapX.R"))
+  
   source(paste0(myPlace,"/myFunctions/cbdMap0Leaflet.R"))
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))
@@ -161,3 +162,5 @@ yG <- "2011-2015"
  myLHJ  <- "Colusa"; myLev <- 1; myCause <- 104   # myCause  <- "Diabetes mellitus"
 
 # --- END --------------------------------------------------------------------------------------------------
+
+ 

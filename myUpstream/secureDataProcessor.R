@@ -233,13 +233,3 @@ cbdDat0SAMP <- rbind(half1,half2)
 
 save(cbdDat0SAMP, file= paste0(upPlace,"/upData/cbdDat0SAMP.R"))
 
-
-# ========================================================================================================================
-
-
-temp  <- cbdDat0FULL %>% group_by(GEOID,year,county) %>% 
-  summarize(Ndeaths = n())
-temp <- temp[!is.na(temp$GEOID),]
-temp <- temp[temp$GEOID != "",]
-write.csv(temp,file="E:/0.CBD/myCBD/tract.deaths.csv")
-
