@@ -3,15 +3,33 @@
 # https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Exploring-and-presenting-maps-with-tmap
 
 
+#for testing:
+if (1==2){
+myLHJ= "Amador"
+myCause=0
+myMeasure = "YLLper"
+myYear=2015
+myCon=TRUE
+myGeo="Census Tract"
+cZoom=TRUE
+myLabName=FALSE
+myLabNum=FALSE
+}
 
 
-cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon="Yes",myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
+
+cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon=TRUE,myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
   #use these values to see the error bleow  
  # myLHJ = "Amador"; myCause=104; myYear=2015;myLabName=FALSE; myCon=TRUE;myGeo="Community";cZoom=TRUE;    myMeasure = "aRate";myLabNum=FALSE
   
   
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
+  
+  
+  if( myGeo == "County" & cZoom ) stop('Hey Buddy, use your noggin, you can not Zoom to County and keep the the Geo Level select as County')
+  
+  
   
     #county data for just 2011-2015
     dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA STATE")
@@ -92,8 +110,32 @@ palette(myColor1)
   #  mapInputs(myGeo,myMeasure,cZoom,myLHJ,cutType,stateCut,nC) 
     
   library(tmap)
-    tm_shape(map.1) + tm_polygons("plotter",title=paste(myMeasure)) + tm_style_grey()
+    #tmap_style("grey")
+    tmap_style("classic")
+    tm_shape(map.1) + tm_polygons("plotter",title=paste(myMeasure))  
     
     
   
 }
+
+#fortesting
+if (1==2){
+
+mapx <- cbdMapX()
+tmap_mode("plot")
+
+# plot map
+mapx
+
+# view map with default view options
+tmap_mode("view")
+mapx
+mapx + tm_view(alpha = 1, basemaps = "Stamen.Watercolor")
+
+# restore current mode
+tmap_mode("plot")
+
+
+
+}
+

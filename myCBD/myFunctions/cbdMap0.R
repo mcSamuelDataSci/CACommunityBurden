@@ -16,6 +16,11 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
+  
+  if( myGeo == "County" & cZoom ) stop('Hey Buddy, use your noggin, you can not Zoom to County and keep the the Geo Level select as County')
+  
+  
+  
     #county data for just 2011-2015
     dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA STATE")
    
