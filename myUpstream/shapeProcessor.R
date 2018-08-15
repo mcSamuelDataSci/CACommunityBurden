@@ -88,7 +88,7 @@ shapeX <- gSimplify(shape_Tract,tol = 0.05, topologyPreserve = TRUE)
 library(rgeos)
 library(maptools) 
 
-writeSpatialShape(shape_Tract,paste0(myPlace,"/myData/shape_Tract"))
+writeSpatialShape(shape_TractX,paste0(myPlace,"/myData/shape_Tract"))
 
 shape_Comm      <- unionSpatialPolygons(shape_Tract, shape_Tract$comID)      # base spatial polygons on community
 
@@ -101,14 +101,14 @@ shape_Comm$comID <- as.character(n.ID)
 linkTemp    <- as.data.frame(cbdLinkCA %>% group_by(county,comID) %>% summarize(junk=n()))[,1:2] # removes "junk"
 shape_Comm  <- merge(shape_Comm,linkTemp,by="comID")
 #shape_Comm  <- geo_join(shape_Comm,linkTemp,by="comID")
-writeSpatialShape(shape_Comm,paste0(myPlace,"/myData/shape_Comm"))
+writeSpatialShape(shape_CommX,paste0(myPlace,"/myData/shape_Comm"))
 
 shape_County  <- unionSpatialPolygons(shape_Comm, shape_Comm$county)    
 n.ID <-shape_County@polygons[[1]]@ID
 for (i in 2:length(shape_County)){  n.ID <-c(n.ID,shape_County@polygons[[i]]@ID)}  # make accessible label for shapes
 shape_County$county <- as.character(n.ID)
 
-writeSpatialShape(shape_County,paste0(myPlace,"/myData/shape_County"))
+writeSpatialShape(shape_CountyX,paste0(myPlace,"/myData/shape_County"))
 
 
 # NOTES  ===============================================================================================
