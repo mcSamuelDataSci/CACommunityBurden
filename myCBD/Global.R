@@ -87,10 +87,23 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
   whichData  <-  "real"
  
+  if (whichData == "fake") {
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
   load(path(myPlace,"/myData/",whichData,"datComm.R"))
   load(path(myPlace,"/myData/",whichData,"datCounty.R"))
   load(path(myPlace,"/myData/",whichData,"datState.R"))
+  }
+  
+  
+  if (whichData == "real") {
+    load(path("e:/0.CBD_SecLocalData",whichData,"datTract.R"))
+    load(path("e:/0.CBD_SecLocalData",whichData,"datComm.R"))
+    load(path("e:/0.CBD_SecLocalData",whichData,"datCounty.R"))
+    load(path("e:/0.CBD_SecLocalData",whichData,"datState.R"))
+  }  
+    
+  
+  
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 

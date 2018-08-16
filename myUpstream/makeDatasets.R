@@ -19,7 +19,7 @@ library(fs)
 
 #-- LOAD MAIN DATA SET, AND "INFO FILES", BEGIN KEY TRANSFORMATIONS------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 
 if (whichDat == "real") {
 # CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
