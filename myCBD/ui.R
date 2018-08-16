@@ -73,7 +73,7 @@ sidebarPanel(
 mainPanel(
   hr(), 
   tabsetPanel(type = "tabs",
-   tabPanel("Home Page",         textOutput("HomeText"                             ),   value =  0),
+   tabPanel("Home Page",     img(src="burden-of-disease-toolkit.jpg",width = 600, height = 350),   value =  0),            #textOutput("HomeText"                             )
    tabPanel("Map (tmap)",      plotOutput(      "cbdMapX",   width=700,height=700),   value =  33),
    
     tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
