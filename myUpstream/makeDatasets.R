@@ -19,13 +19,13 @@ library(fs)
 
 #-- LOAD MAIN DATA SET, AND "INFO FILES", BEGIN KEY TRANSFORMATIONS------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 
 if (whichDat == "real") {
 # CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
-# load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
+ load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
 #  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
-#  cbdDat0 <- cbdDat0FULL    
+  cbdDat0 <- cbdDat0FULL    
 }
  
 if (whichDat == "fake") { 
@@ -313,7 +313,8 @@ myMeasures <- function(group_vars,levLab,myTotal=TRUE){
    dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
     summarize(Ndeaths = n() , 
               YLL     = sum(yll,   na.rm = TRUE),    # NEED TO ADD CIs
-              m.YLL   = mean(yll,  na.rm = TRUE)     # NEED TO ADD CIs
+              m.YLL   = mean(yll,  na.rm = TRUE),     # NEED TO ADD CIs
+              mean.age = mean(age,na.rm=TRUE)
               #med.age = median(age,na.rm = TRUE)
               ) %>%  ungroup
    names(dat)[grep("gbd", names(dat))] <- "CAUSE"     # CHANGE "gbd" here to iGRP and add that in front of any groupings
@@ -324,7 +325,8 @@ myMeasures <- function(group_vars,levLab,myTotal=TRUE){
    dat2 <- cbdDat0 %>% group_by_(.dots = group_vars[-temp]) %>% 
      summarize(Ndeaths = n() , 
                YLL     = sum(yll,   na.rm = TRUE), # NEED TO ADD CIs
-               m.YLL   = mean(yll,  na.rm = TRUE) # NEED TO ADD CIs
+               m.YLL   = mean(yll,  na.rm = TRUE), # NEED TO ADD CIs
+               mean.age = mean(age,na.rm=TRUE)
                #med.age = median(age,na.rm = TRUE)
                ) %>% ungroup
    dat2$CAUSE <- 0

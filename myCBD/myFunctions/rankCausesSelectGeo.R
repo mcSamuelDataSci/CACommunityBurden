@@ -16,7 +16,13 @@ rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,myN=10) {
     
   
    dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
- 
+
+   if (myMeasure=="mean.age"){
+     dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure))),decreasing=TRUE),]}
+     
+   
+   
+    
   nR    <- nrow(dat.1)
   myNX  <- min(nR,myN) 
   dat.1 <- dat.1[((nR-myNX):nR),]
@@ -38,7 +44,7 @@ rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,myN=10) {
      
  par(mar=c(5,0,0,0))
    
-   t.plot <- barplot((dat.1$m.YLL), xlab="Mean YLL",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$m.YLL)));   box(lwd=bLwd)
+   t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age)));   box(lwd=bLwd)
    t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
  
   if (myLHJ != "CALIFORNIA STATE") {

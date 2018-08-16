@@ -85,7 +85,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #library(sf)
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
-  whichData  <-  "fake"
+  whichData  <-  "real"
  
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
   load(path(myPlace,"/myData/",whichData,"datComm.R"))
@@ -94,7 +94,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 
-  mTitle       <- "California Community Burden of Disease and Costs 0.3.0"
+  mTitle       <- "California Community Burden of Disease and Costs 0.4.0"
   sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
   sjc          <- FALSE
   
@@ -134,14 +134,19 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   # --- Shiny Stuff and Constants ---------------------------------------------------------------------------
 
 #lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate","med.age","SMR")
-lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate",          "SMR")
-
+#lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate",          "SMR")
+lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","m.YLL","SMR")
+  
+  
+  
 lMeasuresC <- c("Years of Life Lost (YLL)",
-                      "Mean YLL","Years of Life Lost per 100,000 population",
-                      "Number of deaths","Crude Death Rate",
-                      "Age-Adjusted Death Rate",
-                      #   "Median Age",
-                      "Standard Mortality Ratio")
+                "Years of Life Lost per 100,000 population",
+                "Number of deaths",
+                "Crude Death Rate",
+                "Age-Adjusted Death Rate",
+                "Mean Age at Death",
+                "Mean YLL",
+                "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
 

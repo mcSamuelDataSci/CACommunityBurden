@@ -54,60 +54,34 @@ cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
 
   if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
 
-  mydat <-     eval(parse(text=paste0("map.1$",myMeasure)))
-  mydat[is.na(mydat)] <- 0
-
-# if (myCon)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
-#   #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
-#   myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-# }
-#   
-# if (!myCon)  {myrange <- c(0,mydat)
-#        #     myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
-# 
-#              myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-# }
-
-  
- myrange <- c(0,mydat)
-  myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
- # myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-  
+ #  mydat <-     eval(parse(text=paste0("map.1$",myMeasure)))
+ #  mydat[is.na(mydat)] <- 0
+ # 
+ # 
+ # myrange <- c(0,mydat)
+ #  myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
+ # # myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+ #  
+ # 
+ #  
+ #  if (myCon)   {
+ #    myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
+ #  #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
+ #    myCutsT <- myCuts
+ #    myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
+ #    myCuts$brks[6] <- max(myCutsT$brks[length(myCutsT$brks)],myCuts$brks[length(myCuts$brks)])
+ #  }
+ #  
+ #  
  
   
-  if (myCon)   {
-    myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
-  #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
-    myCutsT <- myCuts
-    myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
-    myCuts$brks[6] <- max(myCutsT$brks[length(myCutsT$brks)],myCuts$brks[length(myCuts$brks)])
-  }
-  
-  
- 
-  
-    map.1$plotter <-  eval(parse(text=paste0("map.1$",myMeasure)))
-  
-  
+map.1$plotter <-  eval(parse(text=paste0("map.1$",myMeasure)))
+map.1$plotter[is.na(map.1$plotter)] <- 0
   
 
 #if (myMeasure=="med.age") {myColor1 <- rev(myColor1)}
 palette(myColor1)
 
-#========================================
-
-  
-  Leg      <- findColours(myCuts,myColor1,between="-",under="<",over=">",cutlabels=FALSE)
-  mCols    <- findInterval(mydat,myCuts$brks,rightmost.closed=TRUE)
-  #=========================================  
-  
-# plot(map.1)
-# plot(map.1, col=mCols,add=TRUE)  
-  
-  
- #  mapBoth1 <- function(myGeo="County",myMeasure="cDeathRate",cZoom=FALSE,myLHJ="Alameda",cutType,stateCut,nC)  {
-    
-  #  mapInputs(myGeo,myMeasure,cZoom,myLHJ,cutType,stateCut,nC) 
     
   library(tmap)
     #tmap_style("grey")

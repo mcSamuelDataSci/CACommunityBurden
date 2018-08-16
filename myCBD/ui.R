@@ -26,9 +26,9 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(1,2,4,5,55,8)),    selectInput(  "myLHJ",     "County",                choices=lList,selected=1)),
  conditionalPanel(condition = fC(c(1,3, 33,8,9)),         selectInput(  "myGeo",     "Geo Level",             choices=c("County","Community","Census Tract"))),
 
- conditionalPanel(condition = paste("!( input.myGeo == 'Community' | input.myGeo == 'Census Tract')  && "
-                                    
-                                    , fC(c(1,3, 33,5,55,6))),      numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
+ conditionalPanel(condition =       paste("(!( input.myGeo == 'Community' | input.myGeo == 'Census Tract')  && (", fC(c(1,3, 33)),") ) | (", fC(c(5,55,6)),")"  ),
+                  
+                  numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
  
  #conditionalPanel(condition = fC(c(1,3, 33,5,55,6)),      numericInput( "myYear",    "Year",                  value=2015,min=2001,max=2015)),
 
