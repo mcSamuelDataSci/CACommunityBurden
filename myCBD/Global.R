@@ -37,6 +37,7 @@
  library(readxl)
  library(plotly)
  library(readr)
+ library(fs)
 
 # library(shinymaterial)
 
@@ -103,6 +104,12 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   }  
     
   
+  load(path(myPlace,"/myData/","sdohTract.R"))
+  load(path(myPlace,"/myData/","sdohComm.R"))
+  load(path(myPlace,"/myData/","sdohCounty.R"))
+  
+  
+  
   
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
@@ -134,15 +141,15 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   
   source(paste0(myPlace,"/myFunctions/cbdMap0.R"))
   source(paste0(myPlace,"/myFunctions/cbdMapX.R"))
-  
   source(paste0(myPlace,"/myFunctions/cbdMap0Leaflet.R"))
+  
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))
-  source(paste0(myPlace,"/myFunctions/trend.R"))
   source(paste0(myPlace,"/myFunctions/rankGeosSelectCause.R"))
   
+  source(paste0(myPlace,"/myFunctions/trend.R"))
   
-  source(paste0(myPlace,"/myFunctions/makeSES.R"))
+  source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
   
   # --- Shiny Stuff and Constants ---------------------------------------------------------------------------
 
@@ -166,7 +173,13 @@ names(lMeasures) <- lMeasuresC
 causeList36       <- gbdMap0[!is.na(gbdMap0$list36),c("gbdCode","nameOnly")]
 causeList36       <- causeList36[order(causeList36[,2]),]
 causeNum36        <- causeList36[,1]
-names(causeNum36) <- causeList36[,2]
+names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
+
+
+sdohVecL  <- c("<Bachelors Degree","Below Federal Poverty",'HCI Raw Score')
+sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
+names(sdohVec) <- sdohVecL
+
 
 lList  <- sort(as.character(unique(datCounty$county)))
 if (sjc) {lList <- lList[lList %in% sjconsortium]}

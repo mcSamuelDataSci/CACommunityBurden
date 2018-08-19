@@ -25,7 +25,7 @@ shinyServer(function(input, output) {
  
    output$rankGeo   <- renderPlot(   rankGeo(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear,                           input$gZoom,input$myCI      ))
  output$trend     <- renderPlot(   trend(         input$myLHJ,  input$myCAUSE, input$myMeasure                                                                      ))
- output$scatter   <- renderPlotly( ccbSESplot1(                 input$myCAUSE, input$myMeasure,               input$myGeo,input$myX                                 ))
+ output$scatter   <- renderPlotly( scatterSDOH(                 input$myCAUSE, input$myMeasure,               input$myGeo,input$myX                                 ))
  
   output$map_title <- renderUI({
                                 HTML(paste("<div style='text-align:center;font-size:18px'>",

@@ -42,7 +42,7 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(3, 33)),               checkboxInput("cZoom",     "Zoom to County",        value=FALSE)),
  conditionalPanel(condition = fC(c(6)),               checkboxInput("gZoom",     "Comunity Level",        value=FALSE)),
  conditionalPanel(condition = fC(c(6)),               checkboxInput("myCI",      "95% CIs?",              value=TRUE)),
- conditionalPanel(condition = fC(c(9)),               selectInput(  "myX",       "SDOH Variable",        choices=varVec)),
+ conditionalPanel(condition = fC(c(9)),               selectInput(  "myX",       "SDOH Variable",        choices=sdohVec)),
 
  conditionalPanel(condition = paste("(input.cZoom | input.gZoom) && ", fC(c(3, 33,6))), selectInput(   "myLHJX",    "County",               choices=lList,selected=1)),
 
