@@ -1,5 +1,3 @@
-# junk here
-
 # =====================================================================================
 # "Global.R" file                                                                     |
 #            designate folder locations                                               |
@@ -14,51 +12,39 @@
 
 #-- Set Locations Etc----------------------------------------------------------------------
 
-# myDrive  <- "E:"  
-# myPlace  <- paste0(myDrive,"/0.CBD/myCBD")  
-# myLoc1   <- myPlace                             # used by some of myFunctions  --- no longer?                     
- 
  myPlace  <- getwd()   # for Shiny.io
  
-  
 #-- Load Packages --------------------------------------------------------------------------
 
- #library(shinythemes)
- 
  library(shiny)  
  library(dplyr)
+ 
+ library(readxl)
+ library(readr) 
+ 
  library(maptools); 
- #library(maps);
  library(rgdal)
  library(leaflet); 
- library(classInt); #library(scatterD3); 
+
+ library(classInt);  
  library(RColorBrewer);
  library(epitools)
- library(readxl)
  library(plotly)
- library(readr)
  library(fs)
-
+ 
+# library(scatterD3);
+# library(maps);  
+# library(shinythemes)
 # library(shinymaterial)
 
-# MIGRATE all mapping to tmap? 
+ # --- CBD Key Inputs --------------------------------------------------------------------------------------
+
+ # MIGRATE all mapping to tmap? 
  
 # USE consistent map projection system throughout all app code !
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
-# USE THIS 
-# new appraoch from Zev for simplifying path names, etc 
-# don't have to keep tract of leading or following "/" !
-# check to make sure this is supported on CDPH Shiny Server?
- library(fs)
- gbdMap0    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))  # OLD
- gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo////gbd.ICD.Map.xlsx/"), sheet="main"))    # NEW, with extra "/" as examples
-  
- 
- 
-# --- CBD Key Inputs --------------------------------------------------------------------------------------
-
  #  myProj             <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"                            # Key line for Happy GIS
  #  shape_County       <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(myProj)) 
  #  shape_Comm         <- readShapePoly(paste0(myPlace,"/myData/shape_Comm"),proj4string=CRS(myProj))   # Read Shape Files
@@ -68,7 +54,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  # shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
  # shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
  # shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
- # 
+ 
  
  shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
  shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))   # Read Shape Files
@@ -86,7 +72,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #library(sf)
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
-  whichData  <-  "real"
+  whichData  <-  "fake"
  
   if (whichData == "fake") {
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
@@ -95,7 +81,6 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   load(path(myPlace,"/myData/",whichData,"datState.R"))
   }
   
-  
   if (whichData == "real") {
     load(path("e:/0.CBD_SecLocalData",whichData,"datTract.R"))
     load(path("e:/0.CBD_SecLocalData",whichData,"datComm.R"))
@@ -103,36 +88,21 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
     load(path("e:/0.CBD_SecLocalData",whichData,"datState.R"))
   }  
     
-  
   load(path(myPlace,"/myData/","sdohTract.R"))
   load(path(myPlace,"/myData/","sdohComm.R"))
   load(path(myPlace,"/myData/","sdohCounty.R"))
-  
-  
-  
-  
-  
-# --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 
-  mTitle       <- "California Community Burden of Disease and Costs 0.4.0"
-  sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
-  sjc          <- FALSE
-  
-  if (sjc){
-  mTitle <- "San Joaquin Public Health Consortium Community Burden of Disease"  
-  shape_County <- shape_County[shape_County$county %in% sjconsortium,]
-  shape_Comm   <- shape_Comm[  shape_Comm $county  %in% sjconsortium,]
-  shape_Tract  <- shape_Tract[ shape_Tract$county  %in% sjconsortium,]
-  
-  datCounty <- datCounty[datCounty$county %in% sjconsortium,]
-  datComm   <- datComm[datComm$county %in% sjconsortium,]
-  datTract  <- datTract[datTract$county %in% sjconsortium,]  }
 
-    
 #-- Load Info Files and Functions ------------------------------------------------------------------------
   
-  gbdMap0    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))
-
+  # USE THIS 
+  # new appraoch from Zev for simplifying path names, etc 
+  # don't have to keep tract of leading or following "/" !
+  # check to make sure this is supported on CDPH Shiny Server?
+  
+  gbdMap0    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))  # OLD
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo////gbd.ICD.Map.xlsx/"), sheet="main"))    # NEW, with extra "/" as examples
+  
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
@@ -150,15 +120,29 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   source(paste0(myPlace,"/myFunctions/trend.R"))
   
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
+
+  # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
   
-  # --- Shiny Stuff and Constants ---------------------------------------------------------------------------
+  mTitle       <- "California Community Burden of Disease and Costs 0.4.0"
+  sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
+  sjc          <- FALSE
+  
+  if (sjc){
+    mTitle <- "San Joaquin Public Health Consortium Community Burden of Disease"  
+    shape_County <- shape_County[shape_County$county %in% sjconsortium,]
+    shape_Comm   <- shape_Comm[  shape_Comm $county  %in% sjconsortium,]
+    shape_Tract  <- shape_Tract[ shape_Tract$county  %in% sjconsortium,]
+    
+    datCounty <- datCounty[datCounty$county %in% sjconsortium,]
+    datComm   <- datComm[datComm$county %in% sjconsortium,]
+    datTract  <- datTract[datTract$county %in% sjconsortium,]  }
+  
+# --- Shiny Stuff and Constants ---------------------------------------------------------------------------
 
 #lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate","med.age","SMR")
 #lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate",          "SMR")
 lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","m.YLL","SMR")
-  
-  
-  
+
 lMeasuresC <- c("Years of Life Lost (YLL)",
                 "Years of Life Lost per 100,000 population",
                 "Number of deaths",
@@ -180,20 +164,17 @@ sdohVecL  <- c("<Bachelors Degree","Below Federal Poverty",'HCI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
 names(sdohVec) <- sdohVecL
 
-
 lList  <- sort(as.character(unique(datCounty$county)))
 if (sjc) {lList <- lList[lList %in% sjconsortium]}
 
+nC       <- 5
+myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
+yG       <- "2011-2015"
 
-
-nC        <- 5
-myColor1  <- rev(brewer.pal(nC,"RdYlBu"))
-
-yG <- "2011-2015"
-
- #myYear <- 2013
- myLHJ  <- "Colusa"; myLev <- 1; myCause <- 104   # myCause  <- "Diabetes mellitus"
+# myYear <- 2013
+# myLHJ  <- "Colusa"
+# myLev <- 1
+# myCause <- 104
+# myCause  <- "Diabetes mellitus"
 
 # --- END --------------------------------------------------------------------------------------------------
-
- 

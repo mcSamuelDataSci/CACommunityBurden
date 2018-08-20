@@ -9,6 +9,7 @@
 
 library(fs)
 library(dplyr)
+library(readxl)
 
 myDrive <- "E:/0.CBD"  
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -19,7 +20,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 # maybe change to read_csv....
 HPIdat     <- read.csv(path(upPlace,"/upData/HPI2_MasterFile_2018-04-04.csv"),as.is=TRUE)
 
-county.map <- read.csv(paste0(myPlace,"/myInfo/county_crosswalk.csv"),as.is=TRUE)
+county.map <- as.data.frame(read_xlsx(paste0(myPlace,"/myInfo/countycodes.Map.xlsx")))
 cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "character")  # file linking MSSAs to census 
 comName    <- unique(cbdLinkCA[,c("comID","comName")])                                    # dataframe linking comID and comName
 
@@ -34,7 +35,7 @@ sdohTract     <- mutate(HPIdat,
                          belowPov     = 100 - abovepoverty,
                          hpiScore     = hpi2score,
                          comID        = cbdLinkCA[match(GEOID,cbdLinkCA[,"GEOID"]),"comID"],
-                         region       = county.map[match(County_Name,county.map[,"NAME1_PROPER"]),"REGION_HEALTHYCA"],
+                         region       = county.map[match(County_Name,county.map[,"countyName"]),"REGION_HEALTHYCA"],
                          regionF      = as.numeric(as.factor(region))
                      ) %>%
                transform(county=County_Name)
@@ -61,5 +62,5 @@ sdohTract <- select(sdohTract,year,GEOID,county,region,pop,lessBachelor,belowPov
 
 save(sdohTract,  file= path(myPlace,"/myData/","sdohTract.R"))
 save(sdohComm,   file= path(myPlace,"/myData/","sdohComm.R"))
-save(sdohCounty, file= path(myPlace,"/myData/","sdohCOunty.R"))
+save(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.R"))
 
