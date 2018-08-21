@@ -121,9 +121,14 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
-  # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
   
-  mTitle       <- "California Community Burden of Disease and Costs 0.4.0"
+  version <- "0.4.0"
+  
+  mTitle       <- "California Community Burden of Disease and Costs"
+  
+# --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
+
+  
   sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
   sjc          <- FALSE
   
@@ -144,7 +149,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","m.YLL","SMR")
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
-                "Years of Life Lost per 100,000 population",
+                "Years of Life Lost per 100,000 people",
                 "Number of deaths",
                 "Crude Death Rate",
                 "Age-Adjusted Death Rate",

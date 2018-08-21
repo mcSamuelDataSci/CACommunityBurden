@@ -26,7 +26,7 @@ tags$h3(mTitle),
 sidebarPanel( 
  conditionalPanel(condition = fC(c(1,3, 33,6,8,9)),       selectInput(  "myCAUSE",   "Cause",                 choices=causeNum36,selected=0)),
  conditionalPanel(condition = fC(c(1,2,4,5,55,8)),    selectInput(  "myLHJ",     "County",                choices=lList,selected=1)),
- conditionalPanel(condition = fC(c(1,3, 33,8,9)),         selectInput(  "myGeo",     "Geo Level",             choices=c("County","Community","Census Tract"))),
+ conditionalPanel(condition = fC(c(1,3, 33,8,9)),         selectInput(  "myGeo",     "Geographic Level",             choices=c("County","Community","Census Tract"))),
 
  conditionalPanel(condition =       paste("(!( input.myGeo == 'Community' | input.myGeo == 'Census Tract')  && (", fC(c(1,3, 33)),") ) | (", fC(c(5,55,6)),")"  ),
                   
@@ -38,7 +38,7 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(1,3, 33)),             checkboxInput("myCon",     "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(2,4,5,7)),         numericInput( "myN",       "How Many",              value=10,min=1,max=50)),
  conditionalPanel(condition = fC(c(1,3, 33,5,55,6,7,8,9)),selectInput(  "myMeasure", "What Measure",          choices=lMeasures,selected="YLLper")),
- conditionalPanel(condition = fC(c(3, 33)),               checkboxInput("myLabName", "Geo Names",             value=FALSE)),
+ conditionalPanel(condition = fC(c(3, 33)),               checkboxInput("myLabName", "Place Names",             value=FALSE)),
  conditionalPanel(condition = fC(c(3, 33)),               checkboxInput("cZoom",     "Zoom to County",        value=FALSE)),
  conditionalPanel(condition = fC(c(6)),               checkboxInput("gZoom",     "Comunity Level",        value=FALSE)),
  conditionalPanel(condition = fC(c(6)),               checkboxInput("myCI",      "95% CIs?",              value=TRUE)),
@@ -64,8 +64,9 @@ sidebarPanel(
      tags$a(href="https://oshpd.ca.gov/HWDD/MSSA.html",h6("MSSA Info")),
      style="color:blue"),
    br(),
-   HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
-   #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center"
+   HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
+   #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
+   helpText(paste("Version:",version),style="color:blue")
  )
  
  ),
