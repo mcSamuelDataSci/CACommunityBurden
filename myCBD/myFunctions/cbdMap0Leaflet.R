@@ -12,7 +12,7 @@ cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, 
     if (myGeo == "Community") {
       dat.1    <- filter(datComm,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
       map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
-      map.1$lab <- map.1$comName
+      map.1$lab <- paste0("MSSA: ",map.1$comName," (ID=",map.1$comID,")")
       yearLab <- yG    }  
   
     if (myGeo == "Census Tract") { 
@@ -34,7 +34,7 @@ cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, 
     mA <-leaflet(map.1)  %>% 
             addTiles()  %>%
             addPolygons(color = "#444444", weight = 1, fillOpacity = 0.4, fillColor = ~ pal(WORK),
-                 popup = paste(myMeasure,"<BR>",map.1[["lab"]],"<BR>",round(map.1[["WORK"]],2)   ) ) %>%
+                 popup = paste(myMeasure,"=",round(map.1[["WORK"]],2),"<BR>",map.1[["lab"]],"<BR>") ) %>%
             addLegend("bottomleft", pal = pal, values = map.1[["WORK"]],title = names(lMeasures[lMeasures==myMeasure]), opacity=.7 )
               
  mA

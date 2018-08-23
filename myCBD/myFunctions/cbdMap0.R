@@ -135,8 +135,10 @@ col2hex <- function(cname)
 if (myLabName) {
 t.ll <- coordinates(map.1)
 if (myGeo=="County")    {test <- map.1$county}
-if (myGeo=="Community") {test <- comName$comName[comName$comID %in% map.1$comID]}
-if (myGeo=="Census Tract")     {test <- map.1$TRACT_ID}
+if (myGeo=="Community") {test <- paste0(map.1$comName," (",map.1$comID,")")}
+if (myGeo=="Census Tract")     {test <- paste0(map.1$GEOID)}
+
+
 text(t.ll,wrap.labels(as.character(test),10),cex=0.8) }
 
 
