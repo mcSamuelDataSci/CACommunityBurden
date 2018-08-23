@@ -9,13 +9,13 @@ shinyServer(function(input, output) {
  
   output$cbdMap1   <- 
     #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
-    renderPlot(cbdMap0(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
+    renderPlot(cbdMap0(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
     #})
  
   
   output$cbdMapX   <- 
     #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
-    renderPlot(cbdMapX(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
+    renderPlot(cbdMapX(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myCon, input$myGeo, input$cZoom,input$myLabName ))
   #})
   
   
@@ -23,7 +23,7 @@ shinyServer(function(input, output) {
  output$rankCauseT<- renderDataTable(rankCauseTab(input$myLHJ, input$myYear),option=list(columnDefs=list(list(targets=3:5, class="dt-right")),
                                                        pageLength = 60)) #DT::
  
-   output$rankGeo   <- renderPlot(   rankGeo(       input$myLHJX, input$myCAUSE, input$myMeasure, input$myYear,                           input$gZoom,input$myCI      ))
+   output$rankGeo   <- renderPlot(   rankGeo(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear,                           input$cZoom,input$myCI      ))
  output$trend     <- renderPlot(   trend(         input$myLHJ,  input$myCAUSE, input$myMeasure                                                                      ))
  output$scatter   <- renderPlotly( scatterSDOH(                 input$myCAUSE, input$myMeasure,               input$myGeo,input$myX                                 ))
  

@@ -10,6 +10,7 @@
 
 cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon="Yes",myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
+
   #use these values to see the error bleow  
  # myLHJ = "Amador"; myCause=104; myYear=2015;myLabName=FALSE; myCon=TRUE;myGeo="Community";cZoom=TRUE;    myMeasure = "aRate";myLabNum=FALSE
   

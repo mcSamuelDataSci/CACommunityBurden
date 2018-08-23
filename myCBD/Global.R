@@ -72,21 +72,12 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #library(sf)
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
-  whichData  <-  "fake"
- 
-  if (whichData == "fake") {
+  whichData  <-  "real"
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
   load(path(myPlace,"/myData/",whichData,"datComm.R"))
   load(path(myPlace,"/myData/",whichData,"datCounty.R"))
   load(path(myPlace,"/myData/",whichData,"datState.R"))
-  }
-  
-  if (whichData == "real") {
-    load(path("e:/0.CBD_SecLocalData",whichData,"datTract.R"))
-    load(path("e:/0.CBD_SecLocalData",whichData,"datComm.R"))
-    load(path("e:/0.CBD_SecLocalData",whichData,"datCounty.R"))
-    load(path("e:/0.CBD_SecLocalData",whichData,"datState.R"))
-  }  
+ 
     
   load(path(myPlace,"/myData/","sdohTract.R"))
   load(path(myPlace,"/myData/","sdohComm.R"))
@@ -165,7 +156,7 @@ causeNum36        <- causeList36[,1]
 names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
 
 
-sdohVecL  <- c("<Bachelors Degree","Below Federal Poverty",'HCI Raw Score')
+sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
 names(sdohVec) <- sdohVecL
 

@@ -19,12 +19,12 @@ library(fs)
 
 #-- LOAD MAIN DATA SET, AND "INFO FILES", BEGIN KEY TRANSFORMATIONS------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 
 if (whichDat == "real") {
 # CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
- load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
-#  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
+# load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
+ load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
   cbdDat0 <- cbdDat0FULL    
 }
  
@@ -479,8 +479,6 @@ save(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.R"))
 save(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.R"))
 save(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.R"))
 save(datState,  file= path(myPlace,"/myData/",whichDat,"datState.R"))
-
-
 
 
 # END

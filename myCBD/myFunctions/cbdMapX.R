@@ -18,10 +18,14 @@ myLabNum=FALSE
 
 
 
-cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon=TRUE,myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
+cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myLabNum=FALSE) {
 
   #use these values to see the error bleow  
  # myLHJ = "Amador"; myCause=104; myYear=2015;myLabName=FALSE; myCon=TRUE;myGeo="Community";cZoom=TRUE;    myMeasure = "aRate";myLabNum=FALSE
+  
+  
+    if(cZoom & myGeo=="County") myGeo="Community"
+  
   
   
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
@@ -86,9 +90,9 @@ palette(myColor1)
   library(tmap)
     #tmap_style("grey")
     tmap_style("classic")
-    tm_shape(map.1) + tm_polygons("plotter",title=paste(myMeasure))  
+    tm_shape(map.1) + tm_polygons(col="plotter",title=paste(myMeasure),style="fisher",colorNA="white")  
     
-    
+    # how to use style="quantile" and add na.rm=TRUE
   
 }
 
