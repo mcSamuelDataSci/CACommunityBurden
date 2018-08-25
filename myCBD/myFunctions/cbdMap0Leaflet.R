@@ -1,4 +1,4 @@
-cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, myGeo="Census Tract",myPal="Numeric") {
+cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, myGeo="Census Tract",myCutSystem="fisher") {
     
    # county data for just 2011-2015
    # dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,county !="CALIFORNIA STATE")
@@ -29,9 +29,10 @@ cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, 
     map.1$WORK <-  eval(parse(text=paste0("map.1$",myMeasure)))
     map.1$WORK[is.na(map.1$WORK)] <- 0
    
-    pal <- colorNumeric(rev(brewer.pal(6,"RdYlBu")),  domain = map.1[["WORK"]], 6)
-    if (myPal=="Quantile") {pal <- colorQuantile(rev(brewer.pal(6,"RdYlBu")),  domain = map.1[["WORK"]], 6) }
-
+    if (myCutSystem == "numeric")  {pal <- colorNumeric(rev(brewer.pal(6,"RdYlBu")),  domain = map.1[["WORK"]], 6) }
+    if (myCutSystem == "quantile") {pal <- colorQuantile(rev(brewer.pal(6,"RdYlBu")),  domain = map.1[["WORK"]], 6) }
+    if (myCutSystem == "fisher")   {pal <- colorBin(rev(brewer.pal(6,"RdYlBu")),  domain = map.1[["WORK"]], 6) }
+    
     
     mA <-leaflet(map.1)  %>% 
             addTiles()  %>%
@@ -50,8 +51,8 @@ cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, 
 # addPolygons(weight=2, fillColor = ~colorNumeric(rev(brewer.pal(7,"RdYlBu")), map.1[["WORK"]], 7)(map.1[["WORK"]]),fillOpacity=.7,
 
 
-# if (myCon)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))}        
-# if (!myCon)  {myrange <- c(0,mydat)}
+# if (myStateCut)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))}        
+# if (!myStateCut)  {myrange <- c(0,mydat)}
 
 #  if (myMeasure=="med.age") {myColor1 <- rev(myColor1)}
 #  palette(myColor1)

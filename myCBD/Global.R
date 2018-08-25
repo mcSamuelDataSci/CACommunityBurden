@@ -10,9 +10,10 @@
 #                                                                                     |   
 # =====================================================================================
 
-#-- Set Locations Etc----------------------------------------------------------------------
+#-- Set Locations and Data Source ----------------------------------------------------------
 
- myPlace  <- getwd()   # for Shiny.io
+ myPlace   <- getwd()   
+ whichData <-  "fake"
  
 #-- Load Packages --------------------------------------------------------------------------
 
@@ -72,7 +73,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #library(sf)
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
-  whichData  <-  "real"
+ 
   load(path(myPlace,"/myData/",whichData,"datTract.R"))
   load(path(myPlace,"/myData/",whichData,"datComm.R"))
   load(path(myPlace,"/myData/",whichData,"datCounty.R"))
@@ -101,7 +102,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   source(paste0(myPlace,"/myFunctions/cbdCutPoint0.R"))
   
   source(paste0(myPlace,"/myFunctions/cbdMap0.R"))
-  source(paste0(myPlace,"/myFunctions/cbdMapX.R"))
+  source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
   source(paste0(myPlace,"/myFunctions/cbdMap0Leaflet.R"))
   
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 

@@ -1,18 +1,11 @@
-#need to change this to tmap!
-
-#one more...Thing
-
-####  check "Tract" versus "Census tract"
-####  check myCon="Yes" verus myCon=TRUE
+# Core Static CCB Mapping Function
 
 
-# THIS IS IN THE TEMP BANCH
-
-cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myCon="Yes",myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
+cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=FALSE,myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
 
   #use these values to see the error bleow  
- # myLHJ = "Amador"; myCause=104; myYear=2015;myLabName=FALSE; myCon=TRUE;myGeo="Community";cZoom=TRUE;    myMeasure = "aRate";myLabNum=FALSE
+ # myLHJ = "Amador"; myCause=104; myYear=2015;myLabName=FALSE; myStateCut=TRUE;myGeo="Community";cZoom=TRUE;    myMeasure = "aRate";myLabNum=FALSE
   
   
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
@@ -48,12 +41,12 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   mydat <-     eval(parse(text=paste0("map.1$",myMeasure)))
   mydat[is.na(mydat)] <- 0
 
-# if (myCon)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
+# if (myStateCut)   {myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
 #   #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
 #   myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
 # }
 #   
-# if (!myCon)  {myrange <- c(0,mydat)
+# if (!myStateCut)  {myrange <- c(0,mydat)
 #        #     myCuts   <- classIntervals(myrange, n=min(length(mydat),5),style = "fisher") ###ADDED n=5
 # 
 #              myCuts   <- classIntervals(myrange, n=5,style = "fisher") ###ADDED n=5
@@ -66,7 +59,7 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   
  
   
-  if (myCon)   {
+  if (myStateCut)   {
     myrange <- c(0,eval(parse(text=paste0("dat.X$",myMeasure))))
   #  myCuts   <- classIntervals(myrange, n = nC, style = "fisher",dataPrecision=0) 
     myCutsT <- myCuts
