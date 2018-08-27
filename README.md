@@ -6,6 +6,10 @@
 * Includes a pilot set of Social Determinants of Health data. 
 * Designed for State Health Department programs, Local Health Departments, and community partners; specifically for epidemiologic analysis and systematic scientific insight for allocation of resources, evaluation of interventions, and program planning 
 
+Test Site:
+https://phdataviz.shinyapps.io/myCBD/
+
+
 <br>
 
 * Clear place-based mortality measure data, to address specific queries;
