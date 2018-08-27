@@ -88,6 +88,8 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 #-- Load Info Files and Functions ------------------------------------------------------------------------
   
   # USE THIS 
+  
+  
   # new appraoch from Zev for simplifying path names, etc 
   # don't have to keep tract of leading or following "/" !
   # check to make sure this is supported on CDPH Shiny Server?
@@ -136,17 +138,15 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   
 # --- Shiny Stuff and Constants ---------------------------------------------------------------------------
 
-#lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate","med.age","SMR")
-#lMeasures <- c("YLL","m.YLL","YLLper","Ndeaths","cDeathRate","aRate",          "SMR")
-lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","m.YLL","SMR")
+# med.age, m.YLL  
+lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
-                "Years of Life Lost per 100,000 people",
+                "YLL per 100,000 population",
                 "Number of deaths",
                 "Crude Death Rate",
                 "Age-Adjusted Death Rate",
                 "Mean Age at Death",
-                "Mean YLL",
                 "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
