@@ -116,9 +116,9 @@ cbdMapXLeaf <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=
 
        tt.map <- 
     cbdMapX(myLHJ, myCause,myMeasure, myYear,myStateCut,myGeo,cZoom,myLabName,myCutSystem)
-  
+       pdf(NULL)
   tmap_leaflet(tt.map)
-  
+  pdf(NULL)
 }
   
 

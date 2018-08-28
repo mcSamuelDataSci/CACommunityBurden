@@ -16,8 +16,10 @@ fC <- function(vec) {
 #library(shinythemes)
 shinyUI(fluidPage(theme = "bootstrap.css",
                   #shinythemes::themeSelector(),
-
-tags$h3(mTitle),
+                  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),
+                  # removes ticks between years
+                  # https://stackoverflow.com/questions/44474099/removing-hiding-minor-ticks-of-a-sliderinput-in-shiny
+                  tags$h3(mTitle),
   
 
 # wellPanel

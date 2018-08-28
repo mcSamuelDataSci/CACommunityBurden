@@ -31,7 +31,5 @@ output$map_title <- renderUI({
                                   "</div>", sep = " ") ) })
                      })
 
-
-
 #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
 
