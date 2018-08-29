@@ -29,6 +29,8 @@ bad <- c(c("06081990100","06083990000","06111990100","06037990300","06001990000"
 options(tigris_class = "sf")  # Read shape files as Simiple Features objects
 shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
 
+shape_Tract <- rmapshaper::ms_simplify(input = shape_Tract, weighting = 2, keep_shapes = TRUE) # From John P.
+
 # Remove Islands
 # does NOT yet eliminate the islands the way we want it to
 shape_Tract  <- ms_filter_islands(shape_Tract,min_area = 100000000) 
