@@ -1,7 +1,3 @@
-# Core CCB Mapping Function
-# uses tmap
-# (https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Exploring-and-presenting-maps-with-tmap)
-
 library(tmap)
 
 # values that can be used for testing code "outside" shiny:
@@ -21,11 +17,7 @@ myCutSystem="fisher"
 
 cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
 
-  #quick fix to address an error that will be addressed later
-  #Problem seems resolved with using tmap -- keeping code temporarily 
-  #if(cZoom & myGeo=="County") myGeo="Community"
-  
-   if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
+    if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
   #county data for just 2011-2015 needed when myStateCut = TRUE -- to be addressed soon
     dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA STATE")
@@ -64,8 +56,6 @@ cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
 map.1$plotter <- eval(parse(text=paste0("map.1$",myMeasure)))
 map.1$plotter[is.na(map.1$plotter)] <- 0
   
-#tmap_mode("view")
-
 palette(myColor1)
 #tmap_style("white")
 
@@ -75,32 +65,17 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
 # coLab <- myLHJ
 # if (!cZoom) coLab <- "California"
 
-
-# KEY ISSUE for the moment is below in style=myCutSystem  
-# if there are missing values (e.g. if mapping statewide at the census-tract level), style="quantile" yeilds and errom message
-#   wanting "na.rm=TRUE", but I can not find where to set this
-
-
-
 # can't use this -- "Bug"/throws error if only one value (e.g. cZoom and County geography)
 #,legend.hist=T
 
-
  tm_shape(map.1) + tm_polygons(col="plotter",title=paste(lMeasuresC[lMeasures==myMeasure]),style=myCutSystem,colorNA="white")  +
-  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,1]== myCause,2],"in",yearLab),
+  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"gbdCode"]== myCause,"nameOnly"],"in",yearLab),
             legend.outside = TRUE,
             legend.outside.position = "right"
             #,
-            #legend.title.size = 1,
-            #legend.text.size = 1,
-            #legend.hist.height = .3)
-  )
-            
-#tmap_leaflet(t.map)
-
+            #legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3
+            )
 }
-
-
 
 cbdMapXStat <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
   tmap_mode("plot")
@@ -109,19 +84,14 @@ cbdMapXStat <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=
 }
 
 cbdMapXLeaf <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
-  tmap_mode("view")
-
-  #?? tm_basemap function not there???
-  # tm_basemap("Stamen.Watercolor") +  
-
-       tt.map <- 
-    cbdMapX(myLHJ, myCause,myMeasure, myYear,myStateCut,myGeo,cZoom,myLabName,myCutSystem)
-       pdf(NULL)
-  tmap_leaflet(tt.map)
+   tmap_mode("view")
+   tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear,myStateCut,myGeo,cZoom,myLabName,myCutSystem)
+   tmap_leaflet(tt.map)
   
 }
   
-
+ #?? tm_basemap function not there???
+  # tm_basemap("Stamen.Watercolor") + 
 # FOR TESTING ----------------------------------------------------------------------------------------------
 
 
