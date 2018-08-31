@@ -1,7 +1,10 @@
 #library(DT)
 shinyServer(function(input, output) {
  
-  
+Gettysburg <- "Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal"
+
+observeEvent(input$causeHelp1, {showModal(modalDialog(Gettysburg, easyClose = TRUE))})
+
   
 output$homeText  <- renderText("Hello")  
 output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myGeo, input$myCutSystem))  
@@ -30,6 +33,8 @@ output$map_title <- renderUI({
                                    ,",",input$myYear,
                                   "</div>", sep = " ") ) })
                      })
+
+
 
 #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
 

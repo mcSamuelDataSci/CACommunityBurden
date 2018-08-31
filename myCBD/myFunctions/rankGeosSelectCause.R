@@ -2,6 +2,11 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015, cZoom=FAL
 
     temp <- paste0("dat.1$",myMeasure)
   
+    if (cZoom & myMeasure == "SMR") stop("I appologize dear, but SMR is not calcualted for now below the county level")
+    
+    
+    
+    
     if (cZoom) {dat.1    <- filter(datComm,county==myLHJ,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36") 
              dat.1    <- dat.1[order(eval(parse(text=temp))),]
                       dat.1$lab <- wrap.labels(dat.1$comName,30)

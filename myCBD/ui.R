@@ -28,7 +28,8 @@ shinyUI(fluidPage(theme = "bootstrap.css",
 sidebarPanel( 
  
  conditionalPanel(condition = fC(c(1,3, 33,34,6,8,9)),   
-                  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected=0)
+                  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected=0),
+                  actionButton("causeHelp1", "Cause Help",icon("paper-plane"),style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                   ),
  
  conditionalPanel(condition = fC(c(3,6,33,34)),
@@ -64,25 +65,25 @@ sidebarPanel(
 
  hr(), 
  conditionalPanel(condition = fC(c(0)), 
- helpText(n1), br(),
- helpText(n2,style="color:red"),br(),
+ helpText(n1,style="color:black"), br(),
+ helpText(n2,style="color:black"),br(),
  helpText("LINKS",tags$a(href="https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-and-Statistics-.aspx", 
                                h6("California Death Data")),
                   tags$a(href="https://data.chhs.ca.gov/",
                                h6("California Health and Human Service Agency Open Data Portal")),
                   tags$a(href="https://www.census.gov/programs-surveys/acs/",
-                               h6("American Community Survey")),  style="color:blue"),
+                               h6("American Community Survey")),  style="color:black"),
    br(),
    helpText("DEFINITIONS",
      h6("YLL:  Years of Life Lost"),
      h6("SMR:  Standard Mortality Ratio (Local Rate/State Rate)"),
      h6("Community: Medical Service Study Areas (MSSA)"),
      tags$a(href="https://oshpd.ca.gov/HWDD/MSSA.html",h6("MSSA Info")),
-     style="color:blue"),
+     style="color:black"),
    br(),
    HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
    #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
-   helpText(paste("Version:",version),style="color:blue")
+   helpText(paste("Version:",version),style="color:black")
  )
  
  ),
@@ -90,7 +91,7 @@ sidebarPanel(
 mainPanel(
   hr(), 
   tabsetPanel(type = "tabs",
-   tabPanel("Home Page",  br(),helpText("[Placeholder Image]",align='center',style="color:red"),  img(src="burden-of-disease-toolkit.jpg",width = 600, height = 350),   value =  0),            #textOutput("HomeText"                             )
+   tabPanel("Home Page",  br(),helpText("[Placeholder Image]",align='center',style="color:black"),  img(src="burden-of-disease-toolkit.jpg",width = 600, height = 350),   value =  0),            #textOutput("HomeText"                             )
   
    tabPanel("Map (tmap Leaf)",   htmlOutput(      "map_title"                      ),
                                  leafletOutput(      "cbdMapTL",   width=700,height=700),   value = 33),
