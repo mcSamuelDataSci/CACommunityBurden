@@ -19,7 +19,7 @@ library(fs)
 
 #-- LOAD MAIN DATA SET, AND "INFO FILES", BEGIN KEY TRANSFORMATIONS------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 
 if (whichDat == "real") {
 # CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
@@ -66,20 +66,13 @@ cbdDat0       <- mutate(cbdDat0,
 # aL            <- c(   0, 5,15,25,35,45,55,65,75,85)
 # aU            <- c(-1,4,14,24,34,44,54,64,74,84,999)
 
-# make "ageMap" from info file to make standard age groups  # CHANGE NAME OF THIS FILE...
-ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/acsCensus.Map.xlsx"),sheet = "ageList"))
-# subset ageMap to relevant rows and columns
-ageMap  <- ageMap[!is.na(ageMap$inAgeG),c("lAge","uAge")]
-#ageMap  <- read.csv(paste0(myPlace,"/myInfo/ageGroupMap2.csv"))  #simplier, but want to use same age info source for all files...
+ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge   # lower age ranges
 aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
 
 aMark         <- findInterval(cbdDat0$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 aLabs         <- paste(aL,"-",aU[-1])                           # make label for ranges
 cbdDat0$ageG  <- aLabs[aMark]                                   # make new "ageG" variable based on two objects above 
-
-
-
 
 # function to map ICD-10 codes to GBD conditions
 icdToGroup <- function(myIn,myInMap) {
@@ -95,8 +88,6 @@ cbdDat0$gbdSpec <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[ (gbdMap0$L2 %in% c(2,6
 #popTractTot2013 <- readRDS(paste0(upPlace,"/upData/popTractTot2013.RDS"))
 popTractSex2013 <- readRDS(paste0(upPlace,"/upData/popTractSex2013.RDS"))
 popTractTot2013 <- filter(popTractSex2013,sex=="Total")
-
-
 
 #---------------
 

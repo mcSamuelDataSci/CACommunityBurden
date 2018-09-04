@@ -111,6 +111,9 @@ popTractAgeG2013 <- as.data.frame(acs.pop.tracts)
  
 aL                 <- c(   0, 5,15,25,35,45,55,65,75,85)
 aU                 <- c(-1,4,14,24,34,44,54,64,74,84,999)
+
+
+
 aMark              <- findInterval(popTractAgeG2013$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 aLabs              <- paste(aL,"-",aU[-1])                           # make label for ranges
 popTractAgeG2013$ageG  <- aLabs[aMark] 

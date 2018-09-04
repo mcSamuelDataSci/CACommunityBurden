@@ -54,8 +54,7 @@ saveRDS(popCountyTot2000to2015, file= paste0(upPlace,"/upData/popCountyTot2000to
 
 # -- Construct age groups, stratify pop file by age group and save ---------------------------------------------------------------------------
 
-ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/acsCensus.Map.xlsx"),sheet = "ageList"))
-ageMap  <- ageMap[!is.na(ageMap$inAgeG),c("lAge","uAge")]
+ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge
 aU      <- c(-1,ageMap$uAge)
 
