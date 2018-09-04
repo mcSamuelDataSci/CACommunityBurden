@@ -104,24 +104,23 @@ acs.pop.tracts[, yearG := "2011-2015"] 	                                 # add y
 # ----- Michael Work --------------------------------------------------------------------------------------------------------
 library(dplyr)
 
-popTractAgeG2013 <- as.data.frame(acs.pop.tracts)
+popTractSexAgeG2013 <- as.data.frame(acs.pop.tracts)
 
-# unique(popTractAgeG2013$agell)
-# "0"  "5"  "10" "15" "18" "20" "21" "22" "25" "30" "35" "40" "45" "50" "55" "60" "62" "65" "67" "70" "75" "80" "85"
- 
-aL                 <- c(   0, 5,15,25,35,45,55,65,75,85)
-aU                 <- c(-1,4,14,24,34,44,54,64,74,84,999)
+library(readxl)
+ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
+aL      <-      ageMap$lAge   # lower age ranges
+aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
 
+aMark                     <- findInterval(popTractAgeG2013$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+aLabs                     <- paste(aL,"-",aU[-1])                           # make label for ranges
+popTractSexAgeG2013$ageG  <- aLabs[aMark] 
 
+linker              <- as.data.frame(cbd.link)[,-1] # removes year
+popTractSexAgeG2013 <- merge(popTractAgeG2013,linker,by=c("GEOID"),all=TRUE)
+popSex              <- popTractSexAgeG2013 %>% group_by(yearG,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
+popTot              <- popSex              %>% group_by(yearG,GEOID,comID,ageG)     %>% summarise(pop=sum(pop))     %>% mutate(sex="Total")
+popTractAgeG2013    <- rbind(popSex,popTot)
 
-aMark              <- findInterval(popTractAgeG2013$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-aLabs              <- paste(aL,"-",aU[-1])                           # make label for ranges
-popTractAgeG2013$ageG  <- aLabs[aMark] 
+table(popTractAgeG2013$sex)
 
-linker           <- as.data.frame(cbd.link)[,-1] # removes year
-popTractAgeG2013 <- merge(popTractAgeG2013,linker,by=c("GEOID"),all=TRUE)
-popTractAgeG2013 <- rbind(popTractAgeG2013 %>% group_by(yearG,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate)),
-                          popTractAgeG2013 %>% group_by(yearG,GEOID,comID,ageG) %>% summarise(pop=sum(estimate)))
-popTractAgeG2013$sex[is.na(popTractAgeG2013$sex)]<-"Total"
-
-saveRDS(popTractAgeG2013, file=paste0(upPlace,"/upData/popTractAgeG2013.RDS"))
+saveRDS(popTractAgeG2013, file=paste0(upPlace,"/upData/popTractSexAgeG2013.RDS"))
