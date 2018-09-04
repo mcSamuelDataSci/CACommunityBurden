@@ -1,6 +1,6 @@
 library(tigris) 
 library(dplyr)
-library(sf)         # simple features GIS
+library(sf)         
 library(rmapshaper) # to remove islands (not yet working)
 
 options(tigris_class = "sf")  # Read shape files as Simiple Features objects
