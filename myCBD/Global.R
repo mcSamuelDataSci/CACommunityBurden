@@ -95,8 +95,7 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   # don't have to keep tract of leading or following "/" !
   # check to make sure this is supported on CDPH Shiny Server?
   
-  gbdMap0    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))  # OLD
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo////gbd.ICD.Map.xlsx/"), sheet="main"))    # NEW, with extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))

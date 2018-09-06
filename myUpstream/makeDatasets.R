@@ -33,14 +33,8 @@ if (whichDat == "fake") {
    load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))      
    cbdDat0 <- cbdDat0SAMP
 }
-
-   
    #forEthan <- sample_n(cbdDat0SAMP,100000)
    #saveRDS(forEthan, file=paste0(upPlace,"/upData/forEthan.RDS"))
-   
-   
-      
-# source(paste0(myPlace,"/myFunctions/icdToGroup.R"))
 
 # this "as.data.frame" below and elsewhere is really annoying.... but at least icdToGroup function below does not work otherwise;
 # becuase the "tibble" is double precision or for some other reason this messes up; 
@@ -54,27 +48,23 @@ cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "cha
 comName    <- unique(cbdLinkCA[,c("comID","comName")])                                    # dataframe linking comID and comName
 
 cbdDat0       <- mutate(cbdDat0,
+                         sex    = c("Male","Female")[match(sex,c("M","F"))],
                          age    = as.numeric(age),                                                  # redundant...
                          ICD10  = as.character(ICD10),                                              # redundant...
                          comID  = cbdLinkCA[match(cbdDat0$GEOID,cbdLinkCA[,"GEOID"]),"comID"],   
                          yll    = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],
                          yearG  = yearMap[match(year,yearMap[,"year"]),"yGroup1"]           )
 
-# Add age-group(s) variable(s) for age-specific and age-adjustment calculations -----------------------------------
-
-# could make aL and aU like this, or as below based on an input file:
-# aL            <- c(   0, 5,15,25,35,45,55,65,75,85)
-# aU            <- c(-1,4,14,24,34,44,54,64,74,84,999)
-
-ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
-aL      <-      ageMap$lAge   # lower age ranges
-aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
-
+# Add age-Group variable for age-specific rates and age-adjustment -------------------------------------------------------
+ageMap        <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
+aL            <-      ageMap$lAge     # lower age ranges
+aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
+aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
 aMark         <- findInterval(cbdDat0$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-aLabs         <- paste(aL,"-",aU[-1])                           # make label for ranges
 cbdDat0$ageG  <- aLabs[aMark]                                   # make new "ageG" variable based on two objects above 
 
-# function to map ICD-10 codes to GBD conditions
+
+# core function to map ICD-10 codes to GBD conditions ---------------------------------------------------------------------
 icdToGroup <- function(myIn,myInMap) {
   Cause   <- rep(NA,length(myIn))
   for (i in 1:nrow(myInMap)) {Cause[grepl(myInMap[i,2],myIn)] <- myInMap[i,1] } 
@@ -84,11 +74,11 @@ cbdDat0$gbd36   <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[!is.na(gbdMap0$list36),
 cbdDat0$gbd3    <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[is.na(gbdMap0$L2)     ,c("gbdCode","regEx10")])      
 cbdDat0$gbdSpec <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[ (gbdMap0$L2 %in% c(2,6,8,11,13,14,15,16,21,22) & !is.na(gbdMap0$L3) & is.na(gbdMap0$L4) & is.na(gbdMap0$list36) )    ,c("gbdCode","regEx10")])      
 
-
-#popTractTot2013 <- readRDS(paste0(upPlace,"/upData/popTractTot2013.RDS"))
-popTractSex2013 <- readRDS(paste0(upPlace,"/upData/popTractSex2013.RDS"))
-popTractTot2013 <- filter(popTractSex2013,sex=="Total")
-
+popTract         <- readRDS(path(upPlace,"/upData/popTract2013.RDS"))
+popTractTotal    <- filter(popTract,sex == "Total" & ageG == "Total")
+popTractSexTotal <- filter(popTract,                 ageG == "Total")
+  
+  
 #---------------
 
 # DATA CLEANING ISSUES --------------------------------------------------------------------------------
@@ -330,7 +320,7 @@ myMeasures <- function(group_vars,levLab,myTotal=TRUE){
 }
 
 #  Examples
-#  grp <- c("county","year","gbd3")
+#  grp <- c("county","year","sex","gbd3")
 #  df  <- myMeasures(grp,grp[length(grp)])
 #  df  <- myMeasures(grp,grp[length(grp)],myTotal=FALSE)
   
@@ -356,17 +346,26 @@ ccbRates <- function(inData,yearN){
 # TRACT - level file
 
 # Group Causes
-grp      <- c("county","GEOID","yearG","gbd36")
-datTract <- myMeasures(grp,grp[length(grp)])
+grp       <- c("county","GEOID","yearG","gbd36")
+datTract  <- myMeasures(grp,grp[length(grp)]) %>% mutate(sex="Total")
+
+grp2      <- c("county","GEOID","yearG","sex","gbd36")
+datTract2 <- myMeasures(grp2,grp2[length(grp2)])
+
+datTract  <- bind_rows(datTract,datTract2) %>%
+                arrange(county,GEOID,yearG,CAUSE)
+
+
 
 # POPULATION file for tract level
-popDat1  <- as.data.frame(popTractTot2013  %>% group_by(county,GEOID) %>% summarize(pop = sum(pop,na.rm = TRUE) ))
+popDat1  <- as.data.frame(popTractSexTotal   %>% group_by(county,GEOID,sex) %>% summarize(pop = sum(pop,na.rm = TRUE) ))
 
 # MERGE Death and Population files
-datTract <- merge(datTract,popDat1,by.x = c("county","GEOID"), by.y = c("county","GEOID"))                     
+datTract <- merge(datTract,popDat1,by = c("county","GEOID","sex"))                     
 
 # Calculate Rates
-datTract <- ccbRates(datTract,5)
+datTract <- ccbRates(datTract,5) %>%
+             arrange(county,GEOID,yearG,CAUSE)
 
 # add adjusted rates
 datTract <- merge(datTract,tractAA ,by = c("GEOID","yearG","CAUSE"),all=TRUE)
@@ -381,7 +380,7 @@ grp3    <- c("county","comID","yearG","gbd3")
 datComm <- rbind(myMeasures(grp36,grp36[length(grp36)]),
                  myMeasures( grp3, grp3[ length(grp3)],myTotal=FALSE))
 
-popDat1  <- as.data.frame(popTractTot2013  %>% group_by(county,comID)  %>% summarize(pop = sum(pop,na.rm = TRUE) ))
+popDat1  <- as.data.frame(popTractTotal  %>% group_by(county,comID)  %>% summarize(pop = sum(pop,na.rm = TRUE) ))
 datComm  <- merge(datComm,popDat1,by = c("county","comID"))
 
 datComm <- ccbRates(datComm,5)
@@ -472,4 +471,11 @@ save(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.R"))
 save(datState,  file= path(myPlace,"/myData/",whichDat,"datState.R"))
 
 
-# END
+# END ---------------------------------------------------------------------------------------------
+
+# could make aL and aU like this, or as below based on an input file:
+# aL            <- c(   0, 5,15,25,35,45,55,65,75,85)
+# aU            <- c(-1,4,14,24,34,44,54,64,74,84,999)
+
+
+
