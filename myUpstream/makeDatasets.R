@@ -384,10 +384,9 @@ write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
 write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
 write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
 
- save(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.R"))
- save(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.R"))
- save(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.R"))
- save(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.R"))
+saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
+saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
+saveRDS(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 
 # END ===================================================================================================================
 
