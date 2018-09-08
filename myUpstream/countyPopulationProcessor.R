@@ -49,11 +49,6 @@ tDatDOF$county <- capwords(tDatDOF$county,strict=TRUE)
 
 # -- Make and save file with County (and California Total) Pop by year 2000-2015 -----------------------------------------------------------
 
-popCountyTot2000to2015 <- tDat %>% group_by(year, county) %>% summarize(pop  = sum(pop))
-saveRDS(popCountyTot2000to2015, file= paste0(upPlace,"/upData/popCountyTot2000to2017.RDS"))
-
-# -- Construct age groups, stratify pop file by age group and save ---------------------------------------------------------------------------
-
 ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge
 aU      <- c(-1,ageMap$uAge)
@@ -62,20 +57,40 @@ aMark       <- findInterval(tDat$age,aU,left.open = TRUE)
 aLabs       <- paste(aL,"-",aU[-1])
 tDat$ageG   <- aLabs[aMark]
 
-popCountyAgeG2000to2015 <- tDat %>% group_by(year, county,ageG) %>% 
-                                    summarize(pop  = sum(pop))  %>% 
-                                    filter(county != "California")
+tDatTot <-  tDat %>% mutate(sex = "T")
+tDat    <- bind_rows(tDat,tDatTot) %>% mutate(sex = c("Male","Female","Total")[match(sex,c("M","F","T"))])
 
-saveRDS(popCountyAgeG2000to2015, file= paste0(upPlace,"/upData/popCountyAgeG2000to2015.RDS"))
 
-# Life Table Thinking...
-# aLLT <- c(0,1,5,...90,100)
-# aULt <- 
+# 
+# 
+# popCountySexTot2000to2015    <- tDat %>% group_by(year, county, sex) %>% summarize(pop  = sum(pop))
+#                                  arrange(county,year,sex)
+# 
+#                                  
+# saveRDS(popCountySexTot2000to2015, file= paste0(upPlace,"/upData/popCountySexTot2000to2017.RDS"))
 
-# -- Construct and save file with total state popuation by age groups to use as "Standard Population"------------------------------------------
 
-popStandard     <-  tDat %>% filter(year == 2015, county == "California") %>%
-                             group_by(ageG) %>%  
-                             summarize(popStandard  = sum(pop))
 
-saveRDS(popStandard, file= paste0(upPlace,"/upData/popStandard.RDS"))
+popCounty2000to2015  <- tDat %>% group_by(year, county,sex,ageG) %>% 
+                                 summarize(pop  = sum(pop)) 
+
+popCountytemp <-        tDat %>% group_by(year, county,sex) %>% 
+                                 summarize(pop  = sum(pop)) %>%
+                                 mutate(ageG = "Total")
+
+popCounty2000to2015  <- bind_rows(popCounty2000to2015,popCountytemp)
+
+
+
+#%>% 
+#                                        filter(county != "California")
+
+saveRDS(popCounty2000to2015, file= paste0(upPlace,"/upData/popCounty2000to2015.RDS"))
+# 
+# # -- Construct and save file with total state popuation by age groups to use as "Standard Population"------------------------------------------
+# 
+# popStandard     <-  tDat %>% filter(year == 2015, county == "California") %>%
+#                              group_by(ageG) %>%  
+#                              summarize(popStandard  = sum(pop))
+# 
+# saveRDS(popStandard, file= paste0(upPlace,"/upData/popStandard.RDS"))
