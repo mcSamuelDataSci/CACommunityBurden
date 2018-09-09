@@ -20,7 +20,7 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015, cZoom=FAL
     #rankdat <- rankdat[(nrow(rankdat)-mytop):nrow(rankdat),]
     
     
-    if (myMeasure == "aRate")  {dat.1 <- dat.1[dat.1$county != "CALIFORNIA STATE",]}
+    if (myMeasure == "aRate")  {dat.1 <- dat.1[dat.1$county != "CALIFORNIA",]}
     
     
     

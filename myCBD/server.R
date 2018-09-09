@@ -10,8 +10,8 @@ output$homeText  <- renderText("Hello")
 output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myGeo, input$myCutSystem))  
 output$cbdMap1   <- renderPlot(     cbdMap0(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myStateCut, input$myGeo, input$cZoom,input$myLabName ))
 
-output$cbdMapTL  <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
-output$cbdMapTS  <- renderPlot(   cbdMapXStat(    input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$cbdMapTL  <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$cbdMapTS  <- renderPlot(   cbdMapXStat(    input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
 
 output$rankCause <- renderPlot(     rankCause(     input$myLHJ,                input$myMeasure, input$myYear,                           input$myN                   ))
 output$rankCauseT<- renderDataTable(rankCauseTab(  input$myLHJ, input$myYear),option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::

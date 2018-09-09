@@ -1,7 +1,7 @@
 cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, myGeo="Census Tract",myCutSystem="fisher") {
     
    # county data for just 2011-2015
-   # dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,county !="CALIFORNIA STATE")
+   # dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,county !="CALIFORNIA")
     
     if (myGeo == "County"){
       dat.1   <- filter(datCounty,year==myYear,CAUSE==myCause,Level == "gbd36")  

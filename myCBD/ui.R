@@ -55,6 +55,10 @@ sidebarPanel(
                   sliderInput("myYear","Year:",value=2015,min=2001,max=2015,animate = TRUE,round=TRUE,sep="",step=1)
                   ),
 
+ conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,8,9)), radioButtons(  "mySex",  "Sex:",choices=c("Total","Female","Male"))),
+ 
+ 
+ 
  conditionalPanel(condition = fC(c(1,3)),                  checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(2,4,5,7)),              numericInput( "myN",        "How Many:",              value=10,min=1,max=50)),
  conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,8,9)), selectInput(  "myMeasure",  "Measure:",          choices=lMeasures,selected="YLLper")),

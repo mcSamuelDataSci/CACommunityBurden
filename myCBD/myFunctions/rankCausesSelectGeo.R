@@ -47,7 +47,7 @@ rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,myN=10) {
    t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age)));   box(lwd=bLwd)
    t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
  
-  if (myLHJ != "CALIFORNIA STATE") {
+  if (myLHJ != "CALIFORNIA") {
    t.plot <- barplot((dat.1$SMR),xlab="SMR",                col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$SMR)));     box(lwd=bLwd)
    abline(v=0.8,col="green"); abline(v=1,col="gray"); abline(v=1.2,col="red")
    text(1,0,"state rate",srt=90,col="black",cex=1.2,adj=c(0,.5))

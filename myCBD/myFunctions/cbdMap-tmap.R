@@ -6,6 +6,7 @@ myLHJ= "Amador"
 myCause=0
 myMeasure = "YLLper"
 myYear=2015
+mySex="Female"
 myStateCut=TRUE
 myGeo="Census Tract"
 cZoom=TRUE
@@ -15,25 +16,25 @@ myCutSystem="fisher"
 }
 
 
-cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
 
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
   #county data for just 2011-2015 needed when myStateCut = TRUE -- to be addressed soon
-    dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA STATE")
+    dat.X   <- filter(datCounty,year %in% 2011:2015, sex==mySex, CAUSE==myCause, Level == "gbd36",county !="CALIFORNIA")
    
     if (myGeo == "County"){
-    dat.1   <- filter(datCounty,year==myYear,CAUSE==myCause,Level == "gbd36")  
+    dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause, Level == "gbd36")  
     map.1   <- merge(shape_County, dat.1, by.x=c("county"), by.y = c("county"),all=TRUE) 
     yearLab <- myYear }
     
     if (myGeo == "Census Tract") { 
-    dat.1    <- filter(datTract,yearG==yG,CAUSE==myCause,Level == "gbd36") 
+    dat.1    <- filter(datTract,yearG==yG,sex==mySex, CAUSE==myCause, Level == "gbd36") 
     map.1    <- merge(shape_Tract, dat.1, by.x=c("county","GEOID"), by.y = c("county","GEOID"),all=TRUE) 
     yearLab  <- yG}
 
     if (myGeo == "Community") {
-    dat.1    <- filter(datComm,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
+    dat.1    <- filter(datComm,yearG==yG,sex==mySex, CAUSE==myCause,  comID != "Unknown",Level == "gbd36")
     map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
     yearLab <- yG  
     }  
@@ -77,15 +78,15 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
             )
 }
 
-cbdMapXStat <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+cbdMapXStat <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
   tmap_mode("plot")
-  cbdMapX(myLHJ, myCause,myMeasure, myYear,myStateCut,myGeo,cZoom,myLabName,myCutSystem)
+  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)
   
 }
 
-cbdMapXLeaf <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+cbdMapXLeaf <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
    tmap_mode("view")
-   tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear,myStateCut,myGeo,cZoom,myLabName,myCutSystem)
+   tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)
    tmap_leaflet(tt.map)
   
 }
@@ -111,20 +112,6 @@ cal.gono.hatch<-hatched.SpatialPolygons(map.1,density=0.001,angle=45);
 proj4string(cal.gono.hatch)<-proj4string(cal.gono);
 
 tm_shape(cal.gono)+tm_polygon()+tm_shape(cal.gono.hatch)+tm_lines(col="grey");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 mapx <- cbdMapX()

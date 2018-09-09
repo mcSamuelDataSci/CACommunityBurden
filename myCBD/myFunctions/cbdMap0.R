@@ -16,7 +16,7 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   
   
     #county data for just 2011-2015
-    dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA STATE")
+    dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA")
    
     if (myGeo == "County"){
     dat.1   <- filter(datCounty,year==myYear,CAUSE==myCause,Level == "gbd36")  #
