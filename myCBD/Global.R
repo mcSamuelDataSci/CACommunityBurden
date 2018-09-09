@@ -80,12 +80,11 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
   #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
  
  
-datTract.R  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
-datComm.R   <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
-datCounty.R <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+datTract  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
+datComm   <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
+datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 #  load(path(myPlace,"/myData/",whichData,"datState.R"))
  
-    
   load(path(myPlace,"/myData/","sdohTract.R"))
   load(path(myPlace,"/myData/","sdohComm.R"))
   load(path(myPlace,"/myData/","sdohCounty.R"))
