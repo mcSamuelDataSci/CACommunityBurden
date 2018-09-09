@@ -95,7 +95,7 @@ sidebarPanel(
 mainPanel(
   hr(), 
   tabsetPanel(type = "tabs",
-   tabPanel("Home Page",  br(),helpText("[Placeholder Image]",align='center',style="color:black"),  img(src="burden-of-disease-toolkit.jpg",width = 600, height = 350),   value =  0),            #textOutput("HomeText"                             )
+   tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="100%",width="100%"),   value =  0),            #textOutput("HomeText"                             )
   
    tabPanel("Map (tmap Leaf)",   htmlOutput(      "map_title"                      ),
                                  leafletOutput(      "cbdMapTL",   width=700,height=700),   value = 33),
