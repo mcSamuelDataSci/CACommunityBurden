@@ -1,4 +1,4 @@
-rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015, cZoom=FALSE, myCI=TRUE) {
+rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Total", cZoom=FALSE, myCI=TRUE) {
 
     temp <- paste0("dat.1$",myMeasure)
   
@@ -7,12 +7,12 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015, cZoom=FAL
     
     
     
-    if (cZoom) {dat.1    <- filter(datComm,county==myLHJ,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36") 
+    if (cZoom) {dat.1    <- filter(datComm,county==myLHJ,yearG==yG,sex==mySex,CAUSE==myCause, comID != "Unknown",Level == "gbd36") 
              dat.1    <- dat.1[order(eval(parse(text=temp))),]
                       dat.1$lab <- wrap.labels(dat.1$comName,30)
               tit <- paste("Community Ranking of",causeList36[causeList36[,1]==myCause,2],"in",myLHJ,"in",yG)  }
   
-    if (!cZoom) {dat.1    <- filter(datCounty,year==myYear,CAUSE==myCause,county != "zz California",Level == "gbd36")  
+    if (!cZoom) {dat.1    <- filter(datCounty,year==myYear,sex==mySex,CAUSE==myCause,county != "zz California",Level == "gbd36")  
     dat.1    <- dat.1[order(eval(parse(text=temp))),]
               dat.1$lab <- dat.1$county
               tit <- paste("County Ranking of",causeList36[causeList36[,1]==myCause,2],"in",myYear) }

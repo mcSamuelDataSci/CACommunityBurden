@@ -1,11 +1,11 @@
-rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,myN=10) {
+rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,mySex="Total",myN=10) {
 
   myCex <- 1.6
   myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
   
   inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,year==myYear,Level == "gbd36",CAUSE !=0)
+  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,Level == "gbd36",CAUSE !=0)
   
   #  if (myMeasure == "YLL")        dat.1 <- dat.1[order(dat.1$YLL),]
   #  if (myMeasure == "m.YLL")      dat.1 <- dat.1[order(dat.1$m.YLL),]

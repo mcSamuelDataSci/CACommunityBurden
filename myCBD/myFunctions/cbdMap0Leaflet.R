@@ -1,22 +1,22 @@
-cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, myGeo="Census Tract",myCutSystem="fisher") {
+cbdMap0Leaflet <- function(myLHJ, myCause=0, myMeasure = "YLLper", myYear=2015, mySex="Total", myGeo="Census Tract",myCutSystem="fisher") {
     
    # county data for just 2011-2015
    # dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,county !="CALIFORNIA")
     
     if (myGeo == "County"){
-      dat.1   <- filter(datCounty,year==myYear,CAUSE==myCause,Level == "gbd36")  
+      dat.1   <- filter(datCounty,year==myYear, sex==mySex,CAUSE==myCause,Level == "gbd36")  
       map.1   <- merge(shape_County, dat.1, by.x=c("county"), by.y = c("county"),all=TRUE)
       map.1$lab <- map.1$county
       yearLab <- myYear }
    
     if (myGeo == "Community") {
-      dat.1    <- filter(datComm,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
+      dat.1    <- filter(datComm,yearG==yG,sex==mySex,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
       map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
       map.1$lab <- paste0("MSSA: ",map.1$comName," (ID=",map.1$comID,")")
       yearLab <- yG    }  
   
     if (myGeo == "Census Tract") { 
-      dat.1    <- filter(datTract,yearG==yG,CAUSE==myCause,Level == "gbd36") 
+      dat.1    <- filter(datTract,yearG==yG,sex==mySex,CAUSE==myCause,Level == "gbd36") 
       dat.1    <- dat.1[dat.1$pop > 200,]  # TEMP FIX
       map.1    <- merge(shape_Tract, dat.1, by.x=c("county","GEOID"), by.y = c("county","GEOID"),all=TRUE) 
       map.1$lab <- map.1$GEOID

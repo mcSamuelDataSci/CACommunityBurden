@@ -1,7 +1,7 @@
 # Core Static CCB Mapping Function
 
 
-cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,myStateCut=FALSE,myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
+cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=FALSE,myGeo="Census Tract",cZoom=TRUE,myLabName=FALSE,myLabNum=FALSE) {
 
 
   #use these values to see the error bleow  
@@ -16,20 +16,20 @@ cbdMap0 <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015
   
   
     #county data for just 2011-2015
-    dat.X   <- filter(datCounty,year %in% 2011:2015, CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA")
+    dat.X   <- filter(datCounty,year %in% 2011:2015, sex==mySex,CAUSE==myCause,Level == "gbd36",county !="CALIFORNIA")
    
     if (myGeo == "County"){
-    dat.1   <- filter(datCounty,year==myYear,CAUSE==myCause,Level == "gbd36")  #
+    dat.1   <- filter(datCounty,year==myYear,sex==mySex,CAUSE==myCause,Level == "gbd36")  #
     map.1   <- merge(shape_County, dat.1, by.x=c("county"), by.y = c("county"),all=TRUE) 
     yearLab <- myYear }
     
     if (myGeo == "Census Tract") { 
-    dat.1    <- filter(datTract,yearG==yG,CAUSE==myCause,Level == "gbd36") 
+    dat.1    <- filter(datTract,yearG==yG,sex==mySex,CAUSE==myCause,Level == "gbd36") 
     map.1    <- merge(shape_Tract, dat.1, by.x=c("county","GEOID"), by.y = c("county","GEOID"),all=TRUE) 
     yearLab  <- yG}
 
     if (myGeo == "Community") {
-    dat.1    <- filter(datComm,yearG==yG,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
+    dat.1    <- filter(datComm,yearG==yG,sex==mySex,CAUSE==myCause, comID != "Unknown",Level == "gbd36")
     map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
     yearLab <- yG  
     }  

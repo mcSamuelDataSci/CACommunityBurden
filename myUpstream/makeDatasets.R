@@ -13,7 +13,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 
 STATE    <- "California"
 
@@ -355,14 +355,11 @@ tractAA  <- tractAA[!(is.na(tractAA$aRate)),]
 
 # -- Merge adjusted rates into main data files ----------------------------------------------------------
 
-datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) %>% select(-ageG)
-datComm   <- merge(datComm,    commAA ,by = c("comID","yearG","sex","CAUSE"),all=TRUE) %>% select(-ageG,-stateRate)
+datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) 
+datComm   <- merge(datComm,    commAA ,by = c("comID","yearG","sex","CAUSE"),all=TRUE) 
 datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE) %>% select(-ageG,-stateRate)
 
-junk <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE) %>% select(-ageG,-stateRate)
-
 # == Final Data Clean Up and Export ==================================================================================
-
 
 datCounty <- datCounty %>% mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
                            mutate(county = ifelse(county==STATE, toupper(STATE),county),      # e.g. California --> CALIFORNIA
@@ -379,10 +376,10 @@ datTract <- datTract %>% mutate_if(is.numeric, signif,digits=4)
 # datComm   <- filter(datComm,  !(CAUSE %in% xCause1))
 # datCounty <- filter(datCounty,!(CAUSE %in% xCause0))
 
-write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
-write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
-write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
-write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
+#write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
+#write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
+#write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
+#write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
 
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
