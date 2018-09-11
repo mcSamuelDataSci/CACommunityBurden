@@ -252,9 +252,9 @@ datTract <- calculateRates(datTract,5) %>%
 
 year   <- data.frame(year   = 2000:2015) # these "vectors" need to be dataframes for the sq merge below to work
 yearG  <- data.frame(yearG  = "2011-2015")
-CAUSE1  <- data.frame(CAUSE=allLabels) 
-CAUSE2 <- data.frame(CAUSE=CAUSE[nchar(as.character(CAUSE$CAUSE)) < 4,])
-CAUSE3 <- data.frame(CAUSE=CAUSE[nchar(as.character(CAUSE$CAUSE)) < 2,])
+CAUSE1 <- data.frame(CAUSE=allLabels) 
+CAUSE2 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
+CAUSE3 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
 sex    <- data.frame(sex    = c("Male","Female","Total"))
 ageG   <- data.frame(ageG   = sort(unique(cbdDat0$ageG)))
 county <- data.frame(county = geoMap$countyName)         
