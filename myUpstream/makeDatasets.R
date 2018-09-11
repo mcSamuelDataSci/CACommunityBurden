@@ -141,7 +141,6 @@ junk <- filter(cbdDat0,is.na(lev1))
 # DEATH MEASURES FUNCTIONS =========================================================================
 
 
-
 calculateYLLmeasures <- function(group_vars,levLab){
   
   dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
@@ -149,50 +148,18 @@ calculateYLLmeasures <- function(group_vars,levLab){
               YLL     = sum(yll,   na.rm = TRUE),     # NEED TO ADD CIs
               m.YLL   = mean(yll,  na.rm = TRUE),     # NEED TO ADD CIs
               mean.age = mean(age,na.rm=TRUE)
-    ) %>%  ungroup
+    ) %>%  ungroup 
  
-   
-  names(dat)[grep("lev", names(dat))] <- "CAUSE"     # CHANGE "gbd" here to iGRP and add that in front of any groupings
-  
-  
-  
-  
-  
-  
-}
-  
-  grp       <- c("county","year","sex","lev1")
-  
-  
-  
-  datCounty   <- calculateYLLmeasures(grp,grp[length(grp)])
-  
-  
-  
-  
-  
-  
-  names(dat)[grep("gbd", names(dat))] <- "CAUSE"     # CHANGE "gbd" here to iGRP and add that in front of any groupings
- 
-  
-  
-  
-  
-  
-  
+    names(dat)[grep("lev", names(dat))] <- "CAUSE"
     
+    dat$Level <- levLab
     
-  }
-  
-  dat       <- filter(dat,!is.na(CAUSE))  # "HARD FIX" that should be assessed carefully
-  dat$Level <- levLab
-  dat %>% data.frame
-}
+    dat <- filter(dat,!is.na(CAUSE)) # "HARD FIX" that should be assessed carefully
+      
+    dat %>%  data.frame
 
-#  Examples
-#  grp <- c("county","year","sex","gbd3")
-#  df  <- calculateYLLmeasures(grp,grp[length(grp)])
-#  df  <- calculateYLLmeasures(grp,grp[length(grp)],myTotal=FALSE)
+    
+}
 
 calculateRates <- function(inData,yearN){
   transform(inData, 
@@ -212,10 +179,6 @@ calculateRates <- function(inData,yearN){
 # Group Causes
 grp       <- c("county","GEOID","yearG","sex","lev1")
 
-
-
-
-
 datTract  <- calculateYLLmeasures(grp,grp[length(grp)]) %>% 
   filter(yearG == "2011-2015")  %>%    # 2011-2015 ONLY!!!
   arrange(county,GEOID,yearG,CAUSE)
@@ -230,17 +193,6 @@ datTract <- merge(datTract,popTractSexTot,by = c("yearG","county","GEOID","sex")
 # Calculate Rates
 datTract <- calculateRates(datTract,5) %>%
   arrange(county,GEOID,yearG,CAUSE)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -266,10 +218,18 @@ datComm  <- merge(datComm, comName, by = "comID",all=TRUE) %>%
 
 # == build COUNTY-level file ======================================================================
 
-grp         <- c("county","year","sex","gbd36")
-datCounty   <- calculateYLLmeasures(grp,grp[length(grp)])
-grp         <- c("year","sex","gbd36")
-datState    <- calculateYLLmeasures(grp,grp[length(grp)]) %>% mutate(county=STATE)
+c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2")
+c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3")
+datCounty <- bind_rows(c.t1,c.t2,c.t3,c.t4)
+
+s.t1      <- calculateYLLmeasures(c("year","sex","lev0"),"lev0")
+s.t2      <- calculateYLLmeasures(c("year","sex","lev1"),"lev1")
+s.t3      <- calculateYLLmeasures(c("year","sex","lev2"),"lev2")
+s.t4      <- calculateYLLmeasures(c("year","sex","lev3"),"lev3")
+datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
+datState$county = STATE
 
 datCounty <- bind_rows(datCounty,datState)
 
