@@ -13,13 +13,10 @@
 #-- Set Locations and Data Source ----------------------------------------------------------
 
  myPlace   <- getwd()   
-<<<<<<< HEAD
- whichData <-  "fake"
-=======
- myPlace <- "e:/0.CBD/myCBD"
+
  whichData <-  "real"
->>>>>>> ICDlistWork
- pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
+
+  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
  
  #-- Load Packages --------------------------------------------------------------------------
