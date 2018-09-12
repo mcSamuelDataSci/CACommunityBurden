@@ -28,7 +28,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
 sidebarPanel( 
  
  conditionalPanel(condition = fC(c(1,3, 33,34,6,8,9)),   
-                  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="0"),
+                  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A"),
                   actionButton("causeHelp1", "Cause Help",icon("paper-plane"),style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                   ),
  

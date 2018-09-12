@@ -157,6 +157,9 @@ causeNum36        <- causeList36[,1]
 names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
 
 
+
+
+
 sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
 names(sdohVec) <- sdohVecL

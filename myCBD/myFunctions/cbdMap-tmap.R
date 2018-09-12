@@ -3,12 +3,12 @@ library(tmap)
 # values that can be used for testing code "outside" shiny:
 if (1==2){
 myLHJ= "Amador"
-myCause=0
+myCause="A"
 myMeasure = "YLLper"
 myYear=2015
 mySex="Female"
 myStateCut=TRUE
-myGeo="Census Tract"
+myGeo="County"
 cZoom=TRUE
 myLabName=FALSE
 myLabNum=FALSE
@@ -16,25 +16,28 @@ myCutSystem="fisher"
 }
 
 
-cbdMapX <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+
+# Level == "lev1",
+
+cbdMapX <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
 
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
   #county data for just 2011-2015 needed when myStateCut = TRUE -- to be addressed soon
-    dat.X   <- filter(datCounty,year %in% 2011:2015, sex==mySex, CAUSE==myCause, Level == "gbd36",county !="CALIFORNIA")
+    dat.X   <- filter(datCounty,year %in% 2011:2015, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
    
     if (myGeo == "County"){
-    dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause, Level == "gbd36")  
+    dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  
     map.1   <- merge(shape_County, dat.1, by.x=c("county"), by.y = c("county"),all=TRUE) 
     yearLab <- myYear }
     
     if (myGeo == "Census Tract") { 
-    dat.1    <- filter(datTract,yearG==yG,sex==mySex, CAUSE==myCause, Level == "gbd36") 
+    dat.1    <- filter(datTract,yearG==yG,sex==mySex, CAUSE==myCause) 
     map.1    <- merge(shape_Tract, dat.1, by.x=c("county","GEOID"), by.y = c("county","GEOID"),all=TRUE) 
     yearLab  <- yG}
 
     if (myGeo == "Community") {
-    dat.1    <- filter(datComm,yearG==yG,sex==mySex, CAUSE==myCause,  comID != "Unknown",Level == "gbd36")
+    dat.1    <- filter(datComm,yearG==yG,sex==mySex, CAUSE==myCause,  comID != "Unknown")
     map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
     yearLab <- yG  
     }  
@@ -70,7 +73,7 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
 #,legend.hist=T
 
  tm_shape(map.1) + tm_polygons(col="plotter",title=paste(lMeasuresC[lMeasures==myMeasure]),style=myCutSystem,colorNA="white")  +
-  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"gbdCode"]== myCause,"nameOnly"],"in",yearLab),
+  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from","in",yearLab),
             legend.outside = TRUE,
             legend.outside.position = "right"
             #,
@@ -78,13 +81,17 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
             )
 }
 
-cbdMapXStat <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+#,causeList36[causeList36[,"gbdCode"]== myCause,"nameOnly"]
+
+
+
+cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
   tmap_mode("plot")
   cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)
   
 }
 
-cbdMapXLeaf <- function(myLHJ= "Amador", myCause=0,myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
    tmap_mode("view")
    tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)
    tmap_leaflet(tt.map)

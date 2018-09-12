@@ -5,6 +5,9 @@ Gettysburg <- "Four score and seven years ago our fathers brought forth on this 
 
 observeEvent(input$causeHelp1, {showModal(modalDialog(Gettysburg, easyClose = TRUE))})
 
+
+
+
   
 output$homeText  <- renderText("Hello")  
 output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myGeo, input$myCutSystem))  
