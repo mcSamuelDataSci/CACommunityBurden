@@ -15,7 +15,7 @@
  
  myPlace   <- getwd()   
 
- whichData <-  "real"
+ whichData <-  "fake"
 
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
