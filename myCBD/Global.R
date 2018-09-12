@@ -17,11 +17,7 @@
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
  
- 
- 
- 
- 
-#-- Load Packages --------------------------------------------------------------------------
+ #-- Load Packages --------------------------------------------------------------------------
 
  library(shiny)  
  library(dplyr)
@@ -99,7 +95,7 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
   # don't have to keep tract of leading or following "/" !
   # check to make sure this is supported on CDPH Shiny Server?
   
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//NEWgbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
@@ -154,6 +150,9 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
                 "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
+
+
+
 
 causeList36       <- gbdMap0[!is.na(gbdMap0$list36),c("gbdCode","nameOnly")]
 causeList36       <- causeList36[order(causeList36[,2]),]
