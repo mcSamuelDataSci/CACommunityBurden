@@ -13,6 +13,7 @@
 #-- Set Locations and Data Source ----------------------------------------------------------
 
  myPlace   <- getwd()   
+ myPlace <- "e:/0.CBD/myCBD"
  whichData <-  "real"
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
@@ -151,11 +152,7 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
 
 names(lMeasures) <- lMeasuresC
 
-
-
-
-causeList36       <- gbdMap0[!is.na(gbdMap0$list36),c("gbdCode","nameOnly")]
-causeList36       <- causeList36[order(causeList36[,2]),]
+causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList")]
 causeNum36        <- causeList36[,1]
 names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
 
