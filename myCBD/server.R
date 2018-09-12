@@ -6,16 +6,11 @@ Gettysburg <- "Four score and seven years ago our fathers brought forth on this 
 observeEvent(input$causeHelp1, {showModal(modalDialog(Gettysburg, easyClose = TRUE))})
 
 observeEvent(input$myGeo, {
-    if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigList) }
-    if(input$myGeo=="County"){updateSelectInput(session, "myCAUSE", choices = causeNum36) }
-  
-  # else{
-  #   updateSelectInput(session, inputId= "myLHJ", choices = c("Alameda", "Los Angeles"),
-  #                     selected = "Alameda")
-  # }
-})
-
-
+    if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }
+    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode) }
+    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36)}
+}
+)
 
 output$homeText  <- renderText("Hello")  
 output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myGeo, input$myCutSystem))  

@@ -73,7 +73,7 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
 #,legend.hist=T
 
  tm_shape(map.1) + tm_polygons(col="plotter",title=paste(lMeasuresC[lMeasures==myMeasure]),style=myCutSystem,colorNA="white")  +
-  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from","in",yearLab),
+  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"],"in",yearLab),
             legend.outside = TRUE,
             legend.outside.position = "right"
             #,

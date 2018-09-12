@@ -1,9 +1,9 @@
 rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
 
   inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,Level == "gbd36",CAUSE !=0)
+  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,CAUSE !=0)
 
-  dat.1$causeName <- gbdMap0[match(dat.1$CAUSE,gbdMap0[,1]),"nameOnly"]
+  dat.1$causeName <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
   
   dat.1 <- dat.1[,c("causeName","Ndeaths","YLLper","YLL.adj.rate","cDeathRate","aRate")]
   

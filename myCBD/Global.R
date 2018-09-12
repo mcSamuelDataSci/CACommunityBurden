@@ -152,15 +152,17 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
 
 names(lMeasures) <- lMeasuresC
 
-causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList")]
-causeNum36        <- causeList36[,1]
-names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
+causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+causeNum36        <- causeList36[,"LABEL"]
+names(causeNum36) <- causeList36[,"causeList" ]
 
+phList   <- causeList36[nchar(causeList36$LABEL) == 3,]
+phCode   <- phList[,"LABEL"]
+names(phCode) <- phList[,"causeList" ]
 
-bigListX <- causeList36[nchar(causeList36$LABEL) == 1,]
-bigList  <- bigListX[,1]
-names(bigList) <- bigListX[,2]
-
+bigList  <- causeList36[nchar(causeList36$LABEL) == 1,]
+bigCode  <- bigList[,"LABEL"]
+names(bigCode) <- bigList[,"causeList"]
 
 sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
