@@ -13,15 +13,16 @@
 #-- Set Locations and Data Source ----------------------------------------------------------
 
  myPlace   <- getwd()   
+<<<<<<< HEAD
  whichData <-  "fake"
+=======
+ myPlace <- "e:/0.CBD/myCBD"
+ whichData <-  "real"
+>>>>>>> ICDlistWork
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
  
- 
- 
- 
- 
-#-- Load Packages --------------------------------------------------------------------------
+ #-- Load Packages --------------------------------------------------------------------------
 
  library(shiny)  
  library(dplyr)
@@ -99,7 +100,7 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
   # don't have to keep tract of leading or following "/" !
   # check to make sure this is supported on CDPH Shiny Server?
   
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//NEWgbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
@@ -155,11 +156,17 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
 
 names(lMeasures) <- lMeasuresC
 
-causeList36       <- gbdMap0[!is.na(gbdMap0$list36),c("gbdCode","nameOnly")]
-causeList36       <- causeList36[order(causeList36[,2]),]
-causeNum36        <- causeList36[,1]
-names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
+causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+causeNum36        <- causeList36[,"LABEL"]
+names(causeNum36) <- causeList36[,"causeList" ]
 
+phList   <- causeList36[nchar(causeList36$LABEL) == 3,]
+phCode   <- phList[,"LABEL"]
+names(phCode) <- phList[,"causeList" ]
+
+bigList  <- causeList36[nchar(causeList36$LABEL) == 1,]
+bigCode  <- bigList[,"LABEL"]
+names(bigCode) <- bigList[,"causeList"]
 
 sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 

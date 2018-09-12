@@ -13,7 +13,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 
 STATE    <- "California"
 
@@ -39,7 +39,7 @@ pop1 <- 1       # 1 year
 # becuase the "tibble" is double precision or for some other reason this messes up; 
 # and get error "Error: Can't use matrix or array for column indexing"
 
-gbdMap0    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))   # also have e.g. range="A1:J167"
+
 leMap      <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/le.Map.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
 yearMap    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/year.Map.xlsx")))
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/countycodes.Map.xlsx")))
@@ -105,12 +105,28 @@ cbdDat0$ageG  <- aLabs[aMark]                                   # make new "ageG
 
 # Map ICD-10 codes to GBD conditions ----------------------------
 
-icdToGroup <- function(myIn,myInMap) {
+gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/NEWgbd.ICD.Map.xlsx"), sheet="main"))   # also have e.g. range="A1:J167"
+allLabels <- sort(gbdMap0$LABEL[!is.na(gbdMap0$LABEL)])
+
+mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
+
+icdToGroup <- function(myIn) {
   Cause   <- rep(NA,length(myIn))
-  for (i in 1:nrow(myInMap)) {Cause[grepl(myInMap[i,2],myIn)] <- myInMap[i,1] } 
+  for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],myIn)] <- mapICD[i,"CODE"] } 
   Cause}
 
-cbdDat0$gbd36   <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[!is.na(gbdMap0$list36),c("gbdCode","regEx10")])      
+cbdDat0$icdCODE  <- icdToGroup(myIn=cbdDat0$ICD10)
+temp             <- nchar(str_sub(cbdDat0$icdCODE,2,5))
+cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
+                                        lev1  = str_sub(icdCODE,2,2),
+                                        lev2  = str_sub(icdCODE,2,4),
+                                        lev3  = ifelse(temp==4,str_sub(icdCODE,2,5),NA)
+                                       )
+
+table(cbdDat0$lev0,useNA = "ifany")
+table(cbdDat0$lev1,useNA = "ifany")
+table(cbdDat0$lev2,useNA = "ifany")
+table(cbdDat0$lev3,useNA = "ifany")
 
 
 # cbdDat0$gbd3    <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[is.na(gbdMap0$L2)     ,c("gbdCode","regEx10")])      
@@ -122,39 +138,26 @@ cbdDat0$gbd36   <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[!is.na(gbdMap0$list36),
 
 # DEATH MEASURES FUNCTIONS =========================================================================
 
-calculateYLLmeasures <- function(group_vars,levLab,myTotal=TRUE){
+
+calculateYLLmeasures <- function(group_vars,levLab){
   
   dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
     summarize(Ndeaths = n() , 
-              YLL     = sum(yll,   na.rm = TRUE),    # NEED TO ADD CIs
+              YLL     = sum(yll,   na.rm = TRUE),     # NEED TO ADD CIs
               m.YLL   = mean(yll,  na.rm = TRUE),     # NEED TO ADD CIs
               mean.age = mean(age,na.rm=TRUE)
-              #med.age = median(age,na.rm = TRUE)
-    ) %>%  ungroup
-  names(dat)[grep("gbd", names(dat))] <- "CAUSE"     # CHANGE "gbd" here to iGRP and add that in front of any groupings
-  
-  if (myTotal) {
-    temp <- length(group_vars) 
-    dat2 <- cbdDat0 %>% group_by_(.dots = group_vars[-temp]) %>% 
-      summarize(Ndeaths = n() , 
-                YLL     = sum(yll,   na.rm = TRUE), # NEED TO ADD CIs
-                m.YLL   = mean(yll,  na.rm = TRUE), # NEED TO ADD CIs
-                mean.age = mean(age,na.rm=TRUE)
-                #med.age = median(age,na.rm = TRUE)
-      ) %>% ungroup
-    dat2$CAUSE <- 0
-    dat <- bind_rows(dat,dat2)
-  }
-  
-  dat       <- filter(dat,!is.na(CAUSE))  # "HARD FIX" that should be assessed carefully
-  dat$Level <- levLab
-  dat %>% data.frame
-}
+    ) %>%  ungroup 
+ 
+    names(dat)[grep("lev", names(dat))] <- "CAUSE"
+    
+    dat$Level <- levLab
+    
+    dat <- filter(dat,!is.na(CAUSE)) # "HARD FIX" that should be assessed carefully
+      
+    dat %>%  data.frame
 
-#  Examples
-#  grp <- c("county","year","sex","gbd3")
-#  df  <- calculateYLLmeasures(grp,grp[length(grp)])
-#  df  <- calculateYLLmeasures(grp,grp[length(grp)],myTotal=FALSE)
+    
+}
 
 calculateRates <- function(inData,yearN){
   transform(inData, 
@@ -169,48 +172,20 @@ calculateRates <- function(inData,yearN){
 }
 
 
-# == build TRACT-level file =======================================================================
-
-# Group Causes
-grp       <- c("county","GEOID","yearG","sex","gbd36")
-datTract  <- calculateYLLmeasures(grp,grp[length(grp)]) %>% 
-  filter(yearG == "2011-2015")  %>%    # 2011-2015 ONLY!!!
-  arrange(county,GEOID,yearG,CAUSE)
-# NOTE -- includes many with NA GEOID
-
-# MERGE Death and Population files
-datTract <- merge(datTract,popTractSexTot,by = c("yearG","county","GEOID","sex"))                     
-# NOTE -- merge "drops" NA GEOID  --> good/fine here
-
-# Calculate Rates
-datTract <- calculateRates(datTract,5) %>%
-  arrange(county,GEOID,yearG,CAUSE)
-
-# == build COMMUNITY-level file ===================================================================
-
-grp36   <- c("county","comID","yearG","sex","gbd36")
-#grp3    <- c("county","comID","yearG","sex","gbd3")
-
-datComm <- rbind(calculateYLLmeasures(grp36,grp36[length(grp36)])) %>%  #,
-                   #               calculateYLLmeasures( grp3, grp3[ length(grp3)],myTotal=FALSE)) %>%
-    filter(yearG == "2011-2015")  %>%   # 2011-2015 ONLY!!!
-  arrange(county,comID,yearG,CAUSE)
-
-datComm  <- merge(datComm,popCommSexTot,by = c("yearG","county","comID","sex"))
-
-datComm  <- calculateRates(datComm,5)
-
-# add community names  POSSIBLE REMOVE
-datComm  <- merge(datComm, comName, by = "comID",all=TRUE) %>%
-  arrange(county,comID,yearG,CAUSE)
-
-
 # == build COUNTY-level file ======================================================================
 
-grp         <- c("county","year","sex","gbd36")
-datCounty   <- calculateYLLmeasures(grp,grp[length(grp)])
-grp         <- c("year","sex","gbd36")
-datState    <- calculateYLLmeasures(grp,grp[length(grp)]) %>% mutate(county=STATE)
+c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2")
+c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3")
+datCounty <- bind_rows(c.t1,c.t2,c.t3,c.t4)
+
+s.t1      <- calculateYLLmeasures(c("year","sex","lev0"),"lev0")
+s.t2      <- calculateYLLmeasures(c("year","sex","lev1"),"lev1")
+s.t3      <- calculateYLLmeasures(c("year","sex","lev2"),"lev2")
+s.t4      <- calculateYLLmeasures(c("year","sex","lev3"),"lev3")
+datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
+datState$county = STATE
 
 datCounty <- bind_rows(datCounty,datState)
 
@@ -232,13 +207,54 @@ datCounty            <- merge(datCounty,datState,by = c("year","sex","Level","CA
 datCounty$SMR        <- datCounty$cDeathRate / datCounty$stateRate
 
 
+# == build COMMUNITY-level file ===================================================================
+
+
+c.t1      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev2"),"lev2")
+datComm  <- bind_rows(c.t1,c.t2,c.t3) %>%
+                filter(yearG == "2011-2015")  %>%   # 2011-2015 ONLY!!!
+                arrange(county,comID,yearG,CAUSE)
+
+datComm  <- merge(datComm,popCommSexTot,by = c("yearG","county","comID","sex"))
+
+datComm  <- calculateRates(datComm,5)
+
+# add community names  POSSIBLE REMOVE
+datComm  <- merge(datComm, comName, by = "comID",all=TRUE) %>%
+  arrange(county,comID,yearG,CAUSE)
+
+
+# == build TRACT-level file =======================================================================
+
+
+c.t1      <- calculateYLLmeasures(c("county","GEOID","yearG","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","GEOID","yearG","sex","lev1"),"lev1")
+
+datTract  <- bind_rows(c.t1,c.t2) %>% 
+  filter(yearG == "2011-2015")  %>%    # 2011-2015 ONLY!!!
+  arrange(county,GEOID,yearG,CAUSE)
+# NOTE -- includes many with NA GEOID
+
+# MERGE Death and Population files
+datTract <- merge(datTract,popTractSexTot,by = c("yearG","county","GEOID","sex"))                     
+# NOTE -- merge "drops" NA GEOID  --> good/fine here
+
+# Calculate Rates
+datTract <- calculateRates(datTract,5) %>%
+  arrange(county,GEOID,yearG,CAUSE)
+
+
 # == AGE ADJUSTED ("AA") RATES =========================================================================================
 
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
 year   <- data.frame(year   = 2000:2015) # these "vectors" need to be dataframes for the sq merge below to work
 yearG  <- data.frame(yearG  = "2011-2015")
-CAUSE  <- data.frame(CAUSE  = c(0,sort(unique(cbdDat0$gbd36))))  # "0" is for "all cause"
+CAUSE1 <- data.frame(CAUSE=allLabels) 
+CAUSE2 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
+CAUSE3 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
 sex    <- data.frame(sex    = c("Male","Female","Total"))
 ageG   <- data.frame(ageG   = sort(unique(cbdDat0$ageG)))
 county <- data.frame(county = geoMap$countyName)         
@@ -247,9 +263,9 @@ GEOID  <- data.frame(GEOID  = cbdLinkCA[,"GEOID"])
 
 # other cool approach from Adam:
 # fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageG))
-fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE cross join sex cross join ageG")
-fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE cross join sex cross join ageG")
-fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE cross join sex cross join ageG")
+fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE1 cross join sex cross join ageG")
+fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
+fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
 
 fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
@@ -257,15 +273,16 @@ fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.
 
 # County age deaths -------------------------------------------------------------------------------
 
-datAA1       <- cbdDat0 %>% group_by(county,year, sex, ageG,gbd36) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  # BY CAUSE
-datAA1.State <- cbdDat0 %>% group_by(       year, sex, ageG,gbd36) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  %>% mutate(county=STATE)
-datAA1       <- bind_rows(datAA1,datAA1.State) %>% mutate(CAUSE=gbd36) %>% select(-gbd36)  
+tA1      <- cbdDat0 %>% group_by(county,year, sex, ageG,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(county,year, sex, ageG,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA3      <- cbdDat0 %>% group_by(county,year, sex, ageG,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA4      <- cbdDat0 %>% group_by(county,year, sex, ageG,CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA5      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA6      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA7      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA8      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
 
-datAA0       <- cbdDat0 %>% group_by(county,year, sex, ageG      ) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  # BY CAUSE
-datAA0.State <- cbdDat0 %>% group_by(       year, sex, ageG      ) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  %>% mutate(county=STATE)
-datAA0       <- bind_rows(datAA0,datAA0.State) %>% mutate(CAUSE=0)   
-
-datAA1 <- bind_rows(datAA1,datAA0)   # merge cause-specific and all-cause  # 140,192 records
+datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)
 
 # DATA CLEANING ISSUES as above
 datAA1 <- filter(datAA1,!is.na(ageG))   # remove 403 records with missing age (0.065% of deaths)  -- impact of this?
@@ -295,10 +312,11 @@ countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRa
 
 # Community age deaths ----------------------------------------------------------------------------
 
-datAA1 <- cbdDat0 %>% group_by(comID, yearG, sex, ageG, gbd36) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  %>% mutate(CAUSE=gbd36) %>% select(-gbd36)   # BY CAUSE
-datAA0 <- cbdDat0 %>% group_by(comID, yearG, sex, ageG)        %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  %>% mutate(CAUSE=0)                          # ALL CAUSE
+tA1      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA3      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
 
-datAA1 <- bind_rows(datAA1,datAA0)  %>% filter(comID != "")  
+datAA1 <- bind_rows(tA1,tA2,tA3)  %>% filter(comID != "")  
 #datAA1 <- na.omit(datAA1)           
 
 ageComm   <- merge(fullMatComm,datAA1,by = c("comID","yearG","sex","ageG","CAUSE"),all=TRUE)  %>% 
@@ -321,16 +339,15 @@ commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths",
 # removes rows with aRate = inf HERE there are only ALPINE 
 commAA  <- commAA[!(commAA$aRate > 10000),]
 
-# tester <- filter(ageComm,yearG=="2011-2015",comID=="1.1",sex=="Female",CAUSE==0) 
-# ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
+tester <- filter(ageComm,yearG=="2011-2015",comID=="104",sex=="Female",CAUSE==0) 
+ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
 
 # Tract age deaths -----------------------------------------------------------------------------------------------------
 
-datAA1 <- cbdDat0 %>% group_by(GEOID, yearG, sex, ageG, gbd36) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  %>% mutate(CAUSE=gbd36) %>% select(-gbd36)   # BY CAUSE
-datAA0 <- cbdDat0 %>% group_by(GEOID, yearG, sex, ageG)        %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )  %>% mutate(CAUSE=0)                          # ALL CAUSE
+tA1      <- cbdDat0 %>% group_by(GEOID, yearG, sex, ageG,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(GEOID, yearG, sex, ageG,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
 
-datAA1 <- bind_rows(datAA1,datAA0)  %>% filter(GEOID != "")  
-#datAA1 <- na.omit(datAA1)           
+datAA1 <- bind_rows(tA1,tA2)  %>% filter(GEOID != "")  
 
 ageTract   <- merge(fullMatTract,datAA1,by = c("GEOID","yearG","sex","ageG","CAUSE"),all=TRUE)  %>% 
                 filter(yearG == "2011-2015")                                                    %>%
@@ -376,10 +393,13 @@ datTract <- datTract %>% mutate_if(is.numeric, signif,digits=4)
 # datComm   <- filter(datComm,  !(CAUSE %in% xCause1))
 # datCounty <- filter(datCounty,!(CAUSE %in% xCause0))
 
-#write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
-#write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
-#write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
-#write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
+write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
+write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
+write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
+write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
+
+
+
 
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))

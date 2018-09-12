@@ -7,7 +7,7 @@ trend <- function(myLHJ="zz California",myCause=61,myMeasure = "YLL",mySex="Tota
   myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
   inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,(year >= minYear & year <= maxYear ),CAUSE == myCause,sex==mySex,Level == "gbd36")
+  dat.1 <- filter(inDat,county==myLHJ,(year >= minYear & year <= maxYear ),CAUSE == myCause,sex==mySex)
   
   if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
   

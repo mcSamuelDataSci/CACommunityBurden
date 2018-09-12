@@ -29,19 +29,19 @@ temp <- paste0("dat.1$",myMeasure)
 
 if (myGeo=="Census Tract") {
                           sdohWork <- sdohTract
-                          dat.1 <- filter(datTract,yearG=="2011-2015",sex==mySex,CAUSE==myCause,county != "CALIFORNIA",Level == "gbd36")  
+                          dat.1 <- filter(datTract,yearG=="2011-2015",sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
                           temp  <- dat.1[,c("GEOID",myMeasure)]
                           sdohWork  <- merge(sdohWork,temp,by="GEOID")
                           }
 
 if (myGeo=="Community") {
                        sdohWork <- sdohComm
-                       dat.1 <- filter(datComm,yearG=="2011-2015",sex==mySex,CAUSE==myCause,county != "CALIFORNIA",Level == "gbd36")  
+                       dat.1 <- filter(datComm,yearG=="2011-2015",sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
                        temp  <- dat.1[,c("comID",myMeasure)]
                        sdohWork  <- merge(sdohWork,temp,by="comID")}
 if (myGeo=="County") {
                    sdohWork <- sdohCounty
-                   dat.1 <- filter(datCounty,year==myYear,sex==mySex,CAUSE==myCause,county != "CALIFORNIA",Level == "gbd36")  
+                   dat.1 <- filter(datCounty,year==myYear,sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
                    temp  <- dat.1[,c("county",myMeasure)]
                    sdohWork  <- merge(sdohWork,temp,by="county")
              

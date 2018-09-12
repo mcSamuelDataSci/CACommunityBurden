@@ -5,7 +5,7 @@ rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,mySex="Tot
 
   
   inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,Level == "gbd36",CAUSE !=0)
+  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,CAUSE !=0)
   
   #  if (myMeasure == "YLL")        dat.1 <- dat.1[order(dat.1$YLL),]
   #  if (myMeasure == "m.YLL")      dat.1 <- dat.1[order(dat.1$m.YLL),]
@@ -36,7 +36,11 @@ rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,mySex="Tot
   
    t.plot <- barplot((dat.1$YLLper),xlab="YLL per 100K pop",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper))); box(lwd=bLwd)
  
-   t.label <- gbdMap0[match(dat.1$CAUSE,gbdMap0[,1]),"nameOnly"] 
+   t.label <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
+   
+   
+   
+   
    wr.lap <- wrap.labels(t.label ,18)
    
    axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.6)
