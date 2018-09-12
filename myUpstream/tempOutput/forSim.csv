@@ -1,0 +1,544 @@
+"","comID","yearG","sex","CAUSE","county","Ndeaths","YLL","m.YLL","mean.age","Level","pop","YLLper","YLLrateLCI","YLLrateUCI","cDeathRate","rateLCI","rateUCI","comName","oDeaths","aRate","aLCI","aUCI","YLL.adj.rate"
+"1","1.1","2011-2015","Total","0","Alameda",1668,33420,20.04,75.17,"lev0",54830,12190,12060,12320,608.4,579.2,637.6,"Livermore Central and West/Spring Town",1668,643,612.3,675,12410
+"2","1.2","2011-2015","Total","0","Alameda",893,18760,21.01,73.78,"lev0",38050,9862,9721,10000,469.3,438.6,500.1,"Altamont/Livermore East/Midway/Mountain House/Scotts Corner",908,561.2,524.2,600.2,10370
+"3","10","2011-2015","Total","0","Butte",2766,58930,21.31,73.39,"lev0",48690,24210,24010,24400,1136,1094,1179,"Oroville/Palermo/Thermalito",2768,885.6,852.2,920.3,20560
+"4","100","2011-2015","Total","0","Modoc",19,418.6,22.03,72.26,"lev0",2214,3781,3419,4144,171.6,94.46,248.8,"Adin/Lookout/Newell",45,368.1,265.3,509.6,7465
+"5","102","2011-2015","Total","0","Mono",76,1518,19.98,74.55,"lev0",6002,5059,4805,5314,253.2,196.3,310.2,"Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker",107,309.4,251.4,380.3,6323
+"6","103","2011-2015","Total","0","Mono",67,2022,30.17,63.66,"lev0",8215,4922,4707,5136,163.1,124.1,202.2,"Mammoth Lakes",67,442.7,307.8,626.2,7589
+"7","104","2011-2015","Total","0","Monterey",20,350.2,17.51,77.7,"lev0",1303,5375,4812,5938,307,172.4,441.5,"Big Sur/Lucia",20,474.9,205.4,976.9,7233
+"8","105","2011-2015","Total","0","Monterey",325,9174,28.23,66.07,"lev0",16310,11250,11020,11480,398.5,355.2,441.8,"King City/San Lucas",325,616.3,543.4,697.3,15110
+"9","106","2011-2015","Total","0","Monterey",69,1824,26.43,67.49,"lev0",3566,10230,9760,10700,387,295.7,478.3,"Bradley/San Ardo",88,509,404.8,636.3,12810
+"10","107","2011-2015","Total","0","Monterey",803,21350,26.59,67.87,"lev0",55280,7724,7620,7827,290.5,270.4,310.6,"Chualar/Gonzalez/Greenfield/Soledad",803,500,463.7,538.5,10540
+"11","108","2011-2015","Total","0","Monterey",1456,32480,22.31,72.38,"lev0",54710,11870,11740,12000,532.3,504.9,559.6,"Carmel Valley/Castroville/Marina/Moss Landing/Ord",1456,595.5,564.6,627.9,12020
+"12","109.1","2011-2015","Total","0","Monterey",895,20460,22.86,71.75,"lev0",42760,9570,9439,9702,418.6,391.2,446.1,"Aromas/Las Lomas/Pajaro/Prunedale",1047,548.2,514.8,583.2,11620
+"13","109.2","2011-2015","Total","0","Monterey",3717,92770,24.96,69.74,"lev0",151900,12210,12130,12290,489.3,473.6,505,"Salinas/Spreckels",3717,717.9,694.4,742.2,15410
+"14","11","2011-2015","Total","0","Butte",318,7655,24.07,69.92,"lev0",5000,30620,29930,31300,1272,1132,1412,"Berry Creek/Brownsville/Concow/Feather Falls/Forbestown",318,867.6,765.2,987.4,21940
+"15","110","2011-2015","Total","0","Monterey",4096,66260,16.18,79.71,"lev0",94710,13990,13890,14100,865,838.5,891.5,"Carmel/Del Rey Oaks/Monterey/Pacific Grove/Sand City/Seaside",4096,503.8,487.7,520.5,10070
+"16","111.1","2011-2015","Total","0","Napa",445,7269,16.34,79.72,"lev0",13880,10480,10240,10720,641.4,581.8,701,"Angwin/Deer Park/St. Helena",445,376.6,339.4,418.1,7889
+"17","111.2","2011-2015","Total","0","Napa",227,3784,16.67,78.99,"lev0",6496,11650,11280,12020,698.9,608,789.8,"Calistoga",227,462.1,402.8,531.7,8432
+"18","111.3","2011-2015","Total","0","Napa",44,1186,26.96,66.82,"lev0",1639,14480,13650,15300,536.9,378.3,695.6,"Berryessa",44,573.5,394.6,819.2,15860
+"19","112.1","2011-2015","Total","0","Napa",2393,44860,18.75,76.57,"lev0",64290,13960,13830,14090,744.4,714.6,774.3,"Napa Central",2393,668.4,641.6,696.1,13010
+"20","112.2","2011-2015","Total","0","Napa",2089,32530,15.57,80.26,"lev0",31180,20860,20640,21090,1340,1282,1397,"Napa Northeast/Rutherford/Yountville",2090,710.1,677.6,744.5,13950
+"21","112.3","2011-2015","Total","0","Napa",589,12880,21.86,72.76,"lev0",20360,12650,12430,12870,578.7,532,625.5,"American Canyon",590,851.6,779.1,929.6,15000
+"22","113","2011-2015","Total","0","Nevada",4153,73190,17.62,77.89,"lev0",78350,18680,18550,18820,1060,1028,1092,"Grass Valley/Nevada City/Penn Valley/Rough and Ready/Wildwood",4405,644.7,624.1,666.2,14070
+"23","114","2011-2015","Total","0","Nevada",377,9857,26.14,68.01,"lev0",20160,9778,9585,9971,374,336.3,411.8,"North Bloomfield/North San Juan/Truckee",388,545.2,486.8,609.3,11330
+"24","115.1","2011-2015","Total","0","Orange",4192,74190,17.7,77.92,"lev0",115400,12860,12760,12950,726.4,704.4,748.4,"Dana Point/San Clemente/San Juan Capistrano",4193,536.5,519.9,553.5,10730
+"25","115.2a","2011-2015","Total","0","Orange",3293,63270,19.21,76.21,"lev0",112100,11290,11200,11380,587.7,567.6,607.8,"Lake Forest East/Mission Viejo Central and South",3293,650.6,627.8,674.1,11710
+"26","115.2b","2011-2015","Total","0","Orange",2777,55400,19.95,75.18,"lev0",136700,8102,8035,8170,406.2,391,421.3,"Coto de Caza/Las Flores/Mission Viejo Northwest/Rancho Santa Margarita/Trabuco Canyon",2778,530.9,510.9,551.5,9253
+"27","115.2c","2011-2015","Total","0","Orange",3218,60460,18.79,76.63,"lev0",126200,9582,9505,9658,510,492.3,527.6,"Aliso Viejo/Laguna Hills/Laguna Niguel",3218,559.6,540,579.8,9708
+"28","115.2d","2011-2015","Total","0","Orange",5127,70530,13.76,82.57,"lev0",76040,18550,18410,18690,1349,1312,1385,"Laguna Beach/Laguna Woods",5127,509.1,493,525.9,10130
+"29","116a","2011-2015","Total","0","Orange",2331,52190,22.39,72.21,"lev0",80380,12990,12870,13100,580,556.4,603.5,"Buena Park/La Palma",2331,633.1,607.4,659.7,13460
+"30","116b","2011-2015","Total","0","Orange",1770,50370,28.46,65.72,"lev0",116600,8639,8563,8714,303.5,289.4,317.7,"Santa Ana Central",1770,621.9,591.1,654,13320
+"31","116c","2011-2015","Total","0","Orange",4020,86740,21.58,73.2,"lev0",123200,14080,13990,14170,652.5,632.3,672.7,"Anaheim West",4020,697.7,676.1,719.8,14780
+"32","116d","2011-2015","Total","0","Orange",4088,68570,16.77,78.92,"lev0",148600,9232,9163,9301,550.3,533.5,567.2,"Irvine South/Newport Beach/Newport Coast/San Joaquin Hills",4089,482.2,467.4,497.5,8375
+"33","116e","2011-2015","Total","0","Orange",4183,77100,18.43,76.79,"lev0",116000,13290,13200,13380,721.1,699.2,742.9,"Cypress/Los Alamitos/Rossmoor",4186,613.8,595.3,632.9,11550
+"34","116f","2011-2015","Total","0","Orange",3636,67520,18.57,76.82,"lev0",106900,12630,12540,12730,680.4,658.2,702.5,"Fullerton Central and South",3636,615.4,595.2,636.2,12260
+"35","116g","2011-2015","Total","0","Orange",2090,56910,27.23,66.95,"lev0",120500,9442,9365,9520,346.8,331.9,361.7,"Santa Ana South",2090,591.8,565.4,619.3,13030
+"36","116h","2011-2015","Total","0","Orange",4387,81520,18.58,76.94,"lev0",134100,12160,12070,12240,654.3,634.9,673.6,"City of Orange South/Santa Ana North/Tustin Foothills/Tustin West",4387,641.2,621.9,661.1,12520
+"37","116i","2011-2015","Total","0","Orange",2896,68530,23.67,70.77,"lev0",117300,11690,11600,11780,494,476,512,"Garden Grove South/Santa Ana West",2896,607.7,585.5,630.7,13050
+"38","116j","2011-2015","Total","0","Orange",3201,57560,17.98,77.35,"lev0",78860,14600,14480,14720,811.8,783.7,839.9,"Fountain Valley/Huntington Beach Central",3201,579.6,559.4,600.6,11490
+"39","116k","2011-2015","Total","0","Orange",3490,66840,19.15,76.06,"lev0",111200,12020,11930,12110,627.7,606.9,648.6,"Brea West/Fullerton North/La Habra",3514,582.6,563.4,602.4,11490
+"40","116l","2011-2015","Total","0","Orange",2353,56300,23.93,70.7,"lev0",97950,11500,11400,11590,480.4,461,499.9,"Anaheim Central",2353,665.9,638.8,694,14250
+"41","116m","2011-2015","Total","0","Orange",3951,76520,19.37,75.78,"lev0",139000,11010,10930,11090,568.5,550.7,586.2,"Brea East/Placentia Central and North/Yorba Linda",3951,572.3,554.3,590.7,10680
+"42","116n","2011-2015","Total","0","Orange",3484,65240,18.72,76.54,"lev0",126600,10310,10230,10390,550.5,532.2,568.8,"Anaheim Hills/City of Orange East/Villa Park",3484,549.4,531,568.2,9773
+"43","116o","2011-2015","Total","0","Orange",1791,37120,20.73,74.29,"lev0",93260,7961,7880,8042,384.1,366.3,401.9,"Irvine Central/Tustin East",1791,435,414.9,455.9,8305
+"44","116p","2011-2015","Total","0","Orange",3123,64680,20.71,74.4,"lev0",110600,11700,11610,11790,564.8,545,584.6,"Costa Mesa",3123,677.2,653.2,701.9,13310
+"45","116q","2011-2015","Total","0","Orange",3173,71250,22.46,72.31,"lev0",125200,11380,11300,11460,506.8,489.2,524.5,"Anaheim East/City of Orange North/Placentia Southwest",3173,672,648.4,696.2,13290
+"46","116r","2011-2015","Total","0","Orange",3682,77190,20.97,74,"lev0",128300,12030,11940,12110,573.8,555.2,592.3,"Garden Grove North/Stanton",3682,619.1,599,639.7,12880
+"47","116s","2011-2015","Total","0","Orange",3863,84140,21.79,72.95,"lev0",127000,13250,13160,13340,608.2,589,627.4,"Huntington Beach North/Seal Beach East/Westminster",3865,595,576.3,614.2,12840
+"48","116t","2011-2015","Total","0","Orange",2843,54090,19.03,76.07,"lev0",82230,13160,13050,13270,691.5,666.1,716.9,"Huntington Beach South",2843,578.9,557.5,601.2,11350
+"49","116u","2011-2015","Total","0","Orange",4458,72490,16.26,79.39,"lev0",87650,16540,16420,16660,1017,987.4,1047,"Huntington Beach West/Seal Beach West",4458,557.1,540,574.9,11040
+"50","116v","2011-2015","Total","0","Orange",1784,40410,22.65,72.2,"lev0",113800,7101,7031,7170,313.5,298.9,328,"Foothill Ranch/IrvineNortheast/Lake Forest West/Portola Hills/Tustin East",1785,450.5,429.1,472.9,8764
+"51","117","2011-2015","Total","0","Placer",179,5427,30.32,63.53,"lev0",12720,8530,8303,8757,281.4,240.1,322.6,"Dollar Point/Kings Beach/Sunnyside/Tahoe City/Tahoe Vista",210,420.2,356.6,493.6,9584
+"52","118","2011-2015","Total","0","Placer",1305,26080,19.98,74.95,"lev0",27260,19130,18900,19360,957.5,905.6,1009,"Colfax/Meadow Vista",1305,611.8,577.2,648.9,13970
+"53","119","2011-2015","Total","0","Placer",4544,82850,18.23,77.02,"lev0",92270,17960,17840,18080,985,956.3,1014,"Auburn/Newcastle/Lincoln/Sheridan",4563,621.5,602.9,640.7,13320
+"54","12","2011-2015","Total","0","Calaveras",2069,43150,20.86,73.85,"lev0",45150,19120,18940,19300,916.6,877.1,956.1,"Angels Camp/Arnold/Copperopolis/Mountain Ranch/Murphys/San Andreas/Valley Springs/West Point",2070,595.1,568,623.6,14110
+"55","120","2011-2015","Total","0","Placer",271,5928,21.88,72.5,"lev0",6015,19710,19210,20210,901.1,793.8,1008,"Foresthill",271,702.6,616.4,803.8,14280
+"56","121.1","2011-2015","Total","0","Placer",4205,77410,18.41,76.85,"lev0",106500,14540,14440,14640,789.9,766,813.7,"Roseville",4207,691.9,671.1,713.3,13400
+"57","121.2","2011-2015","Total","0","Placer",3523,65980,18.73,76.56,"lev0",111200,11870,11780,11960,633.7,612.8,654.6,"Rocklin/Granite Bay",3523,600.6,580.6,621.1,11410
+"58","122","2011-2015","Total","0","Plumas",103,2401,23.31,71.2,"lev0",2753,17440,16750,18140,748.3,603.8,892.8,"Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain",103,601.7,477.9,770.1,16780
+"59","123.1","2011-2015","Total","0","Plumas",286,6147,21.49,73.33,"lev0",6185,19880,19380,20370,924.8,817.6,1032,"Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden",286,709.6,624.7,807.8,16960
+"60","123.2","2011-2015","Total","0","Plumas",67,1260,18.81,76.13,"lev0",1289,19560,18480,20630,1040,790.6,1288,"Blairsden/Clio/C-Road/Gold Mountain/Greagle/Johnsville/Mohawk Meadows/Mohawk Vista/Plumas Eureka/Plumas Pines/Sierra Springs/Valley Ranch/White Hawk",67,545.9,370.2,1100,13350
+"61","124","2011-2015","Total","0","Plumas",148,3207,21.67,73.26,"lev0",5063,12670,12230,13110,584.6,490.4,678.8,"Beckwourth/Chilcoot/Crocker Mountain/Delleker/Iron Horse/Lake Davis/Maybe/Portola/Valley View/Vinton",148,495,415.4,587.7,10680
+"62","125","2011-2015","Total","0","Plumas",194,3728,19.22,75.82,"lev0",4296,17350,16800,17910,903.2,776.1,1030,"Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley",195,514.3,431,623.2,12140
+"63","126","2011-2015","Total","0","Riverside",505,12740,25.28,68.88,"lev0",15560,16370,16090,16660,649.1,592.4,705.7,"Blythe",504,723.5,660,791.8,17130
+"64","127","2011-2015","Total","0","Riverside",90,2226,24.74,69.3,"lev0",9753,4565,4376,4755,184.6,146.4,222.7,"Chiriaco Summit/Desert Center/Eagle Mountain",90,391.1,304.3,502.4,6791
+"65","128","2011-2015","Total","0","Riverside",1946,52140,26.79,67.38,"lev0",104400,9991,9905,10080,372.9,356.3,389.5,"Arabia/Coachella/Desert Beach/Flowing Wells/Indio South/La Quinta East/Mecca/Oasis/Thermal",1946,555.1,529.7,581.4,12420
+"66","129.1","2011-2015","Total","0","Riverside",5374,89330,16.62,78.91,"lev0",1e+05,17870,17750,17980,1075,1046,1104,"Bermuda Dunes South/Indian Wells/La Quinta West/Palm Desert/Rancho Mirage Central and South",5374,549.3,533.4,565.6,11590
+"67","129.2","2011-2015","Total","0","Riverside",2184,44140,20.21,74.69,"lev0",53650,16450,16300,16610,814.2,780,848.3,"Bermuda Dunes North/Indio North",2184,594.8,568.8,622,14190
+"68","129.3","2011-2015","Total","0","Riverside",2038,37230,18.27,76.79,"lev0",29100,25590,25330,25850,1401,1340,1462,"Agua Caliente/Palm Springs Central",2038,622.1,591,655.6,15270
+"69","129.4","2011-2015","Total","0","Riverside",6528,136700,20.94,73.87,"lev0",136300,20060,19950,20170,958.1,934.9,981.3,"Cathedral City Southeast/Palm Desert North/Palm Springs South/Rancho Mirage North",6528,713.8,696.3,731.7,16560
+"70","130","2011-2015","Total","0","Riverside",586,14120,24.09,70.05,"lev0",11530,24490,24080,24890,1016,933.9,1098,"Idyllwild/Pine Cove",587,711.4,648.5,782.7,19380
+"71","131a","2011-2015","Total","0","Riverside",3998,90440,22.62,71.97,"lev0",145300,12450,12370,12530,550.3,533.3,567.4,"Lake Elsinore/Murrieta West/Sedco Hills/Wildomar",3998,769.9,745.6,794.8,14990
+"72","131b","2011-2015","Total","0","Riverside",3188,68790,21.58,73.22,"lev0",144100,9546,9475,9618,442.4,427.1,457.8,"French Valley/Murrieta East/Temecula/Winchester",3189,625.9,603.9,648.5,11640
+"73","131c","2011-2015","Total","0","Riverside",1783,39800,22.32,72.38,"lev0",82760,9617,9522,9711,430.9,410.9,450.9,"Temecula South",1785,615.3,586.1,645.7,11510
+"74","132","2011-2015","Total","0","Riverside",8605,172800,20.08,74.91,"lev0",141700,24390,24280,24510,1215,1189,1241,"East Hemet/Hemet/Valle Vista",8604,873,854,892.4,20670
+"75","133.1","2011-2015","Total","0","Riverside",6313,132500,20.98,73.83,"lev0",176400,15020,14940,15100,715.9,698.2,733.6,"Canyon Lake/Perris/Quail Valley/Romoland/Sun City/Winchester",6313,732.1,714.1,750.5,15270
+"76","133.2","2011-2015","Total","0","Riverside",1096,24330,22.2,72.35,"lev0",29660,16400,16200,16610,739,695.2,782.7,"Homeland/Lakeview/San Jacinto",1096,649.2,610.8,689.7,15360
+"77","133.3","2011-2015","Total","0","Riverside",693,17650,25.46,68.77,"lev0",22760,15510,15280,15730,609,563.6,654.3,"Glen Valley/Mead Valley",693,745,689.1,804.5,16940
+"78","134","2011-2015","Total","0","Riverside",5531,116400,21.06,73.7,"lev0",144300,16140,16050,16230,766.6,746.4,786.8,"Banning/Beaumont/Cabizon/Calimesa/Cherry Valley",5588,670.8,653.2,688.8,14760
+"79","135a","2011-2015","Total","0","Riverside",2500,65130,26.05,68.1,"lev0",107500,12120,12030,12210,465.2,446.9,483.4,"Eastside/Fairmont Park/Riverside Downtown/Rubidoux/University",2501,797,764.9,830.2,17290
+"80","135b","2011-2015","Total","0","Riverside",4423,101000,22.84,71.87,"lev0",166700,12130,12050,12200,530.8,515.2,546.4,"Edgemont/Orange Crest/Woodcrest",4424,676.4,656.3,697,13800
+"81","135c","2011-2015","Total","0","Riverside",3114,68230,21.91,72.94,"lev0",88550,15410,15300,15530,703.3,678.6,728.1,"Casablanca/Riverside Central",3114,777.7,750.4,805.7,16810
+"82","135d","2011-2015","Total","0","Riverside",2847,71500,25.12,69.26,"lev0",122600,11670,11580,11750,464.5,447.4,481.5,"Arlington/Corona East/Home Gardens/La Sierra/Riverside Southwest",2848,688.6,662.8,715.3,14910
+"83","135e","2011-2015","Total","0","Riverside",4129,102300,24.79,69.46,"lev0",181900,11250,11180,11320,453.9,440,467.7,"Corona North/Glen Avon/Jurupa/Norco",4130,709.9,687.1,733.2,14180
+"84","135f","2011-2015","Total","0","Riverside",3139,66610,21.22,73.59,"lev0",123100,10820,10740,10900,509.9,492.1,527.8,"Corona South/El Cerrito/Temescal",3139,653.7,630.5,677.5,12390
+"85","135g","2011-2015","Total","0","Riverside",2103,55200,26.25,67.86,"lev0",91030,12130,12030,12230,462,442.3,481.8,"Moreno Valley",2103,696.5,665.8,728.3,15430
+"86","136","2011-2015","Total","0","Sacramento",1215,26240,21.6,73.12,"lev0",36200,14500,14320,14670,671.3,633.6,709.1,"Clay/Galt/Herald/Wilton",1215,680.9,642.8,720.9,14010
+"87","137","2011-2015","Total","0","Sacramento",268,5881,21.95,72.57,"lev0",5786,20330,19810,20850,926.4,815.5,1037,"Clarksburg/Hood/Isleton/Locke/Walnut Grove",276,661,582.6,750,16020
+"88","138","2011-2015","Total","0","Sacramento",635,12290,19.36,75.92,"lev0",20610,11930,11720,12140,616.2,568.3,664.1,"Rancho Murieta/Sloughhouse",635,569.9,525.3,617.8,11350
+"89","139a","2011-2015","Total","0","Sacramento",4857,124700,25.67,68.5,"lev0",191800,13000,12930,13080,506.6,492.3,520.8,"Elverta/Natomas/North Highlands/Rio Linda",4857,762.4,739.9,785.5,15860
+"90","139b","2011-2015","Total","0","Sacramento",5017,90730,18.08,77.3,"lev0",91750,19780,19650,19910,1094,1063,1124,"Carmichael/Fair Oaks/Gold River",5017,732,711.2,753.4,15220
+"91","139c","2011-2015","Total","0","Sacramento",5019,108400,21.59,73.1,"lev0",119700,18110,18010,18220,838.8,815.6,862,"Antelope/Citrus Heights/Foothill Farms",5019,846.1,822.7,870.1,17760
+"92","139d","2011-2015","Total","0","Sacramento",4565,82290,18.03,77.51,"lev0",75960,21660,21520,21810,1202,1167,1237,"Arcade/Arden/Town and Country Village",4565,713.2,691.3,735.8,16140
+"93","139e","2011-2015","Total","0","Sacramento",3748,72110,19.25,75.96,"lev0",112500,12820,12720,12910,666.3,644.9,687.6,"Folsom/Orangevale",3748,710.7,687.8,734.2,13040
+"94","139f","2011-2015","Total","0","Sacramento",4443,110200,24.81,69.57,"lev0",121300,18180,18070,18280,732.6,711,754.1,"Florin/Fruitridge/Oak Park/Parkway/South Sacramento",4443,780.4,757.4,804,19060
+"95","139g","2011-2015","Total","0","Sacramento",4601,100900,21.92,72.8,"lev0",127700,15790,15690,15890,720.3,699.5,741.2,"East Sacramento/La Riviera/Mather/Rancho Cordova/Rosemont",4601,721,700.1,742.3,15640
+"96","139h","2011-2015","Total","0","Sacramento",1894,45130,23.83,70.64,"lev0",79140,11410,11300,11510,478.7,457.1,500.2,"Elk Grove/Laguna/Laguna West/Lakeside",1894,700.2,667.9,733.8,14200
+"97","139i","2011-2015","Total","0","Sacramento",3754,66760,17.78,77.8,"lev0",83670,15960,15840,16080,897.4,868.7,926.1,"Greenhaven/Land Park/Midtown/Pocket/Riverside/Sutterville",3754,582.6,563.3,602.7,12290
+"98","139j","2011-2015","Total","0","Sacramento",5012,130700,26.07,68.21,"lev0",123100,21230,21110,21340,814.3,791.8,836.9,"Capitol Park/Del Paso Heights/Downtown/Gardenland/North Sacramento",5013,949.9,923.1,977.4,23480
+"99","139k","2011-2015","Total","0","Sacramento",3337,81650,24.47,69.92,"lev0",84440,19340,19210,19470,790.3,763.5,817.2,"Freeport/Meadowview",3337,829.3,801.1,858.4,19960
+"100","139l","2011-2015","Total","0","Sacramento",1900,46160,24.3,70.2,"lev0",78040,11830,11720,11940,486.9,465,508.8,"Vineyard",1900,660.6,630.2,692.1,14060
+"101","139m","2011-2015","Total","0","Sacramento",2017,42140,20.89,73.98,"lev0",83520,10090,9994,10190,483,461.9,504.1,"Central South Elk Grove/Franklin",2017,637.1,609.1,666.1,11820
+"102","140","2011-2015","Total","0","San Benito",1413,31130,22.03,72.9,"lev0",56120,11090,10970,11220,503.6,477.4,529.9,"Hollister/Paicines/Panoche/San Juan Bautista",1466,608,576.8,640.6,12260
+"103","142","2011-2015","Total","0","San Bernardino",114,3025,26.53,67.29,"lev0",2366,25570,24660,26480,963.7,786.8,1141,"Argus/Borosalvay/Trona",129,990.7,805,1214,25750
+"104","143","2011-2015","Total","0","San Bernardino",269,6939,25.8,68.13,"lev0",6555,21170,20670,21670,820.7,722.7,918.8,"Big River/Needles",269,597.6,521.4,686,17930
+"105","144.1","2011-2015","Total","0","San Bernardino",12,812.6,67.71,24.67,"lev0",10410,1561,1454,1668,23.05,10.01,36.1,"USMC Air-Ground Combat Training Center",NA,NA,NA,NA,NA
+"106","144.2","2011-2015","Total","0","San Bernardino",2618,57390,21.92,72.66,"lev0",41610,27590,27360,27810,1258,1210,1307,"Joshua Tree/Landers/Morongo Valley/Rimrock/Yucca Valley",2621,940.6,904,978.8,22280
+"107","144.3","2011-2015","Total","0","San Bernardino",716,18170,25.38,68.76,"lev0",19310,18820,18550,19090,741.6,687.3,795.9,"Cadiz/Twentynine Palms",718,827.4,766,892.8,19240
+"108","145.1a","2011-2015","Total","0","San Bernardino",5818,149400,25.68,68.46,"lev0",178400,16750,16670,16840,652.3,635.5,669,"Hesperia West/Mountain View Acres/Victorville Central and South",5818,941.3,916.3,966.8,20340
+"109","145.1b","2011-2015","Total","0","San Bernardino",5530,122200,22.11,72.48,"lev0",115700,21140,21020,21260,956.2,931,981.4,"Apple Valley/Hesperia East",5530,867.7,844.8,891.2,19670
+"110","145.2","2011-2015","Total","0","San Bernardino",1390,41370,29.77,63.96,"lev0",59870,13820,13690,13950,464.3,439.9,488.7,"Adelanto/Phelan/Pinon Hills/Victorville Northwest",1390,760.2,718.1,804.3,18020
+"111","145.3","2011-2015","Total","0","San Bernardino",267,6298,23.59,70.43,"lev0",4284,29400,28680,30130,1246,1097,1396,"Lucerne Valley",267,1018,896.7,1155,23460
+"112","146","2011-2015","Total","0","San Bernardino",1031,25300,24.54,69.62,"lev0",25520,19830,19580,20070,808.1,758.8,857.4,"Big Bear Lake/Fawnskin/Moorridge/Running Springs/Sugarloaf",1032,661.1,619.9,705.1,16370
+"113","147","2011-2015","Total","0","San Bernardino",743,17960,24.18,69.99,"lev0",21670,16580,16340,16820,685.8,636.5,735.1,"Blue Jay/Crestline/Lake Arrowhead/Skyforest/Twin Peaks",743,619.2,573.1,668.6,14360
+"114","148","2011-2015","Total","0","San Bernardino",214,4971,23.23,71.17,"lev0",6677,14890,14470,15300,641,555.1,726.9,"Lytle Creek/Wrightwood",217,815.3,699.6,946.5,15710
+"115","149","2011-2015","Total","0","San Bernardino",2430,60730,24.99,69.12,"lev0",53420,22740,22560,22920,909.8,873.7,946,"Barstow/Daggett/Lenwood/Nebo Center/Oro Grande/Yermo",2433,954.8,916.2,994.7,22130
+"116","15","2011-2015","Total","0","Colusa",278,6187,22.25,72.26,"lev0",7690,16090,15690,16490,723,638,808,"Colusa",278,722.7,636.2,818.9,14800
+"117","150","2011-2015","Total","0","San Bernardino",209,5803,27.77,66.36,"lev0",12610,9204,8968,9441,331.5,286.5,376.4,"Baker/Harvard/Newberry Springs",209,836.7,714.9,976.1,17040
+"118","151a","2011-2015","Total","0","San Bernardino",2598,59410,22.87,71.67,"lev0",126200,9414,9338,9490,411.6,395.8,427.5,"Chino Hills/Chino West Central/Los Serranos/Sleepy Hollow",2599,607.1,582.9,632.1,11470
+"119","151b","2011-2015","Total","0","San Bernardino",2609,60320,23.12,71.45,"lev0",100400,12020,11920,12110,519.9,499.9,539.8,"Ontario Northeast/Rancho Cucamonga South",2610,707.8,680.1,736.3,14410
+"120","151c","2011-2015","Total","0","San Bernardino",3127,77690,24.84,69.57,"lev0",124900,12450,12360,12530,500.9,483.4,518.5,"Montclair/Ontario Northwest/Upland South",3197,727.6,702,753.9,15580
+"121","151d","2011-2015","Total","0","San Bernardino",2957,58280,19.71,75.29,"lev0",85530,13630,13520,13740,691.5,666.6,716.4,"Rancho Cucamonga Northwest/San Antonio Heights/Upland North",2959,637.1,614,660.9,12530
+"122","151e","2011-2015","Total","0","San Bernardino",3411,91410,26.8,67.35,"lev0",187500,9749,9686,9812,363.8,351.6,376,"Fontana North/Rancho Cucamonga Northwest/Rialto Northeast",3414,632.8,610.2,656.1,13200
+"123","151f","2011-2015","Total","0","San Bernardino",3396,87500,25.77,68.41,"lev0",146800,11920,11840,12000,462.6,447,478.1,"Bloomington/Colton Central and West/Fontana South/Rialto South",3399,689.9,666.1,714.5,15410
+"124","151g","2011-2015","Total","0","San Bernardino",3756,107700,28.66,65.28,"lev0",126400,17040,16940,17140,594.5,575.5,613.5,"Muscoy/San Bernardino Central",3756,882.8,853.7,912.7,21450
+"125","151h","2011-2015","Total","0","San Bernardino",2959,82220,27.79,66.24,"lev0",133100,12350,12270,12430,444.5,428.5,460.5,"Fontana Central/Rialto Central",2959,781.7,752.2,812.2,17030
+"126","151i","2011-2015","Total","0","San Bernardino",3215,70610,21.96,72.92,"lev0",105000,13450,13350,13550,612.4,591.3,633.6,"Colton Southeast/Grand Terrace/Loma Linda/Redlands North",3215,692.2,668,717,14510
+"127","151j","2011-2015","Total","0","San Bernardino",4630,90400,19.52,75.64,"lev0",100500,17980,17870,18100,921.1,894.6,947.7,"Mentone/Redlands South/Yucaipa",4632,768.9,746.6,791.8,15820
+"128","151k","2011-2015","Total","0","San Bernardino",4202,109300,26,68.19,"lev0",121800,17930,17830,18040,689.7,668.9,710.6,"Highland/San Bernardino East",4202,848.3,822.5,874.7,20130
+"129","151l","2011-2015","Total","0","San Bernardino",2776,70720,25.48,68.91,"lev0",140400,10080,10000,10150,395.6,380.9,410.3,"Chino Northeast/Fontana Southwest/Ontario South",2791,637,612.5,662.4,13250
+"130","152","2011-2015","Total","0","San Diego",522,11580,22.19,72.3,"lev0",9965,23250,22830,23670,1048,957.8,1138,"Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs",525,633.9,575.4,699,17100
+"131","153.1","2011-2015","Total","0","San Diego",174,4903,28.18,66.01,"lev0",7323,13390,13020,13770,475.2,404.6,545.8,"Pala/Pauma Valley",174,709.8,597.7,839.7,15000
+"132","153.2","2011-2015","Total","0","San Diego",561,12170,21.69,73.06,"lev0",17160,14180,13930,14430,653.7,599.6,707.7,"Rincon/San Pasqual/Valley Center",561,512.5,469.5,559.6,12000
+"133","154","2011-2015","Total","0","San Diego",98,2594,26.47,67.47,"lev0",2486,20870,20070,21680,788.4,632.3,944.5,"Barona/Moreno",98,635.8,513.2,785.4,17720
+"134","155","2011-2015","Total","0","San Diego",1228,26520,21.59,73.12,"lev0",33320,15920,15730,16110,737.1,695.9,778.3,"Alpine/Blossom Valley/Crest/Descanso/Glen Oaks/Harbison Canyon/Japatul/Palo Verde",1228,586.5,553,622.1,13300
+"135","156a","2011-2015","Total","0","San Diego",3696,77070,20.85,74.21,"lev0",111100,13870,13770,13970,665.2,643.7,686.6,"Encinitas Central/Leucadia/Oceanside North and West/San Luis Rey/South Oceanside",3696,630.4,610,651.5,13580
+"136","156b","2011-2015","Total","0","San Diego",4128,71630,17.35,78.34,"lev0",110000,13030,12930,13120,750.7,727.8,773.6,"Carlsbad East/Encinitas East/Oceanside East",4128,564.3,546.8,582.3,10990
+"137","156c","2011-2015","Total","0","San Diego",5140,87730,17.07,78.57,"lev0",157100,11170,11100,11240,654.4,636.6,672.3,"Cardiff by the Sea/Eden Gardens/Harmony Grove/La Costa/Ocean Hills/Lomas Santa Fe/Olivehain/Rancho Santa Fe/San Marcos South/Solana Beach/Vista South",5140,517.8,503.5,532.6,9604
+"138","156d","2011-2015","Total","0","San Diego",4013,81930,20.42,74.72,"lev0",128200,12780,12700,12870,626.2,606.8,645.5,"Oceanside East/San Marcos West/Vista",4013,671.5,650.4,693.2,13510
+"139","156e","2011-2015","Total","0","San Diego",4709,92210,19.58,75.69,"lev0",134200,13740,13650,13830,701.5,681.5,721.6,"Escondido Central and South/San Marcos Central and East",4709,729.3,708.1,751.1,15030
+"140","156f","2011-2015","Total","0","San Diego",3933,69310,17.62,77.89,"lev0",101900,13610,13510,13710,772.2,748.1,796.3,"Escondido East/Hidden Meadows/Poway North",3933,567.7,549.6,586.4,11290
+"141","157","2011-2015","Total","0","San Diego",469,10270,21.89,72.8,"lev0",18770,10940,10730,11150,499.8,454.6,545,"Dulzura/Engineer Springs/Indian Springs/Jamacha/Jamul",469,880.8,790.1,980.3,13900
+"142","158.1","2011-2015","Total","0","San Diego",769,18720,24.35,70.08,"lev0",26060,14370,14160,14570,590.1,548.4,631.8,"Ramona/Rock Haven/Rosemont",773,650.7,604.1,700,14550
+"143","158.2","2011-2015","Total","0","San Diego",285,6155,21.6,73.19,"lev0",10830,11360,11080,11650,526.2,465.1,587.3,"Ballena/Four Corners/San Diego Country Estates",285,641.4,566.2,724.2,12120
+"144","159","2011-2015","Total","0","San Diego",251,6311,25.15,69,"lev0",6794,18580,18120,19040,738.9,647.5,830.3,"Buckman Springs/Canyon City/Jacumba/Morena Village/Tecate",293,841.6,742.9,951.5,20980
+"145","16.1","2011-2015","Total","0","Colusa",151,2870,19.01,76.64,"lev0",6046,9494,9146,9841,499.5,419.8,579.2,"Williams",151,739.2,623.9,870.2,11860
+"146","16.2","2011-2015","Total","0","Colusa",77,1553,20.17,74.62,"lev0",2265,13710,13030,14390,679.9,528,831.8,"Loduga/Maxwell/Princeton/Stonyford",88,528.2,419.8,663.9,11980
+"147","16.3","2011-2015","Total","0","Colusa",125,3085,24.68,69.8,"lev0",5365,11500,11090,11900,466,384.3,547.7,"Arbuckle/Grimes",125,669.8,550.3,810.3,13490
+"148","160","2011-2015","Total","0","San Diego",2093,43100,20.59,74.6,"lev0",87310,9874,9781,9967,479.4,458.9,500,"Bonsall/Camp Pendleton/Fallbrook/Live Oak Park/Rainbow/San Luis Rey Heights/Winterwarm",2097,548.1,524.3,572.9,11550
+"149","161a","2011-2015","Total","0","San Diego",4401,81130,18.43,76.97,"lev0",146800,11050,10980,11130,599.6,581.9,617.3,"Clairemont/Fiesta Shores/Linda Vista/Mission Beach/Sorrento/University City",4401,544.4,528.2,561,10850
+"150","161b","2011-2015","Total","0","San Diego",3359,67560,20.11,75.06,"lev0",100300,13470,13370,13570,669.7,647,692.3,"Bay Park/Five Points/Hillcrest Northwest/Mission Hills/Mission Valley/Morena/Normal Heights/Old Town/Serra Mesa",3359,653.9,631.6,677.1,13520
+"151","161c","2011-2015","Total","0","San Diego",2186,59940,27.42,66.55,"lev0",91030,13170,13060,13270,480.3,460.1,500.4,"Downtown/Golden Hill/Logan Heights",2186,709.5,679.2,740.8,16900
+"152","161d","2011-2015","Total","0","San Diego",2319,58060,25.04,69.35,"lev0",97570,11900,11800,12000,475.3,456,494.7,"Chollas Creek/City Heights/East San Diego/North Park/Oak Park/South Park",2319,695.3,666.5,725.2,14740
+"153","161e","2011-2015","Total","0","San Diego",2942,63030,21.42,73.66,"lev0",91710,13740,13640,13850,641.6,618.4,664.7,"College Heights/Hillcrest Southeast/Kensington/Rolando North/University Heights",2942,689.7,663.9,716.4,14890
+"154","161f","2011-2015","Total","0","San Diego",3410,65580,19.23,76.24,"lev0",81590,16070,15950,16200,835.8,807.8,863.9,"La Mesa/Rolando South",3410,687.9,663.6,713,15060
+"155","161g","2011-2015","Total","0","San Diego",3219,74640,23.19,71.36,"lev0",97680,15280,15170,15390,659.1,636.3,681.8,"Encanto/Lemon Grove Northwest/Lincoln Acres/National City East/Paradise Hills Southwest",3219,724.6,699.6,750.3,16330
+"156","161h","2011-2015","Total","0","San Diego",3323,76000,22.87,71.71,"lev0",87210,17430,17310,17550,762.1,736.2,788,"El Cajon Central and South/Fletcher Hills",3323,840.2,811.3,870,19120
+"157","161i","2011-2015","Total","0","San Diego",3211,63400,19.75,75.42,"lev0",85900,14760,14650,14880,747.6,721.7,773.5,"Calavo Gardens/Casa de Oro/Cottonwood/Grossmont/Homelands/Lemon Grove Central and North/Mount Helix/Rancho San Diego/Spring Valley",3211,666.8,643.5,690.8,13600
+"158","161j","2011-2015","Total","0","San Diego",4454,97110,21.8,73,"lev0",155500,12490,12410,12570,572.9,556.1,589.7,"Castle Park/Chula Vista Southwest/Imperial Beach West/Nestor East/Palm City/San Ysidro/South San Diego",4454,591.9,574.4,609.8,13090
+"159","161k","2011-2015","Total","0","San Diego",2571,56210,21.86,72.88,"lev0",80000,14050,13940,14170,642.8,617.9,667.6,"Chula Vista Central and Northwest/National City West",2571,709.3,681.9,737.6,15300
+"160","161l","2011-2015","Total","0","San Diego",2555,58430,22.87,71.69,"lev0",82470,14170,14050,14280,619.6,595.6,643.6,"Lemon Grove South/Paradise Hills",2555,680.3,653.8,707.6,14580
+"161","161m","2011-2015","Total","0","San Diego",3460,67950,19.64,75.35,"lev0",85700,15860,15740,15980,807.5,780.6,834.4,"Carlton Hills/El Cajon North/Eucalyptus Hills/Lake Murray/Loma Portal/San Carlos/Santee",3460,623.4,602.4,645.1,13530
+"162","161n","2011-2015","Total","0","San Diego",1946,37040,19.04,76.35,"lev0",62610,11830,11710,11950,621.6,594,649.3,"Civic Center/Coronado/Harbor Island/Imperial Beach East/Nestor West/Ocean Beach/Point Loma/Silver Strand",1947,595.8,568.4,624.6,12210
+"163","161o","2011-2015","Total","0","San Diego",2539,48060,18.93,76.38,"lev0",85570,11230,11130,11330,593.4,570.3,616.5,"Allied Gardens/Del Cerro/Grantville/Miramar/Tierrasanta",2539,569.6,547.5,592.5,10920
+"164","161p","2011-2015","Total","0","San Diego",2813,54990,19.55,75.83,"lev0",151400,7265,7205,7326,371.7,357.9,385.4,"Carmel Valley/Del Dios/Escondido South/Fairbanks Ranch/Poway Southeast/Rancho Bernardo Southeast/Rancho Penasquitos",2813,486.3,468,505.3,8469
+"165","161q","2011-2015","Total","0","San Diego",2906,48320,16.63,79.13,"lev0",79250,12190,12090,12300,733.4,706.7,760,"Poway Central/Poway Grove/Rancho Bernardo Southwest/Sabre Springs",2906,568.8,547.8,590.6,10450
+"166","161r","2011-2015","Total","0","San Diego",2813,42680,15.17,80.91,"lev0",75590,11290,11180,11400,744.2,716.7,771.7,"Crown Point/Del Mar/La Jolla/Pacific Beach",2813,545.5,524.9,567,9434
+"167","161s","2011-2015","Total","0","San Diego",3143,70120,22.31,72.33,"lev0",144700,9692,9620,9764,434.4,419.2,449.6,"Cockatoo Grove/Eastlake Greens/Otay Mesa",3144,632.3,609.9,655.3,12090
+"168","161t","2011-2015","Total","0","San Diego",3151,58330,18.51,76.92,"lev0",96860,12040,11950,12140,650.6,627.9,673.4,"Bonita/Chula Vista East/Eastlake/La Presa/Lynwood Hills/Rancho del Rey/Sunnyside/Sunny Vista",3151,576.2,555.9,597.1,11200
+"169","161u","2011-2015","Total","0","San Diego",3297,70830,21.48,73.22,"lev0",83460,16970,16850,17100,790.1,763.1,817.1,"Bostonia/Glenview/Granite Hills/Hillsdale/Johnstown/Lakeside/Riverview/Winter Gardens",3297,796.7,769.5,824.8,16340
+"170","161v","2011-2015","Total","0","San Diego",2090,48190,23.06,71.55,"lev0",112900,8539,8463,8615,370.3,354.5,386.2,"Mira Mesa/Scripps Miramar Ranch",2090,469.6,449.2,490.8,9505
+"171","162a","2011-2015","Total","0","San Francisco",5439,120700,22.2,72.59,"lev0",108600,22230,22110,22360,1002,974.9,1028,"Chinatown/Civic Center/Inner Mission/North Beach/South of Market/Tenderloin/Western Addition",5438,712.1,692.6,732.5,18110
+"172","162b","2011-2015","Total","0","San Francisco",2671,47350,17.73,77.85,"lev0",92440,10240,10150,10340,577.9,555.9,599.8,"Cow Hollow/Financial District/Marina/Nob Hill/Pacific Heights/Russian Hill/Seacliff",2672,498.7,479.8,518.8,9406
+"173","162c","2011-2015","Total","0","San Francisco",2610,61670,23.64,71.06,"lev0",111700,11050,10960,11130,467.5,449.6,485.5,"Bernal Heights/Mission District/Potrero Hill",2610,565.4,543.5,588.2,12270
+"174","162d","2011-2015","Total","0","San Francisco",4156,76130,18.32,77.2,"lev0",129900,11720,11640,11810,639.9,620.5,659.4,"Excelsior/Glen Park/Ingleside/Lake Merced/Merced Heights/Ocean Beach South/Park Merced/Saint Francis Wood/Westwood Park",4159,518.4,502.5,534.8,10160
+"175","162e","2011-2015","Total","0","San Francisco",2957,45830,15.5,80.53,"lev0",80300,11410,11310,11520,736.5,710,763,"Golden Gate Park/Parkside/Sunset/West Portal",2957,462.2,445,480.1,8498
+"176","162f","2011-2015","Total","0","San Francisco",2805,65750,23.44,71.28,"lev0",81360,16160,16040,16290,689.6,664,715.1,"Bayview/Candlestick/Hunters Point/Portola/Visitacion Valley",2806,659.6,635.3,684.7,15310
+"177","162g","2011-2015","Total","0","San Francisco",3352,71580,21.36,73.56,"lev0",120100,11920,11830,12000,558.1,539.2,577,"Buena Vista/Castro/Eureka Valley/Forest Hill/Haight-Ashbury/Noe Valley/West of Twin Peaks",3351,585.9,565.6,607.1,12280
+"178","162h","2011-2015","Total","0","San Francisco",3412,54140,15.87,80.16,"lev0",93120,11630,11530,11720,732.8,708.2,757.4,"Laurel Heights/Ocean Beach North/Richmond/Sutro Heights",3411,497.4,480.1,515.5,9321
+"179","163","2011-2015","Total","0","San Joaquin",2319,56250,24.25,70.19,"lev0",102800,10940,10850,11030,451.2,432.9,469.6,"Tracy",2320,793,758.8,828.4,14770
+"180","164.1","2011-2015","Total","0","San Joaquin",2507,59260,23.64,70.77,"lev0",77710,15250,15130,15370,645.2,619.9,670.5,"Lathrop/Manteca",2507,872.9,837.9,909.1,17890
+"181","164.2","2011-2015","Total","0","San Joaquin",1904,37950,19.93,75.09,"lev0",54610,13900,13760,14040,697.3,666,728.6,"Banta/Escalon/Ripon/Vernalis",1916,661.7,632.1,692.5,13560
+"182","165","2011-2015","Total","0","San Joaquin",172,3466,20.15,74.9,"lev0",5280,13130,12690,13570,651.5,554.1,748.9,"Farmington/Linden",172,900.2,755.6,1068,14190
+"183","166","2011-2015","Total","0","San Joaquin",2998,60450,20.17,74.98,"lev0",66630,18150,18000,18290,899.9,867.7,932.1,"Lodi",2998,778.5,750.4,807.6,17110
+"184","167","2011-2015","Total","0","San Joaquin",1344,29760,22.14,72.52,"lev0",37930,15690,15510,15870,708.7,670.8,746.6,"Lockeford/North Woodbridge",1371,752.5,712.5,794.4,15680
+"185","168","2011-2015","Total","0","San Joaquin",774,16340,21.11,73.84,"lev0",25090,13020,12820,13220,617,573.5,660.4,"South Woodbridge/Thornton",790,629.9,585.9,676.6,13150
+"186","169a","2011-2015","Total","0","San Joaquin",4104,99650,24.28,70.22,"lev0",98360,20260,20140,20390,834.5,809,860,"Stockton North Central/Stockton Northeast",4104,893.2,865.7,921.4,21700
+"187","169b","2011-2015","Total","0","San Joaquin",4778,132600,27.76,66.31,"lev0",139800,18970,18870,19070,683.4,664,702.7,"French Camp/Stockton South/Stockton Southeast",4778,849.4,825.2,874.3,21490
+"188","169c","2011-2015","Total","0","San Joaquin",3706,76730,20.7,74.29,"lev0",84940,18070,17940,18190,872.6,844.6,900.7,"Stockton Northwest/Stockton West",3706,719.7,696.2,744,16150
+"189","17","2011-2015","Total","0","Contra Costa",1499,34830,23.24,71.26,"lev0",55780,12490,12360,12620,537.5,510.3,564.7,"Brentwood East/Byron/Discovery Bay/Knightsen",1499,678.7,643.7,715.2,13970
+"190","170","2011-2015","Total","0","San Luis Obispo",1538,29840,19.4,75.91,"lev0",38080,15680,15500,15850,807.9,767.5,848.3,"Atascadero/Templeton",1538,608.4,577.3,641,13180
+"191","171","2011-2015","Total","0","San Luis Obispo",3416,65110,19.06,76.17,"lev0",82980,15690,15570,15810,823.3,795.7,850.9,"Arroyo Grande/Nipomo/Oceano/Pismo Beach",3436,582.6,562.7,603.2,12550
+"192","172","2011-2015","Total","0","San Luis Obispo",1931,33720,17.46,78.33,"lev0",65630,10280,10170,10390,588.4,562.2,614.7,"San Luis Obispo",1931,610.5,582.2,640.3,12170
+"193","173","2011-2015","Total","0","San Luis Obispo",1790,37540,20.97,74.07,"lev0",50080,14990,14840,15150,714.9,681.8,748,"El Paso de Robles/Lake Nacimiento/San Miguel/Shandon",1803,672.8,641.8,705.1,13790
+"194","174","2011-2015","Total","0","San Luis Obispo",2093,36140,17.27,78.33,"lev0",35330,20460,20250,20670,1185,1134,1236,"Baywood/Cambria/Cayucos/Morro Bay/Los Osos",2093,632.9,603.8,663.8,13720
+"195","175.1","2011-2015","Total","0","San Mateo",733,15180,20.7,74.15,"lev0",24880,12200,12010,12390,589.2,546.6,631.9,"El Granada/Half Moon Bay/Miramar/Montara/Moss Beach/Princeton by the Sea/Skyline",733,516.3,478.5,556.8,10380
+"196","175.2","2011-2015","Total","0","San Mateo",86,2107,24.51,69.64,"lev0",3938,10700,10250,11160,436.8,344.5,529.1,"La Honda/Loma Mar/Pescadero/San Gregorio/Sky Londa",86,439,337.4,566.1,8621
+"197","175.3","2011-2015","Total","0","San Mateo",1206,25540,21.18,73.5,"lev0",37940,13460,13300,13630,635.7,599.8,671.6,"Pacifica/Rockaway Beach/San Pedro Terrace/Sharp Park/Vallemar",1207,612.5,577.3,649.6,12350
+"198","176a","2011-2015","Total","0","San Mateo",3008,58100,19.31,75.86,"lev0",95970,12110,12010,12210,626.9,604.5,649.3,"Brisbane/Burlingame Northeast/Colma/Daly City East/Millbrae East/San Bruno/South San Francisco",3016,601.5,579.9,623.8,11730
+"199","176b","2011-2015","Total","0","San Mateo",1621,40100,24.74,69.93,"lev0",77240,10380,10280,10490,419.7,399.3,440.1,"East Menlo Park/East Palo Alto/North Fair Oaks/Redwood City East",1638,644,611.9,677.5,13530
+"200","176c","2011-2015","Total","0","San Mateo",2701,43210,16,79.99,"lev0",84090,10280,10180,10370,642.4,618.2,666.6,"Atherton/Lindenwood/Menlo Oaks/Menlo Park/Redwood City Central/Sharon Heights/West Menlo Park/Woodside/Woodside Hills",2701,477.3,459,496.2,8423
+"201","176d","2011-2015","Total","0","San Mateo",3831,76110,19.87,75.16,"lev0",123100,12360,12280,12450,622.3,602.6,642,"Broadmoor Village/Daly City West/San Bruno Northwest/Serramonte/Westborough",3832,556.1,538.4,574.2,11070
+"202","176e","2011-2015","Total","0","San Mateo",3899,58500,15,81.06,"lev0",96910,12070,11980,12170,804.7,779.4,829.9,"Burlingame Hills/Burlingame Southwest/Hillsborough/Hillsdale/Millbrae West/San Bruno Central/San Mateo West",3900,490.3,474.3,506.8,8807
+"203","176f","2011-2015","Total","0","San Mateo",2621,48740,18.6,76.87,"lev0",93020,10480,10390,10570,563.5,542,585.1,"Foster City/Redwood Shores/San Mateo East",2622,469.8,451.4,489,9588
+"204","176g","2011-2015","Total","0","San Mateo",2884,47400,16.44,79.38,"lev0",92420,10260,10170,10350,624.1,601.3,646.9,"Belmont/Devonshire/Emerald Lake/Farm Hills/Palomar Park/San Carlos West/The Highlands",2884,462.2,445.2,479.9,8218
+"205","177","2011-2015","Total","0","Santa Barbara",700,13100,18.71,76.61,"lev0",18600,14090,13850,14330,752.9,697.1,808.6,"Carpinteria/New Cuyama/Summerland/Toro Canyon",705,543.6,503.3,587.2,11090
+"206","178.1","2011-2015","Total","0","Santa Barbara",692,11570,16.73,79.15,"lev0",17120,13520,13270,13770,808.4,748.1,868.6,"Buellton/Los Olivos/Santa Ynez/Solvang",692,430.5,395.7,469.4,9575
+"207","178.2","2011-2015","Total","0","Santa Barbara",234,4459,19.05,76.01,"lev0",7429,12000,11650,12360,630,549.2,710.7,"Los Alamos",234,740.6,644.2,848.2,12510
+"208","179","2011-2015","Total","0","Santa Barbara",1851,40030,21.62,73.11,"lev0",58430,13700,13570,13830,633.6,604.7,662.4,"Lompoc/Mission Hills/Vandenberg",1851,712.7,680.4,746.2,14560
+"209","180.1","2011-2015","Total","0","Santa Barbara",4349,90100,20.72,74.34,"lev0",134000,13440,13360,13530,648.9,629.6,668.2,"Orcutt/Santa Maria",4352,659.6,639.8,679.9,14140
+"210","180.2","2011-2015","Total","0","Santa Barbara",153,3937,25.74,68.63,"lev0",7285,10810,10470,11150,420,353.5,486.6,"Guadalupe",153,563.9,476.5,663.7,12560
+"211","181a","2011-2015","Total","0","Santa Barbara",2624,52010,19.82,75.64,"lev0",103200,10080,9992,10170,508.5,489,527.9,"Goleta South/Isla Vista/Santa Barbara South",2624,561.7,539.4,584.8,12200
+"212","181b","2011-2015","Total","0","Santa Barbara",3760,58330,15.51,80.64,"lev0",81180,14370,14250,14490,926.4,896.8,956,"Goleta North/Mission Canyon/Montecito/Riviera/Santa Barbara North",3760,518.6,500.9,537,10270
+"213","182","2011-2015","Total","0","Santa Clara",2979,64050,21.5,73.41,"lev0",110200,11620,11530,11710,540.5,521.1,559.9,"Gilroy/Morgan Hill/Rucker/San Martin",2989,652.9,629.2,677.4,12560
+"214","183a","2011-2015","Total","0","Santa Clara",4307,60530,14.05,82.4,"lev0",132100,9162,9089,9235,652,632.5,671.5,"Los Altos/Los Altos Hills/Palo Alto Central/Stanford",4308,424.1,411,437.6,7124
+"215","183b","2011-2015","Total","0","Santa Clara",2906,63880,21.98,72.74,"lev0",124900,10230,10150,10310,465.4,448.5,482.3,"Berryessa/East San Jose/Milpitas East",2906,494.7,476.7,513.3,10120
+"216","183c","2011-2015","Total","0","Santa Clara",2475,43990,17.78,77.7,"lev0",90800,9691,9600,9781,545.2,523.7,566.7,"Sunnyvale South",2475,510.6,490.4,531.6,9436
+"217","183d","2011-2015","Total","0","Santa Clara",1529,38740,25.34,69.11,"lev0",76870,10080,9979,10180,397.8,377.9,417.8,"Downtown San Jose",1529,506.5,480.6,533.5,12180
+"218","183e","2011-2015","Total","0","Santa Clara",2819,68010,24.12,70.38,"lev0",126300,10770,10690,10850,446.3,429.8,462.7,"Alum Rock South/San Jose East",2819,575.5,554.1,597.6,12340
+"219","183f","2011-2015","Total","0","Santa Clara",3047,47360,15.54,80.33,"lev0",114400,8276,8201,8350,532.5,513.6,551.4,"Cupertino/Rancho Rinconada/San Jose West/Saratoga",3047,438.4,422.6,454.7,7302
+"220","183g","2011-2015","Total","0","Santa Clara",3926,72320,18.42,76.97,"lev0",117100,12350,12260,12440,670.5,649.5,691.4,"Cambrian Village East/San Jose South Central",3926,599.8,581,619.1,11290
+"221","183h","2011-2015","Total","0","Santa Clara",2733,67070,24.54,69.83,"lev0",131000,10240,10160,10320,417.3,401.6,432.9,"San Jose Southeast",2733,590.2,567.3,613.8,12020
+"222","183i","2011-2015","Total","0","Santa Clara",2475,53620,21.67,73,"lev0",107600,9970,9885,10050,460.2,442,478.3,"New Almaden/San Jose Southwest",2475,541.8,519.7,564.6,10170
+"223","183j","2011-2015","Total","0","Santa Clara",2495,54070,21.67,73.39,"lev0",92020,11750,11650,11850,542.3,521,563.6,"San Jose Northwest",2495,604.1,579.2,629.9,13370
+"224","183k","2011-2015","Total","0","Santa Clara",2481,48970,19.74,75.36,"lev0",104100,9407,9323,9490,476.6,457.8,495.3,"Evergreen/San Jose East Central",2482,482.3,463.4,501.9,9112
+"225","183l","2011-2015","Total","0","Santa Clara",2531,53800,21.25,73.8,"lev0",127900,8411,8340,8482,395.7,380.3,411.1,"Alviso/Palo Alto Bayshore/Santa Clara Northwest/Sunnyvale North",2531,531.8,511,553.3,10120
+"226","183m","2011-2015","Total","0","Santa Clara",3443,60020,17.43,78.12,"lev0",102500,11710,11610,11800,671.6,649.2,694.1,"Cambrian Village West/Campbell South/Los Gatos/Monte Sereno/San Tomas",3443,550.8,532.4,569.8,10030
+"227","183n","2011-2015","Total","0","Santa Clara",3731,69330,18.59,76.78,"lev0",127000,10920,10840,11000,587.5,568.6,606.4,"Santa Clara South and West",3730,578.1,559.4,597.4,11020
+"228","183o","2011-2015","Total","0","Santa Clara",2363,54400,23.02,71.56,"lev0",127300,8549,8477,8621,371.3,356.4,386.3,"Milpitas West/Santa Clara Northeast",2363,522.3,500.9,544.6,10160
+"229","184","2011-2015","Total","0","Santa Cruz",1491,34900,23.4,71.49,"lev0",55620,12550,12420,12680,536.2,509,563.4,"Freedom/Watsonville",1491,648.4,615.2,683.1,14450
+"230","185.1","2011-2015","Total","0","Santa Cruz",3982,77580,19.48,75.88,"lev0",120700,12860,12770,12950,660.1,639.6,680.6,"Aptos/Capitola/Live Oak/Rio del Mar/Santa Cruz",3982,644.2,623.9,665,12670
+"231","185.2","2011-2015","Total","0","Santa Cruz",101,2305,22.82,71.86,"lev0",4276,10780,10340,11220,472.4,380.3,564.5,"Davenport",101,534.8,428.3,663.9,11630
+"232","185.3","2011-2015","Total","0","Santa Cruz",1352,26220,19.39,75.9,"lev0",39950,13130,12970,13280,676.8,640.8,712.9,"Ben Lomond/Felton/Scotts Valley",1352,554.4,523.7,586.8,11330
+"233","185.4","2011-2015","Total","0","Santa Cruz",419,10590,25.26,68.89,"lev0",16080,13160,12910,13410,521.1,471.2,571,"Boulder Creek",468,782.3,698.1,875.1,15300
+"234","185.5","2011-2015","Total","0","Santa Cruz",842,18140,21.54,73.47,"lev0",28230,12850,12670,13040,596.6,556.3,636.9,"Amesti/Corralitos/Day Valley/Interlaken/Pajaro Dunes",910,564,527,603.3,12390
+"235","186","2011-2015","Total","0","Shasta",1770,40830,23.07,71.37,"lev0",33260,24550,24310,24790,1064,1015,1114,"Anderson/Cottonwood/French Gulch/Happy Valley/Igo/Ono/Platina/Shasta",1770,872,830.9,915.1,20970
+"236","187","2011-2015","Total","0","Shasta",72,1680,23.33,70.93,"lev0",1427,23540,22420,24670,1009,776,1242,"Castella/Lakehead/OBrien",91,868,674.4,1150,21150
+"237","188.1","2011-2015","Total","0","Shasta",172,4064,23.63,70.82,"lev0",4958,16390,15890,16900,693.8,590.1,797.5,"Big Bend/Montgomery Creek/Oak Run/Round Mountain",204,823.5,696.8,970.3,17060
+"238","188.2","2011-2015","Total","0","Shasta",342,7733,22.61,71.72,"lev0",6334,24420,23870,24960,1080,965.4,1194,"Manton/Millville/Shingletown/Viola",354,761.5,671.2,868.5,20240
+"239","189.1","2011-2015","Total","0","Shasta",222,4619,20.8,73.94,"lev0",4726,19550,18980,20110,939.5,815.9,1063,"Palo Cedro",222,672.7,572.6,798.2,17720
+"240","189.2","2011-2015","Total","0","Shasta",5780,116600,20.17,74.84,"lev0",99910,23340,23200,23470,1157,1127,1187,"Redding",5780,864.5,841.8,887.8,19480
+"241","189.3","2011-2015","Total","0","Shasta",1037,23200,22.38,72.11,"lev0",20090,23100,22800,23400,1032,969.6,1095,"Bella Vista/City of Shasta Lake",1068,786.2,738.5,836.8,18690
+"242","18a","2011-2015","Total","0","Contra Costa",2965,63020,21.25,73.58,"lev0",86280,14610,14490,14720,687.3,662.6,712,"Crockett/Hercules/Martinez West/Pinole/Port Costa/Richmond Northeast/Rodeo",2966,638.7,615.3,662.8,13330
+"243","18b","2011-2015","Total","0","Contra Costa",2546,53660,21.08,73.89,"lev0",78770,13630,13510,13740,646.4,621.3,671.5,"Concord West/Martinez East/Martinez Waterfront/Pacheco/Pleasant Hill East",2546,675.6,648.9,703.2,14150
+"244","18c","2011-2015","Total","0","Contra Costa",3164,64840,20.49,74.5,"lev0",88960,14580,14470,14690,711.4,686.6,736.1,"Avon/Clyde/Concord Central/Pittsburg Southwest",3164,688.7,664.7,713.4,13650
+"245","18d","2011-2015","Total","0","Contra Costa",3332,87640,26.3,67.9,"lev0",98980,17710,17590,17820,673.3,650.4,696.1,"Antioch North and West/Nichols/Pittsburg Central and East/West Pittsburg",3332,884.3,853.8,915.7,20400
+"246","18e","2011-2015","Total","0","Contra Costa",3994,89140,22.32,72.35,"lev0",129200,13790,13700,13880,618,598.9,637.2,"Brentwood Central and West/Oakley",3994,749.6,725.9,773.9,14970
+"247","18f","2011-2015","Total","0","Contra Costa",3053,77180,25.28,69.11,"lev0",99780,15470,15360,15580,612,590.3,633.7,"Richmond Central/San Pablo Central",3053,726,699.9,752.9,16950
+"248","18g","2011-2015","Total","0","Contra Costa",2916,58270,19.98,75.15,"lev0",79940,14580,14460,14700,729.6,703.1,756,"El Cerrito/El Sobrante/Kensington/Richmond North/Richmond Southeast/Wildcat Canyon",2921,579.1,557.9,601,12420
+"249","18h","2011-2015","Total","0","Contra Costa",3044,54990,18.07,77.37,"lev0",136000,8089,8021,8157,447.8,431.9,463.7,"Alamo/Danville/Diablo/San Ramon",3072,508.2,489.7,527.3,8755
+"250","18i","2011-2015","Total","0","Contra Costa",5418,77380,14.28,81.9,"lev0",112500,13760,13660,13860,963.4,937.7,989,"Lafayette/Martinez South/Moraga/Orinda/Pleasant Hill/Rheem Valley/Rossmoor Leisure World/Walnut Creek Southwest",5419,467.3,453.8,481.4,8758
+"251","18j","2011-2015","Total","0","Contra Costa",3819,58340,15.28,80.8,"lev0",99620,11710,11620,11810,766.7,742.4,791.1,"Clayton/Concord South/Walnut Creek Central and East",3819,552.4,534.7,570.6,9263
+"252","19","2011-2015","Total","0","Del Norte",1170,27000,23.08,71.32,"lev0",28360,19040,18810,19270,825.2,777.9,872.5,"Crescent City/Gasquet/Klamath/Smith River",1170,760.4,716.7,806.3,16960
+"253","190","2011-2015","Total","0","Shasta",440,9069,20.61,74,"lev0",7261,24980,24460,25490,1212,1099,1325,"Burney/Cassel/Fall River Mills/Hat Creek/McArthur",440,885.5,799.7,981.4,19250
+"254","191","2011-2015","Total","0","Sierra",124,2546,20.53,74.47,"lev0",3127,16280,15650,16910,793.1,653.5,932.7,"Alleghany/Calpine/Downieville/Goodyear Bar/Sattley/Sierra City/Sierraville",125,552.7,453,679.1,12220
+"255","193","2011-2015","Total","0","Siskiyou",71,1843,25.96,68.15,"lev0",2085,17680,16880,18490,681.1,522.6,839.5,"Happy Camp",71,438.4,332.9,578.4,13460
+"256","194","2011-2015","Total","0","Siskiyou",219,4534,20.7,74.19,"lev0",4948,18330,17790,18860,885.2,768,1002,"Etna/Fort Jones/Greenview",219,606.1,522.8,704.7,13960
+"257","195","2011-2015","Total","0","Siskiyou",925,18900,20.43,74.48,"lev0",16240,23280,22950,23610,1139,1066,1213,"Gazelle/Grenada/Hilt/Hornbrook/Yreka",927,743.3,693.9,796.7,17790
+"258","196","2011-2015","Total","0","Siskiyou",23,493.8,21.47,73.3,"lev0",1418,6965,6351,7579,324.4,191.8,457,"Tulelake",23,330.8,206.7,511.4,6753
+"259","197","2011-2015","Total","0","Siskiyou",725,15060,20.77,74.16,"lev0",14190,21210,20880,21550,1022,947.2,1096,"Carrick/Edgewood/Mount Shasta/Weed",726,722.7,668.6,781.2,16540
+"260","198","2011-2015","Total","0","Siskiyou",149,3585,24.06,70.31,"lev0",2104,34070,32960,35190,1416,1189,1644,"Dunsmuir",149,1055,874.6,1286,31340
+"261","199","2011-2015","Total","0","Siskiyou",77,1455,18.9,76.23,"lev0",1605,18130,17200,19060,959.5,745.2,1174,"McCloud/Tennant",77,478.1,364.9,650.8,11500
+"262","200","2011-2015","Total","0","Siskiyou",51,1290,25.29,68.94,"lev0",1911,13500,12760,14230,533.8,387.3,680.2,"Dorris/Macdoel/Mount Hebron",51,567.5,396.5,816.2,16210
+"263","201","2011-2015","Total","0","Solano",487,10850,22.28,72.41,"lev0",21460,10120,9925,10310,453.9,413.6,494.2,"Dixon",495,608.1,553,667.8,11940
+"264","202a","2011-2015","Total","0","Solano",3623,80640,22.26,72.42,"lev0",101400,15900,15790,16010,714.3,691.1,737.6,"Vacaville",3670,770,744.8,795.9,16070
+"265","202b","2011-2015","Total","0","Solano",3619,83520,23.08,71.55,"lev0",109800,15210,15110,15320,659.2,637.7,680.7,"Fairfield",3619,779.1,753.6,805.3,16390
+"266","203.1","2011-2015","Total","0","Solano",884,20520,23.21,71.32,"lev0",33920,12100,11930,12270,521.3,486.9,555.7,"Benicia/Collinsville/Suisun City",884,624.4,582.1,669.2,12910
+"267","203.2","2011-2015","Total","0","Solano",543,10710,19.72,75.03,"lev0",8512,25160,24690,25640,1276,1169,1383,"Rio Vista",549,656.4,593.4,729.1,16880
+"268","204","2011-2015","Total","0","Solano",5378,125100,23.26,71.3,"lev0",142100,17600,17500,17700,756.8,736.5,777,"Vallejo",5380,701.2,682.2,720.6,16160
+"269","205.1","2011-2015","Total","0","Sonoma",628,11390,18.14,77.53,"lev0",15840,14380,14120,14650,792.8,730.8,854.8,"Geyserville/Healdsburg",628,541.1,497.2,588.8,11780
+"270","205.2","2011-2015","Total","0","Sonoma",914,17740,19.43,75.68,"lev0",29710,11940,11770,12120,615.3,575.4,655.1,"Windsor",915,576,539.1,615,11300
+"271","206","2011-2015","Total","0","Sonoma",583,11360,19.48,75.68,"lev0",13980,16240,15950,16540,834,766.3,901.7,"Cloverdale",587,614.8,564.7,669,13210
+"272","207","2011-2015","Total","0","Sonoma",922,19190,20.82,73.97,"lev0",22220,17270,17030,17520,829.7,776.2,883.3,"Forestville/Fort Ross/Guerneville/Jenner/Monte Rio/Occidental/Sea Ranch",922,636.4,592.8,684,12630
+"273","208","2011-2015","Total","0","Sonoma",2019,33700,16.7,78.93,"lev0",43740,15410,15250,15570,923.3,883,963.5,"Boyes Hot Springs/Glen Ellen/Kenwood/Sonoma/Vineburg",2018,543.4,518.7,569.4,10680
+"274","209.1","2011-2015","Total","0","Sonoma",4466,90300,20.22,74.78,"lev0",135400,13340,13250,13420,659.6,640.2,678.9,"Petaluma",4465,655.4,635.7,675.5,13130
+"275","209.2","2011-2015","Total","0","Sonoma",605,11040,18.25,77.09,"lev0",14130,15630,15340,15920,856.3,788.1,924.6,"Two Rock/Valley Ford",605,636.7,585.7,691.9,12530
+"276","210.1","2011-2015","Total","0","Sonoma",8057,145700,18.09,77.45,"lev0",192400,15150,15070,15230,837.5,819.2,855.8,"Santa Rosa",8077,672.1,657.2,687.3,13170
+"277","210.2","2011-2015","Total","0","Sonoma",772,14750,19.11,76.1,"lev0",20030,14730,14500,14970,771,716.6,825.4,"Bodega/Sebastopol",772,581.2,538.2,628.6,11740
+"278","211","2011-2015","Total","0","Stanislaus",2118,46740,22.07,72.58,"lev0",56420,16570,16420,16720,750.7,718.8,782.7,"Oakdale/Riverbank",2122,791.7,758.2,826.4,16900
+"279","212.1","2011-2015","Total","0","Stanislaus",2739,55760,20.36,74.71,"lev0",74360,15000,14870,15120,736.7,709.1,764.3,"Denair/Turlock",2738,734.9,707.1,763.5,15160
+"280","212.2","2011-2015","Total","0","Stanislaus",521,12510,24.02,70.31,"lev0",16900,14810,14550,15070,616.4,563.5,669.4,"Keyes",521,766.4,700.9,836.7,16900
+"281","212.3","2011-2015","Total","0","Stanislaus",893,21440,24.01,70.49,"lev0",26680,16080,15860,16290,669.5,625.6,713.4,"Salida",893,766.3,716,819.6,17170
+"282","213","2011-2015","Total","0","Stanislaus",1034,25970,25.11,69.34,"lev0",39320,13210,13050,13370,526,493.9,558.1,"Crows Landing/Empire/Grayson/Newman/Patterson/Westley",1035,754.4,706.8,804.6,16330
+"283","214","2011-2015","Total","0","Stanislaus",1583,37320,23.57,70.99,"lev0",46810,15940,15780,16110,676.4,643,709.7,"Hughson",1584,745.1,708.5,783.2,16780
+"284","215a","2011-2015","Total","0","Stanislaus",3685,79980,21.71,73.1,"lev0",80280,19930,19790,20060,918,888.4,947.6,"Modesto West",3685,838.9,811.7,867,18770
+"285","215b","2011-2015","Total","0","Stanislaus",3811,82950,21.77,73.02,"lev0",88550,18730,18610,18860,860.8,833.4,888.1,"Modesto East",3811,807.4,781.6,834,18100
+"286","215c","2011-2015","Total","0","Stanislaus",2673,75230,28.14,65.84,"lev0",89000,16910,16780,17030,600.7,577.9,623.5,"Ceres/Modesto South Central",2674,816.5,785.1,848.8,20070
+"287","216","2011-2015","Total","0","Sutter",3150,67990,21.58,73.15,"lev0",81900,16600,16480,16730,769.2,742.3,796.1,"Meridian/Robbins/Yuba City",3155,742.7,716.9,769.3,15970
+"288","217","2011-2015","Total","0","Sutter",91,1659,18.23,76.8,"lev0",2413,13750,13090,14410,754.2,599.3,909.2,"Nicolaus/Pleasant Grove",105,627.2,511.2,769.3,11600
+"289","218","2011-2015","Total","0","Sutter",404,9324,23.08,71.56,"lev0",10470,17810,17450,18170,771.7,696.4,846.9,"Live Oak",405,905.5,817.9,1000,19250
+"290","219","2011-2015","Total","0","Tehama",195,4184,21.46,73.14,"lev0",5043,16590,16090,17100,773.3,664.8,881.9,"Paskenta/Rancho Tehama",198,645.1,553.8,750.1,14030
+"291","22","2011-2015","Total","0","El Dorado",456,9736,21.35,73.24,"lev0",9862,19750,19350,20140,924.8,839.9,1010,"Garden Valley/Georgetown/Greenwood/Kelsey/Volcanoville",457,615.9,559.4,679.8,13650
+"292","220","2011-2015","Total","0","Tehama",248,5785,23.33,70.96,"lev0",4137,27970,27250,28690,1199,1050,1348,"Dairyville/Manton/Mineral/Paynes Creek",250,940.3,816.7,1086,22930
+"293","221","2011-2015","Total","0","Tehama",1502,31490,20.97,73.72,"lev0",35990,17500,17310,17700,834.7,792.5,877,"Gerber/Los Flores/Proberta/Red Bluff",1860,820.8,783.2,860,18880
+"294","222","2011-2015","Total","0","Tehama",808,18620,23.04,71.27,"lev0",18070,20600,20310,20900,894.1,832.5,955.8,"Corning/Los Molinos/Tehama/Vina",843,897,837,960.7,20480
+"295","223","2011-2015","Total","0","Trinity",33,675.6,20.47,74.27,"lev0",2436,5546,5128,5965,270.9,178.5,363.4,"Junction City/Salyer",33,223.9,147.5,343.6,4588
+"296","224","2011-2015","Total","0","Trinity",301,6191,20.57,74.22,"lev0",7234,17120,16690,17540,832.2,738.2,926.2,"Douglas City/Lewiston/Trinity Center/Weaverville",302,555.5,490.3,630.6,13120
+"297","225","2011-2015","Total","0","Trinity",74,1929,26.06,67.77,"lev0",3283,11750,11230,12270,450.8,348.1,553.5,"Forest Glen/Hayfork/Hyampom/Peanut",77,336.7,261.2,438.1,9934
+"298","226","2011-2015","Total","0","Trinity",11,318.6,28.96,64.45,"lev0",685,9302,8280,10320,321.2,131.4,511,"Kettenpom/Mad River/Ruth/Xenia",11,300,108.5,787.3,12870
+"299","227.1","2011-2015","Total","0","Tulare",707,17810,25.2,69.28,"lev0",33460,10650,10490,10810,422.6,391.5,453.8,"Dinuba",802,663.8,617.9,712.3,14350
+"300","227.2","2011-2015","Total","0","Tulare",362,9560,26.41,68.08,"lev0",18830,10150,9949,10360,384.4,344.8,424,"Cutler-Orosi",369,590.6,530.8,655.4,13670
+"301","228.1","2011-2015","Total","0","Tulare",417,11100,26.62,67.65,"lev0",15320,14490,14220,14760,544.4,492.1,596.6,"Ivanhoe/Woodlake",417,672.6,608.1,742.4,15890
+"302","228.2","2011-2015","Total","0","Tulare",1284,31160,24.27,70.24,"lev0",43810,14230,14070,14380,586.2,554.2,618.3,"Exeter/Lemon Cove/Lindsay/Strathmore",1284,736.9,696.6,779.1,16460
+"303","229","2011-2015","Total","0","Tulare",215,4789,22.27,72.51,"lev0",5002,19150,18610,19690,859.7,744.7,974.6,"Three Rivers",215,592.5,507.8,692.3,15950
+"304","23.1","2011-2015","Total","0","El Dorado",1993,38520,19.33,75.74,"lev0",68570,11240,11120,11350,581.3,555.8,606.8,"Cameron Park/El Dorado Hills/Shingle Springs",1994,544.5,520.3,569.8,10480
+"305","23.2","2011-2015","Total","0","El Dorado",1069,23790,22.25,72.3,"lev0",23700,20070,19820,20330,902.1,848,956.1,"Camino/Pollock Pines",1071,882.5,825.4,943,17550
+"306","23.3","2011-2015","Total","0","El Dorado",2481,46030,18.55,76.68,"lev0",49590,18560,18390,18730,1001,961.2,1040,"Cool/Diamond Springs/Latrobe/Pilot Hill/Placerville",2482,648.5,622.1,676.2,13830
+"307","230","2011-2015","Total","0","Tulare",2337,56770,24.29,70.19,"lev0",75950,14950,14830,15070,615.4,590.4,640.3,"Tipton/Tulare/Woodville",2338,799.6,767.1,833.2,17720
+"308","231","2011-2015","Total","0","Tulare",3079,77350,25.12,69.27,"lev0",100800,15350,15240,15460,611.1,589.5,632.7,"Alpaugh/Earlimart/Pixley/Porterville/Rich Grove/Terra Bella",3094,812.6,783.8,842.2,18410
+"309","232","2011-2015","Total","0","Tulare",239,5422,22.69,71.73,"lev0",5641,19220,18710,19740,847.4,739.9,954.8,"Springville",239,552.9,476.7,643.5,15070
+"310","233","2011-2015","Total","0","Tulare",4899,112000,22.85,71.86,"lev0",147900,15140,15060,15230,662.6,644.1,681.2,"Farmersville/Goshen/Visalia",4899,756.8,735.5,778.6,16510
+"311","234.1","2011-2015","Total","0","Tuolumne",60,1430,23.84,70.12,"lev0",5129,5577,5288,5866,234,174.8,293.2,"Chinese Camp",69,406.9,304.7,555.1,8893
+"312","234.2","2011-2015","Total","0","Tuolumne",1227,24500,19.97,75,"lev0",21440,22850,22560,23140,1144,1080,1209,"Columbia/Jamestown/Sonora",1227,885.9,835.3,939.6,18370
+"313","235","2011-2015","Total","0","Tuolumne",188,3593,19.11,75.72,"lev0",3513,20460,19790,21120,1070,917.3,1223,"Big Oak Flat/Groveland",191,523,438.2,635.9,13540
+"314","236","2011-2015","Total","0","Tuolumne",1509,27500,18.22,77.08,"lev0",24640,22320,22050,22580,1225,1163,1286,"East Sonora/Mi-Wuk Village/Soulsbyville/Tuolumne City/Twain Harte",1512,693.6,656.6,733.4,15130
+"315","237","2011-2015","Total","0","Ventura",2191,46030,21.01,74,"lev0",67870,13560,13440,13690,645.6,618.6,672.6,"Fillmore/Los Padres National Forest/Piru/Santa Paula/Saticoy",2205,682.3,654,711.7,14450
+"316","238","2011-2015","Total","0","Ventura",1463,28010,19.15,76.15,"lev0",31780,17630,17430,17840,920.8,873.6,968,"Meiners Oaks/Oak View/Ojai",1466,676.4,641,713.7,14330
+"317","239","2011-2015","Total","0","Ventura",3725,65080,17.47,78.13,"lev0",106000,12280,12190,12380,703.1,680.5,725.7,"Camarillo/Moorpark",3728,551.1,532.9,569.8,10700
+"318","24","2011-2015","Total","0","El Dorado",693,17170,24.78,69.49,"lev0",29260,11740,11560,11910,473.7,438.5,509,"South Lake Tahoe",694,543,500.5,588.3,11360
+"319","240a","2011-2015","Total","0","Ventura",2520,53330,21.16,73.73,"lev0",92560,11520,11420,11620,544.5,523.2,565.8,"Simi Valley East",2543,633.4,608.3,659.4,12190
+"320","240b","2011-2015","Total","0","Ventura",3984,65510,16.44,79.35,"lev0",115600,11340,11250,11420,689.5,668.1,710.9,"Thousand Oaks Central and West",3997,542.8,525.8,560.3,9727
+"321","240c","2011-2015","Total","0","Ventura",2593,51920,20.02,75.1,"lev0",85930,12080,11980,12190,603.5,580.3,626.7,"Simi Valley West/Thousand Oaks East",2594,620.4,596.5,645.2,11800
+"322","241a","2011-2015","Total","0","Ventura",2975,68680,23.09,71.56,"lev0",108400,12670,12580,12760,548.8,529.1,568.5,"Oxnard East/Oxnard West/Oxnard South Central/Port Hueneme",2975,611.2,589.1,633.8,13030
+"323","241b","2011-2015","Total","0","Ventura",2661,68680,25.81,68.69,"lev0",131500,10450,10370,10530,404.8,389.4,420.2,"Oxnard North Central",2661,575.5,553.3,598.5,12880
+"324","241c","2011-2015","Total","0","Ventura",3629,70600,19.45,75.79,"lev0",89460,15780,15670,15900,811.3,784.9,837.7,"Ventura",3629,654.8,633.2,677,13780
+"325","242","2011-2015","Total","0","Yolo",201,4718,23.47,71.12,"lev0",8599,10970,10660,11290,467.5,402.9,532.1,"Winters",201,583.7,501.8,676.1,12230
+"326","243","2011-2015","Total","0","Yolo",160,3758,23.49,70.92,"lev0",4975,15110,14620,15590,643.2,543.6,742.9,"Esparto/Rumsey",160,657.7,557.5,773,14920
+"327","244","2011-2015","Total","0","Yolo",1381,24010,17.38,78.26,"lev0",72440,6628,6544,6712,381.3,361.2,401.4,"Davis",1381,526.3,497.9,556,9159
+"328","245","2011-2015","Total","0","Yolo",1887,44830,23.76,70.67,"lev0",53910,16630,16480,16790,700.1,668.5,731.7,"Bryte/Broderick/Clarksburg/Riverview/West Sacramento",1907,817.4,780.5,855.6,17880
+"329","246.1","2011-2015","Total","0","Yolo",2171,45490,20.96,74.07,"lev0",58720,15500,15350,15640,739.5,708.4,770.6,"Woodland",2171,700.7,670.9,731.5,15120
+"330","246.2","2011-2015","Total","0","Yolo",112,2596,23.18,71.2,"lev0",3653,14210,13660,14760,613.2,499.6,726.8,"Knights Landing",114,698.3,566.4,855.2,14250
+"331","247","2011-2015","Total","0","Yuba",215,4767,22.17,72.2,"lev0",4396,21690,21070,22300,978.2,847.4,1109,"Browns Valley/Brownsville/Dobbins/Oregon House",224,777,669.3,903.6,18010
+"332","248","2011-2015","Total","0","Yuba",146,3102,21.24,73.66,"lev0",4155,14930,14400,15460,702.8,588.8,816.8,"Wheatland",146,948.8,793.5,1129,16810
+"333","249","2011-2015","Total","0","Yuba",2302,57770,25.1,69.17,"lev0",64020,18050,17900,18190,719.1,689.7,748.5,"Marysville",2305,881.3,845.1,918.7,20240
+"334","25","2011-2015","Total","0","Fresno",359,10770,30.01,64.04,"lev0",21770,9894,9708,10080,329.8,295.6,363.9,"Firebaugh/Mendota",381,665,594.5,742.4,14690
+"335","26","2011-2015","Total","0","Fresno",96,2997,31.22,62.92,"lev0",6849,8752,8439,9066,280.3,224.3,336.4,"Cantua Creek/San Joaquin/Tranquility",96,814.7,621.6,1055,13930
+"336","27","2011-2015","Total","0","Fresno",365,9904,27.13,66.98,"lev0",21770,9098,8918,9277,335.3,300.9,369.7,"Coalinga",365,543.8,484.6,608.9,11230
+"337","28","2011-2015","Total","0","Fresno",85,2673,31.45,62.53,"lev0",8107,6595,6345,6845,209.7,165.1,254.3,"Huron",85,440.6,338.7,569.5,10280
+"338","29","2011-2015","Total","0","Fresno",1073,26670,24.85,69.58,"lev0",37660,14160,13990,14330,569.8,535.7,603.9,"Biola/Herndon/Highway City/Kerman",1073,688.8,647.9,731.8,16040
+"339","2a","2011-2015","Total","0","Alameda",1949,44360,22.76,71.99,"lev0",89730,9887,9795,9979,434.4,415.1,453.7,"Berkeley South and West/Emeryville/Oakland Northwest",1949,598.1,570.4,627,12720
+"340","2b","2011-2015","Total","0","Alameda",3427,59760,17.44,78.25,"lev0",109500,10920,10830,11010,626.2,605.3,647.2,"Albany/Berkeley East and North/Claremont/Cragmont/Forest Park/Rockridge/Temescal/Thousand Oaks",3427,499.8,482.7,517.5,9172
+"341","2c","2011-2015","Total","0","Alameda",3332,78230,23.48,71.42,"lev0",82950,18860,18730,18990,803.4,776.1,830.7,"Oakland West Central",3332,739.2,713.4,765.8,18500
+"342","2d","2011-2015","Total","0","Alameda",4261,113200,26.58,67.78,"lev0",130800,17300,17200,17410,651.4,631.9,671,"Fruitvale/Melrose/Oakland Airport",4259,814.4,789.5,840,19120
+"343","2e","2011-2015","Total","0","Alameda",2406,46760,19.44,75.8,"lev0",69560,13440,13320,13570,691.8,664.1,719.4,"Alameda/Jack London Square/Oakland Inner Harbor",2405,623,598,648.9,12340
+"344","2f","2011-2015","Total","0","Alameda",3771,69900,18.54,76.87,"lev0",103800,13470,13370,13570,726.8,703.6,750,"Castro Valley Central and North/Oak Knoll/San Leandro Northeast/Sheffield Village/Union City East",3770,597,577.6,617,11600
+"345","2g","2011-2015","Total","0","Alameda",3562,71070,19.95,75.06,"lev0",97210,14620,14510,14730,732.8,708.8,756.9,"San Leandro West/San Lorenzo West/Hayward West",3563,603.5,583.4,624.1,12990
+"346","2h","2011-2015","Total","0","Alameda",3951,89110,22.55,72.38,"lev0",111100,16040,15940,16150,711.3,689.2,733.5,"Ashland/Brookfield Village/Castro Valley South/Elmhurst/Hayward Northeast/San Leandro North Central/San Lorenzo East",3954,751.4,727,776.5,17050
+"347","2i","2011-2015","Total","0","Alameda",1867,39300,21.05,73.66,"lev0",93320,8422,8339,8506,400.1,382,418.3,"Fremont South/Mission San Jose/Newark South/Warm Springs",1867,455.2,434.5,476.7,8753
+"348","2j","2011-2015","Total","0","Alameda",2399,49530,20.65,74.43,"lev0",90470,10950,10850,11050,530.3,509.1,551.6,"Centerville/Fremont West/Irvington/Newark East Central",2399,573.5,550.3,597.5,11560
+"349","2k","2011-2015","Total","0","Alameda",2398,49110,20.48,74.53,"lev0",113000,8690,8613,8766,424.3,407.3,441.3,"Dublin/Pleasanton/Santa Rita/Sunol",2398,553.1,530.6,576.2,9844
+"350","2l","2011-2015","Total","0","Alameda",2727,57010,20.91,74,"lev0",115400,9880,9799,9961,472.6,454.9,490.3,"Fremont East/Niles/Union City Central",2727,498.2,479.4,517.6,9804
+"351","2m","2011-2015","Total","0","Alameda",3836,75700,19.74,75.46,"lev0",117300,12910,12820,13000,654.2,633.5,674.9,"Dimond/Montclair/Oakland East/Oakmore/Piedmont/Piedmont Pines/Trestle Glen",3835,555.5,537.5,573.9,11340
+"352","2n","2011-2015","Total","0","Alameda",3592,79700,22.19,72.57,"lev0",118300,13470,13380,13570,607.3,587.4,627.1,"Hayward Central",3592,682.8,660.4,705.9,14290
+"353","3","2011-2015","Total","0","Alpine",12,326.8,27.24,66.42,"lev0",1165,5611,5003,6219,206,89.45,322.6,"Alpine Village/Bear Valley/Kirkwood/Markleeville/Mesa Valley/Woodfords",NA,NA,NA,NA,NA
+"354","30","2011-2015","Total","0","Fresno",3016,70260,23.3,71.42,"lev0",92670,15160,15050,15280,650.9,627.7,674.1,"Bowles/Caruthers/Easton/Kingsburg/Lanare/Laton/Raisin City/Riverdale/Selma",3016,760,732.9,787.9,16610
+"355","31","2011-2015","Total","0","Fresno",3013,66330,22.02,72.8,"lev0",96380,13760,13660,13870,625.2,602.9,647.5,"Auberry/Calwa/Centerville/Clovis East/Del Rey/Fowler/Friant/Sanger/Shaver Lake",3015,631.2,608.6,654.5,13690
+"356","32","2011-2015","Total","0","Fresno",1759,39890,22.68,72.27,"lev0",62010,12860,12740,12990,567.3,540.8,593.8,"Orange Cove/Parlier/Reedley/Squaw Valley/Tivy Valley/Wonder Valley",1775,636.1,606.2,667.1,14340
+"357","35a","2011-2015","Total","0","Fresno",4556,83090,18.24,77.2,"lev0",134700,12340,12250,12420,676.4,656.8,696,"Fresno Northwest",4556,608.9,590.8,627.5,11740
+"358","35b","2011-2015","Total","0","Fresno",3465,77550,22.38,72.42,"lev0",101500,15290,15180,15390,683,660.2,705.7,"Clovis West/Fresno East",3465,761.8,736.3,788.1,16280
+"359","35c","2011-2015","Total","0","Fresno",3111,80870,26,68.44,"lev0",83960,19260,19130,19400,741,715,767.1,"Fresno West Central",3111,890.6,858.1,924.2,21670
+"360","35d","2011-2015","Total","0","Fresno",3343,87570,26.2,68.22,"lev0",101100,17320,17210,17440,661.3,638.9,683.7,"Fresno East Central",3342,854.5,825.2,884.6,20820
+"361","35e","2011-2015","Total","0","Fresno",2695,76130,28.25,65.77,"lev0",90300,16860,16740,16980,596.9,574.3,619.4,"Fresno South and West",2695,873.6,839.7,908.6,20640
+"362","35f","2011-2015","Total","0","Fresno",3264,67020,20.53,74.56,"lev0",80820,16590,16460,16710,807.8,780,835.5,"Fresno North Central",3264,701.1,676.5,726.6,16230
+"363","36.1","2011-2015","Total","0","Glenn",554,11810,21.31,73.78,"lev0",13220,17850,17530,18180,837.9,768.1,907.6,"Orland",554,797.1,731.4,867.9,16970
+"364","36.2","2011-2015","Total","0","Glenn",96,2205,22.97,71.97,"lev0",3513,12550,12030,13080,546.5,437.2,655.9,"Hamilton City",96,665.7,536.2,820.3,14220
+"365","37","2011-2015","Total","0","Glenn",466,10160,21.8,72.87,"lev0",11320,17960,17610,18310,823.5,748.8,898.3,"Artois/Elk Creek/Glenn/Grindstone Indian Rancheria/Willows",476,709.2,646.4,777.3,16360
+"366","38","2011-2015","Total","0","Humboldt",108,2686,24.87,69.46,"lev0",5574,9637,9272,10000,387.5,314.4,460.6,"Hoopa/Willow Creek",108,514.7,412.7,637.1,10240
+"367","39","2011-2015","Total","0","Humboldt",3186,70860,22.24,72.48,"lev0",72650,19510,19360,19650,877.1,846.7,907.6,"Arcata/Eureka",3187,808.6,780.2,838,18260
+"368","4","2011-2015","Total","0","Amador",1513,27380,18.09,77.13,"lev0",26520,20640,20400,20890,1141,1083,1198,"Ione/Jackson/Pine Grove/Sutter Creek",1513,778.1,738.4,820.2,14970
+"369","40","2011-2015","Total","0","Humboldt",882,18800,21.32,73.43,"lev0",23530,15980,15760,16210,749.8,700.3,799.3,"Bluelake/McKinleyville/Orick/Trinidad",882,635.2,593.2,679.9,13900
+"370","42","2011-2015","Total","0","Humboldt",1334,28350,21.25,73.52,"lev0",25560,22190,21930,22440,1044,988,1100,"Ferndale/Fortuna/Rio Dell/Scotia",1334,853.5,807.7,901.6,19030
+"371","44","2011-2015","Total","0","Humboldt",214,5704,26.65,67.47,"lev0",7310,15610,15200,16010,585.5,507.1,663.9,"Garberville/Redway",230,638.1,548.5,740.5,15930
+"372","46","2011-2015","Total","0","Imperial",32,973,30.41,63.34,"lev0",2594,7502,7031,7974,246.7,161.2,332.2,"Bard/Winterhaven",32,273.6,183.3,400.9,8442
+"373","47","2011-2015","Total","0","Imperial",422,9615,22.79,71.45,"lev0",17450,11020,10800,11240,483.7,437.5,529.8,"Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach",451,557.7,506.7,612.8,12780
+"374","48","2011-2015","Total","0","Imperial",2130,48670,22.85,71.75,"lev0",82390,11820,11710,11920,517.1,495.1,539,"El Centro/Heber/Holtville/Imperial/Seeley",2131,646.8,619.2,675.4,13220
+"375","49","2011-2015","Total","0","Imperial",1067,23570,22.09,72.58,"lev0",44660,10560,10420,10690,477.9,449.2,506.5,"Calexico/Ocotillo",1073,506.4,476.2,538,11070
+"376","5","2011-2015","Total","0","Amador",206,4056,19.69,75.11,"lev0",4833,16790,16270,17300,852.5,736.1,968.9,"Plymouth",206,693.1,580.9,837.6,14940
+"377","50","2011-2015","Total","0","Imperial",811,19390,23.93,70.42,"lev0",28110,13790,13600,13990,577,537.3,616.7,"Brawley/Westmorland",810,727.6,675.1,783.6,15220
+"378","53","2011-2015","Total","0","Inyo",516,8941,17.33,78.16,"lev0",12910,13850,13570,14140,799.5,730.5,868.5,"Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson",516,499.1,454.9,547.9,9992
+"379","54","2011-2015","Total","0","Inyo",121,2536,20.96,73.86,"lev0",2418,20980,20160,21790,1001,822.5,1179,"Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence",121,707.2,582.3,860,16730
+"380","55","2011-2015","Total","0","Inyo",96,1734,18.07,77.34,"lev0",3156,10990,10470,11510,608.4,486.7,730.1,"Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville",96,416.4,334.4,522.4,8438
+"381","57.1","2011-2015","Total","0","Kern",301,7721,25.65,68.42,"lev0",7877,19600,19170,20040,764.3,677.9,850.6,"Fort Tejon/Frazier Park/Lebec/Pine Mountain",302,751.4,659.7,854.6,17300
+"382","57.2","2011-2015","Total","0","Kern",789,21010,26.62,67.47,"lev0",21780,19280,19020,19550,724.4,673.8,774.9,"Blackwells Corners/Ford City/Maricopa/McKittrick/Taft",789,1085,1002,1174,22330
+"383","58.1","2011-2015","Total","0","Kern",570,14680,25.81,68.51,"lev0",22160,13250,13040,13460,514.3,472.1,556.6,"Shafter",569,907.1,830.2,990,18370
+"384","58.2","2011-2015","Total","0","Kern",491,14500,29.54,64.39,"lev0",29730,9757,9598,9916,330.3,301.1,359.5,"Lost Hills/Wasco",491,613.7,557,675.2,14620
+"385","59","2011-2015","Total","0","Kern",102,2988,29.3,64.62,"lev0",3921,15240,14700,15790,520.3,419.3,621.2,"Buttonwillow",102,822.9,663.2,1012,19800
+"386","6","2011-2015","Total","0","Amador",317,6647,20.97,73.7,"lev0",6065,21920,21390,22450,1045,930.3,1160,"Pioneer",318,631.1,529.6,767.9,20720
+"387","60","2011-2015","Total","0","Kern",1313,35850,27.31,66.94,"lev0",69060,10380,10280,10490,380.3,359.7,400.8,"Delano/McFarland",1313,685.3,646.6,725.9,14800
+"388","61","2011-2015","Total","0","Kern",807,23690,29.35,64.62,"lev0",43260,10950,10810,11090,373,347.3,398.8,"Arvin/Lamont/Weed Patch",807,961.4,886.8,1041,18500
+"389","62","2011-2015","Total","0","Kern",1323,28380,21.45,73.08,"lev0",36610,15500,15320,15680,722.8,683.8,761.7,"Bear Valley Springs/Keene/Stallion Springs/Tehachapi",1324,725.5,686.1,766.8,14540
+"390","63","2011-2015","Total","0","Kern",1430,30850,21.57,72.96,"lev0",15100,40860,40400,41320,1894,1796,1992,"Alta Sierra/Bodfish/Glennville/Kernville/Lake Isabella/Weldon/Wofford Heights",1430,1099,1035,1168,28540
+"391","64","2011-2015","Total","0","Kern",1483,34540,23.29,71.14,"lev0",34240,20170,19960,20390,866.3,822.2,910.4,"Inyokern/Ridgecrest",1483,824.5,782.5,868.4,19020
+"392","65","2011-2015","Total","0","Kern",1455,39220,26.96,66.91,"lev0",43830,17900,17720,18080,664,629.9,698.1,"Boron/California City/Desert Lake/Mojave/North Edwards/Rosamond",1455,781.7,740.1,825.2,18490
+"393","66a","2011-2015","Total","0","Kern",4469,110300,24.67,69.69,"lev0",105500,20890,20770,21020,846.8,822,871.7,"Bakersfield Northeast/Oildale",4469,908,881.3,935.4,21820
+"394","66b","2011-2015","Total","0","Kern",4454,129600,29.1,64.81,"lev0",140800,18400,18300,18500,632.5,613.9,651.1,"Bakersfield East/Lakeview/La Loma",4453,942.6,914.3,971.6,23190
+"395","66c","2011-2015","Total","0","Kern",4201,103600,24.66,69.84,"lev0",157800,13130,13050,13210,532.5,516.4,548.6,"Bakersfield Southwest",4200,796.5,771.8,821.8,16580
+"396","66d","2011-2015","Total","0","Kern",3612,79150,21.91,72.86,"lev0",116500,13590,13500,13690,620.2,600,640.4,"Bakersfield Northwest/Rosedale",3612,744,719.5,769.2,14640
+"397","67","2011-2015","Total","0","Kings",179,5512,30.8,63,"lev0",15000,7349,7155,7543,238.7,203.7,273.6,"Avenal",179,560.3,461.2,678.4,11960
+"398","68","2011-2015","Total","0","Kings",591,18080,30.59,63.12,"lev0",29820,12130,11950,12300,396.4,364.5,428.4,"Corcoran/Kettleman City/Stratford",591,657.5,600.3,719.1,15420
+"399","69","2011-2015","Total","0","Kings",3019,71500,23.68,70.84,"lev0",107000,13370,13270,13460,564.4,544.2,584.5,"Armona/Hanford/Lemoore",3064,729.1,703.2,755.7,15790
+"400","7.1","2011-2015","Total","0","Butte",3631,72230,19.89,75.4,"lev0",95840,15070,14960,15180,757.7,733.1,782.4,"Chapmantown/Chico",3631,756.4,731.4,782.2,15730
+"401","7.2","2011-2015","Total","0","Butte",221,4310,19.5,75.51,"lev0",5721,15070,14620,15520,772.6,670.7,874.5,"Capay/Lake/Nord",221,718.5,612.7,840.1,14060
+"402","7.3","2011-2015","Total","0","Butte",152,3538,23.27,71.1,"lev0",5241,13500,13050,13940,580,487.8,672.3,"Butte Meadows/Cohasset/Forest Ranch",152,615.7,512,736.7,12830
+"403","7.4","2011-2015","Total","0","Butte",184,3372,18.32,76.89,"lev0",5435,12410,11990,12830,677.1,579.3,774.9,"Durham",184,489.2,413.8,582.3,10120
+"404","70.1","2011-2015","Total","0","Lake",948,19020,20.07,74.81,"lev0",15710,24220,23870,24560,1207,1130,1284,"Kelseyville/Lakeport",948,872,814.8,933.4,19480
+"405","70.2","2011-2015","Total","0","Lake",626,15180,24.25,69.97,"lev0",8215,36950,36360,37540,1524,1405,1643,"Lucerne/Nice/Upper Lake",626,1075,983.7,1175,29850
+"406","71.1","2011-2015","Total","0","Lake",1412,34940,24.74,69.41,"lev0",18930,36910,36530,37300,1492,1414,1570,"Clearlake/Clearlake Oaks",1414,1128,1068,1191,29680
+"407","71.2","2011-2015","Total","0","Lake",461,9963,21.61,73.07,"lev0",10340,19280,18900,19660,892,810.6,973.5,"Lower Lake",461,602.2,546.5,664.3,14960
+"408","71.3","2011-2015","Total","0","Lake",448,11090,24.77,69.38,"lev0",11070,20050,19670,20420,809.5,734.5,884.4,"Cobb/Hidden Valley/Middletown",448,655.8,592.4,725.9,17190
+"409","72","2011-2015","Total","0","Lassen",456,10800,23.68,70.99,"lev0",25610,8433,8274,8592,356.1,323.4,388.8,"Susanville",456,441,400.4,484.9,9161
+"410","73","2011-2015","Total","0","Lassen",16,462.2,28.89,64.25,"lev0",2626,3520,3200,3841,121.9,62.15,181.6,"Bieber/Madeline/Nubieber",36,313.1,209.3,492.7,5762
+"411","74","2011-2015","Total","0","Lassen",41,1221,29.78,63.85,"lev0",3499,6979,6587,7370,234.4,162.6,306.1,"Doyle",41,242.2,171.2,342.8,6500
+"412","75","2011-2015","Total","0","Lassen",75,1674,22.32,72.2,"lev0",2282,14670,13970,15370,657.3,508.6,806.1,"Westwood",75,465.9,358.2,607.7,11090
+"413","76.1a","2011-2015","Total","0","Los Angeles",2764,56850,20.57,74.48,"lev0",130600,8704,8632,8775,423.2,407.4,439,"Canyon Country/Santa Clarita West/Saugus",2764,559.2,537.9,581.1,10180
+"414","76.1b","2011-2015","Total","0","Los Angeles",2666,62090,23.29,71.33,"lev0",116800,10640,10550,10720,456.7,439.3,474,"Newhall/Santa Clarita East/Valencia",2666,638.3,612.6,665,12900
+"415","76.2","2011-2015","Total","0","Los Angeles",447,11410,25.52,68.8,"lev0",24860,9179,9010,9347,359.7,326.3,393,"Castaic/Val Verde",448,616.4,555.7,682.8,12680
+"416","77.1a","2011-2015","Total","0","Los Angeles",2250,61430,27.3,66.71,"lev0",99450,12350,12260,12450,452.5,433.8,471.2,"Palmdale Central",2250,779.7,745.7,815,16740
+"417","77.1b","2011-2015","Total","0","Los Angeles",3249,74300,22.87,71.82,"lev0",105500,14090,13990,14190,616.2,595,637.4,"Desert View Highlands/Lancaster West/Palmdale Northwest/Quartz Hill",3249,732.5,707,758.7,15360
+"418","77.1c","2011-2015","Total","0","Los Angeles",3527,96440,27.35,66.67,"lev0",107700,17900,17790,18020,654.7,633.1,676.3,"Lancaster Central/Palmdale North Central",3526,848.4,819.9,877.7,20680
+"419","77.2","2011-2015","Total","0","Los Angeles",633,18260,28.84,64.86,"lev0",18560,19670,19390,19960,682.1,629,735.2,"Lake Los Angeles",633,788.4,725.9,855.3,20250
+"420","77.3","2011-2015","Total","0","Los Angeles",575,13720,23.86,70.38,"lev0",16870,16260,15990,16530,681.6,625.9,737.3,"Juniper Hills/Littlerock/Longview/Pearblossom/Valyermo",576,725.8,665.7,790.3,15810
+"421","77.4","2011-2015","Total","0","Los Angeles",431,10590,24.58,69.6,"lev0",11430,18530,18180,18880,754,682.8,825.2,"Acton/Ravenna",431,1674,1443,1935,24400
+"422","77.5","2011-2015","Total","0","Los Angeles",905,20640,22.81,71.82,"lev0",25190,16390,16170,16620,718.6,671.8,765.4,"Elizabeth Lake/Gorman/Green Valley/Lake Hughes/Leona Valley/Neenach",936,818.8,766.2,874.1,17340
+"423","78.1","2011-2015","Total","0","Los Angeles",74,1417,19.15,76.31,"lev0",4051,6995,6630,7359,365.3,282.1,448.6,"Avalon",74,508.5,376.3,681.3,8769
+"424","78.2a","2011-2015","Total","0","Los Angeles",2211,46840,21.19,73.7,"lev0",81840,11450,11340,11550,540.4,517.8,562.9,"Echo Park/Hollywood North Central/Silverlake South",2211,538.7,516.3,562.1,11390
+"425","78.2aa","2011-2015","Total","0","Los Angeles",3602,53740,14.92,81.17,"lev0",100500,10690,10600,10780,716.5,693.1,739.9,"Bel Air/Beverly Glen/Beverly Hills/Brentwood/Malibu/Pacific Palisades/Santa Monica Northwest/Topanga",3610,412.3,398.2,427,7480
+"426","78.2aaaa","2011-2015","Total","0","Los Angeles",3939,81420,20.68,74.29,"lev0",113400,14350,14260,14450,694.4,672.7,716.1,"Harbor Gateway South/Lomita/Torrance East Central",3938,652.7,632.3,673.6,13550
+"427","78.2b","2011-2015","Total","0","Los Angeles",2989,74090,24.8,69.63,"lev0",151700,9765,9695,9835,394,379.8,408.1,"Pico-Union",2987,532.9,513.6,552.7,11930
+"428","78.2bb","2011-2015","Total","0","Los Angeles",2298,56370,24.53,69.98,"lev0",102000,11050,10960,11140,450.4,432,468.9,"North Hollywood Central and North",2298,622.4,596.3,649.4,13260
+"429","78.2bbb","2011-2015","Total","0","Los Angeles",2078,61680,29.68,64.1,"lev0",90830,13580,13470,13690,457.6,437.9,477.2,"Compton East",2078,826.5,788.2,866.4,18700
+"430","78.2bbbb","2011-2015","Total","0","Los Angeles",1976,51840,26.23,67.91,"lev0",78070,13280,13170,13390,506.2,483.9,528.5,"Gardena West/Hawthorne",1976,724,691.1,758.3,15930
+"431","78.2c","2011-2015","Total","0","Los Angeles",2572,62110,24.15,70.43,"lev0",117800,10540,10460,10630,436.6,419.7,453.4,"Bell Northeast/Bell Gardens/Commerce/Maywood/Montebello South",2572,612.2,588,637.3,13190
+"432","78.2cc","2011-2015","Total","0","Los Angeles",2854,64650,22.65,72.12,"lev0",105600,12250,12150,12340,540.6,520.7,560.4,"Van Nuys Central",2854,741.4,713.9,769.8,14630
+"433","78.2ccc","2011-2015","Total","0","Los Angeles",1788,48010,26.85,67.39,"lev0",104300,9206,9124,9289,342.9,327,358.8,"Huntington Park/South Gate West/Walnut Park",1788,558.1,531.1,586.3,11800
+"434","78.2cccc","2011-2015","Total","0","Los Angeles",3828,71620,18.71,76.59,"lev0",108300,13230,13130,13320,706.9,684.5,729.3,"Chatsworth",3828,580.7,562.2,599.6,11330
+"435","78.2d","2011-2015","Total","0","Los Angeles",2257,53270,23.6,71.08,"lev0",96590,11030,10940,11120,467.3,448.1,486.6,"City Terrace East/East Los Angeles",2257,609.2,584.2,635.1,13270
+"436","78.2dd","2011-2015","Total","0","Los Angeles",3510,64350,18.33,77,"lev0",105600,12190,12090,12280,664.9,642.9,686.8,"Burbank South/Eagle Rock/Glendale Northwest",3510,530.4,512.9,548.5,10240
+"437","78.2ddd","2011-2015","Total","0","Los Angeles",1359,36380,26.77,67.44,"lev0",82270,8845,8754,8936,330.4,312.8,348,"Bell Southwest/Cudahy/Vernon",1359,580.8,548.8,614.4,12360
+"438","78.2dddd","2011-2015","Total","0","Los Angeles",3880,68320,17.61,77.93,"lev0",104400,13080,12990,13180,743.1,719.7,766.5,"Arcadia Southeast/San Gabriel North",3880,544.8,527.5,562.7,10650
+"439","78.2e","2011-2015","Total","0","Los Angeles",2744,65050,23.71,70.87,"lev0",132700,9808,9732,9883,413.7,398.2,429.2,"Country Club Park/Koreatown/Mid-City East",2744,489.7,471.1,508.9,10520
+"440","78.2ee","2011-2015","Total","0","Los Angeles",3492,62970,18.03,77.35,"lev0",95290,13220,13110,13320,732.9,708.6,757.2,"Atwater Village/Glendale Central/Glendale Southwest/Griffith Park",3493,559.5,540.9,578.7,10880
+"441","78.2eee","2011-2015","Total","0","Los Angeles",2325,47400,20.39,74.77,"lev0",82090,11550,11440,11650,566.5,543.4,589.5,"Downey Northeast",2325,621.4,596.2,647.4,12280
+"442","78.2eeee","2011-2015","Total","0","Los Angeles",3630,65610,18.07,77.55,"lev0",110100,11920,11830,12010,659.5,638.1,681,"Alhambra/El Sereno South/San Gabriel Central",3630,513.5,496.3,531.2,10370
+"443","78.2f","2011-2015","Total","0","Los Angeles",3252,57180,17.58,78.09,"lev0",93560,12220,12120,12320,695.2,671.3,719.1,"Hollywood Hills/Hollywood West/Mount Olympus/West Hollywood",3252,586.3,565.7,608.2,11290
+"444","78.2ff","2011-2015","Total","0","Los Angeles",2826,56730,20.08,75.02,"lev0",95030,11940,11840,12040,594.7,572.8,616.7,"Glassell Park/Glendale Southeast/Silverlake North",2826,545.2,525.2,566,11270
+"445","78.2fff","2011-2015","Total","0","Los Angeles",2843,83930,29.52,64.48,"lev0",132400,12680,12590,12760,429.5,413.7,445.2,"Firestone/Florence South/Watts",2843,780.9,750.7,812.2,17900
+"446","78.2ffff","2011-2015","Total","0","Los Angeles",2522,57140,22.66,72.13,"lev0",104800,10910,10820,11000,481.4,462.6,500.2,"Boyle Heights Northwest/Chinatown/Downtown Northwest/Little Tokyo/Westlake",2522,548.9,527.5,570.9,12410
+"447","78.2g","2011-2015","Total","0","Los Angeles",3027,67870,22.43,72.3,"lev0",115300,11770,11680,11860,525,506.3,543.7,"Hollywood South Central/Inner Sunset",3026,646.9,623.2,671.3,13320
+"448","78.2gg","2011-2015","Total","0","Los Angeles",2668,64510,24.18,70.25,"lev0",99920,12910,12810,13010,534,513.8,554.3,"Angeles National Forest West/Kagel Canyon/Lake View Terrace/San Fernando East/Sylmar",2668,647.9,623.2,673.5,14180
+"449","78.2ggg","2011-2015","Total","0","Los Angeles",3265,90920,27.85,66.23,"lev0",129600,14030,13930,14120,503.7,486.4,520.9,"South Central Northeast",3265,749.6,723.4,776.6,17790
+"450","78.2gggg","2011-2015","Total","0","Los Angeles",3301,61370,18.59,76.64,"lev0",92110,13330,13220,13430,716.8,692.3,741.2,"Altadena East/Angeles National Forest East/Azusa North/Duarte North/Glendora/Pasadena East",3302,579,559.1,599.6,11350
+"451","78.2h","2011-2015","Total","0","Los Angeles",2155,52900,24.55,70.04,"lev0",93800,11280,11180,11380,459.5,440.1,478.9,"Boyle Heights Central/City Terrace West",2155,594.6,569.3,620.9,13620
+"452","78.2hh","2011-2015","Total","0","Los Angeles",3254,57140,17.56,77.92,"lev0",86650,13190,13080,13300,751.1,725.3,776.9,"Granada Hills/Mission Hills/Porter Ranch",3254,544.9,525.7,564.8,10710
+"453","78.2hhh","2011-2015","Total","0","Los Angeles",3201,65700,20.54,74.54,"lev0",94180,13950,13850,14060,679.7,656.2,703.3,"Altadena West/Pasadena Northwest",3200,632.9,610.3,656.1,13840
+"454","78.2hhhh","2011-2015","Total","0","Los Angeles",2065,49930,24.18,70.4,"lev0",96160,10390,10290,10480,429.5,411,448,"Canoga Park Northeast/Winnetka",2065,552.8,528.9,577.7,12160
+"455","78.2i","2011-2015","Total","0","Los Angeles",3089,68930,22.32,72.55,"lev0",122000,11300,11210,11380,506.3,488.5,524.2,"El Sereno North/Highland Park/Montecito Heights/Monterey Hills",3090,588.6,567.8,609.9,12120
+"456","78.2ii","2011-2015","Total","0","Los Angeles",3524,60910,17.29,78.64,"lev0",93760,12990,12890,13100,751.7,726.9,776.5,"Reseda South/Van Nuys Southwest",3524,600,578.9,621.7,11910
+"457","78.2iii","2011-2015","Total","0","Los Angeles",2246,62390,27.78,66.16,"lev0",91690,13610,13500,13720,489.9,469.6,510.2,"North Long Beach",2246,822.2,785.6,860.1,17940
+"458","78.2iiii","2011-2015","Total","0","Los Angeles",3758,76710,20.41,74.62,"lev0",112500,13630,13540,13730,667.9,646.6,689.3,"Gardena Southeast/Harbor Gateway Central/Lawndale South/Moneta/Redondo Beach North/Torrance North",3758,564.9,546.8,583.5,12270
+"459","78.2j","2011-2015","Total","0","Los Angeles",4473,82490,18.44,76.97,"lev0",127200,12970,12890,13060,703.5,682.9,724.1,"Baldwin Hills/Culver City South/Fox Hills/Ladera Heights/Marina del Rey/View Park/Windsor Hills",4473,528.3,512.6,544.5,10750
+"460","78.2jj","2011-2015","Total","0","Los Angeles",4043,74090,18.32,77.2,"lev0",128000,11580,11490,11660,631.7,612.2,651.2,"Sherman Oaks/Studio City/Valley Village",4043,588.5,570.2,607.3,10760
+"461","78.2jjj","2011-2015","Total","0","Los Angeles",2709,79110,29.2,64.61,"lev0",113100,13990,13890,14090,479.1,461.1,497.2,"Long Beach West Central",2709,805,773.2,837.9,18910
+"462","78.2jjjj","2011-2015","Total","0","Los Angeles",3179,73960,23.26,71.3,"lev0",106300,13910,13810,14010,598.1,577.3,618.8,"Norwalk/Studebaker",3179,658.8,635.8,682.6,14780
+"463","78.2k","2011-2015","Total","0","Los Angeles",2878,74620,25.93,68.26,"lev0",78310,19060,18920,19190,735.1,708.2,761.9,"South Central Northwest",2878,777.7,749.2,807.1,19250
+"464","78.2kk","2011-2015","Total","0","Los Angeles",3046,61660,20.24,74.84,"lev0",113600,10860,10770,10950,536.5,517.4,555.5,"North Hills/Northridge North",3046,631.7,609.2,654.8,11970
+"465","78.2kkk","2011-2015","Total","0","Los Angeles",4798,93370,19.46,75.77,"lev0",130700,14280,14190,14370,734,713.2,754.7,"Belmont Shore/Long Beach East/Long Beach Shoreline/Los Altos/Naples",4798,633.7,615.6,652.3,12700
+"466","78.2kkkk","2011-2015","Total","0","Los Angeles",2737,48880,17.86,77.78,"lev0",85230,11470,11370,11570,642.3,618.2,666.4,"Santa Monica Central/Sawtelle/West Los Angeles",2737,520.7,500.7,541.7,10530
+"467","78.2l","2011-2015","Total","0","Los Angeles",2582,66920,25.92,68.47,"lev0",95170,14060,13960,14170,542.6,521.7,563.5,"Exposition Park/Leimert Park",2582,743.9,714.8,774,17260
+"468","78.2ll","2011-2015","Total","0","Los Angeles",2488,62450,25.1,69.4,"lev0",124700,10020,9939,10100,399.1,383.4,414.8,"Arleta/Pacoima West/Panorama City/San Fernando West",2488,550.2,528.2,572.8,12160
+"469","78.2lll","2011-2015","Total","0","Los Angeles",4000,86130,21.54,73.41,"lev0",110300,15620,15520,15730,725.5,703,748,"Bixby Knolls/Long Beach Central",3999,749.9,726.3,774.1,15890
+"470","78.2m","2011-2015","Total","0","Los Angeles",2788,67950,24.37,69.99,"lev0",100200,13560,13460,13660,556.3,535.7,577,"Bellflower/Paramount South",2788,751.9,723.5,781.2,16080
+"471","78.2mm","2011-2015","Total","0","Los Angeles",3183,53830,16.91,78.81,"lev0",103600,10390,10310,10480,614.6,593.3,636,"Pasadena South/San Marino/South Pasadena",3183,464.9,448.6,481.8,8622
+"472","78.2mmm","2011-2015","Total","0","Los Angeles",2392,69170,28.93,65.06,"lev0",98330,14070,13960,14170,486.5,467,506,"Downtown Southeast/Florence North",2391,743,712,775.2,18030
+"473","78.2n","2011-2015","Total","0","Los Angeles",3695,76320,20.66,74.33,"lev0",109300,13970,13870,14060,676.1,654.3,697.9,"Cerritos/Hawaiian Gardens",3705,669,647.4,691.2,13650
+"474","78.2nn","2011-2015","Total","0","Los Angeles",3129,52760,16.86,78.75,"lev0",81720,12910,12800,13020,765.7,738.9,792.6,"Montebello North/Monterey Park/South San Gabriel",3130,474.4,457.4,492,9490
+"475","78.2nnn","2011-2015","Total","0","Los Angeles",3782,91600,24.22,70.32,"lev0",109500,16730,16620,16840,690.8,668.8,712.8,"Crenshaw/Culver City East/Mid-City South/West Adams",3782,762.8,738.2,788.1,17750
+"476","78.2o","2011-2015","Total","0","Los Angeles",5143,85350,16.59,79.04,"lev0",121000,14100,14010,14200,849.8,826.6,873,"Miraleste/Palo Verdes Estates/Portuguese Bend/Rancho Palos Verdes/Rolling Hills/San Pedro West",5143,507.7,493.4,522.5,10070
+"477","78.2oo","2011-2015","Total","0","Los Angeles",2262,55790,24.67,69.73,"lev0",100500,11100,11010,11200,450.2,431.6,468.8,"El Monte/Five Points",2262,537.7,515.5,560.7,12210
+"478","78.2ooo","2011-2015","Total","0","Los Angeles",2995,84710,28.29,65.76,"lev0",135100,12540,12450,12620,443.3,427.4,459.2,"Paramount North/Willowbrook",2994,756.8,728.1,786.4,17210
+"479","78.2p","2011-2015","Total","0","Los Angeles",2847,72340,25.41,68.88,"lev0",116300,12440,12350,12530,489.7,471.8,507.7,"Long Beach Port/San Pedro East/Wilmington",2847,679.9,654.5,706.1,14850
+"480","78.2pp","2011-2015","Total","0","Los Angeles",2827,56580,20.01,75.06,"lev0",103200,10960,10870,11050,547.6,527.4,567.8,"Hacienda Heights/Industry Central",2829,497.6,479.2,516.7,10050
+"481","78.2ppp","2011-2015","Total","0","Los Angeles",2389,61300,25.66,68.68,"lev0",103900,11800,11700,11890,459.8,441.3,478.2,"Pacoima East/Sun Valley West",2389,597.5,573.2,622.5,13340
+"482","78.2q","2011-2015","Total","0","Los Angeles",2593,59590,22.98,71.65,"lev0",100800,11830,11730,11920,514.7,494.9,534.5,"Del Aire/Inglewood West/Los Angeles International Airport",2593,616.9,592.8,641.9,12980
+"483","78.2qq","2011-2015","Total","0","Los Angeles",3733,78600,21.06,73.76,"lev0",120300,13060,12970,13160,620.5,600.5,640.4,"Asuza/Charter Oak/Covina",3734,687.7,665.5,710.4,14070
+"484","78.2qqq","2011-2015","Total","0","Los Angeles",2549,51380,20.17,74.97,"lev0",90840,11310,11220,11410,561.2,539.4,583,"Rosemead/San Gabriel South/South El Monte West/Temple City West",2548,517.2,497.1,537.9,10490
+"485","78.2r","2011-2015","Total","0","Los Angeles",2160,54170,25.08,69.24,"lev0",79530,13620,13510,13740,543.2,520.3,566.1,"Inglewood East/Lennox",2160,700.6,670.6,731.6,15410
+"486","78.2rr","2011-2015","Total","0","Los Angeles",3875,73510,18.97,76.23,"lev0",113600,12940,12850,13040,682.3,660.8,703.8,"Glendale Northeast/La Canada-Flintridge/La Crescenta/Montrose/Sunland/Tujunga/Verdugo City",3876,626,606.1,646.5,11870
+"487","78.2rrr","2011-2015","Total","0","Los Angeles",3645,68000,18.65,76.56,"lev0",103800,13110,13010,13210,702.7,679.8,725.5,"La Mirada/Santa Fe Springs South",3651,578.6,559.8,598,11330
+"488","78.2s","2011-2015","Total","0","Los Angeles",2472,75370,30.49,63.28,"lev0",83990,17950,17820,18080,588.7,565.5,611.9,"South Central Southwest",2472,817.3,784.2,851.5,21070
+"489","78.2ss","2011-2015","Total","0","Los Angeles",2673,72040,26.95,67.28,"lev0",116500,12370,12280,12460,459,441.6,476.4,"Pomona East and South",2673,693.7,666.8,721.5,15700
+"490","78.2sss","2011-2015","Total","0","Los Angeles",2259,52810,23.38,71.27,"lev0",97590,10820,10730,10920,463,443.9,482,"Downey Southwest/Lynwood North Central/South Gate East",2260,610,584.6,636.3,12950
+"491","78.2t","2011-2015","Total","0","Los Angeles",2235,44480,19.9,75.22,"lev0",93660,9498,9410,9586,477.3,457.5,497,"Hermosa Beach/Lawndale North/Manhattan Beach/Redondo Beach North",2235,523.3,501.3,546.1,9927
+"492","78.2tt","2011-2015","Total","0","Los Angeles",5036,89510,17.77,77.59,"lev0",118000,15170,15070,15270,853.5,829.9,877.1,"Claremont/La Verne/Pomona Northwest/San Dimas",5038,641.1,623,659.7,12660
+"493","78.2ttt","2011-2015","Total","0","Los Angeles",4167,75970,18.23,77.23,"lev0",127600,11910,11820,11990,653.1,633.3,672.9,"Burbank North/North Hollywood South",4167,571.8,554.3,589.8,11120
+"494","78.2u","2011-2015","Total","0","Los Angeles",3290,57080,17.35,78.12,"lev0",92720,12310,12210,12410,709.7,685.4,733.9,"Redondo Beach Central and South/Torrance West Central",3290,523.3,505.3,542,9992
+"495","78.2uu","2011-2015","Total","0","Los Angeles",2906,55080,18.95,76.44,"lev0",87110,12650,12540,12750,667.2,642.9,691.5,"La Habra Heights/Whittier",2925,555.3,534.9,576.5,11740
+"496","78.2uuu","2011-2015","Total","0","Los Angeles",3085,74540,24.16,70.3,"lev0",83750,17800,17670,17930,736.7,710.7,762.7,"Athens/Gardena Northeast/Harbor Gateway North",3085,803.9,775.5,833.1,18800
+"497","78.2v","2011-2015","Total","0","Los Angeles",3795,85030,22.41,72.1,"lev0",107900,15760,15660,15870,703.5,681.1,725.9,"Carson/Compton West/Rancho Dominguez",3795,716.7,693.6,740.3,15190
+"498","78.2vv","2011-2015","Total","0","Los Angeles",2615,55230,21.12,73.78,"lev0",90130,12260,12150,12360,580.2,558,602.5,"Los Nietos/Santa Fe Springs Northeast",2615,605.1,581.9,629.1,12820
+"499","78.2vvv","2011-2015","Total","0","Los Angeles",2821,56660,20.09,74.9,"lev0",115800,9789,9708,9869,487.4,469.4,505.3,"Diamond Bar/Industry East/Phillips Ranch/Pomona West/Walnut",2824,511.9,492.6,531.8,9739
+"500","78.2w","2011-2015","Total","0","Los Angeles",4040,57280,14.18,82.3,"lev0",132000,8679,8608,8750,612.1,593.3,631,"Century City/Cheviot Hills/Rancho Park/West Los Angeles/Westwood",4054,427.6,413.7,442.1,7476
+"501","78.2ww","2011-2015","Total","0","Los Angeles",3383,69330,20.49,74.45,"lev0",101000,13730,13630,13830,670,647.4,692.6,"Pico Rivera/Santa Fe Springs Northwest",3383,627.5,606.4,649.2,13230
+"502","78.2www","2011-2015","Total","0","Los Angeles",3701,76700,20.72,74.21,"lev0",126600,12120,12030,12200,584.6,565.8,603.4,"Valinda/West Covina",3701,575.5,556.8,594.6,12160
+"503","78.2x","2011-2015","Total","0","Los Angeles",3787,68030,17.96,77.73,"lev0",124600,10920,10840,11000,608.1,588.7,627.4,"Hancock Park/Mid-City West/Park La Brea",3787,573.4,554.7,592.7,10860
+"504","78.2xx","2011-2015","Total","0","Los Angeles",3282,58950,17.96,77.41,"lev0",117300,10050,9971,10130,559.6,540.5,578.8,"Agoura Hills/Calabasas/Hidden Hills/West Hills/Westlake",3625,566.7,548,585.9,9770
+"505","78.2xxx","2011-2015","Total","0","Los Angeles",3297,61180,18.56,76.84,"lev0",101000,12120,12020,12210,652.9,630.6,675.2,"Arcadia Central and Northeast/Bradbury/Monrovia/Sierra Madre",3297,554.4,535.1,574.2,10850
+"506","78.2y","2011-2015","Total","0","Los Angeles",2548,48540,19.05,76.44,"lev0",97180,9989,9900,10080,524.4,504,544.7,"Culver City North/Palms",2548,538.4,517,560.6,10190
+"507","78.2yy","2011-2015","Total","0","Los Angeles",3582,54020,15.08,80.94,"lev0",82100,13160,13050,13270,872.6,844,901.2,"Encino/Tarzana/Warner Center/Woodland Hills",3583,519,501.7,537,9155
+"508","78.2yyy","2011-2015","Total","0","Los Angeles",3009,70130,23.31,71.21,"lev0",119800,11710,11620,11790,502.2,484.3,520.2,"Bassett/Industry West/La Puente",3008,614.5,592.4,637.3,12870
+"509","78.2z","2011-2015","Total","0","Los Angeles",2022,45340,22.42,72.49,"lev0",79050,11470,11360,11580,511.6,489.3,533.9,"Mar Vista/Ocean Park/Santa Monica South/Venice",2023,565.3,540.7,590.9,11760
+"510","78.2zz","2011-2015","Total","0","Los Angeles",2932,65010,22.17,72.63,"lev0",110600,11760,11660,11850,530.2,511,549.4,"Northridge South/Reseda North",2932,632,608.9,655.9,12890
+"511","78.2zzz","2011-2015","Total","0","Los Angeles",2959,67030,22.65,72.02,"lev0",105500,12700,12610,12800,560.8,540.6,581,"Baldwin Park/Irwindale",2959,640.8,617.5,664.8,13700
+"512","79.1","2011-2015","Total","0","Madera",1503,30600,20.36,74.46,"lev0",26530,23060,22810,23320,1133,1076,1190,"Oakhurst/Yosemite Lakes",1566,785.5,744.2,829.3,18300
+"513","79.2","2011-2015","Total","0","Madera",649,15410,23.74,70.69,"lev0",23750,12970,12770,13180,546.5,504.4,588.5,"Chowchilla",650,724.1,667.7,784.4,14870
+"514","8","2011-2015","Total","0","Butte",2891,53190,18.4,76.86,"lev0",40740,26110,25890,26330,1419,1367,1471,"Magalia/Paradise/Stirling City",2891,725.9,696.4,757.2,17880
+"515","80","2011-2015","Total","0","Madera",2682,67370,25.12,69.29,"lev0",101200,13320,13220,13420,530.3,510.2,550.4,"Madera",2697,688.6,662.4,715.7,15630
+"516","81","2011-2015","Total","0","Marin",384,7122,18.55,76.52,"lev0",13960,10200,9964,10440,550,495,605,"Bolinas/Dillon Beach/Inverness/Point Reyes Station/Stinson Beach/Tomales",403,446.7,401.7,497.3,8195
+"517","82","2011-2015","Total","0","Marin",1736,29520,17.01,78.63,"lev0",54480,10840,10720,10960,637.4,607.4,667.3,"Angel Island/Belvedere/Marin City/Sausalito/Strawberry Manor/Tiburon",1736,422.2,402,443.7,7932
+"518","83a","2011-2015","Total","0","Marin",3303,51470,15.58,80.38,"lev0",86180,11940,11840,12050,766.5,740.4,792.7,"Corte Madera/Fairfax/Kentfield/Larkspur/Marinwood/Mill Valley/Ross/San Anselmo/San Rafael West/Terra Linda",3304,507.1,489.4,525.4,8901
+"519","83b","2011-2015","Total","0","Marin",3713,65010,17.51,78.1,"lev0",1e+05,13000,12900,13100,742.4,718.5,766.3,"Bel Marin Keys/Black Point/Ignacio/Novato/San Rafael East/Santa Venetia",3713,576.8,558.1,596,10640
+"520","85","2011-2015","Total","0","Mariposa",786,16560,21.07,73.65,"lev0",16200,20450,20140,20760,970.7,902.8,1039,"Bootjack/Catheys Valley/Coulterville/Don Pedro/El Portal/Fish Camp/Mariposa",810,702.9,651,759.4,16170
+"521","86","2011-2015","Total","0","Mariposa",12,379.1,31.59,61.67,"lev0",1866,4063,3654,4472,128.6,55.85,201.4,"Yosemite Valley",NA,NA,NA,NA,NA
+"522","87.1","2011-2015","Total","0","Mendocino",86,1863,21.66,73.06,"lev0",3219,11570,11050,12100,534.3,421.4,647.3,"Boonville/Navarro/Philo/Yorkville",86,429.7,339.9,541.8,10080
+"523","87.2","2011-2015","Total","0","Mendocino",341,6903,20.24,74.87,"lev0",6989,19750,19290,20220,975.8,872.2,1079,"Elk/Little River/Mendocino",341,470.8,404.2,571.3,14040
+"524","88","2011-2015","Total","0","Mendocino",141,2626,18.63,76.51,"lev0",3468,15150,14570,15730,813.1,678.9,947.4,"Anchor Bay/Gualala/Manchester/Point Arena",142,533.2,446.6,641.6,9813
+"525","89","2011-2015","Total","0","Mendocino",633,12890,20.36,74.78,"lev0",12050,21390,21030,21760,1051,968.9,1133,"Fort Bragg/Westport",633,751.7,692.5,816.4,17200
+"526","9","2011-2015","Total","0","Butte",659,14600,22.15,72.6,"lev0",13880,21040,20690,21380,949.7,877.2,1022,"Biggs/East Biggs/Gridley",659,956.4,883.7,1034,20380
+"527","90","2011-2015","Total","0","Mendocino",130,3367,25.9,68.1,"lev0",3637,18520,17890,19140,714.9,592,837.8,"Laytonville/Leggett/Piercy",131,612.2,498.8,753,16520
+"528","91","2011-2015","Total","0","Mendocino",644,14810,23,71.56,"lev0",12120,24440,24050,24830,1063,980.5,1145,"Brooktrails/Pine Mountain/Willits",644,826.8,761.3,897.7,20450
+"529","92","2011-2015","Total","0","Mendocino",83,2354,28.36,65.51,"lev0",2637,17860,17130,18580,629.5,494.1,764.9,"Covelo/Dos Rios",83,545.8,425.9,695.9,17650
+"530","93.1","2011-2015","Total","0","Mendocino",1310,27740,21.17,73.79,"lev0",28510,19460,19230,19680,918.8,869.1,968.6,"Ukiah",1310,890.3,842,940.9,18650
+"531","93.2","2011-2015","Total","0","Mendocino",245,5687,23.21,71.29,"lev0",6109,18620,18130,19100,802.1,701.7,902.5,"Redwood Valley",245,782.7,682.9,895.9,17670
+"532","93.3","2011-2015","Total","0","Mendocino",72,1358,18.86,76.29,"lev0",2224,12210,11560,12860,647.5,497.9,797,"Potter Valley",72,847,654.2,1085,15070
+"533","93.4","2011-2015","Total","0","Mendocino",133,2482,18.66,76.89,"lev0",4499,11030,10600,11470,591.2,490.8,691.7,"Talmage",133,391,321.9,475.5,9264
+"534","93.5","2011-2015","Total","0","Mendocino",53,1299,24.52,69.92,"lev0",2030,12800,12110,13500,522.2,381.6,662.7,"Hopland",53,525.2,383.3,725,11310
+"535","94","2011-2015","Total","0","Merced",1841,44530,24.19,70.39,"lev0",58040,15350,15200,15490,634.4,605.5,663.4,"Dos Palos/Gustine/Los Banos",1846,798.5,762,836.3,17430
+"536","95","2011-2015","Total","0","Merced",956,22680,23.72,70.8,"lev0",40300,11260,11110,11400,474.5,444.4,504.6,"Ballico/Cressey/Delhi/Hilmar/Livingston",994,625.9,587,666.9,13160
+"537","96","2011-2015","Total","0","Merced",1536,36280,23.62,70.76,"lev0",51620,14060,13910,14200,595.1,565.4,624.9,"Atwater/Snelling/Winton",1540,744.6,707.4,783.3,15970
+"538","97.1","2011-2015","Total","0","Merced",2581,60420,23.41,71.27,"lev0",73470,16450,16320,16580,702.6,675.5,729.7,"Merced Central and North/Merced Southeast",2581,795.8,765.1,827.5,17680
+"539","97.2","2011-2015","Total","0","Merced",569,16550,29.09,64.9,"lev0",26900,12310,12120,12500,423,388.3,457.8,"El Nido/Merced Southwest",590,735.9,675.8,800.4,17870
+"540","97.3","2011-2015","Total","0","Merced",223,5747,25.77,68.66,"lev0",8383,13710,13360,14060,532,462.2,601.9,"Le Grand/Planada",224,688.9,597.9,790.7,16060
+"541","98","2011-2015","Total","0","Modoc",187,4340,23.21,71.53,"lev0",6025,14410,13980,14840,620.7,531.8,709.7,"Alturas/Canby",187,474.1,404.1,557.6,12950
+"542","99","2011-2015","Total","0","Modoc",46,923.2,20.07,75.11,"lev0",1229,15020,14050,15990,748.6,532.3,964.9,"Surprise Valley",46,398.8,268,639.5,12100
+"543",NA,"2011-2015","Total","0",NA,2500,11810,33.55,59.87,"lev0",0,Inf,NA,Inf,Inf,NA,Inf,NA,NA,NA,NA,NA,NA

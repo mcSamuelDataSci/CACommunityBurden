@@ -339,8 +339,8 @@ commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths",
 # removes rows with aRate = inf HERE there are only ALPINE 
 commAA  <- commAA[!(commAA$aRate > 10000),]
 
-# tester <- filter(ageComm,yearG=="2011-2015",comID=="1.1",sex=="Female",CAUSE==0) 
-# ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
+tester <- filter(ageComm,yearG=="2011-2015",comID=="104",sex=="Female",CAUSE==0) 
+ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
 
 # Tract age deaths -----------------------------------------------------------------------------------------------------
 
@@ -397,6 +397,9 @@ write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
 write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
 write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
 write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
+
+
+
 
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
