@@ -2,7 +2,7 @@ textIntro1 <- "The goal of the California Community Burden of Disease and Cost E
 textIntro2 <- "This[FS1] app[SM2] deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov[FS3]."
 
 
-measureHelp[FS4] <- "The current MEASURES of deaths are ‘Years of Life Lost (YLL)’, ‘Years of Life Lost per 100,000 population’, ‘Number of Deaths’, ‘Crude Death Rate’, ‘Age-Adjusted Death Rate’, ‘Mean Age at Death’, and  ‘Standard Mortality Ratio. No one measure is ‘best’--each measure provides a different view or perspective into the impact of the condition.   
+measureHelp <- "The current MEASURES of deaths are ‘Years of Life Lost (YLL)’, ‘Years of Life Lost per 100,000 population’, ‘Number of Deaths’, ‘Crude Death Rate’, ‘Age-Adjusted Death Rate’, ‘Mean Age at Death’, and  ‘Standard Mortality Ratio. No one measure is ‘best’--each measure provides a different view or perspective into the impact of the condition.   
 * ‘Number of deaths’ is the simplest, most direct measure, and usually is larger in areas with larger populations. 
 * ‘Crude Death Rate’ takes the size of the population into account by dividing the number of deaths by the number of people in the population (multiplied by 100,000 for interpretability, i.e. number of deaths per 100,000 people).
 * ‘Age-adjusted Death Rate’ is the rate that would have existed if the population had the same age distribution as a ‘reference’ population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality.
@@ -15,16 +15,6 @@ causeHelp <- "The CAUSES OF DEATH in the app are currently based on an alphabeti
 
 statecutHelp <- "The ‘State-based Cutpoints[FS7]’ button changes the way the Measure is broken down or grouped—with the box checked, the cutpoints are based on the State data overall (so many/most communities in a given county might be in the highest category, if that condition tended to be high in that county in general). If the box is unchecked, the cut points will be based on the data in just that county, so the distribution of the condition throughout just that one county may be easier to see and understand."
 
-cutmethodHelp[FS8] <- "test"
+cutmethodHelp <- "test"
 
-SDOHHelp[FS9] <- "test"
-
-[FS1]This part has no quotes but displayed in R without problems. Why is that?
-[SM2]Not quite sure what you were seeing, but will not read into R without quotes…
-[FS3]For public release, want to change this to a generic email—maybe Fusion Center.
-[FS4]Would be nicer if each dropdown measure had its own explanation instead all of them crammed into one lengthy paragraph. Not sure how to do the R coding for this though.
-[FS5]May want to reference https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf
-[FS6]I think this needs to be updated? Suggest not putting in a specific number (as it may change and isn’t important in a Help caption) but rather brief overview of how the three levels of detail were constructed. Also note which levels are comprehensive and which only have certain conditions (only the most granular I recall).
-[FS7]This isn’t in the current version. Was it removed by mistake?
-[FS8]Needs explanation on how color cutoffs were calculated, especially Fisher method
-[FS9]Maybe text on importance of SDOH on mortality, but only variable needing explanation is HPI
+SDOHHelp <- "test"
