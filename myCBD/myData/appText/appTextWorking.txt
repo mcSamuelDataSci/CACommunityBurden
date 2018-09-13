@@ -1,5 +1,5 @@
 textIntro1 <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for recent years.    At the county level, data are displayed separately for each year,  and at the community or census-tract level are displayed only for the most recent five-year period (combined).  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release."
-textIntro2 <- “This[FS1] app[SM2] deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov[FS3].”
+textIntro2 <- "This[FS1] app[SM2] deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov[FS3]."
 
 
 measureHelp[FS4] <- "The current MEASURES of deaths are ‘Years of Life Lost (YLL)’, ‘Years of Life Lost per 100,000 population’, ‘Number of Deaths’, ‘Crude Death Rate’, ‘Age-Adjusted Death Rate’, ‘Mean Age at Death’, and  ‘Standard Mortality Ratio. No one measure is ‘best’--each measure provides a different view or perspective into the impact of the condition.   
@@ -15,9 +15,9 @@ causeHelp <- "The CAUSES OF DEATH in the app are currently based on an alphabeti
 
 statecutHelp <- "The ‘State-based Cutpoints[FS7]’ button changes the way the Measure is broken down or grouped—with the box checked, the cutpoints are based on the State data overall (so many/most communities in a given county might be in the highest category, if that condition tended to be high in that county in general). If the box is unchecked, the cut points will be based on the data in just that county, so the distribution of the condition throughout just that one county may be easier to see and understand."
 
-cutmethodHelp[FS8] <-
+cutmethodHelp[FS8] <- "test"
 
-SDOHHelp[FS9] <-
+SDOHHelp[FS9] <- "test"
 
 [FS1]This part has no quotes but displayed in R without problems. Why is that?
 [SM2]Not quite sure what you were seeing, but will not read into R without quotes…
