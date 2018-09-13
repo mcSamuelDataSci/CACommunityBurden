@@ -19,6 +19,7 @@
 
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
+ source(paste0(myPlace,"/myData/appText/appTextWork.txt"))
  
  
  #-- Load Packages --------------------------------------------------------------------------
