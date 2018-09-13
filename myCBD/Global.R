@@ -119,6 +119,9 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
   
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
+  source(paste0(myPlace,"/myData/app Text/app text new.txt"))
+  
+  
   
   version <- "0.4.0"
   
