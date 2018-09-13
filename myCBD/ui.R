@@ -21,18 +21,25 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                   # https://stackoverflow.com/questions/44474099/removing-hiding-minor-ticks-of-a-sliderinput-in-shiny
                   tags$h3(mTitle),
   
-
 # wellPanel
 # navBarPanel 
 
 sidebarPanel( 
  
+  # https://shiny.rstudio.com/reference/shiny/latest/selectInput.html
+  # https://shiny.rstudio.com/articles/selectize.html
+  # https://www.w3schools.com/html/html_form_elements.asp
+ #  https://www.w3schools.com/css/css3_buttons.asp
+  
  conditionalPanel(condition = fC(c(1,3, 33,34,6,8,9)),   
-                  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A"),
-                  actionButton("causeHelp1", "Cause Help",icon("paper-plane"),style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-                  ),
- 
+                               actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
+               # selectizeInput("myCAUSE", "Cause:", choices=causeNum36, selected="A",options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
+ #width:100px;
+ selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),# size=30 selectize = F, size=3,
+
  conditionalPanel(condition = fC(c(3,6,33,34)),
+                 # actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
+                  
                   checkboxInput("cZoom","Zoom to County",value=FALSE)
                   ),
  
@@ -55,7 +62,7 @@ sidebarPanel(
                   sliderInput("myYear","Year:",value=2015,min=2001,max=2015,animate = TRUE,round=TRUE,sep="",step=1)
                   ),
 
- conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,8,9)), radioButtons(  "mySex",  "Sex:",choices=c("Total","Female","Male"))),
+ conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,9)), radioButtons(  "mySex",  "Sex:",choices=c("Total","Female","Male"))),
  
  
  

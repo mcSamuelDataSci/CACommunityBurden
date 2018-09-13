@@ -22,7 +22,7 @@ output$cbdMapTS  <- renderPlot(   cbdMapXStat(    input$myLHJ, input$myCAUSE, in
 output$rankCause <- renderPlot(     rankCause(     input$myLHJ,                input$myMeasure, input$myYear, input$mySex,                          input$myN                   ))
 output$rankCauseT<- renderDataTable(rankCauseTab(  input$myLHJ, input$myYear,input$mySex),option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
 output$rankGeo   <- renderPlot(     rankGeo(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear,  input$mySex,                         input$cZoom,input$myCI      ))
-output$trend     <- renderPlot(     trend(         input$myLHJ, input$myCAUSE, input$myMeasure, input$mySex                                                                     ))
+output$trend     <- renderPlot(     trend(         input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 output$scatter   <- renderPlotly(   scatterSDOH(                input$myCAUSE, input$myMeasure,               input$myGeo,input$myX ,  input$mySex                              ))
  
 
