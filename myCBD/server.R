@@ -31,12 +31,20 @@ output$scatter   <- renderPlotly(   scatterSDOH(                input$myCAUSE, i
 # if (!input$cZoom) tLHJ <- 'California'
 
 
+# sexLabel <- ""
+# reactive(if (input$mySex != "Total") sexLabel <- paste0(", among ",input$mySex,"s"))
+#sexLabel <- "Temporary"
+
+
+sexLabel <- renderText({sexLabel <- "";
+                        if (input$mySex != "Total") sexLabel <- paste0(", among ",input$mySex,"s")}
+)
+  
 output$map_title <- renderUI({
-                              HTML(paste("<div style='text-align:center;font-size:18px'>",
-                                   lMeasuresC[lMeasures == input$myMeasure]," - ",causeList36[causeList36[,1]==input$myCAUSE,2],"in",input$myLHJ
-                                   
-                                   
-                                   ,",",input$myYear,
+                              HTML(paste0("<div style='text-align:center;font-size:18px'>",
+                                   lMeasuresC[lMeasures == input$myMeasure]," - ",
+                                   causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"],
+                                   " in ",input$myLHJ,", ",input$myYear,sexLabel(),
                                   "</div>", sep = " ") ) })
                      })
 

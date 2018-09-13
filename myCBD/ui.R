@@ -78,6 +78,15 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(0)), 
  helpText(n1,style="color:black"), br(),
  helpText(n2,style="color:black"),br(),
+ 
+ tags$br(),
+ icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?"),
+ tags$br(),
+ tags$h6("Developed in R-Shiny"),
+ 
+ 
+ 
+ 
  helpText("LINKS",tags$a(href="https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-and-Statistics-.aspx", 
                                h6("California Death Data")),
                   tags$a(href="https://data.chhs.ca.gov/",
@@ -102,7 +111,7 @@ sidebarPanel(
 mainPanel(
   hr(), 
   tabsetPanel(type = "tabs",
-   tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="100%",width="100%"),   value =  0),            #textOutput("HomeText"                             )
+   tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="50%",width="50%"),   value =  0),            #textOutput("HomeText"                             )
   
    tabPanel("Map (tmap Leaf)",   htmlOutput(      "map_title"                      ),
                                  leafletOutput(      "cbdMapTL",   width=700,height=700),   value = 33),

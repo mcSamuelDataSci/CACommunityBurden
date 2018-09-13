@@ -72,8 +72,12 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
 # can't use this -- "Bug"/throws error if only one value (e.g. cZoom and County geography)
 #,legend.hist=T
 
+sexLabel <- ""
+if (mySex != "Total") sexLabel <- paste0("among ",mySex,"s")
+
+
  tm_shape(map.1) + tm_polygons(col="plotter",title=paste(lMeasuresC[lMeasures==myMeasure]),style=myCutSystem,colorNA="white")  +
-  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"],"in",yearLab),
+  tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"],"in",yearLab,sexLabel),
             legend.outside = TRUE,
             legend.outside.position = "right"
             #,
