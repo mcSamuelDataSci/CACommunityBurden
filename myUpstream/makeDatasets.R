@@ -393,14 +393,17 @@ datTract <- datTract %>% mutate_if(is.numeric, signif,digits=4)
 # datComm   <- filter(datComm,  !(CAUSE %in% xCause1))
 # datCounty <- filter(datCounty,!(CAUSE %in% xCause0))
 
-write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
-write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
-write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
-write.csv(datState,(paste0(upPlace,"/tempOutput/State CCB Work.csv")))
-
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
 saveRDS(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
+
+ datTract$causeName <- gbdMap0[match(datTract$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+  datComm$causeName <- gbdMap0[match(datComm$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+
+write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
+write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
+write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
 
 # END ===================================================================================================================
 

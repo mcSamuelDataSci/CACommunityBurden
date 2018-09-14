@@ -1,3 +1,6 @@
+
+#https://stackoverflow.com/questions/40513153/shiny-extra-white-space-in-selectinput-choice-display-label
+
 n1 <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for 2001 to 2015.  Cause of death groupings are based on the Global Burden of Disease Study.  At the county level, data are displayed separately for each year, 2001 to 2015.  In this release, data at the community or census-tract level are displayed only for 2011 to 2015 combined.  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release."
 
 if (whichData == "real") {
