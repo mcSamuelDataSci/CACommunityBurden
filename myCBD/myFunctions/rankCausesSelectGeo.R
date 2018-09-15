@@ -1,4 +1,4 @@
-rankCause  <- function(myLHJ="Alameda", myMeasure = "YLL",myYear=2015,mySex="Total",myN=10) {
+rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="Total",myN=10) {
 
   myCex <- 1.6
   myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))

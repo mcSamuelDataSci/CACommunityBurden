@@ -95,7 +95,6 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
   
   # USE THIS 
   
-  
   # new appraoch from Zev for simplifying path names, etc 
   # don't have to keep tract of leading or following "/" !
   # check to make sure this is supported on CDPH Shiny Server?
@@ -162,13 +161,16 @@ causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","na
 causeNum36        <- causeList36[,"LABEL"]
 names(causeNum36) <- causeList36[,"causeList" ]
 
-phList   <- causeList36[nchar(causeList36$LABEL) == 3,]
+phList   <- causeList36[nchar(causeList36$LABEL) <= 3,]
 phCode   <- phList[,"LABEL"]
 names(phCode) <- phList[,"causeList" ]
 
 bigList  <- causeList36[nchar(causeList36$LABEL) == 1,]
 bigCode  <- bigList[,"LABEL"]
 names(bigCode) <- bigList[,"causeList"]
+
+
+
 
 sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 

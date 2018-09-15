@@ -60,6 +60,9 @@ cbdMapX <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=20
 map.1$plotter <- eval(parse(text=paste0("map.1$",myMeasure)))
 map.1$plotter[is.na(map.1$plotter)] <- 0
   
+
+stateCutter <- eval(parse(text=paste0("dat.X$",myMeasure)))
+
 palette(myColor1)
 #tmap_style("white")
 
@@ -75,8 +78,16 @@ if (myCutSystem == "numeric") myCutSystem <- "pretty"
 sexLabel <- ""
 if (mySex != "Total") sexLabel <- paste0("among ",mySex,"s")
 
+myBreaks <- NULL
 
- tm_shape(map.1) + tm_polygons(col="plotter",title=paste(lMeasuresC[lMeasures==myMeasure]),style=myCutSystem,colorNA="white")  +
+if (myStateCut) {
+  myCutSystem <- "fixed"
+  myBreaks    <- c(0,classIntervals(stateCutter)$brks)
+}
+
+
+ 
+ tm_shape(map.1) + tm_polygons(col="plotter",title=paste(lMeasuresC[lMeasures==myMeasure]),style=myCutSystem,breaks=myBreaks,colorNA="white")  + 
   tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"],"in",yearLab,sexLabel),
             legend.outside = TRUE,
             legend.outside.position = "right"

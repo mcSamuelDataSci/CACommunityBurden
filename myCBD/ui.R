@@ -50,7 +50,7 @@ sidebarPanel(
                                "((",fC(c(2,4,5,55,8)),") |",
                                 "(input.cZoom && (",fC(c(3, 33,34,6)),")))" 
                                ), 
-                  selectInput("myLHJ","County:",choices=lList,selected=1)
+                  selectInput("myLHJ","County:",choices=lList,selected=6)
                   ),
  
  conditionalPanel(condition = fC(c(1,3, 33,34,9)),
@@ -69,7 +69,7 @@ sidebarPanel(
  
  
  
- conditionalPanel(condition = fC(c(1,3)),                  checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
+ conditionalPanel(condition = fC(c(1,3,33,34)),                  checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(2,4,5,7)),              numericInput( "myN",        "How Many:",              value=10,min=1,max=50)),
  conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,8,9)), selectInput(  "myMeasure",  "Measure:",          choices=lMeasures,selected="YLLper")),
  conditionalPanel(condition = fC(c(1,33,34)),                 radioButtons( "myCutSystem","Cut-point method:",choices=c("fisher","numeric","quantile"))),
