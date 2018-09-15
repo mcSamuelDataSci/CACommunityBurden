@@ -52,22 +52,15 @@
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
- #  myProj             <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"                            # Key line for Happy GIS
- #  shape_County       <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(myProj)) 
- #  shape_Comm         <- readShapePoly(paste0(myPlace,"/myData/shape_Comm"),proj4string=CRS(myProj))   # Read Shape Files
- #  
- # shape_Tract        <- readShapePoly(paste0(myPlace,"/myData/shape_Tract"),proj4string=CRS(myProj))  
+ # shape_County  <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(proj1)) 
+ # shape_County  <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
 
- # shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
- # shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
- # shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
+ shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+ shape_Comm     <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
+ shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
- 
- shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
- shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))   # Read Shape Files
- shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
- 
-  #simple feature objects
+# simple feature objects
+# use st_read? (need stringsAsFactors = F  ??)
 # shape_Tract        <- read_rds(path(myPlace,"/myData/shape_Tract.rds"))
 # shape_Comm         <- read_rds(path(myPlace,"/myData/shape_Comm.rds"))
 # shape_County       <- read_rds(path(myPlace,"/myData/shape_County.rds"))
@@ -75,53 +68,33 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
  shape_Tract$county <- as.character(shape_Tract$county)   
  
-  #not quite...
-  #library(sf)
-  #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
- 
- 
 datTract  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm   <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
 datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
-#  load(path(myPlace,"/myData/",whichData,"datState.R"))
- 
-  load(path(myPlace,"/myData/","sdohTract.R"))
-  load(path(myPlace,"/myData/","sdohComm.R"))
-  load(path(myPlace,"/myData/","sdohCounty.R"))
+
+load(path(myPlace,"/myData/","sdohTract.R"))
+load(path(myPlace,"/myData/","sdohComm.R"))
+load(path(myPlace,"/myData/","sdohCounty.R"))
 
 
 #-- Load Info Files and Functions ------------------------------------------------------------------------
-  
-  # USE THIS 
-  
-  # new appraoch from Zev for simplifying path names, etc 
-  # don't have to keep tract of leading or following "/" !
-  # check to make sure this is supported on CDPH Shiny Server?
   
   gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//NEWgbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
-  
-  source(paste0(myPlace,"/myFunctions/cbdCutPoint0.R"))
-  
-  source(paste0(myPlace,"/myFunctions/cbdMap0.R"))
+
   source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
-  source(paste0(myPlace,"/myFunctions/cbdMap0Leaflet.R"))
-  
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))
   source(paste0(myPlace,"/myFunctions/rankGeosSelectCause.R"))
-  
   source(paste0(myPlace,"/myFunctions/trend.R"))
-  
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
   source(paste0(myPlace,"/myData/appText/appTextWorking.txt"))
-  
-  
-  version <- "0.4.0"
+
+  version <- "0.5.0"
   
   mTitle       <- "California Community Burden of Disease and Costs"
   
@@ -168,16 +141,12 @@ bigList  <- causeList36[nchar(causeList36$LABEL) == 1,]
 bigCode  <- bigList[,"LABEL"]
 names(bigCode) <- bigList[,"causeList"]
 
-
-
-
 sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
 names(sdohVec) <- sdohVecL
 
 lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
-
 
 if (sjc) {lList <- lList[lList %in% sjconsortium]}
 

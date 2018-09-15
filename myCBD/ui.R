@@ -120,10 +120,10 @@ mainPanel(
                                  leafletOutput(      "cbdMapTL",   width=700,height=700),   value = 33),
    tabPanel("Map (tmap Stat)",   plotOutput(      "cbdMapTS",   width=700,height=700),   value = 34),
    
-   tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
-   tabPanel("Map (interactive)", 
+   #tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
+   #tabPanel("Map (interactive)", 
                                  #htmlOutput(      "map_title"                      ),
-                                 leafletOutput(   "cbdMap0",             height=700),   value =  1),
+    #                             leafletOutput(   "cbdMap0",             height=700),   value =  1),
    tabPanel("Rank Causes",       plotOutput(      "rankCause", width=700,height=700),   value =  5),
    tabPanel("Rank Causes Table", dataTableOutput( "rankCauseT"                     ),   value = 55),   #DT::
    tabPanel("Rank Counties/Communities",  plotOutput(      "rankGeo",    width=700,height=1700),  value =  6),
