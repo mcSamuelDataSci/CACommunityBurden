@@ -1,7 +1,5 @@
 # -- INSTALL PACKAGES --------------------------------------------------------------------------
 
-#test
-
 # The CBD, including the "Upstream" system, requires installation of the following packages 
  
 
@@ -14,8 +12,8 @@
 
 #-READING Data ----------------------------------------------------------------------------------
  #install.packages("readr")   # read .csv and others -- # installed with tidyverse
- #install.packages(haven)     # read SAS files -- # installed with tidyverse
- #install.packages(readxl)    # read Excel -- # installed with tidyverse
+ #install.packages(haven)     # read SAS files       -- # installed with tidyverse
+ #install.packages(readxl)    # read Excel           -- # installed with tidyverse
 
 #-MAPPING/GIS-------------------------------------------------------------------------------------
   install.packages("maptools"); 
@@ -25,6 +23,7 @@
   install.packages("tidycensus")
   install.packages("tigris")
   install.packages("rmapshaper")
+  install.packages("directlabels") # adding labels to lines in ggplot2
  #install.packages("maps");
  #install.packages("acs") # still used?
  

@@ -12,6 +12,11 @@ observeEvent(input$myGeo, {
 }
 )
 
+observeEvent(input$cZoom, {
+  if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
+}
+)
+
 output$homeText  <- renderText("Hello")  
 output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myGeo, input$myCutSystem))  
 output$cbdMap1   <- renderPlot(     cbdMap0(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName ))

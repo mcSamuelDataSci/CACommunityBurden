@@ -15,25 +15,27 @@
  
  myPlace   <- getwd()   
 
- whichData <-  "real"
+ whichData <-  "fake"
 
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
  
  source(paste0(myPlace,"/myData/appText/appTextWorking.txt"))
+ 
+ STATE <- "CALIFORNIA"
  
  
  #-- Load Packages --------------------------------------------------------------------------
 
  library(shiny)  
  library(dplyr)
- 
  library(readxl)
  library(readr) 
  
- library(maptools); 
- library(rgdal)
- library(leaflet); 
-
+ library(maptools)   #needed? 
+ library(rgdal)      #needed?
+ library(leaflet) 
+ library(tmap)
+ 
  library(classInt);  
  library(RColorBrewer);
  library(epitools)
@@ -47,8 +49,6 @@
 
  # --- CBD Key Inputs --------------------------------------------------------------------------------------
 
- # MIGRATE all mapping to tmap? 
- 
 # USE consistent map projection system throughout all app code !
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
@@ -176,7 +176,10 @@ sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Sco
 sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
 names(sdohVec) <- sdohVecL
 
-lList  <- sort(as.character(unique(datCounty$county)))
+lList         <- sort(as.character(unique(datCounty$county)))
+lListNoState  <- lList[lList != STATE]
+
+
 if (sjc) {lList <- lList[lList %in% sjconsortium]}
 
 nC       <- 5
