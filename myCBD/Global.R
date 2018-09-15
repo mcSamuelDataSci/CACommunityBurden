@@ -12,7 +12,6 @@
 
 #-- Set Locations and Data Source ----------------------------------------------------------
 
- 
  myPlace   <- getwd()   
 
  whichData <-  "fake"
