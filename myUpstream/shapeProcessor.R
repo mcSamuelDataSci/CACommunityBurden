@@ -45,7 +45,6 @@ shape_Tract <- shape_Tract %>% geo_join(cbdLinkCA, by="GEOID") %>%
                                filter(!(GEOID %in% bad)) %>% 
                                select(GEOID,comID,COUNTYFP,county,geometry) # 8034 tracts
 
-
 write_rds(shape_Tract,path(myPlace,"/myData/shape_Tract.rds"),compress="none")   # Save Simple Feature shape object as R object
 st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE)  # Save as ESRI shape file set
 
@@ -85,7 +84,7 @@ s2<- ms_simplify(shape_Tract,keep=.001);tM(s2)
 shapeX <- gSimplify(shape_Tract,tol = 0.05, topologyPreserve = TRUE)
 # writeSpatialShape(shapeX,paste0(myPlace,"/myData/shapeX"))
 
-# OLD APPROACH ===============================================================================================
+# OLD APPROACH SAVE IN TRUE ARCHIVES ===================================================================
 
 library(rgeos)
 library(maptools) 
@@ -104,13 +103,6 @@ linkTemp    <- as.data.frame(cbdLinkCA %>% group_by(county,comID) %>% summarize(
 shape_Comm  <- merge(shape_Comm,linkTemp,by="comID")
 #shape_Comm  <- geo_join(shape_Comm,linkTemp,by="comID")
 writeSpatialShape(shape_CommX,paste0(myPlace,"/myData/shape_Comm"))
-
-shape_County  <- unionSpatialPolygons(shape_Comm, shape_Comm$county)    
-n.ID <-shape_County@polygons[[1]]@ID
-for (i in 2:length(shape_County)){  n.ID <-c(n.ID,shape_County@polygons[[i]]@ID)}  # make accessible label for shapes
-shape_County$county <- as.character(n.ID)
-
-writeSpatialShape(shape_CountyX,paste0(myPlace,"/myData/shape_County"))
 
 
 # NOTES  ===============================================================================================
