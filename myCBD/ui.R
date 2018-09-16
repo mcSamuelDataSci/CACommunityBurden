@@ -65,17 +65,14 @@ sidebarPanel(
                   sliderInput("myYear","Year:",value=2015,min=2001,max=2015,animate = TRUE,round=TRUE,sep="",step=1)
                   ),
 
- conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,9)), radioButtons(  "mySex",  "Sex:",choices=c("Total","Female","Male"))),
- 
- 
- 
- conditionalPanel(condition = fC(c(1,3,33,34)),                  checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
- conditionalPanel(condition = fC(c(2,4,5,7)),              numericInput( "myN",        "How Many:",              value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,8,9)), selectInput(  "myMeasure",  "Measure:",          choices=lMeasures,selected="YLLper")),
- conditionalPanel(condition = fC(c(1,33,34)),                 radioButtons( "myCutSystem","Cut-point method:",choices=c("pretty","quantile","fisher"))),
- conditionalPanel(condition = fC(c(3)),                    checkboxInput("myLabName",  "Place Names",           value=FALSE)),
- conditionalPanel(condition = fC(c(6)),                    checkboxInput("myCI",       "95% CIs?",              value=TRUE)),
- conditionalPanel(condition = fC(c(9)),                    selectInput(  "myX",        "SDOH Variable:",         choices=sdohVec)),
+ conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,9)),  radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
+ conditionalPanel(condition = fC(c(1,3,33,34)),              checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
+ conditionalPanel(condition = fC(c(2,4,5,7)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
+ conditionalPanel(condition = fC(c(1,3, 33,34,5,55,6,7,8,9)),selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+ conditionalPanel(condition = fC(c(1,33,34)),                radioButtons( "myCutSystem","Cut-point method:", choices=c("pretty","quantile","fisher"))),
+ conditionalPanel(condition = fC(c(3)),                      checkboxInput("myLabName",  "Place Names", value=FALSE)),
+ conditionalPanel(condition = fC(c(6)),                      checkboxInput("myCI",       "95% CIs?", value=TRUE)),
+ conditionalPanel(condition = fC(c(9)),                      selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
 
  hr(), 
  conditionalPanel(condition = fC(c(0)), 

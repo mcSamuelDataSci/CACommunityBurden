@@ -12,34 +12,27 @@ observeEvent(input$myGeo, {
 }
 )
 
-observeEvent(input$cZoom, {
+observeEvent(input$cZoom,{
   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
 }
 )
 
-output$homeText  <- renderText("Hello")  
-#output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myGeo, input$myCutSystem))  
-#output$cbdMap1   <- renderPlot(     cbdMap0(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName ))
+# observeEvent(input.ID, {
+#   if(input.ID== 5){updateSelectInput(session, "myLHJ", choices = lListNoState) }
+# }
+# )
 
-output$cbdMapTL  <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
-output$cbdMapTS  <- renderPlot(   cbdMapXStat(    input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$homeText   <- renderText("Hello")  
 
-output$rankCause <- renderPlot(     rankCause(     input$myLHJ,                input$myMeasure, input$myYear, input$mySex,                          input$myN                   ))
-output$rankCauseT<- renderDataTable(rankCauseTab(  input$myLHJ, input$myYear,input$mySex),option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
-output$rankGeo   <- renderPlot(     rankGeo(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear,  input$mySex,                         input$cZoom,input$myCI      ))
-output$trend     <- renderPlot(     trend(         input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
-output$scatter   <- renderPlotly(   scatterSDOH(                input$myCAUSE, input$myMeasure,               input$myGeo,input$myX ,  input$mySex                              ))
- 
+output$cbdMapTL   <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$cbdMapTS   <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$rankCause  <- renderPlot(     rankCause(input$myLHJ,                input$myMeasure, input$myYear, input$mySex,                                           input$myN))
+output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$cZoom,input$myCI))
+output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
+output$scatter    <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,               input$mySex,                  input$myGeo,input$myX))
 
-
-# tLHJ <- input$myLHJ
-# if (!input$cZoom) tLHJ <- 'California'
-
-
-# sexLabel <- ""
-# reactive(if (input$mySex != "Total") sexLabel <- paste0(", among ",input$mySex,"s"))
-#sexLabel <- "Temporary"
-
+output$rankCauseT <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
+                                     option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
 
 sexLabel <- renderText({sexLabel <- "";
                         if (input$mySex != "Total") sexLabel <- paste0(", among ",input$mySex,"s")}
@@ -54,6 +47,10 @@ output$map_title <- renderUI({
                      })
 
 
+# OLD junk, possibly archive some: -----------------------------------------------------------------------------------------
+
+#output$cbdMap0   <- renderLeaflet(  cbdMap0Leaflet(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myGeo, input$myCutSystem))  
+#output$cbdMap1   <- renderPlot(     cbdMap0(       input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName ))
 
 #reactive({ validate(need( !(input$myGeo %in% c("Community","Census Tract") & input$myMeasure == "SMR" ),"Please select a data set"))
 

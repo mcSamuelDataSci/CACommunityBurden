@@ -18,7 +18,7 @@ pal <- c("red", "blue", "green")
 # https://plotly-book.cpsievert.me/scatter-traces.html
          
 
-scatterSDOH <- function(myCause=0, myMeasure = "aRate",myGeo="Community",t.x="lessBachelor",mySex="Total"){
+scatterSDOH <- function(myCause=0, myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="lessBachelor"){
 
 t.y <- 4  
 xL <-  which(sdohVec == t.x)

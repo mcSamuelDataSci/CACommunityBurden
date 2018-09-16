@@ -35,7 +35,7 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
 sexLabel <- ""
 if (mySex != "Total") sexLabel <- paste0("among ",mySex,"s")
 
-nCut <- 7
+nCut <- 5
 
 if ( myStateCut) {myRange <- dat.State[,myMeasure]}
 if (!myStateCut) {myRange <- dat.1[,myMeasure]}
