@@ -35,7 +35,7 @@ list.sex  <- c("B01001_001E","B01001_002E", "B01001_026E")    # B01001_002E,026E
 
 #-- Get, process, and export data -----------------------------------------------------------------------------------
 
-makePop <- function(inList=list.sex,inyear=2013,yearlabel="2011-2015") {
+makePop <- function(inList=list.sex,inyear=2015,yearlabel="2011-2015") {
 
 acs.varlist <- inList  
   
@@ -61,7 +61,7 @@ workDat   <- workDat %>% mutate(yearG = paste0(yearlabel),
 
 }
 
-tDat <- makePop(list.sex,2013,"2011-2015")                                                   # edit "sex" or "race" as appropate
+tDat <- makePop(list.sex,2015,"2011-2015")                                                   # edit "sex" or "race" as appropate
 tDat <- tDat %>%  
                 # filter(label !="Total:") %>%
                   transform(label = str_replace(label, ":", "")) %>%
