@@ -50,8 +50,6 @@ samVec <- c(0,5,15,35,65,85,95)/100
 
 
 myPal <- brewer.pal(5,"RdYlBu")
-
-
 myPal <- c("#D7191C","#FDAE61","#FFFFBF","#ABD9E9","#2C7BB6")
 
 
