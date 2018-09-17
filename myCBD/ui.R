@@ -1,3 +1,6 @@
+STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
+
+
 
 #https://stackoverflow.com/questions/40513153/shiny-extra-white-space-in-selectinput-choice-display-label
 
