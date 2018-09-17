@@ -42,8 +42,7 @@ sidebarPanel(
 
  conditionalPanel(condition = fC(c(3,6,33,34)),
                  # actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
-                  
-                  checkboxInput("cZoom","Zoom to County",value=FALSE)
+                   checkboxInput("cZoom","Zoom to County",value=FALSE)
                   ),
  
  conditionalPanel(condition =  paste(
@@ -61,7 +60,6 @@ sidebarPanel(
                              "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c(1,3, 33,34)),") ) 
                                | (", fC(c(5,55,6)),")"
                              ),
-                  #numericInput("myYear","Year:",value=2015,min=2001,max=2015)
                   sliderInput("myYear","Year:",value=2015,min=2001,max=2015,animate = TRUE,round=TRUE,sep="",step=1)
                   ),
 

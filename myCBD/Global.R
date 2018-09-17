@@ -117,10 +117,11 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
 # --- Shiny Stuff and Constants ---------------------------------------------------------------------------
 
 # med.age, m.YLL  
-lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
+lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
                 "YLL per 100,000 population",
+                "Age-Adjusted YLL Rate",
                 "Number of deaths",
                 "Crude Death Rate",
                 "Age-Adjusted Death Rate",
