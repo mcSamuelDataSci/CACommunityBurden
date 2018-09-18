@@ -10,19 +10,18 @@
 #                                                                                     |   
 # =====================================================================================
 
+
 #-- Set Locations and Data Source ----------------------------------------------------------
 
- myPlace   <- getwd()   
-
  whichData <-  "real"
-
- pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
+ myPlace   <- getwd()   
+ STATE     <- "CALIFORNIA"
  
+ # temporary for testing:
  source(paste0(myPlace,"/myData/appText/appTextWork.txt"))
  
- STATE <- "CALIFORNIA"
- 
- 
+ pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
+
  #-- Load Packages --------------------------------------------------------------------------
 
  library(shiny)  
@@ -34,6 +33,7 @@
  library(rgdal)      #needed?
  library(leaflet) 
  library(tmap)
+ library(sf)
  
  library(classInt);  
  library(RColorBrewer);
@@ -48,25 +48,35 @@
 
  # --- CBD Key Inputs --------------------------------------------------------------------------------------
 
+# Shapes file: ------------------------------- 
+ 
 # USE consistent map projection system throughout all app code !
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
- # shape_County  <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(proj1)) 
- # shape_County  <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
-
- shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
- shape_Comm     <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
- shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
-# simple feature objects
-# use st_read? (need stringsAsFactors = F  ??)
-# shape_Tract        <- read_rds(path(myPlace,"/myData/shape_Tract.rds"))
-# shape_Comm         <- read_rds(path(myPlace,"/myData/shape_Comm.rds"))
-# shape_County       <- read_rds(path(myPlace,"/myData/shape_County.rds"))
+# check each of below with:  class(shape_County); object.size(shape_County)
+# shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp"))  # -->    822,048 bytes "SpatialPolygonsDataFrame"
+# shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
+# shape_County   <- read_rds(paste0(myPlace,"/myData/shape_County.rds")) # --> 11,174,336 bytes "sf"  "data.frame"
+# shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.shp"))  # -->    674,488 bytes "sf"  "data.frame"
+# shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
+
+
+# THESE DO NOT WORK IN THE APP:
+ shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
+ shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
+ shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
+ 
+# THESE DO: 
+ shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+ shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
+ shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
  shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
  shape_Tract$county <- as.character(shape_Tract$county)   
+ 
+# Data: ----------------------------------------- 
  
 datTract  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm   <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
@@ -75,7 +85,6 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 load(path(myPlace,"/myData/","sdohTract.R"))
 load(path(myPlace,"/myData/","sdohComm.R"))
 load(path(myPlace,"/myData/","sdohCounty.R"))
-
 
 #-- Load Info Files and Functions ------------------------------------------------------------------------
   
@@ -92,7 +101,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myFunctions/trend.R"))
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
-  source(paste0(myPlace,"/myData/appText/appTextWorking.txt"))
+  source(paste0(myPlace,"/myData/appText/appTextWork.txt"))
 
   version <- "0.5.0"
   
@@ -100,7 +109,6 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 
-  
   sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
   sjc          <- FALSE
   
@@ -162,3 +170,10 @@ yG       <- "2011-2015"
 # myCause  <- "Diabetes mellitus"
 
 # --- END --------------------------------------------------------------------------------------------------
+
+
+# OLD stuff for GIS notes:
+# shape_County  <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(proj1)) 
+# shape_County  <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
+
+
