@@ -1,10 +1,8 @@
-#library(DT)
 shinyServer(function(input, output,session) {
  
 observeEvent(input$causeHelp, {showModal(modalDialog(causeHelp, easyClose = TRUE))})
 observeEvent(input$measureHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
-  
-  
+
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }
     if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode) }
@@ -12,51 +10,21 @@ observeEvent(input$myGeo, {
 }
 )
 
-# observeEvent(input$cZoom,{
-#   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
-# }
-# )
-
-
+observeEvent(input$ID,{
+ if(input$ID %in% c(33,44,45,55)){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
+}
+)
 
 observeEvent(input$cZoom,{
   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
 }
 )
 
-
-# 
-# observeEvent(input$ID,{
-#   if(input$ID == 6) {updateSelectInput(session, "myLHJ", choices = lListNoState,selected=input$myLHJ) }
-# }
-# )
-
-
-
-observeEvent(input$ID,{
-  if(!(input$ID %in% c(33,34))){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
-}
-)
-
-
-
-
-
-
-#| input$tabs
-
+#for two input use:
 # observeEvent(input$test1 | input$test2, {
 #    if(input$test1==0 && input$test2==0){
 
-
-
-
-# observeEvent(input.ID, {
-#   if(input.ID== 5){updateSelectInput(session, "myLHJ", choices = lListNoState) }
-# }
-# )
-
-output$homeText   <- renderText("Hello")  
+#------------------------------------------------------------------------------------------------------------------------------------------
 
 output$cbdMapTL   <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
 output$cbdMapTS   <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
