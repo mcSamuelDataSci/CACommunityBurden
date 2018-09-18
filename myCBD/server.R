@@ -24,10 +24,20 @@ observeEvent(input$cZoom,{
 }
 )
 
+
+# 
+# observeEvent(input$ID,{
+#   if(input$ID == 6) {updateSelectInput(session, "myLHJ", choices = lListNoState,selected=input$myLHJ) }
+# }
+# )
+
+
+
 observeEvent(input$ID,{
   if(!(input$ID %in% c(33,34))){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
 }
 )
+
 
 
 
