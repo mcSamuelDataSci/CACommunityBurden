@@ -22,6 +22,33 @@ measureHelp <- "The current MEASURES of deaths are ‘Years of Life Lost (YLL)’, ‘
 * ‘Years of Life Lost per 100,000 population” divides the YLL sum by the number of people in the population, then multiplies by 100,000 for interpretability. It is the YLL equivalent of the Death Rate.
 *  ‘Standard[FS2] Mortality Ratio (SMR)’ shows the county rate of condition divided by the rate for the condition in the State overall—this measure will highlight counties that have especially high (or low) rates of a condition compared to the State rate, even if the condition does not have a large number of deaths.  To aid in using this measure, the vertical red line is at 1.2, corresponding to the measure being 120% higher in the selected geography than the State average.  The green line is at 0.8, 80% of the State average and the grey line is at 1.0, right on the State average.   Measures to be added in the near future include age-specific rates and life expectancy."
 
+
+measureHelpJohn <- paste0('<p>The current MEASURES of deaths are:</p>
+<ui style="list-style-type:circle">
+<li style="margin-left: 80px">Years of Life Lost (YLL)</li>
+<li style="margin-left: 80px">Mean YLL</li>
+<li style="margin-left: 80px">Years of Life Lost per 100,000 population</li>
+<li style="margin-left: 80px">Number of Deaths</li>
+<li style="margin-left: 80px">Death Rate (Deaths per 100,000 population)</li>
+<li style="margin-left: 80px">Median Age at Death</li>
+<li style="margin-left: 80px">Excess Relative Risk (Standard Mortality Ratio) </li>
+                        </ui>
+                         <br>
+<p>No one measure is best--each measure provides a different view or perspective into the impact of the condition. For example, <b>Number of deaths</b> is the simplest, most direct measure, and has clear intuitive meaning, and, other things being equal, will be larger in areas with larger populations.  
+                  			 <b>Death Rate</b> takes the size of the population into account, and is the number of deaths divided by the number 
+                  			 of people in the population (multiplied by a constant, 100,000, for interpretability). <b>Mean Years of Life Lost</b> 
+                  			 is the average number of years of life lost among all people that die from that condition (so will be higher for 
+                  			 conditions differentially impacting young people. <b>Years of Life Lost</b> sums all the years of life lost across all 
+                  			 people that die from that condition, and is influenced by the age at which people die from the condition and the 
+                  			 number of people that die from that condition.  <b>Median Age</b> shows the median age at death for all persons who die 
+                  			 from that condition. It is not a common measure, but is intuitive and clear, showing  the <i>average age</i> at death, 
+                  			 and can be useful for easily and clearly highlighting disparities. <b>Excess Relative Risk</b> is an <i>ad hoc</i> measure, 
+                  			 and shows the county rate of condition divided by the rate for the condition in the State overall. This measure will 
+                  			 highlight counties that have especially high (or low) rates of a condition compared to the State rate.   Measures 
+                  			 to be added in the near future include age-specific rates and life expectancy.')
+
+
+
 causeHelp <- "The CAUSES OF DEATH in the app are currently based on an alphabetical arrangement of 36[FS3] mutually exclusive and exhaustive conditions from the Global Burden of Disease Study—these 36 are an ad hoc list, thought to be generally relatable to California Public Health priorities.  But, the app could, and likely will, include the full list of Global Burden of Disease conditions, and/or other Global Burden of Disease subsets; and/or subsets from 2011 National Center of Health Statistics  condition groupings (e.g. 133 or 39 causes)."
 
 statecutHelp <- "The ‘State-based Cutpoints[FS4]’ button changes the way the Measure is broken down or grouped—with the box checked, the cutpoints are based on the State data overall (so many/most communities in a given county might be in the highest category, if that condition tended to be high in that county in general). If the box is unchecked, the cut points will be based on the data in just that county, so the distribution of the condition throughout just that one county may be easier to see and understand."
@@ -29,3 +56,10 @@ statecutHelp <- "The ‘State-based Cutpoints[FS4]’ button changes the way the Mea
 cutmethodHelp <- "te[S5]st"
 
 SDOHHelp <- "test[S6]"
+
+[FS1]For public release, want to change this to a generic email—maybe Fusion Center.
+[FS2]May want to reference https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf
+[FS3]I think this needs to be updated? Suggest not putting in a specific number (as it may change and isn’t important in a Help caption) but rather brief overview of how the three levels of detail were constructed. Also note which levels are comprehensive and which only have certain conditions (only the most granular I recall).
+[FS4]This isn’t in the current version. Was it removed by mistake?
+[S5]Needs explanation on how color cutoffs were calculated, especially Fisher method
+[S6]Maybe text on importance of SDOH on mortality, but only variable needing explanation is HPI
