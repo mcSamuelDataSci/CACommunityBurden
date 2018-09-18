@@ -109,7 +109,7 @@ sidebarPanel(
  
 mainPanel(
   hr(), 
-  tabsetPanel(type = "tabs",id="ID",
+  tabsetPanel(type = "tabs",
    tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="50%",width="50%"),   value =  10),            #textOutput("HomeText"                             )
   
    tabPanel("Map (tmap Leaf)",   htmlOutput(      "map_title"                      ),
@@ -120,8 +120,8 @@ mainPanel(
    tabPanel("Rank Causes Table", dataTableOutput( "rankCauseT"                     ),   value = 55),   #DT::
    tabPanel("Rank Counties/Communities",  plotOutput(      "rankGeo",    width=700,height=1700),  value =  6),
    tabPanel("Trend",             plotOutput(      "trend",      width=700,height=700),  value =  8),
-   tabPanel("SES Burden Scatter",plotlyOutput(    "scatter",              height=700),  value =  9)
-  )       ) 
+   tabPanel("SES Burden Scatter",plotlyOutput(    "scatter",              height=700),  value =  9),
+  id="ID")       ) 
  
 ))
 

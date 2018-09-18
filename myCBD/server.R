@@ -12,10 +12,34 @@ observeEvent(input$myGeo, {
 }
 )
 
+# observeEvent(input$cZoom,{
+#   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
+# }
+# )
+
+
+
 observeEvent(input$cZoom,{
   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
 }
 )
+
+observeEvent(input$ID,{
+  if(!(input$ID %in% c(33,34))){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
+}
+)
+
+
+
+
+
+#| input$tabs
+
+# observeEvent(input$test1 | input$test2, {
+#    if(input$test1==0 && input$test2==0){
+
+
+
 
 # observeEvent(input.ID, {
 #   if(input.ID== 5){updateSelectInput(session, "myLHJ", choices = lListNoState) }

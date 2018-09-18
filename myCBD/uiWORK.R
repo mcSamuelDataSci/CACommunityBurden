@@ -16,7 +16,7 @@ n2 <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE
 
 fC <- function(vec) {
   tRep <- length(vec)-1
-  paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
+  paste("input$tabs == ",vec,    c(rep("|",tRep),""), collapse="")
 }
 
 #library(shinythemes)
@@ -37,46 +37,46 @@ sidebarPanel(
   # https://www.w3schools.com/html/html_form_elements.asp
  #  https://www.w3schools.com/css/css3_buttons.asp
   
- conditionalPanel(condition = fC(c(33,34,6,8,9)),   
+ conditionalPanel(condition = fC(c("thirty-three","X34","X6","X8","X9")),   
                                actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
                # selectizeInput("myCAUSE", "Cause:", choices=causeNum36, selected="A",options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
  #width:100px;
  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),# size=30 selectize = F, size=3,
 
- conditionalPanel(condition = fC(c(6,33,34)),
+ conditionalPanel(condition = fC(c("X6","thirty-three","X34")),
                  # actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
                    checkboxInput("cZoom","Zoom to County",value=FALSE)
                   ),
  
  conditionalPanel(condition =  paste(
-                               "((",fC(c(2,4,5,55,8)),") |",
-                                "(input.cZoom && (",fC(c(33,34,6)),")))" 
+                               "((",fC(c(2,4,"X5","X55","X8")),") |",
+                                "(input.cZoom && (",fC(c("thirty-three","X34","X6")),")))" 
                                ), 
                   selectInput("myLHJ","County:",choices=lList,selected=STATE)
                   ),
  
- conditionalPanel(condition = fC(c(33,34,9)),
+ conditionalPanel(condition = fC(c("thirty-three","X34","X9")),
                   selectInput("myGeo","Geographic Level:",choices=c("County","Community","Census Tract"))
                   ),
 
  conditionalPanel(condition =paste(
-                             "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c(33,34)),") ) 
-                               | (", fC(c(5,55,6)),")"
+                             "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c("thirty-three","X34")),") ) 
+                               | (", fC(c("X5","X55","X6")),")"
                              ),
                   sliderInput("myYear","Year:",value=2015,min=2001,max=2015,animate = TRUE,round=TRUE,sep="",step=1)
                   ),
 
- conditionalPanel(condition = fC(c(33,34,5,55,6,7,9)),  radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
- conditionalPanel(condition = fC(c(33,34)),              checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
- conditionalPanel(condition = fC(c(2,4,5,7)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(33,34,5,6,7,8,9)),selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
- conditionalPanel(condition = fC(c(33,34)),                radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
- conditionalPanel(condition = fC(c(34)),                      checkboxInput("myLabName",  "Place Names", value=FALSE)),
- conditionalPanel(condition = fC(c(6)),                      checkboxInput("myCI",       "95% CIs?", value=TRUE)),
- conditionalPanel(condition = fC(c(9)),                      selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
+ conditionalPanel(condition = fC(c("thirty-three","X34","X5","X55","X6",7,"X9")),  radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
+ conditionalPanel(condition = fC(c("thirty-three","X34")),              checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
+ conditionalPanel(condition = fC(c(2,4,"X5",7)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
+ conditionalPanel(condition = fC(c("thirty-three","X34","X5","X6",7,"X8","X9")),selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+ conditionalPanel(condition = fC(c("thirty-three","X34")),                radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
+ conditionalPanel(condition = fC(c("X34")),                      checkboxInput("myLabName",  "Place Names", value=FALSE)),
+ conditionalPanel(condition = fC(c("X6")),                      checkboxInput("myCI",       "95% CIs?", value=TRUE)),
+ conditionalPanel(condition = fC(c("X9")),                      selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
 
  hr(), 
- conditionalPanel(condition = fC(c(10)), 
+ conditionalPanel(condition = fC(c("ten")), 
  helpText(n1,style="color:black"), br(),
  helpText(n2,style="color:black"),br(),
  
@@ -109,19 +109,18 @@ sidebarPanel(
  
 mainPanel(
   hr(), 
-  tabsetPanel(type = "tabs",id="ID",
-   tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="50%",width="50%"),   value =  10),            #textOutput("HomeText"                             )
+  tabsetPanel(id = "tabs",
+   tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="50%",width="50%"),   value =  "ten"),            #textOutput("HomeText"                             )
   
    tabPanel("Map (tmap Leaf)",   htmlOutput(      "map_title"                      ),
-                                 leafletOutput(   "cbdMapTL",   width=700,height=700),   value = 33),
-   tabPanel("Map (tmap Stat)",   plotOutput(      "cbdMapTS",   width=700,height=700),   value = 34),
+                                 leafletOutput(   "cbdMapTL",   width=700,height=700),   value = "thirty-three"),
+   tabPanel("Map (tmap Stat)",   plotOutput(      "cbdMapTS",   width=700,height=700),   value = "X34"),
    
-   tabPanel("Rank Causes",       plotOutput(      "rankCause", width=700,height=700),   value =  5),
-   tabPanel("Rank Causes Table", dataTableOutput( "rankCauseT"                     ),   value = 55),   #DT::
-   tabPanel("Rank Counties/Communities",  plotOutput(      "rankGeo",    width=700,height=1700),  value =  6),
-   tabPanel("Trend",             plotOutput(      "trend",      width=700,height=700),  value =  8),
-   tabPanel("SES Burden Scatter",plotlyOutput(    "scatter",              height=700),  value =  9)
-  )       ) 
+   tabPanel("Rank Causes",       plotOutput(      "rankCause", width=700,height=700),   value =  "X5"),
+   tabPanel("Rank Causes Table", dataTableOutput( "rankCauseT"                     ),   value = "X55"),   #DT::
+   tabPanel("Rank Counties/Communities",  plotOutput(      "rankGeo",    width=700,height=1700),  value =  "X6"),
+   tabPanel("Trend",             plotOutput(      "trend",      width=700,height=700),  value =  "X8"),
+   tabPanel("SES Burden Scatter",plotlyOutput(    "scatter",              height=700),  value =  "X9"))       ) 
  
 ))
 
