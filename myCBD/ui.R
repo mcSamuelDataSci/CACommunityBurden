@@ -31,7 +31,7 @@ sidebarPanel(
  #  https://www.w3schools.com/css/css3_buttons.asp
   
  conditionalPanel(condition = fC(c(33,34,6,8,9)),   
-                               actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
+                               actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
                # selectizeInput("myCAUSE", "Cause:", choices=causeNum36, selected="A",options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
  #width:100px;
  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),# size=30 selectize = F, size=3,

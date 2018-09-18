@@ -29,10 +29,3 @@ statecutHelp <- "The ‘State-based Cutpoints[FS4]’ button changes the way the Mea
 cutmethodHelp <- "te[S5]st"
 
 SDOHHelp <- "test[S6]"
-
-[FS1]For public release, want to change this to a generic email—maybe Fusion Center.
-[FS2]May want to reference https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf
-[FS3]I think this needs to be updated? Suggest not putting in a specific number (as it may change and isn’t important in a Help caption) but rather brief overview of how the three levels of detail were constructed. Also note which levels are comprehensive and which only have certain conditions (only the most granular I recall).
-[FS4]This isn’t in the current version. Was it removed by mistake?
-[S5]Needs explanation on how color cutoffs were calculated, especially Fisher method
-[S6]Maybe text on importance of SDOH on mortality, but only variable needing explanation is HPI
