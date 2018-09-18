@@ -1,10 +1,10 @@
 #library(DT)
 shinyServer(function(input, output,session) {
  
-Gettysburg <- "Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal"
-
-observeEvent(input$causeHelp1, {showModal(modalDialog(Gettysburg, easyClose = TRUE))})
-
+observeEvent(input$causeHelp, {showModal(modalDialog(causeHelp, easyClose = TRUE))})
+observeEvent(input$measureHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
+  
+  
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }
     if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode) }

@@ -1,18 +1,11 @@
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
-
-
 #https://stackoverflow.com/questions/40513153/shiny-extra-white-space-in-selectinput-choice-display-label
 
-n1 <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for 2001 to 2015.  Cause of death groupings are based on the Global Burden of Disease Study.  At the county level, data are displayed separately for each year, 2001 to 2015.  In this release, data at the community or census-tract level are displayed only for 2011 to 2015 combined.  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release."
+n1 <- textIntro1
 
-if (whichData == "real") {
-n2 <- "This app deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enchantments are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov."
-}
-
-if (whichData == "fake") {
-n2 <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA" 
-}
+if (whichData == "real") {n2 <- textIntro2.real}
+if (whichData == "fake") {n2 <- textIntro2.fake}
 
 fC <- function(vec) {
   tRep <- length(vec)-1
@@ -44,7 +37,7 @@ sidebarPanel(
  selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),# size=30 selectize = F, size=3,
 
  conditionalPanel(condition = fC(c(6,33,34)),
-                 # actionButton("causeHelp1", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
+                 # actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
                    checkboxInput("cZoom","Zoom to County",value=FALSE)
                   ),
  
@@ -69,7 +62,11 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(33,34,5,55,6,7,9)),  radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  conditionalPanel(condition = fC(c(33,34)),              checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(2,4,5,7)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(33,34,5,6,7,8,9)),selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+ conditionalPanel(condition = fC(c(33,34,5,6,7,8,9)), 
+                  actionButton("measureHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
+                  selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+ 
+ 
  conditionalPanel(condition = fC(c(33,34)),                radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
  conditionalPanel(condition = fC(c(34)),                      checkboxInput("myLabName",  "Place Names", value=FALSE)),
  conditionalPanel(condition = fC(c(6)),                      checkboxInput("myCI",       "95% CIs?", value=TRUE)),
