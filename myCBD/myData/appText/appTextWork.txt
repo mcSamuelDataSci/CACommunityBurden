@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # we need to remove all comments – we can use this system…
 
 
@@ -7,14 +7,17 @@ textIntro1 <- "The goal of the California Community Burden of Disease and Cost E
 textIntro2.real <- "This app deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov."
 
 
+
+
 textIntro2.fake <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA"
+
+
 
 measureHelp <- "The current MEASURES of deaths are..."
 
 
 causeHelp <- "The CAUSES OF DEATH in the app are currently based on...."
-=======
-# we need to remove all comments – we can use this system…
+
 
 newIntroWork <-   "The Community Burden of Disease (CBD) is an evolving platform to view and explore detailed disease/condition burden and Social Determinants of Health data on multiple levels of geographic granularity in order to answer and generate questions, both simple and complex. 
 The code and system are written/structured to useable by States and Counties throughout the United States—with any State or County using their own structured input file of events (e.g. deaths), and the CBD system supplying underlying population data, Social Determinates of Health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.  The list of disease conditions is based on the Global Burden of Disease system, modified for local public health priorities.
@@ -60,4 +63,3 @@ SDOHHelp <- "test"
 
 # [0]Maybe text on importance of SDOH on mortality, but only variable needing explanation is HPI
 
->>>>>>> a0f1c448c1719eed43312714b1a3a0ab3c29dd0b
