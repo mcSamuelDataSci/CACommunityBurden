@@ -1,9 +1,18 @@
 rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="Total",myN=10) {
 
   myPlace   <- getwd()  
-  whichData <-  "fake"
+  whichData <-  "real"
   
-  datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+  
+  
+  myMeasure = "YLL"
+  myMeasure = "aRate"
+  
+  library(fs)
+  library(ggplot2)
+  library(dplyr)
+  
+  datCounty <- readRDS(path("e:","0.CBD/myCBD/","/myData/",whichData,"datCounty.RDS"))
   
   
   myCex <- 1.6
@@ -11,7 +20,7 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="T
 
   
   inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,CAUSE !=0)
+  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",CAUSE !=0)
   
    dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
 
@@ -22,71 +31,16 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="T
   myNX  <- min(nR,myN) 
   dat.1 <- dat.1[((nR-myNX):nR),]
   
-  
- 
-  
-  
-  
-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
-    geom_line(size=2) +
-    scale_colour_discrete(guide = 'none') + labs(y = myMeasure) +
-    scale_x_continuous(expand=c(0,3)) + scale_y_continuous(limits = c(0, NA)) +
-    geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex = 1.6, font="bold")) +
-    geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points", cex = 1.6, font="bold"))  
+  dat.1$info <- dat.1[,myMeasure]
   
   
   
-  
-  g <- ggplot(dat.1, aes(sex))
-  # Number of cars in each class:
-  g + geom_bar()
-  
-  
-    
-    
+  g <- ggplot(dat.1, aes(CAUSE,info))
+  g + geom_col() +  coord_flip() +
+      facet_grid(. ~ sex)
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-   t.plot <- barplot((dat.1$YLLper),xlab="YLL per 100K pop",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper))); box(lwd=bLwd)
- 
-   t.label <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
-   
-   
-   
-   
-   wr.lap <- wrap.labels(t.label ,18)
-   
-   axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.6)
-   box(lwd=2)
-     
- par(mar=c(5,0,0,0))
-   
-   t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age)));   box(lwd=bLwd)
-   t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
- 
-  if (myLHJ != "CALIFORNIA") {
-   t.plot <- barplot((dat.1$SMR),xlab="SMR",                col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$SMR)));     box(lwd=bLwd)
-   abline(v=0.8,col="green"); abline(v=1,col="gray"); abline(v=1.2,col="red")
-   text(1,0,"state rate",srt=90,col="black",cex=1.2,adj=c(0,.5))
-  
- 
-  }
- 
-  mtext(paste("Measures by Cause,",myYear,myLHJ),outer = TRUE,cex=1.3,line=1)
-
 }
-
-
-
-
-# ADD TO OUR R FUNCTION LIST na.omit
-#  junk <-  na.omit(gbdMap0$GBDA[gbdMap0$linkL1==myL1List] )
-
-
+  
+  
+  
