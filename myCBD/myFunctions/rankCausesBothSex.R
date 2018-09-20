@@ -4,9 +4,12 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="T
   whichData <-  "real"
   
   
-  
+  myLHJ = "CALIFORNIA"
+  myN = 20
   myMeasure = "YLL"
   myMeasure = "aRate"
+  myYear = 2015
+  
   
   library(fs)
   library(ggplot2)
@@ -33,7 +36,12 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="T
   
   dat.1$info <- dat.1[,myMeasure]
   
+
+ # https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets
   
+  
+  
+  dat.1$CAUSE <- factor(dat.1$CAUSE, levels = dat.1$CAUSE[order(dat.1$info)])
   
   g <- ggplot(dat.1, aes(CAUSE,info))
   g + geom_col() +  coord_flip() +
