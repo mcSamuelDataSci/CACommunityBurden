@@ -19,22 +19,18 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="T
 
    if (myMeasure=="mean.age"){
      dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure))),decreasing=TRUE),]}
-     
    
-   
-    
   nR    <- nrow(dat.1)
   myNX  <- min(nR,myN) 
   dat.1 <- dat.1[((nR-myNX):nR),]
   
   
-  layout(matrix(c(1,1,2,3,4),1,5,byrow=TRUE))
+  layout(matrix(c(1,1,2,3,4,5),1,6,byrow=TRUE))
   
   bLwd <- 2
   
   par(mar=c(5,13,0,0),oma = c(0, 0, 3, 0))
-  
-   t.plot <- barplot((dat.1$YLLper),xlab="YLL per 100K pop",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper))); box(lwd=bLwd)
+   t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
  
    t.label <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
    
@@ -47,9 +43,10 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="T
    box(lwd=2)
      
  par(mar=c(5,0,0,0))
+   t.plot <- barplot((dat.1$YLLper),xlab="YLL per 100K pop",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper))); box(lwd=bLwd)
+   t.plot <- barplot((dat.1$aRate),xlab="Age-Adjusted Rate",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$aRate))); box(lwd=bLwd)
    
    t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age)));   box(lwd=bLwd)
-   t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
  
   if (myLHJ != "CALIFORNIA") {
    t.plot <- barplot((dat.1$SMR),xlab="SMR",                col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$SMR)));     box(lwd=bLwd)

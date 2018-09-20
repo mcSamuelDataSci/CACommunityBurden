@@ -13,7 +13,7 @@
 
 #-- Set Locations and Data Source ----------------------------------------------------------
 
- whichData <-  "fake"
+ whichData <-  "real"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
  
@@ -64,10 +64,10 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 
 
 # THESE DO NOT WORK IN THE APP:
- shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
- shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
- shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
- 
+ # shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
+ # shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
+ # shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
+ # 
 # THESE DO: 
  shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
  shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
@@ -137,6 +137,8 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
                 "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
+
+lMeasuresShort <- lMeasures[c(4,2,6,7,8)] # fix later
 
 causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
 causeNum36        <- causeList36[,"LABEL"]

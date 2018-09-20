@@ -42,8 +42,10 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(22,23,33,45,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  conditionalPanel(condition = fC(c(22,23)),             checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(33)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(22,23,33,44,55,66)), actionButton("measureHelp", "?",style=myButtonSty) ,
+ conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+ conditionalPanel(condition = fC(c(33)),                actionButton( "measureHelp", "?",style=myButtonSty) ,
+                                                        selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
  conditionalPanel(condition = fC(c(22,23)),             radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
  conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
  conditionalPanel(condition = fC(c(44)),                checkboxInput("myCI",       "95% CIs?", value=TRUE)),
@@ -93,8 +95,8 @@ mainPanel(
                                          leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
    tabPanel("Map (tmap Stat)",           plotOutput(      "cbdMapTS",  width=700,height=700),  value = 23),
    tabPanel("Rank Causes",               plotOutput(      "rankCause", width=700,height=700),  value = 33),
-   tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width=700,height=1700), value = 44),
    tabPanel("Rank Causes Table",         dataTableOutput( "rankCauseT"                     ),  value = 45),   #DT::
+   tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width=700,height=1700), value = 44),
    tabPanel("Trend",                     plotOutput(      "trend",     width=700,height=700),  value = 55),
    tabPanel("SES Burden Scatter",        plotlyOutput(    "scatter",             height=700),  value = 66)
   )       ) 
