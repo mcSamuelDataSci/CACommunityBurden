@@ -5,7 +5,7 @@ rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
 
   dat.1$causeList <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"causeList"]
   
-  dat.1 <- dat.1[,c("causeList","Ndeaths","YLLper","YLL.adj.rate","cDeathRate","aRate")]
+  dat.1 <- dat.1[,c("causeList","Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate","SMR")]
   
   dat.1[,3:6] <- round(dat.1[3:6],1)
   
