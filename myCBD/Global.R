@@ -164,7 +164,7 @@ if (sjc) {lList <- lList[lList %in% sjconsortium]}
 
 nC       <- 5
 myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
-yG       <- "2011-2015"
+yG       <- "2013-2017"
 
 # myYear <- 2013
 # myLHJ  <- "Colusa"

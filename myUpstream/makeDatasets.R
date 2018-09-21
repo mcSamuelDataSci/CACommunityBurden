@@ -31,6 +31,8 @@ yF   <- 100000  # rate constant
 pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
+yearGrp <- "2013-2017"
+
 #-- LOAD STANDARDS AND DATA MAPPING FILES ---------------------------------------------------------
 
 # add to technical notes the purposes and contents of each data mapping file 
@@ -214,7 +216,7 @@ c.t1      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev0"),"lev0
 c.t2      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev1"),"lev1")
 c.t3      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev2"),"lev2")
 datComm  <- bind_rows(c.t1,c.t2,c.t3) %>%
-                filter(yearG == "2011-2015")  %>%   # 2011-2015 ONLY!!!
+                filter(yearG == yearGrp)  %>%   # 2013-2017 ONLY!!!
                 arrange(county,comID,yearG,CAUSE)
 
 datComm  <- merge(datComm,popCommSexTot,by = c("yearG","county","comID","sex"))
@@ -233,7 +235,7 @@ c.t1      <- calculateYLLmeasures(c("county","GEOID","yearG","sex","lev0"),"lev0
 c.t2      <- calculateYLLmeasures(c("county","GEOID","yearG","sex","lev1"),"lev1")
 
 datTract  <- bind_rows(c.t1,c.t2) %>% 
-  filter(yearG == "2011-2015")  %>%    # 2011-2015 ONLY!!!
+  filter(yearG == yearGrp)  %>%    # 2013-2017 ONLY!!!
   arrange(county,GEOID,yearG,CAUSE)
 # NOTE -- includes many with NA GEOID
 
@@ -251,7 +253,7 @@ datTract <- calculateRates(datTract,5) %>%
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
 year   <- data.frame(year   = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
-yearG  <- data.frame(yearG  = "2011-2015")
+yearG  <- data.frame(yearG  = yearGrp)
 CAUSE1 <- data.frame(CAUSE=allLabels) 
 CAUSE2 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
 CAUSE3 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
@@ -320,7 +322,7 @@ datAA1 <- bind_rows(tA1,tA2,tA3)  %>% filter(comID != "")
 #datAA1 <- na.omit(datAA1)           
 
 ageComm   <- merge(fullMatComm,datAA1,by = c("comID","yearG","sex","ageG","CAUSE"),all=TRUE)  %>% 
-                filter(yearG == "2011-2015")                                                  %>%
+                filter(yearG == yearGrp)                                                  %>%
              merge(popCommSexTotAgeG, by = c("comID","yearG","sex","ageG"),all=TRUE)          %>% # population
              merge(popStandard[,c("ageG","US2000POP")],by="ageG")                                 # standard population
 
@@ -339,7 +341,7 @@ commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths",
 # removes rows with aRate = inf HERE there are only ALPINE 
 commAA  <- commAA[!(commAA$aRate > 10000),]
 
-tester <- filter(ageComm,yearG=="2011-2015",comID=="104",sex=="Female",CAUSE==0) 
+tester <- filter(ageComm,yearG==yearGrp,comID=="104",sex=="Female",CAUSE==0) 
 ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
 
 # Tract age deaths -----------------------------------------------------------------------------------------------------
@@ -350,7 +352,7 @@ tA2      <- cbdDat0 %>% group_by(GEOID, yearG, sex, ageG,CAUSE=lev1) %>% summari
 datAA1 <- bind_rows(tA1,tA2)  %>% filter(GEOID != "")  
 
 ageTract   <- merge(fullMatTract,datAA1,by = c("GEOID","yearG","sex","ageG","CAUSE"),all=TRUE)  %>% 
-                filter(yearG == "2011-2015")                                                    %>%
+                filter(yearG == yearGrp)                                                    %>%
               merge(popTractSexTotAgeG,by = c("GEOID","yearG","sex","ageG"),all=TRUE)           %>%   # add population
               merge(popStandard[,c("ageG","US2000POP")],by="ageG")                                    # add standard population 
 
