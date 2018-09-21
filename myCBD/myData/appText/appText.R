@@ -1,5 +1,3 @@
-# we need to remove all comments – we can use this system…
-
 # textIntroA
 # textIntroB
 # textIntroC
@@ -32,28 +30,29 @@ textNote.real <- "This app deployment is for preliminary internal CDPH review. D
 
 textNote.fake <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA"
 
-measureHelp <- "The current MEASURES of deaths are ‘Years of Life Lost (YLL)’, ‘Years of Life Lost per 100,000 population’, ‘Number of Deaths’, ‘Crude Death Rate’, ‘Age-Adjusted Death Rate’, ‘Mean Age at Death’, and  ‘Standard Mortality Ratio. No one measure is ‘best’--each measure provides a different view or perspective into the impact of the condition.   
-* ‘Number of deaths’ is the simplest, most direct measure, and usually is larger in areas with larger populations. 
-* ‘Crude Death Rate’ takes the size of the population into account by dividing the number of deaths by the number of people in the population (multiplied by 100,000 for interpretability, i.e. number of deaths per 100,000 people).
-* ‘Age-adjusted Death Rate’ is the rate that would have existed if the population had the same age distribution as a ‘reference’ population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality.
-* ‘Mean Years of Life Lost’ is the average number of years of life lost among all people that die from that condition (so will be higher for conditions differentially impacting young people). 
-* ‘Years of Life Lost’ sums all the years of life prematurely lost across all people that die from that condition, and is influenced by the age at which people die from the condition and the number of people that die from that condition.
-* ‘Years of Life Lost per 100,000 population” divides the YLL sum by the number of people in the population, then multiplies by 100,000 for interpretability. It is the YLL equivalent of the Death Rate.
-*  ‘Standard Mortality Ratio (SMR)’ shows the county rate of condition divided by the rate for the condition in the State overall—this measure will highlight counties that have especially high (or low) rates of a condition compared to the State rate, even if the condition does not have a large number of deaths.  To aid in using this measure, the vertical red line is at 1.2, corresponding to the measure being 120% higher in the selected geography than the State average.  The green line is at 0.8, 80% of the State average and the grey line is at 1.0, right on the State average.   Measures to be added in the near future include age-specific rates and life expectancy."
+
+
+measureHelp <- "The current MEASURES of deaths are 'Years of Life Lost (YLL)', 'Years of Life Lost per 100,000 population', 'Number of Deaths', 'Crude Death Rate', 'Age-Adjusted Death Rate', 'Mean Age at Death', and  'Standard Mortality Ratio. No one measure is 'best'--each measure provides a different view or perspective into the impact of the condition.   
+-'Number of deaths' is the simplest, most direct measure, and usually is larger in areas with larger populations. 
+-'Crude Death Rate' takes the size of the population into account by dividing the number of deaths by the number of people in the population (multiplied by 100,000 for interpretability, i.e. number of deaths per 100,000 people).
+-'Age-adjusted Death Rate' is the rate that would have existed if the population had the same age distribution as a 'reference' population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality.
+-'Mean Years of Life Lost' is the average number of years of life lost among all people that die from that condition (so will be higher for conditions differentially impacting young people). 
+-'Years of Life Lost' sums all the years of life prematurely lost across all people that die from that condition, and is influenced by the age at which people die from the condition and the number of people that die from that condition.
+-'Years of Life Lost per 100,000 population' divides the YLL sum by the number of people in the population, then multiplies by 100,000 for interpretability. It is the YLL equivalent of the Death Rate.
+- 'Standard Mortality Ratio (SMR)' shows the county rate of condition divided by the rate for the condition in the State overall-this measure will highlight counties that have especially high (or low) rates of a condition compared to the State rate, even if the condition does not have a large number of deaths.  To aid in using this measure, the vertical red line is at 1.2, corresponding to the measure being 120% higher in the selected geography than the State average.  The green line is at 0.8, 80% of the State average and the grey line is at 1.0, right on the State average.   Measures to be added in the near future include age-specific rates and life expectancy."
+
 
 # SMR: May want to reference https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf
 
 
-causeHelp <- "The CAUSES OF DEATH in the app are currently based on an alphabetical arrangement of 36 mutually exclusive and exhaustive conditions from the Global Burden of Disease Study—these 36 are an ad hoc list, thought to be generally relatable to California Public Health priorities.  But, the app could, and likely will, include the full list of Global Burden of Disease conditions, and/or other Global Burden of Disease subsets; and/or subsets from 2011 National Center of Health Statistics  condition groupings (e.g. 133 or 39 causes)."
+causeHelp <- "The CAUSES OF DEATH in the app are currently based on an alphabetical arrangement of 36 mutually exclusive and exhaustive conditions from the Global Burden of Disease Study-these 36 are an ad hoc list, thought to be generally relatable to California Public Health priorities.  But, the app could, and likely will, include the full list of Global Burden of Disease conditions, and/or other Global Burden of Disease subsets; and/or subsets from 2011 National Center of Health Statistics condition groupings (e.g. 133 or 39 causes)."
 
-#I think this needs to be updated? Suggest not putting in a specific number (as it may change and isn’t important in a Help caption) but rather brief overview of how the three levels of detail were constructed. Also note which levels are comprehensive and which only have certain conditions (only the most granular I recall).
+#I think this needs to be updated? Suggest not putting in a specific number (as it may change and isn't important in a Help caption) but rather brief overview of how the three levels of detail were constructed. Also note which levels are comprehensive and which only have certain conditions (only the most granular I recall).
 
 
-statecutHelp <- "The ‘State-based Cutpoints’ button changes the way the Measure is broken down or grouped—with the box checked, the cutpoints are based on the State data overall (so many/most communities in a given county might be in the highest category, if that condition tended to be high in that county in general). If the box is unchecked, the cut points will be based on the data in just that county, so the distribution of the condition throughout just that one county may be easier to see and understand."
+statecutHelp <- "The 'State-based Cut-points' button changes the way the Measure is broken down or grouped-with the box checked, the cut-points are based on the State data overall (so many/most communities in a given county might be in the highest category, if that condition tended to be high in that county in general). If the box is unchecked, the cut points will be based on the data in just that county, so the distribution of the condition throughout just that one county may be easier to see and understand."
 
-# This isn’t in the current version. Was it removed by mistake?
-
-cutmethodHelp <- "test"
+cutmethodHelp <- "Specifies method used to determine the cut-points for the color categories. 'Quantile' divides the frequency distribution into equal categories, each containing the same fraction of the total dataset. 'Fisher' uses the Fisher-Jenks algorithm which reduces the variance within categories and maximizes the variance between categories."
 
 # Needs explanation on how color cutoffs were calculated, especially Fisher method
 
