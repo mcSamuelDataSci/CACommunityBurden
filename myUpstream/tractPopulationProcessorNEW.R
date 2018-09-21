@@ -11,6 +11,9 @@
 #!		to prepare for race/eth specific results, perhaps introduce placeholder values of race (eg, =0)
 #!		do the county labels need to be added to the population datasets at this time or later?
 
+
+yearGrp <- "2013-2017"
+
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
@@ -58,7 +61,7 @@ acs.labels <- setDT (
 
 ## 2.4 	ACS data: tract-level population by age/sex (long format, count and MOE in columns)
 acs.pop.tracts <- 	get_acs(state = 06, geography = "tract",  # all tracts in CA (FIPS state code = 06)
-						survey = "acs5", year = 2013,         # ACS options
+						survey = "acs5", year = 2016,         # ACS options
 						variables = acs.varlist,              # ACS variable requested (B01003_001 = total population)
 						key=.ckey, moe_level=90               # global variable containing Census API key
 					)
@@ -94,7 +97,7 @@ acs.pop.tracts<-merge(
 				)                                                # merge ACS tract dataset with with age, sex labels
 acs.pop.tracts <- acs.pop.tracts[, 
 					c("GEOID","sex","agell","ageul","estimate")] # keep needed variables only
-acs.pop.tracts[, yearG := "2011-2015"] 	                                 # add year to dataset
+acs.pop.tracts[, yearG := yearGrp] 	                                 # add year to dataset
 
 
 # ===========================================================================================================================
@@ -104,7 +107,7 @@ library(dplyr)
 popTractWork <- as.data.frame(acs.pop.tracts)
 
 library(readxl)
-ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group and Standard US 2000 population.xlsx"),sheet = "data"))
+ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Groups and Standard US 2000 pop.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge   # lower age ranges
 aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
 

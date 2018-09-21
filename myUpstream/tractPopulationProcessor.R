@@ -15,6 +15,9 @@ library(tigris)      # gets "shape" files  # requires census_api_key("MYKEY") to
 library(tidyverse)   # data processing
 library(fs)          # just for path function
 
+yearGrp <- "2013-2017"
+
+
 #-- Set Locations Etc----------------------------------------------------------------------
 
 myDrive  <- "E:"  
@@ -35,7 +38,7 @@ list.sex  <- c("B01001_001E","B01001_002E", "B01001_026E")    # B01001_002E,026E
 
 #-- Get, process, and export data -----------------------------------------------------------------------------------
 
-makePop <- function(inList=list.sex,inyear=2016,yearlabel="2013-2017") {
+makePop <- function(inList=list.sex,inyear=2016,yearlabel=yearGrp) {
 
 acs.varlist <- inList  
   
@@ -61,7 +64,7 @@ workDat   <- workDat %>% mutate(yearG = paste0(yearlabel),
 
 }
 
-tDat <- makePop(list.sex,2016,"2013-2017")                                                   # edit "sex" or "race" as appropate
+tDat <- makePop(list.sex,2016,yearGrp)                                                   # edit "sex" or "race" as appropate
 tDat <- tDat %>%  
                 # filter(label !="Total:") %>%
                   transform(label = str_replace(label, ":", "")) %>%

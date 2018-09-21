@@ -5,7 +5,7 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
 
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
-    dat.State   <- filter(datCounty,year %in% 2011:2015, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
+    dat.State   <- filter(datCounty,year %in% 2013:2017, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
 
     if (myGeo == "County"){
     dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)

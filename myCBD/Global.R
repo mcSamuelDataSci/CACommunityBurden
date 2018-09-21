@@ -16,6 +16,9 @@
  whichData <-  "real"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
+ yearGrp   <- "2013-2017"
+ yG        <- "2013-2017"
+ 
  
  # temporary for testing:
  source(paste0(myPlace,"/myData/appText/appTextWork.txt"))
@@ -164,7 +167,6 @@ if (sjc) {lList <- lList[lList %in% sjconsortium]}
 
 nC       <- 5
 myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
-yG       <- "2013-2017"
 
 # myYear <- 2013
 # myLHJ  <- "Colusa"
