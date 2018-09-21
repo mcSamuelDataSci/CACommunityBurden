@@ -1,9 +1,5 @@
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
-# text used later in the UI
-n1                           <- textIntro1
-if (whichData == "real") {n2 <- textIntro2.real}
-if (whichData == "fake") {n2 <- textIntro2.fake}
 
 # funtion used as "short-cut" when making criteria for conditionals below
 fC <- function(vec) {
@@ -60,8 +56,16 @@ sidebarPanel(
  
  conditionalPanel(condition = fC(c(11)), 
                   
- helpText(n1,style="color:black"), br(),
- helpText(n2,style="color:black"), br(),
+ helpText(textIntroA,style="color:black"), br(),
+ helpText(textIntroB,style="color:black"), br(),
+ helpText(textIntroC,style="color:black"), br(),
+ 
+ 
+ if (whichData == "real") { helpText(textNote.Real,style="color:black")}
+ if (whichData == "fake") { helpText(textNote.Fake,style="color:red")}
+ 
+ br(),
+ 
  
  tags$br(),
  icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?"),

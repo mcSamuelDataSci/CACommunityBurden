@@ -21,7 +21,7 @@
  
  
  # temporary for testing:
- source(paste0(myPlace,"/myData/appText/appTextWork.txt"))
+ source(paste0(myPlace,"/myData/appText/appText.R"))
  
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 
@@ -105,7 +105,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myFunctions/trend.R"))
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
-  source(paste0(myPlace,"/myData/appText/appTextWork.txt"))
+  source(paste0(myPlace,"/myData/appText/appText.R"))
 
   version <- "0.5.0"
   
