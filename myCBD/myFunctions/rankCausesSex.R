@@ -40,7 +40,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   
   
   
-  dat.1$CAUSE <- factor(dat.1$CAUSE, levels = dat.1$CAUSE[order(dat.1$info)])
+ # dat.1$CAUSE <- factor(dat.1$CAUSE, levels = dat.1$CAUSE[order(dat.1$info)])
   
   g <- ggplot(dat.1, aes(x=CAUSE,y=info,group=sex))
   g + geom_col() +  coord_flip() +
