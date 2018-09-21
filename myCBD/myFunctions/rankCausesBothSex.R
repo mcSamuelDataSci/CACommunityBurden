@@ -1,26 +1,21 @@
-rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2015,mySex="Total",myN=10) {
+rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,mySex="Total",myN=10) {
 
-  myPlace   <- getwd()  
-  whichData <-  "real"
+  #myPlace   <- getwd()  
+  #whichData <-  "real"
   
   
-  myLHJ = "CALIFORNIA"
-  myN = 20
-  myMeasure = "YLL"
-  myMeasure = "aRate"
-  myYear = 2015
+  #myLHJ = "CALIFORNIA"
+  #myN = 20
+  #myMeasure = "YLL"
+  #myMeasure = "aRate"
+  #myYear = 2015
   
-  
-  library(fs)
-  library(ggplot2)
-  library(dplyr)
+  #library(fs)
+  #library(ggplot2)
+  #library(dplyr)
   
   datCounty <- readRDS(path("e:","0.CBD/myCBD/","/myData/",whichData,"datCounty.RDS"))
   
-  
-  myCex <- 1.6
-  myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
-
   
   inDat <- datCounty
   dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",CAUSE !=0)

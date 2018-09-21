@@ -11,7 +11,7 @@ observeEvent(input$myGeo, {
 )
 
 observeEvent(input$ID,{
- if(input$ID %in% c(33,44,45,55)){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
+ if(input$ID %in% c(33,34,44,45,55)){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
 }
 )
 
@@ -26,9 +26,11 @@ observeEvent(input$cZoom,{
 
 #------------------------------------------------------------------------------------------------------------------------------------------
 
-output$cbdMapTL   <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
-output$cbdMapTS   <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
-output$rankCause  <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev,    input$myN))
+output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$rankCause    <- renderPlot(     rankCause(input$myLHJ,           input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
+output$rankCauseSex <- renderPlot(     rankCause(input$myLHJ,           input$myMeasureShort, input$myYear,                           input$myN))
+
 output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$cZoom,input$myCI))
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 output$scatter    <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,               input$mySex,                  input$myGeo,input$myX))
