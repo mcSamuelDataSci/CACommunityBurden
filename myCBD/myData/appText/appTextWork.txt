@@ -2,6 +2,9 @@
 # we need to remove all comments – we can use this system…
 
 
+  test...
+
+
 textIntro1 <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for recent years.    At the county level, data are displayed separately for each year,  and at the community or census-tract level are displayed only for the most recent five-year period (combined).  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release."
 
 textIntro2.real <- "This app deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov."
