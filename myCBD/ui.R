@@ -57,12 +57,12 @@ sidebarPanel(
  conditionalPanel(condition = fC(c(11)), 
                   
  helpText(textIntroA,style="color:black"), br(),
- helpText(textIntroB,style="color:black"), br(),
+ #helpText(textIntroB,style="color:black"), br(),
  helpText(textIntroC,style="color:black"), br(),
  
  
- if (whichData == "real") { helpText(textNote.Real,style="color:black")}
- if (whichData == "fake") { helpText(textNote.Fake,style="color:red")}
+ if (whichData == "real") { helpText(textNote.real,style="color:black")},
+ if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
  br(),
  
