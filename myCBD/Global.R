@@ -95,6 +95,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
 
   source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
+  source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))
   source(paste0(myPlace,"/myFunctions/rankGeosSelectCause.R"))
