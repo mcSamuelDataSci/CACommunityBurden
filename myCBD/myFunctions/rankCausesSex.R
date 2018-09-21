@@ -27,7 +27,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
    dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
 
    if (myMeasure=="mean.age"){
-     dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure))),decreasing=TRUE),]}
+      dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure))),decreasing=TRUE),]}
   
   nR    <- nrow(dat.1)
   myNX  <- min(nR,myN) 
@@ -42,9 +42,9 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   
   dat.1$CAUSE <- factor(dat.1$CAUSE, levels = dat.1$CAUSE[order(dat.1$info)])
   
-  g <- ggplot(dat.1, aes(CAUSE,info))
+  g <- ggplot(dat.1, aes(x=CAUSE,y=info,group=sex))
   g + geom_col() +  coord_flip() +
-      facet_grid(. ~ sex)
+      facet_grid( ~ sex)
   
   
 }
