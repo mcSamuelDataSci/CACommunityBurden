@@ -29,7 +29,7 @@ observeEvent(input$cZoom,{
 output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
 output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
 output$rankCause    <- renderPlot(     rankCause(input$myLHJ,           input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
-output$rankCauseSex <- renderPlot(     rankCauseSex(input$myLHJ,           input$myMeasureShort, input$myYear,                           input$myN))
+output$rankCauseSex <- renderPlot(     rankCauseSex(input$myLHJ,        input$myMeasure     , input$myYear,                           input$myN))
 
 output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$cZoom,input$myCI))
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
