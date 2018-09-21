@@ -250,7 +250,7 @@ datTract <- calculateRates(datTract,5) %>%
 
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
-year   <- data.frame(year   = 2000:2015) # these "vectors" need to be dataframes for the sq merge below to work
+year   <- data.frame(year   = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
 yearG  <- data.frame(yearG  = "2011-2015")
 CAUSE1 <- data.frame(CAUSE=allLabels) 
 CAUSE2 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])

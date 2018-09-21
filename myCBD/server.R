@@ -28,7 +28,7 @@ observeEvent(input$cZoom,{
 
 output$cbdMapTL   <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
 output$cbdMapTS   <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
-output$rankCause  <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex,                                           input$myN))
+output$rankCause  <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev,    input$myN))
 output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$cZoom,input$myCI))
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 output$scatter    <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,               input$mySex,                  input$myGeo,input$myX))
