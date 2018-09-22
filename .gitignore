@@ -1,6 +1,7 @@
 .gitignore
 .Rproj.user
 *.Rproj
+myCBD/myData/real/*.*
 myCBD/rsconnect/*.*
 myUpstream/census.api.key.txt
 myUpstream/tempOutput/*.*
