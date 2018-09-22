@@ -7,7 +7,8 @@ fC <- function(vec) {
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
 }
 
-myButtonSty <- "height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4"
+myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4"
+myHelpButtonSty <- "height:12px;padding-top:0px; margin-top:-5px"
 
 #-----------------------------------------------------------------------------------------------------------------------------
 
@@ -17,6 +18,10 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   
 sidebarPanel( 
  
+  conditionalPanel(condition = fC(c(22)), actionButton("mapTabHelp", "Map Tab Help"),style=myHelpButtonSty),hr(),
+                   
+   
+  
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) ,
                                                         selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),  # size=30 selectize = F, size=3,
  conditionalPanel(condition = fC(c(22,23,44)),          checkboxInput("cZoom","Zoom to County",value=FALSE)),

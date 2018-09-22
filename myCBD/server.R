@@ -2,6 +2,10 @@ shinyServer(function(input, output,session) {
  
 observeEvent(input$causeHelp, {showModal(modalDialog(causeHelp, easyClose = TRUE))})
 observeEvent(input$measureHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
+observeEvent(input$mapTabHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
+
+
+
 
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }
