@@ -59,6 +59,11 @@ sidebarPanel(
  
  # TEXT on bottom of SIDEBAR
  
+ conditionalPanel(condition = "input.ID !=  11 ", 
+                  br(),
+                  helpText("DEFINITIONS",h6("YLL:  Years of Life Lost"),style="color:black"),br()
+                  ),
+ 
  conditionalPanel(condition = fC(c(11)), 
                   
  helpText(textIntroA,style="color:black"), br(),
@@ -76,20 +81,8 @@ sidebarPanel(
  icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?"),
  tags$br(),
  tags$h6("Developed in R-Shiny"),
- 
- helpText("LINKS",tags$a(href="https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-and-Statistics-.aspx", 
-                               h6("California Death Data")),
-                  tags$a(href="https://data.chhs.ca.gov/",
-                               h6("California Health and Human Service Agency Open Data Portal")),
-                  tags$a(href="https://www.census.gov/programs-surveys/acs/",
-                               h6("American Community Survey")),  style="color:black"),
-   br(),
-   helpText("DEFINITIONS",
-     h6("YLL:  Years of Life Lost"),
-     h6("SMR:  Standard Mortality Ratio (Local Rate/State Rate)"),
-     h6("Community: Medical Service Study Areas (MSSA)"),
-     tags$a(href="https://oshpd.ca.gov/HWDD/MSSA.html",h6("MSSA Info")),
-     style="color:black"),
+ helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden/wiki/Technical-Documentation", 
+                         h4("Technical Documentation (on GitHub"))),
    br(),
    HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
    #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
