@@ -18,7 +18,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 
 STATE    <- "California"
 
