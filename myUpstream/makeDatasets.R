@@ -11,6 +11,11 @@
 #            export files for use in CBD app                                          |
 #======================================================================================
 
+
+# all occurences of "06037800325" in death data are Ventura, all are LA in pop data
+
+
+
 # -- Designate locations and load packages---------------------------------------------------------
 
 whichDat <- "fake"
@@ -118,22 +123,16 @@ icdToGroup <- function(myIn) {
   Cause}
 
 cbdDat0$icdCODE  <- icdToGroup(myIn=cbdDat0$ICD10)
+
+cbdDat0$icdCODE[is.na(cbdDat0$icdCODE)] <- "XXXX"
+
+
 temp             <- nchar(str_sub(cbdDat0$icdCODE,2,5))
 cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
                                         lev1  = str_sub(icdCODE,2,2),
                                         lev2  = str_sub(icdCODE,2,4),
                                         lev3  = ifelse(temp==4,str_sub(icdCODE,2,5),NA)
                                        )
-
-table(cbdDat0$lev0,useNA = "ifany")
-table(cbdDat0$lev1,useNA = "ifany")
-table(cbdDat0$lev2,useNA = "ifany")
-table(cbdDat0$lev3,useNA = "ifany")
-
-
-# cbdDat0$gbd3    <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[is.na(gbdMap0$L2)     ,c("gbdCode","regEx10")])      
-# cbdDat0$gbdSpec <- icdToGroup(myIn=cbdDat0$ICD10,gbdMap0[ (gbdMap0$L2 %in% c(2,6,8,11,13,14,15,16,21,22) & !is.na(gbdMap0$L3) & is.na(gbdMap0$L4) & is.na(gbdMap0$list36) )    ,c("gbdCode","regEx10")])      
-
 
 # DATA CLEANING ISSUES (see at bottom of file) ----------------------------------------------------
 
@@ -151,10 +150,8 @@ calculateYLLmeasures <- function(group_vars,levLab){
     ) %>%  ungroup 
  
     names(dat)[grep("lev", names(dat))] <- "CAUSE"
-    
-    dat$Level <- levLab
-    
-    dat <- filter(dat,!is.na(CAUSE)) # "HARD FIX" that should be assessed carefully
+    dat$Level                           <- levLab
+    # dat                               <- filter(dat,!is.na(CAUSE)) # "HARD FIX" that should be assessed carefully
       
     dat %>%  data.frame
 
@@ -212,43 +209,72 @@ datCounty$SMR        <- datCounty$cDeathRate / datCounty$stateRate
 # == build COMMUNITY-level file ===================================================================
 
 
-c.t1      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev0"),"lev0")
-c.t2      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev1"),"lev1")
-c.t3      <- calculateYLLmeasures(c("county","comID","yearG","sex","lev2"),"lev2")
+c.t1      <- calculateYLLmeasures(c("comID","yearG","sex","lev0"),"lev0")  #removed "county",
+c.t2      <- calculateYLLmeasures(c("comID","yearG","sex","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("comID","yearG","sex","lev2"),"lev2")
 datComm  <- bind_rows(c.t1,c.t2,c.t3) %>%
                 filter(yearG == yearGrp)  %>%   # 2013-2017 ONLY!!!
-                arrange(county,comID,yearG,CAUSE)
+                arrange(comID,yearG,CAUSE)
 
-datComm  <- merge(datComm,popCommSexTot,by = c("yearG","county","comID","sex"))
+datComm  <- merge(datComm,popCommSexTot,by = c("yearG","comID","sex"),all=TRUE)
 
 datComm  <- calculateRates(datComm,5)
 
 # add community names  POSSIBLE REMOVE
 datComm  <- merge(datComm, comName, by = "comID",all=TRUE) %>%
-  arrange(county,comID,yearG,CAUSE)
+  arrange(comID,yearG,CAUSE)
 
 
 # == build TRACT-level file =======================================================================
 
 
-c.t1      <- calculateYLLmeasures(c("county","GEOID","yearG","sex","lev0"),"lev0")
-c.t2      <- calculateYLLmeasures(c("county","GEOID","yearG","sex","lev1"),"lev1")
+c.t1      <- calculateYLLmeasures(c("GEOID","yearG","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("GEOID","yearG","sex","lev1"),"lev1")
 
 datTract  <- bind_rows(c.t1,c.t2) %>% 
   filter(yearG == yearGrp)  %>%    # 2013-2017 ONLY!!!
-  arrange(county,GEOID,yearG,CAUSE)
+  arrange(GEOID,yearG,CAUSE)
 # NOTE -- includes many with NA GEOID
 
 # MERGE Death and Population files
-datTract <- merge(datTract,popTractSexTot,by = c("yearG","county","GEOID","sex"))                     
-# NOTE -- merge "drops" NA GEOID  --> good/fine here
+datTract <- merge(datTract,popTractSexTot,by = c("yearG","GEOID","sex"),all=TRUE)                     
 
 # Calculate Rates
 datTract <- calculateRates(datTract,5) %>%
-  arrange(county,GEOID,yearG,CAUSE)
+  arrange(GEOID,yearG,CAUSE)
 
 
 # == AGE ADJUSTED ("AA") RATES =========================================================================================
+
+
+
+# https://github.com/cran/epitools/blob/master/R/ageadjust.direct.R
+
+
+ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 0.95) 
+{
+  if (missing(count) == TRUE & !missing(pop) == TRUE & is.null(rate) == TRUE)   count <- rate * pop
+  if (missing(pop) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     pop <- count/rate
+  if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(pop) == TRUE)  rate <- count/pop
+  
+  rate[is.na(pop)] <- 0
+  rate[is.null(pop)] <- 0
+  pop[is.na(pop)] <- 0
+  pop[is.null(pop)] <- 0
+  
+  alpha <- 1 - conf.level
+  cruderate <- sum(count,na.rm=TRUE)/sum(pop,na.rm=TRUE)
+  stdwt <- stdpop/sum(stdpop,na.rm=TRUE)
+  dsr <- sum(stdwt * rate,na.rm=TRUE)
+  dsr.var <- sum((stdwt^2) * (count/pop^2))
+  wm<- max(stdwt/pop)
+  gamma.lci <- qgamma(alpha/2, shape = (dsr^2)/dsr.var, scale = dsr.var/dsr)
+  gamma.uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
+                      scale = (dsr.var+wm^2)/(dsr+wm))
+  c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
+    uci = gamma.uci)
+}
+
 
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
@@ -300,11 +326,11 @@ ageCounty$Ndeaths[is.na(ageCounty$Ndeaths)] <- 0    # if NA deaths in strata cha
 ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
 countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
-  summarize(oDeaths = sum(Ndeaths),
-            aRate   = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            YLL.adj.rate   = ageadjust.direct(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
 
 countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 
@@ -314,7 +340,7 @@ countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRa
 
 # Community age deaths ----------------------------------------------------------------------------
 
-tA1      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA1      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )   #cut county,
 tA2      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
 tA3      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
 
@@ -331,18 +357,18 @@ ageComm$Ndeaths[is.na(ageComm$Ndeaths)] <- 0    # if NA deaths in strata change 
 ageComm$YLL[is.na(ageComm$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
 commAA <- ageComm %>% group_by(comID,yearG,sex,CAUSE) %>%
-  summarize(oDeaths = sum(Ndeaths),
-            aRate   = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            YLL.adj.rate   = ageadjust.direct(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
 commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","YLL.adj.rate")]  
 
 # removes rows with aRate = inf HERE there are only ALPINE 
 commAA  <- commAA[!(commAA$aRate > 10000),]
 
-tester <- filter(ageComm,yearG==yearGrp,comID=="104",sex=="Female",CAUSE==0) 
-ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
+#tester <- filter(ageComm,yearG==yearGrp,comID=="104",sex=="Female",CAUSE==0) 
+#ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
 
 # Tract age deaths -----------------------------------------------------------------------------------------------------
 
@@ -360,11 +386,11 @@ ageTract$Ndeaths[is.na(ageTract$Ndeaths)] <- 0    # if NA deaths in strata chang
 ageTract$YLL[is.na(ageTract$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
 tractAA <- ageTract %>% group_by(GEOID,yearG,sex,CAUSE) %>%
-  summarize(oDeaths = sum(Ndeaths),
-            aRate   = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            YLL.adj.rate   = ageadjust.direct(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
 tractAA <- tractAA[!(tractAA$oDeaths==0),c("GEOID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","YLL.adj.rate")]  
 
 
@@ -372,22 +398,45 @@ tractAA <- tractAA[!(tractAA$oDeaths==0),c("GEOID","yearG","sex","CAUSE","oDeath
 tractAA  <- tractAA[!(tractAA$aRate > 5000),]
 tractAA  <- tractAA[!(is.na(tractAA$aRate)),]
 
-# -- Merge adjusted rates into main data files ----------------------------------------------------------
+# -- Merge adjusted rates into main data files and final Clean Up ----------------------------------------------------------
 
-datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) 
-datComm   <- merge(datComm,    commAA ,by = c("comID","yearG","sex","CAUSE"),all=TRUE) 
-datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE) %>% select(-ageG,-stateRate)
 
+
+junk <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) %>% 
+  mutate_if(is.numeric, signif,digits=4) %>%
+  filter(!is.na(county))   # REMOVE ALL out-of-state GEOID and missing GEOID
+junk2 <- filter(junk,is.na(CAUSE))
+# where do this come from?  0 deaths, some 0 pop, but some large pop
+
+datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) %>% 
+                    mutate_if(is.numeric, signif,digits=4) %>%
+                    filter(!is.na(county))  %>%  # REMOVE ALL out-of-state GEOID and missing GEOID
+                    filter(!is.na(CAUSE))
+
+datComm   <- merge(datComm,    commAA ,by = c("comID","yearG","sex","CAUSE"),all=TRUE) %>%
+                   mutate_if(is.numeric, signif,digits=4) %>%
+                   filter(!is.na(county))   %>% 
+                   filter(!is.na(CAUSE))
+
+datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE) %>% 
+                   select(-ageG,-stateRate) %>%
+                   mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
+                   mutate(county = ifelse(county==STATE, toupper(STATE),county),      # e.g. California --> CALIFORNIA
+                   SMR    = ifelse(Ndeaths < 6,   0             ,SMR)          # better NA, but then "highest on ranking..."
+                           )
+
+
+ junk2 <- filter(datTract, Ndeaths != oDeaths) %>% select(GEOID,yearG,county,Ndeaths,oDeaths)
+
+ 
+ 
+ 
+ 
 # == Final Data Clean Up and Export ==================================================================================
 
-datCounty <- datCounty %>% mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
-                           mutate(county = ifelse(county==STATE, toupper(STATE),county),      # e.g. California --> CALIFORNIA
-                                  SMR    = ifelse(Ndeaths < 6,   0             ,SMR)          # better NA, but then "highest on ranking..."
-                           )
-datComm  <- datComm  %>% mutate_if(is.numeric, signif,digits=4)         
-datTract <- datTract %>% mutate_if(is.numeric, signif,digits=4)         
 
-  
+
+
 # "SMALL CELL and "RISKY CAUSE" supression ----------
 # xCause0 <- c(14,41,50,139,4,49,192)
 # xCause1 <- c(xCause0,10)
@@ -399,38 +448,15 @@ saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
 saveRDS(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 # 
-#  datTract$causeName <- gbdMap0[match(datTract$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
-#   datComm$causeName <- gbdMap0[match(datComm$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
-# datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
-# 
-# write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
-# write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
-# write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
+datTract$causeName <- gbdMap0[match(datTract$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+datComm$causeName <- gbdMap0[match(datComm$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+ 
+ write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
+ write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
+ write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
 
 # END ===================================================================================================================
-
-# https://github.com/cran/epitools/blob/master/R/ageadjust.direct.R
-
-
-ageadjust.direct2 <- function (count, pop, rate = NULL, stdpop, conf.level = 0.95) 
-  {
-    if (missing(count) == TRUE & !missing(pop) == TRUE & is.null(rate) == TRUE)   count <- rate * pop
-    if (missing(pop) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     pop <- count/rate
-    if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(pop) == TRUE)  rate <- count/pop
-    alpha <- 1 - conf.level
-    cruderate <- sum(count)/sum(pop)
-    stdwt <- stdpop/sum(stdpop)
-    dsr <- sum(stdwt * rate)
-    dsr.var <- sum((stdwt^2) * (count/pop^2))
-    wm<- max(stdwt/pop)
-    gamma.lci <- qgamma(alpha/2, shape = (dsr^2)/dsr.var, scale = dsr.var/dsr)
-    gamma.uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
-                        scale = (dsr.var+wm^2)/(dsr+wm))
-    c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
-      uci = gamma.uci)
-  }
-
-
 
 
 
