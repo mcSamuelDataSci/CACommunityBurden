@@ -10,12 +10,12 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Tot
     if (cZoom) {dat.1    <- filter(datComm,county==myLHJ,yearG==yG,sex==mySex,CAUSE==myCause, comID != "Unknown") 
              dat.1    <- dat.1[order(eval(parse(text=temp))),]
                       dat.1$lab <- wrap.labels(dat.1$comName,30)
-              tit <- paste("Community Ranking of",causeList36[causeList36[,1]==myCause,2],"in",myLHJ,"in",yG)  }
+              tit <- paste("Community Ranking of",causeList36[causeList36[,"LABEL"]==myCause,"nameOnly"],"in",myLHJ,"in",yG)  }
   
     if (!cZoom) {dat.1    <- filter(datCounty,year==myYear,sex==mySex,CAUSE==myCause,county != "zz California")  
     dat.1    <- dat.1[order(eval(parse(text=temp))),]
               dat.1$lab <- dat.1$county
-              tit <- paste("County Ranking of",causeList36[causeList36[,1]==myCause,2],"in",myYear) }
+              tit <- paste("County Ranking of",causeList36[causeList36[,"LABEL"]==myCause,"nameOnly"],"in",myYear) }
   
     #rankdat <- rankdat[(nrow(rankdat)-mytop):nrow(rankdat),]
     

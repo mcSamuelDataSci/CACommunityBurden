@@ -98,17 +98,17 @@ mainPanel(
   hr(), 
   tabsetPanel(type = "tab",id="ID",
               
-   tabPanel("Home Page",  br(),align='center',img(src="logo1.png",height="50%",width="50%"),   value = 11),          
+   tabPanel("Home Page",  br(),align='center',img(src="screen shots.jpg",height="100%",width="100%"),   value = 11),          
   
    tabPanel("Map - Interactive",         htmlOutput(      "map_title"                      ),
                                          leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
-   tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  width=700,height=700),  value = 23),
+   tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  height=700,width="100%"),  value = 23),
    tabPanel("Rank Conditions",               plotOutput(      "rankCause", width="100%",height=700),  value = 33),
    tabPanel("Rank Conditions Table",         dataTableOutput( "rankCauseT"                     ),  value = 45),   #DT::
    tabPanel("Rank Conditions by Sex",     plotOutput(      "rankCauseSex", width="100%",height=700),  value = 34),
    
    tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width=700,height=1700), value = 44),
-   tabPanel("Trend",                     plotOutput(      "trend",     width=700,height=700),  value = 55),
+   tabPanel("Trend",                     plotOutput(      "trend",     width="100%",height=700),  value = 55),
    tabPanel("SDOH Associations",        plotlyOutput(    "scatter",             height=700),  value = 66)
   )       ) 
  

@@ -4,7 +4,6 @@
 #                                                                                     |   
 # =====================================================================================
 
-
 #TEMPORARY
 myYear <- 2015
 
@@ -63,12 +62,14 @@ p <- plot_ly(
      type="scatter",mode="markers",
     colors=pal,
     color = as.numeric(as.factor(sdohWorkList[["region"]])),
-     size = ~ sdohWorkList[["pop"]]*10,
-      hoverinfo = 'text',
-      text = ~paste('</br> County',sdohWorkList[["county"]],
-                    '</br> Population:',format(sdohWorkList[["pop"]], big.mark = ","), 
-                    '</br>',sdohVecL[xL],":",round(sdohWorkList[[t.x]],1),"%",
-                    '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) ) %>%
+     size = ~ sdohWorkList[["pop"]]*10
+    # ,
+    #   hoverinfo = 'text',
+    #    text = ~paste('</br> County',sdohWorkList[["county"]],
+    #                  '</br> Population:',format(sdohWorkList[["pop"]], big.mark = ","), 
+    #                  '</br>',sdohVecL[xL],":",round(sdohWorkList[[t.x]],1),"%",
+    #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
+    ) %>%
     hide_colorbar() %>% 
 layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo,"in",myYear),
        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
