@@ -1,3 +1,5 @@
+#yearGrp <- "2013-2017"   # why doesn't it find this from global?
+
 shinyServer(function(input, output,session) {
  
 observeEvent(input$causeHelp, {showModal(modalDialog(causeHelp, easyClose = TRUE))})
@@ -42,15 +44,18 @@ output$scatter    <- renderPlotly( scatterSDOH(             input$myCAUSE, input
 output$rankCauseT <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
 
-sexLabel <- renderText({sexLabel <- "";
-                        if (input$mySex != "Total") sexLabel <- paste0(", among ",input$mySex,"s")}
-)
-  
+sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
+geoLabel   <- renderText({if (!input$cZoom)            geoLab    <- ""      else geoLab    <- paste0(", in ",input$myLHJ)})
+timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
+### not sure why I can't use timeLabel <- yearGrp here?
+
+
+
 output$map_title <- renderUI({
                               HTML(paste0("<div style='text-align:center;font-size:18px'>",
                                    lMeasuresC[lMeasures == input$myMeasure]," - ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"],
-                                   " in ",input$myLHJ,", ",input$myYear,sexLabel(),
+                                   geoLabel()," ",timeLabel(),sexLabel(),
                                   "</div>", sep = " ") ) })
                      })
 

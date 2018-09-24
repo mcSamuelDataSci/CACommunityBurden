@@ -7,22 +7,28 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
   
     dat.State   <- filter(datCounty,year %in% 2013:2017, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
 
+    geoLab <- ""
+    if (cZoom) geoLab <- paste(", in",myLHJ)
+    
+    sexLab <- ""
+    if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
+    
     if (myGeo == "County"){
     dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)
     map.1   <- merge(shape_County, dat.1, by.x=c("county"), by.y = c("county"),all=TRUE) 
-    yearLab <- myYear 
+    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myYear," by County",sexLab,geoLab)
     }
     
     if (myGeo == "Census Tract") { 
-    dat.1    <- filter(datTract,yearG==yG,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = GEOID)
+    dat.1    <- filter(datTract,yearG==yearGrp,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = GEOID)
     map.1    <- merge(shape_Tract, dat.1, by.x=c("county","GEOID"), by.y = c("county","GEOID"),all=TRUE) 
-    yearLab  <- yG
+    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",yearGrp," by Census Tract",sexLab,geoLab)
     }
 
     if (myGeo == "Community") {
-    dat.1    <- filter(datComm,yearG==yG,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% mutate(geoLab = comName)
+    dat.1    <- filter(datComm,yearG==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% mutate(geoLab = comName)
     map.1    <- merge(shape_Comm, dat.1, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
-    yearLab <- yG  
+    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",yearGrp," by Community",sexLab,geoLab)
     }  
   
   if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
@@ -32,8 +38,8 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
 #palette(myColor1)
 #tmap_style("white")
 
-sexLabel <- ""
-if (mySex != "Total") sexLabel <- paste0("among ",mySex,"s")
+# sexLabel <- ""
+# if (mySex != "Total") sexLabel <- paste0("among ",mySex,"s")
 
 nCut <- 5
 
@@ -45,32 +51,29 @@ myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
 
 samVec <- c(0,5,15,35,65,85,95)/100
 
-# add 0 minimum of range?
-# dataPrecision=0  for Fisher's?
-
-
 myPal <- brewer.pal(5,"RdYlBu")
 #myPal <- c("#D7191C","#FDAE61","#FFFFBF","#ABD9E9","#2C7BB6")
 
-
- tm_shape(map.1) + tm_polygons(col=myMeasure,palette=myPal,
-                               title=paste(lMeasuresC[lMeasures==myMeasure]),
-                               style="fixed",breaks=myBreaks,colorNA="white",
-                               legend.hist=T)  + 
-       tm_layout(main.title= paste(lMeasuresC[lMeasures==myMeasure],"from",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"],"in",yearLab,sexLabel),
-            legend.outside = TRUE,
-            legend.outside.position = "right", 
-            legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3
-          #  , aes.palette=list(div="RdYlBu")
-            
-            )
+ tm_shape(map.1) + tm_polygons(col=myMeasure,palette=myPal,style="fixed",breaks=myBreaks,colorNA="white",
+                               legend.hist=T)  +
+ tm_layout(main.title= myTit,main.title.size = 1.3,
+           legend.outside = TRUE,
+           legend.outside.position = "right", 
+           legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3)  
+   #  , aes.palette=list(div="RdYlBu")
+ 
+ 
 }
+
 
 cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
   tmap_mode("plot")
-  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)
-  if (myLabName) tt.map <- tt.map + tm_text(wrap.labels("geoLab",10)) 
-  tt.map
+  
+  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)  + 
+    
+      if (myLabName) tt.map <- tt.map + tm_text(wrap.labels("geoLab",10)) 
+    
+  tt.map 
   }
 
 cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {

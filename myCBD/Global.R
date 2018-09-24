@@ -17,8 +17,6 @@
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"
- yG        <- "2013-2017"
- 
  
  # temporary for testing:
  source(paste0(myPlace,"/myData/appText/appText.R"))

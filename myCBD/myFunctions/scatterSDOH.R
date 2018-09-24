@@ -4,9 +4,6 @@
 #                                                                                     |   
 # =====================================================================================
 
-#TEMPORARY
-myYear <- 2015
-
 f   <- list(family = "Arial", size = 18, color = "blue")            
 pal <- c("red", "blue", "green")
 
@@ -17,7 +14,7 @@ pal <- c("red", "blue", "green")
 # https://plotly-book.cpsievert.me/scatter-traces.html
          
 
-scatterSDOH <- function(myCause=0, myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="lessBachelor"){
+scatterSDOH <- function(myCause="O", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="lessBachelor"){
 
 t.y <- 4  
 xL <-  which(sdohVec == t.x)
@@ -28,14 +25,14 @@ temp <- paste0("dat.1$",myMeasure)
 
 if (myGeo=="Census Tract") {
                           sdohWork <- sdohTract
-                          dat.1 <- filter(datTract,yearG=="2011-2015",sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
+                          dat.1 <- filter(datTract,sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
                           temp  <- dat.1[,c("GEOID",myMeasure)]
                           sdohWork  <- merge(sdohWork,temp,by="GEOID")
                           }
 
 if (myGeo=="Community") {
                        sdohWork <- sdohComm
-                       dat.1 <- filter(datComm,yearG=="2011-2015",sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
+                       dat.1 <- filter(datComm,sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
                        temp  <- dat.1[,c("comID",myMeasure)]
                        sdohWork  <- merge(sdohWork,temp,by="comID")}
 if (myGeo=="County") {
