@@ -4,6 +4,8 @@
 #                                                                                     |   
 # =====================================================================================
 
+myYear <- 2017
+
 f   <- list(family = "Arial", size = 18, color = "blue")            
 pal <- c("red", "blue", "green")
 
@@ -68,7 +70,7 @@ p <- plot_ly(
     #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
     ) %>%
     hide_colorbar() %>% 
-layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo,"in",myYear),
+layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo),
        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
        yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
 p
