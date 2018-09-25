@@ -1,3 +1,5 @@
+# NOTE:  if this file is used again, note that "acsCensus.Map.xlsx has essentailly been replaced with "Age Group and Standard US 2000 population.xlsx"
+
 #===============================================#
 #Population data pull for denominator           #
 #                                               #

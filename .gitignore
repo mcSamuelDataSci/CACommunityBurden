@@ -2,5 +2,6 @@
 .Rproj.user
 *.Rproj
 myCBD/myData/real/*.*
-myUpstream/census.api.key.txt
 myCBD/rsconnect/*.*
+myUpstream/census.api.key.txt
+myUpstream/tempOutput/*.*

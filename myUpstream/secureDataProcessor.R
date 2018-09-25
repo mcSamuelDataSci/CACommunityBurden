@@ -33,7 +33,8 @@ varInfo <- as.data.frame(read_excel(paste0(upPlace,"/upInfo/death.File.Vars.xlsx
 # === Process 2005 - 2015 files ==============================================================
 
 vInfo <- filter(varInfo,file1 == 1)  # select input variables and variable names for 2005-2015 files
-
+ ca17    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2017.csv"), colClasses = "character") 
+ ca16    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2015.csv"), colClasses = "character") 
  ca14    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2014.csv"), colClasses = "character") 
  ca13    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2013.csv"), colClasses = "character")
@@ -46,7 +47,8 @@ vInfo <- filter(varInfo,file1 == 1)  # select input variables and variable names
  ca06    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2006.csv"), colClasses = "character")
  ca05    <- read.csv(paste0(mySecure,"/rawDeathData/Samuel_2005.csv"), colClasses = "character")
  
-cbdDatA        <- rbind(ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
+cbdDatA        <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
+
 cbdDatA        <- cbdDatA[vInfo$seqID1]   # select only needed columns of 2005-2015 data!
 names(cbdDatA) <- vInfo$varName           # name columns based on varName!
 

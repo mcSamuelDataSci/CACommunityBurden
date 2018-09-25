@@ -10,24 +10,32 @@
 #                                                                                     |   
 # =====================================================================================
 
+
 #-- Set Locations and Data Source ----------------------------------------------------------
 
- myPlace   <- getwd()   
  whichData <-  "real"
- pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPh Shiny Server, from tmap leaflet map
+ myPlace   <- getwd()   
+ STATE     <- "CALIFORNIA"
+ yearGrp   <- "2013-2017"
  
-#-- Load Packages --------------------------------------------------------------------------
+ # temporary for testing:
+ source(paste0(myPlace,"/myData/appText/appText.R"))
+ 
+ pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
+
+ #-- Load Packages --------------------------------------------------------------------------
 
  library(shiny)  
  library(dplyr)
- 
  library(readxl)
  library(readr) 
  
- library(maptools); 
- library(rgdal)
- library(leaflet); 
-
+ library(maptools)   #needed? 
+ library(rgdal)      #needed?
+ library(leaflet) 
+ library(tmap)
+ library(sf)
+ 
  library(classInt);  
  library(RColorBrewer);
  library(epitools)
@@ -41,89 +49,68 @@
 
  # --- CBD Key Inputs --------------------------------------------------------------------------------------
 
- # MIGRATE all mapping to tmap? 
+# Shapes file: ------------------------------- 
  
 # USE consistent map projection system throughout all app code !
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
- #  myProj             <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"                            # Key line for Happy GIS
- #  shape_County       <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(myProj)) 
- #  shape_Comm         <- readShapePoly(paste0(myPlace,"/myData/shape_Comm"),proj4string=CRS(myProj))   # Read Shape Files
- #  
- # shape_Tract        <- readShapePoly(paste0(myPlace,"/myData/shape_Tract"),proj4string=CRS(myProj))  
+ 
+# check each of below with:  class(shape_County); object.size(shape_County)
+# shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp"))  # -->    822,048 bytes "SpatialPolygonsDataFrame"
+# shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
+# shape_County   <- read_rds(paste0(myPlace,"/myData/shape_County.rds")) # --> 11,174,336 bytes "sf"  "data.frame"
+# shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.shp"))  # -->    674,488 bytes "sf"  "data.frame"
+# shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
 
- # shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
- # shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"),p4s=proj1)   # Read Shape Files
- # shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"),p4s=proj1)  
- 
- 
- shape_County       <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
- shape_Comm         <-readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))   # Read Shape Files
- shape_Tract        <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
- 
-  #simple feature objects
-# shape_Tract        <- read_rds(path(myPlace,"/myData/shape_Tract.rds"))
-# shape_Comm         <- read_rds(path(myPlace,"/myData/shape_Comm.rds"))
-# shape_County       <- read_rds(path(myPlace,"/myData/shape_County.rds"))
+
+# THESE DO NOT WORK IN THE APP:
+ # shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
+ # shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
+ # shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
+ # 
+# THESE DO: 
+ shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+ shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
+ shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
  shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
  shape_Tract$county <- as.character(shape_Tract$county)   
  
-  #not quite...
-  #library(sf)
-  #shape_Tract <-  st_read(paste0(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors = FALSE)  
+# Data: ----------------------------------------- 
  
- 
-  load(path(myPlace,"/myData/",whichData,"datTract.R"))
-  load(path(myPlace,"/myData/",whichData,"datComm.R"))
-  load(path(myPlace,"/myData/",whichData,"datCounty.R"))
-  load(path(myPlace,"/myData/",whichData,"datState.R"))
- 
-    
-  load(path(myPlace,"/myData/","sdohTract.R"))
-  load(path(myPlace,"/myData/","sdohComm.R"))
-  load(path(myPlace,"/myData/","sdohCounty.R"))
+datTract  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
+datComm   <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
+datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 
+load(path(myPlace,"/myData/","sdohTract.R"))
+load(path(myPlace,"/myData/","sdohComm.R"))
+load(path(myPlace,"/myData/","sdohCounty.R"))
 
 #-- Load Info Files and Functions ------------------------------------------------------------------------
   
-  # USE THIS 
-  
-  
-  # new appraoch from Zev for simplifying path names, etc 
-  # don't have to keep tract of leading or following "/" !
-  # check to make sure this is supported on CDPH Shiny Server?
-  
-  gbdMap0    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))  # OLD
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo////gbd.ICD.Map.xlsx/"), sheet="main"))    # NEW, with extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//NEWgbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
-  
-  source(paste0(myPlace,"/myFunctions/cbdCutPoint0.R"))
-  
-  source(paste0(myPlace,"/myFunctions/cbdMap0.R"))
+
   source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
-  source(paste0(myPlace,"/myFunctions/cbdMap0Leaflet.R"))
-  
+  source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))
   source(paste0(myPlace,"/myFunctions/rankGeosSelectCause.R"))
-  
   source(paste0(myPlace,"/myFunctions/trend.R"))
-  
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
-  
-  version <- "0.4.0"
+  source(paste0(myPlace,"/myData/appText/appText.R"))
+
+  version <- "0.5.0"
   
   mTitle       <- "California Community Burden of Disease and Costs"
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 
-  
   sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
   sjc          <- FALSE
   
@@ -140,10 +127,11 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 # --- Shiny Stuff and Constants ---------------------------------------------------------------------------
 
 # med.age, m.YLL  
-lMeasures <- c("YLL","YLLper","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
+lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
                 "YLL per 100,000 population",
+                "Age-Adjusted YLL Rate",
                 "Number of deaths",
                 "Crude Death Rate",
                 "Age-Adjusted Death Rate",
@@ -152,22 +140,42 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
 
 names(lMeasures) <- lMeasuresC
 
-causeList36       <- gbdMap0[!is.na(gbdMap0$list36),c("gbdCode","nameOnly")]
-causeList36       <- causeList36[order(causeList36[,2]),]
-causeNum36        <- causeList36[,1]
-names(causeNum36) <- causeList36[,2]#measVecN <- 1:3
+lMeasuresShort <- lMeasures[c(4,2,6,7,8)] # fix later
 
+causeList36       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+causeNum36        <- causeList36[,"LABEL"]
+names(causeNum36) <- causeList36[,"causeList" ]
 
-sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
-sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
+phList   <- causeList36[nchar(causeList36$LABEL) <= 3,]
+phCode   <- phList[,"LABEL"]
+names(phCode) <- phList[,"causeList" ]
+
+bigList  <- causeList36[nchar(causeList36$LABEL) == 1,]
+bigCode  <- bigList[,"LABEL"]
+names(bigCode) <- bigList[,"causeList"]
+
+sdohVec  <- c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty", "parkaccess","houserepair")
+
+sdohVecL <- c(
+"Health Places Index score",                                   
+"Percentage of adults aged 18 to 64 years currently insured",
+"Percentage of 3 and 4 year olds enrolled in school",                    
+"Percentage of population over age 25 with a bachelor's education or higher",      
+"Percent of the population with an income exceeding 200% of federal poverty level",
+"Percentage of the population living within a half-mile of a park, beach, or open space greater than 1 acre",
+"Percent of households with kitchen facilities and plumbing")
+
 names(sdohVec) <- sdohVecL
 
-lList  <- sort(as.character(unique(datCounty$county)))
+
+
+lList         <- sort(as.character(unique(datCounty$county)))
+lListNoState  <- lList[lList != STATE]
+
 if (sjc) {lList <- lList[lList %in% sjconsortium]}
 
 nC       <- 5
 myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
-yG       <- "2011-2015"
 
 # myYear <- 2013
 # myLHJ  <- "Colusa"
@@ -176,3 +184,10 @@ yG       <- "2011-2015"
 # myCause  <- "Diabetes mellitus"
 
 # --- END --------------------------------------------------------------------------------------------------
+
+
+# OLD stuff for GIS notes:
+# shape_County  <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(proj1)) 
+# shape_County  <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
+
+
