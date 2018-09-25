@@ -154,9 +154,20 @@ bigList  <- causeList36[nchar(causeList36$LABEL) == 1,]
 bigCode  <- bigList[,"LABEL"]
 names(bigCode) <- bigList[,"causeList"]
 
-sdohVecL  <- c("Less than Bachelors Degree","Below Federal Poverty",'HPI Raw Score')
-sdohVec   <- c("lessBachelor","belowPov","hpiScore") 
+sdohVec  <- c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty", "parkaccess","houserepair")
+
+sdohVecL <- c(
+"Health Places Index score",                                   
+"Percentage of adults aged 18 to 64 years currently insured",
+"Percentage of 3 and 4 year olds enrolled in school",                    
+"Percentage of population over age 25 with a bachelor's education or higher",      
+"Percent of the population with an income exceeding 200% of federal poverty level",
+"Percentage of the population living within a half-mile of a park, beach, or open space greater than 1 acre",
+"Percent of households with kitchen facilities and plumbing")
+
 names(sdohVec) <- sdohVecL
+
+
 
 lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]

@@ -26,11 +26,11 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Tot
     
     par(mar=par()$mar+c(2,12,0,0))
     t.plot <- barplot(eval(parse(text=temp)),col="gray",cex.names=.8,horiz=TRUE,space=.3,xlab=names(lMeasures[lMeasures==myMeasure]))
-    axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=.8)
+    axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1)
   
     
     if (myCI & myMeasure=="cDeathRate") {arrows(y0=t.plot,x0=dat.1$rateLCI,x1=dat.1$rateUCI,col="blue",length=.05,angle=90,code=3)}
     
-    title(tit)
+    title(tit,cex=2)
     
   }

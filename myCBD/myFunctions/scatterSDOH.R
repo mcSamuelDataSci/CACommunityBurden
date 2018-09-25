@@ -16,9 +16,9 @@ pal <- c("red", "blue", "green")
 # https://plotly-book.cpsievert.me/scatter-traces.html
          
 
-scatterSDOH <- function(myCause="O", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="lessBachelor"){
+scatterSDOH <- function(myCause="0", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="abovepoverty"){
 
-t.y <- 4  
+t.y <- 8  
 xL <-  which(sdohVec == t.x)
 xM <-  which(lMeasures== myMeasure)
 
@@ -46,11 +46,11 @@ if (myGeo=="County") {
 }
 
 
-  
-sdohWork <- sdohWork[,c("lessBachelor","belowPov","hpiScore",myMeasure,"pop","county","region")]
+sdohWork <- sdohWork[,c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty","parkaccess","houserepair",myMeasure,"pop","county","region")]
 
 sdohWorkList <- as.list(sdohWork)  
-  
+
+
 # https://plot.ly/r/axes/
   
 
@@ -61,7 +61,7 @@ p <- plot_ly(
      type="scatter",mode="markers",
     colors=pal,
     color = as.numeric(as.factor(sdohWorkList[["region"]])),
-     size = ~ sdohWorkList[["pop"]]*10
+     size = ~ sdohWorkList[["pop"]], sizes=c(20,400)
     # ,
     #   hoverinfo = 'text',
     #    text = ~paste('</br> County',sdohWorkList[["county"]],

@@ -106,7 +106,7 @@ mainPanel(
    tabPanel("Rank Conditions Table",         dataTableOutput( "rankCauseT"                     ),  value = 45),   #DT::
    tabPanel("Rank Conditions by Sex",     plotOutput(      "rankCauseSex", width="100%",height=700),  value = 34),
    
-   tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width=700,height=1700), value = 44),
+   tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width="100%",height=1700), value = 44),
    tabPanel("Trend",                     plotOutput(      "trend",     width="100%",height=700),  value = 55),
    tabPanel("SDOH Associations",        plotlyOutput(    "scatter",             height=700),  value = 66)
   )       ) 
