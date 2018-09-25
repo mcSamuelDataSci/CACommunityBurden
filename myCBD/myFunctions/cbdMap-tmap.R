@@ -56,7 +56,7 @@ myPal <- brewer.pal(5,"RdYlBu")
 
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette=myPal,style="fixed",breaks=myBreaks,colorNA="white",
                                legend.hist=T)  +
- tm_layout(main.title= myTit,main.title.size = 1.3,
+ tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,
            legend.outside = TRUE,
            legend.outside.position = "right", 
            legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3)  
@@ -69,7 +69,7 @@ myPal <- brewer.pal(5,"RdYlBu")
 cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
   tmap_mode("plot")
   
-  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)  + 
+  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)   
     
       if (myLabName) tt.map <- tt.map + tm_text(wrap.labels("geoLab",10)) 
     

@@ -13,7 +13,7 @@ myHelpButtonSty <- "height:12px;padding-top:0px; margin-top:-5px"
 #-----------------------------------------------------------------------------------------------------------------------------
 
 shinyUI(fluidPage(theme = "bootstrap.css",
-                  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
+                #  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
                   tags$h3(mTitle),                                                       # title supplied from Global
   
 sidebarPanel( 
@@ -79,10 +79,9 @@ sidebarPanel(
  
  tags$br(),
  icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?"),
- tags$br(),
- tags$h6("Developed in R-Shiny"),
- helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden/wiki/Technical-Documentation", 
-                         h4("Technical Documentation (on GitHub"))),
+ tags$br(), tags$a("Developed in R-Shiny"),
+ helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden/wiki/Technical-Documentation",
+                 ("Technical Documentation (on GitHub)"))),
    br(),
    HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
    #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
