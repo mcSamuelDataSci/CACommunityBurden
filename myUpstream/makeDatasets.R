@@ -257,22 +257,24 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
   if (missing(pop) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     pop <- count/rate
   if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(pop) == TRUE)  rate <- count/pop
   
-  rate[is.na(pop)] <- 0
+  rate[is.na(pop)]   <- 0
   rate[is.null(pop)] <- 0
-  pop[is.na(pop)] <- 0
-  pop[is.null(pop)] <- 0
+  pop[is.na(pop)]    <- 0
+  pop[is.null(pop)]  <- 0
   
   alpha <- 1 - conf.level
   cruderate <- sum(count,na.rm=TRUE)/sum(pop,na.rm=TRUE)
   stdwt <- stdpop/sum(stdpop,na.rm=TRUE)
   dsr <- sum(stdwt * rate,na.rm=TRUE)
   dsr.var <- sum((stdwt^2) * (count/pop^2))
+  dsr.se  <- sqrt(dsr.var)
   wm<- max(stdwt/pop)
   gamma.lci <- qgamma(alpha/2, shape = (dsr^2)/dsr.var, scale = dsr.var/dsr)
   gamma.uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
                       scale = (dsr.var+wm^2)/(dsr+wm))
-  c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
-    uci = gamma.uci)
+  
+    c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
+    uci = gamma.uci, se = dsr.se)
 }
 
 
@@ -330,9 +332,10 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
             aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
 
-countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","YLL.adj.rate")]  # remove strata with no deaths and select columns  
+countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 
 #tester <- filter(ageCounty,year==2015,county=="Alameda",sex=="Male",CAUSE==0) 
 #ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
@@ -361,8 +364,10 @@ commAA <- ageComm %>% group_by(comID,yearG,sex,CAUSE) %>%
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
             aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
-commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","YLL.adj.rate")]  
+commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
 
 # removes rows with aRate = inf HERE there are only ALPINE 
 commAA  <- commAA[!(commAA$aRate > 10000),]

@@ -16,7 +16,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                 #  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
                   tags$h3(mTitle),                                                       # title supplied from Global
   
-sidebarPanel(width=3, 
+sidebarPanel( 
  
   conditionalPanel(condition = fC(c(22)), actionButton("mapTabHelp", "Map Tab Help"),style=myHelpButtonSty),hr(),
                    
@@ -57,12 +57,12 @@ sidebarPanel(width=3,
 
  hr(), 
  
-
+ # TEXT on bottom of SIDEBAR
  
- # conditionalPanel(condition = "input.ID !=  11 ", 
- #                  br(),
- #                  helpText("DEFINITIONS",h6("YLL:  Years of Life Lost"),style="color:black"),br()
- #                  ),
+ conditionalPanel(condition = "input.ID !=  11 ", 
+                  br(),
+                  helpText("DEFINITIONS",h6("YLL:  Years of Life Lost"),style="color:black"),br()
+                  ),
  
  conditionalPanel(condition = fC(c(11)), 
                   
@@ -72,38 +72,23 @@ sidebarPanel(width=3,
  
  
  if (whichData == "real") { helpText(textNote.real,style="color:black")},
- if (whichData == "fake") { helpText(textNote.fake,style="color:red")}
+ if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
-  # 
- # tags$br(),
- # icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?",style="color:blue"),
- # tags$br(), tags$a("Developed in R-Shiny",style="color:blue"),
- # helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site",style="color:blue")),
- #   br(),
- #   HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
- #   #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
- #   helpText(paste("Version:",version),style="color:black")
- ),
-
+ br(),
  
-
-# TEXT on bottom of SIDEBAR
-tags$br(),
-
-helpText("Definition - YLL:  Years of Life Lost",style="color:black"),
-br(),
-icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?",style="color:blue"),
-tags$br(), tags$a("Developed in R-Shiny",style="color:blue"),
-helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site",style="color:blue")),
-br(),
-HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
-#img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
-
-
+ 
+ tags$br(),
+ icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?"),
+ tags$br(), tags$a("Developed in R-Shiny"),
+ helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden/wiki/Technical-Documentation",
+                 ("Technical Documentation (on GitHub)"))),
+   br(),
+   HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
+   #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
+   helpText(paste("Version:",version),style="color:black")
+ )
 ),
-
-
-
+ 
 
 # https://stackoverflow.com/questions/35025145/background-color-of-tabs-in-shiny-tabpanel
 # works: h5("Home Page",style="color:red")
@@ -111,9 +96,32 @@ HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
 mainPanel(
   hr(), 
   tabsetPanel(type = "tab",id="ID",
-        tabPanel("Home Page",  br(),align='center',
-              img(src="screen shots.jpg",height="100%",width="100%"),value = 11),          
+              
+              
+          #  each image ID and style
+          # shiny jj
+          
+   tabPanel("Home Page",  br(),align='center',
+            fluidRow(column(width=4,
+              img(src="screen shots.jpg"),
+              img(src="screen shots.jpg",height="100%",width="100%"),
+
+              
+            )),
+              column(width=4,
+                   img(src="screen shots.jpg",height="100%",width="100%"),
+                   img(src="screen shots.jpg",height="100%",width="100%"),
+                   
+                   
+            ))
+            ,   value = 11),          
   
+   
+   
+   
+   
+   
+   
    tabPanel("Map - Interactive",         htmlOutput(      "map_title"                      ),
                                          leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
    tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  height=700,width="100%"),  value = 23),
@@ -123,8 +131,8 @@ mainPanel(
    
    tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width="100%",height=1700), value = 44),
    tabPanel("Trend",                     plotOutput(      "trend",     width="100%",height=700),  value = 55),
-   tabPanel("SDOH Associations",  br(),      plotlyOutput(    "scatter",             height=700),  value = 66),
-   tabPanel("Technical",        br(), includeMarkdown("technical.md"),value = 77)
+   tabPanel("SDOH Associations",        plotlyOutput(    "scatter",             height=700),  value = 66),
+   tabPanel("Technical",              includeMarkdown("technical.md"),value = 77)
   )       ) 
  
 ))

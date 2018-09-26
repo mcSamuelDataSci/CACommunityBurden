@@ -30,6 +30,9 @@ observeEvent(input$cZoom,{
 # observeEvent(input$test1 | input$test2, {
 #    if(input$test1==0 && input$test2==0){
 
+
+
+
 #------------------------------------------------------------------------------------------------------------------------------------------
 
 output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))

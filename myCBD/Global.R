@@ -41,6 +41,7 @@
  library(epitools)
  library(plotly)
  library(fs)
+ library(markdown)
  
 # library(scatterD3);
 # library(maps);  
