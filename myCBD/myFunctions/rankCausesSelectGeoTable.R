@@ -11,6 +11,9 @@ rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
   
  # mtext(paste("Measures by Cause,",myYear,myLHJ),outer = TRUE,cex=1.3,line=1)
 
+  names(dat.1) <- c("Condition","Number of deaths","Crude Death Rate","Age-Adjusted Death Rate","Years of Life Lost (YLL)","YLL per 100,000 population","Age-Adjusted YLL Rate","Standard Mortality Ratio")
+  
   dat.1
+  
 }
 
