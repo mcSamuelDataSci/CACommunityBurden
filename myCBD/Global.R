@@ -90,7 +90,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
 
 #-- Load Info Files and Functions ------------------------------------------------------------------------
   
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//NEWgbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))

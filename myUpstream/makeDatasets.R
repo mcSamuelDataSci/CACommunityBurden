@@ -112,7 +112,7 @@ cbdDat0$ageG  <- aLabs[aMark]                                   # make new "ageG
 
 # Map ICD-10 codes to GBD conditions ----------------------------
 
-gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/NEWgbd.ICD.Map.xlsx"), sheet="main"))   # also have e.g. range="A1:J167"
+gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))   # also have e.g. range="A1:J167"
 allLabels <- sort(gbdMap0$LABEL[!is.na(gbdMap0$LABEL)])
 
 mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
@@ -531,7 +531,6 @@ datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeLi
 
 # age-adjustment reference
 # https://www.cdc.gov/nchs/data/nvsr/nvsr47/nvs47_03.pdf
-
 
 
 
