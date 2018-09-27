@@ -41,8 +41,8 @@ shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp"))
 
 vpMap <- function(myCounty,myDeath)  {
   
-myCounty <- "Fresno"
-myDeath  <- "Homicide"
+# myCounty <- "Fresno"
+#myDeath  <- "Homicide"
   
 if (myDeath == "Homicide") xDat <- filter(communityHomicide,county==myCounty)
 if (myDeath == "Suicide")  xDat <- filter(communitySuicide,county==myCounty)
