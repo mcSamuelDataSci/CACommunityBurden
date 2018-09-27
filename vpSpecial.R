@@ -56,7 +56,7 @@ myPal <- c("purple4", "lightblue1","darkgreen")
 
 
 #jpeg(paste0("tempfig/",myCounty,myDeath,".jpg"),2000,2000,quality=100)
-png(paste0("e:/0.CBD/tempfig/",myCounty,myDeath,".png"),2000,2000)
+png(paste0("e:/0.CBD",myCounty,myDeath,".png"),2000,2000)
 
 
 tm_shape(map.1) + tm_polygons(col="sig",palette=myPal,colorNA="white",labels = c("Above","Same","Below"))  +
