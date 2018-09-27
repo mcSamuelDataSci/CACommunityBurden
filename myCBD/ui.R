@@ -129,6 +129,12 @@ mainPanel(
  
 ))
 
+# convert Markdown doc to Work if needed forediting
+# https://cloudconvert.com/md-to-docx
+
+
+
+
 # END -----------------------------------------------------------------------------------------------------------------
 
 # NOTES etc. :
