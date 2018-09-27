@@ -29,7 +29,7 @@ stateSa  <- vpState[vpState$CAUSE=="E02","aRate"]
 stateSse <- vpState[vpState$CAUSE=="E02","aSE"]
 
 communitySuicide  <- datComm %>% filter(sex=="Total",CAUSE %in% c("E02")) %>% 
-                                 select(county,comName,oDeaths,pop,aRate,aSE,aLCI,aUCI) %>%
+                                 select(county,comID,comName,oDeaths,pop,aRate,aSE,aLCI,aUCI) %>%
                                  mutate(myZ    = (aRate-stateSa) / sqrt(aSE^2 + stateSse^2)) %>%
                                  mutate(sig    = ifelse(myZ>1.96, 1, ifelse(myZ < -1.96,3,2)))
 
@@ -39,10 +39,10 @@ communitySuicide  <- datComm %>% filter(sex=="Total",CAUSE %in% c("E02")) %>%
 
 shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
 
-vpMap <- function(myCounty,myDeath)  {
+# vpMap <- function(myCounty,myDeath)  {
   
-# myCounty <- "Fresno"
-#myDeath  <- "Homicide"
+myCounty <- "Los Angeles"
+myDeath  <- "Homicide"
   
 if (myDeath == "Homicide") xDat <- filter(communityHomicide,county==myCounty)
 if (myDeath == "Suicide")  xDat <- filter(communitySuicide,county==myCounty)
@@ -50,25 +50,26 @@ if (myDeath == "Suicide")  xDat <- filter(communitySuicide,county==myCounty)
 map.1  <- merge(shape_Comm, xDat, by.x=c("county","comID"), by.y = c("county","comID"),all=TRUE) 
 map.1  <- map.1[map.1$county == myCounty,]
 
-myPal <- c("#D7191C","#FDAE61","#FFFFBF")
-myPal <- c("purple4", "lightblue1","darkgreen")
-
+#myPal <- c("#D7191C","#FDAE61","#FFFFBF")
+myPal <- c("darkorchid1", "lightblue1","olivedrab3")
 
 
 jpeg(paste0("tempfig/",myCounty,myDeath,".jpg"),2000,2000,quality=100)
 #png(paste0("e:/0.CBD",myCounty,myDeath,".png"),2000,2000)
 
 
-tm_shape(map.1) + tm_polygons(col="sig",palette=myPal,colorNA="white",labels = c("Above","Same","Below"))  +
-tm_layout(frame=F,main.title= paste(myCounty,myDeath),main.title.size = 8, title.position = c("center","top"),
-          legend.title.size = 1, legend.text.size = 6)             
+tm_shape(map.1) + tm_polygons(col="sig",palette=myPal,colorNA="white",labels = c("Above","Same","Below"),title="Legend Title Here")  +
+tm_layout(frame=F,main.title= paste(myDeath,"Rates in Communities in",myCounty,"County, 2013-2017"),main.title.size = 4,scale=4,main.title.position = c("center","top"))
+
+
+#          legend.title.size = 1, legend.text.size = 1)             
 
 dev.off()
-}
+# }
 
+#main.title.size = 8,
 
-
-vpMap("Alameda","Homicide")
+#vpMap("Fresno","Suicide")
 
 
 
