@@ -2,12 +2,18 @@
 
 shinyServer(function(input, output,session) {
  
-observeEvent(input$causeHelp, {showModal(modalDialog(causeHelp, easyClose = TRUE))})
-observeEvent(input$measureHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
-observeEvent(input$mapTabHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
+observeEvent(input$causeHelp,   {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
+observeEvent(input$cutmethodHelp,   {showModal(modalDialog(     cutmethodHelp,    easyClose = TRUE))})
+observeEvent(input$statecutHelp,   {showModal(modalDialog(     statecutHelp,    easyClose = TRUE))})
+observeEvent(input$measureHelp, {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
 
-
-
+observeEvent(input$mapTab,            {showModal(modalDialog(HTML(mapTab),            easyClose = TRUE))})
+observeEvent(input$conditionTab,      {showModal(modalDialog(HTML(conditionTab),      easyClose = TRUE))})
+observeEvent(input$conditionTableTab, {showModal(modalDialog(HTML(conditionTableTab), easyClose = TRUE))})
+observeEvent(input$conditionSexTab,   {showModal(modalDialog(HTML(conditionSexTab),   easyClose = TRUE))})
+observeEvent(input$rankGeoTab,        {showModal(modalDialog(HTML(rankGeoTab),        easyClose = TRUE))})
+observeEvent(input$trendTab,          {showModal(modalDialog(HTML(trendTab),          easyClose = TRUE))})
+observeEvent(input$sdohTab,           {showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))})
 
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }

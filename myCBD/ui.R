@@ -18,9 +18,14 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   
 sidebarPanel(width=3, 
  
-  conditionalPanel(condition = fC(c(22)), actionButton("mapTabHelp", "Map Tab Help"),style=myHelpButtonSty),hr(),
-                   
-   
+  conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help"),style=myHelpButtonSty),
+  conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help"),style=myHelpButtonSty),
+  conditionalPanel(condition = fC(c(45)),    actionButton("conditionTableTab","Tab Help"),style=myHelpButtonSty),
+  conditionalPanel(condition = fC(c(34)),    actionButton("conditionSexTab",  "Tab Help"),style=myHelpButtonSty),
+  conditionalPanel(condition = fC(c(44)),    actionButton("rankGeoTab",       "Tab Help"),style=myHelpButtonSty),
+  conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help"),style=myHelpButtonSty),
+  conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help"),style=myHelpButtonSty),
+  br(),br(),
   
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) ,
                                                         selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),  # size=30 selectize = F, size=3,
@@ -43,14 +48,16 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(22,23,33,45,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  conditionalPanel(condition = fC(c(33)),                checkboxGroupInput("myLev", "Levels to show:",c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
- conditionalPanel(condition = fC(c(22,23)),             checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
+ conditionalPanel(condition = fC(c(22,23)),             actionButton("statecutHelp", "?",style=myButtonSty) ,
+                                                        checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(33,34)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
  conditionalPanel(condition = fC(c(22,23,34,44,55,66)),    actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                        #selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
                                                         radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
  conditionalPanel(condition = fC(c(33)),                actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
- conditionalPanel(condition = fC(c(22,23)),             radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
+ conditionalPanel(condition = fC(c(22,23)),              actionButton("cutmethodHelp", "?",style=myButtonSty) ,
+                                                         radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
  conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
  conditionalPanel(condition = fC(c(44)),                checkboxInput("myCI",       "95% CIs?", value=TRUE)),
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
