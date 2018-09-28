@@ -45,8 +45,8 @@ shape_Tract <- shape_Tract %>% geo_join(cbdLinkCA, by="GEOID") %>%
                                filter(!(GEOID %in% bad)) %>% 
                                select(GEOID,comID,COUNTYFP,county,geometry) # 8034 tracts
 
-write_rds(shape_Tract,path(myPlace,"/myData/shape_Tract.rds"),compress="none")   # Save Simple Feature shape object as R object
-st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE)  # Save as ESRI shape file set
+write_rds(shape_Tract,path(myPlace,"/myData/shape_Tract.rds"),compress="none")    # Save Simple Feature shape object as R object
+# st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE) # Save as ESRI shape file set; NOT USING this, but keep for reference
 
 #-- Create new Community shape file based on MSSAs --------------------------------------------------------------------------
 
@@ -54,14 +54,11 @@ st_write(shape_Tract,path(myPlace,"/myData/shape_Tract.shp"),delete_layer=TRUE) 
 shape_Comm  <- shape_Tract %>% group_by(county,comID) %>% summarize() %>% ungroup()
 
 write_rds(shape_Tract,path(myPlace,"/myData/shape_Comm.rds"),compress="none")
-st_write(shape_Comm,path(myPlace,"/myData/shape_Comm.shp"),delete_layer=TRUE)
 
 #-- Create County shape file based same approach as above----------------------------------------------------------------
 
 shape_County <- shape_Tract %>% group_by(county) %>% summarize()
 write_rds(shape_Tract,path(myPlace,"/myData/shape_County.rds"),compress="none")
-st_write(shape_County,path(myPlace,"/myData/shape_County.shp"),delete_layer=TRUE)
-
 
 # NONE of below Currently Used:
 # MAKE SMALLER SHAPE FILES!? ================================================================================================

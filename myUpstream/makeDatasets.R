@@ -15,7 +15,6 @@
 # all occurences of "06037800325" in death data are Ventura, all are LA in pop data
 
 
-
 # -- Designate locations and load packages---------------------------------------------------------
 
 whichDat <- "real"
@@ -334,6 +333,10 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
             aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+
+
+
+
 
 countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 

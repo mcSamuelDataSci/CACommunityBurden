@@ -11,6 +11,8 @@
 # =====================================================================================
 
 
+myPlace <- "e:/0.CBD/myCBD"
+
 #-- Set Locations and Data Source ----------------------------------------------------------
 
  whichData <-  "real"
@@ -66,14 +68,14 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 
 
 # THESE DO NOT WORK IN THE APP:
- # shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
- # shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
- # shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
+ shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
+ shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
+ shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
  # 
 # THESE DO: 
- shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
- shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
- shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
+ #shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+# shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
+# shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
  shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
  shape_Tract$county <- as.character(shape_Tract$county)   
