@@ -15,21 +15,21 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     
     if (myGeo == "County"){
     dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)
-    map.1   <- geo_join(shape_County, dat.1, by=c("county")) 
+    map.1   <- left_join(shape_County, dat.1, by=c("county")) 
     map.1$name <- map.1$county
     myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myYear," by County",sexLab,geoLab)
     }
     
     if (myGeo == "Census Tract") { 
     dat.1    <- filter(datTract,yearG==yearGrp,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = GEOID)
-    map.1    <- geo_join(shape_Tract, dat.1, by=c("county","GEOID"))
+    map.1    <- left_join(shape_Tract, dat.1, by=c("county","GEOID"))
     map.1$name <- map.1$GEOID
     myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",yearGrp," by Census Tract",sexLab,geoLab)
     }
 
     if (myGeo == "Community") {
     dat.1    <- filter(datComm,yearG==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% mutate(geoLab = comName)
-    map.1    <- geo_join(shape_Comm, dat.1, by=c("county","comID")) 
+    map.1    <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
     map.1$name <- map.1$comName
     myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",yearGrp," by Community",sexLab,geoLab)
     }  

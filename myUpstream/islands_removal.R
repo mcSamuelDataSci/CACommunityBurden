@@ -89,3 +89,16 @@ county_filter <- function(.data, min_area = 2000000000, domap = TRUE, rowmap = T
 res <- county_filter(cnty_ma, min_area = 2000000000)
 res <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
 
+res <- county_filter(tr_ca, min_area = 5000, rowmap = FALSE)
+
+
+
+
+
+
+
+
+
+
+
+
