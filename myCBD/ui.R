@@ -16,7 +16,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                 #  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
                   tags$h3(mTitle),                                                       # title supplied from Global
   
-sidebarPanel(width=3, 
+sidebarPanel(#width=3, 
  
   conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help"),style=myHelpButtonSty),
   conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help"),style=myHelpButtonSty),
@@ -125,9 +125,10 @@ mainPanel(
   hr(), 
   tabsetPanel(type = "tab",id="ID",
         tabPanel("Home Page",  br(),align='center',
-              HTML(above1),
+               
+              h4(HTML(above1),align="left"),
               img(src="screen shots.jpg",height="100%",width="100%"),
-              HTML(below1),
+              h5(HTML(below1),align="left"),
               value = 11),          
   
    tabPanel("Map - Interactive",         htmlOutput(      "map_title"                      ),
