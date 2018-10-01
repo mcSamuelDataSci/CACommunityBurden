@@ -54,10 +54,28 @@ myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
 
 samVec <- c(0,5,15,35,65,85,95)/100
 
-myPal <- brewer.pal(5,"RdYlBu")
+
+add.alpha <- function(col, alpha=1){
+  if(missing(col))
+    stop("Please provide a vector of colours.")
+  apply(sapply(col, col2rgb)/255, 2, 
+        function(x) 
+          rgb(x[1], x[2], x[3], alpha=alpha))  
+}
+
+
+
+
+
+#tmaptools::palette_explorer()
+myPal <- rev(brewer.pal(5,"RdYlBu"))
+myPal <- add.alpha(myPal,.7)
 #myPal <- c("#D7191C","#FDAE61","#FFFFBF","#ABD9E9","#2C7BB6")
 
- tm_shape(map.1) + tm_polygons(col=myMeasure,palette=myPal,style="fixed",breaks=myBreaks,colorNA="white",
+#myPal <- rev(get_brewer_pal("RdYlB", n = 5, contrast = c(0, 0.7)))
+
+
+ tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
                                legend.hist=T,
                                title.col=NA,id="name", 
                                popup.vars=c("Population: " = "pop",

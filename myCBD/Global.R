@@ -95,6 +95,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
+
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
 
   source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
@@ -159,7 +160,7 @@ names(bigCode) <- bigList[,"causeList"]
 sdohVec  <- c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty", "parkaccess","houserepair")
 
 sdohVecL <- c(
-"Health Places Index score",                                   
+"Healthy Places Index score",                                   
 "Percentage of adults aged 18 to 64 years currently insured",
 "Percentage of 3 and 4 year olds enrolled in school",                    
 "Percentage of population over age 25 with a bachelor's education or higher",      

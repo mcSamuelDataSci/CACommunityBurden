@@ -91,14 +91,3 @@ res <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
 
 res <- county_filter(tr_ca, min_area = 5000, rowmap = FALSE)
 
-
-
-
-
-
-
-
-
-
-
-

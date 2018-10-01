@@ -18,6 +18,11 @@ pal <- c("red", "blue", "green")
 
 scatterSDOH <- function(myCause="0", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="abovepoverty"){
 
+
+if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
+  
+  
+  
 t.y <- 8  
 xL <-  which(sdohVec == t.x)
 xM <-  which(lMeasures== myMeasure)
@@ -59,8 +64,8 @@ p <- plot_ly(
      x =  ~  sdohWorkList[[t.x]],
      y =  ~ sdohWorkList[[t.y]],
      type="scatter",mode="markers",
-    colors=pal,
-    color = as.numeric(as.factor(sdohWorkList[["region"]])),
+     colors=pal,
+     color = ~sdohWorkList[["region"]],
      size = ~ sdohWorkList[["pop"]], sizes=c(20,400)
     # ,
     #   hoverinfo = 'text',
@@ -69,13 +74,12 @@ p <- plot_ly(
     #                  '</br>',sdohVecL[xL],":",round(sdohWorkList[[t.x]],1),"%",
     #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
     ) %>%
-    hide_colorbar() %>% 
+#    hide_colorbar() %>% 
 layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo),
        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
        yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
 p
 }
-
 
 
 # add_annotations(x = c(100),

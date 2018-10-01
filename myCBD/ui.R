@@ -79,7 +79,13 @@ sidebarPanel(width=3,
  
  
  if (whichData == "real") { helpText(textNote.real,style="color:black")},
- if (whichData == "fake") { helpText(textNote.fake,style="color:red")}
+ if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
+ 
+ 
+ helpText("Share your feedback!",style="color:black"),br(),  
+ helpText("Help us improve the CCB by taking a short survey LINK.",style="color:black") 
+ 
+ 
  
   # 
  # tags$br(),
@@ -119,7 +125,10 @@ mainPanel(
   hr(), 
   tabsetPanel(type = "tab",id="ID",
         tabPanel("Home Page",  br(),align='center',
-              img(src="screen shots.jpg",height="100%",width="100%"),value = 11),          
+              HTML(above1),
+              img(src="screen shots.jpg",height="100%",width="100%"),
+              HTML(below1),
+              value = 11),          
   
    tabPanel("Map - Interactive",         htmlOutput(      "map_title"                      ),
                                          leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),

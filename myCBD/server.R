@@ -2,10 +2,10 @@
 
 shinyServer(function(input, output,session) {
  
-observeEvent(input$causeHelp,   {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
-observeEvent(input$cutmethodHelp,   {showModal(modalDialog(     cutmethodHelp,    easyClose = TRUE))})
-observeEvent(input$statecutHelp,   {showModal(modalDialog(     statecutHelp,    easyClose = TRUE))})
-observeEvent(input$measureHelp, {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
+observeEvent(input$causeHelp,     {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
+observeEvent(input$cutmethodHelp, {showModal(modalDialog(     cutmethodHelp,    easyClose = TRUE))})
+observeEvent(input$statecutHelp,  {showModal(modalDialog(     statecutHelp,    easyClose = TRUE))})
+observeEvent(input$measureHelp,   {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
 
 observeEvent(input$mapTab,            {showModal(modalDialog(HTML(mapTab),            easyClose = TRUE))})
 observeEvent(input$conditionTab,      {showModal(modalDialog(HTML(conditionTab),      easyClose = TRUE))})
@@ -22,6 +22,7 @@ observeEvent(input$myGeo, {
 }
 )
 
+
 observeEvent(input$ID,{
  if(input$ID %in% c(33,34,44,45,55)){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
 }
@@ -31,6 +32,11 @@ observeEvent(input$cZoom,{
   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
 }
 )
+
+
+
+#observeEvent(input$myGeo , input$myMeasure, {
+#    if(input$myGeo != "County" && input$myMeasure=="SMR"){showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))}})
 
 #for two input use:
 # observeEvent(input$test1 | input$test2, {
