@@ -18,9 +18,6 @@
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"
  
- # temporary for testing:
- source(paste0(myPlace,"/myData/appText/appText.R"))
- 
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 
  #-- Load Packages --------------------------------------------------------------------------
