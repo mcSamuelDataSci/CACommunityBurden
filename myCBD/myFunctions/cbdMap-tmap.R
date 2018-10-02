@@ -113,44 +113,44 @@ cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYea
 
 
 # values that can be used for testing code "outside" shiny:
-if (1==2){
-  myLHJ= "Amador"
-  myCause="A"
-  myMeasure = "YLLper"
-  myYear=2015
-  mySex="Female"
-  myStateCut=TRUE
-  myGeo="County"
-  cZoom=TRUE
-  myLabName=FALSE
-  myLabNum=FALSE
-  myCutSystem="fisher"
-  Level = "lev1"
-}
+# if (1==2){
+#   myLHJ= "Amador"
+#   myCause="A"
+#   myMeasure = "YLLper"
+#   myYear=2015
+#   mySex="Female"
+#   myStateCut=TRUE
+#   myGeo="County"
+#   cZoom=TRUE
+#   myLabName=FALSE
+#   myLabNum=FALSE
+#   myCutSystem="fisher"
+#   Level = "lev1"
+# }
 
 
-if (1==2){
-# devtools::install_github("statnmap/HatchedPolygons")
-library(HatchedPolygons);
-cal.gono #spatial polygon data frame;
-cal.gono.hatch<-hatched.SpatialPolygons(map.1,density=0.001,angle=45);
-proj4string(cal.gono.hatch)<-proj4string(cal.gono);
-tm_shape(cal.gono)+tm_polygon()+tm_shape(cal.gono.hatch)+tm_lines(col="grey");
-mapx <- cbdMapX()
-tmap_mode("plot")
-
-# plot map
-mapx
-
-# view map with default view options
-tmap_mode("view")
-mapx
-mapx + tm_view(alpha = 1, basemaps = "Stamen.Watercolor")
+# if (1==2){
+# # devtools::install_github("statnmap/HatchedPolygons")
+# library(HatchedPolygons);
+# cal.gono #spatial polygon data frame;
+# cal.gono.hatch<-hatched.SpatialPolygons(map.1,density=0.001,angle=45);
+# proj4string(cal.gono.hatch)<-proj4string(cal.gono);
+# tm_shape(cal.gono)+tm_polygon()+tm_shape(cal.gono.hatch)+tm_lines(col="grey");
+# mapx <- cbdMapX()
+# tmap_mode("plot")
+# 
+# # plot map
+# mapx
+# 
+# # view map with default view options
+# tmap_mode("view")
+# mapx
+# mapx + tm_view(alpha = 1, basemaps = "Stamen.Watercolor")
 
 # restore current mode
 tmap_mode("plot")
 
-}
+#}
 
 # OLD STUFF - NOT USED FOR NOW --------------------------------------------------------------------------------
 
