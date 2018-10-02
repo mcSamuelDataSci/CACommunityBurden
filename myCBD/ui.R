@@ -116,8 +116,6 @@ HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
 ),
 
 
-
-
 # https://stackoverflow.com/questions/35025145/background-color-of-tabs-in-shiny-tabpanel
 # works: h5("Home Page",style="color:red")
 

@@ -70,7 +70,7 @@ output$map_title <- renderUI({
                               HTML(paste0("<div style='text-align:center;font-size:18px'>",
                                    lMeasuresC[lMeasures == input$myMeasure]," - ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"],
-                                   geoLabel()," ",timeLabel(),sexLabel(),
+                                   geoLabel()," ",span(timeLabel(),style="color:blue"),sexLabel(),
                                   "</div>", sep = " ") ) })
                      })
 
