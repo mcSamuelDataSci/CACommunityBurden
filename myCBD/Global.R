@@ -27,8 +27,8 @@
  library(readxl)
  library(readr) 
  
- library(maptools)   #needed? 
- library(rgdal)      #needed?
+# library(maptools)   #needed? 
+# library(rgdal)      #needed?
  library(leaflet) 
  library(tmap)
  library(sf)

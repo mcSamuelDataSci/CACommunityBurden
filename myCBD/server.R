@@ -17,21 +17,28 @@ observeEvent(input$sdohTab,           {showModal(modalDialog(HTML(sdohTab),     
 
 
 # https://stackoverflow.com/questions/28379937/change-selectize-choices-but-retain-previously-selected-values
-current_selection <- reactiveVal(NULL)
+current_Cause <- reactiveVal(NULL)
 # now store your current selection in the reactive value
-observeEvent(input$myCAUSE, { current_selection(input$myCAUSE) })
+observeEvent(input$myCAUSE, { current_Cause(input$myCAUSE) })
 
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode ) }
-    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_selection()) } 
-    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36,selected=current_selection()  ) }
+    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_Cause()) } 
+    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36,selected=current_Cause()  ) }
 })
 
 
-observeEvent(input$ID,{
- if(input$ID %in% c(33,34,44,45,55)){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
-}
-)
+# current_LHJ <- reactiveVal(NULL)
+# observeEvent(input$myLHJ, { current_LHJ(input$myLHJ) })
+# 
+# observeEvent(input$ID,{
+#  if(input$ID %in% c(33,34,44,45,55)                        ) { updateSelectInput(session, "myLHJ", choices = lList,       selected=current_LHJ() ) }
+#  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") { updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ() ) }
+#  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") { updateSelectInput(session, "cZoom", selected=FALSE) }
+#   
+#   #                                                               updateSelectInput(session, "myLHJ", choices = lList) }
+# }
+# )
 
 observeEvent(input$cZoom,{
   if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }

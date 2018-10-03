@@ -36,6 +36,11 @@ icdToGroup <- function(myIn) {
 
 cbdDat0$icdCODE  <- icdToGroup(myIn=cbdDat0$ICD10)
 
+junk <- filter(cbdDat0, ICD10 == "X60") 
+
+cbdWhat <- filter(cbdDat0, ICD10 == is.na(icdCODE))  #3453 --> 378
+
+
 cbdWhat <- filter(cbdDat0, is.na(icdCODE))  #3453 --> 378
 table(cbdWhat$ICD10)
 

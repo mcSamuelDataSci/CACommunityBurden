@@ -28,7 +28,7 @@ sidebarPanel(#width=3,
   br(),br(),
   
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) ,
-                                                        selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="A")),  # size=30 selectize = F, size=3,
+                                                        selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="0")),  # size=30 selectize = F, size=3,
  conditionalPanel(condition = fC(c(22,23,44)),          checkboxInput("cZoom","Zoom to County",value=FALSE)),
  
  conditionalPanel(condition =  paste(
