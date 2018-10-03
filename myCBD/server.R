@@ -15,12 +15,17 @@ observeEvent(input$rankGeoTab,        {showModal(modalDialog(HTML(rankGeoTab),  
 observeEvent(input$trendTab,          {showModal(modalDialog(HTML(trendTab),          easyClose = TRUE))})
 observeEvent(input$sdohTab,           {showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))})
 
+
+# https://stackoverflow.com/questions/28379937/change-selectize-choices-but-retain-previously-selected-values
+current_selection <- reactiveVal(NULL)
+# now store your current selection in the reactive value
+observeEvent(input$myCAUSE, { current_selection(input$myCAUSE) })
+
 observeEvent(input$myGeo, {
-    if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }
-    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode) }
-    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36)}
-}
-)
+    if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode ) }
+    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_selection()) } 
+    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36,selected=current_selection()  ) }
+})
 
 
 observeEvent(input$ID,{
