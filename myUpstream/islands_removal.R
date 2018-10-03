@@ -16,8 +16,8 @@ cnty_ma <- counties(state = "MA", cb = TRUE)
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 
 # Project to teale meters
-tr_ca <- st_transform(tract, crs = proj1)
-cnty_ca  <- st_transform(county, crs = proj1)
+tr_ca <- st_transform(tr_ca, crs = proj1)
+cnty_ca  <- st_transform(cnty_ca, crs = proj1)
 
 # Project to UTM 19 (eastern Mass)
 
@@ -56,7 +56,7 @@ county_filter <- function(.data, min_area = 2000000000, domap = TRUE, rowmap = T
   final_counties <- filtered_counties %>% group_by(GEOID) %>% summarise_all(first)
   
   if(length(missing_counties) != 0){
-    missing_counties <- purrr::map(cnty_removed, ~island_county_processing(exploded_counties, .))
+    missing_counties <- purrr::map(missing_counties, ~island_county_processing(exploded_counties, .))
     missing_counties <- do.call("rbind", missing_counties)
     final_counties <- rbind(final_counties, missing_counties)
   }
@@ -86,6 +86,23 @@ county_filter <- function(.data, min_area = 2000000000, domap = TRUE, rowmap = T
 }
 
 # Note 1.01e+9 for channel islands state park
-res <- county_filter(cnty_ma, min_area = 2000000000)
-res <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
+res_ma <- county_filter(cnty_ma, min_area = 1.01e+9)
+res_ca <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
+
+tr_ca_clip <- st_intersection(tr_ca, res_ca)
+tr_ma_clip <- st_intersection(tr_ma, res_ma)
+
+# Before
+before <- filter(tr_ca, COUNTYFP == "037") %>% 
+  tm_shape() + 
+  tm_polygons()
+
+# After
+after <- filter(tr_ca_clip, COUNTYFP == "037") %>% 
+  tm_shape() + 
+  tm_polygons()
+
+tmap_arrange(before, after, nrow = 1)
+
+
 
