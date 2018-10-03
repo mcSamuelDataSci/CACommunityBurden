@@ -92,6 +92,8 @@ res_ca <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
 tr_ca_clip <- st_intersection(tr_ca, res_ca)
 tr_ma_clip <- st_intersection(tr_ma, res_ma)
 
+# LOS ANGELES COUNTY
+
 # Before
 before <- filter(tr_ca, COUNTYFP == "037") %>% 
   tm_shape() + 
@@ -104,7 +106,17 @@ after <- filter(tr_ca_clip, COUNTYFP == "037") %>%
 
 tmap_arrange(before, after, nrow = 1)
 
+# Before
+before <- filter(tr_ma, COUNTYFP %in% c("001", "007", "019")) %>% 
+  tm_shape() + 
+  tm_polygons()
+
+# After
+after <- filter(tr_ma_clip, COUNTYFP %in% c("001", "007", "019")) %>% 
+  tm_shape() + 
+  tm_polygons()
+
+tmap_arrange(before, after, nrow = 1)
 
 
-res <- county_filter(tr_ca, min_area = 5000, rowmap = FALSE)
 
