@@ -18,9 +18,6 @@
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"
  
- # temporary for testing:
- source(paste0(myPlace,"/myData/appText/appText.R"))
- 
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 
  #-- Load Packages --------------------------------------------------------------------------
@@ -41,6 +38,7 @@
  library(epitools)
  library(plotly)
  library(fs)
+ library(markdown)
  
 # library(scatterD3);
 # library(maps);  
@@ -59,20 +57,19 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 # check each of below with:  class(shape_County); object.size(shape_County)
 # shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp"))  # -->    822,048 bytes "SpatialPolygonsDataFrame"
 # shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
-# shape_County   <- read_rds(paste0(myPlace,"/myData/shape_County.rds")) # --> 11,174,336 bytes "sf"  "data.frame"
+# shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds")) # --> 11,174,336 bytes "sf"  "data.frame"
 # shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.shp"))  # -->    674,488 bytes "sf"  "data.frame"
 # shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
 
-
 # THESE DO NOT WORK IN THE APP:
- # shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
- # shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
- # shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
+ shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
+ shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
+ shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
  # 
 # THESE DO: 
- shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
- shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
- shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
+ #shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
+# shape_Comm     <- readOGR(paste0(myPlace,"/myData/shape_Comm.shp")) 
+# shape_Tract    <- readOGR(paste0(myPlace,"/myData/shape_Tract.shp"))  
  
  shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
  shape_Tract$county <- as.character(shape_Tract$county)   
@@ -89,10 +86,11 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
 
 #-- Load Info Files and Functions ------------------------------------------------------------------------
   
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//NEWgbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
   
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
+
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
 
   source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
@@ -157,7 +155,7 @@ names(bigCode) <- bigList[,"causeList"]
 sdohVec  <- c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty", "parkaccess","houserepair")
 
 sdohVecL <- c(
-"Health Places Index score",                                   
+"Healthy Places Index score",                                   
 "Percentage of adults aged 18 to 64 years currently insured",
 "Percentage of 3 and 4 year olds enrolled in school",                    
 "Percentage of population over age 25 with a bachelor's education or higher",      

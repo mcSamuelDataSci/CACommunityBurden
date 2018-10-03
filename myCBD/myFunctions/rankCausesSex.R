@@ -18,14 +18,14 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   datCounty <- readRDS(path("e:","0.CBD/myCBD/","/myData/",whichData,"datCounty.RDS"))
   }
   
-  
-  
-  
   inDat <- datCounty
   dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",CAUSE !=0)
   
    dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
 
+   
+   
+   
    if (myMeasure=="mean.age"){
       dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure))),decreasing=TRUE),]}
   
@@ -42,12 +42,16 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   
  # dat.1$CAUSE <- factor(dat.1$CAUSE, levels = dat.1$CAUSE[order(dat.1$info)])
   
-  g <- ggplot(dat.1, aes(x=CAUSE,y=info,group=sex))
-  g + geom_col() +  coord_flip() +
-      facet_grid( ~ sex)
+  
+  dat.1$causeName <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
   
   
+  g <- ggplot(dat.1, aes(x=causeName,y=info,group=sex)) +
+                  facet_grid( ~ sex)  + 
+                  geom_col() +  
+                  coord_flip() +
+                  #scale_x_discrete(labels= paste(CAUSE))  +
+                  theme(axis.text = element_text(colour = "blue")) 
+  g  
+
 }
-  
-  
-  

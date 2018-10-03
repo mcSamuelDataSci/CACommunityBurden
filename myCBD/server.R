@@ -2,19 +2,31 @@
 
 shinyServer(function(input, output,session) {
  
-observeEvent(input$causeHelp, {showModal(modalDialog(causeHelp, easyClose = TRUE))})
-observeEvent(input$measureHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
-observeEvent(input$mapTabHelp, {showModal(modalDialog(measureHelp, easyClose = TRUE))})
+observeEvent(input$causeHelp,     {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
+observeEvent(input$cutmethodHelp, {showModal(modalDialog(     cutmethodHelp,    easyClose = TRUE))})
+observeEvent(input$statecutHelp,  {showModal(modalDialog(     statecutHelp,    easyClose = TRUE))})
+observeEvent(input$measureHelp,   {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
+
+observeEvent(input$mapTab,            {showModal(modalDialog(HTML(mapTab),            easyClose = TRUE))})
+observeEvent(input$conditionTab,      {showModal(modalDialog(HTML(conditionTab),      easyClose = TRUE))})
+observeEvent(input$conditionTableTab, {showModal(modalDialog(HTML(conditionTableTab), easyClose = TRUE))})
+observeEvent(input$conditionSexTab,   {showModal(modalDialog(HTML(conditionSexTab),   easyClose = TRUE))})
+observeEvent(input$rankGeoTab,        {showModal(modalDialog(HTML(rankGeoTab),        easyClose = TRUE))})
+observeEvent(input$trendTab,          {showModal(modalDialog(HTML(trendTab),          easyClose = TRUE))})
+observeEvent(input$sdohTab,           {showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))})
 
 
-
+# https://stackoverflow.com/questions/28379937/change-selectize-choices-but-retain-previously-selected-values
+current_selection <- reactiveVal(NULL)
+# now store your current selection in the reactive value
+observeEvent(input$myCAUSE, { current_selection(input$myCAUSE) })
 
 observeEvent(input$myGeo, {
-    if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode) }
-    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode) }
-    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36)}
-}
-)
+    if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode ) }
+    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_selection()) } 
+    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36,selected=current_selection()  ) }
+})
+
 
 observeEvent(input$ID,{
  if(input$ID %in% c(33,34,44,45,55)){updateSelectInput(session, "myLHJ", choices = lList,selected=input$myLHJ) }
@@ -26,9 +38,17 @@ observeEvent(input$cZoom,{
 }
 )
 
+
+
+#observeEvent(input$myGeo , input$myMeasure, {
+#    if(input$myGeo != "County" && input$myMeasure=="SMR"){showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))}})
+
 #for two input use:
 # observeEvent(input$test1 | input$test2, {
 #    if(input$test1==0 && input$test2==0){
+
+
+
 
 #------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -55,7 +75,7 @@ output$map_title <- renderUI({
                               HTML(paste0("<div style='text-align:center;font-size:18px'>",
                                    lMeasuresC[lMeasures == input$myMeasure]," - ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"],
-                                   geoLabel()," ",timeLabel(),sexLabel(),
+                                   geoLabel()," ",span(timeLabel(),style="color:blue"),sexLabel(),
                                   "</div>", sep = " ") ) })
                      })
 

@@ -15,7 +15,6 @@
 # all occurences of "06037800325" in death data are Ventura, all are LA in pop data
 
 
-
 # -- Designate locations and load packages---------------------------------------------------------
 
 whichDat <- "real"
@@ -112,7 +111,7 @@ cbdDat0$ageG  <- aLabs[aMark]                                   # make new "ageG
 
 # Map ICD-10 codes to GBD conditions ----------------------------
 
-gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/NEWgbd.ICD.Map.xlsx"), sheet="main"))   # also have e.g. range="A1:J167"
+gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))   # also have e.g. range="A1:J167"
 allLabels <- sort(gbdMap0$LABEL[!is.na(gbdMap0$LABEL)])
 
 mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
@@ -257,22 +256,24 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
   if (missing(pop) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     pop <- count/rate
   if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(pop) == TRUE)  rate <- count/pop
   
-  rate[is.na(pop)] <- 0
+  rate[is.na(pop)]   <- 0
   rate[is.null(pop)] <- 0
-  pop[is.na(pop)] <- 0
-  pop[is.null(pop)] <- 0
+  pop[is.na(pop)]    <- 0
+  pop[is.null(pop)]  <- 0
   
   alpha <- 1 - conf.level
   cruderate <- sum(count,na.rm=TRUE)/sum(pop,na.rm=TRUE)
   stdwt <- stdpop/sum(stdpop,na.rm=TRUE)
   dsr <- sum(stdwt * rate,na.rm=TRUE)
   dsr.var <- sum((stdwt^2) * (count/pop^2))
+  dsr.se  <- sqrt(dsr.var)
   wm<- max(stdwt/pop)
   gamma.lci <- qgamma(alpha/2, shape = (dsr^2)/dsr.var, scale = dsr.var/dsr)
   gamma.uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
                       scale = (dsr.var+wm^2)/(dsr+wm))
-  c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
-    uci = gamma.uci)
+  
+    c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
+    uci = gamma.uci, se = dsr.se)
 }
 
 
@@ -330,9 +331,14 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
             aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
 
-countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","YLL.adj.rate")]  # remove strata with no deaths and select columns  
+
+
+
+
+countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 
 #tester <- filter(ageCounty,year==2015,county=="Alameda",sex=="Male",CAUSE==0) 
 #ageadjust.direct(count=tester$Ndeaths, pop=tester$pop, rate = NULL, stdpop=tester$US2000POP, conf.level = 0.95)*100000
@@ -361,8 +367,10 @@ commAA <- ageComm %>% group_by(comID,yearG,sex,CAUSE) %>%
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
             aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
-commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","YLL.adj.rate")]  
+commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
 
 # removes rows with aRate = inf HERE there are only ALPINE 
 commAA  <- commAA[!(commAA$aRate > 10000),]
@@ -447,14 +455,14 @@ datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
 saveRDS(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
-# 
-datTract$causeName <- gbdMap0[match(datTract$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
-datComm$causeName <- gbdMap0[match(datComm$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
-datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
- 
- write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
- write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
- write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
+# # 
+# datTract$causeName <- gbdMap0[match(datTract$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+# datComm$causeName <- gbdMap0[match(datComm$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+# datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
+#  
+#  write.csv(datTract,(paste0(upPlace,"/tempOutput/Tract CCB Work.csv")))
+#  write.csv(datComm,(paste0(upPlace,"/tempOutput/Community CCB Work.csv")))
+#  write.csv(datCounty,(paste0(upPlace,"/tempOutput/County CCB Work.csv")))
 
 # END ===================================================================================================================
 
@@ -526,7 +534,6 @@ datCounty$causeName <- gbdMap0[match(datCounty$CAUSE,gbdMap0[,"LABEL"]),"causeLi
 
 # age-adjustment reference
 # https://www.cdc.gov/nchs/data/nvsr/nvsr47/nvs47_03.pdf
-
 
 
 

@@ -106,3 +106,5 @@ tmap_arrange(before, after, nrow = 1)
 
 
 
+res <- county_filter(tr_ca, min_area = 5000, rowmap = FALSE)
+
