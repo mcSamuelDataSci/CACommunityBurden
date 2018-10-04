@@ -76,12 +76,10 @@ geoLabel   <- renderText({if (!input$cZoom)            geoLab    <- ""      else
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
 ### not sure why I can't use timeLabel <- yearGrp here?
 
-
-
 output$map_title <- renderUI({
                               HTML(paste0("<div style='text-align:center;font-size:18px'>",
                                    lMeasuresC[lMeasures == input$myMeasure]," - ",
-                                   causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"],
+                                   causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
                                    geoLabel()," ",span(timeLabel(),style="color:blue"),sexLabel(),
                                   "</div>", sep = " ") ) })
                      })
