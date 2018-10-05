@@ -128,7 +128,9 @@ SDOHHelp <- "test"
 
 mapTab <- paste0("
 These maps display the geographic distribution of disease burden among counties and communities across California. The *Geo Level* options allow the user to change the display from county, to community, to census tract.  This selection is one of the key concepts behind the app—Place Matters!--and insights into the burden of disease must be explored at multiple geographic levels, especially granular community levels.  Data at the community and the census tract levels are aggregated to 5-year intervals.  
+<br><br>
 Users can select either the state as a whole or zoom to a specific county for a better view of just that county, and its subcounty detail. 
+<br><br>
 Users can select from various measures of mortality to assess burden of disease. 
 Selecting the *State-based cutpoints* option allows for comparisons based on the statewide distribution instead of just within the county.
 <br><br>
@@ -166,7 +168,9 @@ sdohTab <-
 <br><br>
 This scatter plot displays the correlation of a selected social determinant measure with a selected condition. Each dot maps the value of the social determinant measure against the value of the condition measure for one geographic unit (county, community, or census tract). Because this association is “ecologic” (correlation of geographic units, not of individuals), it is particularly important in this tab to look at measures that take into account the size and age distribution of the population, such as age-adjusted YLL rate and age-adjusted death rate. While correlations do not indicate causation, they are a potentially important way to understand the differential roles of some social determinants of health on disease outcomes.
 <br><br>
-In the current version, the colors represent the regions of the state – the colors represent the rurality levels of the places represented by the dots
+In the current version, the colors represent the regions of the state; soon the colors could represent the rurality levels of the county/community/tract or other factors.
+<br><br>
+In the current version, the size of the dots is proportional to the size of the population represented by the dot.  This too, could represent other things.
 <br><br>
 Note: Currently this tab only displays one variable, but the display and analysis in this tab will be expanded to include multiple variables simultaneously."
 
@@ -185,7 +189,4 @@ Note: Currently this tab only displays one variable, but the display and analysi
 # textIntroC <- "This California State implementation of the CBD, The California Community Burden of Disease and Cost Engine (CCB), currently includes detailed death data and multiple associated measures (e.g. age-adjusted cause-specific Years of Life Lost rates) for 2001 to 2015 at the census tract, community (California Medical Service Study Areas), county, and statewide levels.  The CCB also includes a small set of Social Determinates of Health, and describes their correlations with death outcomes, as a pilot for more robust functionality in this area.  Other short-term road map plans include the addition of burden of disease and costs (charges) based on California Hospital Discharge data, automated report generation, and more."
 
 
-textIntroOld <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for recent years.    At the county level, data are displayed separately for each year,  and at the community or census-tract level are displayed only for the most recent five-year period (combined).  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release."
-
-
-
+textIntroOld <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for recent years.    At the county level, data are displayed separately for each year,  and at the community or census-tract level are displayed only for the most recent five-year period (combined).  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release." 
