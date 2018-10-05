@@ -16,7 +16,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                 #  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
                   tags$h3(mTitle),                                                       # title supplied from Global
   
-sidebarPanel(#width=3, 
+sidebarPanel(width=3, 
  
   conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help"),style=myHelpButtonSty),
   conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help"),style=myHelpButtonSty),

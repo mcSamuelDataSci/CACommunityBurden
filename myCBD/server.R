@@ -40,13 +40,42 @@ observeEvent(input$myGeo, {
 # }
 # )
 
+current_LHJ <- reactiveVal(NULL)
+observeEvent(input$myLHJ, { current_LHJ(input$myLHJ) })
+
+
 observeEvent(input$cZoom,{
-  if(input$cZoom){updateSelectInput(session, "myLHJ", choices = lListNoState) }
+  if(input$cZoom)    {updateSelectInput(session, "myLHJ", choices = lListNoState) }
+  if(!(input$cZoom)) {updateSelectInput(session, "myLHJ", choices = lList,selected="CALIFORNIA")}
 }
 )
 
 
 
+ observeEvent(input$ID,{
+   if(input$ID %in% c(33)){updateSelectInput(session, "myLHJ", choices = lList,selected=current_LHJ()) }
+ })
+
+
+
+
+#observeEvent(input$ID,{
+#  if(input$ID %in% c(22,23)){updateSelectInput(session, "myLHJ", choices = lListNoState) }
+#})
+
+ observeEvent(input$ID,{
+  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") { updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ() ) }
+  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") { updateCheckboxInput(session, "cZoom", value=FALSE)
+                                                                updateSelectInput(session, "myLHJ", choices = lListNoState)}
+ })
+
+
+
+
+
+ 
+ 
+ 
 #observeEvent(input$myGeo , input$myMeasure, {
 #    if(input$myGeo != "County" && input$myMeasure=="SMR"){showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))}})
 

@@ -12,7 +12,7 @@
 #======================================================================================
 
 
-# all occurences of "06037800325" in death data are Ventura, all are LA in pop data
+
 
 
 # -- Designate locations and load packages---------------------------------------------------------
@@ -83,6 +83,20 @@ if (whichDat == "fake") {
   cbdDat0 <- cbdDat0SAMP
 }
 
+
+# GEOID/COUNTY CORRECTION HERE =============================================
+
+# (1) LA CENSUS TRACT TO RECODE
+# 06037930401 should be recoded to  06037137000 in all data files
+cbdDat0$GEOID[cbdDat$GEOID=="06037930401"] <- "06037137000"
+
+# (2) all occurences of "06037800325" in death data are Ventura, all are LA in pop data
+
+# (3) fix county based on GEOID analysis here:
+
+
+
+
 #forEthan <- sample_n(cbdDat0SAMP,100000)
 #saveRDS(forEthan, file=paste0(upPlace,"/upData/forEthan.RDS"))
 
@@ -123,7 +137,11 @@ icdToGroup <- function(myIn) {
 
 cbdDat0$icdCODE  <- icdToGroup(myIn=cbdDat0$ICD10)
 
-cbdDat0$icdCODE[is.na(cbdDat0$icdCODE)] <- "XXXX"
+cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ2"  # >3500 records have no ICD10 code -- label them as cZ for now
+
+junk <- filter(cbdDat0,is.na(icdCODE))
+table(junk$ICD10,useNA = "ifany")
+cbdDat0$icdCODE[is.na(cbdDat0$icdCODE)] <- "cZ3"  # 370 records that are not mapping to a code right now --TEMP
 
 
 temp             <- nchar(str_sub(cbdDat0$icdCODE,2,5))
@@ -409,24 +427,29 @@ tractAA  <- tractAA[!(is.na(tractAA$aRate)),]
 # -- Merge adjusted rates into main data files and final Clean Up ----------------------------------------------------------
 
 
+datT0     <- datTract 
+junk      <- filter(datT0,is.na(CAUSE))
+junk2     <- filter(datTract, is.na(Ndeaths))
+# county county mismatch?
+#same!
+write_csv(junk,paste0(upPlace,"/tempOutput/tracts for dave.csv"))
+junk3 <- filter(datTract, is.na(county))
+junk4 <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) %>% filter(is.na(county))
 
-junk <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) %>% 
-  mutate_if(is.numeric, signif,digits=4) %>%
-  filter(!is.na(county))   # REMOVE ALL out-of-state GEOID and missing GEOID
-junk2 <- filter(junk,is.na(CAUSE))
-# where do this come from?  0 deaths, some 0 pop, but some large pop
 
 datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG","sex","CAUSE"),all=TRUE) %>% 
                     mutate_if(is.numeric, signif,digits=4) %>%
                     filter(!is.na(county))  %>%  # REMOVE ALL out-of-state GEOID and missing GEOID
-                    filter(!is.na(CAUSE))
+                    filter(!is.na(CAUSE)) # removes about 130 records with bad/no GEOID and/or wrong County based on GEOID
 
+datT1     <- datComm
 datComm   <- merge(datComm,    commAA ,by = c("comID","yearG","sex","CAUSE"),all=TRUE) %>%
                    mutate_if(is.numeric, signif,digits=4) %>%
-                   filter(!is.na(county))   %>% 
-                   filter(!is.na(CAUSE))
+                   filter(!is.na(county)) #  as above
 
+datT2     <- datCounty
 datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE) %>% 
+                   filter(!(is.na(CAUSE)))  %>%                                  # removes "Level3" NA (most 'causes' are NA on Level3) 
                    select(-ageG,-stateRate) %>%
                    mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
                    mutate(county = ifelse(county==STATE, toupper(STATE),county),      # e.g. California --> CALIFORNIA
@@ -434,11 +457,6 @@ datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all
                            )
 
 
- junk2 <- filter(datTract, Ndeaths != oDeaths) %>% select(GEOID,yearG,county,Ndeaths,oDeaths)
-
- 
- 
- 
  
 # == Final Data Clean Up and Export ==================================================================================
 

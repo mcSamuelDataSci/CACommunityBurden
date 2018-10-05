@@ -75,6 +75,11 @@ myPal <- add.alpha(myPal,.7)
 #myPal <- rev(get_brewer_pal("RdYlB", n = 5, contrast = c(0, 0.7)))
 
 
+if (myMeasure == "mean.age") myPal <- rev(myPal)
+
+
+
+
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
                                legend.hist=T,
                                title.col=NA,id="name", 

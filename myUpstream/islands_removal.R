@@ -10,8 +10,8 @@ tr_ca <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry
 cnty_ca <- counties(state = "CA", cb = TRUE)
 
 # mass
-tr_ma <- tracts(state = "MA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
-cnty_ma <- counties(state = "MA", cb = TRUE)
+#tr_ma <- tracts(state = "MA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
+#cnty_ma <- counties(state = "MA", cb = TRUE)
 
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 
@@ -20,9 +20,8 @@ tr_ca <- st_transform(tr_ca, crs = proj1)
 cnty_ca  <- st_transform(cnty_ca, crs = proj1)
 
 # Project to UTM 19 (eastern Mass)
-
-tr_ma <- st_transform(tr_ma, crs = 32619)
-cnty_ma <- st_transform(cnty_ma, crs = 32619)
+#tr_ma <- st_transform(tr_ma, crs = 32619)
+#cnty_ma <- st_transform(cnty_ma, crs = 32619)
 
 
 #************************************************
@@ -86,25 +85,45 @@ county_filter <- function(.data, min_area = 2000000000, domap = TRUE, rowmap = T
 }
 
 # Note 1.01e+9 for channel islands state park
-res_ma <- county_filter(cnty_ma, min_area = 1.01e+9)
-res_ca <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
+#res_ma <- county_filter(cnty_ma, min_area = 1.01e+9)
+res_ca <- county_filter(cnty_ca, min_area = 1.01e+15, rowmap = FALSE)
 
 tr_ca_clip <- st_intersection(tr_ca, res_ca)
-tr_ma_clip <- st_intersection(tr_ma, res_ma)
+#tr_ma_clip <- st_intersection(tr_ma, res_ma)
 
 # LOS ANGELES COUNTY
 
 # Before
-before <- filter(tr_ca, COUNTYFP == "037") %>% 
+before <- filter(tr_ca, COUNTYFP == "075") %>% 
   tm_shape() + 
   tm_polygons()
 
 # After
-after <- filter(tr_ca_clip, COUNTYFP == "037") %>% 
+after <- filter(tr_ca_clip, COUNTYFP == "075") %>% 
   tm_shape() + 
   tm_polygons()
 
-tmap_arrange(before, after, nrow = 1)
+tmap_arrange(before, after, nrow = 2)
+
+
+
+# Before
+before <- filter(res_ca, COUNTYFP == "075") %>% 
+  tm_shape() + 
+  tm_polygons()
+
+# After
+after <- filter(cnty_ca, COUNTYFP == "075") %>% 
+  tm_shape() + 
+  tm_polygons()
+
+tmap_arrange(after, before, nrow = 2)
+
+
+
+
+
+
 
 # Before
 before <- filter(tr_ma, COUNTYFP %in% c("001", "007", "019")) %>% 
