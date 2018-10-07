@@ -2,6 +2,16 @@
 
 shinyServer(function(input, output,session) {
  
+  
+shinyjs::onclick("map1I",updateTabsetPanel(session,inputId="ID",selected="22"))  
+shinyjs::onclick("map2I",updateTabsetPanel(session,inputId="ID",selected="23"))  
+shinyjs::onclick("rankcauseI",updateTabsetPanel(session,inputId="ID",selected="33"))  
+shinyjs::onclick("ranktableI",updateTabsetPanel(session,inputId="ID",selected="45"))  
+shinyjs::onclick("rankgeoI",updateTabsetPanel(session,inputId="ID",selected="44"))  
+shinyjs::onclick("trendI",updateTabsetPanel(session,inputId="ID",selected="55"))  
+shinyjs::onclick("scatterI",updateTabsetPanel(session,inputId="ID",selected="66"))  
+  
+  
 observeEvent(input$causeHelp,     {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
 observeEvent(input$cutmethodHelp, {showModal(modalDialog(     cutmethodHelp,    easyClose = TRUE))})
 observeEvent(input$statecutHelp,  {showModal(modalDialog(     statecutHelp,    easyClose = TRUE))})
@@ -94,23 +104,32 @@ output$rankCause    <- renderPlot(     rankCause(input$myLHJ,           input$my
 output$rankCauseSex <- renderPlot(     rankCauseSex(input$myLHJ,        input$myMeasure     , input$myYear,                           input$myN))
 
 output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$cZoom,input$myCI))
+
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
+output$trend2      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
+
+
+
 output$scatter    <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,               input$mySex,                  input$myGeo,input$myX))
 
 output$rankCauseT <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
 
 sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
-geoLabel   <- renderText({if (!input$cZoom)            geoLab    <- ""      else geoLab    <- paste0(", in ",input$myLHJ)})
+geoLabel   <- renderText({if (!input$cZoom)            geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
 ### not sure why I can't use timeLabel <- yearGrp here?
 
 output$map_title <- renderUI({
-                              HTML(paste0("<div style='text-align:center;font-size:18px'>",
-                                   lMeasuresC[lMeasures == input$myMeasure]," - ",
+                    HTML(paste0("<div style='text-align:left;font-size:20px;font-weight: bold'>",
+                                   lMeasuresC[lMeasures == input$myMeasure],
+                                   " from ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
-                                   geoLabel()," ",span(timeLabel(),style="color:blue"),sexLabel(),
-                                  "</div>", sep = " ") ) })
+                                   " in ",span(timeLabel(),style="color:blue"),
+                                   " by ",input$myGeo,
+                                   sexLabel(), geoLabel(),
+                                   
+                                  "</div>", sep = " ")) })
                      })
 
 

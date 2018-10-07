@@ -40,6 +40,9 @@
  library(fs)
  library(markdown)
  
+ library(shinyjs)
+ 
+ 
 # library(scatterD3);
 # library(maps);  
 # library(shinythemes)

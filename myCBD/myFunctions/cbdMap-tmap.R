@@ -8,7 +8,7 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     dat.State   <- filter(datCounty,year %in% 2013:2017, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
 
     geoLab <- ""
-    if (cZoom) geoLab <- paste(", in",myLHJ)
+    if (cZoom) geoLab <- paste(" in",myLHJ)
     
     sexLab <- ""
     if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
@@ -17,23 +17,34 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)
     map.1   <- left_join(shape_County, dat.1, by=c("county")) 
     map.1$name <- map.1$county
-    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myYear," by County",sexLab,geoLab)
+    myTitYear <- myYear
+    myTitGeo  <- " by County"
     }
-    
+  
     if (myGeo == "Census Tract") { 
     dat.1    <- filter(datTract,yearG==yearGrp,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = GEOID)
     map.1    <- left_join(shape_Tract, dat.1, by=c("county","GEOID"))
     map.1$name <- map.1$GEOID
-    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",yearGrp," by Census Tract",sexLab,geoLab)
+    myTitYear <- yearGrp
+    myTitGeo  <- " by Tract"
     }
 
     if (myGeo == "Community") {
     dat.1    <- filter(datComm,yearG==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% mutate(geoLab = comName)
     map.1    <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
     map.1$name <- map.1$comName
-    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",yearGrp," by Community",sexLab,geoLab)
+    myTitYear <- yearGrp
+    myTitGeo  <- " by Community"
     }  
   
+    
+    
+    
+    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myTitYear,myTitGeo,sexLab,geoLab)
+    
+    
+    
+    
   if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 
   if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
@@ -71,13 +82,11 @@ add.alpha <- function(col, alpha=1){
 myPal <- rev(brewer.pal(5,"RdYlBu"))
 myPal <- add.alpha(myPal,.7)
 #myPal <- c("#D7191C","#FDAE61","#FFFFBF","#ABD9E9","#2C7BB6")
-
+ #  , aes.palette=list(div="RdYlBu")
 #myPal <- rev(get_brewer_pal("RdYlB", n = 5, contrast = c(0, 0.7)))
 
 
 if (myMeasure == "mean.age") myPal <- rev(myPal)
-
-
 
 
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
@@ -86,11 +95,11 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
                                popup.vars=c("Population: " = "pop",
                                             "Measure Value: "= myMeasure)
                                             ) +
-   tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,
+   tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,fontface = 2,
            legend.outside = TRUE,
            legend.outside.position = "right", 
            legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3)  
-   #  , aes.palette=list(div="RdYlBu")
+  
  
  
 }
@@ -117,21 +126,21 @@ cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYea
 # FOR TESTING ----------------------------------------------------------------------------------------------
 
 
-# values that can be used for testing code "outside" shiny:
-# if (1==2){
-#   myLHJ= "Amador"
-#   myCause="A"
-#   myMeasure = "YLLper"
-#   myYear=2015
-#   mySex="Female"
-#   myStateCut=TRUE
-#   myGeo="County"
-#   cZoom=TRUE
-#   myLabName=FALSE
-#   myLabNum=FALSE
-#   myCutSystem="fisher"
-#   Level = "lev1"
-# }
+#values that can be used for testing code "outside" shiny:
+if (1==2){
+  myLHJ= "Amador"
+  myCause="A"
+  myMeasure = "YLLper"
+  myYear=2015
+  mySex="Female"
+  myStateCut=TRUE
+  myGeo="County"
+  cZoom=FALSE
+  myLabName=FALSE
+  myLabNum=FALSE
+  myCutSystem="fisher"
+  Level = "lev1"
+}
 
 
 # if (1==2){

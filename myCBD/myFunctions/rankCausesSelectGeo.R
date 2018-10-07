@@ -47,7 +47,11 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,mySex="T
  
   }
  
-  mtext(paste("Measures by Cause,",myYear,myLHJ),outer = TRUE,cex=1.3,line=1)
+ sexLab <- ""
+ if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
+   
+   
+  mtext(paste0("Measures by Cause in ",myYear," in ",myLHJ,sexLab),outer = TRUE,cex=1.6,line=1,font=2)
 
 }
 

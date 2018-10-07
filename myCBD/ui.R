@@ -10,10 +10,12 @@ fC <- function(vec) {
 myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4"
 myHelpButtonSty <- "height:12px;padding-top:0px; margin-top:-5px"
 
+myBoxSty <- "cursor:pointer;border: 3px solid blue;padding-right:0px;padding-left:0px;"
+
 #-----------------------------------------------------------------------------------------------------------------------------
 
 shinyUI(fluidPage(theme = "bootstrap.css",
-                #  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
+                  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
                   tags$h3(mTitle),                                                       # title supplied from Global
   
 sidebarPanel(width=3, 
@@ -119,25 +121,44 @@ HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
 # https://stackoverflow.com/questions/35025145/background-color-of-tabs-in-shiny-tabpanel
 # works: h5("Home Page",style="color:red")
 
+useShinyjs(),
+
 mainPanel(
   hr(), 
   tabsetPanel(type = "tab",id="ID",
-        tabPanel("Home Page",  br(),align='center',
-               
+      
+              
+              
+              
+          tabPanel("Home Page",  br(),align='center',
+            
               h4(HTML(above1),align="left"),
-              img(src="screen shots.jpg",height="100%",width="100%"),
+           
+                fluidRow(
+               column(width=3,img(id="map1I",src="map1.png",width="100%",height=200,style= myBoxSty)),
+               column(width=3,img(id="map2I",src="map2.png",width="100%",height=200,style = myBoxSty)),
+               column(width=3,img(id="rankgeoI",src="rankgeo.png",width="100%",height=200,style = myBoxSty)),
+               column(width=3,img(id="ranktableI",src="ranktable.png",width="100%",height=200,style = myBoxSty))),
+               fluidRow(
+                 column(width=4,img(id="scatterI",src="scatter.jpeg",width="100%",height=200,style = myBoxSty)),
+                 column(width=4,img(id="trendI",src="trend.png",width="100%",height=200,style = myBoxSty)),
+                 column(width=4,img(id="rankcauseI",src="rankcause.png",width="100%",height=200,style = myBoxSty))),
+               
+              
+             
+            #    img(src="screen shots.jpg",height="100%",width="100%"),
               h5(HTML(below1),align="left"),
               value = 11),          
   
-   tabPanel("Map - Interactive",         htmlOutput(      "map_title"                      ),
+     tabPanel("Map - Interactive",       br(),htmlOutput("map_title")  ,
                                          leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
    tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  height=700,width="100%"),  value = 23),
-   tabPanel("Rank Conditions",               plotOutput(      "rankCause", width="100%",height=700),  value = 33),
+   tabPanel("Rank Conditions",           br(),    plotOutput(      "rankCause", width="100%",height=700),  value = 33),
    tabPanel("Rank Conditions Table",         dataTableOutput( "rankCauseT"                     ),  value = 45),   #DT::
    tabPanel("Rank Conditions by Sex",     plotOutput(      "rankCauseSex", width="100%",height=700),  value = 34),
    
    tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width="100%",height=1700), value = 44),
-   tabPanel("Trend",                     plotOutput(      "trend",     width="100%",height=700),  value = 55),
+   tabPanel("Trend",                     br(),plotOutput(      "trend",     width="100%",height=700),  value = 55),
    tabPanel("SDOH Associations",  br(),      plotlyOutput(    "scatter",             height=700),  value = 66),
    tabPanel("Technical",        br(), includeMarkdown("technical.md"),value = 77)
   )       ) 

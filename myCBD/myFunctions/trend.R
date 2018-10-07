@@ -37,7 +37,7 @@ dat.1 <- filter(inDat,county == myLHJ,CAUSE == myCause)
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
 
-myTit <- paste("Trend in ",lMeasuresC[lMeasures==myMeasure],"of",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in",myLHJ,", ",minYear,"to",maxYear)
+myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
 
 #ggplot(data=dat.1, aes(x=year, y=eval(parse(text=(myMeasure))), group=sex)) +
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
