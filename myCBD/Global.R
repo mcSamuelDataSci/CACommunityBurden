@@ -104,7 +104,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myFunctions/trend.R"))
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
-  source(paste0(myPlace,"/myData/appText/appText.R"))
+  source(paste0(myPlace,"/myData/appText/AppText.txt"))
 
   version <- "0.5.0"
   
