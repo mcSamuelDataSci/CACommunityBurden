@@ -39,6 +39,7 @@
   install.packages("shiny")
   install.packages("shinythemes")
   install.packages("shinyWidgets")
+  install.packages("shinyjs")
  #materials
  
  # this part is required for publication of the app to shiny.io and will be documented seperately

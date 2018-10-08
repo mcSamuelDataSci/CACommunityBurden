@@ -37,14 +37,8 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     myTitGeo  <- " by Community"
     }  
   
-    
-    
-    
-    myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myTitYear,myTitGeo,sexLab,geoLab)
-    
-    
-    
-    
+  myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myTitYear,myTitGeo,sexLab,geoLab)
+  
   if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 
   if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
@@ -90,6 +84,7 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
 
 
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
+                               textNA = "0 deaths",
                                legend.hist=T,
                                title.col=NA,id="name", 
                                popup.vars=c("Population: " = "pop",
