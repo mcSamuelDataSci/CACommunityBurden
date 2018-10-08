@@ -129,7 +129,7 @@ cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYea
 #values that can be used for testing code "outside" shiny:
 if (1==2){
   myLHJ= "Amador"
-  myCause="A"
+  myCause="0"
   myMeasure = "YLLper"
   myYear=2015
   mySex="Female"

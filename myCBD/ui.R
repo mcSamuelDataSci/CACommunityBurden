@@ -136,12 +136,13 @@ mainPanel(
            
                 fluidRow(
                column(width=3,img(id="map1I",src="map1.png",width="100%",height=200,style= myBoxSty)),
-               column(width=3,img(id="map2I",src="map2.png",width="100%",height=200,style = myBoxSty)),
+               column(width=3,img(id="map2I",src="mapS.jpeg",width="100%",height=200,style = myBoxSty)),
                column(width=3,img(id="rankgeoI",src="rankgeo.png",width="100%",height=200,style = myBoxSty)),
                column(width=3,img(id="ranktableI",src="ranktable.png",width="100%",height=200,style = myBoxSty))),
+              br(),
                fluidRow(
                  column(width=4,img(id="scatterI",src="scatter.jpeg",width="100%",height=200,style = myBoxSty)),
-                 column(width=4,img(id="trendI",src="trend.png",width="100%",height=200,style = myBoxSty)),
+                 column(width=4,img(id="trendI",src="trend.jpeg",width="100%",height=200,style = myBoxSty)),
                  column(width=4,img(id="rankcauseI",src="rankcause.png",width="100%",height=200,style = myBoxSty))),
                
               
