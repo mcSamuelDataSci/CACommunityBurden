@@ -13,7 +13,7 @@
 
 #-- Set Locations and Data Source ----------------------------------------------------------
 
- whichData <-  "fake"
+ whichData <-  "real"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"
@@ -108,7 +108,7 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
 
   version <- "0.5.0"
   
-  mTitle       <- "California Community Burden of Disease and Costs"
+  mTitle       <- "California Community Burden of Disease and Cost Engine"
   
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium------------------------------------------
 

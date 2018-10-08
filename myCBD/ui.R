@@ -36,60 +36,45 @@ sidebarPanel(width=3,
  conditionalPanel(condition =  paste(
                                "((",fC(c(33,34,45,55)),") |",
                                 "(input.cZoom && (",fC(c(22,23,44)),")))" 
-                               ), 
-                                                        selectInput("myLHJ","County:",choices=lList,selected=STATE)  ),
+                               ),                       selectInput("myLHJ","County:",choices=lList,selected=STATE)  ),
  
  conditionalPanel(condition = fC(c(22,23,66)),          selectInput("myGeo","Geographic Level:",choices=c("County","Community","Census Tract"))),
 
  conditionalPanel(condition =paste(
                              "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c(22,23)),") ) 
                                | (", fC(c(33,34,45,44)),")"  
-                             ),
-                                                        sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
+                             ),                         sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
 
  conditionalPanel(condition = fC(c(22,23,33,45,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  conditionalPanel(condition = fC(c(33)),                checkboxGroupInput("myLev", "Levels to show:",c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("statecutHelp", "?",style=myButtonSty) ,
                                                         checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
- conditionalPanel(condition = fC(c(33,34)),                numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(22,23,34,44,55,66)),    actionButton( "measureHelp", "?",style=myButtonSty) ,
-                                                       #selectInput(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+ conditionalPanel(condition = fC(c(33,34)),             numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
+ conditionalPanel(condition = fC(c(22,23,34,44,55,66)), actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
  conditionalPanel(condition = fC(c(33)),                actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
- conditionalPanel(condition = fC(c(22,23)),              actionButton("cutmethodHelp", "?",style=myButtonSty) ,
-                                                         radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
+ conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
+                                                        radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
  conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
  conditionalPanel(condition = fC(c(44)),                checkboxInput("myCI",       "95% CIs?", value=TRUE)),
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
 
  hr(), 
  
-
- 
- # conditionalPanel(condition = "input.ID !=  11 ", 
- #                  br(),
- #                  helpText("DEFINITIONS",h6("YLL:  Years of Life Lost"),style="color:black"),br()
- #                  ),
  
  conditionalPanel(condition = fC(c(11)), 
                   
  helpText(textIntroA,style="color:black"), br(),
- #helpText(textIntroB,style="color:black"), br(),
  helpText(textIntroC,style="color:black"), br(),
- 
  
  if (whichData == "real") { helpText(textNote.real,style="color:black")},
  if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
- 
  helpText("Share your feedback!",style="color:black"),br(),  
  helpText("Help us improve the CCB by taking a short survey LINK.",style="color:black") 
  
- 
- 
-  # 
  # tags$br(),
  # icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?",style="color:blue"),
  # tags$br(), tags$a("Developed in R-Shiny",style="color:blue"),
@@ -126,32 +111,24 @@ useShinyjs(),
 mainPanel(
   hr(), 
   tabsetPanel(type = "tab",id="ID",
-      
-              
-              
-              
+ 
           tabPanel("Home Page",  br(),align='center',
             
               h4(HTML(above1),align="left"),
-           
-                fluidRow(
-               column(width=3,img(id="map1I",src="mapx.jpeg",width="100%",height=200,style= myBoxSty)),
-               column(width=3,img(id="map2I",src="mapS.jpeg",width="100%",height=200,style = myBoxSty)),
-               column(width=3,img(id="rankgeoI",src="lhj.jpeg",width="100%",height=200,style = myBoxSty)),
-               column(width=3,img(id="ranktableI",src="table.jpeg",width="100%",height=200,style = myBoxSty))),
+              fluidRow(
+                column(width=3,img(id="map1I",src="mapx.jpeg",width="100%",height=200,style= myBoxSty)),
+                column(width=3,img(id="map2I",src="mapS.jpeg",width="100%",height=200,style = myBoxSty)),
+                column(width=3,img(id="rankgeoI",src="lhj.jpeg",width="100%",height=200,style = myBoxSty)),
+                column(width=3,img(id="ranktableI",src="table.jpeg",width="100%",height=200,style = myBoxSty))),
               br(),
                fluidRow(
-                 column(width=4,img(id="scatterI",src="scatter.jpeg",width="100%",height=200,style = myBoxSty)),
-                 column(width=4,img(id="trendI",src="trend.jpeg",width="100%",height=200,style = myBoxSty)),
-                 column(width=4,img(id="rankcauseI",src="causes.jpeg",width="100%",height=200,style = myBoxSty))),
-               
-              
-             
-            #    img(src="screen shots.jpg",height="100%",width="100%"),
+                column(width=4,img(id="scatterI",src="scatter.jpeg",width="100%",height=200,style = myBoxSty)),
+                column(width=4,img(id="trendI",src="trend.jpeg",width="100%",height=200,style = myBoxSty)),
+                column(width=4,img(id="rankcauseI",src="causes.jpeg",width="100%",height=200,style = myBoxSty))),
               h5(HTML(below1),align="left"),
               value = 11),          
   
-     tabPanel("Map - Interactive",       br(),htmlOutput("map_title")  ,
+   tabPanel("Map - Interactive",       br(),htmlOutput("map_title")  ,
                                          leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
    tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  height=700,width="100%"),  value = 23),
    tabPanel("Rank Conditions",           br(),    plotOutput(      "rankCause", width="100%",height=700),  value = 33),
