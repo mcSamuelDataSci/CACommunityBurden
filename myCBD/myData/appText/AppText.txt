@@ -1,3 +1,6 @@
+# DO NOT ADD  any punctuation except commas and periods, hash mark for R comments, and single and double quote using the same exact character sex as below 
+
+
 # textIntroA                # measureHelp
 # textIntroB                # causeHelp
 # textIntroC                # statecutHelp
@@ -20,7 +23,7 @@
 #Contact us
 #Survey URL
 
-textYear <-  "YEAR:  At the County and State levels of geography, YEAR is the individual year of death, with current data from 2001 to 2017.  At the Community and Census Tract levels of geography, all data are displayed for the years 2013-2017 combined.  These years are combined for statistical stability, so that for these more granular levels of geography, the displayed data are still meaningful, and not just the result of random fluctuations"
+textYear <-  "YEAR:  At the County and State levels of geography, YEAR is the individual year of death, with current data from 2001 to 2017.  At the Community and Census Tract levels of geography, all data are displayed for the years 2013 to 2017 combined.  These years are combined for statistical stability, so that for these more granular levels of geography, the displayed data are still meaningful, and not just the result of random fluctuations"
 
 #--Home Page Text -------------------------------------------------------------------------------------------------------------
 
@@ -88,8 +91,8 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 <p>No one measure is best--each measure provides a different view or perspective into the impact of the condition. For example,
  <b>Number of deaths</b>
   is the simplest, most direct measure, and has clear intuitive meaning, and, other things being equal, will be larger in areas with larger populations.  
-<b>Crude Death Rate</b>  takes the size of the population into account by dividing the number of deaths by the number of people in the population (multiplied by 100,000 for interpretability, i.e. number of deaths per 100,000 people).
-<b>Age-adjusted Death Rate</b>  is the rate that would have existed if the population had the same age distribution as a reference population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality.
+<b>Crude Death Rate</b> takes the size of the population into account by dividing the number of deaths by the number of people in the population (multiplied by 100,000 for interpretability, i.e. number of deaths per 100,000 people).
+<b>Age-adjusted Death Rate</b> is the rate that would have existed if the population had the same age distribution as a reference population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality.
 <b>Years of Life Lost</b> sums all the years of life prematurely lost across all people that die from that condition, and is influenced by the age at which people die from the condition and the number of people that die from that condition.
 <b>Years of Life Lost per 100,000 population</b> divides the YLL sum by the number of people in the population, and then multiplies by 100,000 for interpretability. It is the YLL equivalent of the Death Rate
 <b> Standard Mortality Ratio (SMR)</b>  shows the county rate of condition divided by the rate for the condition in the State overall-this measure will highlight counties that have especially high (or low) rates of a condition <b>compared</b> to the State rate, even if the condition does not have a large number of deaths.  To aid in using this measure, the vertical red line is at 1.2, corresponding to the measure being 120% higher in the selected geography than the State average.  The green line is at 0.8, 80% of the State average and the grey line is at 1.0, right on the State average. 
@@ -145,7 +148,7 @@ conditionTableTab <-
 "This is a tabular version of the Rank Conditions tab, providing for a more granular examination of specific numbers or rates., Users can sort the table on any of the measures and can use the search window allows users to quickly find a specific condition."
 
 conditionSexTab <-
-"(This tab work in progress – awaiting further development of the tab)
+"(This tab work in progress, awaiting further development of the tab)
 <br><br>
 This tab ranks causes within a selected geography separately for males and females. It can highlight conditions that appear to be a leading cause of death for one sex but not the other."
 
