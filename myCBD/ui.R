@@ -116,15 +116,15 @@ mainPanel(
             
               h4(HTML(above1),align="left"),
               fluidRow(
-                column(width=3,img(id="map1I",src="mapx.jpeg",width="100%",height=200,style= myBoxSty)),
-                column(width=3,img(id="map2I",src="mapS.jpeg",width="100%",height=200,style = myBoxSty)),
-                column(width=3,img(id="rankgeoI",src="lhj.jpeg",width="100%",height=200,style = myBoxSty)),
-                column(width=3,img(id="ranktableI",src="table.jpeg",width="100%",height=200,style = myBoxSty))),
+                column(width=3,img(id="map1I",src="MapInt2.png",width="100%",style= myBoxSty)),
+                column(width=3,img(id="map2I",src="MapStat2.png",width="100%",style = myBoxSty)),
+                column(width=3,img(id="trendI",src="trends2.png",width="100%",style = myBoxSty)),
+                column(width=3,img(id="scatterI",src="SODH2.png",width="100%", style = myBoxSty))),
               br(),
                fluidRow(
-                column(width=4,img(id="scatterI",src="scatter.jpeg",width="100%",height=200,style = myBoxSty)),
-                column(width=4,img(id="trendI",src="trend.jpeg",width="100%",height=200,style = myBoxSty)),
-                column(width=4,img(id="rankcauseI",src="causes.jpeg",width="100%",height=200,style = myBoxSty))),
+                column(width=4,img(id="rankgeoI",src="rankGeo2.png",width="100%",style = myBoxSty)),
+                column(width=4,img(id="ranktableI",src="rankTable2.png",width="100%",style = myBoxSty)),
+                column(width=4,img(id="rankcauseI",src="rankPlot2.png",width="100%",style = myBoxSty))),
               h5(HTML(below1),align="left"),
               value = 11),          
   
