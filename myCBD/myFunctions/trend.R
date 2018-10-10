@@ -24,9 +24,13 @@ library(directlabels)
 
 
 trend <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL") {
+ if(1==2){
+  myLHJ="CALIFORNIA" 
+  myCause="0"
+  myMeasure = "YLL"
+ }
   
-
-minYear <- 2002
+minYear <- 2000
 maxYear <- 2017
 
 myCex <- 1.6
@@ -39,23 +43,25 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 
 myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
 
-#ggplot(data=dat.1, aes(x=year, y=eval(parse(text=(myMeasure))), group=sex)) +
+
+mySize1 <- 20
+mySize2 <- 24
+myCex1  <- 1.8
+
+
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
-    geom_line(size=2) +
-     scale_colour_discrete(guide = 'none') + labs(y = myMeasure) +
-     scale_x_continuous(expand=c(0,3)) + scale_y_continuous(limits = c(0, NA)) +
-     geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex = 1.6, font="bold")) +
-   geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points", cex = 1.6, font="bold"))  +
-      labs(title =myTit) +
-   theme_grey() +
-   theme(
-     plot.title=element_text(family='', face='bold', colour='black', size=18)
-   )
- 
-    
-   
-#    scale_x_continuous(limits = c(0, NA))
+    geom_line(size=2)  +
+    scale_x_continuous(minor_breaks=2000:2017,breaks=2000:2017,expand=c(0,3)) +
+    scale_y_continuous(limits = c(0, NA)) +
+    scale_colour_discrete(guide = 'none') +   # removed legend
+    labs(y = myMeasure)  + 
+    geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
+    geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
+    labs(title =myTit,size=mySize2) +
+    theme(axis.text=element_text(size=mySize1),
+          axis.title=element_text(size=mySize1,face="bold"),
+          plot.title=element_text(family='', face='bold', colour='black', size=mySize2),
+          axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
   
-  
-  
+
 }

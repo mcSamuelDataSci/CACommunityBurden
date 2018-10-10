@@ -17,8 +17,14 @@ pal <- c("red", "blue", "green")
          
 
 scatterSDOH <- function(myCause="0", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="abovepoverty"){
-
-
+ if(1==2){
+  myCause="0"
+  myMeasure = "aRate"
+  mySex="Total"
+  myGeo="Community"
+  t.x="abovepoverty"
+}
+  
 if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
   
@@ -35,7 +41,7 @@ if (myGeo=="Census Tract") {
                           dat.1 <- filter(datTract,sex==mySex,CAUSE==myCause,county != "CALIFORNIA")  
                           temp  <- dat.1[,c("GEOID",myMeasure)]
                           sdohWork  <- merge(sdohWork,temp,by="GEOID")
-                          }
+                           }
 
 if (myGeo=="Community") {
                        sdohWork <- sdohComm
@@ -59,25 +65,48 @@ sdohWorkList <- as.list(sdohWork)
 # https://plot.ly/r/axes/
   
 
+
+
 p <- plot_ly(
-     data = sdohWork,
-     x =  ~  sdohWorkList[[t.x]],
-     y =  ~ sdohWorkList[[t.y]],
-     type="scatter",mode="markers",
-     colors=pal,
-     color = ~sdohWorkList[["region"]],
-     size = ~ sdohWorkList[["pop"]], sizes=c(20,400)
-    # ,
-    #   hoverinfo = 'text',
-    #    text = ~paste('</br> County',sdohWorkList[["county"]],
-    #                  '</br> Population:',format(sdohWorkList[["pop"]], big.mark = ","), 
-    #                  '</br>',sdohVecL[xL],":",round(sdohWorkList[[t.x]],1),"%",
-    #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
-    ) %>%
-#    hide_colorbar() %>% 
-layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo),
-       xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
-       yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
+  data = sdohWork,
+  x =    sdohWork[,t.x],
+  y =    sdohWork[,t.y],
+  type="scatter",mode="markers",
+  colors=pal,
+  color = sdohWork[,"region"],
+  size =  sdohWork[,"pop"], sizes=c(20,400),
+  hoverinfo = 'text',
+  text   = paste('County:',sdohWork[,"county"],
+                '<br> Population:',format(sdohWork[,"pop"], big.mark = ","), 
+                '<br>',names(xL),":",round(sdohWork[,t.x]),"%",
+                '<br>',names(xM),":",round(sdohWork[,t.y])) ) %>%
+  layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo),
+                 xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
+                 yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
+
+
+
+# 
+# 
+# p <- plot_ly(
+#      data = sdohWork,
+#      x =  ~  sdohWorkList[[t.x]],
+#      y =  ~ sdohWorkList[[t.y]],
+#      type="scatter",mode="markers",
+#      colors=pal,
+#      color = ~sdohWorkList[["region"]],
+#      size = ~ sdohWorkList[["pop"]], sizes=c(20,400)
+#     # ,
+#     #   hoverinfo = 'text',
+#     #    text = ~paste('</br> County',sdohWorkList[["county"]],
+#     #                  '</br> Population:',format(sdohWorkList[["pop"]], big.mark = ","), 
+#     #                  '</br>',sdohVecL[xL],":",round(sdohWorkList[[t.x]],1),"%",
+#     #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
+#     ) %>%
+# #    hide_colorbar() %>% 
+# layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo),
+#        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
+#        yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
 p
 }
 
