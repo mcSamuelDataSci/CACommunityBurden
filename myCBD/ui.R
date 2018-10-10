@@ -61,7 +61,7 @@ sidebarPanel(width=3,
  conditionalPanel(condition = paste(
                               "(",fC(c(44)),") &&",
                               "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | (input.myMeasure == 'aRate'))"),
-                                                        checkboxInput("myCI",       "95% CIs?", value=TRUE)),
+                                                        checkboxInput("myCI",       "95% CIs?", value=FALSE)),
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
 
  hr(), 
