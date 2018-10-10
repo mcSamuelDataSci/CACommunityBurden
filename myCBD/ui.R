@@ -58,7 +58,10 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
                                                         radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
  conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
- conditionalPanel(condition = fC(c(44)),                checkboxInput("myCI",       "95% CIs?", value=TRUE)),
+ conditionalPanel(condition = paste(
+                              "(",fC(c(44)),") &&",
+                              "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | (input.myMeasure == 'aRate'))"),
+                                                        checkboxInput("myCI",       "95% CIs?", value=TRUE)),
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
 
  hr(), 

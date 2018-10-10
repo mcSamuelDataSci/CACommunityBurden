@@ -29,6 +29,10 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Tot
   
     
     if (myCI & myMeasure=="cDeathRate") {arrows(y0=t.plot,x0=dat.1$rateLCI,x1=dat.1$rateUCI,col="blue",length=.05,angle=90,code=3)}
+    if (myCI & myMeasure=="YLLper")     {arrows(y0=t.plot,x0=dat.1$YLLrateLCI,x1=dat.1$YLLrateUCI,col="blue",length=.05,angle=90,code=3)}
+    if (myCI & myMeasure=="aRate")      {arrows(y0=t.plot,x0=dat.1$aLCI,x1=dat.1$aUCI,col="blue",length=.05,angle=90,code=3)}
+    
+    
     
     mtext(tit,cex=1.6,line=-2,font=2)
     
