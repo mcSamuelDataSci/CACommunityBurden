@@ -18,7 +18,7 @@ library(rmapshaper) # to remove islands (not yet working)
 library(readr)
 
 
-source(path(upPlace,"islands_removal.R"))
+#source(path(upPlace,"islands_removal.R"))
 # res <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
 
 
@@ -30,7 +30,7 @@ source(path(upPlace,"islands_removal.R"))
 cbdLinkCA  <- read.csv(path(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "character")  # colClasses... essential for keeping leading "0"   
 
 
-tractInfo <- read_csv(path(myPlace,"/upData/tractInformation.csv"),guess_max = 8000)
+tractInfo <- read_csv(path(upPlace,"/upData/tractInformation.csv"),guess_max = 8000)
 allWater  <- filter(tractInfo,allH20==1)$GEOID
 #  c("06017990000","06037990300","06061990000","06083990000","06111990100")
 
@@ -44,9 +44,10 @@ bad <- c("06081990100","06001990000","06037137000","06075980401")
 
 options(tigris_class = "sf")  # Read shape files as Simiple Features objects
 shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
+                                                 # now 8041!!
 
-
-shape_Tract <- county_filter(shape_Tract, min_area = 1.01e+9, rowmap = FALSE)
+#ZEV?
+# shape_Tract <- county_filter(shape_Tract, min_area = 1.01e+9, rowmap = FALSE)
 
 #shape_Tract <- rmapshaper::ms_simplify(input = shape_Tract, weighting = 2, keep_shapes = TRUE) # From John P.
 

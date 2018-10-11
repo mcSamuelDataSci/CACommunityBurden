@@ -108,6 +108,10 @@ junk <- filter(work,pop2013ACS==0 & is.na(deaths1))
 # one tract, 06095980000 has 0 pop2012ACS but 236 pop in pop1013 -- DAVE CHECK
 # 11 tracts with no population and no deaths
 # "06037980005" "06037980022" "06037980006" "06037980030" "06037980020" "06037980001" "06037980002" "06065980004" "06071980100" "06075980401" "06081984300" "06095980000"
+junk <- junk[,c("GEOID","county")]
+junk$ZERO=1
+
+
 
 # bad <- c("06081990100","06001990000","06037137000", #  WHY?
 #         "06075980401") # 0 population and 0 deaths   
