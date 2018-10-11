@@ -29,7 +29,11 @@ source(path(upPlace,"islands_removal.R"))
 # cbdLinkCA links census tracts ("GEOID") to "comID" (community ID; currently adjusted MSSA_ID) - 8036 tracts
 cbdLinkCA  <- read.csv(path(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "character")  # colClasses... essential for keeping leading "0"   
 
-allWater <- c("06017990000","06037990300","06061990000","06083990000","06111990100")
+
+tractInfo <- read_csv(path(myPlace,"/upData/tractInformation.csv"),guess_max = 8000)
+allWater  <- filter(tractInfo,allH20==1)$GEOID
+#  c("06017990000","06037990300","06061990000","06083990000","06111990100")
+
 # these (4) census tracts are in the shape files (8043 elements) "bad" and not in our CA data; last one has zero pop; CHECK others 
 bad <- c("06081990100","06001990000","06037137000","06075980401")  
 
@@ -57,7 +61,7 @@ shape_Tract <- county_filter(shape_Tract, min_area = 1.01e+9, rowmap = FALSE)
 # Join "Community IDs (MSSAs)" to tract file, remove "bad" tracts, select variables/columns needed
 
 shape_Tract <- shape_Tract %>% geo_join(cbdLinkCA, by="GEOID") %>%   
-                               filter(!(GEOID %in% bad)) %>% 
+                               filter(!(GEOID %in% allWater)) %>% 
                                select(GEOID,comID,COUNTYFP,county,geometry) # 8034 tracts
 
 #write_rds(shape_Tract,path(myPlace,"/myData/shape_Tract.rds"),compress="none")    # Save Simple Feature shape object as R object
