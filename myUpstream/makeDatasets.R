@@ -95,6 +95,12 @@ cbdDat0$GEOID[cbdDat$GEOID=="06037930401"] <- "06037137000"
 # (3) fix county based on GEOID analysis here:
 
 
+allWater <- c("06017990000","06037990300","06061990000","06083990000","06111990100")
+
+
+
+
+
 
 
 #forEthan <- sample_n(cbdDat0SAMP,100000)

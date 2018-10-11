@@ -49,7 +49,7 @@ tDat <- bind_rows(tDat,tDatState)
 
 popCounty2000to2015 <- tDat %>% group_by(year, county,sex,ageG) %>%  summarize(pop  = sum(pop)) 
 popCountytemp       <- tDat %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageG = "Total")
-popCounty2000to2015 <- bind_rows(popCounty2000to2015,popCountytemp)
+popCounty2000to2015 <- bind_rows(popCounty2000to2015,popCountytemp) %>% ungroup()
                             
                     
 # == CDPH DIVISION OF COMMINIABLE DISEASE CONTROL DATA ================================================================================
