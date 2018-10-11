@@ -121,7 +121,7 @@ timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else
 ### not sure why I can't use timeLabel <- yearGrp here?
 
 output$map_title <- renderUI({
-                    HTML(paste0("<div style='text-align:left;font-size:20px;font-weight: bold'>",
+                    HTML(paste0("<div style='text-align:left;>",
                                    lMeasuresC[lMeasures == input$myMeasure],
                                    " from ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA

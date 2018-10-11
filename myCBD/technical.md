@@ -1,4 +1,7 @@
-﻿- Key definitions
+<div style = 'font-size:16px;font-weight: bold;font-family:"Times New Roman", Times, serif';>
+
+
+- Key definitions
   - Communities:  Throughout the CCB, communities are defined by Medical Service Study Areas (MSSAs), a unique California geographic designation based on aggregation of census tracts, constructed by the California Office of Statewide Health Planning and Development (OSHPD) with each decennial census [CHHS/OSHPD/MSSA](https://oshpd.maps.arcgis.com/home/item.html?id=a20100c4bf374bd081bb49b82cbaaac3#overview). MSSAs provide the CCB with a good surrogate for &quot;communities&quot; because:
     - (1) there are 542 MSSAs for the 2010 census, providing much more geographic granularity than the 58 California counties and much greater numerical/statistical stability than the 8000+ California 2010 census tracts,
     - (2) in general, they are aligned with &quot;communities&quot; in the important sense of geographic, cultural, and sociodemographic similarities (although this is generally more true for urban than rural MSSAs, because of the larger size of MSSAs in rural areas),
