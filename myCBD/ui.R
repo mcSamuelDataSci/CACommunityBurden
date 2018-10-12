@@ -69,10 +69,10 @@ sidebarPanel(width=3,
  
  conditionalPanel(condition = fC(c(11)), 
                   
- helpText(textIntroA,style="color:black"), br(),
- helpText(textIntroC,style="color:black"), br(),
+ helpText(textIntroA,style="color:blue"), br(),
+ helpText(textIntroC,style="color:blue"), br(),
  
- if (whichData == "real") { helpText(textNote.real,style="color:black")},
+ if (whichData == "real") { helpText(textNote.real,style="color:blue")},
  if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
  helpText("Share your feedback!",style="color:black"),br(),  
