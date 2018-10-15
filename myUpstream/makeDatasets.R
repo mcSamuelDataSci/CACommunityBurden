@@ -12,9 +12,6 @@
 #======================================================================================
 
 
-
-
-
 # -- Designate locations and load packages---------------------------------------------------------
 
 whichDat <- "real"
@@ -55,18 +52,30 @@ ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Groups and St
 
 #-- LOAD AND PROCESS POPULATION DATA --------------------------------------------------------------
 
-popTract            <- readRDS(path(upPlace,"/upData/popTract2013.RDS"))
+# ungrouping important for subsequent data set merging
+
+
+popTract            <- readRDS(path(upPlace,"/upData/popTract2013.RDS")) %>% ungroup() 
 popTractSexTot      <- filter(popTract,ageG == "Total")
 popTractSexTotAgeG  <- filter(popTract,ageG != "Total")
 
-popCommSexTot       <- popTractSexTot     %>% group_by(yearG,county,comID,sex)      %>% summarise(pop=sum(pop))   
-popCommSexTotAgeG   <- popTractSexTotAgeG %>% group_by(yearG,county,comID,sex,ageG) %>% summarise(pop=sum(pop))
+popCommSexTot       <- popTractSexTot     %>% group_by(yearG,county,comID,sex)      %>% summarise(pop=sum(pop))  %>% ungroup()  
+popCommSexTotAgeG   <- popTractSexTotAgeG %>% group_by(yearG,county,comID,sex,ageG) %>% summarise(pop=sum(pop))  %>% ungroup() 
 
-popCounty           <- readRDS(path(upPlace,"/upData/popCounty2000to2015.RDS"))
+popCounty           <- readRDS(path(upPlace,"/upData/popCounty2000to2015.RDS")) %>% ungroup() 
 popCountySexTot     <- filter(popCounty,ageG == "Total")
 popCountySexTotAgeG <- filter(popCounty,ageG != "Total")
 
 popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
+
+
+# popCountySexTotAgeG  <- ungroup(popCountySexTotAgeG)
+# popCountySexTotAgeG  <- as.data.frame(popCountySexTotAgeG)
+
+
+
+
+
 
  # == LOAD AND PROCESS DEATH DATA =================================================================
 
@@ -88,7 +97,7 @@ if (whichDat == "fake") {
 
 # (1) LA CENSUS TRACT TO RECODE
 # 06037930401 should be recoded to  06037137000 in all data files
-cbdDat0$GEOID[cbdDat$GEOID=="06037930401"] <- "06037137000"
+cbdDat0$GEOID[cbdDat0$GEOID=="06037930401"] <- "06037137000"
 
 # (2) all occurences of "06037800325" in death data are Ventura, all are LA in pop data
 
@@ -96,11 +105,6 @@ cbdDat0$GEOID[cbdDat$GEOID=="06037930401"] <- "06037137000"
 
 
 allWater <- c("06017990000","06037990300","06061990000","06083990000","06111990100")
-
-
-
-
-
 
 
 #forEthan <- sample_n(cbdDat0SAMP,100000)
@@ -324,8 +328,8 @@ fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE
 #######CAUSE CHARACTER##################
 
 fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 
 # County age deaths -------------------------------------------------------------------------------
 
@@ -349,12 +353,6 @@ datAA1 <- filter(datAA1,!is.na(sex))    # remove
 
 #########################
 
-
- popCountySexTotAgeG  <- ungroup(popCountySexTotAgeG)
- popCountySexTotAgeG  <- as.data.frame(popCountySexTotAgeG)
-
- 
- 
 #  crap3 <- filter(popCountySexTotAgeG ,county=="California",sex =="Female",year>2014)
 #           crap3 %>% group_by(year,sex) %>%
 #                       summarize(oPop    = sum(pop,na.rm=TRUE))
@@ -393,10 +391,10 @@ datAA1 <- filter(datAA1,!is.na(sex))    # remove
 
 
 
-ageCounty   <- full_join(fullMatCounty,datAA1,by = c("county","year","sex","ageG","CAUSE"))  %>%    # merge death data and "fullMatCounty"
-                full_join(popCountySexTotAgeG, by = c("county","year","sex","ageG") )  %>%    # merge population
-                 full_join(popStandard[,c("ageG","US2000POP")],           by="ageG")                           # merge standard population
-
+ageCounty   <- full_join(fullMatCounty,datAA1 ,by = c("county","year","sex","ageG","CAUSE"))  %>%    # merge death data and "fullMatCounty"
+                full_join(popCountySexTotAgeG, by = c("county","year","sex","ageG") )         %>%    # merge population
+                 full_join(popStandard[,c("ageG","US2000POP")],          by="ageG")                  # merge standard population
+ 
 
 ageCounty$Ndeaths[is.na(ageCounty$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata change to "0"
@@ -425,10 +423,10 @@ tA3      <- cbdDat0 %>% group_by(comID, yearG, sex, ageG,CAUSE=lev2) %>% summari
 datAA1 <- bind_rows(tA1,tA2,tA3)  %>% filter(comID != "")  
 #datAA1 <- na.omit(datAA1)           
 
-ageComm   <- merge(fullMatComm,datAA1,by = c("comID","yearG","sex","ageG","CAUSE"),all=TRUE)  %>% 
-                filter(yearG == yearGrp)                                                  %>%
-             merge(popCommSexTotAgeG, by = c("comID","yearG","sex","ageG"),all=TRUE)          %>% # population
-             merge(popStandard[,c("ageG","US2000POP")],by="ageG")                                 # standard population
+ageComm   <- full_join(fullMatComm,datAA1,by = c("comID","yearG","sex","ageG","CAUSE"))  %>% 
+                filter(yearG == yearGrp)                                                 %>%
+              full_join(popCommSexTotAgeG, by = c("comID","yearG","sex","ageG"))         %>% # population
+               full_join(popStandard[,c("ageG","US2000POP")],by="ageG")                      # standard population
 
 
 ageComm$Ndeaths[is.na(ageComm$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
@@ -457,10 +455,10 @@ tA2      <- cbdDat0 %>% group_by(GEOID, yearG, sex, ageG,CAUSE=lev1) %>% summari
 
 datAA1 <- bind_rows(tA1,tA2)  %>% filter(GEOID != "")  
 
-ageTract   <- merge(fullMatTract,datAA1,by = c("GEOID","yearG","sex","ageG","CAUSE"),all=TRUE)  %>% 
-                filter(yearG == yearGrp)                                                    %>%
-              merge(popTractSexTotAgeG,by = c("GEOID","yearG","sex","ageG"),all=TRUE)           %>%   # add population
-              merge(popStandard[,c("ageG","US2000POP")],by="ageG")                                    # add standard population 
+ageTract   <- full_join(fullMatTract,datAA1,by = c("GEOID","yearG","sex","ageG","CAUSE"))  %>% 
+                filter(yearG == yearGrp)                                                   %>%
+               full_join(popTractSexTotAgeG,by = c("GEOID","yearG","sex","ageG"))          %>%   # add population
+                full_join(popStandard[,c("ageG","US2000POP")],by="ageG")                        # add standard population 
 
 ageTract$Ndeaths[is.na(ageTract$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageTract$YLL[is.na(ageTract$YLL)]         <- 0    # if NA deaths in strata change to "0"
@@ -479,7 +477,6 @@ tractAA  <- tractAA[!(tractAA$aRate > 5000),]
 tractAA  <- tractAA[!(is.na(tractAA$aRate)),]
 
 # -- Merge adjusted rates into main data files and final Clean Up ----------------------------------------------------------
-
 
 datT0     <- datTract 
 junk      <- filter(datT0,is.na(CAUSE))

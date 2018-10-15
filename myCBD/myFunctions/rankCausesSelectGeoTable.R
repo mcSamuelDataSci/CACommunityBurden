@@ -1,5 +1,5 @@
 rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
-
+  mySex <- "Total"
   inDat <- datCounty
   dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,CAUSE !=0)
 

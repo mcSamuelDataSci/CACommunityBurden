@@ -45,7 +45,7 @@ sidebarPanel(width=3,
                                | (", fC(c(33,34,45,44)),")"  
                              ),                         sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
 
- conditionalPanel(condition = fC(c(22,23,33,45,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
+ conditionalPanel(condition = fC(c(22,23,33,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  conditionalPanel(condition = fC(c(33)),                checkboxGroupInput("myLev", "Levels to show:",c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("statecutHelp", "?",style=myButtonSty) ,
@@ -75,20 +75,11 @@ sidebarPanel(width=3,
  if (whichData == "real") { helpText(textNote.real,style="color:blue")},
  if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
- helpText("Share your feedback!",style="color:black"),br(),  
- helpText("Help us improve the CCB by taking a short survey LINK.",style="color:black") 
  
- # tags$br(),
- # icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?",style="color:blue"),
- # tags$br(), tags$a("Developed in R-Shiny",style="color:blue"),
- # helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site",style="color:blue")),
- #   br(),
- #   HTML('<center><img src="cdph2.gif" height="85" width="100"></center>'),
- #   #img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
- #   helpText(paste("Version:",version),style="color:black")
+ helpText("Share your feedback!  Help us improve the CCB by taking a short survey LINK.",style="color:blue") 
+ 
  ),
 
- 
 
 # TEXT on bottom of SIDEBAR
 tags$br(),

@@ -3,7 +3,6 @@
 library(fs)
 library(readr)
 library(dplyr)
-#library(tigris) #Added this one per Zev's instructions below
 
 myDrive  <- "e:"                            
 myPlace  <- paste0(myDrive,"/0.CBD/myUpstream")  
@@ -73,30 +72,30 @@ merged <- full_join(d.correct, d.mssa00, by = mergeVec)  %>%
   full_join(popACS,   by = mergeVec)
 
 
-merged <- merged %>%
-  mutate(inCA         = ifelse(substr(GEOID,1,2) == "06",T,F),
-         somePop      = ifelse(POP2013 != 0,T,F),
-         percentInst  = (POP2013-POP2013CIV)/POP2013) 
+merged <- merged %>%  mutate(inCA          = ifelse(substr(GEOID,1,2) == "06",T,F),
+                             somePop       = ifelse(POP2013 != 0,T,F),
+                             percentInst   = (POP2013-POP2013CIV)/POP2013, 
+                             noPopNoDeaths = ifelse(pop2013ACS==0 & is.na(deaths1),T,F)
+                             )
 
 
-write_csv(merged,path(myPlace,"/upData/tractInformation.csv"))
-
-nrow(merged)  # ALL merged 9791
-table(merged$inCA,useNA = "ifany") #590 not in CA 9191 in CA
-work <- filter(merged,inCA==TRUE)
-table(work$inSHAPE,useNA = "ifany") #1150 not in shape file
-junk <- filter(work, is.na(inSHAPE))
-table(junk$deaths1,useNA = "ifany") #no deaths in any of these
-table(junk$inMSSA00,useNA = "ifany") #1112 from MSSA00, 38 from somewhere else (NONE in MSSA13)
-junk <- filter(junk,is.na(inMSSA00))
-junk$GEOID[!(is.na(junk$inPOV))]   # 17 inPov and nowhere else --- DAVE, check these
+nrow(merged)  # ALL merged 9781
+table(merged$inCA,useNA = "ifany")   # 590 not in CA 9191 in CA
+work <- filter(merged,inCA==TRUE)    # ONLY California
+table(work$inSHAPE,useNA = "ifany")  # 1150 not in shape file
+junk <- filter(work, is.na(inSHAPE)) # not in shape file  
+table(junk$deaths1,useNA = "ifany")  # among these, no deaths 
+table(junk$inMSSA00,useNA = "ifany") # 1112 from MSSA00, 38 from somewhere else (NONE in MSSA13)
+junk <- filter(junk,is.na(inMSSA00)) 
+junk$GEOID[!(is.na(junk$inPOV))]          # 17 inPov and nowhere else --- DAVE, check these
 junk$GEOID[!(is.na(junk$inACSpop2013))]   # 21 inACSpop2013 and nowhere else (and 0 population for all) --- DAVE, check these
 
-
 work <- filter(work,!is.na(inSHAPE))  #8041
+write_csv(work,path(myPlace,"/upData/tractInformation.csv"))
+
+
 table(work$allH20,useNA = "ifany")
 work <- filter(work,allH20==0)        #8036
-
 
 summary(work$deaths1)      # some 0's, 25 NAs
 summary(work$pop2013ACS)   # some 0's, no NAs
@@ -108,25 +107,16 @@ junk <- filter(work,pop2013ACS==0 & is.na(deaths1))
 # one tract, 06095980000 has 0 pop2012ACS but 236 pop in pop1013 -- DAVE CHECK
 # 11 tracts with no population and no deaths
 # "06037980005" "06037980022" "06037980006" "06037980030" "06037980020" "06037980001" "06037980002" "06065980004" "06071980100" "06075980401" "06081984300" "06095980000"
-junk <- junk[,c("GEOID","county")]
-junk$ZERO=1
-
-
 
 # bad <- c("06081990100","06001990000","06037137000", #  WHY?
 #         "06075980401") # 0 population and 0 deaths   
 
 
-
 work <- filter(work, !(pop2013ACS==0 & is.na(deaths1))) #8024 (NO REASON TO FILTER???)  12 tracts with no Pop and no deaths
-
-
 
 junk <- filter(work,pop2013ACS==0) # 13 tracts with 0 pop and some deaths
 junk$GEOID
 # "06037320000" "06037504102" "06037980003" "06037980004" "06037980007" "06037980013" "06037980014" "06037980018" "06037980021" "06037980025" "06037980028" "06037980033" "06073009902"
-
-
 
 
 #Guessing for now we're using the corrected deaths file with totals for all years as before, 

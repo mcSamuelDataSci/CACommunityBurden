@@ -35,7 +35,7 @@ textIntroB <- "This tool is designed for use by CDPH programs, local health depa
 
 textIntroC <- "The CCB currently displays 17 years of California statewide, county, community, and census tract condition-specific mortality burden, using a range of measures, with interactive rankings, charts, maps and trend visualizations. The list of conditions is based on the Global Burden of Disease system, modified for local public health priorities. The CCB also includes a limited set of social determinants data and describes their correlations with death outcomes, as a pilot for more robust functionality in this area." 
 
-textNote.real <- "This app deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome. Please email michael.samuel@cdph.ca.gov."
+textNote.real <- "This app deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome."
 
 textNote.fake <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA"
 
