@@ -310,7 +310,7 @@ CAUSE2 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
 CAUSE3 <- data.frame(CAUSE=CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
 sex    <- data.frame(sex    = c("Male","Female","Total"))
 ageG   <- data.frame(ageG   = sort(unique(cbdDat0$ageG)))
-county <- data.frame(county = geoMap$countyName)         
+county <- data.frame(county = c(geoMap$countyName,"California"))         
 comID  <- data.frame(comID  = unique(cbdLinkCA[,"comID"]))
 GEOID  <- data.frame(GEOID  = cbdLinkCA[,"GEOID"])
 
@@ -320,7 +320,10 @@ fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE
 fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
 fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
 
-fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+
+#######CAUSE CHARACTER##################
+
+fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 
@@ -335,7 +338,7 @@ tA6      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev1) %>% summariz
 tA7      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
 tA8      <- cbdDat0 %>% group_by(       year, sex, ageG,CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
 
-datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)
+datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)  %>% ungroup()  # UNGROUP HERE!!!!
 
 # DATA CLEANING ISSUES as above
 datAA1 <- filter(datAA1,!is.na(ageG))   # remove 403 records with missing age (0.065% of deaths)  -- impact of this?
@@ -343,23 +346,68 @@ datAA1 <- filter(datAA1,!is.na(CAUSE))  # remove 6955 records with missing CAUSE
 datAA1 <- filter(datAA1,!is.na(county)) # remove 758 records with missing county
 datAA1 <- filter(datAA1,!is.na(sex))    # remove 
 
-ageCounty   <- merge(fullMatCounty,datAA1,by = c("county","year","sex","ageG","CAUSE"),all=TRUE)  %>%    # merge death data and "fullMatCounty"
-               merge(popCountySexTotAgeG, by = c("county","year","sex","ageG")        ,all=TRUE)  %>%    # merge population
-               merge(popStandard[,c("ageG","US2000POP")],           by="ageG")                           # merge standard population
+
+#########################
+
+
+ popCountySexTotAgeG  <- ungroup(popCountySexTotAgeG)
+ popCountySexTotAgeG  <- as.data.frame(popCountySexTotAgeG)
+
+ 
+ 
+#  crap3 <- filter(popCountySexTotAgeG ,county=="California",sex =="Female",year>2014)
+#           crap3 %>% group_by(year,sex) %>%
+#                       summarize(oPop    = sum(pop,na.rm=TRUE))
+#  
+# ageCounty      <- full_join(fullMatCounty,datAA1,by = c("county","year","sex","ageG","CAUSE")) 
+# ageCounty$year <- as.integer(ageCounty$year)
+# 
+# 
+# nrow(filter(fullMatCounty,county=="California",CAUSE=="D05",sex =="Female",year==2017))
+# 
+# 
+# #str(ageCounty)
+# #str(popCountySexTotAgeG)
+# 
+# ageCounty <- full_join(ageCounty,popCountySexTotAgeG, by = c("county","year","sex","ageG")        )
+# 
+# crap3 <- filter(ageCounty ,county=="California",CAUSE=="D05",sex =="Female",year>2014)
+# 
+# crap3 %>% group_by(year,sex) %>%
+#   summarize(oPop    = sum(pop,na.rm=TRUE))
+# 
+# crap3 <- filter(ageCounty ,county=="California",CAUSE=="0",sex =="Female",year>2014)
+# crap3 %>% group_by(year,sex) %>%
+#   summarize(oPop    = sum(pop,na.rm=TRUE))
+
+
+##########################
+
+ 
+ 
+ # ageCounty   <- merge(fullMatCounty,datAA1,by = c("county","year","sex","ageG","CAUSE"),all=TRUE)  %>%    # merge death data and "fullMatCounty"
+ #   merge(popCountySexTotAgeG, by = c("county","year","sex","ageG")        ,all=TRUE)  %>%    # merge population
+ #   merge(popStandard[,c("ageG","US2000POP")],           by="ageG")                           # merge standard population
+ # 
+ 
+
+
+
+ageCounty   <- full_join(fullMatCounty,datAA1,by = c("county","year","sex","ageG","CAUSE"))  %>%    # merge death data and "fullMatCounty"
+                full_join(popCountySexTotAgeG, by = c("county","year","sex","ageG") )  %>%    # merge population
+                 full_join(popStandard[,c("ageG","US2000POP")],           by="ageG")                           # merge standard population
+
 
 ageCounty$Ndeaths[is.na(ageCounty$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
 countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
-            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
-            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
-
-
-
+            aRate   = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            YLL.adj.rate   = ageadjust.direct(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
 
 
 countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
@@ -388,12 +436,12 @@ ageComm$YLL[is.na(ageComm$YLL)]         <- 0    # if NA deaths in strata change 
 
 commAA <- ageComm %>% group_by(comID,yearG,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
-            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            aRate   = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             
-            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+            YLL.adj.rate   = ageadjust.direct(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
 commAA <- commAA[!(commAA$oDeaths==0),c("comID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
 
 # removes rows with aRate = inf HERE there are only ALPINE 
@@ -419,10 +467,10 @@ ageTract$YLL[is.na(ageTract$YLL)]         <- 0    # if NA deaths in strata chang
 
 tractAA <- ageTract %>% group_by(GEOID,yearG,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
-            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+            aRate   = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            YLL.adj.rate   = ageadjust.direct(count=YLL, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
 tractAA <- tractAA[!(tractAA$oDeaths==0),c("GEOID","yearG","sex","CAUSE","oDeaths","aRate","aLCI","aUCI","YLL.adj.rate")]  
 
 

@@ -54,7 +54,7 @@ popCountySexTotAgeG <- filter(popCounty,ageG != "Total")
 
 
 tdat <- popCountySexTotAgeG
-tdat <- filter(tdat,county=="California",sex =="Total")
+tdat <- filter(tdat,county=="California",sex =="Female")
 
 
 tdat <- filter(tdat,county=="California",sex !="Total")
@@ -88,7 +88,7 @@ p1 <- ggplot( tdat, aes( x = year, y = pop ) ) +
   facet_wrap( ~ ageG )  
 
 
-
+p1
 
 
 

@@ -83,9 +83,8 @@ DCDCpopCounty2000to2015  <- bind_rows(DCDCpopCounty2000to2015,DCDCpopCountytemp)
 
 
 # ======================================================================================================================================
-
-
-saveRDS(popCounty2000to2015, file= paste0(upPlace,"/upData/popCounty2000to2015.RDS"))
+saveRDS(DCDCpopCounty2000to2015, file= paste0(upPlace,"/upData/popCounty2000to2015.RDS"))
+saveRDS(    popCounty2000to2015, file= paste0(upPlace,"/upData/popCounty2000to2015.RDS"))
 # 
 # # -- Construct and save file with total state popuation by age groups to use as "Standard Population"------------------------------------------
 # 
