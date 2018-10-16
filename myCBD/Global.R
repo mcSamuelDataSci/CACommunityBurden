@@ -58,16 +58,16 @@ proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
  
  
 # check each of below with:  class(shape_County); object.size(shape_County)
-# shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp"))  # -->    822,048 bytes "SpatialPolygonsDataFrame"
+ shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp"))  # -->    822,048 bytes "SpatialPolygonsDataFrame"
 # shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
 # shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds")) # --> 11,174,336 bytes "sf"  "data.frame"
 # shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.shp"))  # -->    674,488 bytes "sf"  "data.frame"
 # shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds"))  # -->      Error
 
 # THESE DO NOT WORK IN THE APP:
- shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"))
- shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"))
- shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"))
+ shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors=FALSE)
+ shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"),stringsAsFactors=FALSE)
+ shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
  # 
 # THESE DO: 
  #shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp")) 
