@@ -18,7 +18,7 @@ library(rmapshaper) # to remove islands (not yet working)
 library(readr)
 
 
-#source(path(upPlace,"islands_removal.R"))
+# source(path(upPlace,"islands_removal.R"))
 # res <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
 
 
@@ -43,8 +43,30 @@ bad <- c("06081990100","06001990000","06037137000","06075980401")
 # -- Read, process, and write CA Tract File -------------------------------------------------------------------------------
 
 options(tigris_class = "sf")  # Read shape files as Simiple Features objects
-shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
-                                                 # now 8041!!
+
+
+#shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
+#                                                 # now 8041!!
+
+
+# shape_Tract <- tr_ca_clip
+
+
+# Get data with tigris
+tr_ca   <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
+cnty_ca <- counties(state = "CA", cb = TRUE)
+
+proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
+
+# Project to teale meters
+tr_ca    <- st_transform(tr_ca, crs = proj1)
+cnty_ca  <- st_transform(cnty_ca, crs = proj1)
+
+source(path(upPlace,"islands_removal_function.R"))
+
+
+res_ca      <- county_filter(cnty_ca, min_area = 1.01e+15, rowmap = FALSE)
+shape_Tract <- st_intersection(tr_ca, res_ca)
 
 #ZEV?
 # shape_Tract <- county_filter(shape_Tract, min_area = 1.01e+9, rowmap = FALSE)

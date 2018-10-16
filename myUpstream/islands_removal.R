@@ -19,6 +19,9 @@ proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000
 tr_ca <- st_transform(tr_ca, crs = proj1)
 cnty_ca  <- st_transform(cnty_ca, crs = proj1)
 
+
+
+
 # Project to UTM 19 (eastern Mass)
 #tr_ma <- st_transform(tr_ma, crs = 32619)
 #cnty_ma <- st_transform(cnty_ma, crs = 32619)
