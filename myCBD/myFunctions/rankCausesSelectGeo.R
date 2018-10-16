@@ -1,5 +1,15 @@
-rankCause  <- function(myLHJ="Fresno",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
+rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
 
+  if(1==2){
+  myLHJ="CALIFORNIA"
+  myMeasure = "mean.age"
+  myYear=2017
+  mySex="Total"
+  myLev="lev2"
+  myN=10
+  }
+  
+  
   myCex <- 1.6
   myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 

@@ -108,8 +108,6 @@ output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 output$trend2      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 
-
-
 output$scatter    <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,               input$mySex,                  input$myGeo,input$myX))
 
 output$rankCauseT <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
@@ -120,16 +118,32 @@ geoLabel   <- renderText({if (!input$cZoom)            geoLab    <- ""      else
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
 ### not sure why I can't use timeLabel <- yearGrp here?
 
-output$map_title <- renderUI({
-                    HTML(paste0("<div style='text-align:left;>",
-                                   lMeasuresC[lMeasures == input$myMeasure],
+# output$map_title <- renderUI({
+#                     HTML(paste0("<div style='text-align:left;>",
+#                                    lMeasuresC[lMeasures == input$myMeasure],
+#                                    " from ",
+#                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
+#                                    " in ",span(timeLabel(),style="color:blue"),
+#                                    " by ",input$myGeo,
+#                                    sexLabel(), geoLabel(),
+#                                    "</div>", sep = " ")) })
+
+
+output$map_title <- renderUI({h4(
+                    HTML(paste0(   lMeasuresC[lMeasures == input$myMeasure],
                                    " from ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
                                    " in ",span(timeLabel(),style="color:blue"),
                                    " by ",input$myGeo,
                                    sexLabel(), geoLabel(),
-                                   
-                                  "</div>", sep = " ")) })
+                                   "</div>", sep = " "))) })
+
+                       
+                                          
+
+
+
+
                      })
 
 
