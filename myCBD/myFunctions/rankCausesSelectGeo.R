@@ -10,6 +10,12 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,myS
   }
   
   
+  #high resolution for images?
+  #svg("filename.svg")  #,width=14,height=7
+  #plot....
+  #dev.off()
+  
+  
   myCex <- 1.6
   myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
