@@ -3,13 +3,13 @@
 shinyServer(function(input, output,session) {
  
   
-shinyjs::onclick("map1I",updateTabsetPanel(session,inputId="ID",selected="22"))  
-shinyjs::onclick("map2I",updateTabsetPanel(session,inputId="ID",selected="23"))  
+shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
+shinyjs::onclick("map2I",     updateTabsetPanel(session,inputId="ID",selected="23"))  
 shinyjs::onclick("rankcauseI",updateTabsetPanel(session,inputId="ID",selected="33"))  
 shinyjs::onclick("ranktableI",updateTabsetPanel(session,inputId="ID",selected="45"))  
-shinyjs::onclick("rankgeoI",updateTabsetPanel(session,inputId="ID",selected="44"))  
-shinyjs::onclick("trendI",updateTabsetPanel(session,inputId="ID",selected="55"))  
-shinyjs::onclick("scatterI",updateTabsetPanel(session,inputId="ID",selected="66"))  
+shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="44"))  
+shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
+shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
   
   
 observeEvent(input$causeHelp,     {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
@@ -60,13 +60,9 @@ observeEvent(input$cZoom,{
 }
 )
 
-
-
  observeEvent(input$ID,{
-   if(input$ID %in% c(33)){updateSelectInput(session, "myLHJ", choices = lList,selected=current_LHJ()) }
+   if(input$ID %in% c(33,34,44,55,66)){updateSelectInput(session, "myLHJ", choices = lList,selected=current_LHJ()) }
  })
-
-
 
 
 #observeEvent(input$ID,{

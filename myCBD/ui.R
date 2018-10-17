@@ -125,17 +125,16 @@ h5(HTML(below1),align="left"),
 value = 11),          
 
 
-           tabPanel("Map - Interactive",       br(),htmlOutput("map_title")  ,
-                                         leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
-   tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  height=700,width="100%"),  value = 23),
-   tabPanel("Rank Conditions",           br(),    plotOutput(      "rankCause", width="100%",height=700),  value = 33),
-   tabPanel("Rank Conditions Table",         dataTableOutput( "rankCauseT"                     ),  value = 45),   #DT::
-   tabPanel("Rank Conditions by Sex",     plotOutput(      "rankCauseSex", width="100%",height=700),  value = 34),
-   
-   tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width="100%",height=1700), value = 44),
-   tabPanel("Trend",                     br(),plotOutput(      "trend",     width="100%",height=700),  value = 55),
-   tabPanel("SDOH Associations",  br(),      plotlyOutput(    "scatter",             height=700),  value = 66),
-   tabPanel("Technical",        br(), includeMarkdown("technical.md"),value = 77)
+   tabPanel("Map - Interactive",         br(), htmlOutput("map_title")  ,
+                                         leafletOutput("cbdMapTL",  width=700,height=700),        value = 22),
+   tabPanel("Map - Static",              plotOutput("cbdMapTS",  height=700,width="100%"),        value = 23),
+   tabPanel("Rank Conditions",           br(), plotOutput("rankCause", width="100%",height=700),  value = 33),
+   tabPanel("Rank Conditions Table",     dataTableOutput("rankCauseT"),                           value = 45),   #DT::
+   tabPanel("Rank Conditions by Sex",    plotOutput("rankCauseSex", width="100%",height=700),     value = 34),
+   tabPanel("Rank Counties/Communities", plotOutput("rankGeo",width="100%",height=1700),          value = 44),
+   tabPanel("Trend",                     br(), plotOutput("trend",     width="100%",height=700),  value = 55),
+   tabPanel("SDOH Associations",         br(), plotlyOutput("scatter",             height=700),   value = 66),
+   tabPanel("Technical",                 br(), includeMarkdown("technical.md"),                   value = 77)
   )       ) 
  
 ))
