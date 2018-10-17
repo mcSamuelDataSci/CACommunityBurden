@@ -71,10 +71,10 @@ crap3 <- filter(datCounty,county=="CALIFORNIA",CAUSE=="D05",sex !="Total") %>%
 
 
 
+crap <- datCounty
 
 
-
-crap2 <- filter(crap,county=="California",CAUSE=="D05",sex !="Total",(ageG >=  "55" & ageG < "75"))
+crap2 <- filter(crap,county=="California",CAUSE=="D05",sex !="Total")
 
 
 crap2 <- filter(crap,county=="California",CAUSE=="D05",sex !="Total")
@@ -84,7 +84,7 @@ crap2 <- filter(crap,county=="California",CAUSE=="D05",sex !="Total")
 
 
 p1 <- ggplot( crap2, aes( x = year, y = pop) ) + geom_bar( stat = "identity" )  
-p1 <- p1 + facet_grid(cols = vars(ageG), rows = vars(sex))
+p1 <- p1 + facet_grid(cols = vars(county), rows = vars(sex))
 p1
 
 

@@ -14,7 +14,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 
 STATE    <- "California"
 
@@ -147,7 +147,7 @@ icdToGroup <- function(myIn) {
 
 cbdDat0$icdCODE  <- icdToGroup(myIn=cbdDat0$ICD10)
 
-cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ2"  # >3500 records have no ICD10 code -- label them as cZ for now
+cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
 
 junk <- filter(cbdDat0,is.na(icdCODE))
 table(junk$ICD10,useNA = "ifany")
