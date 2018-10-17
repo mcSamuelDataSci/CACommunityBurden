@@ -55,7 +55,8 @@ observeEvent(input$myLHJ, { current_LHJ(input$myLHJ) })
 
 
 observeEvent(input$cZoom,{
-  if(input$cZoom)    {updateSelectInput(session, "myLHJ", choices = lListNoState) }
+  if(input$cZoom & input$myLHJ != STATE)    {updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ()) }
+  if(input$cZoom & input$myLHJ == STATE)    {updateSelectInput(session, "myLHJ", choices = lListNoState )}
   if(!(input$cZoom)) {updateSelectInput(session, "myLHJ", choices = lList,selected="CALIFORNIA")}
 }
 )
