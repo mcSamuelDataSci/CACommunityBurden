@@ -1,7 +1,13 @@
-rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Total", cZoom=FALSE, myCI=TRUE) {
+rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Total", myCI=TRUE) {
 
     temp <- paste0("dat.1$",myMeasure)
   
+    
+    
+    if (myLHJ != STATE) {        cZoom <- TRUE
+    } else { cZoom <-FALSE}
+    
+    
     if (cZoom & myMeasure == "SMR") stop("I appologize dear, but SMR is not calcualted for now below the county level")
     
     causeLab <- causeList36[causeList36[,"LABEL"]==myCause,"nameOnly"]

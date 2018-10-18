@@ -50,31 +50,31 @@ observeEvent(input$myGeo, {
 # }
 # )
 
-current_LHJ <- reactiveVal(NULL)
-observeEvent(input$myLHJ, { current_LHJ(input$myLHJ) })
-
-
-observeEvent(input$cZoom,{
-  if(input$cZoom & input$myLHJ != STATE)    {updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ()) }
-  if(input$cZoom & input$myLHJ == STATE)    {updateSelectInput(session, "myLHJ", choices = lListNoState )}
-  if(!(input$cZoom)) {updateSelectInput(session, "myLHJ", choices = lList,selected="CALIFORNIA")}
-}
-)
-
- observeEvent(input$ID,{
-   if(input$ID %in% c(33,34,44,55,66)){updateSelectInput(session, "myLHJ", choices = lList,selected=current_LHJ()) }
- })
-
-
-#observeEvent(input$ID,{
-#  if(input$ID %in% c(22,23)){updateSelectInput(session, "myLHJ", choices = lListNoState) }
-#})
-
- observeEvent(input$ID,{
-  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") { updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ() ) }
-  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") { updateCheckboxInput(session, "cZoom", value=FALSE)
-                                                                updateSelectInput(session, "myLHJ", choices = lListNoState)}
- })
+# current_LHJ <- reactiveVal(NULL)
+# observeEvent(input$myLHJ, { current_LHJ(input$myLHJ) })
+# 
+# 
+# observeEvent(input$cZoom,{
+#   if(input$cZoom & input$myLHJ != STATE)    {updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ()) }
+#   if(input$cZoom & input$myLHJ == STATE)    {updateSelectInput(session, "myLHJ", choices = lListNoState )}
+#   if(!(input$cZoom)) {updateSelectInput(session, "myLHJ", choices = lList,selected="CALIFORNIA")}
+# }
+# )
+# 
+#  observeEvent(input$ID,{
+#    if(input$ID %in% c(33,34,44,55,66)){updateSelectInput(session, "myLHJ", choices = lList,selected=current_LHJ()) }
+#  })
+# 
+# 
+# #observeEvent(input$ID,{
+# #  if(input$ID %in% c(22,23)){updateSelectInput(session, "myLHJ", choices = lListNoState) }
+# #})
+# 
+#  observeEvent(input$ID,{
+#   if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") { updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ() ) }
+#   if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") { updateCheckboxInput(session, "cZoom", value=FALSE)
+#                                                                 updateSelectInput(session, "myLHJ", choices = lListNoState)}
+#  })
 
 
 
@@ -95,12 +95,12 @@ observeEvent(input$cZoom,{
 
 #------------------------------------------------------------------------------------------------------------------------------------------
 
-output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
-output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$cZoom,input$myLabName, input$myCutSystem))
+output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
 output$rankCause    <- renderPlot(     rankCause(input$myLHJ,           input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
 output$rankCauseSex <- renderPlot(     rankCauseSex(input$myLHJ,        input$myMeasure     , input$myYear,                           input$myN))
 
-output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$cZoom,input$myCI))
+output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$myCI))
 
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 output$trend2      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
@@ -111,7 +111,7 @@ output$rankCauseT <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, inp
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
 
 sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
-geoLabel   <- renderText({if (!input$cZoom)            geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
+geoLabel   <- renderText({if (input$myLHJ==STATE)        geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
 ### not sure why I can't use timeLabel <- yearGrp here?
 
@@ -136,6 +136,7 @@ output$map_title <- renderUI({h4(
                                    "</div>", sep = " "))) })
 
                        
+
                                           
 
 

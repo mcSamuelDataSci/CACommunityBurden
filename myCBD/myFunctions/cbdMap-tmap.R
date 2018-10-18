@@ -1,12 +1,16 @@
 
 cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLper",       myYear = 2015,
-                    mySex     = "Total",  myStateCut  = TRUE, myGeo     = "Census Tract", cZoom  = FALSE,
+                    mySex     = "Total",  myStateCut  = TRUE, myGeo     = "Census Tract", 
                     myLabName = FALSE,    myCutSystem ="fisher") {
 
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
     dat.State   <- filter(datCounty,year %in% 2013:2017, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
 
+   
+    if (myLHJ != STATE) {        cZoom <- TRUE
+                        } else { cZoom <-FALSE}
+    
     geoLab <- ""
     if (cZoom) geoLab <- paste(" in",myLHJ)
     
@@ -101,19 +105,19 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
 }
 
 
-cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",myLabName=FALSE,myCutSystem="fisher") {
   tmap_mode("plot")
   
-  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)   
+  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)   
     
       if (myLabName) tt.map <- tt.map + tm_text(wrap.labels("geoLab",10)) 
     
   tt.map 
   }
 
-cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",cZoom=FALSE,myLabName=FALSE,myCutSystem="fisher") {
+cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",myLabName=FALSE,myCutSystem="fisher") {
    tmap_mode("view")
-   tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,cZoom,myLabName,myCutSystem)
+   tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)
    tmap_leaflet(tt.map)
 }
   
