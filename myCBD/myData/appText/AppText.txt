@@ -55,7 +55,7 @@ The CCB is a work in progress, and is intended to be an evolving toolset develop
 <li>Hospital discharge and emergency department data</li>
 <li>Cost (charges) data based on hospital discharge</li>
 <li>Life expectancy estimates at the census tract, community, and county levels</li>
-<li>Incorporation of “multiple cause of death” and “out of state” death data files</li>
+<li>Incorporation of 'multiple cause of death' and 'out of state' death data files</li>
 <li>Expanded range and analysis of social determinants data</li>
 <li>Additional displays of statistical significance</li>
 <li>Enhanced user interface</li>
