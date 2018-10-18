@@ -37,6 +37,10 @@ observeEvent(input$myGeo, {
     if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36,selected=current_Cause()  ) }
 })
 
+observeEvent(input$myLHJ, {
+  if(input$myLHJ != STATE){updateSelectInput(session, "myGeo", selected = "Community") }
+})
+
 
 # current_LHJ <- reactiveVal(NULL)
 # observeEvent(input$myLHJ, { current_LHJ(input$myLHJ) })
