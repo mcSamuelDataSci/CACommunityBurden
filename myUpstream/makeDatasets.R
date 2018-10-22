@@ -524,6 +524,34 @@ datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
 saveRDS(datCounty, file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
+
+
+if (1==2){
+datTract  <- readRDS(path(myPlace,"/myData/",whichDat,"datTract.RDS"))
+datComm   <- readRDS(path(myPlace,"/myData/",whichDat,"datComm.RDS"))
+datCounty <- readRDS(path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
+}
+
+datComm$Ndeaths[datComm$Ndeaths < 12] <- 0
+
+
+datComm <-  datComm %>% mutate(Ndeaths    = ifelse(Ndeaths < 12,0,Ndeaths),
+                               cDeathRate = ifelse(Ndeaths < 12,0,cDeathRate)
+                               )
+
+datCounty <-  datCounty %>% mutate(Ndeaths    = ifelse(Ndeaths < 12,0,Ndeaths),
+                                  cDeathRate  = ifelse(Ndeaths < 12,0,cDeathRate),
+                                  SMR         = ifelse(Ndeaths < 12,0,SMR)
+                                  )
+
+
+
+datComm$Ndeaths[datComm$Ndeaths < 12] <- 0
+
+
+
+
+
 # # 
 # datTract$causeName <- gbdMap0[match(datTract$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
 # datComm$causeName <- gbdMap0[match(datComm$CAUSE,gbdMap0[,"LABEL"]),"causeList"]
