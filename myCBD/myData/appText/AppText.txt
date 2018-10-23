@@ -103,7 +103,29 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 
 # SMR: May want to reference https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf
 
-causeHelp <- "The CAUSES OF DEATH in the app are currently based on an alphabetical arrangement of 36 mutually exclusive and exhaustive conditions from the Global Burden of Disease Study-these 36 are an ad hoc list, thought to be generally relatable to California Public Health priorities.  But, the app could, and likely will, include the full list of Global Burden of Disease conditions, and/or other Global Burden of Disease subsets; and/or subsets from 2011 National Center of Health Statistics condition groupings (e.g. 133 or 39 causes)."
+causeHelpX <- "The CAUSES OF DEATH in the app are currently based on an alphabetical arrangement of 36 mutually exclusive and exhaustive conditions from the Global Burden of Disease Study-these 36 are an ad hoc list, thought to be generally relatable to California Public Health priorities.  But, the app could, and likely will, include the full list of Global Burden of Disease conditions, and/or other Global Burden of Disease subsets; and/or subsets from 2011 National Center of Health Statistics condition groupings (e.g. 133 or 39 causes)."
+
+causeHelp <- 'The CAUSES OF DEATH in the app are based on a hierarchal  outline arrangement of 70 conditions. The Global Burden of Disease Study forms the basis for this outline, with our minor modifications to the outline structure aimed at making information the app as relatable and useful to California Public Health priorities and programs as possible.  
+
+Above the "Top Level" of the outline is "All Causes", including all deaths from any cause (including missing cause information) for a selected geography for a selected time period. The "Top Level" of the outline includes a mutually exclusive and exhaustive set of five high-level groups (and a "missing category"):
+<li style="margin-left: 30px">Infectious Diseases)</li>
+<li style="margin-left: 30px">Coronary Heart Disease</li>
+<li style="margin-left: 30px"> Cancer/Malignant Neoplasms</li>
+<li style="margin-left: 30px">Other Chronic Conditions</li>
+<li style="margin-left: 30px">Injury</li>
+<br>
+
+More here
+'
+
+
+
+
+
+
+
+
+
 
 statecutHelp <- 
 "The State-based Cut-points button changes the way the Measure is broken down or 

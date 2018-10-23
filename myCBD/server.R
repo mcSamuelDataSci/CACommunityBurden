@@ -12,7 +12,7 @@ shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="5
 shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
   
   
-observeEvent(input$causeHelp,     {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
+observeEvent(input$causeHelp,     {showModal(modalDialog(HTML(  causeHelp),    easyClose = TRUE))})
 observeEvent(input$cutmethodHelp, {showModal(modalDialog(HTML(cutmethodHelp),easyClose = TRUE))})
 observeEvent(input$statecutHelp,  {showModal(modalDialog(     statecutHelp, easyClose = TRUE))})
 observeEvent(input$measureHelp,   {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
