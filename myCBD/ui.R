@@ -1,6 +1,9 @@
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
 
+# https://coolors.co
+
+
 # funtion used as "short-cut" when making criteria for conditionals below
 fC <- function(vec) {
   tRep <- length(vec)-1
@@ -8,31 +11,47 @@ fC <- function(vec) {
 }
 
 myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4"
-myHelpButtonSty <- "height:12px;padding-top:0px; margin-top:-5px"
+myHelpButtonSty <- "background-color: #694D75;font-size:14px;"
 
 myBoxSty <- "cursor:pointer;border: 3px solid blue;padding-right:0px;padding-left:0px;"
 
 #-----------------------------------------------------------------------------------------------------------------------------
 
 shinyUI(fluidPage(theme = "bootstrap.css",
+                  # tags$head(
+                  #   tags$link(rel = "stylesheet", type = "text/css", href = "https://fonts.googleapis.com/css?family=Open+Sans")
+                  # ),
+
+                  tags$head(
+                    tags$style(HTML("
+                                    @import url('//fonts.googleapis.com/css?family=Open+Sans');
+                                    
+                                    * {
+                                    font-family: 'Open Sans';
+                                    line-height: 1.5;
+                                    }
+                                    
+                                    "))),
+                  
+                  #tags$style(type='text/css', "* {font-family: 'Open Sans', Georgia; }"),
                   tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
                   tags$h3(mTitle),                                                       # title supplied from Global
   
 sidebarPanel(width=3, 
  
-  conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(45)),    actionButton("conditionTableTab","Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(34)),    actionButton("conditionSexTab",  "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(44)),    actionButton("rankGeoTab",       "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help"),style=myHelpButtonSty),
-  br(),br(),
+  conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(45)),    actionButton("conditionTableTab","Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(34)),    actionButton("conditionSexTab",  "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(44)),    actionButton("rankGeoTab",       "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
+  
   
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) ,
                                                         selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="0")),  # size=30 selectize = F, size=3,
 
-               
+         
                   
  conditionalPanel(condition = fC(c(22,23,33,44,45,55)),selectInput("myLHJ","County:",choices=lList,selected=STATE)  ),
  
@@ -61,12 +80,7 @@ sidebarPanel(width=3,
                               "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | (input.myMeasure == 'aRate'))"),
                                                         checkboxInput("myCI",       "95% CIs?", value=FALSE)),
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
-
- hr(), 
- 
- 
  conditionalPanel(condition = fC(c(11)), 
-                  
  helpText(textIntroA,style="color:blue"), br(),
  helpText(textIntroC,style="color:blue"), br(),
  
@@ -114,11 +128,13 @@ mainPanel(
           column(width=3,img(id="map2I",src="MapStat2.png",width="100%",style = myBoxSty)),
           column(width=3,img(id="trendI",src="trends2.png",width="100%",style = myBoxSty)),
           column(width=3,img(id="scatterI",src="SDOH2.png",width="100%", style = myBoxSty))),
+        
   br(),
   fluidRow(
       column(width=4,img(id="rankgeoI",src="rankGeo2.png",width="100%",style = myBoxSty)),
   column(width=4,img(id="ranktableI",src="rankTable2.png",width="100%",style = myBoxSty)),
   column(width=4,img(id="rankcauseI",src="rankPlot2.png",width="100%",style = myBoxSty))),
+
 h5(HTML(below1),align="left"),
 value = 11),          
 

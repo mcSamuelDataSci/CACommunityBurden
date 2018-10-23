@@ -105,18 +105,25 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 
 causeHelpX <- "The CAUSES OF DEATH in the app are currently based on an alphabetical arrangement of 36 mutually exclusive and exhaustive conditions from the Global Burden of Disease Study-these 36 are an ad hoc list, thought to be generally relatable to California Public Health priorities.  But, the app could, and likely will, include the full list of Global Burden of Disease conditions, and/or other Global Burden of Disease subsets; and/or subsets from 2011 National Center of Health Statistics condition groupings (e.g. 133 or 39 causes)."
 
-causeHelp <- 'The CAUSES OF DEATH in the app are based on a hierarchal  outline arrangement of 70 conditions. The Global Burden of Disease Study forms the basis for this outline, with our minor modifications to the outline structure aimed at making information the app as relatable and useful to California Public Health priorities and programs as possible.  
-
-Above the "Top Level" of the outline is "All Causes", including all deaths from any cause (including missing cause information) for a selected geography for a selected time period. The "Top Level" of the outline includes a mutually exclusive and exhaustive set of five high-level groups (and a "missing category"):
-<li style="margin-left: 30px">Infectious Diseases)</li>
+causeHelp <- 'The CAUSES OF DEATH in the app are based on a hierarchal  outline arrangement of about 70 conditions. The Global Burden of Disease Study condition structure forms the basis for this outline, with modifications aimed at making the conditions as relatable and useful to California Public Health priorities and programs as possible.  
+<br>
+Above the "Top Level" of the outline is "All Causes", including all deaths from any cause (including those few with missing or unclear cause information). 
+<br><br>
+The "Top Level" of the outline includes a mutually exclusive and exhaustive set of five high-level condition sets (and a "missing category"):
+<li style="margin-left: 30px"> Communicable, Maternal, and Perinatal Conditions</li>
 <li style="margin-left: 30px">Coronary Heart Disease</li>
 <li style="margin-left: 30px"> Cancer/Malignant Neoplasms</li>
 <li style="margin-left: 30px">Other Chronic Conditions</li>
 <li style="margin-left: 30px">Injury</li>
+At the census-tract level, only this "Top Level" set of conditions is available in the app.  Because of the large numbers of deaths in these broad categories, this Top Level will be particularly useful for looking at differences within and between small geographic areas.  
 <br>
-
-More here
+The next level, the "Public Health Level", is a separate mutually exclusive and exhaustive list of about 60 conditions (e.g. "Respiratory infections", "Trachea, bronchus and lung cancers", "Alzheimer disease and other dementias", "Suicide/Self-harm", etc.) "under" the "Top Level" categories, based on intermediate-level conditions in the Global Burden of Disease system, modified based on public health priorities and programs in the United States. Because of the greater clinical detail and public health program specificity of this level, we believe it will provide the greatest insights and the most meaningful rankings of conditions at the county and community levels.  
+<br><br>
+Below this, there is a Detail Level of conditions, with a few Public Health Level conditions broken down into more detailed (e.g.  Lymphomas and multiple myeloma, is broken down into Hodgkin lymphoma, Non-Hodgkin lymphoma and Multiple myeloma). These detailed conditions are only available in the app at the county level of geography. 
+<br>
+A diagram showing this hierarchy, and the long list of detailed conditions on which this list is based is available here. We welcome comments for suggested changes to our hierarchal list. 
 '
+
 
 
 

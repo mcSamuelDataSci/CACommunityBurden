@@ -1,7 +1,15 @@
 #yearGrp <- "2013-2017"   # why doesn't it find this from global?
 
+
+
+
+
 shinyServer(function(input, output,session) {
- 
+
+  
+
+  
+   
   
 shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
 shinyjs::onclick("map2I",     updateTabsetPanel(session,inputId="ID",selected="23"))  
