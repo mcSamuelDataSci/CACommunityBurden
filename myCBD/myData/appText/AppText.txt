@@ -125,25 +125,15 @@ Not shown in the app, is the underlying "Base Level". Each and every condition i
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list. 
 '
+stateCutHelp <- 
+"The <b>State-based cutpoints</b> button changes the way the Measure is broken down or grouped for display in the map and the legend. If the box is checked, the cut-points are based on the data for all 58 counties for the most recent five years. If the box is unchecked, the cut-points are based on just the county being displayed in the current map. 
+<br><br>
+Looking at the map with the box checked allows you to see how things compare to the State overall. Looking at the data with the box unchecked allows you to see how things compare within the selected county. For example, if most communities in a given county have high rates of something compared to other counties, that county would be almost all red (indicating high rates) with the box checked, and would show a more varied distribution with the box unchecked. 
+<br><br>
+Different insights can be gained by looking at these maps in the two different ways.
+"
 
 
-
-
-
-
-
-
-
-
-
-
-statecutHelp <- 
-"The State-based Cut-points button changes the way the Measure is broken down or 
-grouped-with the box checked, the cut-points are based on the State data overall 
-(so many/most communities in a given county might be in the highest category, if 
-that condition tended to be high in that county in general). If the box is unchecked, 
-the cut points will be based on the data in just that county, so the distribution 
-of the condition throughout just that one county may be easier to see and understand."
 
 cutmethodHelp <- 
 "Specifies method used to determine the cut-points for the color categories. <b>Quantile</b> 

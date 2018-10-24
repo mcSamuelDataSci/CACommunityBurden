@@ -22,7 +22,7 @@ shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="6
   
 observeEvent(input$causeHelp,     {showModal(modalDialog(HTML(  causeHelp),    easyClose = TRUE))})
 observeEvent(input$cutmethodHelp, {showModal(modalDialog(HTML(cutmethodHelp),easyClose = TRUE))})
-observeEvent(input$statecutHelp,  {showModal(modalDialog(     statecutHelp, easyClose = TRUE))})
+observeEvent(input$statecutHelp,  {showModal(modalDialog(HTML( stateCutHelp), easyClose = TRUE))})
 observeEvent(input$measureHelp,   {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
 
 observeEvent(input$mapTab,            {showModal(modalDialog(HTML(mapTab),            easyClose = TRUE))})
@@ -138,17 +138,28 @@ timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else
 #                                    "</div>", sep = " ")) })
 
 
-output$map_title <- renderUI({h4(
+output$map_title <- renderUI({h4(strong(
                     HTML(paste0(   lMeasuresC[lMeasures == input$myMeasure],
                                    " from ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
                                    " in ",span(timeLabel(),style="color:blue"),
                                    " by ",input$myGeo,
                                    sexLabel(), geoLabel(),
-                                   "</div>", sep = " "))) })
+                                   sep = " ")))) })
 
-                       
+# HTML(paste0( "<div style='font-weight:bold;>",  lMeasuresC[lMeasures == input$myMeasure],
+#              " from ",
+#              causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
+#              " in ",span(timeLabel(),style="color:blue"),
+#              " by ",input$myGeo,
+#              sexLabel(), geoLabel(),"</div>",
+#              sep = " "))) })
 
+
+
+#  {font-weight: bold;}
+             
+# "</div>"
                                           
 
 
