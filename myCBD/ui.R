@@ -80,6 +80,11 @@ sidebarPanel(width=3,
                               "(",fC(c(44)),") &&",
                               "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | (input.myMeasure == 'aRate'))"),
                                                         checkboxInput("myCI",       "95% CIs?", value=FALSE)),
+ 
+ conditionalPanel(condition = fC(c(44)),                checkboxInput("myRefLine",  "Reference Line", value=FALSE)),
+ 
+ 
+ 
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
  conditionalPanel(condition = fC(c(11)), 
  helpText(textIntroA,style="color:blue"), br(),
