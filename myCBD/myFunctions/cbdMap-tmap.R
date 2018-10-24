@@ -87,10 +87,13 @@ myPal <- add.alpha(myPal,.7)
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
 
+#https://rdrr.io/cran/tmap/man/tm_symbols.html
+
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
                                title = lMeasuresC[lMeasures==myMeasure],
                                textNA = "0 deaths/or supressed",
                                legend.hist=T,
+                               legend.reverse=T,
                                title.col=NA,id="name", 
                                popup.vars=c("Population: " = "pop",
                                             "Measure Value: "= myMeasure)
@@ -98,7 +101,9 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
    tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,fontface = 2,
            legend.outside = TRUE,
            legend.outside.position = "right", 
-           legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3)  
+           legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3
+          )  
+  
   
  
  

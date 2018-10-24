@@ -48,8 +48,9 @@ sidebarPanel(width=3,
   conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
   
   
- conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) ,
-                                                        selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="0")),  # size=30 selectize = F, size=3,
+ conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) , 
+                                                        selectInput("myCAUSE", HTML(paste("Cause:",a("(Cause List Info)",target="_blank",href="gbd.ICD.MapIMAGE.pdf"))), choices=causeNum36, selected="0")
+                                                       ),  # size=30 selectize = F, size=3,
 
          
                   
@@ -73,13 +74,13 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(33)),                actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
-                                                        radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
+                                                        radioButtons( "myCutSystem","Cut-point method:", choices=c("fisher","quantile"))),   # pretty
  conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
  conditionalPanel(condition = paste(
                               "(",fC(c(44)),") &&",
                               "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | (input.myMeasure == 'aRate'))"),
                                                         checkboxInput("myCI",       "95% CIs?", value=FALSE)),
- conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
+ conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
  conditionalPanel(condition = fC(c(11)), 
  helpText(textIntroA,style="color:blue"), br(),
  helpText(textIntroC,style="color:blue"), br(),
