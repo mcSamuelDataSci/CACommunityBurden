@@ -14,6 +14,7 @@
 #-- Set Locations and Data Source ----------------------------------------------------------
 
  whichData <-  "real"
+ VERSION  <- "Version B1.0"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"
@@ -131,10 +132,10 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
 lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
-                "YLL per 100,000 population",
+                "YLL Rate per 100,000 population",
                 "Age-Adjusted YLL Rate",
                 "Number of deaths",
-                "Crude Death Rate",
+                "Crude Death Rate per 100,000 population",
                 "Age-Adjusted Death Rate",
                 "Mean Age at Death",
                 "Standard Mortality Ratio")

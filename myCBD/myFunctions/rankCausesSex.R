@@ -42,7 +42,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
  # ok to remove. sorting handled in ggplot  
  # dat.1$CAUSE <- factor(dat.1$CAUSE, levels = dat.1$CAUSE[order(dat.1$info)])
   
-  
+  dat.1
   
   dat.1 <- dat.1[with(dat.1,order(info,CAUSE)),]
   dat.1$order <- rank(factor(dat.1$info,levels = unique(dat.1$info)))

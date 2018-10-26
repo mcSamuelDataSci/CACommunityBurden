@@ -6,7 +6,7 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,myS
   myYear=2017
   mySex="Total"
   myLev="lev2"
-  myN=10
+  myN=3
   }
   
   
@@ -33,7 +33,7 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,myS
    
   nR    <- nrow(dat.1)
   myNX  <- min(nR,myN) 
-  dat.1 <- dat.1[((nR-myNX):nR),]
+  dat.1 <- dat.1[((nR-myNX+1):nR),]
   
   layout(matrix(c(1,1,2,3,4,5),1,6,byrow=TRUE))
   

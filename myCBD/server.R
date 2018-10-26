@@ -1,7 +1,15 @@
 #yearGrp <- "2013-2017"   # why doesn't it find this from global?
 
+
+
+
+
 shinyServer(function(input, output,session) {
- 
+
+  
+
+  
+   
   
 shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
 shinyjs::onclick("map2I",     updateTabsetPanel(session,inputId="ID",selected="23"))  
@@ -12,9 +20,9 @@ shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="5
 shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
   
   
-observeEvent(input$causeHelp,     {showModal(modalDialog(     causeHelp,    easyClose = TRUE))})
+observeEvent(input$causeHelp,     {showModal(modalDialog(HTML(  causeHelp),    easyClose = TRUE))})
 observeEvent(input$cutmethodHelp, {showModal(modalDialog(HTML(cutmethodHelp),easyClose = TRUE))})
-observeEvent(input$statecutHelp,  {showModal(modalDialog(     statecutHelp, easyClose = TRUE))})
+observeEvent(input$statecutHelp,  {showModal(modalDialog(HTML( stateCutHelp), easyClose = TRUE))})
 observeEvent(input$measureHelp,   {showModal(modalDialog(HTML(measureHelp), easyClose = TRUE))})
 
 observeEvent(input$mapTab,            {showModal(modalDialog(HTML(mapTab),            easyClose = TRUE))})
@@ -104,7 +112,7 @@ output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, inp
 output$rankCause    <- renderPlot(     rankCause(input$myLHJ,           input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
 output$rankCauseSex <- renderPlot(     rankCauseSex(input$myLHJ,        input$myMeasure     , input$myYear,                           input$myN))
 
-output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$myCI))
+output$rankGeo    <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex,                               input$myCI,input$myRefLine))
 
 output$trend      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
 output$trend2      <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure                                                                   ))
@@ -130,17 +138,28 @@ timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else
 #                                    "</div>", sep = " ")) })
 
 
-output$map_title <- renderUI({h4(
+output$map_title <- renderUI({h4(strong(
                     HTML(paste0(   lMeasuresC[lMeasures == input$myMeasure],
                                    " from ",
                                    causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
                                    " in ",span(timeLabel(),style="color:blue"),
                                    " by ",input$myGeo,
                                    sexLabel(), geoLabel(),
-                                   "</div>", sep = " "))) })
+                                   sep = " ")))) })
 
-                       
+# HTML(paste0( "<div style='font-weight:bold;>",  lMeasuresC[lMeasures == input$myMeasure],
+#              " from ",
+#              causeList36[causeList36[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
+#              " in ",span(timeLabel(),style="color:blue"),
+#              " by ",input$myGeo,
+#              sexLabel(), geoLabel(),"</div>",
+#              sep = " "))) })
 
+
+
+#  {font-weight: bold;}
+             
+# "</div>"
                                           
 
 

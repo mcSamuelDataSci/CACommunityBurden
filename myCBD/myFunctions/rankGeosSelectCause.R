@@ -1,9 +1,15 @@
-rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Total", myCI=TRUE) {
+rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="Total", myCI=TRUE,myRefLine=FALSE) {
 
-    temp <- paste0("dat.1$",myMeasure)
   
-    
-    
+    if (1==2){
+      myCause="A"
+      myMeasure = "YLL"
+      myLHJ = STATE
+      mySex = "Total"
+        }
+  
+  
+
     if (myLHJ != STATE) {        cZoom <- TRUE
     } else { cZoom <-FALSE}
     
@@ -15,24 +21,43 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Tot
                 if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
     
      
-    if (cZoom)  {dat.1     <- filter(datComm,county==myLHJ,yearG==yearGrp,sex==mySex,CAUSE==myCause, comID != "Unknown") 
-                 dat.1     <- dat.1[order(eval(parse(text=temp))),]
-                 dat.1$lab <- wrap.labels(dat.1$comName,30)
-                 tit       <- paste0("Community Ranking of ",causeLab," in ",myLHJ," in ",yearGrp,sexLab)  }
-  
-    if (!cZoom) {dat.1     <- filter(datCounty,year==myYear,sex==mySex,CAUSE==myCause,county != "zz California")  
-                 dat.1     <- dat.1[order(eval(parse(text=temp))),]
-                 dat.1$lab <- dat.1$county
-                 tit       <- paste0("County Ranking of ",causeLab," in ",myYear,sexLab) }
-  
-    #rankdat <- rankdat[(nrow(rankdat)-mytop):nrow(rankdat),]
-  
-    if (myMeasure == "aRate")  {dat.1 <- dat.1[dat.1$county != "CALIFORNIA",]}
+    datCounty$plotter <- datCounty[,myMeasure]
+    datCounty         <- datCounty %>% filter(year==myYear,sex==mySex,CAUSE==myCause) 
     
-    par(mar=par()$mar+c(2,12,-4,0))
-    t.plot <- barplot(eval(parse(text=temp)),col="gray",cex.names=.8,horiz=TRUE,space=.3,xlab=names(lMeasures[lMeasures==myMeasure]))
-    axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1)
+    
+ 
+    if (cZoom) { datComm$plotter <- datComm[,myMeasure]
+                 dat.1     <- datComm  %>% filter(county==myLHJ,yearG==yearGrp,sex==mySex,CAUSE==myCause, comID != "Unknown")  %>%
+                 arrange(plotter) %>%
+                 mutate(lab =wrap.labels(comName,30))
+    tit       <- paste0("Community Ranking of ",causeLab," in ",myLHJ," in ",yearGrp,sexLab) 
+    sMeasure  <- datCounty$plotter[datCounty$county==myLHJ]
+    }
+    
+    
+    
+    if (!cZoom) { dat.1     <- datCounty  %>%   arrange(plotter) %>%
+                                 mutate(lab =county)
+                 tit       <- paste0("County Ranking of ",causeLab," in ",myYear,sexLab)
+                 sMeasure  <- dat.1$plotter[dat.1$county==STATE]
+                 }
   
+
+    #par(mar=par()$mar+c(2,12,-4,0))
+    par(mar=c(2,12,0,0),oma=c(0,0,0,0))
+    
+    t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,space=.3,
+                      border="black",
+                      offset=0,
+                      xlab=names(lMeasures[lMeasures==myMeasure]))
+    axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1)
+ 
+    
+    
+    if (myRefLine)  segments(x0=sMeasure,y0=t.plot[1],y1=t.plot[length(t.plot)])
+    
+    
+    
     
     if (myCI & myMeasure=="cDeathRate") {arrows(y0=t.plot,x0=dat.1$rateLCI,x1=dat.1$rateUCI,col="blue",length=.05,angle=90,code=3)}
     if (myCI & myMeasure=="YLLper")     {arrows(y0=t.plot,x0=dat.1$YLLrateLCI,x1=dat.1$YLLrateUCI,col="blue",length=.05,angle=90,code=3)}
@@ -40,7 +65,7 @@ rankGeo <- function(myLHJ, myCause=61, myMeasure = "YLL", myYear=2015,mySex="Tot
     
     
     
-    mtext(tit,cex=1.6,line=-2,font=2)
+    mtext(tit,cex=1.6,line=-3,font=2)
     
     
   }
