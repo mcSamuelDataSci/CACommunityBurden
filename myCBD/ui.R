@@ -137,10 +137,11 @@ conditionalPanel(condition = "input.ID !=  11 ",
                  
 helpText('Note: YLL is "Years of Life Lost"',style="color:green"),
 helpText('Note: "0" values appearing in charts or tables may be true 0 or may be any value <11',style="color:green;font-weight: bold;"),
-HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
+HTML('<left><img src="cdph2.gif" height="125" width="150"></left>')
 
-)
+),
                  
+helpText(h4(VERSION),style="color:green")
 
 # https://stackoverflow.com/questions/35025145/background-color-of-tabs-in-shiny-tabpanel
 # works: h5("Home Page",style="color:red")
@@ -168,7 +169,7 @@ mainPanel(
   br(),
   fluidRow(
       column(width=4,img(id="rankgeoI",src="rankGeo2.png",width="100%",style = myBoxSty)),
-  column(width=4,img(id="ranktableI",src="rankTable2.png",width="100%",style = myBoxSty)),
+  column(width=4,img(id="ranktableI",src="rankPlot2-save.png",width="100%",style = myBoxSty)),
   column(width=4,img(id="rankcauseI",src="rankPlot2.png",width="100%",style = myBoxSty))),
 
 h5(HTML(below1),align="left"),

@@ -14,6 +14,7 @@
 #-- Set Locations and Data Source ----------------------------------------------------------
 
  whichData <-  "real"
+ VERSION  <- "Version B1.0"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"
