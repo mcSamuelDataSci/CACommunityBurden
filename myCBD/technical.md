@@ -1,4 +1,8 @@
-<div style = 'font-size:16px;font-weight: bold;font-family:"Times New Roman", Times, serif';>
+﻿<div style = 'font-size:16px;font-weight: bold;font-family:"Times New Roman", Times, serif';>
+
+- Note regarding data suppression
+  - A number of steps have been taken to address data security issue, including aggregation of year into 5-year groups for data displayed at the community and census tract level, showing less granular cause of death data at more granular geographic levels, and suppressing numbers of deaths, crude death rates, Years of Life Lost (YLL), crude YLL rate, mean age at death, and Standard Mortality Ratio when the corresponding number of deaths is <11. 
+
 
 - Note regarding YEAR or Year Group
   - At the County and State levels of geography, YEAR is the individual year of death, with current data from 2001 to 2017.  At the Community and Census Tract levels of geography, all data are displayed for the years 2013 to 2017 combined.  These years are combined for statistical stability, so that for these more granular levels of geography, the displayed data are still meaningful, and not just the result of random fluctuations.

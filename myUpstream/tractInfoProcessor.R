@@ -17,9 +17,11 @@ popACS  <- readRDS(path(myPlace,"/upData/popTract2013.RDS")) %>%
 # R detects character (c) vs. numeric (n) automatically based on first 1000 rows but making sure with col_types below 
 # Use pipes (%>%) to neatly select variables and other changes specified
 
-d.correct <- read_csv(path(myPlace,"upData/tractInfoData","Deaths_County_Corrected.csv"), col_types = "ncncn") %>%
+#, col_types = "ncncn"
+
+d.correct <- read_csv(path(myPlace,"upData/tractInfoData","CT_DEATHS_all counties_corrected.csv")) %>%
   mutate(GEOID        = paste0("0",GEOID), #Add "0" to beginning of GEOID as it's shown in some databases
-         wrong_county1 = wrong_deaths_co1,
+       #  wrong_county1 = wrong_deaths_co1,
          inDEATHS   = 1)  # this creates the indicator variable for this data set
 
 d.mssa00  <- read_csv(path(myPlace,"upData/tractInfoData","mssa00.csv"))  %>%
