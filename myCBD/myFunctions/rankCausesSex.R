@@ -5,6 +5,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   myPlace   <- getwd()  
   whichData <- "fake"
   
+  myLev="lev2"
   myLHJ = "CALIFORNIA"
   myN = 10
   myMeasure = "YLL"
@@ -17,7 +18,8 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   }
   
   inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",CAUSE !=0)
+  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",Level %in% myLev,CAUSE !=0)
+  #dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",CAUSE !=0)
   
   dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
 
@@ -42,6 +44,9 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   
   dat.1
   
+  dat.1 <- dat.1[with(dat.1,order(info,CAUSE)),]
+  dat.1$order <- rank(factor(dat.1$info,levels = unique(dat.1$info)))
+  
   dat.1$causeName <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
    
 
@@ -54,8 +59,6 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
                     } else if (myMeasure=="mean.age") {"Mean Age at Death"
                     } else if (myMeasure=="SMR") {"Standard Mortality Ratio"
                     }
-  
-  
   
   g <- ggplot(dat.1, aes(x=reorder(causeName, info),y=info,group=sex)) +
        labs(title=paste(myMeasureAlias,"by Cause Grouped by Gender,\n","California",myYear),
