@@ -87,7 +87,7 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(33,34)),             numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
  conditionalPanel(condition = fC(c(22,23,34,44,55,66)), actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
- conditionalPanel(condition = fC(c(33)),                actionButton( "measureHelp", "?",style=myButtonSty) ,
+ conditionalPanel(condition = fC(c(33)),                #actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
                                                         radioButtons( "myCutSystem","Cut-point method:", choices=c("fisher","quantile"))),   # pretty
