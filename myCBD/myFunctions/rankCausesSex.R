@@ -49,6 +49,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
   
   dat.1$causeName <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
    
+
   # myMeasureAlias <-        if (myMeasure=="YLL"){ "Years of Life Lost"
   #                   } else if (myMeasure=="YLLper") { "Years of Life Lost (per 100,000 population)"
   #                   } else if (myMeasure=="YLL.adj.rate") {"Age-Adjusted YLL Rate"
@@ -60,7 +61,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
   #                   }
   myMeasureAlias <-  lMeasuresC[lMeasures==myMeasure]
   
-  
+
   g <- ggplot(dat.1, aes(x=reorder(causeName, info),y=info,group=sex)) +
        labs(title=paste(myMeasureAlias,"by Cause Grouped by Gender,\n","California",myYear),
                 y=paste("\n",myMeasureAlias)) +
