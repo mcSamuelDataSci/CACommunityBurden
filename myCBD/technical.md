@@ -1,5 +1,8 @@
 <div style = 'font-size:16px;font-weight: bold;font-family:"Times New Roman", Times, serif';>
 
+- Note regarding YEAR or Year Group
+  - At the County and State levels of geography, YEAR is the individual year of death, with current data from 2001 to 2017.  At the Community and Census Tract levels of geography, all data are displayed for the years 2013 to 2017 combined.  These years are combined for statistical stability, so that for these more granular levels of geography, the displayed data are still meaningful, and not just the result of random fluctuations.
+
 
 - Key definitions
   - Communities:  Throughout the CCB, communities are defined by Medical Service Study Areas (MSSAs), a unique California geographic designation based on aggregation of census tracts, constructed by the California Office of Statewide Health Planning and Development (OSHPD) with each decennial census [CHHS/OSHPD/MSSA](https://oshpd.maps.arcgis.com/home/item.html?id=a20100c4bf374bd081bb49b82cbaaac3#overview). MSSAs provide the CCB with a good surrogate for &quot;communities&quot; because:
@@ -10,8 +13,6 @@
     - Although not yet implemented in a fully automated fashion, users can work with the CCB project team to create their own customized communities (based on designated census tracts) for incorporation into the CCB.
 
   - Social Determinants of Health: The conditions in which people are born, grow, live, work, and age, including the health system. These circumstances are shaped by the distribution of money, power and resources at global, national and local levels.
-
-
 
 - Data and other key inputs:
   - Death data
@@ -37,8 +38,10 @@
 
 - ICD-10 Mapping
   - In the current version of the CBD project, only the single underlying cause of death ICD-10 code is used. A future release of the CBD may incorporate &quot;multiple cause of death&quot; codes for some conditions.
-  - We used a variant of the World Health Organization (WHO) global burden of disease condition list to create our own hierarchical disease and injury categorization with three levels.  The first level includes &quot;Infectious Diseases&quot;, &quot;Coronary Heart Disease&quot;, &quot;Cancer/Malignant Neoplasms&quot;, &quot;Other Chronic Conditions&quot;, and &quot;Injury&quot; as well as all causes combined. For data displayed at the census tract level, only this level of the hierarchy is included due to sample size and statistical reliability limitations. The next, &quot;Public Health&quot (PH); level, splits each of these top levels into 51 subcategories, and this is the default level for data/maps displayed at the community level. The final detailed level breaks a few of these PH level conditions down further, for a total of 66 categories; the detailed level is the default for data/maps displayed at the county level.
-
+  - We based the hierarchal list of about 70 disease/injury conditions used in the CBD on a variant of the World Health Organization (WHO) global burden of disease condition list, modified to enhance the usefulness and applicability for U.S. public health priorities and programs. The hierarchy has three levels. The &quot;Top Level&quot; includes &quot;Infectious Diseases&quot;, &quot;Coronary Heart Disease&quot;, &quot;Cancer/Malignant Neoplasms&quot;, &quot;Other Chronic Conditions&quot;, and &quot;Injury&quot; as well as all causes combined. For data displayed at the census tract level, only this level of the hierarchy is included due to sample size and statistical reliability limitations. The next, &quot;Public Health&quot; level, splits each of these top levels into about 50 subcategories, and this is the default level for data/maps displayed at the community level. The final detailed level breaks a few of these Public Health level conditions down further, for the total of about 70 categories. All the levels are shown for data/maps displayed at the county level.
+    - County:            Top Level, Public Health Level, Detail Level
+    - Community:         Top Level, Public Health Level
+    - Census Tract:      Top Level
   - Categorization of deaths was extracted from death certificates based on the International Classification of Diseases version 10 (ICD-10). The primary basis for the ICD10–to-condition mapping is the WHO Annex Table A from &quot;[WHO methods and data sources for global burden of disease estimates 2000-2015, January 2017](http://www.who.int/healthinfo/global_burden_disease/GlobalDALYmethods_2000_2015.pdf)&quot;.  We did not use a similar, more recent and more detailed, system developed by the Institute for Health Metrics and Evaluation (IHME) at the University of Washington ([The State of US Health, 1990-2016 Burden of Diseases, Injuries, and Risk Factors Among US States, JAMA 2018](https://jamanetwork.com/journals/jama/fullarticle/2678018) and [US County-Level Trends in Mortality Rates for Major Causes of Death, 1980-2014, JAMA 2016](https://jamanetwork.com/journals/jama/fullarticle/2592499); Supplemental Appendices) in this version of the CBD because that system resulted in 721,783 (19.2%) of California deaths from 2000 to 2015 being mapped to &quot;garbage codes&quot;, for which more sophisticated methods would need to be employed, which may not be appropriate for our system. The possibility of redistributing these &quot;garbage codes&quot; to valid categories at the census tract level and otherwise using the IHME system is being explored and may be implemented in future versions of the CBD.  However, to enhance our use of the WHO system we compared the mapping of 3,758,856 deaths based on the WHO and IHME systems and changed the WHO mapping of ICD codes for several categories wherein the IHME classification was considered more appropriate (e.g., specific cancer sites rather than &quot;other malignant neoplasms.&quot;)All of these modifications are carefully described in a key resources tool for the CBD, available [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/gbd.ICD.Map.xlsx) on our GitHub site. In addition, because of our focus was on the &quot;Public health&quot; list of conditions, we remapped a number of ICD-10 codes from the WHO mapping to our own CBD system. These include alcohol… All of these modifications are documented in a &quot;key resources&quot; tab for the CBD available noted above.  .
 
 - Census Tract Data Issues
@@ -49,18 +52,17 @@
 
 
 
-- Formulas and measures
-  - Years of Life Lost (YLL)
-    - Following the methods of the Global Burden of Disease Study, the YLL for each death is based on the age at death, and the additional number of years a person living in an optimal setting could be expected to live (page 30, [here](http://www.who.int/healthinfo/global_burden_disease/GlobalDALYmethods_2000_2015.pdf)). For example, someone dying at birth would be associated with 91.94 YLL, someone dying at 25 associated with 67.08 years, and someone dying at 98 with 3.70 years. Beyond the published data, we associated 1.0 YLL for anyone dying above age 105.
-    - Our mapping of age at death to YLL can be found on our GitHub site [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/le.Map.xlsx).
+-  Formulas and measures
+  -  Years of Life Lost (YLL)
+     -  Following the methods of the Global Burden of Disease Study, the YLL for each death is based on the age at death, and the additional number of years a person living in an optimal setting could be expected to live (page 30, [here](http://www.who.int/healthinfo/global_burden_disease/GlobalDALYmethods_2000_2015.pdf)). For example, someone dying at birth would be associated with 91.94 YLL, someone dying at 25 associated with 67.08 years, and someone dying at 98 with 3.70 years. Beyond the published data, we associated 1.0 YLL for anyone dying above age 105.
+     -  Our mapping of age at death to YLL can be found on our GitHub site [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/le.Map.xlsx).
   - Crude rates
     - All rates are expressed per 100,000 people based on the following calculations:
       - 100,000\*(number (e.g. deaths, potential years of life lost) / midyear population)
     - Confidence intervals for crude rates are based on the pois.approx() function of the [R epitools package](https://github.com/cran/epitools).
   - Age adjusted rates
-    - Age-adjusted rates are based on the &quot;direct&quot; method, using standard definitions and procedures. Great descriptions and the motivations for these methods can be found [here](https://www26.state.nj.us/doh-shad/sharedstatic/AgeAdjustedDeathRate.pdf), from the New Jersey Department of Health.
-    - Ten age-groupings were used for these calculations.
+    - Age-adjusted rates are based on the &quot;direct&quot; method, using standard definitions and procedures. Great descriptions and the motivations for these methods can be found [here](https://www26.state.nj.us/doh-shad/sharedstatic/AgeAdjustedDeathRate.pdf), from the New Jersey Department of Health, and [here](https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf), from CDC.
     - The US 2000 Standard Population from [NCI](https://seer.cancer.gov/stdpopulations/) and [CDC/NCHS](https://www.cdc.gov/nchs/data/statnt/statnt20.pdf) was used; details of the methods and implications of using the 2000 stardard population are described by NCHS and can be found [here](https://www.cdc.gov/nchs/data/nvsr/nvsr47/nvs47_03.pdf)
-    - The age group mapping at this standard population data can be found here URL.
+    - Ten age-groupings were used for these calculations.These groups and the corresponding standard population data can be found [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/Age%20Groups%20and%20Standard%20US%202000%20pop.xlsx).
     - The age-adjusted calculation, and generation of confidence intervals was conducted using the &quot;ageAdjust.Direct()&quot; function of the [R epitools package](https://github.com/cran/epitools).
     - Because a very small number of census tracts with otherwise useful data had zero population in one or more age strata (often the youngest or oldest strata, for just one sex), the above-mentioned function was modified such that rates in such strata were assigned to (reasonably enough) be 0 (rather than undefined/infinity), allowing an adjusted rate to be calculated.

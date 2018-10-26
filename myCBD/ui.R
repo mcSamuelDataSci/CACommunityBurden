@@ -18,10 +18,24 @@ myBoxSty <- "cursor:pointer;border: 3px solid blue;padding-right:0px;padding-lef
 #-----------------------------------------------------------------------------------------------------------------------------
 
 shinyUI(fluidPage(theme = "bootstrap.css",
-                  # tags$head(
-                  #   tags$link(rel = "stylesheet", type = "text/css", href = "https://fonts.googleapis.com/css?family=Open+Sans")
-                  # ),
-
+                   
+                  # 
+                  # tags$head(tags$style(HTML('
+                  #               .skin-blue .main-header .logo {
+                  #                           background-color: #3c8dbc;
+                  #                           }
+                  #                           .skin-blue .main-header .logo:hover {
+                  #                           background-color: #3c8dbc;
+                  #                           }
+                  #                           .main-header .logo {
+                  #                           font-family: Tahoma, Geneva, sans-serif;
+                  #                           font-weight: bold;
+                  #                           font-size: 20px;
+                  #                           }
+                  #                           ')),
+                  # 
+                  
+                  
                   tags$head(
                     tags$style(HTML("
                                     @import url('//fonts.googleapis.com/css?family=Open+Sans');
@@ -30,8 +44,13 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                                     font-family: 'Open Sans';
                                     line-height: 1.5;
                                     }
+
+                                    a {text-decoration: none; color: #0000EE;}
                                     
                                     "))),
+                  
+                 
+                 #a:link { color: blue; }
                   
                   #tags$style(type='text/css', "* {font-family: 'Open Sans', Georgia; }"),
                   tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
@@ -51,9 +70,6 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) , 
                                                         selectInput("myCAUSE", HTML(paste("Cause:",a("(Cause List Info)",target="_blank",href="gbd.ICD.MapIMAGE.pdf"))), choices=causeNum36, selected="0")
                                                        ),  # size=30 selectize = F, size=3,
-
-         
-                  
  conditionalPanel(condition = fC(c(22,23,33,44,45,55)),selectInput("myLHJ","County:",choices=lList,selected=STATE)  ),
  
  conditionalPanel(condition = fC(c(22,23,66)),          selectInput("myGeo","Geographic Level:",choices=c("County","Community","Census Tract"))),
@@ -86,42 +102,56 @@ sidebarPanel(width=3,
  
  
  conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
- conditionalPanel(condition = fC(c(11)), 
- helpText(textIntroA,style="color:blue"), br(),
- helpText(textIntroC,style="color:blue"), br(),
  
- if (whichData == "real") { helpText(textNote.real,style="color:blue")},
+# HOME PAGE SIDE BAR PANNEL
+  conditionalPanel(condition = fC(c(11)), 
+                  
+ HTML('<left><img src="cdph2.gif" height="125" width="150"></left>'),  # 85  100
+ br(),br(),               
+ 
+   
+ helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
+ helpText(h5("Beta-testing in progress October-November 2018"),style="color:green"),
+ helpText("Share your feedback HERE!",style="color:blue"),  
+ helpText('Report "bugs" HERE!',style="color:blue"),  
+ 
+                    
+ helpText(textIntroA,style="color:black"), br(),
+ helpText(textIntroC,style="color:black"), br(),
+ 
+ if (whichData == "real") { helpText(textNote.real,style="color:black")},
  if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
+ br(),
+ icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"),
+ br(), 
+ tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"),
+ br(),
+ tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
  
- helpText("Share your feedback!  Help us improve the CCB by taking a short survey LINK.",style="color:blue") 
- 
- ),
-
-
-# TEXT on bottom of SIDEBAR
-tags$br(),
-
-helpText("Definition - YLL:  Years of Life Lost",style="color:black"),
-br(),
-icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?",style="color:blue"),
-tags$br(), tags$a("Developed in R-Shiny",style="color:blue"),
-helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site",style="color:blue")),
-br(),
-HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
-#img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
-
 
 ),
 
 
+conditionalPanel(condition = "input.ID !=  11 ",
+                 
+helpText('Note: YLL is "Years of Life Lost"',style="color:green"),
+helpText('Note: "0" values appearing in charts or tables may be true 0 or may be any value <11',style="color:green;font-weight: bold;"),
+HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
+
+)
+                 
+
 # https://stackoverflow.com/questions/35025145/background-color-of-tabs-in-shiny-tabpanel
 # works: h5("Home Page",style="color:red")
+
+),
+
 
 useShinyjs(),
 
 mainPanel(
-  hr(), 
+   
   tabsetPanel(type = "tab",id="ID",
  
           tabPanel("Home Page",  br(),align='center',
@@ -157,7 +187,9 @@ value = 11),
    tabPanel("Technical",                 br(), includeMarkdown("technical.md"),                   value = 77)
   )       ) 
  
+
 ))
+
 
 # convert Markdown doc to Work if needed forediting
 # https://cloudconvert.com/md-to-docx
@@ -185,7 +217,7 @@ value = 11),
 # navBarPanel 
                   
 # work on customizing help button
-# actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
+# actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") 
 # selectizeInput("myCAUSE", "Cause:", choices=causeNum36, selected="A",options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
 #width:100px;
   # https://shiny.rstudio.com/reference/shiny/latest/selectInput.html
@@ -200,9 +232,3 @@ value = 11),
 #tabPanel("Map (interactive)", 
 #htmlOutput(      "map_title"                      ),
 #                             leafletOutput(   "cbdMap0",             height=700),   value =  1),
-
-
-
-
-
-

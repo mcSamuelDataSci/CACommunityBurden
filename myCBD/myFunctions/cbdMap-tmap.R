@@ -5,6 +5,8 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
 
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
+  
+  
     dat.State   <- filter(datCounty,year %in% 2013:2017, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
 
    
@@ -76,6 +78,7 @@ add.alpha <- function(col, alpha=1){
 
 
 
+
 #tmaptools::palette_explorer()
 myPal <- rev(brewer.pal(5,"RdYlBu"))
 myPal <- add.alpha(myPal,.7)
@@ -87,13 +90,37 @@ myPal <- add.alpha(myPal,.7)
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
 
+
+# https://stackoverflow.com/questions/8161836/how-do-i-replace-na-values-with-zeros-in-an-r-dataframe
+replace_missings <- function(x, replacement) {
+  is_miss <- is.na(x)
+  x[is_miss] <- replacement
+  
+  message(sum(is_miss), " missings replaced by the value ", replacement)
+  x
+}
+
+
+map.1 <- replace_missings(map.1, replacement = 0)
+
+
+
+
+
+
+
+
+
+
 #https://rdrr.io/cran/tmap/man/tm_symbols.html
 
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
                                title = lMeasuresC[lMeasures==myMeasure],
                                textNA = "0 deaths/or supressed",
+                               interval.closure="right",
                                legend.hist=T,
                                legend.reverse=T,
+                               #legend.format=text.less.than,
                                title.col=NA,id="name", 
                                popup.vars=c("Population: " = "pop",
                                             "Measure Value: "= myMeasure)
