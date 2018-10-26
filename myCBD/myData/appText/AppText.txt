@@ -15,9 +15,6 @@
 # trendTab
 # sdohTab
 
-#-- Other Misc--------------------------------------------------------
-
-textYear <-  "YEAR:  At the County and State levels of geography, YEAR is the individual year of death, with current data from 2001 to 2017.  At the Community and Census Tract levels of geography, all data are displayed for the years 2013 to 2017 combined.  These years are combined for statistical stability, so that for these more granular levels of geography, the displayed data are still meaningful, and not just the result of random fluctuations"
 
 #--Home Page Side Bar Text ------------------------------------------
 
@@ -92,7 +89,6 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 <b> Standard Mortality Ratio (SMR)</b> shows the county rate of a condition divided by the rate for the condition in the State overall. This measure will highlight counties that have especially high (or low) rates of a condition compared to the State rate, even if the condition does not have a large number of deaths.  To aid in using this measure, the vertical red line is at 1.2, corresponding to the measure being 120% of the State average.  The green line is at 0.8, 80% of the State average and the grey line is at 1.0, right on the State average.
 ')
 
-# SMR: May want to reference https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf
 
 causeHelp <-
 'The list of CAUSES in the app is based on a hierarchal outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs. 
@@ -145,7 +141,7 @@ conditionTab <-
 <br><br>
 Ranking on SMR provides a special window in the potentially unique priority of a condition in the selected geography.  A large SMR means the condition is especially high in that geography relative to the State average, even if the condition does not have a large number of deaths.  This is an important way to detect conditions that, while perhaps not common, are unusually high (or low) in a county or community in which one is interested.  To aid in using this measure, the vertical red line is at 1.2, corresponding to the measure being 120% higher in the selected geography than the State average.  The green line is at 0.8, 80% of the State average and the grey line is at 1.0, right on the State average.
 <br><br>
-Because the 'base' ratio for the SMR is the state rate, the SMR is not shown when the statewide 'California' geography is selected—it would be 1.0 in all cases.
+Because the 'base' ratio for the SMR is the state rate, the SMR is not shown when the statewide 'California' geography is selected; it would be 1.0 in all cases.
 <br><br>
 For additional help or more info, click the '?' button next to each tool, or check out the Technical tab.
 " 
