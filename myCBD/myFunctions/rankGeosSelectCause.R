@@ -6,7 +6,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
       myMeasure = "YLL"
       myLHJ = STATE
       mySex = "Total"
-    }
+        }
   
   
 
@@ -44,9 +44,12 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   
 
     #par(mar=par()$mar+c(2,12,-4,0))
-    par(mar=c(2,12,3,0))
+    par(mar=c(2,12,0,0),oma=c(0,0,0,0))
     
-    t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,space=.3,xlab=names(lMeasures[lMeasures==myMeasure]))
+    t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,space=.3,
+                      border="black",
+                      offset=0,
+                      xlab=names(lMeasures[lMeasures==myMeasure]))
     axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1)
  
     
@@ -62,7 +65,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     
     
     
-    mtext(tit,cex=1.6,line=1,font=2)
+    mtext(tit,cex=1.6,line=-3,font=2)
     
     
   }

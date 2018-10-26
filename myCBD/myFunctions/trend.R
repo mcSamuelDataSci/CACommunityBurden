@@ -44,8 +44,8 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
 
 
-mySize1 <- 20
-mySize2 <- 24
+mySize1 <- 18
+mySize2 <- 20
 myCex1  <- 1.8
 
 
@@ -59,6 +59,7 @@ myCex1  <- 1.8
     geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
     labs(title =myTit,size=mySize2) +
     labs(y = lMeasuresC[lMeasures==myMeasure]) +
+   theme_bw() +
     theme(axis.text=element_text(size=mySize1),
           axis.title=element_text(size=mySize1,face="bold"),
           plot.title=element_text(family='', face='bold', colour='black', size=mySize2),
