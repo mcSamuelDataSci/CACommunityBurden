@@ -81,7 +81,7 @@ sidebarPanel(width=3,
 
  conditionalPanel(condition = fC(c(22,23,33,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
- conditionalPanel(condition = fC(c(33)),                checkboxGroupInput("myLev", "Levels to show:",c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
+ conditionalPanel(condition = fC(c(33,34)),                checkboxGroupInput("myLev", "Levels to show:",c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("statecutHelp", "?",style=myButtonSty) ,
                                                         checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(33,34)),             numericInput( "myN",        "How Many:", value=10,min=1,max=50)),

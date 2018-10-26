@@ -1,4 +1,4 @@
-rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=10,mySex="Total") {
+rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev="lev1",myN=10,mySex="Total") {
 
   
   if (1==2) {
@@ -49,16 +49,17 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myN=1
   
   dat.1$causeName <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
    
-
-  myMeasureAlias <-        if (myMeasure=="YLL"){ "Years of Life Lost"
-                    } else if (myMeasure=="YLLper") { "Years of Life Lost (per 100,000 population)"
-                    } else if (myMeasure=="YLL.adj.rate") {"Age-Adjusted YLL Rate"
-                    } else if (myMeasure=="Ndeaths") {"Number of Deaths"
-                    } else if (myMeasure=="cDeathRate") {"Crude Death Rate"
-                    } else if (myMeasure=="aRate") {"Age-Adjusted Death Rate"
-                    } else if (myMeasure=="mean.age") {"Mean Age at Death"
-                    } else if (myMeasure=="SMR") {"Standard Mortality Ratio"
-                    }
+  # myMeasureAlias <-        if (myMeasure=="YLL"){ "Years of Life Lost"
+  #                   } else if (myMeasure=="YLLper") { "Years of Life Lost (per 100,000 population)"
+  #                   } else if (myMeasure=="YLL.adj.rate") {"Age-Adjusted YLL Rate"
+  #                   } else if (myMeasure=="Ndeaths") {"Number of Deaths"
+  #                   } else if (myMeasure=="cDeathRate") {"Crude Death Rate"
+  #                   } else if (myMeasure=="aRate") {"Age-Adjusted Death Rate"
+  #                   } else if (myMeasure=="mean.age") {"Mean Age at Death"
+  #                   } else if (myMeasure=="SMR") {"Standard Mortality Ratio"
+  #                   }
+  myMeasureAlias <-  lMeasuresC[lMeasures==myMeasure]
+  
   
   g <- ggplot(dat.1, aes(x=reorder(causeName, info),y=info,group=sex)) +
        labs(title=paste(myMeasureAlias,"by Cause Grouped by Gender,\n","California",myYear),
