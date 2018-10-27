@@ -106,16 +106,19 @@ sidebarPanel(width=3,
 # HOME PAGE SIDE BAR PANNEL
   conditionalPanel(condition = fC(c(11)), 
                   
- HTML('<left><img src="cdph2.gif" height="125" width="150"></left>'),  # 85  100
+ HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
  br(),br(),               
  
    
  helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
  helpText(h5("Beta-testing in progress October-November 2018"),style="color:green"),
- helpText("Share your feedback HERE!",style="color:blue"),  
- helpText('Report "bugs" HERE!',style="color:blue"),  
+ br(),
  
-                    
+ h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
+ h4(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
+ br(),br(),
+ 
+ 
  helpText(textIntroA,style="color:black"), br(),
  helpText(textIntroC,style="color:black"), br(),
  
@@ -159,19 +162,53 @@ mainPanel(
     
           
         h4(HTML(above1),align="left"),
-          fluidRow(
-          # column(width=3,img(id="map1I",src="mapx.jpeg",width="100%",height=200,style= myBoxSty)),
-          column(width=3,img(id="map1I",src="MapInt2.png",width="100%",style= myBoxSty)),
-          column(width=3,img(id="map2I",src="MapStat2.png",width="100%",style = myBoxSty)),
-          column(width=3,img(id="trendI",src="trends2.png",width="100%",style = myBoxSty)),
-          column(width=3,img(id="scatterI",src="SDOH2.png",width="100%", style = myBoxSty))),
-        
+  #         fluidRow(
+  #         # column(width=3,img(id="map1I",src="mapx.jpeg",width="100%",height=200,style= myBoxSty)),
+  #         column(width=3,img(id="map1I",src="MapInt2.png",width="100%",style= myBoxSty)),
+  #         column(width=3,img(id="map2I",src="MapStat2.png",width="100%",style = myBoxSty)),
+  #         column(width=3,img(id="trendI",src="trends2.png",width="100%",style = myBoxSty)),
+  #         column(width=3,img(id="scatterI",src="SDOH2.png",width="100%", style = myBoxSty))),
+  #       
+  # br(),
+  # fluidRow(
+  #     column(width=4,img(id="rankgeoI",src="rankGeo2.png",width="100%",style = myBoxSty)),
+  # column(width=4,img(id="ranktableI",src="rankPlot2-save.png",width="100%",style = myBoxSty)),
+  # column(width=4,img(id="rankcauseI",src="rankPlot2.png",width="100%",style = myBoxSty))),
+  # 
+  # 
+  
+  fluidRow(
+    column(width=3,img(id="map1I",src="mapInt.png",width="100%",onmouseout="this.src='mapInt.png'", onmouseover="this.src='mapInt2.png'",style = myBoxSty)),
+    column(width=3,img(id="map2I",src="mapStat.png",width="100%",onmouseout="this.src='mapStat.png'", onmouseover="this.src='mapStat2.png'",style = myBoxSty)),
+    column(width=3,img(id="trendI",src="trends.png",width="100%",onmouseout="this.src='trends.png'", onmouseover="this.src='trends2.png'",style = myBoxSty)),
+    column(width=3,img(id="scatterI",src="SDOH.png",width="100%", onmouseout="this.src='SDOH.png'", onmouseover="this.src='SDOH2.png'",style = myBoxSty))), 
   br(),
   fluidRow(
-      column(width=4,img(id="rankgeoI",src="rankGeo2.png",width="100%",style = myBoxSty)),
-  column(width=4,img(id="ranktableI",src="rankPlot2-save.png",width="100%",style = myBoxSty)),
-  column(width=4,img(id="rankcauseI",src="rankPlot2.png",width="100%",style = myBoxSty))),
-
+    column(width=4,img(id="rankgeoI",src="rankGeo.png",width="100%",onmouseout="this.src='rankGeo.png'", onmouseover="this.src='rankGeo2.png'",style = myBoxSty)),
+    column(width=4,img(id="ranktableI",src="rankTable.png",width="100%",onmouseout="this.src='rankTable.png'", onmouseover="this.src='rankTable2.png'",style = myBoxSty)),
+    column(width=4,img(id="rankcauseI",src="rankPlot.png",width="100%", onmouseout="this.src='rankPlot.png'", onmouseover="this.src='rankPlot2.png'",style = myBoxSty))),
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 h5(HTML(below1),align="left"),
 value = 11),          
 
@@ -181,7 +218,7 @@ value = 11),
    tabPanel("STATIC MAP",              plotOutput("cbdMapTS",  height=700,width="100%"),        value = 23),
    tabPanel("RANK BY CAUSE [PLOT]",           br(), plotOutput("rankCause", width="100%",height=700),  value = 33),
    tabPanel("RANK BY CAUSE [TABLE]",     dataTableOutput("rankCauseT"),                           value = 45),   #DT::
-   tabPanel("RANK BY CAUSE AND SEX",    plotOutput("rankCauseSex", width="100%",height=700),     value = 34),
+ #  tabPanel("RANK BY CAUSE AND SEX",    plotOutput("rankCauseSex", width="100%",height=700),     value = 34),
    tabPanel("RANK BY GEOGRAPHY", plotOutput("rankGeo",width="100%",height=1700),          value = 44),
    tabPanel("Trend",                     br(), plotOutput("trend",     width="100%",height=700),  value = 55),
    tabPanel("SOCIAL DETERMINANTS",         br(), plotlyOutput("scatter",             height=700),   value = 66),
