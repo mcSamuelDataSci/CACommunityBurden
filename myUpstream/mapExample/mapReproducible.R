@@ -1,44 +1,75 @@
-
+# Make California Tract "Shape" file
 library(tigris)
-# make California County Map File
 options(tigris_class = "sf")  
-caCounty  <- counties(state = "CA", cb = TRUE)  
+caTract  <- tracts(state = "CA", cb = TRUE)  
 
-library(readr)
-# get some (real!) California data
-caDat     <- read_csv("https://raw.githubusercontent.com/mcSamuelDataSci/CACommunityBurden/master/myUpstream/mapExample/caDat.csv")
+# Read file that links tracts to "communities"
+cbdLinkCA  <- read.csv("https://raw.githubusercontent.com/mcSamuelDataSci/CACommunityBurden/master/myCBD/myInfo/cbdLinkCA.csv",colClasses = "character") 
 
+
+# merge Map and link file
 library(dplyr)
-# merge the map with data
-myMapper  <- left_join(caCounty,caDat,by=c("NAME"= "county"))
+caTract <- caTract %>% 
+           left_join(cbdLinkCA, by="GEOID")
 
+# new "Shape" file based on communites
+shape_Comm  <- caTract %>% 
+               group_by(county,comName) %>% 
+               summarize() %>% 
+               ungroup()
+
+# Filter to one county for example
+shape_Comm  <- filter(shape_Comm,county=="Alameda")
+
+
+# Make dumb map with community labels
 library(tmap)
-# simple mapping function
-# first argument is the variable for the coloring
-# second argument if is "style" for the break points
-mapEx <- function(measure,cutSystem){
-                 tm_shape(myMapper) + tm_polygons(col=measure, style=cutSystem)
-         }
-
-tmap_mode("plot")
-mapEx("aRate","quantile")   #  :)
-mapEx("Ndeaths","fisher")   #  :)  
-mapEx("Ndeaths","quantile") #  :)
-
-tmap_mode("view")
-mapEx("aRate","quantile")   #  :)
-mapEx("Ndeaths","fisher")   #  :)  
-mapEx("Ndeaths","quantile") #  :(
-
-#  Error in `levels<-`(`*tmp*`, value = as.character(levels)) : 
-#    factor level [2] is duplicated
-
-# --------------------------------------------------------------------------------------------------------------
+   tm_shape(shape_Comm) + 
+    tm_polygons(col="county") + 
+     tm_text("comName")
 
 
+# == TEXT WRAPPING FUNCTION I GOT FROM STACK OVERFLOW AND USE OFTEN ===========
 
-caDat     <- filter(datCounty,year==2017,sex=="Total",CAUSE=="A01",county != "CALIFORNIA") %>%
-                  select(county,Ndeaths,SMR,aRate)
+#http://stackoverflow.com/questions/20241065/r-barplot-wrapping-long-text-labels
 
-write_csv(caDat,"caDat.csv")
-caDat <- read.csv("caDat.csv")
+# Core wrapping function
+wrap.it <- function(x, len)
+{ 
+  sapply(x, function(y) paste(strwrap(y, len), 
+                              collapse = "\n"), 
+         USE.NAMES = FALSE)
+}
+
+# Call this function with a list or vector
+wrap.labels <- function(x, len)
+{
+  if (is.list(x))
+  {
+    lapply(x, wrap.it, len)
+  } else {
+    wrap.it(x, len)
+  }
+}
+
+# =============================================================================
+
+# try to make map with wrapped labels
+# nope!
+ tm_shape(shape_Comm) + 
+  tm_polygons(col="county") + 
+   tm_text(wrap.labels("comName",15))
+
+
+
+
+
+
+
+
+
+
+
+
+
+

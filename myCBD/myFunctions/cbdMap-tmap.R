@@ -43,7 +43,10 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     myTitGeo  <- " by Community"
     }  
   
-  myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myTitYear,myTitGeo,sexLab,geoLab)
+  myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]
+                     
+                     
+                     ," from ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myTitYear,myTitGeo,sexLab,geoLab)
   
   if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 

@@ -299,7 +299,6 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
     uci = gamma.uci, se = dsr.se)
 }
 
-
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
 year   <- data.frame(year   = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
@@ -472,22 +471,40 @@ criticalNum <- 11
 datTract <-  datTract %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,Ndeaths),
                                  cDeathRate  = ifelse(Ndeaths < criticalNum,0,cDeathRate),
                                  YLL         = ifelse(Ndeaths < criticalNum,0,YLL),
-                                 YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper)
+                                 YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper),
+                                 rateLCI     = ifelse(Ndeaths < criticalNum,0,rateLCI),
+                                 rateUCI     = ifelse(Ndeaths < criticalNum,0,rateUCI),
+                                 mean.age    = ifelse(Ndeaths < criticalNum,0,mean.age)
+                                 
+                                                                  
                                  )
 
 
 datComm  <-  datComm  %>%  mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,Ndeaths),
                                   cDeathRate  = ifelse(Ndeaths < criticalNum,0,cDeathRate),
                                   YLL         = ifelse(Ndeaths < criticalNum,0,YLL),
-                                  YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper)
+                                  YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper),
+                                  rateLCI     = ifelse(Ndeaths < criticalNum,0,rateLCI),
+                                  rateUCI     = ifelse(Ndeaths < criticalNum,0,rateUCI),
+                                  mean.age    = ifelse(Ndeaths < criticalNum,0,mean.age)
                              )
 
 datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,Ndeaths),
                                   cDeathRate  = ifelse(Ndeaths < criticalNum,0,cDeathRate),
                                   YLL         = ifelse(Ndeaths < criticalNum,0,YLL),
                                   YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper),
-                                  SMR         = ifelse(Ndeaths < criticalNum,0,SMR)
+                                  SMR         = ifelse(Ndeaths < criticalNum,0,SMR),
+                                  rateLCI     = ifelse(Ndeaths < criticalNum,0,rateLCI),
+                                  rateUCI     = ifelse(Ndeaths < criticalNum,0,rateUCI),
+                                  mean.age    = ifelse(Ndeaths < criticalNum,0,mean.age)
                                   )
+
+
+# Quick fix to replace with Version Beta 1.1
+# eliminates pop 0 and therefore infinity rates
+
+datTract <- filter(datTract,pop>0)
+
 
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
