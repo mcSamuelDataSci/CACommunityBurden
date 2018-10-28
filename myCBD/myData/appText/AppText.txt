@@ -89,8 +89,10 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 ')
 
 
-causeHelp <-
-'The list of CAUSES in the app is based on a hierarchal outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs. 
+causeHelp <-'
+<a href="gbd.ICD.MapIMAGE.pdf">Cause List Detail</a>
+<br><br>
+The list of CAUSES in the app is based on a hierarchal outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs. 
 <br><br>
 Depending on the geographic level selected, different levels of detail in the cause list will be available.  The more granular the geographic level, the less granular the cause list will become, for statistical stability. 
 <br><br>
@@ -102,7 +104,7 @@ A small number of the Public Health Level conditions are further broken down int
 <br><br>
 A diagram showing this full cause list hierarchy is available by clicking the "Cause List Info" link. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions can be found on the Technical Tab. 
 <br><br>
-<a>href="gbd.ICD.MapIMAGE.pdf"</a>
+<a href="gbd.ICD.MapIMAGE.pdf">Cause List Detail</a>
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
@@ -184,7 +186,7 @@ Note: Currently this tab only displays one variable, but the display and analysi
 
 # textIntroA <-   "The Community Burden of Disease (CBD) is an evolving platform to view and explore detailed disease/condition burden and Social Determinants of Health data on multiple levels of geographic granularity in order to answer and generate questions, both simple and complex."
 
-# textIntroB <- "The code and system are written/structured to useable by States and Counties throughout the United States—with any State or County using their own structured input file of events (e.g. deaths), and the CBD system supplying underlying population data, Social Determinates of Health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.  The list of disease conditions is based on the Global Burden of Disease system, modified for local public health priorities."
+# textIntroB <- "The code and system are written/structured to useable by States and Counties throughout the United States?with any State or County using their own structured input file of events (e.g. deaths), and the CBD system supplying underlying population data, Social Determinates of Health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.  The list of disease conditions is based on the Global Burden of Disease system, modified for local public health priorities."
 
 # textIntroC <- "This California State implementation of the CBD, The California Community Burden of Disease and Cost Engine (CCB), currently includes detailed death data and multiple associated measures (e.g. age-adjusted cause-specific Years of Life Lost rates) for 2001 to 2015 at the census tract, community (California Medical Service Study Areas), county, and statewide levels.  The CCB also includes a small set of Social Determinates of Health, and describes their correlations with death outcomes, as a pilot for more robust functionality in this area.  Other short-term road map plans include the addition of burden of disease and costs (charges) based on California Hospital Discharge data, automated report generation, and more."
 

@@ -68,7 +68,8 @@ sidebarPanel(width=3,
   
   
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) , 
-                                                        selectInput("myCAUSE", HTML(paste("Cause:",a("(Cause List Info)",target="_blank",href="gbd.ICD.MapIMAGE.pdf"))), choices=causeNum36, selected="0")
+                                                        selectInput("myCAUSE", HTML("Cause:"), choices=causeNum36, selected="0")
+    #    selectInput("myCAUSE", HTML(paste("Cause:",a("(Cause List Info)",target="_blank",href="gbd.ICD.MapIMAGE.pdf"))), choices=causeNum36, selected="0")            
                                                        ),  # size=30 selectize = F, size=3,
  conditionalPanel(condition = fC(c(22,23,33,44,45,55)),selectInput("myLHJ","County/State:",choices=lList,selected=STATE)  ),
  
