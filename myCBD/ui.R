@@ -121,7 +121,6 @@ sidebarPanel(width=3,
  
  h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
  h4(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
- actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
  helpText(textIntroA,style="color:black"), br(),
  helpText(textIntroC,style="color:black"), br(),
  
@@ -129,6 +128,10 @@ sidebarPanel(width=3,
  if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
  br(),
+ actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
+ 
+ 
+ br(),br(),
  icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"),
  br(), 
  tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"),
