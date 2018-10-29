@@ -15,7 +15,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 
 STATE    <- "California"
 
@@ -503,8 +503,8 @@ datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,N
 # Quick fix to replace with Version Beta 1.1
 # eliminates pop 0 and therefore infinity rates
 
-datTract <- filter(datTract,pop>0)
-
+datTract  <- filter(datTract,pop>0)
+datCounty <- filter(datCounty,!is.na(Ndeaths))
 
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))

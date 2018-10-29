@@ -29,6 +29,8 @@
  library(readr) 
  
 # library(maptools)   #needed? 
+ 
+ 
 # library(rgdal)      #needed?
  library(leaflet) 
  library(tmap)
@@ -106,6 +108,8 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
 
   source(paste0(myPlace,"/myData/appText/AppText.txt"))
+ source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
+
 
   version <- "0.5.0"
   

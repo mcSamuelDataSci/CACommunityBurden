@@ -34,6 +34,11 @@ observeEvent(input$trendTab,          {showModal(modalDialog(HTML(trendTab),    
 observeEvent(input$sdohTab,           {showModal(modalDialog(HTML(sdohTab),           easyClose = TRUE))})
 
 
+observeEvent(input$newsUse,           {showModal(modalDialog(HTML(newsUse),           easyClose = TRUE))})
+
+
+
+
 # https://stackoverflow.com/questions/28379937/change-selectize-choices-but-retain-previously-selected-values
 current_Cause <- reactiveVal(NULL)
 # now store your current selection in the reactive value

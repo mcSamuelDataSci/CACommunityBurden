@@ -66,6 +66,10 @@ sidebarPanel(width=3,
   conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help",style=myHelpButtonSty),br(),br()),
   conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
   
+  conditionalPanel(condition = fC(c(1)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
+  
+  
+  
   
  conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) , 
                                                         selectInput("myCAUSE", HTML("Cause:"), choices=causeNum36, selected="0")
@@ -87,7 +91,7 @@ sidebarPanel(width=3,
                                                         checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  conditionalPanel(condition = fC(c(33,34)),             numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
  conditionalPanel(condition = fC(c(22,23,34,44,55,66)), actionButton( "measureHelp", "?",style=myButtonSty) ,
-                                                        radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
+                                                        radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLL.adj.rate")),
  conditionalPanel(condition = fC(c(33)),                #actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
@@ -117,9 +121,7 @@ sidebarPanel(width=3,
  
  h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
  h4(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
- br(),br(),
- 
- 
+ actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
  helpText(textIntroA,style="color:black"), br(),
  helpText(textIntroC,style="color:black"), br(),
  

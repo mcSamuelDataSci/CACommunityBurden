@@ -3,16 +3,26 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
                     mySex     = "Total",  myStateCut  = TRUE, myGeo     = "Census Tract", 
                     myLabName = FALSE,    myCutSystem ="fisher") {
 
+  
+  if (1==2){
+    myLHJ     = "Amador";myCause     ="A";myMeasure = "YLLper";  myYear = 2015;
+    mySex     = "Total";myStateCut  = TRUE; myGeo     = "County";
+    myLabName = FALSE;  myCutSystem ="fisher" 
+  }
+  
+  
+  
+  
+  
+  
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
-  
-  
-    dat.State   <- filter(datCounty,year %in% 2013:2017, sex==mySex, CAUSE==myCause, county !="CALIFORNIA")
-
-   
     if (myLHJ != STATE) {        cZoom <- TRUE
                         } else { cZoom <-FALSE}
     
+  
+    
+  
     geoLab <- ""
     if (cZoom) geoLab <- paste(" in",myLHJ)
     
@@ -20,6 +30,8 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
     
     if (myGeo == "County"){
+    
+    dat.State <-   filter(datCounty,(myYear>= 2012 & myYear <= 2017),sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)  
     dat.1   <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)
     map.1   <- left_join(shape_County, dat.1, by=c("county")) 
     map.1$name <- map.1$county
@@ -60,8 +72,12 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
 
 nCut <- 5
 
-if ( myStateCut) {myRange <- dat.State[,myMeasure]}
-if (!myStateCut) {myRange <- dat.1[,myMeasure]}
+#if ( myStateCut) {myRange <- dat.State[,myMeasure]}
+
+if (myStateCut & myGeo == "county") {myRange <- dat.State[,myMeasure]}
+if (myStateCut & myGeo != "county") {myRange <- dat.1[,myMeasure]}
+if (!myStateCut)                    {myRange <- (map.1 %>% st_set_geometry(NULL))[,myMeasure]}
+
 # fix NAs ?
 
 myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
@@ -121,7 +137,7 @@ map.1 <- replace_missings(map.1, replacement = 0)
                                title = lMeasuresC[lMeasures==myMeasure],
                                textNA = "0 deaths/or supressed",
                                interval.closure="right",
-                               legend.hist=T,
+                             #  legend.hist=T,
                                legend.reverse=T,
                                #legend.format=text.less.than,
                                title.col=NA,id="name", 
