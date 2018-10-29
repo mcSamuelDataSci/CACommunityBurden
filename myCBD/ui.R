@@ -95,7 +95,7 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(33)),                #actionButton( "measureHelp", "?",style=myButtonSty) ,
                                                         selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
  conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
-                                                        radioButtons( "myCutSystem","Cut-point method:", choices=c("fisher","quantile"))),   # pretty
+                                                        radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
  conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
  conditionalPanel(condition = paste(
                               "(",fC(c(44)),") &&",
