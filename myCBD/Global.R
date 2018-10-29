@@ -13,7 +13,7 @@
 
 #-- Set Locations and Data Source ----------------------------------------------------------
 
- whichData <-  "real"
+ whichData <-  "fake"
  VERSION  <- "Version B1.0"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
