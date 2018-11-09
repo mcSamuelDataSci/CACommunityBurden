@@ -82,7 +82,7 @@ sidebarPanel(width=3,
  conditionalPanel(condition =paste(
                              "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c(22,23)),") ) 
                                | (", fC(c(33,34,45,44)),")"  
-                             ),                         sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
+                             ),                         sliderInput("myYear","Year:",value=c(2017,2017),min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
 
  conditionalPanel(condition = fC(c(22,23,33,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  

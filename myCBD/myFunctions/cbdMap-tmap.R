@@ -48,13 +48,25 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     }
 
     if (myGeo == "Community") {
-    dat.1    <- filter(datComm,yearG==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% mutate(geoLab = comName)
+    dat.1    <- filter(datComm,yearG==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% mutate(geoLab = wrap.labels(comName,15))
     map.1    <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
     map.1$name <- map.1$comName
     myTitYear <- yearGrp
     myTitGeo  <- " by Community"
     }  
   
+    
+    # shape_Comm <- shape_Comm %>% 
+    #   mutate(comName2 = wrap.labels(comName,15))
+    # 
+    # tm_shape(shape_Comm) + 
+    #   tm_polygons(col="county") + 
+    #   tm_text("comName2")
+    # 
+    
+    
+    
+    
   myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]
                      
                      
@@ -161,7 +173,7 @@ cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYea
   
   tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)   
     
-      if (myLabName) tt.map <- tt.map + tm_text(wrap.labels("geoLab",10)) 
+      if (myLabName) tt.map <- tt.map + tm_text("geoLab") 
     
   tt.map 
   }

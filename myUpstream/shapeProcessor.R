@@ -18,8 +18,13 @@ library(rmapshaper) # to remove islands (not yet working)
 library(readr)
 
 
-# source(path(upPlace,"islands_removal.R"))
-# res <- county_filter(cnty_ca, min_area = 1.01e+9, rowmap = FALSE)
+
+# EXPERIMENT with make SMALLER shape files
+# sf <- rmapshaper::ms_simplify(input = sf, weighting = 2, keep_shapes = TRUE)
+# http://mapshaper.org/
+
+
+
 
 
 
