@@ -20,6 +20,10 @@
 
 ## 1.1  pats and globals
 .path      	<- "c:/users/iisan7/desktop/mortality_ccb_lt/ccb_lifetables/"
+.path       <- "e:/0.CBD/myUpstream/lifeTables/"
+
+
+
 .cbdlink	<- "data/cbdLinkCA.csv"
 .acs		<- "data/acs5_b01001_2012_2016_ca.dta"
 .dof		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
