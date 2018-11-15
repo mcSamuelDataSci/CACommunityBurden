@@ -67,7 +67,8 @@ proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000
 tr_ca    <- st_transform(tr_ca, crs = proj1)
 cnty_ca  <- st_transform(cnty_ca, crs = proj1)
 
-source(path(upPlace,"islands_removal_function.R"))
+# source(path(upPlace,"islands_removal_function.R"))
+source(path(upPlace,"islands_removal.R"))
 
 
 res_ca      <- county_filter(cnty_ca, min_area = 1.01e+15, rowmap = FALSE)
