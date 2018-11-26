@@ -1,7 +1,7 @@
 rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev="lev1",myN=10,mySex="Total") {
   
   
-  if (1==1) {
+  if (1==2) {
     myPlace   <- getwd()  
     whichData <- "fake"
     
@@ -10,15 +10,16 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
     myN = 10
     myMeasure = "YLLper"
     myYear = 2015
-    mySex = "Male"
+    mySex = "Total"
     library(fs)
     library(ggplot2)
     library(dplyr)
     
     #datCounty <- readRDS(path("e:","0.CBD/myCBD/","/myData/",whichData,"datCounty.RDS"))
     datCounty <- readRDS(path(myPlace,"/myCBD/","/myData/",whichData,"datCounty.RDS"))
-    
   }
+  
+# Filtering dat.1 and merging cause name
   
   inDat <- datCounty
   dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex != "Total",Level %in% myLev,CAUSE !=0)
@@ -29,41 +30,47 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
   dat.1 <- dat.1[((nR-myNX):nR),]
   dat.1$info <- dat.1[,myMeasure]
   
-  
   dat.1$causeName <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
   
-  # https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets
+# Creating order column 
   
-  if (mySex=="Female") #{dat.1       <- dat.1[with(dat.1,order(sex,-info)),]
-    # dat.1$order <- rank(factor(dat.1$info,levels = dat.1$info))
-  {dat.1           <- dat.1 %>%  group_by(CAUSE,add=T) %>%
-    mutate(sum.info = sum(info)) %>%
-    arrange(-sum.info,sex) %>%
-    transform(order=match(info,unique(info)))
+         if (mySex=="Female") #{dat.1       <- dat.1[with(dat.1,order(sex,-info)),]
+                              # dat.1$order <- rank(factor(dat.1$info,levels = dat.1$info))
+                              {dat.1           <- dat.1 %>%  group_by(CAUSE,add=T) %>%
+                               mutate(sum.info = sum(info)) %>%
+                               arrange(-sum.info,sex) %>%
+                               transform(order=match(info,unique(info)))
   } else if (mySex=="Male")   #{dat.1 <- dat.1[with(dat.1,order(sex,info,decreasing=TRUE)),]
-    # dat.1$order <- rank(factor(dat.1$info,levels = dat.1$info))
-    
-  {dat.1           <- dat.1 %>%  arrange(desc(sex),-info) %>%
-    transform(order=match(info,unique(info))) %>%
-    arrange(CAUSE,desc(sex)) #%>%
-  #transform(order=match(info,unique(info)))
-  ##    dat.1$order[duplicated(dat.1$CAUSE)] <- 
-  
+                              # dat.1$order <- rank(factor(dat.1$info,levels = dat.1$info))
+      
+                              {dat.1           <- dat.1 %>%  arrange(desc(sex),-info) %>%
+                               transform(order=match(info,unique(info))) %>%
+                               arrange(CAUSE,desc(sex)) #%>%
+                               #transform(order=match(info,unique(info)))
+                               ##  dat.1$order[duplicated(dat.1$CAUSE)] <- 
+                              
   } else if (mySex=="Total")  {dat.1 <- dat.1 %>%  group_by(CAUSE,add=T) %>%
-    mutate(sum.info = sum(info)) %>%
-    arrange(-sum.info) %>%
-    transform(order=match(sum.info,unique(sum.info)))
-  #dat.1$order <- factor(dat.1$order,levels = dat.1$order)
+                               
+                               mutate(sum.info = sum(info)) %>%
+                               arrange(-sum.info) %>%
+                               transform(order=match(sum.info,unique(sum.info)))
+                               #dat.1$order <- factor(dat.1$order,levels = dat.1$order)
   }
   
   
   #dat.1$order[dat.1$CAUSE==dat.1$CAUSE[!duplicated(dat.1$CAUSE)]]
   #dat.1$order[first(dat.1$CAUSE),]
   #rank(dat.1$order)
+
+# Creating Plot
+  dat.1$value<-dat.1$info
   
+  dat.1$info<-dat.1$order
+  # Creating Title variable
   myMeasureAlias <-  lMeasuresC[lMeasures==myMeasure]
-  
-  g <- ggplot(dat.1, aes(x=order,y=info)) +
+
+  # Plot (https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets)
+  g <- ggplot(dat.1, aes(x=order,y=value)) +
     labs(title=paste(myMeasureAlias,"by Cause Grouped by Gender,\n","California",myYear),
          y=paste("\n",myMeasureAlias)) +
     facet_grid( ~ sex) +
