@@ -40,14 +40,14 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
                                mutate(sum.info = sum(info)) %>%
                                arrange(-sum.info,sex) %>%
                                transform(order=match(info,unique(info)))
-  } else if (mySex=="Male")   #{dat.1 <- dat.1[with(dat.1,order(sex,info,decreasing=TRUE)),]
-                              # dat.1$order <- rank(factor(dat.1$info,levels = dat.1$info))
+  } else if (mySex=="Male")   {dat.1 <- dat.1[with(dat.1,order(sex,info,decreasing=TRUE)),]
+                               dat.1$order <- rank(factor(dat.1$info,levels = dat.1$info))
       
-                              {dat.1           <- dat.1 %>%  arrange(desc(sex),-info) %>%
-                               transform(order=match(info,unique(info))) %>%
-                               arrange(CAUSE,desc(sex)) #%>%
-                               #transform(order=match(info,unique(info)))
-                               ##  dat.1$order[duplicated(dat.1$CAUSE)] <- 
+                              # {dat.1           <- dat.1 %>%  arrange(desc(sex),-info) %>%
+                              #  transform(order=match(info,unique(info))) %>%
+                              #  arrange(CAUSE,desc(sex)) #%>%
+                                #transform(order=match(info,unique(info)))
+                                ##  dat.1$order[duplicated(dat.1$CAUSE)] <- 
                               
   } else if (mySex=="Total")  {dat.1 <- dat.1 %>%  group_by(CAUSE,add=T) %>%
                                
@@ -85,6 +85,8 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
           ,panel.background = element_rect(fill = "white", colour="grey50")
     )
   
-  g  + coord_flip() # scale_x_reverse()
+  g  + coord_flip() # scale_x_reverse() 
   
 }
+
+
