@@ -63,14 +63,14 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
   #rank(dat.1$order)
 
 # Creating Plot
-  dat.1$value<-dat.1$info
-  
-  dat.1$info<-dat.1$order
+ ## dat.1$value<-dat.1$info
+ ## dat.1$info<-dat.1$order
+
   # Creating Title variable
   myMeasureAlias <-  lMeasuresC[lMeasures==myMeasure]
 
   # Plot (https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets)
-  g <- ggplot(dat.1, aes(x=order,y=value)) +
+  g <- ggplot(dat.1, aes(x=order,y=info)) +
     labs(title=paste(myMeasureAlias,"by Cause Grouped by Gender,\n","California",myYear),
          y=paste("\n",myMeasureAlias)) +
     facet_grid( ~ sex) +
