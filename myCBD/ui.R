@@ -82,7 +82,9 @@ sidebarPanel(width=3,
  conditionalPanel(condition =paste(
                              "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c(22,23)),") ) 
                                | (", fC(c(33,34,45,44)),")"  
-                             ),                         sliderInput("myYear","Year:",value=c(2017,2017),min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
+                             ),                         sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
+ 
+ #value=c(2017,2017)
 
  conditionalPanel(condition = fC(c(22,23,33,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
@@ -224,7 +226,7 @@ value = 11),
    tabPanel("STATIC MAP",              plotOutput("cbdMapTS",  height=700,width="100%"),        value = 23),
    tabPanel("RANK BY CAUSE [PLOT]",           br(), plotOutput("rankCause", width="100%",height=700),  value = 33),
    tabPanel("RANK BY CAUSE [TABLE]",     dataTableOutput("rankCauseT"),                           value = 45),   #DT::
- #  tabPanel("RANK BY CAUSE AND SEX",    plotOutput("rankCauseSex", width="100%",height=700),     value = 34),
+#   tabPanel("RANK BY CAUSE AND SEX",    plotOutput("rankCauseSex", width="100%",height=700),     value = 34),
    tabPanel("RANK BY GEOGRAPHY", plotOutput("rankGeo",width="100%",height=1700),          value = 44),
    tabPanel("Trend",                     br(), plotOutput("trend",     width="100%",height=700),  value = 55),
    tabPanel("SOCIAL DETERMINANTS",         br(), plotlyOutput("scatter",             height=700),   value = 66),

@@ -45,6 +45,7 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,myS
                      col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
                      xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
  
+   
    t.label <- causeList36[match(dat.1$CAUSE,causeList36[,"LABEL"]),"nameOnly"]
  
    wr.lap <- wrap.labels(t.label ,18)

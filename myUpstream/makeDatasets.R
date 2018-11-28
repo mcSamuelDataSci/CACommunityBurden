@@ -12,7 +12,6 @@
 #======================================================================================
 
 
-
 # -- Designate locations and load packages---------------------------------------------------------
 
 whichDat <- "fake"
@@ -353,6 +352,7 @@ ageCounty   <- full_join(fullMatCounty,datAA1 ,by = c("county","year","sex","age
 ageCounty$Ndeaths[is.na(ageCounty$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
+
 countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
@@ -360,6 +360,50 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
             aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+
+# test other approach
+countyAA_try2 <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
+  summarize(aMulti = list(unique(
+                            round(
+                              ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)*100000,2)
+                            )
+                          )
+            ) 
+
+
+# THIRD 
+countyAA_try3 <- ageCounty %>% 
+  group_by(county, year, sex, CAUSE) %>% {
+    sam <- ageadjust.direct.SAM(
+      count = .$Ndeaths, 
+      pop = .$pop, 
+      rate = NULL, 
+      stdpop = .$US2000POP, 
+      conf.level = 0.95
+    )
+    
+    summarize(
+      .,
+      aRate = sam[2] * 100000,
+      aLCI = sam[3] * 100000,
+      aUCI = sam[4] * 100000, 
+      aSE  = sam[5] * 100000
+    ) 
+  }
+  
+  
+  
+  
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+
+
+
+
 
 countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 

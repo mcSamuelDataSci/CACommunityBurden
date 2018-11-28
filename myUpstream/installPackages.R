@@ -1,7 +1,13 @@
 # -- INSTALL PACKAGES --------------------------------------------------------------------------
 
 # The CBD, including the "Upstream" system, requires installation of the following packages 
- 
+
+# consider using the "librarian" package to install packages and load libraries
+# https://github.com/DesiQuintans/librarian
+# or perhaps anyLib, https://cran.r-project.org/web/packages/anyLib/anyLib.pdf
+
+
+
 
 #-OTHER/Misc.------------------------------------------------------------------------------------
 #  install.packages("tidyverse")  # data "wrangling" and other stuff
