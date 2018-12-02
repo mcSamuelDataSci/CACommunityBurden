@@ -16,7 +16,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     
     if (cZoom & myMeasure == "SMR") stop("I appologize dear, but SMR is not calcualted for now below the county level")
     
-    causeLab <- causeList36[causeList36[,"LABEL"]==myCause,"nameOnly"]
+    causeLab <- fullCauseList[fullCauseList[,"LABEL"]==myCause,"nameOnly"]
     sexLab   <- ""
                 if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
     

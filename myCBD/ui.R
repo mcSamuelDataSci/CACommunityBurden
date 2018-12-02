@@ -1,5 +1,8 @@
-# STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
 
+
+
+
+# STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
 
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
@@ -138,7 +141,6 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(44)),
    checkboxInput("myRefLine",  "Reference Line", value=FALSE)),
  
- 
  # myX
  conditionalPanel(condition = fC(c(66)),
    selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
@@ -176,7 +178,7 @@ sidebarPanel(width=3,
    ),
  
 
-# Text on all side bars EXCEPT home page ------------------------------------------------
+# Text on all side bars EXCEPT home page -------------------------------------
 
   conditionalPanel(condition = "input.ID !=  11 ",
                  
@@ -185,11 +187,11 @@ sidebarPanel(width=3,
     HTML('<left><img src="CDPH.gif" height="125" width="150"></left>')
    ),
     
-# Text on all side bars -------------- --------------------------------------------------
+# Text on all side bars -------------- ----------------------------------------
 
-             
    helpText(h4(VERSION),style="color:green")
 
+# -----------------------------------------------------------------------------
 
 ), # END of sidebarPanel
 
@@ -256,8 +258,6 @@ mainPanel(
 
 ) # END fluidPage
 ) # END ShinyUI
-
-
 
 
 # END =============================================================================================

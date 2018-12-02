@@ -80,7 +80,7 @@ p <- plot_ly(
                 '<br> Population:',format(sdohWork[,"pop"], big.mark = ","), 
                 '<br>',names(xL),":",round(sdohWork[,t.x]),"%",
                 '<br>',names(xM),":",round(sdohWork[,t.y])) ) %>%
-  layout(title=paste('<b>','Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo,'</b>'),
+  layout(title=paste('<b>','Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo,'</b>'),
                  
                  xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
                  yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
@@ -105,7 +105,7 @@ p <- plot_ly(
 #     #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
 #     ) %>%
 # #    hide_colorbar() %>% 
-# layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",causeList36[causeList36[,1]==myCause,2],"by",myGeo),
+# layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo),
 #        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
 #        yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
 p

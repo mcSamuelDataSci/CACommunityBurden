@@ -26,7 +26,7 @@ if (2==3){
  plot(dat.1$year,dat.1[,myMeasure],
         type="l",lwd=3,col="blue",
         xlab="Year",ylab=names(lMeasures[lMeasures==myMeasure]),
-        main=paste("Trend in",names(lMeasures[lMeasures==myMeasure]),"of",causeList36[causeList36[,1]==myCause,2],"in",myLHJ)) 
+        main=paste("Trend in",names(lMeasures[lMeasures==myMeasure]),"of",fullCauseList[fullCauseList[,1]==myCause,2],"in",myLHJ)) 
 #   
 #   
  }
@@ -53,7 +53,7 @@ dat.1 <- filter(inDat,county == myLHJ,CAUSE == myCause)
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
 
-myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",causeList36[causeList36[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
+myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
 
 
 mySize1 <- 18
