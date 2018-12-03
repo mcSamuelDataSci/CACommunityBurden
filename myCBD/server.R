@@ -1,20 +1,21 @@
 # =============================================================================
 # "server.R" file     
 #
-#   required file for Shiny Application
+# required file for Shiny Application
 #
-#   renders all visual object (maps, charts, help boxes)
-#   modifies inputs through interativity loads all packages needed for application                                                           
+# renders all visual object (maps, charts, help boxes)
+# modifies inputs through interativity 
 #  
-#   Michael Samuel
-#   2018
+# Michael Samuel
+# 2018
 #
 # =============================================================================
 
-
 shinyServer(function(input, output,session) {
 
-# "onclick" is a function from shinyjs package
+# -------------------------------------------------------------------------------  
+
+  # "onclick" is a function from shinyjs package
 # used here to move to specified tab when specified image in clicked
 # first perameter is id associated with images from home page main pannel
 #  see ui.R  "tabPanel("Home Page"..."
@@ -26,6 +27,7 @@ shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="4
 shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
 shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
   
+# -------------------------------------------------------------------------------  
 
 # generates help "objects" used for "drop down" help buttons
 # single argument to each HTML function is a text object (vector of length 1) 
@@ -47,8 +49,10 @@ observeEvent(input$sdohTab,           {showModal(modalDialog(HTML(sdohTab),     
 # generates text "object" used for news you can use buttons, from "...newsUseText.txt" as above
 observeEvent(input$newsUse,           {showModal(modalDialog(HTML(newsUse),           easyClose = TRUE))})
 
+# -------------------------------------------------------------------------------  
+
 # create "empty" reactive value
-# then fill it with current "myCause" selection for use elsewhere
+#  then fill it with current "myCause" selection for use elsewhere
 current_Cause <- reactiveVal(NULL)
 observeEvent(input$myCAUSE, { current_Cause(input$myCAUSE) })
 
@@ -67,20 +71,22 @@ observeEvent(input$myLHJ, {
   if(input$myLHJ != STATE){updateSelectInput(session, "myGeo", selected = "Community") }
 })
 
-
-# not used, but up other examples of what may be need fro future reactivity
+# not used now, but saved as examples of other reactivity
 # observeEvent(input$ID,{
-#  if(input$ID %in% c(33,34,44,45,55)                        ) { updateSelectInput(session, "myLHJ", choices = lList,       selected=current_LHJ() ) }
-#  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") { updateSelectInput(session, "myLHJ", choices = lListNoState,selected=current_LHJ() ) }
-#  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") { updateSelectInput(session, "cZoom", selected=FALSE) }
+#  if(input$ID %in% c(33,34,44,45,55)) 
+#   {updateSelectInput(session, "myLHJ", choices = lList, selected=current_LHJ())}
+#  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") 
+#   {updateSelectInput(session, "myLHJ", choices = lListNoState, selected=current_LHJ())}
+#  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") 
+#   {updateSelectInput(session, "cZoom", selected=FALSE) }
 #   
 # )
 #for two input use:
 # observeEvent(input$test1 | input$test2, {
 #    if(input$test1==0 && input$test2==0){
 
-
-#------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# Render Application Maps and Charts --------------------------------------------
 
 output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
 output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
@@ -93,10 +99,12 @@ output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, inp
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
 
+
+# Generate labels and titles for maps and charts --------------------------------
+
 sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
-geoLabel   <- renderText({if (input$myLHJ==STATE)        geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
+geoLabel   <- renderText({if (input$myLHJ==STATE)      geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
-### not sure why I can't use timeLabel <- yearGrp here?
 
 output$map_title <- renderUI({h4(strong(
                     HTML(paste0(   lMeasuresC[lMeasures == input$myMeasure],
@@ -107,7 +115,9 @@ output$map_title <- renderUI({h4(strong(
                                    sexLabel(), geoLabel(),
                                    sep = " ")))) })
 
-                     })
+# END of shinyServer ---------------------------------------------------------
+
+}) 
 
 # -- END ----------------------------------------------------------------------
 

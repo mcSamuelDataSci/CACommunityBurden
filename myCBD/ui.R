@@ -1,5 +1,16 @@
-
-
+# =============================================================================
+# "ui.R" file     
+#
+# required file for Shiny Application
+#
+# sets up user inputs (drop downs, buttons, etc.) and text in side pannels 
+# sets up tabs and places all maps, charts, images, titles in main pannels
+# set all "styles"
+#
+# Michael Samuel
+# 2018
+#
+# =============================================================================
 
 
 # STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
@@ -67,7 +78,7 @@ sidebarPanel(width=3,
   conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
   conditionalPanel(condition = fC(c(1)),     actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
   
-# Input Selection on each tab  ----------------------------           
+# Input selections on each tab  ----------------------------           
 
  # myCAUSE
  conditionalPanel(condition = fC(c(22,23,44,55,66)), 
@@ -146,7 +157,6 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(66)),
    selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
  
-
 # Home page side bar text ---------------------------------------------------
 
  conditionalPanel(condition = fC(c(11)), 
@@ -178,7 +188,6 @@ sidebarPanel(width=3,
  
    ),
  
-
 # Text on all side bars EXCEPT home page -------------------------------------
 
   conditionalPanel(condition = "input.ID !=  11 ",
@@ -192,9 +201,9 @@ sidebarPanel(width=3,
 
    helpText(h4(VERSION),style="color:green")
 
-# -----------------------------------------------------------------------------
+# -- END of sidebarPanel-------------------------------------------------------
 
-), # END of sidebarPanel
+), 
 
 
 # ------------------------------------------------------------------------------------
