@@ -153,7 +153,8 @@ names(sdohVec) <- sdohVecL
 lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
 
-if (sjc) {lList <- lList[lList %in% sjconsortium]}
+
+# if (sjcSite) {lList <- lList[lList %in% sjconsortium]}
 
 nC       <- 5
 myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
@@ -176,9 +177,9 @@ myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
 # --- Create "Sub-Set" Site: San Joaquin Public Health Consortium--------------
 
 sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
-sjc          <- FALSE
+sjcSite      <- FALSE
 
-if (sjc){
+if (sjcSite){
   mTitle <- "San Joaquin Public Health Consortium Community Burden of Disease"  
   shape_County <- shape_County[shape_County$county %in% sjconsortium,]
   shape_Comm   <- shape_Comm[  shape_Comm $county  %in% sjconsortium,]
