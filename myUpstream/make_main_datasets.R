@@ -353,6 +353,13 @@ ageCounty$Ndeaths[is.na(ageCounty$Ndeaths)] <- 0    # if NA deaths in strata cha
 ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
 
+# saveRDS(ageCounty, file= path(myPlace,"/myData/",whichDat,"forZev.ageCounty.RDS"))
+githubURL <- "https://raw.githubusercontent.com/mcSamuelDataSci/CACommunityBurden/master/myCBD/myData/fake/forZev.ageCounty.RDS"
+download.file(githubURL,"temp.rds", method="curl")
+ageCounty <- readRDS("temp.rds")
+
+
+
 countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,

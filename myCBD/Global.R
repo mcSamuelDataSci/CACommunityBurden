@@ -164,6 +164,9 @@ myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
 # ----------------------------------------------------------------------------
 
 
+library(fs)
+CBD     <- dir_info(recursive = TRUE,type="file")
+CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path)))
 
 
 # NOTES:
