@@ -1,8 +1,8 @@
-rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
+rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
 
   if(1==2){
-  myLHJ="CALIFORNIA"
-  myMeasure = "mean.age"
+  myLHJ="Amador"
+  myMeasure = "aRate"
   myYear=2017
   mySex="Total"
   myLev="lev2"
@@ -22,15 +22,15 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,myS
   
  # levelVec <- c("lev1")
   
-  
   inDat <- datCounty
   dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
  
-  dat.1 <- dat.1[order( dat.1[,myMeasure]),]
+  dat.1 <- dat.1[order( dat.1[,myMeasure],na.last = FALSE),]
+
   #dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
 
    if (myMeasure=="mean.age"){
-     dat.1 <- dat.1[order( dat.1[,myMeasure],decreasing=TRUE),]}
+     dat.1 <- dat.1[order( dat.1[,myMeasure],na.last = NA,decreasing=TRUE),]}
    
   nR    <- nrow(dat.1)
   myNX  <- min(nR,myN) 
@@ -43,9 +43,8 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "mean.age",myYear=2017,myS
   par(mar=c(5,13,0,0),oma = c(0, 0, 3, 0))
    t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",  
                      col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-                     xlim=c(0,1.04*max(dat.1$Ndeaths))); box(lwd=bLwd)
+                     xlim=c(0,1.04*max(dat.1$Ndeaths,na.rm=TRUE))); box(lwd=bLwd)
  
-   
    t.label <- fullCauseList[match(dat.1$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
  
    wr.lap <- wrap.labels(t.label ,18)

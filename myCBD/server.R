@@ -97,7 +97,7 @@ output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, inp
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
-                                     option=list(columnDefs=list(list(targets=3:5, class="dt-right")),pageLength = 60)) #DT::
+                                     option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::
 
 
 # Generate labels and titles for maps and charts --------------------------------

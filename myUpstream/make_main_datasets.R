@@ -14,7 +14,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 
 STATE    <- "California"
 
@@ -166,7 +166,6 @@ calculateYLLmeasures <- function(group_vars,levLab){
   dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
     summarize(Ndeaths = n() , 
               YLL     = sum(yll,   na.rm = TRUE),     # NEED TO ADD CIs
-              m.YLL   = mean(yll,  na.rm = TRUE),     # NEED TO ADD CIs
               mean.age = mean(age,na.rm=TRUE)
     ) %>%  ungroup 
  
@@ -182,8 +181,8 @@ calculateYLLmeasures <- function(group_vars,levLab){
 calculateRates <- function(inData,yearN){
   transform(inData, 
             YLLper      = yF*YLL/(yearN*pop),
-            YLLrateLCI  = yF*pois.approx(YLL,yearN*pop, conf.level = 0.95)$lower,  # need to confirm that this is correct
-            YLLrateUCI  = yF*pois.approx(YLL,yearN*pop, conf.level = 0.95)$upper,
+            # YLLrateLCI  = yF*pois.approx(YLL,yearN*pop, conf.level = 0.95)$lower,  # need to confirm that this is correct
+            # YLLrateUCI  = yF*pois.approx(YLL,yearN*pop, conf.level = 0.95)$upper,
             
             cDeathRate  = yF*Ndeaths/(yearN*pop),
             rateLCI     = yF*pois.approx(Ndeaths,yearN*pop, conf.level = 0.95)$lower,
@@ -359,7 +358,7 @@ download.file(githubURL,"temp.rds", method="curl")
 ageCounty <- readRDS("temp.rds")
 
 
-
+# THIS WORKS - INEFFICIENT
 countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
@@ -368,46 +367,46 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
             aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
 
-# test other approach
-countyAA_try2 <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
-  summarize(aMulti = list(unique(
-                            round(
-                              ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)*100000,2)
-                            )
-                          )
-            ) 
-
-
-# THIRD 
-countyAA_try3 <- ageCounty %>% 
-  group_by(county, year, sex, CAUSE) %>% {
-    sam <- ageadjust.direct.SAM(
-      count = .$Ndeaths, 
-      pop = .$pop, 
-      rate = NULL, 
-      stdpop = .$US2000POP, 
-      conf.level = 0.95
-    )
-    
-    summarize(
-      .,
-      aRate = sam[2] * 100000,
-      aLCI = sam[3] * 100000,
-      aUCI = sam[4] * 100000, 
-      aSE  = sam[5] * 100000
-    ) 
-  }
-  
-  
-  
-  
-  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
-            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
-            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
-
+# # MY ATTEMPTS... CLOSE BUT NO CIGAR
+# countyAA_try2 <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
+#   summarize(aMulti = list(unique(
+#                             round(
+#                               ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)*100000,2)
+#                             )
+#                           )
+#             ) 
+# 
+# 
+# # THIRD 
+# countyAA_try3 <- ageCounty %>% 
+#   group_by(county, year, sex, CAUSE) %>% {
+#     sam <- ageadjust.direct.SAM(
+#       count = .$Ndeaths, 
+#       pop = .$pop, 
+#       rate = NULL, 
+#       stdpop = .$US2000POP, 
+#       conf.level = 0.95
+#     )
+#     
+#     summarize(
+#       .,
+#       aRate = sam[2] * 100000,
+#       aLCI = sam[3] * 100000,
+#       aUCI = sam[4] * 100000, 
+#       aSE  = sam[5] * 100000
+#     ) 
+#   }
+#   
+#   
+#   
+#   
+#   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+#             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+#             aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+#             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+#             aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+#             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+# 
 
 
 
@@ -519,35 +518,35 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 
 criticalNum <- 11
 
-datTract <-  datTract %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,Ndeaths),
-                                 cDeathRate  = ifelse(Ndeaths < criticalNum,0,cDeathRate),
-                                 YLL         = ifelse(Ndeaths < criticalNum,0,YLL),
-                                 YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper),
-                                 rateLCI     = ifelse(Ndeaths < criticalNum,0,rateLCI),
-                                 rateUCI     = ifelse(Ndeaths < criticalNum,0,rateUCI),
-                                 mean.age    = ifelse(Ndeaths < criticalNum,0,mean.age)
+datTract <-  datTract %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
+                                 cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
+                                 YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
+                                 YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
+                                 rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
+                                 rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
+                                 mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
                                  
                                                                   
                                  )
 
 
-datComm  <-  datComm  %>%  mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,Ndeaths),
-                                  cDeathRate  = ifelse(Ndeaths < criticalNum,0,cDeathRate),
-                                  YLL         = ifelse(Ndeaths < criticalNum,0,YLL),
-                                  YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper),
-                                  rateLCI     = ifelse(Ndeaths < criticalNum,0,rateLCI),
-                                  rateUCI     = ifelse(Ndeaths < criticalNum,0,rateUCI),
-                                  mean.age    = ifelse(Ndeaths < criticalNum,0,mean.age)
+datComm  <-  datComm  %>%  mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
+                                  cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
+                                  YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
+                                  YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
+                                  rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
+                                  rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
+                                  mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
                              )
 
-datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,Ndeaths),
-                                  cDeathRate  = ifelse(Ndeaths < criticalNum,0,cDeathRate),
-                                  YLL         = ifelse(Ndeaths < criticalNum,0,YLL),
-                                  YLLper      = ifelse(Ndeaths < criticalNum,0,YLLper),
-                                  SMR         = ifelse(Ndeaths < criticalNum,0,SMR),
-                                  rateLCI     = ifelse(Ndeaths < criticalNum,0,rateLCI),
-                                  rateUCI     = ifelse(Ndeaths < criticalNum,0,rateUCI),
-                                  mean.age    = ifelse(Ndeaths < criticalNum,0,mean.age)
+datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
+                                  cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
+                                  YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
+                                  YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
+                                  SMR         = ifelse(Ndeaths < criticalNum,NA,SMR),
+                                  rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
+                                  rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
+                                  mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
                                   )
 
 
@@ -555,7 +554,9 @@ datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,0,N
 # eliminates pop 0 and therefore infinity rates
 
 datTract  <- filter(datTract,pop>0)
-datCounty <- filter(datCounty,!is.na(Ndeaths))
+
+# No!
+#  datCounty <- filter(datCounty,!is.na(Ndeaths))
 
 saveRDS(datTract,  file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 saveRDS(datComm,   file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))

@@ -5,13 +5,10 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
 
   
   if (1==2){
-    myLHJ     = "Amador";myCause     ="A";myMeasure = "YLLper";  myYear = 2015;
-    mySex     = "Total";myStateCut  = TRUE; myGeo     = "County";
+    myLHJ     = "Alameda";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
+    mySex     = "Total";myStateCut  = TRUE; myGeo     = "Community";
     myLabName = FALSE;  myCutSystem ="fisher" 
   }
-  
-  
-  
   
   
   
@@ -19,9 +16,6 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
   
     if (myLHJ != STATE) {        cZoom <- TRUE
                         } else { cZoom <-FALSE}
-    
-  
-    
   
     geoLab <- ""
     if (cZoom) geoLab <- paste(" in",myLHJ)
@@ -64,9 +58,7 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
     #   tm_text("comName2")
     # 
     
-    
-    
-    
+   
   myTit    <- paste0(lMeasuresC[lMeasures==myMeasure]
                      
                      
@@ -74,8 +66,14 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
   
   if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 
+  
+  
+  
   if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
 
+  
+  
+  
 #palette(myColor1)
 #tmap_style("white")
 
@@ -86,11 +84,24 @@ nCut <- 5
 
 #if ( myStateCut) {myRange <- dat.State[,myMeasure]}
 
+
+# didn't work...
+#dat.1 <- dat.1 %>% 
+#  mutate_at(c("YLL","YLLper"), funs(recode(., `0` = NA)))
+
+
+
 if (myStateCut & myGeo == "county") {myRange <- dat.State[,myMeasure]}
 if (myStateCut & myGeo != "county") {myRange <- dat.1[,myMeasure]}
 if (!myStateCut)                    {myRange <- (map.1 %>% st_set_geometry(NULL))[,myMeasure]}
 
 # fix NAs ?
+
+
+
+temp <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
+if (is.na(temp) & length(temp)==1)  stop("Sorry, either no values or only suppressed values to map")
+
 
 myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
 
@@ -120,27 +131,19 @@ myPal <- add.alpha(myPal,.7)
 
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
-
-
-# https://stackoverflow.com/questions/8161836/how-do-i-replace-na-values-with-zeros-in-an-r-dataframe
-replace_missings <- function(x, replacement) {
-  is_miss <- is.na(x)
-  x[is_miss] <- replacement
-  
-  message(sum(is_miss), " missings replaced by the value ", replacement)
-  x
-}
-
-
-map.1 <- replace_missings(map.1, replacement = 0)
-
-
-
-
-
-
-
-
+# 
+# 
+# # https://stackoverflow.com/questions/8161836/how-do-i-replace-na-values-with-zeros-in-an-r-dataframe
+# replace_missings <- function(x, replacement) {
+#   is_miss <- is.na(x)
+#   x[is_miss] <- replacement
+#   
+#   message(sum(is_miss), " missings replaced by the value ", replacement)
+#   x
+# }
+# 
+# 
+# map.1 <- replace_missings(map.1, replacement = 0)
 
 
 #https://rdrr.io/cran/tmap/man/tm_symbols.html
@@ -161,11 +164,7 @@ map.1 <- replace_missings(map.1, replacement = 0)
            legend.outside.position = "right", 
            legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3
           )  
-  
-  
- 
- 
-}
+  }
 
 
 cbdMapXStat <- function(myLHJ= "Amador", myCause="A",myMeasure = "YLLper", myYear=2015,mySex="Total",myStateCut=TRUE,myGeo="Census Tract",myLabName=FALSE,myCutSystem="fisher") {
