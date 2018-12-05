@@ -6,7 +6,8 @@ The code and system are written/structured to useable by States and Counties thr
 
 This California State implementation of the CBD, The California Community Burden of Disease and Cost Engine (CCB), currently includes detailed death data and multiple associated measures (e.g. age-adjusted cause-specific Years of Life Lost rates) for 2001 to 2015 at the census tract, community (California Medical Service Study Areas), county, and statewide levels.  The CCB also includes a small set of Social Determinants of Health, and describes their correlations with death outcomes, as a pilot for more robust functionality in this area.  Other short-term road map plans include the addition of burden of disease and costs (charges) based on California Hospital Discharge data, automated report generation, and more.
 
-Test Site:
+Test Sites:
+https://cdph.ca.gov/communityburden
 https://phdataviz.shinyapps.io/myCBD/
 
 
