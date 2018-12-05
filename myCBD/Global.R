@@ -93,13 +93,13 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
   source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
 
-  source(paste0(myPlace,"/myFunctions/cbdMap-tmap.R"))
+  source(paste0(myPlace,"/myFunctions/make_MAPS.R"))
+  source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R")) 
   source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
-  source(paste0(myPlace,"/myFunctions/rankCausesSelectGeo.R")) 
-  source(paste0(myPlace,"/myFunctions/rankCausesSelectGeoTable.R"))
-  source(paste0(myPlace,"/myFunctions/rankGeosSelectCause.R"))
-  source(paste0(myPlace,"/myFunctions/trend.R"))
-  source(paste0(myPlace,"/myFunctions/scatterSDOH.R"))
+  source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
+  source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
+  source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
+  source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 
   source(paste0(myPlace,"/myData/appText/AppText.txt"))
   source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
@@ -111,6 +111,19 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
 
 # med.age, m.YLL  
 lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
+
+
+#   yll                     yll                        YLL
+#   yllRate                 yll.rate                   YLL.rate
+#   yllAdjustedRate         yll.adjusted.rate          YLL.adjusted.rate
+#   deaths                  ndeaths                    Ndeaths
+#   deathRate               death.rate
+#   deathAdjustedRate       death.adjusted.rate
+#   meanAge                 mean.age.at.death
+#   SMR                     SMR 
+
+#   similar nomenclature for confidence intervals
+
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
                 "YLL Rate per 100,000 population",

@@ -55,6 +55,9 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 
 myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
 
+myTit <-  wrap.labels(myTit,80)
+
+
 
 mySize1 <- 18
 mySize2 <- 20

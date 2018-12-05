@@ -80,9 +80,9 @@ p <- plot_ly(
                 '<br> Population:',format(sdohWork[,"pop"], big.mark = ","), 
                 '<br>',names(xL),":",round(sdohWork[,t.x]),"%",
                 '<br>',names(xM),":",round(sdohWork[,t.y])) ) %>%
-  layout(title=paste('<b>','Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo,'</b>'),
+  layout(title=wrap.labels(paste('<b>','Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo,'</b>'),100),
                  
-                 xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
+                 xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE, linewidth = 2),
                  yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
 
 

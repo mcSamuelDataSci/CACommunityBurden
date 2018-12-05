@@ -1,12 +1,12 @@
-rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
+rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
 
   if(1==2){
   myLHJ="Amador"
   myMeasure = "aRate"
   myYear=2017
   mySex="Total"
-  myLev="lev2"
-  myN=3
+  myLev="lev1"
+  myN=10
   }
   
   
@@ -27,6 +27,7 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "aRate",myYear=2017,mySex=
  
   dat.1 <- dat.1[order( dat.1[,myMeasure],na.last = FALSE),]
 
+  
   #dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
 
    if (myMeasure=="mean.age"){
@@ -54,13 +55,13 @@ rankCause  <- function(myLHJ="CALIFORNIA",myMeasure = "aRate",myYear=2017,mySex=
      
  par(mar=c(5,0,0,0))
    t.plot <- barplot((dat.1$YLLper),xlab="YLL per 100K pop",col=myCol,
-                     horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper))); box(lwd=bLwd)
-   t.plot <- barplot((dat.1$aRate),xlab="Age-Adjusted Rate",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$aRate))); box(lwd=bLwd)
+                     horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper,na.rm=T))); box(lwd=bLwd)
+   t.plot <- barplot((dat.1$aRate),xlab="Age-Adjusted Rate",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$aRate,na.rm=T))); box(lwd=bLwd)
    
-   t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age)));   box(lwd=bLwd)
+   t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age,na.rm=T)));   box(lwd=bLwd)
  
   if (myLHJ != "CALIFORNIA") {
-   t.plot <- barplot((dat.1$SMR),xlab="Stnd. Mortaility Ratio",                col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$SMR)));     box(lwd=bLwd)
+   t.plot <- barplot((dat.1$SMR),xlab="Stnd. Mortaility Ratio",                col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$SMR,na.rm=T)));     box(lwd=bLwd)
 
    abline(v=0.8,col="green"); abline(v=1,col="gray"); abline(v=1.2,col="red")
    text(1,.1,"state rate",srt=90,col="black",cex=1.3,adj=c(0,.5))

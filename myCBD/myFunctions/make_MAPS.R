@@ -64,6 +64,10 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
                      
                      ," from ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myTitYear,myTitGeo,sexLab,geoLab)
   
+  
+  myTit <-  wrap.labels(myTit,80)
+  
+  
   if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 
   

@@ -28,7 +28,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
  
     if (cZoom) { datComm$plotter <- datComm[,myMeasure]
                  dat.1     <- datComm  %>% filter(county==myLHJ,yearG==yearGrp,sex==mySex,CAUSE==myCause, comID != "Unknown")  %>%
-                 arrange(plotter) %>%
+                 arrange(!is.na(plotter),plotter) %>%
                  mutate(lab =wrap.labels(comName,30))
     tit       <- paste0("Community Ranking of ",lMeasuresC[lMeasures==myMeasure]," for ",causeLab," in ",myLHJ," in ",yearGrp,sexLab) 
     sMeasure  <- datCounty$plotter[datCounty$county==myLHJ]
@@ -36,14 +36,17 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     
     
     
-    if (!cZoom) { dat.1     <- datCounty  %>%   arrange(plotter) %>%
+    if (!cZoom) { dat.1     <- datCounty  %>%   arrange(!is.na(plotter),plotter) %>%
                                  mutate(lab =county)
                  tit       <- paste0("County Ranking of ",lMeasuresC[lMeasures==myMeasure]," for ",causeLab," in ",myYear,sexLab)
                  sMeasure  <- dat.1$plotter[dat.1$county==STATE]
                  }
   
 
-  par(mar=par()$mar+c(2,12,1,0))
+    tit <-  wrap.labels(tit,80)
+    
+    
+  par(mar=par()$mar+c(2,12,4,0))
   #  par(mar=c(2,12,2,0),oma=c(0,0,0,0))
     
     

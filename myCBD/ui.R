@@ -23,9 +23,10 @@ fC <- function(vec) {
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
 }
 
-myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
-                    color: #fff; background-color: #337ab7; 
-                    border-color: #2e6da4"
+
+ myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
+                     color: #fff; background-color: #337ab7; 
+                     border-color: #2e6da4"
 
 myHelpButtonSty <- "background-color: #694D75;font-size:14px;"
 
@@ -115,7 +116,7 @@ sidebarPanel(width=3,
 
  # myStateCut
  conditionalPanel(condition = fC(c(22,23)),
-    actionButton("statecutHelp", label="?",style=myButtonSty) ,
+    actionButton("statecutHelp", label="?", style=myButtonSty) , br(),    #add br() here to fix spacing, but does not yet....
     checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  
  # myN
