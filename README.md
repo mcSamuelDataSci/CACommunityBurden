@@ -10,6 +10,7 @@ Test Sites:
 * https://cdph.ca.gov/communityburden
 * https://phdataviz.shinyapps.io/myCBD/
 
+Other Info:
 
 * A health burden visualization tool; a lens into the relation of place and health disparities
 * Designed for State Health Department programs, Local Health Departments, and community partners; specifically for epidemiologic analysis and systematic scientific insight for allocation of resources, evaluation of interventions, and program planning 
