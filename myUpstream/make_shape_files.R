@@ -32,7 +32,7 @@ library(readr)
 #-- Read Info file --------------------------------------------------------------------------------
 
 # cbdLinkCA links census tracts ("GEOID") to "comID" (community ID; currently adjusted MSSA_ID) - 8036 tracts
-cbdLinkCA  <- read.csv(path(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "character")  # colClasses... essential for keeping leading "0"   
+cbdLinkCA  <- read.csv(path(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # colClasses... essential for keeping leading "0"   
 
 
 tractInfo <- read_csv(path(upPlace,"/upData/tractInformation.csv"),guess_max = 8000)

@@ -34,7 +34,7 @@ load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")
 .deaths <- cbdDat0FULL
 
 
-.cbdlink	<- "data/cbdLinkCA.csv"
+.cbdlink	<- "data/Tract to Community Linkage.csv"
 .dxtract	<- "data/dxTract.rds"
 .dxmssa		<- "data/dxMSSA.rds"
 .dxcounty	<- "data/dxCounty.rds"

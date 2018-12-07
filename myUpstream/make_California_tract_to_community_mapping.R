@@ -1,5 +1,5 @@
 # =====================================================================================
-# "makeCaliLink" file                                                                 |
+# "make_California_tract_to_community_link.R
 #            ....                                                                     |
 #                                                                                     |
 #            generates .csv file that must have                                       |
@@ -37,4 +37,4 @@ adjMSSA           <- adjMSSA[, c("MSSA_ID","comID","comName")]
 
 cbdLinkCA <- full_join(tractMSSA,adjMSSA,by= "MSSA_ID") %>%  select(-MSSA_ID)
 
-write.csv(cbdLinkCA,paste0(myPlace,"/myInfo/cbdLinkCA.csv"),row.names=FALSE)
+write.csv(cbdLinkCA,paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),row.names=FALSE)

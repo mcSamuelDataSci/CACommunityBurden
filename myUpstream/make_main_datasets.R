@@ -1,15 +1,20 @@
-# =====================================================================================
-# "makeDatasets.R" file                                                               |
-#            designate key constants, folder locations, and load packages             |
-#            load data mapping files                                                  |
-#            load population denominator data                                         |
-#            load death data (cbdDat0)                                                |  
-#            build functions for YLL and rate calcuations                             |
-#            contruction initial tract, community & county CBD data files             |
-#            process data and calculate age-adjusted rates                            |
-#            final merges and processing of main CBD data files                       |
-#            export files for use in CBD app                                          |
-#======================================================================================
+# ============================================================================
+# "makeDatasets.R" file   
+#
+#            designate key constants, folder locations, and load packages     
+#            load data mapping files                                          
+#            load population denominator data                                 
+#            load death data (cbdDat0)                                        
+#            build functions for YLL and rate calcuations                     
+#            contruct initial tract, community & county CBD data files        
+#            process data and calculate age-adjusted rates                    
+#            final merges and processing of main CBD data files               
+#            export files for use in CBD app                              
+#
+#            Michael Samuel
+#            2018
+#
+#=============================================================================
 
 
 # -- Designate locations and load packages---------------------------------------------------------
@@ -45,10 +50,10 @@ yearGrp <- "2013-2017"
 # and get error "Error: Can't use matrix or array for column indexing"
 
 
-leMap      <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/le.Map.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
-yearMap    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/year.Map.xlsx")))
-geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/countycodes.Map.xlsx")))
-cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/cbdLinkCA.csv"),colClasses = "character")  # file linking MSSAs to census 
+leMap      <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/age_to_lifeExpectancy.mapping.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
+yearMap    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/year_to_yearGroup.mapping.xlsx")))
+geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/countyCodes_mapping.xlsx")))
+cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census 
 comName    <- unique(cbdLinkCA[,c("comID","comName")])                                    # dataframe linking comID and comName
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Groups and Standard US 2000 pop.xlsx"),sheet = "data"))
 

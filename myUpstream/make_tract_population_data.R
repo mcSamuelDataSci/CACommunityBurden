@@ -39,7 +39,7 @@ upPlace <- paste0(myDrive,"/0.CBD/myUpstream")
 
 ## 2.1 	tract-to-MSSA crosswalk
 cbd.link <- setDT(
-	read_csv(paste0(myPlace,"/myInfo/cbdLinkCA.csv")),                    # !! update path
+	read_csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv")),                    # !! update path
 	key="GEOID"	                                  # set key for merging later
 )
 

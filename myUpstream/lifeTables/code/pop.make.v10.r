@@ -24,7 +24,7 @@
 
 
 
-.cbdlink	<- "data/cbdLinkCA.csv"
+.cbdlink	<- "data/Tract to Community Linkage.csv"
 .acs		<- "data/acs5_b01001_2012_2016_ca.dta"
 .dof		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
 .nxtract	<- "data/nxTract.rds"
