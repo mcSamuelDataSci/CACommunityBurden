@@ -37,7 +37,7 @@ library(readr)
 #--  for the death data variables used in the CBD
 
 raw.death.variable.info <- as.data.frame(read_excel(
-                             paste0(upPlace,"/upInfo/death.File.Vars.xlsx"), 
+                             paste0(upPlace,"/upstreamInfo/death.File.Vars.xlsx"), 
                              sheet="variableNames")
                              )   
 

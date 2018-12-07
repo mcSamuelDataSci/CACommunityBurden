@@ -33,7 +33,7 @@ myDrive <- "E:"
 myPlace <- paste0(myDrive,"/0.CBD/myCBD") 
 upPlace <- paste0(myDrive,"/0.CBD/myUpstream")
 
-.ckey <- read_file(paste0(upPlace,"/census.api.key.txt")) 
+.ckey <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) 
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
