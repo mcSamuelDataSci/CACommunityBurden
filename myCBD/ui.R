@@ -24,7 +24,7 @@ fC <- function(vec) {
 }
 
 
- myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
+myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
                      color: #fff; background-color: #337ab7; 
                      border-color: #2e6da4"
 
@@ -80,6 +80,9 @@ sidebarPanel(width=3,
   conditionalPanel(condition = fC(c(1)),     actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
   
 # Input selections on each tab  ----------------------------           
+
+# consider CAUSE.ui  etc...
+
 
  # myCAUSE
  conditionalPanel(condition = fC(c(22,23,44,55,66)), 

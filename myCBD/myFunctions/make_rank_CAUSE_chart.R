@@ -1,86 +1,78 @@
 rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
 
-  if(1==2){
+ myCex <- 1.6
+ myCol <- "blue"            #mycol <- rep("blue",nrow(filtered.df))
+ bLwd <- 2
+  
+ filtered.df <- filter(datCounty,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
+ filtered.df <- filtered.df[order( filtered.df[,myMeasure],na.last = FALSE),]
+
+ if (myMeasure=="mean.age"){
+  filtered.df <- filtered.df[order( filtered.df[,myMeasure],na.last = NA,decreasing=TRUE),]
+  }
+   
+ Nrows.df          <- nrow(filtered.df)
+ Nrows.to.display  <- min(Nrows.df,myN) 
+ filtered.df       <- filtered.df[((Nrows.df-Nrows.to.display+1):Nrows.df),]
+  
+ layout(matrix(c(1,1,2,3,4,5),1,6,byrow=TRUE))
+ par(mar=c(5,13,0,0),oma = c(0, 0, 3, 0))
+ 
+ t.plot <- barplot( filtered.df$Ndeaths,
+                    xlab = "Deaths (n)",  
+                    col  = myCol, horiz = TRUE, space = .3, cex.lab = myCex,
+                    xlim = c(0,1.04*max(filtered.df$Ndeaths,na.rm=TRUE)))
+ box(lwd=bLwd)
+ 
+ t.label <- fullCauseList[match(filtered.df$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
+ wr.lap  <- wrap.labels(t.label ,18)
+ axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.6)
+     
+ par(mar=c(5,0,0,0))
+ 
+ barplot(filtered.df$YLLper,
+         xlab="YLL per 100K pop",
+         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+         xlim=c(0,1.04*max(filtered.df$YLLper,na.rm=T)))
+ box(lwd=bLwd)
+   
+ barplot(filtered.df$aRate,
+         xlab="Age-Adjusted Rate",
+         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+         xlim=c(0,1.04*max(filtered.df$aRate,na.rm=T)))
+ box(lwd=bLwd)
+   
+ barplot(filtered.df$mean.age, 
+         xlab="Mean Age",
+         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+         xlim=c(0,1.04*max(filtered.df$mean.age,na.rm=T)))
+ box(lwd=bLwd)
+ 
+ if (myLHJ != "CALIFORNIA") {
+  t.plot <- barplot((filtered.df$SMR),
+                     xlab="Stnd. Mortaility Ratio",
+                     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+                     xlim=c(0,1.04*max(filtered.df$SMR,na.rm=T)))
+  box(lwd=bLwd)
+  abline(v=0.8,col="green")
+  abline(v=1,col="gray")
+  abline(v=1.2,col="red")
+  text(1,.1,"state rate",srt=90,col="black",cex=1.3,adj=c(0,.5))
+ }
+ 
+ sexLab <- ""
+ if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
+   
+ mtext(paste0("Measures by Cause in ",myYear," in ",myLHJ,sexLab),outer = TRUE,cex=1.6,line=1,font=2)
+
+}
+
+
+if(1==2){
   myLHJ="Amador"
   myMeasure = "aRate"
   myYear=2017
   mySex="Total"
   myLev="lev1"
   myN=10
-  }
-  
-  
-  #high resolution for images?
-  #svg("filename.svg")  #,width=14,height=7
-  #plot....
-  #dev.off()
-  
-  
-  myCex <- 1.6
-  myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
-
-  
- # levelVec <- c("lev1")
-  
-  inDat <- datCounty
-  dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
- 
-  dat.1 <- dat.1[order( dat.1[,myMeasure],na.last = FALSE),]
-
-  
-  #dat.1 <- dat.1[order( eval(parse(text=paste0("dat.1$",myMeasure)))),]
-
-   if (myMeasure=="mean.age"){
-     dat.1 <- dat.1[order( dat.1[,myMeasure],na.last = NA,decreasing=TRUE),]}
-   
-  nR    <- nrow(dat.1)
-  myNX  <- min(nR,myN) 
-  dat.1 <- dat.1[((nR-myNX+1):nR),]
-  
-  layout(matrix(c(1,1,2,3,4,5),1,6,byrow=TRUE))
-  
-  bLwd <- 2
-  
-  par(mar=c(5,13,0,0),oma = c(0, 0, 3, 0))
-   t.plot <- barplot((dat.1$Ndeaths),xlab="Deaths (n)",  
-                     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-                     xlim=c(0,1.04*max(dat.1$Ndeaths,na.rm=TRUE))); box(lwd=bLwd)
- 
-   t.label <- fullCauseList[match(dat.1$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
- 
-   wr.lap <- wrap.labels(t.label ,18)
-   
-   axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.6)
-   box(lwd=2)
-     
- par(mar=c(5,0,0,0))
-   t.plot <- barplot((dat.1$YLLper),xlab="YLL per 100K pop",col=myCol,
-                     horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$YLLper,na.rm=T))); box(lwd=bLwd)
-   t.plot <- barplot((dat.1$aRate),xlab="Age-Adjusted Rate",col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$aRate,na.rm=T))); box(lwd=bLwd)
-   
-   t.plot <- barplot((dat.1$mean.age), xlab="Mean Age",        col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$mean.age,na.rm=T)));   box(lwd=bLwd)
- 
-  if (myLHJ != "CALIFORNIA") {
-   t.plot <- barplot((dat.1$SMR),xlab="Stnd. Mortaility Ratio",                col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,xlim=c(0,1.04*max(dat.1$SMR,na.rm=T)));     box(lwd=bLwd)
-
-   abline(v=0.8,col="green"); abline(v=1,col="gray"); abline(v=1.2,col="red")
-   text(1,.1,"state rate",srt=90,col="black",cex=1.3,adj=c(0,.5))
-  
- 
-  }
- 
- sexLab <- ""
- if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
-   
-   
-  mtext(paste0("Measures by Cause in ",myYear," in ",myLHJ,sexLab),outer = TRUE,cex=1.6,line=1,font=2)
-
 }
-
-
-
-
-# ADD TO OUR R FUNCTION LIST na.omit
-#  junk <-  na.omit(gbdMap0$GBDA[gbdMap0$linkL1==myL1List] )
-
-
