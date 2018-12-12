@@ -95,7 +95,7 @@ death.datA$stateFIPS  <-"06"
 # COUNTY -----
 # County name based strictly on (mapping to) FIPS code (F62)
 # HARMONISE with CHSI: OKAY
-fipsCounty          <- as.data.frame(read_excel(paste0(myPlace,"/myinfo/countyCodes_mapping.xlsx"))) 
+fipsCounty          <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) 
 death.datA$county      <- fipsCounty$countyName[match(death.datA$countyFIPS,fipsCounty$FIPSCounty)]        
 
 # code no longer needed since FIPS code is read in as character, but valuable "snipit" for similar purposes:
