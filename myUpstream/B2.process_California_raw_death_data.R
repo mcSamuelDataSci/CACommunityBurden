@@ -15,12 +15,11 @@
 #  2017 and 2018
 # =============================================================================
 
-#-- Set Locations Etc----------------------------------------------------------
+#-- Set Locations Etc-----------------------------------------------------------------------
 
 # MUST EDIT HERE to provide path for secure data
-secure.location  <- "G:/CCB/0.Secure.Data"  # two possible locations for
-secure.location  <- "H:/0.Secure.Data"      #   secure data
-
+secure.location  <- "G:/CCB/0.Secure.Data/"  # two possible locations for
+secure.location  <- "H:/0.Secure.Data/"      #   secure data
 
 .sl              <- secure.location  # short name to shorten lines of code below
 
@@ -32,8 +31,9 @@ upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
 
 #-- EDIT for Local versus State installation -------------------------------------------------
 
-local.installation <- FALSE
 state.installation <- TRUE
+local.installation <- FALSE
+localFileName      <- "YOUR_DEATH_DATA_FILE_NAME_HERE.csv"
 
 #-- Load Packages -------------------------------------------------------------
 
@@ -56,19 +56,19 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
 
- ca17    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2017.csv"), colClasses = "character") 
- ca16    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2016.csv"), colClasses = "character") 
- ca15    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2015.csv"), colClasses = "character") 
- ca14    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2014.csv"), colClasses = "character") 
- ca13    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2013.csv"), colClasses = "character")
- ca12    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2012.csv"), colClasses = "character")
- ca11    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2011.csv"), colClasses = "character")
- ca10    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2010.csv"), colClasses = "character")
- ca09    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2009.csv"), colClasses = "character")
- ca08    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2008.csv"), colClasses = "character")
- ca07    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2007.csv"), colClasses = "character")
- ca06    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2006.csv"), colClasses = "character")
- ca05    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2005.csv"), colClasses = "character")
+ ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
+ ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
+ ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
+ ca14    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2014.csv"), colClasses = "character") 
+ ca13    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2013.csv"), colClasses = "character")
+ ca12    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2012.csv"), colClasses = "character")
+ ca11    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2011.csv"), colClasses = "character")
+ ca10    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2010.csv"), colClasses = "character")
+ ca09    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2009.csv"), colClasses = "character")
+ ca08    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2008.csv"), colClasses = "character")
+ ca07    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2007.csv"), colClasses = "character")
+ ca06    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2006.csv"), colClasses = "character")
+ ca05    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2005.csv"), colClasses = "character")
  
 death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
@@ -76,10 +76,8 @@ death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,
 
 
 if (local.installation) {
-death.datA   <- read.csv(paste0(.sl,"YOUR_DEATH_DATA_FILE_NAME_HERE.csv"), colClasses = "character")
+death.datA   <- read.csv(paste0(.sl,localFileName), colClasses = "character")
 }
-
-# END LOCAL HEALTH JURISDICTION SECTION -------------------------------------------------------
 
 
 vInfo             <- filter(raw.death.variable.info,y2005onward == 1)  # 2005-current variable names 
@@ -178,11 +176,11 @@ if (state.installation) {
 vInfo <- filter(raw.death.variable.info,y2000to2004 == 1) # 2000-2004 variable column locations
 vInfo <- vInfo[order(vInfo$mStart),]   # columns need to be read in order with read_fwf function !!  
 
-.f0 <- paste0(.sl,"/rawDeathData/Death2000.txt")
-.f1 <- paste0(.sl,"/rawDeathData/Death2001.txt")
-.f2 <- paste0(.sl,"/rawDeathData/Death2002.txt")
-.f3 <- paste0(.sl,"/rawDeathData/Death2003.txt")
-.f4 <- paste0(.sl,"/rawDeathData/Death2004.txt")
+.f0 <- paste0(.sl,"rawDeathData/Death2000.txt")
+.f1 <- paste0(.sl,"rawDeathData/Death2001.txt")
+.f2 <- paste0(.sl,"rawDeathData/Death2002.txt")
+.f3 <- paste0(.sl,"rawDeathData/Death2003.txt")
+.f4 <- paste0(.sl,"rawDeathData/Death2004.txt")
 
 # reading from flat files based on start and end positions and names as defined in vInfo  
 ca00 <- read_fwf(file=.f0,col_positions=fwf_positions(start=vInfo$mStart, end=vInfo$mEnd, col_names = vInfo$varName),skip=0)
@@ -263,7 +261,9 @@ save(cbdDat0FULL, file= paste0(.sl,"/myData/cbdDat0FULL.R"))
 
 
 # === Create Random Data Set =============================================================================================
-  
+
+if (state.installation) {
+
 # CAUTION
 load(paste0(.sl,"/myData/cbdDat0FULL.R"))
 
@@ -285,3 +285,4 @@ cbdDat0SAMP <- rbind(half1,half2)
 
 save(cbdDat0SAMP, file= paste0(upPlace,"/upData/cbdDat0SAMP.R"))
 
+}
