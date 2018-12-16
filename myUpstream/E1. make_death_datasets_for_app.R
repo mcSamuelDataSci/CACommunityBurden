@@ -530,8 +530,6 @@ datTract <-  datTract %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,N
                                  rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
                                  rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
                                  mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
-                                 
-                                                                  
                                  )
 
 
@@ -542,7 +540,7 @@ datComm  <-  datComm  %>%  mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,
                                   rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
                                   rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
                                   mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
-                             )
+                                  )
 
 datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
                                   cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),

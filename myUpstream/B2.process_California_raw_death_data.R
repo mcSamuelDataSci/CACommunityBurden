@@ -17,13 +17,23 @@
 
 #-- Set Locations Etc----------------------------------------------------------
 
+# MUST EDIT HERE to provide path for secure data
 secure.location  <- "G:/CCB/0.Secure.Data"  # two possible locations for
 secure.location  <- "H:/0.Secure.Data"      #   secure data
+
+
 .sl              <- secure.location  # short name to shorten lines of code below
 
-myDrive    <- "E:"
+myDrive    <- "E:"  # ROOT Location of CBD Project
+
 myPlace    <- paste0(myDrive,"/0.CBD/myCBD")
 upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
+
+
+#-- EDIT for Local versus State installation -------------------------------------------------
+
+local.installation <- FALSE
+state.installation <- TRUE
 
 #-- Load Packages -------------------------------------------------------------
 
@@ -43,6 +53,9 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 # === Process 2005 - 2015 files ==============================================================
 
+
+if (state.installation) {
+
  ca17    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2017.csv"), colClasses = "character") 
  ca16    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(.sl,"/rawDeathData/Samuel_2015.csv"), colClasses = "character") 
@@ -59,7 +72,17 @@ raw.death.variable.info <- as.data.frame(read_excel(
  
 death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
-vInfo               <- filter(raw.death.variable.info,y2005onward == 1)  # 2005-current variable names 
+}
+
+
+if (local.installation) {
+death.datA   <- read.csv(paste0(.sl,"YOUR_DEATH_DATA_FILE_NAME_HERE.csv"), colClasses = "character")
+}
+
+# END LOCAL HEALTH JURISDICTION SECTION -------------------------------------------------------
+
+
+vInfo             <- filter(raw.death.variable.info,y2005onward == 1)  # 2005-current variable names 
 death.datA        <- death.datA[vInfo$seqID1]   # select only needed columns of 2005-2015 data!
 names(death.datA) <- vInfo$varName           # name columns based on varName!
 
@@ -148,6 +171,10 @@ death.datA$raceCode[is.na(death.datA$raceCode)] <-"-missing"
 
 # note: 2000-2004 files are "flat" ASCII files not .csv so need to be processed differently
 
+
+if (state.installation) {
+
+
 vInfo <- filter(raw.death.variable.info,y2000to2004 == 1) # 2000-2004 variable column locations
 vInfo <- vInfo[order(vInfo$mStart),]   # columns need to be read in order with read_fwf function !!  
 
@@ -218,10 +245,19 @@ death.datB$raceCode[death.datB$hispanicOrigin %in% c(2,3,4,5,6,8)] <-"Hisp"
 death.datB$hispanicOrigin   <- NULL 
 death.datB$multiraceStatus  <- NULL
 
+}
+
+
 # === Combine 2001-2004 and 2005-2015 files ============================================================================
 
+if (state.installation){
 cbdDat0FULL  <- bind_rows(death.datA,death.datB)  # "When row-binding using bind_rows, columns are matched by name,
                                             #   and any values that don't match will be filled with NA."
+}
+
+
+if (local.installation) cbdDat0FULL <- death.datA
+
 
 save(cbdDat0FULL, file= paste0(.sl,"/myData/cbdDat0FULL.R"))
 
@@ -235,10 +271,10 @@ load(paste0(.sl,"/myData/cbdDat0FULL.R"))
 work <- cbdDat0FULL
 work <- work[,c("year","state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","raceCode","ICD10")]
 
-sampN1 <- 200000  
+sampN1 <- 400000  
 half1  <- sample_n(work,sampN1)  # sample function from dplyr
 
-sampN2       <- 300000
+sampN2       <- 600000
 p1           <- sample_n(work[,1:7],  sampN2)
 p2           <- sample_n(work[,8:10], sampN2)
 p3           <- sample_n(work[,10:11], sampN2)
