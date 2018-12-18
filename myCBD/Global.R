@@ -21,6 +21,7 @@
 #-- Key Constants -----------------------------------------------------------
 
  whichData <- "fake"
+ subSite   <- TRUE
  VERSION   <- "Version B1.0"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
@@ -29,7 +30,12 @@
  
  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 
-#-- Load Packages ------------------------------------------------------------
+ # subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
+ # subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
+ subsiteList   <- c("Santa Clara")
+ subsiteName   <- "Santa Clara County CBD"
+ 
+ #-- Load Packages ------------------------------------------------------------
 
  library(shiny)  
  library(shinyjs)
@@ -104,8 +110,17 @@ load(path(myPlace,"/myData/","sdohCounty.R"))
   source(paste0(myPlace,"/myData/appText/AppText.txt"))
   source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
-# --- "SUB-SITE" LINES here when making subsite
-# --- San Joaquin Public Health Consortium lines stored at bottom of this file
+# === "SUB-SITE" Creation HERE ==============================================
+
+if (subSite){
+  mTitle <- subsiteName  
+  shape_County <- shape_County[shape_County$county %in% subsiteList,]
+  shape_Comm   <- shape_Comm[  shape_Comm $county  %in% subsiteList,]
+  shape_Tract  <- shape_Tract[ shape_Tract$county  %in% subsiteList,]
+  
+  datCounty <- datCounty[datCounty$county %in% subsiteList,]
+  datComm   <- datComm[datComm$county %in% subsiteList,]
+  datTract  <- datTract[datTract$county %in% subsiteList,]  }
 
 # --- Shiny Stuff and Constants -----------------------------------------------
 
@@ -189,21 +204,5 @@ CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path)))
 # myCause <- 104
 # myCause  <- "Diabetes mellitus"
 
-# ----------------------------------------------------------------------------
-# --- Create "Sub-Set" Site: San Joaquin Public Health Consortium--------------
-
-sjconsortium <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
-sjcSite      <- FALSE
-
-if (sjcSite){
-  mTitle <- "San Joaquin Public Health Consortium Community Burden of Disease"  
-  shape_County <- shape_County[shape_County$county %in% sjconsortium,]
-  shape_Comm   <- shape_Comm[  shape_Comm $county  %in% sjconsortium,]
-  shape_Tract  <- shape_Tract[ shape_Tract$county  %in% sjconsortium,]
-  
-  datCounty <- datCounty[datCounty$county %in% sjconsortium,]
-  datComm   <- datComm[datComm$county %in% sjconsortium,]
-  datTract  <- datTract[datTract$county %in% sjconsortium,]  }
-# ----------------------------------------------------------------------------
 
 
