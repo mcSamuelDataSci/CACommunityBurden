@@ -17,17 +17,15 @@
 
 #-- Set Locations Etc-----------------------------------------------------------------------
 
-# MUST EDIT HERE to provide path for secure data
+# PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "G:/CCB/0.Secure.Data/"  # two possible locations for
-secure.location  <- "F:/0.Secure.Data/"      #   secure data
-
+secure.location  <- "F:/0.Secure.Data/"      #   secure State data
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- "E:"  # ROOT Location of CBD Project
 
 myPlace    <- paste0(myDrive,"/0.CBD/myCBD")
 upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
-
 
 #-- EDIT for Local versus State installation -------------------------------------------------
 
@@ -256,7 +254,6 @@ cbdDat0FULL  <- bind_rows(death.datA,death.datB)  # "When row-binding using bind
 
 if (local.installation) cbdDat0FULL <- death.datA
 
-
 save(cbdDat0FULL, file= paste0(.sl,"/myData/cbdDat0FULL.R"))
 
 
@@ -271,10 +268,10 @@ load(paste0(.sl,"/myData/cbdDat0FULL.R"))
 work <- cbdDat0FULL
 work <- work[,c("year","state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","raceCode","ICD10")]
 
-sampN1 <- 40000  
+sampN1 <- 200000  
 half1  <- sample_n(work,sampN1)  # sample function from dplyr
 
-sampN2       <- 60000
+sampN2       <- 300000
 p1           <- sample_n(work[,1:7],  sampN2)
 p2           <- sample_n(work[,8:10], sampN2)
 p3           <- sample_n(work[,10:11], sampN2)

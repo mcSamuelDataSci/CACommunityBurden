@@ -20,6 +20,11 @@
 # -- Designate locations and load packages---------------------------------------------------------
 
 whichDat <- "real"
+subSite  <- FALSE
+
+# EDIT SECURE DATA LOCATION AS NEEDED
+SecureDataFile <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
+SecureDataFile <- "F:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
@@ -30,7 +35,6 @@ upPlace <- paste0(myDrive,"/0.CBD/myUpstream")
 library(tidyverse)
 library(epitools)
 library(sqldf)
-
 
 library(readxl)
 library(fs)
@@ -50,18 +54,16 @@ yearGrp <- "2013-2017"
 # and get error "Error: Can't use matrix or array for column indexing"
 
 
-leMap      <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/age_to_lifeExpectancy.mapping.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
-yearMap    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/year_to_yearGroup.mapping.xlsx")))
-geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/countyCodes_mapping.xlsx")))
+leMap      <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age to Life-Expectancy Linkage.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
+yearMap    <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx")))
+geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
 cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census 
 comName    <- unique(cbdLinkCA[,c("comID","comName")])                                    # dataframe linking comID and comName
-ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Groups and Standard US 2000 pop.xlsx"),sheet = "data"))
+ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
 #-- LOAD AND PROCESS POPULATION DATA --------------------------------------------------------------
 
 # ungrouping important for subsequent data set merging
-
-
 popTract            <- readRDS(path(upPlace,"/upData/popTract2013.RDS")) %>% ungroup() 
 popTractSexTot      <- filter(popTract,ageG == "Total")
 popTractSexTotAgeG  <- filter(popTract,ageG != "Total")
@@ -79,14 +81,11 @@ popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
  # == LOAD AND PROCESS DEATH DATA =================================================================
 
 if (whichDat == "real") {
-  # CAUTION --- if using REAL DATA INCLUDE these two lines below and edit the first one with your secure location
-  # load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
-  load("H:/0.Secure.Data/myData/cbdDat0FULL.R")      
+  load(SecureDataFile)
   cbdDat0 <- cbdDat0FULL    
 }
 
 if (whichDat == "fake") { 
-  # Load FAKE Data --- COMMENT OUT these two lines if using REAL DATA
   load(paste0(upPlace,"/upData/cbdDat0SAMP.R"))      
   cbdDat0 <- cbdDat0SAMP
 }
@@ -97,17 +96,10 @@ if (whichDat == "fake") {
 # (1) LA CENSUS TRACT TO RECODE
 # 06037930401 should be recoded to  06037137000 in all data files
 cbdDat0$GEOID[cbdDat0$GEOID=="06037930401"] <- "06037137000"
-
 # (2) all occurences of "06037800325" in death data are Ventura, all are LA in pop data
-
 # (3) fix county based on GEOID analysis here:
-
-
 allWater <- c("06017990000","06037990300","06061990000","06083990000","06111990100")
 
-
-#forEthan <- sample_n(cbdDat0SAMP,100000)
-#saveRDS(forEthan, file=paste0(upPlace,"/upData/forEthan.RDS"))
 
 cbdDat0       <- mutate(cbdDat0,
                          sex    = c("Male","Female")[match(sex,c("M","F"))],
@@ -139,26 +131,36 @@ allLabels <- sort(gbdMap0$LABEL[!is.na(gbdMap0$LABEL)])
 
 mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
 
-icdToGroup <- function(myIn) {
-  Cause   <- rep(NA,length(myIn))
-  for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],myIn)] <- mapICD[i,"CODE"] } 
+icdToGroup <- function(inputVectorICD10) {
+  Cause   <- rep(NA,length(inputVectorICD10))
+  for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],inputVectorICD10)] <- mapICD[i,"CODE"] } 
   Cause}
 
-cbdDat0$icdCODE  <- icdToGroup(myIn=cbdDat0$ICD10)
+cbdDat0$icdCODE  <- icdToGroup(inputVectorICD10=cbdDat0$ICD10)
 
 cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
 
-junk <- filter(cbdDat0,is.na(icdCODE))
-table(junk$ICD10,useNA = "ifany")
-cbdDat0$icdCODE[is.na(cbdDat0$icdCODE)] <- "cZ03"  # 370 records that are not mapping to a code right now --TEMP
 
+# TODO!!
+codeDoesntMap  <- filter(cbdDat0,is.na(icdCODE))
+table(codeDoesntMap$ICD10,useNA = "ifany")
+cbdDat0$icdCODE[is.na(cbdDat0$icdCODE)] <- "cZ03"  
 
-temp             <- nchar(str_sub(cbdDat0$icdCODE,2,5))
+codeLast4      <- str_sub(cbdDat0$icdCODE,2,5)
+nLast4         <- nchar(codeLast4)
+
 cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
                                         lev1  = str_sub(icdCODE,2,2),
                                         lev2  = str_sub(icdCODE,2,4),
-                                        lev3  = ifelse(temp==4,str_sub(icdCODE,2,5),NA)
+                                        lev3  = ifelse(nLast4 == 4,codeLast4,NA)
                                        )
+# syphilis "analysis"
+if (1==2){
+cbdDat0$icd3 <-  str_sub(cbdDat0$ICD10,1,3)
+syph         <-  filter(cbdDat0,icd3 %in% c("A50","A51","A52","A53"),sex != "Total")
+table(syph$year)
+table(syph$year,syph$ageG)
+}
 
 # DATA CLEANING ISSUES (see at bottom of file) ----------------------------------------------------
 
@@ -224,8 +226,8 @@ datState  <-  datCounty  %>% filter(county == STATE) %>%
   select(year,sex,Level,CAUSE,stateRate)
 
 # for LOCAL installation of application EXCLUDE save line and INCLUDE load line
-save(datState, file= paste0(upPlace,"/upData/datState.R"))
-#load(file= paste0(upPlace,"/upData/datState.R"))
+if (!subSite) save(datState, file= paste0(upPlace,"/upData/datState.R"))
+if ( subSite) load(file= paste0(upPlace,"/upData/datState.R"))
 
 datCounty            <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE"))
 datCounty$SMR        <- datCounty$cDeathRate / datCounty$stateRate
