@@ -20,8 +20,8 @@
 
 #-- Key Constants -----------------------------------------------------------
 
- whichData <- "fake"
- subSite   <- TRUE
+ whichData <- "real"
+ subSite   <- FALSE
  VERSION   <- "Version B1.0"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"

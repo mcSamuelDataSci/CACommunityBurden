@@ -7,6 +7,10 @@ rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
     temp <- filter(temp,is.na(causeList))
   }
   
+  # study this to keep selected values...
+  # https://dev.to/awwsmm/reactive-datatables-in-r-with-persistent-filters-l26
+  
+  
   mySex <- "Total"
   inDat <- datCounty
   

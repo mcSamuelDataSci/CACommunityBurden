@@ -19,12 +19,12 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
 SecureDataFile <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
-SecureDataFile <- "F:/0.Secure.Data/myData/cbdDat0FULL.R"  
+SecureDataFile <- "h:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
@@ -138,13 +138,11 @@ icdToGroup <- function(inputVectorICD10) {
 
 cbdDat0$icdCODE  <- icdToGroup(inputVectorICD10=cbdDat0$ICD10)
 
+table(cbdDat0$icdCODE,useNA = "ifany")
+# nrow(filter(cbdDat0,ICD10 %in% c("","000","0000")))
 cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
-
-
-# TODO!!
 codeDoesntMap  <- filter(cbdDat0,is.na(icdCODE))
 table(codeDoesntMap$ICD10,useNA = "ifany")
-cbdDat0$icdCODE[is.na(cbdDat0$icdCODE)] <- "cZ03"  
 
 codeLast4      <- str_sub(cbdDat0$icdCODE,2,5)
 nLast4         <- nchar(codeLast4)
@@ -159,7 +157,8 @@ if (1==2){
 cbdDat0$icd3 <-  str_sub(cbdDat0$ICD10,1,3)
 syph         <-  filter(cbdDat0,icd3 %in% c("A50","A51","A52","A53"),sex != "Total")
 table(syph$year)
-table(syph$year,syph$ageG)
+syphTable<- table(syph$year,syph$ageG)
+write.csv(syphTable,"syphilisDeaths.csv")
 }
 
 # DATA CLEANING ISSUES (see at bottom of file) ----------------------------------------------------
@@ -360,12 +359,11 @@ ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata cha
 
 
 # saveRDS(ageCounty, file= path(myPlace,"/myData/",whichDat,"forZev.ageCounty.RDS"))
-githubURL <- "https://raw.githubusercontent.com/mcSamuelDataSci/CACommunityBurden/master/myCBD/myData/fake/forZev.ageCounty.RDS"
-download.file(githubURL,"temp.rds", method="curl")
-ageCounty <- readRDS("temp.rds")
+# githubURL <- "https://raw.githubusercontent.com/mcSamuelDataSci/CACommunityBurden/master/myCBD/myData/fake/forZev.ageCounty.RDS"
+# download.file(githubURL,"temp.rds", method="curl")
+# ageCounty <- readRDS("temp.rds")
 
 
-# THIS WORKS - INEFFICIENT
 countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
@@ -373,49 +371,6 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
             aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
-
-# # MY ATTEMPTS... CLOSE BUT NO CIGAR
-# countyAA_try2 <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
-#   summarize(aMulti = list(unique(
-#                             round(
-#                               ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)*100000,2)
-#                             )
-#                           )
-#             ) 
-# 
-# 
-# # THIRD 
-# countyAA_try3 <- ageCounty %>% 
-#   group_by(county, year, sex, CAUSE) %>% {
-#     sam <- ageadjust.direct.SAM(
-#       count = .$Ndeaths, 
-#       pop = .$pop, 
-#       rate = NULL, 
-#       stdpop = .$US2000POP, 
-#       conf.level = 0.95
-#     )
-#     
-#     summarize(
-#       .,
-#       aRate = sam[2] * 100000,
-#       aLCI = sam[3] * 100000,
-#       aUCI = sam[4] * 100000, 
-#       aSE  = sam[5] * 100000
-#     ) 
-#   }
-#   
-#   
-#   
-#   
-#   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
-#             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-#             aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-#             aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-#             aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
-#             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
-# 
-
-
 
 
 countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  

@@ -120,13 +120,8 @@ add.alpha <- function(col, alpha=1){
           rgb(x[1], x[2], x[3], alpha=alpha))  
 }
 
-
-
-
-
-
 #tmaptools::palette_explorer()
-myPal <- rev(brewer.pal(5,"RdYlBu"))
+myPal <- brewer.pal(5,"Blues") # rev(brewer.pal(5,"RdYlBu"))
 myPal <- add.alpha(myPal,.7)
 #myPal <- c("#D7191C","#FDAE61","#FFFFBF","#ABD9E9","#2C7BB6")
  #  , aes.palette=list(div="RdYlBu")
@@ -166,7 +161,8 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
    tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,fontface = 2,
            legend.outside = TRUE,
            legend.outside.position = "right", 
-           legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3
+           legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3,
+           basemaps = c('OpenStreetMap')
           )  
   }
 
