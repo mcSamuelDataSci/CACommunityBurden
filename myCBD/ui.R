@@ -190,6 +190,8 @@ sidebarPanel(width=3,
    br(),
    tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
  
+   
+ 
    ),
  
 # Text on all side bars EXCEPT home page -------------------------------------
@@ -262,10 +264,17 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
-   tabPanel("Technical",
+   
+ tabPanel("Links",
+     br(), 
+     includeMarkdown("ourLinks.md"), value = 88),
+ 
+ 
+    tabPanel("Technical",
      br(), 
      includeMarkdown("technical.md"), value = 77)
-  
+ 
+ 
   ) # END tabSetPanel
 ) # END mainPanel
  
