@@ -64,6 +64,7 @@ sdohWorkList <- as.list(sdohWork)
 
 # https://plot.ly/r/axes/
   
+if (nrow(sdohWork)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
 
 
 

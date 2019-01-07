@@ -169,7 +169,9 @@ sidebarPanel(width=3,
    br(),br(),               
  
    helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
-   helpText(h5("Beta-testing in progress October-November 2018"),style="color:green"),
+   
+   br(),
+   actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
    br(),
  
    h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
@@ -180,8 +182,6 @@ sidebarPanel(width=3,
    if (whichData == "real") { helpText(textNote.real,style="color:black")},
    if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
-   br(),
-   actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
  
    br(),br(),
    icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"),

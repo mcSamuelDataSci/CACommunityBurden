@@ -73,7 +73,7 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
   
   
   
-  if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
+  if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
 
   
   

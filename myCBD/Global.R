@@ -22,7 +22,7 @@
 
  whichData <- "real"
  subSite   <- FALSE
- VERSION   <- "Version B1.0"
+ VERSION   <- "Version B1.3"
  myPlace   <- getwd()   
  STATE     <- "CALIFORNIA"
  yearGrp   <- "2013-2017"

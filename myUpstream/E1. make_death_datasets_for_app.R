@@ -19,7 +19,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
@@ -480,34 +480,49 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 
 criticalNum <- 11
 
-datTract <-  datTract %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
-                                 cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
-                                 YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
-                                 YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
-                                 rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
-                                 rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
-                                 mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
-                                 )
+
+datTract  <- filter(datTract, Ndeaths >= criticalNum)
+datComm   <- filter(datComm,  Ndeaths >= criticalNum)
+datCounty <- filter(datCounty,Ndeaths >= criticalNum)
 
 
-datComm  <-  datComm  %>%  mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
-                                  cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
-                                  YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
-                                  YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
-                                  rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
-                                  rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
-                                  mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
-                                  )
+datTract  <- filter(datTract, !(CAUSE=="A09" & sex %in% c("Male","Female")))
+datComm   <- filter(datComm,  !(CAUSE=="A09" & sex %in% c("Male","Female")))
+datCounty <- filter(datCounty,!(CAUSE=="A09" & sex %in% c("Male","Female")))
 
-datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
-                                  cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
-                                  YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
-                                  YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
-                                  SMR         = ifelse(Ndeaths < criticalNum,NA,SMR),
-                                  rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
-                                  rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
-                                  mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
-                                  )
+# 
+# 
+# datTract <-  datTract %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
+#                                  cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
+#                                  YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
+#                                  YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
+#                                  rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
+#                                  rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
+#                                  mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
+#                                  )
+# 
+# 
+# datComm  <-  datComm  %>%  mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
+#                                   cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
+#                                   YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
+#                                   YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
+#                                   rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
+#                                   rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
+#                                   mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
+#                                   )
+# 
+# datCounty <- datCounty %>% mutate(Ndeaths     = ifelse(Ndeaths < criticalNum,NA,Ndeaths),
+#                                   cDeathRate  = ifelse(Ndeaths < criticalNum,NA,cDeathRate),
+#                                   YLL         = ifelse(Ndeaths < criticalNum,NA,YLL),
+#                                   YLLper      = ifelse(Ndeaths < criticalNum,NA,YLLper),
+#                                   SMR         = ifelse(Ndeaths < criticalNum,NA,SMR),
+#                                   rateLCI     = ifelse(Ndeaths < criticalNum,NA,rateLCI),
+#                                   rateUCI     = ifelse(Ndeaths < criticalNum,NA,rateUCI),
+#                                   mean.age    = ifelse(Ndeaths < criticalNum,NA,mean.age)
+#                                   )
+# 
+
+
 
 
 # Quick fix to replace with Version Beta 1.1

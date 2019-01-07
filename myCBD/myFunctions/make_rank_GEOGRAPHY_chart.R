@@ -50,7 +50,8 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   #  par(mar=c(2,12,2,0),oma=c(0,0,0,0))
     
     
-    
+  if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
+  
 
    
     t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,
