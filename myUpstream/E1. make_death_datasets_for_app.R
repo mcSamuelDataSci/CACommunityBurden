@@ -152,8 +152,14 @@ cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
                                         lev2  = str_sub(icdCODE,2,4),
                                         lev3  = ifelse(nLast4 == 4,codeLast4,NA)
                                        )
-# syphilis "analysis"
+
+saveRDS(cbdDat0,  file= path("h:/0.Secure.Data/myData/cbdDat0-INVESTIGATION-FILE.RDS"))
+
+# Investigations
 if (1==2){
+  
+STDS  <- filter(cbdDat0,icdCODE=="cA02a")
+
 cbdDat0$icd3 <-  str_sub(cbdDat0$ICD10,1,3)
 syph         <-  filter(cbdDat0,icd3 %in% c("A50","A51","A52","A53"),sex != "Total")
 table(syph$year)
@@ -220,16 +226,7 @@ datCounty <- merge(datCounty,popCountySexTot,by = c("year","county","sex"))
 
 datCounty <- calculateRates(datCounty,1)
 
-datState  <-  datCounty  %>% filter(county == STATE) %>%
-  mutate(stateRate = cDeathRate) %>%
-  select(year,sex,Level,CAUSE,stateRate)
 
-# for LOCAL installation of application EXCLUDE save line and INCLUDE load line
-if (!subSite) save(datState, file= paste0(upPlace,"/upData/datState.R"))
-if ( subSite) load(file= paste0(upPlace,"/upData/datState.R"))
-
-datCounty            <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE"))
-datCounty$SMR        <- datCounty$cDeathRate / datCounty$stateRate
 
 
 # == build COMMUNITY-level file ===================================================================
@@ -452,12 +449,36 @@ datComm   <- merge(datComm,    commAA ,by = c("comID","yearG","sex","CAUSE"),all
                    mutate_if(is.numeric, signif,digits=4) %>%
                    filter(!is.na(county)) #  as above
 
-datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE) %>% 
+
+# -- Crude and Adjusted SMR Calculations for County Data Set ---------------------------------
+
+datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE)
+
+datState  <-  datCounty  %>% filter(county == STATE) %>%
+  mutate(stateCrudeRate    = cDeathRate,
+         stateAdjustedRate = aRate) %>%
+  select(year,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
+
+if (!subSite) save(datState, file= paste0(upPlace,"/upData/datState.R"))
+if ( subSite) load(file= paste0(upPlace,"/upData/datState.R"))
+
+datCounty            <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
+                        mutate(SMRcrude = cDeathRate / stateCrudeRate,
+                               SMR      = aRate      / stateAdjustedRate)
+
+
+# -- Final Clean Up of County File  ----------------------------------------------------------
+
+datCounty <-       datCounty %>% 
                    filter(!(is.na(CAUSE)))  %>%                                  # removes "Level3" NA (most 'causes' are NA on Level3) 
-                   select(-ageG,-stateRate) %>%
+                   select(-ageG,-stateCrudeRate,-stateAdjustedRate) %>%
                    mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
                    mutate(county = ifelse(county==STATE, toupper(STATE),county)      # e.g. California --> CALIFORNIA
                    )
+
+
+
+
 
 # == Final Data Clean Up and Export ==================================================================================
 

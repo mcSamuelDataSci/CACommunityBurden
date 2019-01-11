@@ -32,8 +32,12 @@
 
  # subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
  # subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
- subsiteList   <- c("Santa Clara")
- subsiteName   <- "Santa Clara County CBD"
+ subsiteList   <- c("Stanislaus")
+ subsiteName   <- "Stanislaus County CBD"
+ 
+ 
+ 
+ 
  
  #-- Load Packages ------------------------------------------------------------
 

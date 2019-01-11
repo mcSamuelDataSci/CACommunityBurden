@@ -119,7 +119,7 @@ sidebarPanel(width=3,
 
  # myStateCut
  conditionalPanel(condition = fC(c(22,23)),
-    actionButton("statecutHelp", label="?", style=myButtonSty) , br(),    #add br() here to fix spacing, but does not yet....
+    actionButton("statecutHelp", label="?", style=myButtonSty),br(),     #add br(), here to fix spacing, but does not yet....
     checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  
  # myN
@@ -161,6 +161,15 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(66)),
    selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
  
+
+# Figure Download buttons ---------------------------------------------------
+
+conditionalPanel(condition = "input.ID == 22", downloadButton('mapFigureI', 'Download Map')),       
+conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
+conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure')),       
+
+
+
 # Home page side bar text ---------------------------------------------------
 
  conditionalPanel(condition = fC(c(11)), 

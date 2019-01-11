@@ -97,6 +97,33 @@ observeEvent(input$myLHJ, {
 # Render Application Maps and Charts --------------------------------------------
 
 output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+# t.map1            <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
+# output$cbdMapTL   <- renderLeaflet(t.map1)
+
+
+output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
+  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+  print(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+  dev.off()
+})
+
+
+
+
+output$mapFigure <- downloadHandler(filename=function(){paste0("MAP",".png")},content = function(file) {
+  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+  print(cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+  dev.off()
+})
+
+
+output$rankCauseFigure <- downloadHandler(filename=function(){paste0("CAUSE",".png")},content = function(file) {
+  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+  print(rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
+  dev.off()
+})
+
+
 output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
 output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
