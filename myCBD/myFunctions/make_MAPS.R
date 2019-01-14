@@ -155,7 +155,7 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
 
  tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
                                title = lMeasuresC[lMeasures==myMeasure],
-                               textNA = "0 deaths/or supressed",
+                               textNA = "0 deaths/or suppressed",
                                interval.closure="right",
                              #  legend.hist=T,
                                legend.reverse=T,

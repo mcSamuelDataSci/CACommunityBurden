@@ -164,7 +164,7 @@ sidebarPanel(width=3,
 
 # Figure Download buttons ---------------------------------------------------
 
-conditionalPanel(condition = "input.ID == 22", downloadButton('mapFigureI', 'Download Map')),       
+# conditionalPanel(condition = "input.ID == 22", downloadButton('mapFigureI', 'Download Map')),       
 conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
 conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure')),       
 
@@ -199,22 +199,29 @@ conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure',
    br(),
    tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
  
-   
- 
    ),
  
-# Text on all side bars EXCEPT home page -------------------------------------
+# Text on other pages  -----------------------------------------
 
-  conditionalPanel(condition = "input.ID !=  11 ",
-                 
-    helpText('Note: YLL is "Years of Life Lost"',style="color:green"),
-    helpText('Note: "0" values appearing in charts or tables may be true 0 or may be any value <11',style="color:green;font-weight: bold;"),
-    HTML('<left><img src="CDPH.gif" height="125" width="150"></left>')
-   ),
-    
+ conditionalPanel(condition = fC(c(22,23,33,45,44,55,66)),
+                  helpText(br(),helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;")
+    ),
+
+conditionalPanel(condition = fC(c(33,45,44,55,66)),
+                 paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;")
+                 ),
+
+
+     
+conditionalPanel(condition = "input.ID != 11",
+                 br(),HTML('<left><img src="CDPH.gif" height="125" width="150"></left>')
+),
+
+
+
 # Text on all side bars -------------- ----------------------------------------
 
-   helpText(h4(VERSION),style="color:green")
+   helpText(br(),h4(VERSION),style="color:green")
 
 # -- END of sidebarPanel-------------------------------------------------------
 
@@ -273,13 +280,14 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
-   
- tabPanel("Links",
-     br(), 
-     includeMarkdown("ourLinks.md"), value = 88),
+
+
+ tabPanel("Links to Other Data",
+          br(), 
+          includeMarkdown("ourLinks.md"), value = 88),
  
  
-    tabPanel("Technical",
+    tabPanel("Technical Documentation",
      br(), 
      includeMarkdown("technical.md"), value = 77)
  
