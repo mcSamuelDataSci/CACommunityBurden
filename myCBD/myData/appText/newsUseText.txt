@@ -1,5 +1,7 @@
 newsUse <- paste0('
 <li>Welcome to CCB Beta</li>
+<br>
+<li>"Cirrhosis of the liver" has been separated out from "Digestive diseases"</li>
 <li>SMR (Standard Mortality Ratio) is now calculated based on age-adjusted rates Jan.2019</li>
 <li>Prototype figure downloads have been added to the static map and cause ranking charts Jan.2019</li>
 <li>A draft "Link" tab has been added, with link to related data and visualizations
