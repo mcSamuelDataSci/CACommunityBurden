@@ -67,7 +67,7 @@ sdohWorkList <- as.list(sdohWork)
 
 
 
-p <- plot_ly(
+p <-plot_ly(
   data = sdohWork,
   x =    sdohWork[,t.x],
   y =    sdohWork[,t.y],
@@ -121,4 +121,5 @@ p
 
 
 # https://plot.ly/r/legend/
+
 
