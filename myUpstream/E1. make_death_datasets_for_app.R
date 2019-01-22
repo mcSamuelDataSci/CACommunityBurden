@@ -19,12 +19,12 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
 SecureDataFile <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
-SecureDataFile <- "h:/0.Secure.Data/myData/cbdDat0FULL.R"  
+#SecureDataFile <- "h:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
@@ -154,6 +154,7 @@ cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
                                        )
 
 saveRDS(cbdDat0,  file= path("h:/0.Secure.Data/myData/cbdDat0-INVESTIGATION-FILE.RDS"))
+saveRDS(cbdDat0,  file= path("g:/CCB/0.Secure.Data/myData/cbdDat0-INVESTIGATION-FILE.RDS"))
 
 # Investigations
 if (1==2){

@@ -15,8 +15,8 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
  Nrows.to.display  <- min(Nrows.df,myN) 
  filtered.df       <- filtered.df[((Nrows.df-Nrows.to.display+1):Nrows.df),]
   
- layout(matrix(c(1,1,2,3,4,5),1,6,byrow=TRUE))
- par(mar=c(5,13,0,0),oma = c(0, 0, 3, 0))
+ layout(matrix(c(1,1,1,2,3,4,5),1,7,byrow=TRUE))
+ par(mar=c(5,25,0,0),oma = c(0, 0, 3, 0))
  
  t.plot <- barplot( filtered.df$Ndeaths,
                     xlab = "Deaths (n)",  
@@ -25,8 +25,8 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
  box(lwd=bLwd)
  
  t.label <- fullCauseList[match(filtered.df$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
- wr.lap  <- wrap.labels(t.label ,18)
- axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.6)
+ wr.lap  <- wrap.labels(t.label ,30)
+ axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.8)
      
  par(mar=c(5,0,0,0))
  
