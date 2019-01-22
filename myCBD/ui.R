@@ -1,5 +1,21 @@
-STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
+# =============================================================================
+# "ui.R" file     
+#
+# required file for Shiny Application
+#
+# sets up user inputs (drop downs, buttons, etc.) and text in side pannels 
+# sets up tabs and places all maps, charts, images, titles in main pannels
+# set all "styles"
+#
+# Michael Samuel
+# 2018
+#
+# =============================================================================
 
+
+# STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
+
+STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
 # funtion used as "short-cut" when making criteria for conditionals below
 fC <- function(vec) {
@@ -7,156 +23,295 @@ fC <- function(vec) {
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
 }
 
-myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4"
-myHelpButtonSty <- "height:12px;padding-top:0px; margin-top:-5px"
 
-myBoxSty <- "cursor:pointer;border: 3px solid blue;padding-right:0px;padding-left:0px;"
+myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
+                     color: #fff; background-color: #337ab7; 
+                     border-color: #2e6da4"
 
-#-----------------------------------------------------------------------------------------------------------------------------
+myHelpButtonSty <- "background-color: #694D75;font-size:14px;"
+
+myBoxSty        <- "cursor:pointer; border: 3px solid blue;
+                    padding-right:0px;padding-left:0px;"
+
+# START OF UI --------------------------------------------------------------------
 
 shinyUI(fluidPage(theme = "bootstrap.css",
-                  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   # removes ticks between years
-                  tags$h3(mTitle),                                                       # title supplied from Global
   
+                  
+ # current approach to setting style for main fonts and hyperlink font
+ # TODO needs cleaning, improvement, and documentation from someone knowledgeable
+ tags$head(
+   tags$style(HTML("
+     @import url('//fonts.googleapis.com/css?family=Open+Sans');
+     * {font-family: 'Open Sans';line-height: 1.5;}
+     a {text-decoration: none; color: #0000EE;}
+                   ")
+   )
+ ),
+                  
+ # from prior attempts to set fonts etc - maybe something useful here  
+  # tags$head(tags$style(HTML('
+  #   .skin-blue .main-header .logo:hover {background-color: #3c8dbc; }
+  #   .main-header .logo {
+  #   font-family: Tahoma, Geneva, sans-serif; font-weight: bold; font-size: 20px;}')),
+  # tags$style(type='text/css', "* {font-family: 'Open Sans', Georgia; }"),                
+                  
+
+ tags$h3(mTitle), # app main title supplied from Global     
+ 
+ # supprisingly enough, this removes the tick marks between the years on the year slider
+ # TODO how does this work?
+ tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   
+  
+ 
+# SIDEBARS -----------------------------------------------------------------------
+
 sidebarPanel(width=3, 
  
-  conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(45)),    actionButton("conditionTableTab","Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(34)),    actionButton("conditionSexTab",  "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(44)),    actionButton("rankGeoTab",       "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help"),style=myHelpButtonSty),
-  conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help"),style=myHelpButtonSty),
-  br(),br(),
+# Tab help buttons on each tab ----------------------------           
+             
+  conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(45)),    actionButton("conditionTableTab","Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(34)),    actionButton("conditionSexTab",  "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(44)),    actionButton("rankGeoTab",       "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
+  conditionalPanel(condition = fC(c(1)),     actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
   
- conditionalPanel(condition = fC(c(22,23,44,55,66)),    actionButton("causeHelp", "?",style=myButtonSty) ,
-                                                        selectInput("myCAUSE", "Cause:", choices=causeNum36, selected="0")),  # size=30 selectize = F, size=3,
- conditionalPanel(condition = fC(c(22,23,44)),          checkboxInput("cZoom","Zoom to County",value=FALSE)),
- 
- conditionalPanel(condition =  paste(
-                               "((",fC(c(33,34,45,55)),") |",
-                                "(input.cZoom && (",fC(c(22,23,44)),")))" 
-                               ),                       selectInput("myLHJ","County:",choices=lList,selected=STATE)  ),
- 
- conditionalPanel(condition = fC(c(22,23,66)),          selectInput("myGeo","Geographic Level:",choices=c("County","Community","Census Tract"))),
+# Input selections on each tab  ----------------------------           
 
- conditionalPanel(condition =paste(
-                             "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') && (", fC(c(22,23)),") ) 
-                               | (", fC(c(33,34,45,44)),")"  
-                             ),                         sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,round=TRUE,sep="",step=1)  ),
+# consider CAUSE.ui  etc...
 
- conditionalPanel(condition = fC(c(22,23,33,44,66)), radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
- 
- conditionalPanel(condition = fC(c(33)),                checkboxGroupInput("myLev", "Levels to show:",c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
- conditionalPanel(condition = fC(c(22,23)),             actionButton("statecutHelp", "?",style=myButtonSty) ,
-                                                        checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
- conditionalPanel(condition = fC(c(33,34)),             numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
- conditionalPanel(condition = fC(c(22,23,34,44,55,66)), actionButton( "measureHelp", "?",style=myButtonSty) ,
-                                                        radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLLper")),
- conditionalPanel(condition = fC(c(33)),                actionButton( "measureHelp", "?",style=myButtonSty) ,
-                                                        selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
- conditionalPanel(condition = fC(c(22,23)),             actionButton("cutmethodHelp", "?",style=myButtonSty) ,
-                                                        radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
- conditionalPanel(condition = fC(c(23)),                checkboxInput("myLabName",  "Place Names", value=FALSE)),
- conditionalPanel(condition = paste(
-                              "(",fC(c(44)),") &&",
-                              "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | (input.myMeasure == 'aRate'))"),
-                                                        checkboxInput("myCI",       "95% CIs?", value=FALSE)),
- conditionalPanel(condition = fC(c(66)),                selectInput(  "myX",        "SDOH Variable:", choices=sdohVec)),
 
- hr(), 
+ # myCAUSE
+ conditionalPanel(condition = fC(c(22,23,44,55,66)), 
+   # first parameter of actionButton (inputId) generated by server.R
+   actionButton(inputId="causeHelp", label="?",style=myButtonSty) , 
+   selectInput("myCAUSE", HTML("Cause:"), choices=causeNum36, selected="0")),
  
+ # myLHJ
+ conditionalPanel(condition = fC(c(22,23,33,44,45,55)), 
+   selectInput("myLHJ","County/State:",choices=lList,selected=STATE)),
  
+ conditionalPanel(condition = fC(c(22,23,66)),
+   selectInput("myGeo","Geographic Level:",
+               choices=c("County","Community","Census Tract"))),
+ 
+ # myYear
+ conditionalPanel(condition = 
+   paste(
+     "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') 
+        && (", fC(c(22,23)),") ) 
+     | (", fC(c(33,34,45,44)),")"
+   ),
+   sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
+               round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
+ 
+ # mySex
+ conditionalPanel(condition = fC(c(22,23,33,44,66)), 
+   radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
+ 
+ # myLev
+ conditionalPanel(condition = fC(c(33,34)),
+   checkboxGroupInput("myLev", "Levels to show:",
+    c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
+
+ # myStateCut
+ conditionalPanel(condition = fC(c(22,23)),
+    actionButton("statecutHelp", label="?", style=myButtonSty),br(),     #add br(), here to fix spacing, but does not yet....
+    checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
+ 
+ # myN
+ conditionalPanel(condition = fC(c(33,34)),
+   numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
+ 
+ # myMeasure
+ conditionalPanel(condition = fC(c(22,23,34,44,55,66)), 
+   actionButton( "measureHelp", label="?",style=myButtonSty) ,
+   radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLL.adj.rate")),
+ 
+ # myMeasureShort
+ conditionalPanel(condition = fC(c(33)),
+   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
+ 
+ # myCutSystem
+ conditionalPanel(condition = fC(c(22,23)),
+   actionButton("cutmethodHelp", label="?",style=myButtonSty) ,
+   radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
+ 
+ # myLabName 
+ conditionalPanel(condition = fC(c(23)),
+   checkboxInput("myLabName",  "Place Names", value=FALSE)),
+ 
+ # myCI
+ conditionalPanel(condition = 
+   paste(
+     "(",fC(c(44)),") &&",
+     "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | 
+        (input.myMeasure == 'aRate'))"
+     ),
+   checkboxInput("myCI",       "95% CIs?", value=FALSE)),
+ 
+ # myRefLine
+ conditionalPanel(condition = fC(c(44)),
+   checkboxInput("myRefLine",  "Reference Line", value=FALSE)),
+ 
+ # myX
+ conditionalPanel(condition = fC(c(66)),
+   selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
+ 
+
+# Figure Download buttons ---------------------------------------------------
+
+# conditionalPanel(condition = "input.ID == 22", downloadButton('mapFigureI', 'Download Map')),       
+conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
+conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure')),       
+
+
+
+# Home page side bar text ---------------------------------------------------
+
  conditionalPanel(condition = fC(c(11)), 
                   
- helpText(textIntroA,style="color:blue"), br(),
- helpText(textIntroC,style="color:blue"), br(),
+   HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
+   br(),br(),               
  
- if (whichData == "real") { helpText(textNote.real,style="color:blue")},
- if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
+   helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
+   
+   br(),
+   actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
+   br(),
+ 
+   h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
+   h4(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
+   helpText(textIntroA,style="color:black"), br(),
+   helpText(textIntroC,style="color:black"), br(),
+ 
+   if (whichData == "real") { helpText(textNote.real,style="color:black")},
+   if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
  
  
- helpText("Share your feedback!  Help us improve the CCB by taking a short survey LINK.",style="color:blue") 
+   br(),br(),
+   icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"),
+   br(), 
+   tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"),
+   br(),
+   tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
  
- ),
+   ),
+ 
+# Text on other pages  -----------------------------------------
+
+ conditionalPanel(condition = fC(c(22,23,33,45,44,55,66)),
+                  helpText(br(),helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;")
+    ),
+
+conditionalPanel(condition = fC(c(33,45,44,55,66)),
+                 paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;")
+                 ),
 
 
-# TEXT on bottom of SIDEBAR
-tags$br(),
-
-helpText("Definition - YLL:  Years of Life Lost",style="color:black"),
-br(),
-icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Find a bug or have a question?",style="color:blue"),
-tags$br(), tags$a("Developed in R-Shiny",style="color:blue"),
-helpText(tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site",style="color:blue")),
-br(),
-HTML('<center><img src="cdph2.gif" height="85" width="100"></center>')
-#img(src='cdph2.gif',width = "100px", height = "85px", align = "center")  # , align = "center",
-
-
+     
+conditionalPanel(condition = "input.ID != 11",
+                 br(),HTML('<left><img src="CDPH.gif" height="125" width="150"></left>')
 ),
 
 
-# https://stackoverflow.com/questions/35025145/background-color-of-tabs-in-shiny-tabpanel
-# works: h5("Home Page",style="color:red")
+
+# Text on all side bars -------------- ----------------------------------------
+
+   helpText(br(),h4(VERSION),style="color:green")
+
+# -- END of sidebarPanel-------------------------------------------------------
+
+), 
+
+
+# ------------------------------------------------------------------------------------
+# MAIN PANNELS-------------------------------------------------------------------------
 
 useShinyjs(),
 
 mainPanel(
-  hr(), 
+   
   tabsetPanel(type = "tab",id="ID",
  
-          tabPanel("Home Page",  br(),align='center',
-    
-          
-        h4(HTML(above1),align="left"),
-          fluidRow(
-          # column(width=3,img(id="map1I",src="mapx.jpeg",width="100%",height=200,style= myBoxSty)),
-          column(width=3,img(id="map1I",src="MapInt2.png",width="100%",style= myBoxSty)),
-          column(width=3,img(id="map2I",src="MapStat2.png",width="100%",style = myBoxSty)),
-          column(width=3,img(id="trendI",src="trends2.png",width="100%",style = myBoxSty)),
-          column(width=3,img(id="scatterI",src="SDOH2.png",width="100%", style = myBoxSty))),
-  br(),
-  fluidRow(
-      column(width=4,img(id="rankgeoI",src="rankGeo2.png",width="100%",style = myBoxSty)),
-  column(width=4,img(id="ranktableI",src="rankTable2.png",width="100%",style = myBoxSty)),
-  column(width=4,img(id="rankcauseI",src="rankPlot2.png",width="100%",style = myBoxSty))),
-h5(HTML(below1),align="left"),
-value = 11),          
+    tabPanel("Home Page",  br(),align='center',
+      h4(HTML(above1),align="left"),
+      fluidRow(
+        column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
+        column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
+        column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
+        column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))), 
+        br(),
+      fluidRow(
+        column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
+        column(width=4,img(id="ranktableI", src="rankTable.png", width="100%", onmouseout="this.src='rankTable.png'", onmouseover="this.src='rankTable2.png'", style = myBoxSty)),
+        column(width=4,img(id="rankcauseI", src="rankPlot.png",  width="100%", onmouseout="this.src='rankPlot.png'",  onmouseover="this.src='rankPlot2.png'",  style = myBoxSty))),
+      h5(HTML(below1),align="left"),
+      value = 11
+      ),          
 
-
-           tabPanel("Map - Interactive",       br(),htmlOutput("map_title")  ,
-                                         leafletOutput(   "cbdMapTL",  width=700,height=700),  value = 22),
-   tabPanel("Map - Static",              plotOutput(      "cbdMapTS",  height=700,width="100%"),  value = 23),
-   tabPanel("Rank Conditions",           br(),    plotOutput(      "rankCause", width="100%",height=700),  value = 33),
-   tabPanel("Rank Conditions Table",         dataTableOutput( "rankCauseT"                     ),  value = 45),   #DT::
-   tabPanel("Rank Conditions by Sex",     plotOutput(      "rankCauseSex", width="100%",height=700),  value = 34),
+   tabPanel("INTERACTIVE MAP",
+     br(), htmlOutput("map_title")  ,
+     leafletOutput("cbdMapTL", width=700, height=700), value = 22),
    
-   tabPanel("Rank Counties/Communities", plotOutput(      "rankGeo",   width="100%",height=1700), value = 44),
-   tabPanel("Trend",                     br(),plotOutput(      "trend",     width="100%",height=700),  value = 55),
-   tabPanel("SDOH Associations",  br(),      plotlyOutput(    "scatter",             height=700),  value = 66),
-   tabPanel("Technical",        br(), includeMarkdown("technical.md"),value = 77)
-  )       ) 
+   tabPanel("STATIC MAP",
+     plotOutput("cbdMapTS",  height=700,width="100%"), value = 23),
+   
+   tabPanel("RANK BY CAUSE [PLOT]",
+     br(), plotOutput("rankCause", width="100%",height=700), value = 33),
+   
+   tabPanel("RANK BY CAUSE [TABLE]",
+     dataTableOutput("rankCauseT"), value = 45),   #DT::
+   
+ # tabPanel("RANK BY CAUSE AND SEX",    
+ #  plotOutput("rankCauseSex", width="100%",height=700), value = 34),
  
-))
+   tabPanel("RANK BY GEOGRAPHY", 
+     plotOutput("rankGeo", width="100%", height=1700), value = 44),
+ 
+   tabPanel("Trend",
+     br(), 
+     plotOutput("trend", width="100%",height=700),  value = 55),
+ 
+   tabPanel("SOCIAL DETERMINANTS",
+     br(), 
+     plotlyOutput("scatter", height=700), value = 66),
+ 
+
+
+ tabPanel("Links to Other Data",
+          br(), 
+          includeMarkdown("ourLinks.md"), value = 88),
+ 
+ 
+    tabPanel("Technical Documentation",
+     br(), 
+     includeMarkdown("technical.md"), value = 77)
+ 
+ 
+  ) # END tabSetPanel
+) # END mainPanel
+ 
+
+) # END fluidPage
+) # END ShinyUI
+
+
+# END =============================================================================================
+
+# NOTES etc. :
 
 # convert Markdown doc to Work if needed forediting
 # https://cloudconvert.com/md-to-docx
 
-
-
-
-# END -----------------------------------------------------------------------------------------------------------------
-
-# NOTES etc. :
 # tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"), # removes ticks between years
 # https://stackoverflow.com/questions/44474099/removing-hiding-minor-ticks-of-a-sliderinput-in-shiny
 
-
 # "BETTER" drop down list look
 # https://stackoverflow.com/questions/40513153/shiny-extra-white-space-in-selectinput-choice-display-label
-
-
 
 #library(shinythemes)
 # shinyUI(fluidPage(theme = "bootstrap.css",
@@ -166,24 +321,12 @@ value = 11),
 # navBarPanel 
                   
 # work on customizing help button
-# actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") ,
-# selectizeInput("myCAUSE", "Cause:", choices=causeNum36, selected="A",options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
+# actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; 
+#      float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") 
+# selectizeInput("myCAUSE", "Cause:", choices=causeNum36, selected="A",
+#    options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
 #width:100px;
   # https://shiny.rstudio.com/reference/shiny/latest/selectInput.html
   # https://shiny.rstudio.com/articles/selectize.html
   # https://www.w3schools.com/html/html_form_elements.asp
   #  https://www.w3schools.com/css/css3_buttons.asp
-
-
-# Junk:
-
-#tabPanel("Map (static)",      plotOutput(      "cbdMap1",   width=700,height=700),   value =  3),
-#tabPanel("Map (interactive)", 
-#htmlOutput(      "map_title"                      ),
-#                             leafletOutput(   "cbdMap0",             height=700),   value =  1),
-
-
-
-
-
-

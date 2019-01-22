@@ -29,6 +29,9 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  path and globals
 .path   	<- "c:/users/iisan7/desktop/mortality_ccb_lt/ccb_lifetables/"
+.path     <- "e:/0.CBD/myUpstream/lifeTables/"
+
+
 .dxtract	<- "data/dxTract.rds"
 .dxmssa		<- "data/dxMSSA.rds"
 .dxcounty	<- "data/dxCounty.rds"

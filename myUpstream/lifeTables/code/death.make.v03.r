@@ -14,6 +14,9 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
+
+
+
 ## 1.1  packages
 .pkg	<- c("data.table","readr") 
 .inst   <- .pkg %in% installed.packages() 
@@ -22,8 +25,16 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  path and globals
 .path      	<- "c:/users/iisan7/desktop/mortality_ccb_lt/ccb_lifetables/"
+.path       <- "e:/0.CBD/myUpstream/lifeTables/"
+
 .deaths		<- "data/forEthan.RDS"
-.cbdlink	<- "data/cbdLinkCA.csv"
+
+# LOAD RAW DATA FILE
+load("G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R")     
+.deaths <- cbdDat0FULL
+
+
+.cbdlink	<- "data/Tract to Community Linkage.csv"
 .dxtract	<- "data/dxTract.rds"
 .dxmssa		<- "data/dxMSSA.rds"
 .dxcounty	<- "data/dxCounty.rds"
@@ -41,7 +52,12 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 
 ## 2.2	CDPH deaths microdata -- CCB datasets
 ## 		!!! there are only 66% of deaths in the file Michael sent that have valid GEOID.
-ccb.dead.tracts <- setDT(readRDS(.deaths), key="GEOID")
+
+
+# ccb.dead.tracts <- setDT(readRDS(.deaths), key="GEOID")
+ccb.dead.tracts <- setDT(.deaths, key="GEOID")
+
+
 ccb.dead.tracts[, month:=sample(1:12, 
 						length(ccb.dead.tracts$year), replace=T)]	# ERASE LATER
 ccb.dead.tracts[, year:=year+2]										# ERASE LATER

@@ -1,0 +1,13 @@
+newsUse <- paste0('
+<li>Welcome to CCB Beta</li>
+<br>
+<li>"Cirrhosis of the liver" has been separated out from "Digestive diseases"</li>
+<li>SMR (Standard Mortality Ratio) is now calculated based on age-adjusted rates Jan.2019</li>
+<li>Prototype figure downloads have been added to the static map and cause ranking charts Jan.2019</li>
+<li>A draft "Link" tab has been added, with link to related data and visualizations
+<li>ALL data are now suppressed for "strata" or cells where there are fewer than 11 deaths</li>
+<li>ALL male- and female-specific data are now suppressed for "Neonatal conditions" in accordance with data de-identification guidelines
+<li>"Sudden infant death syndrome" has been combined into "Neonatal Conditions"</li>
+<li>"Congestive heart failure" has been separated out from "Other or unspecified cardiovascular diseases"</li>
+<li>The color scheme for the maps has changed"</li>
+<li>Recent article "Changes in health in the countries of the UK and 150 English Local Authority areas 1990-2016: a systematic analysis for the Global Burden of Disease Study", in part very related to the CCB <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(18)32207-4/fulltext?dgcid">just published</a></li>')
