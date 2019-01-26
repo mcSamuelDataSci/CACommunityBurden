@@ -249,7 +249,7 @@ mainPanel(
         column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
         column(width=4,img(id="ranktableI", src="rankTable.png", width="100%", onmouseout="this.src='rankTable.png'", onmouseover="this.src='rankTable2.png'", style = myBoxSty)),
         column(width=4,img(id="rankcauseI", src="rankPlot.png",  width="100%", onmouseout="this.src='rankPlot.png'",  onmouseover="this.src='rankPlot2.png'",  style = myBoxSty))),
-      h5(HTML(below1),align="left"),
+    #  h5(HTML(below1),align="left"),
       value = 11
       ),          
 

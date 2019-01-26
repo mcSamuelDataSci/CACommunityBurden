@@ -18,13 +18,11 @@
 
 #--Home Page Side Bar Text ------------------------------------------
 
-textIntroA <- "The California Community Burden of Disease Engine (CCB) is a tool to explore data on burden of disease in multiple levels of geographic granularity in order to answer and generate questions, both simple and complex, about the intersection between health disparities and place." 
+textIntroA <- "The California Community Burden of Disease Engine (CCB) is a tool to explore data on burden of disease in multiple levels of geographic granularity." 
 
-textIntroB <- "This tool is designed for use by CDPH programs, local health departments, and community partners for epidemiologic analysis and to provide systematic scientific insight to inform public health planning, evaluation and action."
+textIntroC <- " The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures, displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations." 
 
-textIntroC <- " The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures, displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations. The list of conditions is based on the Global Burden of Disease system, modified for local public health priorities. The CCB also includes a limited set of social determinants data and describes their correlations with death outcomes, as a pilot for more robust functionality in this area." 
-
-textNote.real <- "This app deployment is for preliminary internal CDPH review. Do not share these data with external partners.  A very wide range of enhancements are being considered for this application. Any/all comments regarding errors, enhancements, or any other ideas about this version are most welcome."
+textNote.real <- "This version of app contains features that are rough and still being refined. It also undoubtedly contains bugs and may well generate uninterpretable error messages based on some selection combinations. More importantly, while we have done extensive review, there could be some errors in the calculations of some measures. While these are all concerns, we are confident the application in its current form will, overall, provide important and reliable insights. We look forward to and would appreciate any observations you make regarding bugs, errors, or anything else of concern. We also welcome supportive comments."
 
 textNote.fake <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA"
 
@@ -39,32 +37,6 @@ California Community Burden of Disease and Cost Engine (CCB):
 An emerging toolset for epidemiologic analysis and scientific insight, exploring the intersection between health disparities and place
 </b></i></h4></ui>")
        
-below1 <- 
-paste0("<ui style=align='left'>
-<h4>Coming Soon:</h3>
-<strong>
-The CCB is a work in progress, and is intended to be an evolving toolset developing new content and functionality in response to the needs of public health practitioners. 
-<br>
-Examples of upcoming development enhancements:</strong>
-<li>Hospital discharge and emergency department data</li>
-<li>Cost (charges) data based on hospital discharge</li>
-<li>Life expectancy estimates at the census tract, community, and county levels</li>
-<li>Incorporation of 'multiple cause of death' and 'out of state' death data files</li>
-<li>Expanded range and analysis of social determinants data</li>
-<li>Additional displays of statistical significance</li>
-<li>Enhanced user interface</li>
-<li>Automated report generation </li>
-<li>Our team will  use the feedback gathered through this beta-testing window to prioritize future enhancements.</li><br><br>
-Another great project of the CDPH Fusion Center! 
-<br><br>
-The CCB is one of the ways the Fusion Center is working to explore the lens of place and its impact on health disparities.  The CCB is an initiative of the Fusion Center implemented with participation from a crosscutting technical team, of representatives from multiple CDPH programs.  
-<br><br>
-This platform is also a pilot component of the CDPH Ecosystem of Data Sharing, leveraging a rich multi-level data set/system for modeling and predictive analytics and demonstrating automated and integrated data processing, analytics, and visualization. The project employs nimble modular development, with the goal to share tools/resources with outside partners (counties and other states). 
-<br><br>
-The Community Burden of Disease System
-<br><br>
-The CCB is the California State implementation piloting the Community Burden of Disease System. The code and system are written and structured to be useable by states and counties throughout the United States-with any state or county using their own structured input file of events (e.g. deaths), and the Community Burden of Disease system supplying underlying population data, social determinants of health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.
-</ui>")
 
 # DROP DOWN HELPS --------------------------------------------------
 
@@ -89,10 +61,8 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 ')
 
 
-causeHelp <-'
-<a href="gbd.ICD.MapIMAGE.pdf">Cause List Detail</a>
-<br><br>
-The list of CAUSES in the app is based on a hierarchal outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs. 
+causeHelp <-
+'The list of CAUSES in the app is based on a hierarchal outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs. 
 <br><br>
 Depending on the geographic level selected, different levels of detail in the cause list will be available.  The more granular the geographic level, the less granular the cause list will become, for statistical stability. 
 <br><br>
@@ -104,7 +74,7 @@ A small number of the Public Health Level conditions are further broken down int
 <br><br>
 A diagram showing this full cause list hierarchy is available by clicking the "Cause List Info" link. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions can be found on the Technical Tab. 
 <br><br>
-<a href="gbd.ICD.MapIMAGE.pdf">Cause List Detail</a>
+<a>href="gbd.ICD.MapIMAGE.pdf"</a>
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
@@ -186,7 +156,7 @@ Note: Currently this tab only displays one variable, but the display and analysi
 
 # textIntroA <-   "The Community Burden of Disease (CBD) is an evolving platform to view and explore detailed disease/condition burden and Social Determinants of Health data on multiple levels of geographic granularity in order to answer and generate questions, both simple and complex."
 
-# textIntroB <- "The code and system are written/structured to useable by States and Counties throughout the United States?with any State or County using their own structured input file of events (e.g. deaths), and the CBD system supplying underlying population data, Social Determinates of Health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.  The list of disease conditions is based on the Global Burden of Disease system, modified for local public health priorities."
+# textIntroB <- "The code and system are written/structured to useable by States and Counties throughout the United States—with any State or County using their own structured input file of events (e.g. deaths), and the CBD system supplying underlying population data, Social Determinates of Health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.  The list of disease conditions is based on the Global Burden of Disease system, modified for local public health priorities."
 
 # textIntroC <- "This California State implementation of the CBD, The California Community Burden of Disease and Cost Engine (CCB), currently includes detailed death data and multiple associated measures (e.g. age-adjusted cause-specific Years of Life Lost rates) for 2001 to 2015 at the census tract, community (California Medical Service Study Areas), county, and statewide levels.  The CCB also includes a small set of Social Determinates of Health, and describes their correlations with death outcomes, as a pilot for more robust functionality in this area.  Other short-term road map plans include the addition of burden of disease and costs (charges) based on California Hospital Discharge data, automated report generation, and more."
 
