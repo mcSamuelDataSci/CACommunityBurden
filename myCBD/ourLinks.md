@@ -1,6 +1,6 @@
-##  Slick Health Data Visualization Sites
+﻿##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
-   *  [CALIFORNIA VIZ](http://ihmeuw.org/4ood)
+   *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
 
 * [FiveThirtyEight - 35 Years Of American Death](https://projects.fivethirtyeight.com/mortality-rates-united-states/)
 * [Race Count California - Advancement Project](http://www.racecounts.org/california/)
@@ -30,15 +30,20 @@
    *  [US Census Bureau's new data exploration platform](https://data.census.gov/) 4; A, B
    *  [Deaths: Leading Causes for 2016, National Vital Statistics Reports, July 26, 2018](https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_06.pdf) 1; A
    *  [Global Burden of Disease/IHME Data](http://ghdx.healthdata.org/gbd-results-tool)
-  
+
+   *  [Better Data for Better Health --  'Collection' of Robert Wood Johnson Foundation sponsored HEALTH DATA RESOURCES sites](https://www.rwjf.org/en/library/collections/better-data-for-better-health.html) na
 
 
-  *  [Better Data for Better Health --  'Collection' of Robert Wood Johnson Foundation sponsored HEALTH DATA RESOURCES sites](https://www.rwjf.org/en/library/collections/better-data-for-better-health.html) na
-
-
+ * **Tools ranking comparing indicators between and within US States**
+   *  [State Health Compare -- create customized reports for state-level health estimates](http://statehealthcompare.shadac.org/)
+   *  [America’s Health Rankings](https://www.americashealthrankings.org/)
 
 **Primary Data Focus**<br>
-1 Diseases/Conditions<br>2 Social Determinants of Health and Related<br>3 Behaviors/Exposures<br>4 Population/Demographic Data<br>5 Evidence-Based Policy/Interventions
+    1 Diseases/Conditions<br>
+    2 Social Determinants of Health and Related<br>
+    3 Behaviors/Exposures<br>
+    4 Population/Demographic Data<br>
+    5 Evidence-Based Policy/Interventions<br>
 
 
 ## Health Data Reports
@@ -54,6 +59,6 @@
 
  * [An Introduction to Measures of Mortality Assessing Overall Health, Cause of Death Rankings, Health-Adjusted Life Expectancy, and Socioeconomic Conditions in Alameda County, California](http://www.acphd.org/media/482811/mofm.pdf)
 
-## need to assess...
 
-  *  [State Health Compare -- create customized reports for state-level health estimates](http://statehealthcompare.shadac.org/)
+
+
