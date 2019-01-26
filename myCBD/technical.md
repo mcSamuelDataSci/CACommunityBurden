@@ -70,3 +70,5 @@
     - The age-adjusted calculation, and generation of confidence intervals was conducted using the &quot;ageAdjust.Direct()&quot; function of the [R epitools package](https://github.com/cran/epitools).
     - Because a very small number of census tracts with otherwise useful data had zero population in one or more age strata (often the youngest or oldest strata, for just one sex), the above-mentioned function was modified such that rates in such strata were assigned to (reasonably enough) be 0 (rather than undefined/infinity), allowing an adjusted rate to be calculated.
 
+</div>
+

@@ -286,11 +286,15 @@ mainPanel(
           br(), 
           includeMarkdown("ourLinks.md"), value = 88),
  
+ tabPanel("ABOUT",
+          br(), 
+          includeMarkdown("About.md"), value = 99),
+  
  
     tabPanel("Technical Documentation",
      br(), 
      includeMarkdown("technical.md"), value = 77)
- 
+
  
   ) # END tabSetPanel
 ) # END mainPanel
