@@ -1,7 +1,7 @@
-﻿
+
 ##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
-   *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
+    *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
 
 * [FiveThirtyEight - 35 Years Of American Death](https://projects.fivethirtyeight.com/mortality-rates-united-states/)
 * [Race Count California - Advancement Project](http://www.racecounts.org/california/)
@@ -59,6 +59,7 @@
 ## Methods and Concepts Related to Mortality Measures
 
  * [An Introduction to Measures of Mortality Assessing Overall Health, Cause of Death Rankings, Health-Adjusted Life Expectancy, and Socioeconomic Conditions in Alameda County, California](http://www.acphd.org/media/482811/mofm.pdf)
+
 
 
 
