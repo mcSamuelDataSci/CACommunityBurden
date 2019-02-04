@@ -9,6 +9,8 @@
 #   read key "info" files                                             
 #   creates vectors and contants used for Shiny app   
 #
+
+
 #   has set ups for local sites
 #     "San Joaquin Public Health Consortium"       
 # 
@@ -20,16 +22,17 @@
 
 #-- Key Constants -----------------------------------------------------------
 
- whichData      <- "real"
- criticalNumber <- 11
- subSite        <- FALSE
- VERSION        <- "Version B1.3"
- myPlace        <- getwd()   
- STATE          <- "CALIFORNIA"
- yearGrp        <- "2013-2017"
- mTitle         <- "California Community Burden of Disease and Cost Engine"
- 
- pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
+ whichData         <- "real"
+ criticalNumber    <- 11
+ subSite           <- FALSE
+ VERSION           <- "Version B1.3"
+ myPlace           <- getwd()   
+ STATE             <- "CALIFORNIA"
+ yearGrp           <- "2013-2017"
+ mTitle            <- "California Community Burden of Disease and Cost Engine"
+ figureAttribution <- "California Department of Public Health"
+
+  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 
  # subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
  # subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 

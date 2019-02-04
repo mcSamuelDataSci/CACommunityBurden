@@ -16,7 +16,7 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
  filtered.df       <- filtered.df[((Nrows.df-Nrows.to.display+1):Nrows.df),]
   
  layout(matrix(c(1,1,1,2,3,4,5),1,7,byrow=TRUE))
- par(mar=c(5,25,0,0),oma = c(0, 0, 3, 0))
+ par(mar=c(5,25,0,0),oma = c(3, 0, 3, 0))
  
  t.plot <- barplot( filtered.df$Ndeaths,
                     xlab = "Deaths (n)",  
@@ -64,7 +64,9 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
  if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
    
  mtext(paste0("Measures by Cause in ",myYear," in ",myLHJ,sexLab),outer = TRUE,cex=1.6,line=1,font=2)
-
+ mtext(figureAttribution,side=1,outer = TRUE,line=2)
+ 
+ 
 }
 
 
