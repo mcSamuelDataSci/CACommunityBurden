@@ -22,7 +22,7 @@ library(readr)
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/capwords.R"))
 
-ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Groups and Standard US 2000 pop.xlsx"),sheet = "data"))
+ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge
 aU      <- c(-1,ageMap$uAge)
 
@@ -33,9 +33,9 @@ tDatDOF  <- read_csv("https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2
 tDat     <- tDatDOF  %>% gather(key="sex",value="pop",-county,-year,-age) %>%
                          filter(year %in% 2000:2017)
 
-aMark         <- findInterval(tDat$age,aU,left.open = TRUE)
-aLabs         <- paste(aL,"-",aU[-1])
-tDat$ageG  <- aLabs[aMark]
+aMark       <- findInterval(tDat$age,aU,left.open = TRUE)
+aLabs       <- paste(aL,"-",aU[-1])
+tDat$ageG   <- aLabs[aMark]
 
 tDat    <- tDat  %>% mutate(sex    = c("Male","Female","Total")[match(sex,c("pop_male","pop_female","pop_total"))],
                             county =  capwords(tDat$county,strict=TRUE)
@@ -45,11 +45,9 @@ tDatState <- mutate(tDat,county="California")
 
 tDat <- bind_rows(tDat,tDatState)
 
-
-
-popCounty2000to2015 <- tDat %>% group_by(year, county,sex,ageG) %>%  summarize(pop  = sum(pop)) 
-popCountytemp       <- tDat %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageG = "Total")
-popCounty2000to2015 <- bind_rows(popCounty2000to2015,popCountytemp) %>% ungroup()
+popCounty      <- tDat %>% group_by(year, county,sex,ageG) %>%  summarize(pop  = sum(pop)) 
+popCountytemp  <- tDat %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageG = "Total")
+popCounty      <- bind_rows(popCounty,popCountytemp) %>% ungroup()
                             
                     
 # == CDPH DIVISION OF COMMINIABLE DISEASE CONTROL DATA ================================================================================
@@ -64,32 +62,50 @@ tDat <- readRDS(file= paste0(upPlace,"/upData/tDat_2000_2020.rds"))
 names(tDat) <- c("county","year","sex","age","raceE","OrigPop","pop" )
 
 tDat        <- filter(tDat, year %in% 2000:2017 & !(county %in% c("Alameda HD","Berkeley","Pasadena","Long Beach","Los Angeles HD")))
+# NOTE: California totals already included with county = "California" 
+
 
 aMark       <- findInterval(tDat$age,aU,left.open = TRUE)
 aLabs       <- paste(aL,"-",aU[-1])
 tDat$ageG   <- aLabs[aMark]
 
-tDatTot <-  tDat %>% mutate(sex = "T")
-tDat    <- bind_rows(tDat,tDatTot) %>% mutate(sex = c("Male","Female","Total")[match(sex,c("M","F","T"))])
+tDatTotAge  <-  tDat %>% mutate(ageG = "Total")
+tDat        <-  bind_rows(tDat,tDatTotAge) 
 
-DCDCpopCounty2000to2015  <- tDat %>% group_by(year, county,sex,ageG) %>% 
-                                 summarize(pop  = sum(pop)) 
+tDatTotSex  <- tDat %>% mutate(sex = "T")
+tDat        <- bind_rows(tDat,tDatTotSex) %>% mutate(sex = c("Male","Female","Total")[match(sex,c("M","F","T"))])
 
-DCDCpopCountytemp <-        tDat %>% group_by(year, county,sex) %>% 
-                                 summarize(pop  = sum(pop)) %>%
-                                 mutate(ageG = "Total")
 
-DCDCpopCounty2000to2015  <- bind_rows(DCDCpopCounty2000to2015,DCDCpopCountytemp)
+# IN DEATH DATA
+# vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
+  vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH",           "Multi-NH",         "Hisp")
+# NO OTHER
+# NO UNKNOWN
+rCode    <- c("W","B","I","A","P","M","H")
+tDat     <-  tDat %>%  mutate( raceCode   = vLab[match(raceE,rCode)])
 
+# RECONSIDER AT SOME POINT
+# tDatTot  <-  tDat %>% mutate(raceCode = "Total")
+# tDat     <-  bind_rows(tDat,tDatTot) 
+
+yearMap   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx")))
+tDat      <- tDat %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
+                               
+popCounty_RE <- tDat %>% group_by(yearG3, county, sex, ageG, raceCode) %>% 
+                         summarize(pop  = sum(pop)) %>%
+                         ungroup()
+
+# table(popCounty_RE$sex,useNA = "ifany")
+# table(popCounty_RE$ageG,useNA = "ifany")
+# table(popCounty_RE$raceCode,useNA = "ifany")
 
 # ======================================================================================================================================
-saveRDS(DCDCpopCounty2000to2015, file= paste0(upPlace,"/upData/popCounty2000to2015.RDS"))
-saveRDS(    popCounty2000to2015, file= paste0(upPlace,"/upData/popCounty2000to2015.RDS"))
-# 
-# # -- Construct and save file with total state popuation by age groups to use as "Standard Population"------------------------------------------
-# 
-# popStandard     <-  tDat %>% filter(year == 2015, county == "California") %>%
-#                              group_by(ageG) %>%  
-#                              summarize(popStandard  = sum(pop))
-# 
-# saveRDS(popStandard, file= paste0(upPlace,"/upData/popStandard.RDS"))
+
+saveRDS(popCounty,    file = paste0(upPlace,"/upData/popCounty.RDS"))
+saveRDS(popCounty_RE, file = paste0(upPlace,"/upData/popCounty_RE.RDS"))
+
+
+# popCounty_RE %>%
+#   filter(year==2017,ageG=="Total",sex=="Total",county != "California",raceCode=="Total") %>%
+#   group_by(sex) %>%
+#   mutate(newPop=sum(pop)) %>% ungroup()

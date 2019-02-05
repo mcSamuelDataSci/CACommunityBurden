@@ -1,0 +1,279 @@
+---
+title: "Race Work"
+author: "Michael Samuel"
+date: "January 28, 2019"
+always_allow_html: yes
+output:
+  html_document: default
+  word_document: default
+---
+```{r echo=FALSE, message=FALSE}
+
+#-- Load Packages ------------------------------------------------------------
+ library(ggplot2)
+ library(dplyr)
+ library(tidyr)
+ library(readxl)
+ library(readr) 
+ library(fs)
+ library(markdown)
+
+#-- Key Constants -----------------------------------------------------------
+
+ whichData <- "real"
+ myPlace   <- "E:/0.CBD/myCBD"
+ STATE     <- "CALIFORNIA"
+ yearGrp   <- "2013-2017"
+
+ datCounty    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+ datCounty.RE <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RE.RDS"))
+ 
+# CHANGE CODES EVERYWHWERE  !!! no -
+#         c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH", "Multi-NH","Hisp")
+tRace <-  c("White-NH","Black-NH",          "Asian-NH",                      "Hisp")
+
+```
+
+```{r echo=FALSE, message=FALSE}
+
+ t.0 <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",sex=="Total")
+
+ ggplot(data=t.0, aes(x=yearG3, y=aRate, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5) +
+   ggtitle("All RE Groups - Age-Adjusted Death Rate - All Causes") 
+ 
+ 
+ ggplot(data=t.0, aes(x=yearG3, y=Ndeaths, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5) +
+     ggtitle("All RE Groups - Number of Deaths - All Causes") 
+
+```
+
+<br>
+<br>
+
+```{r echo=FALSE, message=FALSE}
+
+ 
+
+ 
+ t.0 <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",sex=="Total",raceCode %in% tRace)
+ 
+ # note that size in not in the aes() part...
+ ggplot(data=t.0, aes(x=yearG3, y=aRate, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5) +
+ ggtitle("Selected RE Groups - Age-Adjusted Death Rate - All Causes") 
+ 
+ 
+ ggplot(data=t.0, aes(x=yearG3, y=aRate, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5) +
+ ggtitle("Selected RE Groups - Age-Adjusted Death Rate - All Causes") +
+ scale_y_continuous(trans='log2')
+ 
+ 
+ ggplot(data=t.0, aes(x=yearG3, y=YLL.adj.rate, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5)+
+   ggtitle("Selected RE Groups - Age-Adjusted YLL Rate - All Causes") 
+ 
+ 
+ ggplot(data=t.0, aes(x=yearG3, y=mean.age, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5) +
+   ggtitle("Selected RE Groups - Mean Age at Death - All Causes") 
+ 
+ 
+ 
+ t.0 <- t.0 %>% filter(yearG3=="2015-2017")
+ 
+ ggplot(data=t.0, aes(x=raceCode, y=aRate)) +
+   geom_bar(stat="identity") +
+   ggtitle("RE Groups - Adj-Death Rate - All Causes") 
+ 
+ 
+ 
+ 
+ 
+ library(tidyr)
+ t.0 <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",sex=="Total",raceCode %in% c("White-NH","Black-NH")) %>%
+                           select(yearG3,raceCode,aRate) %>%
+                           spread(key=raceCode,value=aRate) %>%
+                           mutate(BWratio=`Black-NH`/`White-NH`)
+ t.0$midYear <- c(2001,2004,2007,2010,2013,2016)
+ 
+ 
+ ggplot(data=t.0, aes(x=midYear, y=BWratio)) +
+   geom_line(size=1.5) +
+   ggtitle("Rate Ratio Black:White by midYear") 
+ 
+  ggplot(data=t.0, aes(x=midYear, y=BWratio)) +
+   ylim(1, 1.4) +
+   geom_line(size=1.5) +
+   ggtitle("Rate Ratio Black:White by midYear") 
+ 
+ 
+```
+
+
+```{r echo=FALSE, message=FALSE }
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main")) 
+
+fullCauseList       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","nameOnly")] %>% arrange(LABEL)
+
+```
+
+
+
+
+
+```{r echo=FALSE, message=FALSE }
+
+.t.00 <- datCounty.RE %>% filter(county==STATE,yearG3 == "2015-2017",Level=="lev2",
+                              !(raceCode %in% c("AIAN-NH","NHPI-NH","Multi-NH")) )  
+
+.t.0 <-  .t.00 %>% filter(sex == "Total")  
+
+.t.1 <- .t.0 %>%  select(CAUSE,YLL.adj.rate,raceCode) %>%      # YLL by RACE + YLL RANK  (8)
+            spread(key=raceCode,value=YLL.adj.rate) %>%
+            mutate(AsianRank = round(rank(-`Asian-NH`)),
+                   BlackRank = round(rank(-`Black-NH`)),
+                   HispRank  = round(rank(-`Hisp`)),
+                   WhiteRank = round(rank(-`White-NH`))
+                   )
+     
+.t.2 <- .t.0 %>%  select(CAUSE,Ndeaths,raceCode) %>%          # N BY RACE + N RANK  (8)
+            spread(key=raceCode,value=Ndeaths) %>%
+            mutate(AsianRank = round(rank(-`Asian-NH`)),
+                   BlackRank = round(rank(-`Black-NH`)),
+                   HispRank  = round(rank(-`Hisp`)),
+                   WhiteRank = round(rank(-`White-NH`))
+                   )
+
+.t.3 <- .t.0 %>%  select(CAUSE,aRate,raceCode) %>%           # ADJUSTED RATE BY RACE + RANK + RATIO (12)
+            spread(key=raceCode,value=aRate) %>%
+            mutate(AsianRank = round(rank(-`Asian-NH`)),
+                   BlackRank = round(rank(-`Black-NH`)),
+                   HispRank  = round(rank(-`Hisp`)),
+                   WhiteRank = round(rank(-`White-NH`)),
+                   minRate = pmin(`Asian-NH`,`Black-NH`,`Hisp`,`White-NH`,na.rm = TRUE),
+                   Aratio  = `Asian-NH`/minRate,
+                   Bratio  = `Black-NH`/minRate,
+                   Hratio  = `Hisp`    /minRate,
+                   Wratio  = `White-NH`/minRate) %>%
+            select(-minRate)
+
+.t.5      <- bind_cols(.t.1,.t.2,.t.3) 
+CAUSE    <- .t.5 %>% select(CAUSE)
+t.workA  <- right_join(fullCauseList,.t.5,by=c("LABEL"="CAUSE")) %>%
+              select(-LABEL,-CAUSE1,-CAUSE2)
+
+```
+
+
+
+```{r echo=FALSE, message=FALSE}
+
+
+.t.0 <- .t.00 %>% filter(sex == "Male")
+
+.t.1 <- .t.0  %>% select(CAUSE,Ndeaths,raceCode) %>%    ### MALE N BY RACE (4)
+            spread(key=raceCode,value=Ndeaths)
+
+.t.2 <- .t.0 %>%  select(CAUSE,aRate,raceCode) %>%     ### MALE ADJUSTED RATE RATE + RATIO (8) 
+                spread(key=raceCode,value=aRate) %>%
+                mutate(minRate = pmin(`Asian-NH`,`Black-NH`,`Hisp`,`White-NH`,na.rm = TRUE),
+                   Aratio  = `Asian-NH`/minRate,
+                   Bratio  = `Black-NH`/minRate,
+                   Hratio  = `Hisp`    /minRate,
+                   Wratio  = `White-NH`/minRate) %>% select(-minRate)
+
+.tx.1 <- bind_cols(.t.1,.t.2) %>% select(-CAUSE1)
+
+.t.0 <- .t.00 %>% filter(sex == "Female")
+
+.t.3 <- .t.0  %>% select(CAUSE,Ndeaths,raceCode) %>%   ### FAMALE N BY RACE (4)
+            spread(key=raceCode,value=Ndeaths)
+
+.t.4 <- .t.0 %>%  select(CAUSE,aRate,raceCode) %>%     ### FEMALE ADJSUTED RATE + RATIO  (8)
+                spread(key=raceCode,value=aRate) %>%
+                mutate(minRate = pmin(`Asian-NH`,`Black-NH`,`Hisp`,`White-NH`,na.rm = TRUE),
+                   Aratio  = `Asian-NH`/minRate,
+                   Bratio  = `Black-NH`/minRate,
+                   Hratio  = `Hisp`    /minRate,
+                   Wratio  = `White-NH`/minRate) %>% select(-minRate)
+
+.tx.2 <- bind_cols(.t.3,.t.4) %>% select(-CAUSE1)
+
+.t.5      <- full_join(.tx.1,.tx.2,by="CAUSE")
+.t.6      <- full_join(CAUSE,.t.5,by="CAUSE")
+t.workB  <- right_join(fullCauseList,.t.6,by=c("LABEL"="CAUSE")) %>%
+             select(-LABEL)
+
+```
+
+
+```{r echo=FALSE, message=FALSE}
+
+
+.t.00 <- datCounty %>% filter(county==STATE,year == 2017,Level=="lev2",sex %in% c("Male","Female"))
+
+                             
+
+.t.1 <- .t.00 %>% select(CAUSE,Ndeaths,sex) %>%        ### N BY SEX (2)
+            spread(key=sex,value=Ndeaths)
+
+
+.t.2 <- .t.00 %>%  select(CAUSE,aRate,sex) %>%     ### ADJUSTED RATE + RATIO (4)
+            spread(key=sex,value=aRate) %>%
+            mutate(minRate = pmin(Female,Male,na.rm = TRUE),
+                   Mratio  = Male/minRate,
+                   Fratio  = Female/minRate) %>% select(-minRate)
+
+.t.3 <- full_join(.t.1,.t.2,by="CAUSE")
+.t.4 <- full_join(CAUSE,.t.3,by="CAUSE")
+t.workC <- right_join(fullCauseList,.t.4,by=c("LABEL"="CAUSE")) %>%
+          select(-LABEL)
+
+```
+
+
+
+
+
+```{r echo=FALSE, message=FALSE}
+workX           <- full_join(t.workA,t.workB,by="nameOnly")
+raceWorkExplore <- full_join(workX,t.workC,by="nameOnly")
+write_csv(raceWorkExplore,"raceWorkExplore.csv", na ="")
+
+```
+
+
+
+
+
+
+
+
+```{r echo=FALSE, message=FALSE}
+# t.w <- unique(c(test4$CAUSE[test4$WhiteRank < 16],
+#          test4$CAUSE[test4$BlackRank < 16],
+#          test4$CAUSE[test4$HispRank < 16],
+#          test4$CAUSE[test4$AsianRank < 16]))
+# 
+# 
+# t.w2 <- unique(c(test6$CAUSE[test6$WhiteRank < 16],
+#          test6$CAUSE[test6$BlackRank < 16],
+#          test6$CAUSE[test6$HispRank < 16],
+#          test6$CAUSE[test6$AsianRank < 16]))
+# 
+# t.w2 <- unique(c(t.w,t.w2))
+
+# filter(CAUSE %in% t.w2) 
+
+```  
+
+
+
+```{r echo=FALSE, message=FALSE}
+ library(DT)
+ datatable(raceWorkExplore)
+```
+

@@ -225,7 +225,7 @@ death.datB$tractCode        <- NULL   # for now remove this variable
 # multiraceStatus does not include Hispanics one way or other in these years
 # if one race code is classifiable and another is not, multiraceStatus **IS** "multirace"
 
-death.datB$raceCode                                             <-"-missing"
+death.datB$raceCode                                                <-"-missing"
 
 death.datB$raceCode[death.datB$multiraceStatus==1]                 <-"White-NH"
 death.datB$raceCode[death.datB$multiraceStatus==2]                 <-"Black-NH"

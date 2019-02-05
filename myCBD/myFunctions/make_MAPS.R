@@ -165,11 +165,14 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
                                             "Measure Value: "= myMeasure)
                                             ) +
    tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,fontface = 2,
+           inner.margins =c(0.1,0.02,0.02,0.02),  
            legend.outside = TRUE,
            legend.outside.position = "right", 
            legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3,
            basemaps = c('OpenStreetMap')
-          )  
+          )  +
+   tm_credits(figureAttribution,position=c("center","BOTTOM"))
+   
   }
 
 
