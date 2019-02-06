@@ -4,7 +4,7 @@
 
 *  This tool is designed for use by CDPH programs, local health departments, and community partners for epidemiologic analysis and to provide systematic scientific insight to inform public health planning, evaluation and action.
 
-*  The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures, displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations. The list of conditions is based on the Global Burden of Disease system, modified for local public health priorities. The CCB also includes a limited set of social determinants data and describes their correlations with death outcomes, as a pilot for more robust functionality in this area." 
+*  The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations. The list of conditions is based on the Global Burden of Disease system, modified for local public health priorities. The CCB also includes a limited set of social determinants data and describes their correlations with death outcomes, as a pilot for more robust functionality in this area." 
 
 
 ### The Community Burden of Disease System
@@ -17,7 +17,7 @@
 
 ### The CCB is a work in progress
 
-The CCN is intended to be an evolving tool-set developing new content and functionality in response to the needs of public health practitioners. Examples of upcoming development enhancements:
+The CCB is intended to be an evolving tool-set developing new content and functionality in response to the needs of public health practitioners. Examples of upcoming development enhancements:
 
 * Hospital discharge and emergency department data
 * Cost (charges) data based on hospital discharge
@@ -31,7 +31,7 @@ The CCN is intended to be an evolving tool-set developing new content and functi
 
 ### California Department of Public Health [CDPH](https://www.cdph.ca.gov/Pages/CDPHHome.aspx)
 
-* Fusion Center - The CCB is one of the ways the [Fusion Center](https://www.cdph.ca.gov/Programs/FCSD/Pages/FusionCenter.aspxis) working to explore the lens of place and its impact on health disparities.  The CCB is an initiative of the Fusion Center implemented with participation from a crosscutting technical team, of representatives from multiple CDPH programs.  
+* Fusion Center - The CCB is one of the ways the [Fusion Center](https://www.cdph.ca.gov/Programs/FCSD/Pages/FusionCenter.aspx) is working to explore the lens of place and its impact on health disparities.  The CCB is an initiative of the Fusion Center implemented with participation from a crosscutting technical team from multiple CDPH programs.  
 * This platform is also a pilot component of the CDPH Ecosystem of Data Sharing, leveraging a rich multi-level data set/system for modeling and predictive analytics and demonstrating automated and integrated data processing, analytics, and visualization. The project employs nimble modular development, with the goal to share tools/resources with outside partners (counties and other states). 
 
 

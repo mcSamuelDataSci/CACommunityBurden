@@ -20,9 +20,9 @@
 
 textIntroA <- "The California Community Burden of Disease Engine (CCB) is a tool to explore data on burden of disease in multiple levels of geographic granularity." 
 
-textIntroC <- " The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures, displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations." 
+textIntroC <- " The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations." 
 
-textNote.real <- "This version of app contains features that are rough and still being refined. It also undoubtedly contains bugs and may well generate uninterpretable error messages based on some selection combinations. More importantly, while we have done extensive review, there could be some errors in the calculations of some measures. While these are all concerns, we are confident the application in its current form will, overall, provide important and reliable insights. We look forward to and would appreciate any observations you make regarding bugs, errors, or anything else of concern. We also welcome supportive comments."
+textNote.real <- "This version of the app contains features that are rough and still being refined. It also undoubtedly contains bugs and may well generate uninterpretable error messages based on some selection combinations. More importantly, while we have done extensive review, there could be some errors in the calculations of some measures. While these are all concerns, we are confident the application in its current form will, overall, provide important and reliable insights. We look forward to and would appreciate any observations you make regarding bugs, errors, or anything else of concern. We also welcome supportive comments."
 
 textNote.fake <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA"
 
