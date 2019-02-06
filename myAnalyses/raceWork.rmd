@@ -34,6 +34,22 @@ tRace <-  c("White-NH","Black-NH",          "Asian-NH",                      "Hi
 
 ```
 
+
+
+```{r}
+
+IBD       <- read_csv("https://data.chhs.ca.gov/dataset/391d75bf-00fc-4fd7-b00d-9bd16bbe01c0/resource/741f25e1-db50-436a-a6a9-7b840176edbf/download/infectious-disease-cases-by-county-year-and-sex.csv")
+
+workIDB   <- IDB %>% filter(Sex=="Total",Year==2015,County=="California") %>%
+                     arrange(-Rate)
+
+
+```
+
+
+
+
+
 ```{r echo=FALSE, message=FALSE}
 
  t.0 <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",sex=="Total")
@@ -247,6 +263,23 @@ write_csv(raceWorkExplore,"raceWorkExplore.csv", na ="")
 
 
 
+```{r}
+rankwork <- raceWorkExplore[,c(1,26:29,38:41,50:53)]
+.t1      <- raceWorkExplore[,26:29]
+.t2      <- matrix(rank(-.t1),ncol=ncol(.t1))
+.t3      <- apply(.t2,1,min)
+
+.t4      <- raceWorkExplore[,c(38:41,50:53)]
+.t5      <- matrix(rank(-.t4),ncol=ncol(.t4))
+.t6      <- apply(.t5,1,min)
+
+
+
+tRank     <- cbind(rankwork[,1],.t1,.t3,.t4,.t6)
+write_csv(tRank,"tRank.csv", na ="")
+
+
+```
 
 
 
