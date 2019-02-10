@@ -4,6 +4,9 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
  myCol <- "blue"            #mycol <- rep("blue",nrow(filtered.df))
  bLwd <- 2
   
+ 
+ if(myLev=="lev3") myLev <- c("lev2","lev3")
+ 
  filtered.df <- filter(datCounty,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
  filtered.df <- filtered.df[order( filtered.df[,myMeasure],na.last = FALSE),]
 
@@ -75,6 +78,6 @@ if(1==2){
   myMeasure = "aRate"
   myYear=2017
   mySex="Total"
-  myLev="lev1"
+  myLev="lev3"
   myN=10
 }

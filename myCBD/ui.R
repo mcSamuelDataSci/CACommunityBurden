@@ -114,8 +114,7 @@ sidebarPanel(width=3,
  
  # myLev
  conditionalPanel(condition = fC(c(33,34)),
-   checkboxGroupInput("myLev", "Levels to show:",
-    c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"),"lev1")),
+    radioButtons("myLev", "Levels to show:", choices=c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"))),
 
  # myStateCut
  conditionalPanel(condition = fC(c(22,23)),

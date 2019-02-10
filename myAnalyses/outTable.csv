@@ -1,0 +1,16 @@
+,Cause,Ndeaths,Cause,YLLper,Cause,perChange,,Disparities Rank (ALL),,Disparities Rank (GENDER)
+1,Ischaemic heart disease,37800,Ischaemic heart disease,1633,Kidney diseases,68.7,,HIV/ and other Sexually transmitted diseases (STDs),,HIV/ and other Sexually transmitted diseases (STDs)
+2,Alzheimer’s disease and other dementias,24880,Unintentional injuries,871.6,"Symptoms, signs and ill-defined conditions, not elsewhere classified",41.9,,Homicide/Interpersonal violence,,Homicide/Interpersonal violence
+3,Stroke,16230,Substance use (Mental Health),638.7,Alzheimer’s disease and other dementias,32.8,,Tuberculosis,,Substance use (Mental Health)
+4,Chronic obstructive pulmonary disease,13260,Stroke,632.9,Congestive heart failure,25.7,,Melanoma and other skin cancers,,Melanoma and other skin cancers
+5,"Trachea, bronchus and lung cancers",11530,Alzheimer’s disease and other dementias,604.5,Substance use (Mental Health),22.2,,Substance use (Mental Health),,Tuberculosis
+6,Hypertensive heart disease,11530,"Trachea, bronchus and lung cancers",593.7,Other neurological conditions,20.2,,"Symptoms, signs and ill-defined conditions, not elsewhere classified",,"Symptoms, signs and ill-defined conditions, not elsewhere classified"
+7,Other or unspecified cardiovascular diseases,10980,Chronic obstructive pulmonary disease,532.7,Other Infectious Diseases,16.1,,Prostate cancer,,Chronic obstructive pulmonary disease
+8,Unintentional injuries,9509,Cirrhosis of the liver,520.8,"Endocrine, blood, immune disorders",14.8,,Maternal conditions,,Maternal conditions
+9,Kidney diseases,7549,Hypertensive heart disease,486.7,Hypertensive heart disease,13.3,,"Cardiomyopathy, myocarditis, endocarditis",,"Cardiomyopathy, myocarditis, endocarditis"
+10,Congestive heart failure,7172,Suicide/Self-harm,473.5,Liver cancer,10.8,,Cirrhosis of the liver,,Prostate cancer
+11,Other malignant neoplasms,6965,Other or unspecified cardiovascular diseases,464.3,Uterine cancer,7.3,,Meningitis,,Mental Health disoders (non-subsance use)
+12,Cirrhosis of the liver,6648,Other malignant neoplasms,411.9,Maternal conditions,7,,Neonatal conditions,,Cirrhosis of the liver
+13,Other neurological conditions,6403,Kidney diseases,374.7,Suicide/Self-harm,7,,Chronic obstructive pulmonary disease,,Breast cancer
+14,Respiratory infections,6333,Other neurological conditions,342.8,Other respiratory diseases,5.4,,"Endocrine, blood, immune disorders",,Suicide/Self-harm
+15,Diabetes mellitus,5993,Diabetes mellitus,331.8,Cirrhosis of the liver,-0.1,,Suicide/Self-harm,,"Endocrine, blood, immune disorders"

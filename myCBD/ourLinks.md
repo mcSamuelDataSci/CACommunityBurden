@@ -1,4 +1,4 @@
-
+﻿
 ##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
     *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
@@ -8,7 +8,16 @@
 
 ##  Data Sources
 
- *  **California Sub-County Focus**
+ * Primary Data Focus of Resources Below:
+     *  1 Diseases/Conditions
+     *  2 Social Determinants of Health and Related
+     *  3 Behaviors/Exposures
+     *  4 Population/Demographic Data
+     *  5 Evidence-Based Policy/Interventions
+<br>
+<br>
+
+ *  **California Sub-County (e.g. census tracts) Focus**
      *  [Healthy Places Index](http://healthyplacesindex.org/map/) 1,2,3,5
      *  [County Health Rankings](http://www.countyhealthrankings.org) 1,2,3,5
      *  [Community Commons - Community Health Needs Assessment](https://www.communitycommons.org/chna/) 1,2,3,5
@@ -39,12 +48,7 @@
    *  [State Health Compare -- create customized reports for state-level health estimates](http://statehealthcompare.shadac.org/)
    *  [America’s Health Rankings](https://www.americashealthrankings.org/)
 
-**Primary Data Focus**<br>
-    1 Diseases/Conditions<br>
-    2 Social Determinants of Health and Related<br>
-    3 Behaviors/Exposures<br>
-    4 Population/Demographic Data<br>
-    5 Evidence-Based Policy/Interventions<br>
+
 
 
 ## Health Data Reports

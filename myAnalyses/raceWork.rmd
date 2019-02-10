@@ -40,8 +40,12 @@ tRace <-  c("White-NH","Black-NH",          "Asian-NH",                      "Hi
 
 IBD       <- read_csv("https://data.chhs.ca.gov/dataset/391d75bf-00fc-4fd7-b00d-9bd16bbe01c0/resource/741f25e1-db50-436a-a6a9-7b840176edbf/download/infectious-disease-cases-by-county-year-and-sex.csv")
 
-workIDB   <- IDB %>% filter(Sex=="Total",Year==2015,County=="California") %>%
+CID       <- read_csv("CID.csv")
+
+
+workCID   <- IDB %>% filter(Sex=="Total",Year==2015,County=="California") %>%
                      arrange(-Rate)
+write_csv(workCID,"workCID.csv", na ="")
 
 
 ```
