@@ -94,10 +94,15 @@ sidebarPanel(width=3,
  conditionalPanel(condition = fC(c(22,23,33,44,45,55)), 
    selectInput("myLHJ","County/State:",choices=lList,selected=STATE)),
  
+
+ # myGeo
  conditionalPanel(condition = fC(c(22,23,66)),
    selectInput("myGeo","Geographic Level:",
                choices=c("County","Community","Census Tract"))),
  
+# conditionalPanel(condition = fC(c(22,23,66)),
+#                  verbatimTextOutput("warnmsg")),
+
  # myYear
  conditionalPanel(condition = 
    paste(

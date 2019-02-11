@@ -1,4 +1,4 @@
-﻿
+
 ##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
     *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
@@ -19,27 +19,27 @@
 
  *  **California Sub-County (e.g. census tracts) Focus**
      *  [Healthy Places Index](http://healthyplacesindex.org/map/) 1,2,3,5
-     *  [County Health Rankings](http://www.countyhealthrankings.org) 1,2,3,5
-     *  [Community Commons - Community Health Needs Assessment](https://www.communitycommons.org/chna/) 1,2,3,5
+     *  [County Health Rankings](http://www.countyhealthrankings.org) 1,2,3,4,5
+     *  [Community Commons - Community Health Needs Assessment](https://www.communitycommons.org/chna/) 1,2,3,4,5
      *  [CalEnviroScreen - Cal EPA](https://oehha.ca.gov/calenviroscreen/report/calenviroscreen-30) 1,2, 3
 
  *  **California-Specific**
       *  [Let's Get Healthy California](https://letsgethealthy.ca.gov/) 1,2,3 
-      *  [California Asthma Data](https://www.cdph.ca.gov/Programs/CCDPHP/DEODC/EHIB/CPE/Pages/CaliforniaBreathingCountyAsthmaProfiles.aspx)
-[Healthy Communities Index - CDPH Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Meets-the-Basic-Needs-of-All-1-2.aspx) 1
+      *  [California Asthma Data](https://www.cdph.ca.gov/Programs/CCDPHP/DEODC/EHIB/CPE/Pages/CaliforniaBreathingCountyAsthmaProfiles.aspx) 1
+      *  [Healthy Communities Index - CDPH Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Search.aspx) 2
       *  [California Cancer Data](https://www.cancer-rates.info/ca/) 1
  
  * **United States/International with California Specific (A) or California Sub-County Data (B)**
    *  [City Health Dashboard](https://www.cityhealthdashboard.com/) 1,2,3; A, B
-   *  [500 Cities Project – CDC & Robert Wood Johnson Foundation](https://www.cdc.gov/500cities/) 1, 2, 3; B
+   *  [500 Cities Project – CDC & Robert Wood Johnson Foundation](https://www.cdc.gov/500cities/) 1,2,3,5; B
       * [500 Cities methodology](https://www.cdc.gov/500cities/methodology.htm)
-   *  [CDC Wonder - Multiple Data Sets/Systems](https://wonder.cdc.gov/) 1, 4; A
-   *  [Social Vulnerability Indicators & Index - CDC](https://svi.cdc.gov/) 2, 3; B
-   *  [Fatal Injury Visualization Tool -  CDC](https://wisqars-viz.cdc.gov/) 2; A
-   *  [US Census QuickFacts](https://www.census.gov/quickfacts) 4; A, B
-   *  [US Census Bureau's new data exploration platform](https://data.census.gov/) 4; A, B
+   *  [CDC Wonder - Multiple Data Sets/Systems](https://wonder.cdc.gov/) 1,4; A
+   *  [Social Vulnerability Indicators & Index - CDC](https://svi.cdc.gov/) 2,3; B
+   *  [Injury Statistics Query and Reporting System -  CDC](https://www.cdc.gov/injury/wisqars/index.html) 1; A
+   *  [US Census QuickFacts](https://www.census.gov/quickfacts) 2,4; A, B
+   *  [US Census Bureau's new data exploration platform](https://data.census.gov/) 2,4; A, B
    *  [Deaths: Leading Causes for 2016, National Vital Statistics Reports, July 26, 2018](https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_06.pdf) 1; A
-   *  [Global Burden of Disease/IHME Data](http://ghdx.healthdata.org/gbd-results-tool)
+   *  [Global Burden of Disease/IHME Data](http://ghdx.healthdata.org/gbd-results-tool) 1; A
 
    *  [Better Data for Better Health --  'Collection' of Robert Wood Johnson Foundation sponsored HEALTH DATA RESOURCES sites](https://www.rwjf.org/en/library/collections/better-data-for-better-health.html) na
 
@@ -56,7 +56,7 @@
    * [Data tables, etc.](https://www.cdph.ca.gov/Programs/CHSI/Pages/County-Health-Status-Profiles.aspx)
 
 
- * [PORTRAIT OF PROMISE: The California Statewide Plan to Promote Health and Mental Health Equity; Office of Health Equity,California Department of Public Health, August 2015](https://www.cdph.ca.gov/Programs/OHE/CDPH%20Document%20Library/Accessible-CDPH_OHE_Disparity_Report_Final%20(2).pdf)
+ * [PORTRAIT OF PROMISE: The California Statewide Plan to Promote Health and Mental Health Equity; Office of Health Equity,California Department of Public Health, August 2015](https://www.cdph.ca.gov/Programs/OHE/Pages/OfficeHealthEquity.aspx)
 
  * [The Landscape of Opportunity: Cultivating Health Equity in California; California Pan-Ethnic Health Network; 2012](https://cpehn.org/sites/default/files/resource_files/landscapeofopportunity2012.pdf)
 

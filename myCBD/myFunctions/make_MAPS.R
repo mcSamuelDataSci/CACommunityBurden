@@ -15,8 +15,8 @@ cbdMapX <- function(myLHJ     = "Amador", myCause     = "A",  myMeasure = "YLLpe
  # if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
   
-  
-  
+  #  if(myGeo == "Census Tract") stop("NOTE - only 'Top leve' conditions are currently displayed for the census-tract level")
+ 
   
     if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
