@@ -88,8 +88,6 @@ A diagram showing this full cause list hierarchy is available by clicking the "C
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
 
-
-
 stateCutHelp <- 
 "The <b>State-based cutpoints</b> button changes the way the Measure is broken down or grouped for display in the map and the legend. If the box is checked, the cut-points are based on the data for all 58 counties for the most recent five years. If the box is unchecked, the cut-points are based on just the county being displayed in the current map. 
 <br><br>
