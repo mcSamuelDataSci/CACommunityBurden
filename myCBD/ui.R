@@ -104,7 +104,7 @@ sidebarPanel(width=3,
 #                  verbatimTextOutput("warnmsg")),
 
 
-conditionalPanel(condition = paste("(input.myGeo == 'Census Tract') &",fC(c(22,23))), 
+conditionalPanel(condition = paste("(input.myGeo == 'Census Tract') & (",fC(c(22,23)),")"), 
                  helpText(h6("NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"),style="color:red")) ,
                  
 
