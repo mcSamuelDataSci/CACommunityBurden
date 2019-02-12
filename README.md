@@ -22,4 +22,4 @@ Other Info:
 
 Legal: 
 
-* © 2019, California Department of Health released under the GNU General Public License, Version 2.0 available at https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html#SEC1.
+* © 2019, California Department of Public Health released under the GNU General Public License, Version 2.0 available at https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html#SEC1.
