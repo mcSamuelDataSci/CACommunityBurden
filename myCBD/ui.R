@@ -124,6 +124,7 @@ conditionalPanel(condition = paste("(input.myGeo == 'Census Tract') & (",fC(c(22
  
  # myLev
  conditionalPanel(condition = fC(c(33,34)),
+    actionButton( "levelHelp", label="?",style=myButtonSty) ,
     radioButtons("myLev", "Levels to show:", choices=c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"))),
 
  # myStateCut

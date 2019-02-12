@@ -43,6 +43,7 @@ observeEvent(input$causeHelp,     {myModal(causeHelp)})
 observeEvent(input$cutmethodHelp, {myModal(cutmethodHelp)})
 observeEvent(input$statecutHelp,  {myModal(stateCutHelp)})
 observeEvent(input$measureHelp,   {myModal(measureHelp)})
+observeEvent(input$levelHelp,     {myModal(levelHelp)})
 
 
 # generates help "objects" used for tab help buttons, as above

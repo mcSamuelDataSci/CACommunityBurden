@@ -40,6 +40,14 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 
 # DROP DOWN HELPS --------------------------------------------------
 
+levelHelp  <- paste0('<li style="margin-left: 40px">The <b>Top Level</b> includes only the five most aggregated conditions (e.g. Cardiovascular diseases, Injuries) and All Causes combined.</li>
+<li style="margin-left: 40px">The <b>Public Health Level</b> includes a list of about 60 conditions. This Level provides greater clinical detail and public health program specificity than the Top Level. </li>
+<li style="margin-left: 40px">The <b>Detail Level</b> includes a small number further detailed conditions (e.g. Non-Hodgkin lymphoma, Opiod Use Disorders, Falls) <b>AND</b> includes all conditions in the Public Health Level. </li>
+')
+
+
+
+
 measureHelp <- paste0('<p>The current MEASURES of deaths are:</p> 
 <ui style="list-style-type:circle">
 <li style="margin-left: 40px">Years of Life Lost (YLL)</li>
