@@ -103,6 +103,11 @@ sidebarPanel(width=3,
 # conditionalPanel(condition = fC(c(22,23,66)),
 #                  verbatimTextOutput("warnmsg")),
 
+
+conditionalPanel(condition = paste("(input.myGeo == 'Census Tract') &",fC(c(22,23))), 
+                 helpText(h6("NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"),style="color:red")) ,
+                 
+
  # myYear
  conditionalPanel(condition = 
    paste(
@@ -257,6 +262,11 @@ mainPanel(
       value = 11
       ),          
 
+    tabPanel("ABOUT",
+             br(), 
+             includeMarkdown("About.md"), value = 99),
+    
+    
    tabPanel("INTERACTIVE MAP",
      br(), htmlOutput("map_title")  ,
      leafletOutput("cbdMapTL", width=700, height=700), value = 22),
@@ -289,9 +299,7 @@ mainPanel(
      br(), 
      includeMarkdown("technical.md"), value = 77),
 
- tabPanel("ABOUT",
-          br(), 
-          includeMarkdown("About.md"), value = 99),
+
   
   tabPanel("Links to Other Data",
           br(), 
