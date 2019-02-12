@@ -87,7 +87,7 @@ A diagram showing this full cause list hierarchy is available by clicking the "C
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
-h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
+
 
 
 stateCutHelp <- 
