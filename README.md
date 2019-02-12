@@ -20,4 +20,6 @@ Other Info:
 * Pilot component of the Calfornia Department of Public Health Ecosystem of Data Sharing, demonstrating automated and integrated data processing, analytics, and visualization.
 * Nimble modular development, with goal to share tools/resources with outside partners (counties and other states).
 
-© 2019, Michael Samuel released under the GNU General Public License, Version 2.0 available at https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html#SEC1.
+Legal: 
+
+* © 2019, California Department of Health released under the GNU General Public License, Version 2.0 available at https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html#SEC1.
