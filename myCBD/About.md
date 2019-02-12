@@ -4,7 +4,7 @@
 
 *  This tool is designed for use by CDPH programs, local health departments, and community partners for epidemiologic analysis and to provide systematic scientific insight to inform public health planning, evaluation and action.
 
-*  The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations. The list of conditions is based on the Global Burden of Disease system, modified for local public health priorities. The CCB also includes a limited set of social determinants data and describes their correlations with death outcomes, as a pilot for more robust functionality in this area." 
+*  The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations. The list of conditions is based on the [Global Burden of Disease](http://www.healthdata.org/gbd) system, modified for local public health priorities. The CCB also includes a limited set of social determinants data and describes their correlations with death outcomes, as a pilot for more robust functionality in this area." 
 
 
 ### The Community Burden of Disease System
@@ -13,12 +13,11 @@
 
 
 
-
-
 ### The CCB is a work in progress
 
 The CCB is intended to be an evolving tool-set developing new content and functionality in response to the needs of public health practitioners. Examples of upcoming development enhancements:
 
+* Inclusion of trends and disparities for all measures stratified by race/ethnicity
 * Hospital discharge and emergency department data
 * Cost (charges) data based on hospital discharge
 * Life expectancy estimates at the census tract, community, and county levels
@@ -40,5 +39,8 @@ The CCB is intended to be an evolving tool-set developing new content and functi
 * [Zev Ross](http://www.zevross.com/) for a R function to "trim" the pesky islands off of California county coasts, and for other assistance
 
 
+### Licenses 
+* Use of this site is subject to CDPH’s Open Data Terms of Use found [here](https://data.chhs.ca.gov/pages/terms)
+* [R software](https://www.r-project.org/about.html) was used to build this site and all code used can be found on the GitHub repository located at [https://github.com/mcSamuelDataSci/CACommunityBurden](https://github.com/mcSamuelDataSci/CACommunityBurden)
 
 
