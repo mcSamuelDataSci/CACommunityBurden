@@ -187,14 +187,14 @@ conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure',
    HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
    br(),br(),               
  
-   helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
-   
-   br(),
-   actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
+  # helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
+   br(),br(),
+
+     actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),
    br(),
  
-   h4(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
-   h4(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
+   h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
+   h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
    helpText(textIntroA,style="color:black"), br(),
    helpText(textIntroC,style="color:black"), br(),
  
@@ -247,7 +247,7 @@ mainPanel(
    
   tabsetPanel(type = "tab",id="ID",
  
-    tabPanel("Home Page",  br(),align='center',
+    tabPanel("HOME",  br(),align='center',
       h4(HTML(above1),align="left"),
       fluidRow(
         column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
@@ -275,12 +275,10 @@ mainPanel(
    tabPanel("STATIC MAP",
      plotOutput("cbdMapTS",  height=700,width="100%"), value = 23),
    
-   tabPanel("RANK BY CAUSE [PLOT]",
+   tabPanel("RANK BY CAUSE",
      br(), plotOutput("rankCause", width="100%",height=700), value = 33),
    
-   tabPanel("RANK BY CAUSE [TABLE]",
-     dataTableOutput("rankCauseT"), value = 45),   #DT::
-   
+ 
  # tabPanel("RANK BY CAUSE AND SEX",    
  #  plotOutput("rankCauseSex", width="100%",height=700), value = 34),
  
@@ -290,6 +288,9 @@ mainPanel(
    tabPanel("Trend",
      br(), 
      plotOutput("trend", width="100%",height=700),  value = 55),
+ 
+   tabPanel("DATA TABLE",
+     dataTableOutput("rankCauseT"), value = 45),   #DT::
  
    tabPanel("SOCIAL DETERMINANTS",
      br(), 

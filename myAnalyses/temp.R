@@ -32,14 +32,17 @@ library(tidyr)
  
  
  datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+ datTract  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
  
  
  gbdMap0        <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
  fullCauseList  <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","nameOnly")] %>% arrange(LABEL)
  
+ datCountyREVIEW <- right_join(fullCauseList,datCounty,by=c("LABEL"="CAUSE"))
+ write_csv(datCountyREVIEW,"datCountyREVIEW.csv")
  
- 
- 
+ datTractREVIEW <- right_join(fullCauseList,datTract,by=c("LABEL"="CAUSE"))
+ write_csv(datTractREVIEW,"datTractREVIEW.csv")
  
 # --- WORK ---------------------------------------------------------
 

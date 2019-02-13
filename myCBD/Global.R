@@ -25,7 +25,7 @@
  whichData         <- "real"
  criticalNumber    <- 11
  subSite           <- FALSE
- VERSION           <- "Version B1.3"
+ VERSION           <- "Version P1.0"
  myPlace           <- getwd()   
  STATE             <- "CALIFORNIA"
  yearGrp           <- "2013-2017"
