@@ -31,6 +31,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
   dat.1$info <- dat.1[,myMeasure]
   
   dat.1$causeName <- fullCauseList[match(dat.1$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
+
   
 # Creating order column 
   
@@ -62,7 +63,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
   #dat.1$order[first(dat.1$CAUSE),]
   #rank(dat.1$order)
 
-# Creating Plot
+  # Creating Plot
  ## dat.1$value<-dat.1$info
  ## dat.1$info<-dat.1$order
 
