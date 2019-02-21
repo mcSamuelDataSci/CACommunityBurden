@@ -85,7 +85,7 @@ Values$ul_95ci   <- with(Values,estimate+moe)
 
 
 
-# List Rules ####################
+# List Rules (to be deleted upon completion) #################### 
 
 # return object (by string name)
 Estimates[["temp2"]]
@@ -166,7 +166,7 @@ list2env(lapply(Labels,`[`),envir=.GlobalEnv)
 list2env(lapply(RawData,`[`),envir=.GlobalEnv)
 #list2env(lapply(Values,`[`),envir=.GlobalEnv)
 
-# Junk ##########################
+# Junk (to be deleted upon completion) ##########################
 
 popStandard     <-  tDat %>% filter(year == 2015, county == "California")
 
