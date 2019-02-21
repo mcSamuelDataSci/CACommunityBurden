@@ -187,7 +187,7 @@ conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure',
    HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
    br(),br(),               
  
-  # helpText(h4("Welcome  to the Beta-Test Version of the CCB!"),style="color:green",align="left"),
+   helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"),
    br(),br(),
 
      actionButton("newsUse",          "News and Updates",style=myHelpButtonSty),

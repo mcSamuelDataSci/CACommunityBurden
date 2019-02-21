@@ -1,0 +1,222 @@
+---
+title: "Race Work"
+author: "Michael Samuel"
+date: "January 28, 2019"
+always_allow_html: yes
+output:
+  word_document: default
+  html_document: default
+---
+```{r echo=FALSE, message=FALSE}
+
+#-- Load Packages ------------------------------------------------------------
+ library(ggplot2)
+ library(dplyr)
+ library(tidyr)
+ library(readxl)
+ library(readr) 
+ library(fs)
+ library(markdown)
+
+#-- Key Constants -----------------------------------------------------------
+
+ whichData <- "real"
+ myPlace   <- "E:/0.CBD/myCBD"
+ STATE     <- "CALIFORNIA"
+ yearGrp   <- "2013-2017"
+
+ datCounty    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+ datCounty.RE <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RE.RDS"))
+ 
+# CHANGE CODES EVERYWHWERE  !!! no -
+#         c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH", "Multi-NH","Hisp")
+tRace <-  c("White-NH","Black-NH",          "Asian-NH",                      "Hisp")
+tRace  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH",            "Hisp")
+
+```
+
+
+
+### * All-Cause age-adjusted death rates have been decreasing for all race/ethnic groups in recent years (and for maany decades prior). 
+### * The decrease has been proportionally most rapid for Afircan Americans
+### * Nevertheless, this death rate is higher for African Americans across all year-periods 
+
+
+```{r echo=FALSE, message=FALSE}
+  t.0 <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",sex=="Total",raceCode %in% tRace)
+ 
+ # note that size in not in the aes() part...
+x <-  ggplot(data=t.0, aes(x=yearG3, y=aRate, group=raceCode)) +
+      geom_line(aes(color=raceCode),size=1.5) +
+      ggtitle("Selected RE Groups - Age-Adjusted Death Rate - All Causes") 
+x 
+
+# x +  scale_y_continuous(trans='log2')
+
+
+tData <- t.0 %>%    select(yearG3,raceCode,aRate) %>%
+                           spread(key=raceCode,value=aRate) 
+
+write_csv(tData,"chartData.csv", na ="")
+
+ 
+ 
+```
+
+
+### *Kidney Disease...
+
+```{r echo=FALSE, message=FALSE}
+  t.K <- datCounty.RE %>% filter(county==STATE,CAUSE=="D10",sex=="Total",raceCode %in% tRace)
+ 
+ # note that size in not in the aes() part...
+x <-  ggplot(data=t.K, aes(x=yearG3, y=aRate, group=raceCode)) +
+      geom_line(aes(color=raceCode),size=1.5) +
+      ggtitle("KIDNEY DISEASE - Age-Adjusted Death Rate") 
+x 
+
+x +  scale_y_continuous(trans='log2') + ggtitle("LOG SCALE KIDNEY DISEASE - Age-Adjusted Death Rate")
+ 
+ 
+```
+
+
+
+
+
+
+### * This shows the ratio of the death rate of African Americans to whites (the largest group), and shows the rate among African Americans is proportionally decreasing more rapidly than the white rate
+
+```{r echo=FALSE, message=FALSE}
+
+ t.2 <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",sex=="Total",raceCode %in% c("White-NH","Black-NH")) %>%
+                           select(yearG3,raceCode,aRate) %>%
+                           spread(key=raceCode,value=aRate) %>%
+                           mutate(BWratio=`Black-NH`/`White-NH`)
+ t.2$midYear <- c(2001,2004,2007,2010,2013,2016)
+ 
+ 
+x <-  ggplot(data=t.2, aes(x=midYear, y=BWratio)) +
+   geom_line(size=1.5) +
+   ggtitle("Rate Ratio Black:White by midYear") 
+ 
+x
+ 
+# x + ylim(1, 1.4) 
+```
+
+### * Nevertheless, the Black rate is higher than all other groups
+
+```{r echo=FALSE, message=FALSE}
+
+ t.1 <- t.0 %>% filter(yearG3=="2015-2017")
+ 
+ ggplot(data=t.1, aes(x=raceCode, y=aRate)) +
+   geom_bar(stat="identity") +
+   ggtitle("RE Groups - Adj-Death Rate - All Causes") 
+ 
+  
+```
+
+
+
+### * The rate is higher for blacks "total"", and for black females and males. This higher rate is statitcally significant
+
+
+```{r echo=FALSE, message=FALSE}
+  t.T <- datCounty.RE %>% filter(county==STATE,CAUSE=="0",yearG3 == "2015-2017",raceCode != "Multi-NH") %>%
+                          select(raceCode,sex,Ndeaths,pop,aRate,aLCI,aUCI) 
+  t.T
+```
+
+### * Looking at trends in age-adjust Years of Life Lost, the patterns are similary, but the differnece are even greater, since Blacks are differentially impacted by conditions with death at young age (e.g. homicide)
+
+
+```{r echo=FALSE, message=FALSE}
+ ggplot(data=t.0, aes(x=yearG3, y=YLL.adj.rate, group=raceCode)) +
+   geom_line(aes(color=raceCode),size=1.5)+
+   ggtitle("Selected RE Groups - Age-Adjusted YLL Rate - All Causes") 
+ 
+```
+
+
+
+```{r echo=FALSE, message=FALSE }
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main")) 
+
+fullCauseList       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","nameOnly")] %>% arrange(LABEL)
+
+```
+
+
+
+
+
+```{r echo=FALSE, message=FALSE }
+
+.t.00 <- datCounty.RE %>% filter(county==STATE,yearG3 == "2015-2017",Level=="lev2",
+                              !(raceCode %in% c("AIAN-NH","NHPI-NH","Multi-NH")) )  
+
+.t.0 <-  .t.00 %>% filter(sex == "Total")  
+
+
+.t.2 <- .t.0 %>%  select(CAUSE,Ndeaths,raceCode) %>%          # N BY RACE + N RANK  (8)
+            spread(key=raceCode,value=Ndeaths) %>%
+            mutate(AsianRank = round(rank(-`Asian-NH`)),
+                   BlackRank = round(rank(-`Black-NH`)),
+                   HispRank  = round(rank(-`Hisp`)),
+                   WhiteRank = round(rank(-`White-NH`))
+                   )
+
+.t.3 <- .t.0 %>%  select(CAUSE,aRate,raceCode) %>%           # ADJUSTED RATE BY RACE + RANK + RATIO (12)
+            spread(key=raceCode,value=aRate) %>%
+            mutate(AsianRank = round(rank(-`Asian-NH`)),
+                   BlackRank = round(rank(-`Black-NH`)),
+                   HispRank  = round(rank(-`Hisp`)),
+                   WhiteRank = round(rank(-`White-NH`)),
+                   minRate = pmin(`Asian-NH`,`Black-NH`,`Hisp`,`White-NH`,na.rm = TRUE),
+                   Aratio  = `Asian-NH`/minRate,
+                   Bratio  = `Black-NH`/minRate,
+                   Hratio  = `Hisp`    /minRate,
+                   Wratio  = `White-NH`/minRate) %>%
+            select(-minRate)
+
+
+t.5      <- bind_cols(.t.2,.t.3) 
+
+
+CAUSE    <- t.5 %>% select(CAUSE)
+t.workA  <- right_join(fullCauseList,t.5,by=c("LABEL"="CAUSE")) %>%
+              select(-LABEL,-CAUSE1)
+
+```
+
+```{r echo=FALSE, message=FALSE}
+
+t.00 <- datCounty.RE %>% filter(county==STATE,yearG3 %in% c("2003-2005","2015-2017"),Level=="lev2",
+                              raceCode == "Black-NH" ,sex== "Total")  
+
+t.00 <- left_join(t.00,fullCauseList,by=c("CAUSE" = "LABEL"))
+     
+t.2 <- t.00 %>%  select(nameOnly,Ndeaths,yearG3) %>% 
+            spread(key=yearG3,value=Ndeaths) 
+
+  tX <- t.00  %>%
+   select(yearG3,nameOnly,aRate) %>%
+   spread(key=yearG3,value=aRate) %>%
+   mutate(perChange = round((100*(`2015-2017`-`2003-2005`)/`2003-2005`),1)  ) 
+
+
+tX   <- full_join(t.2,tX,by="nameOnly")
+
+```
+
+
+
+
+```{r }
+workX           <- full_join(t.workA,tX,by="nameOnly")
+write_csv(workX,"raceWorkExploreAA.csv", na ="")
+
+```
+
