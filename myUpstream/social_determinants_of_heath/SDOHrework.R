@@ -68,11 +68,20 @@ RowLvls <- function(dataframe,level){ #returns the row #s of a given level
 #conditionally fill denominator and moe (cascade filling, merging cannot do this)
 Values$denominator<-NA
 #Fill denominator with numerator values via cascade (need loop and to make better) 
-Values$denominator[RowLvls(Values,2)] <- Values[RowLvls(Values,1),]$numerator
+Values$denominator[RowLvls(Values,2)] <- Values$numerator[RowLvls(Values,1)]
 Values$denominator[RowLvls(Values,3)] <- Values[RowLvls(Values,2),]$numerator[ match(
       Values$temp1[RowLvls(Values,3)],   Values[RowLvls(Values,2),]$temp1)]
 Values$moe_denom<-NA
 #repeat cascade argument but for moe_denom
+
+match(
+  Values$temp1[RowLvls(Values,3)],   Values[RowLvls(Values,2),]$temp1)
+#fill lvl 3
+test<-left_join(
+  Values[RowLvls(Values,4),] , Values[RowLvls(Values,3),] ,  by=c("temp1","temp2")
+)
+
+Values[RowLvls(Values,3),]
 
 #Calculate estimates, moe, ll_95ci, ul_95ci
 Values$estimates <- with(Values,numerator/denominator)*100
@@ -85,7 +94,7 @@ Values$ul_95ci   <- with(Values,estimate+moe)
 
 
 
-# List Rules (to be deleted upon completion) #################### 
+# List Rules ####################
 
 # return object (by string name)
 Estimates[["temp2"]]
@@ -166,7 +175,7 @@ list2env(lapply(Labels,`[`),envir=.GlobalEnv)
 list2env(lapply(RawData,`[`),envir=.GlobalEnv)
 #list2env(lapply(Values,`[`),envir=.GlobalEnv)
 
-# Junk (to be deleted upon completion) ##########################
+# Junk ##########################
 
 popStandard     <-  tDat %>% filter(year == 2015, county == "California")
 
