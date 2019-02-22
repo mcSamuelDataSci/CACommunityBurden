@@ -11,7 +11,7 @@ library(fs)
 library(dplyr)
 library(readxl)
 
-myDrive <- "E:/0.CBD"  
+myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 
