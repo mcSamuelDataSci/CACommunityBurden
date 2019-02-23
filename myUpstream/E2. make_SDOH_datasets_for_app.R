@@ -20,7 +20,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 # maybe change to read_csv....
 HPIdat     <- read.csv(path(upPlace,"/upData/HPI2_MasterFile_2018-04-04.csv"),as.is=TRUE)
 
-county.map <- as.data.frame(read_xlsx(paste0(myPlace,"/myInfo/countyCodes_mapping.xlsx")))
+county.map <- as.data.frame(read_xlsx(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
 cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census 
 comName    <- unique(cbdLinkCA[,c("comID","comName")])                                    # dataframe linking comID and comName
 
@@ -75,4 +75,7 @@ sdohCounty    <- sdohTract %>% group_by(region,county) %>%
 
 save(sdohTract,  file= path(myPlace,"/myData/","sdohTract.R"))
 save(sdohComm,   file= path(myPlace,"/myData/","sdohComm.R"))
-save(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.R"))
+save(sdohComm, file= path(myPlace,"/myData/","sdohCounty.R"))
+#save(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.R"))
+
+
