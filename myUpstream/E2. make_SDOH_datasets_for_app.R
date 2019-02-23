@@ -75,7 +75,5 @@ sdohCounty    <- sdohTract %>% group_by(region,county) %>%
 
 save(sdohTract,  file= path(myPlace,"/myData/","sdohTract.R"))
 save(sdohComm,   file= path(myPlace,"/myData/","sdohComm.R"))
-save(sdohComm, file= path(myPlace,"/myData/","sdohCounty.R"))
-#save(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.R"))
-
+save(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.R"))
 
