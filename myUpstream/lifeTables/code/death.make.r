@@ -22,15 +22,17 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  path and globals
-.path       <- "c:/users/fieshary/projects/CACommunityBurden" # project directory
-.deaths		<- paste0(.path,"/myUpstream/upData/cbdDat0SAMP.R") # was 'forEthan.RDS'; raw file with deaths
-.cbdlink	<- paste0(.path,"/myCBD/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
-.countylink <- paste0(.path,"/myCBD/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
-.dxtract	<- paste0(.path,"/data/dxTract.rds") # output deaths by tract
-.dxmssa		<- paste0(.path,"/data/dxMSSA.rds") # output deaths by mssa
-.dxcounty	<- paste0(.path,"/data/dxCounty.rds") # output deaths by county
-.dxstate	<- paste0(.path,"/data/dxState.rds") # output deaths by state
-setwd(.path)
+myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
+myPlace <- paste0(myDrive,"/myCBD") 
+upPlace <- paste0(myDrive,"/myUpstream") 
+.deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
+.cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
+.countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
+.dxtract	<- paste0(upPlace,"/lifeTables/dataOut/dxTract.rds") # output deaths by tract
+.dxmssa		<- paste0(upPlace,"/lifeTables/dataOut/dxMSSA.rds") # output deaths by mssa
+.dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
+.dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
+setwd(myDrive)
 
 ## 2	DATASETS	----------------------------------------------------------------------
 

@@ -15,6 +15,7 @@
 
 #-DATA MANIPULATION------------------------------------------------------------------------------
   install.packages("dplyr")
+  install.packages("data.table")
 
 #-READING Data ----------------------------------------------------------------------------------
  install.packages("readr")   # read .csv and others -- # installed with tidyverse
