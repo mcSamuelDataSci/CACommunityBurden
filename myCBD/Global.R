@@ -22,7 +22,7 @@
 
 #-- Key Constants -----------------------------------------------------------
 
- whichData         <- "real"
+ whichData         <- "fake"
  criticalNumber    <- 11
  subSite           <- FALSE
  VERSION           <- "Version P1.1"

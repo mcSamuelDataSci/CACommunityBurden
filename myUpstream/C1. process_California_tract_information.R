@@ -4,8 +4,8 @@ library(fs)
 library(readr)
 library(dplyr)
 
-myDrive  <- "e:"                            
-myPlace  <- paste0(myDrive,"/0.CBD/myUpstream")  
+myDrive  <- getwd()                            
+myPlace  <- paste0(myDrive,"/myUpstream")  
 
 popACS  <- readRDS(path(myPlace,"/upData/popTract2013.RDS")) %>%
                     filter(ageG == "Total",sex=="Total")     %>%
