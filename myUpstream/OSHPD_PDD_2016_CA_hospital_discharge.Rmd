@@ -118,5 +118,9 @@ ggplot(data = tWork, aes(x = MDC, y = number, fill = count_charges)) +  coord_fl
 
 #OSHPD Hospitalization primary and any diagnoses analysis
 
+```{r reading in gbd.ICD.excel file}
+icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 
+
+```
 
