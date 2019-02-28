@@ -7,7 +7,7 @@ options(max.print = 50)
 ihmeKey <- "5a4fc200e1af720001c84cf91e34303eca334ffa8a35722aac008232"
 keyText <- paste0("authorization=",ihmeKey)
 APIroot <- "https://api.healthdata.org/healthdata/v1/"
-subSet <- "data/gbd/cause/?age_group_id=22&location_id=527&"
+subSet  <- "data/gbd/cause/?age_group_id=22&location_id=527&"
 
 # Set variables and make URL
 make_url <- function() {
@@ -30,7 +30,7 @@ make_url <- function() {
 # Get data based on URL
 get_data <- function(url){
   data = data.frame()  # Initialize value_data 
-  for (cause_id in 294) {  # Loop through causes. Set to just 294 (all causes), but can be set to 294:953 for every individual cause
+  for (cause_id in 294:299) {  # Loop through causes. Set to just 294 (all causes), but can be set to 294:953 for every individual cause
     for (measure_id in 1:4){  # Loop through all 4 measures
       this_url <- paste0(url, "&measure_id=", measure_id, "&cause_id=", cause_id)
       data <- rbind(data, as.data.frame(jsonlite::fromJSON(this_url)$data))

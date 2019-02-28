@@ -75,7 +75,7 @@ p <-plot_ly(
   type="scatter",mode="markers",
   colors=pal,
   color = sdohWork[,"region"],
-  size =  sdohWork[,"pop"], sizes=c(20,400),
+  size =  sdohWork[,"pop"], sizes=c(20,400),   #THIS line generates warning about linewidth -- FIX
   hoverinfo = 'text',
   text   = paste('County:',sdohWork[,"county"],
                 '<br> Population:',format(sdohWork[,"pop"], big.mark = ","), 
@@ -83,8 +83,8 @@ p <-plot_ly(
                 '<br>',names(xM),":",round(sdohWork[,t.y])) ) %>%
   layout(title=wrap.labels(paste('<b>','Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo,"in",myYear,'</b>'),100),
                  
-                 xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE, linewidth = 2),
-                 yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
+                 xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE),
+                 yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE))
 
 
 
