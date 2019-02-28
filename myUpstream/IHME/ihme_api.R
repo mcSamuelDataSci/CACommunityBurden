@@ -7,7 +7,7 @@ options(max.print = 50)
 ihmeKey <- "5a4fc200e1af720001c84cf91e34303eca334ffa8a35722aac008232"
 keyText <- paste0("authorization=",ihmeKey)
 APIroot <- "https://api.healthdata.org/healthdata/v1/"
-subSet  <- "data/gbd/cause/?age_group_id=22&location_id=527&"
+subSet <- "data/gbd/cause/?age_group_id=22&location_id=527&"
 
 # Set variables and make URL
 make_url <- function() {
@@ -27,10 +27,32 @@ make_url <- function() {
   return(url)
 }
 
-# Get data based on URL
+# This function shows that only one measure is returned when multiple measures are requested
+measure_just_one <- function(url){
+  measure <- paste(as.character(c(1:4)), collapse = ",")
+  cause <- paste(as.character(c(294)), collapse = ",")
+  this_url <- paste0(url, "&measure_id=", measure, "&cause_id=", cause)
+  data <- as.data.frame(jsonlite::fromJSON(this_url)$data)
+  return(data)
+}
+
+measure_data <- measure_just_one(make_url())
+
+# This function shows what happens when too much data is requested
+data_too_large <- function(url){
+  measure <- paste(as.character(c(3)), collapse = ",")
+  cause <- paste(as.character(c(294:461)), collapse = ",")  # Up to 294:460 works, but 294:461 (or more) gives lexical error
+  this_url <- paste0(url, "&measure_id=", measure, "&cause_id=", cause)
+  data <- as.data.frame(jsonlite::fromJSON(this_url)$data)
+  return(data)
+}
+
+data_too_large <- data_too_large(make_url())
+
+# Get data based on URL using loop to allow for larger JSON request
 get_data <- function(url){
   data = data.frame()  # Initialize value_data 
-  for (cause_id in 294:299) {  # Loop through causes. Set to just 294 (all causes), but can be set to 294:953 for every individual cause
+  for (cause_id in 294) {  # Loop through causes. Set to just 294 (all causes), but can be set to 294:953 for every individual cause
     for (measure_id in 1:4){  # Loop through all 4 measures
       this_url <- paste0(url, "&measure_id=", measure_id, "&cause_id=", cause_id)
       data <- rbind(data, as.data.frame(jsonlite::fromJSON(this_url)$data))
