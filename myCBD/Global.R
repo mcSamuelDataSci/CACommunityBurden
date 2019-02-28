@@ -3,16 +3,13 @@
 #
 #   Core file for Shiny Application
 #
-#   designates constants and folders locations for applcation
+#   designates constants and folders locations for application
 #   loads all packages needed for application                                                           
 #   reads in shape and data files, and loads functions                                                          
 #   read key "info" files                                             
 #   creates vectors and contants used for Shiny app   
 #
-
-
 #   has set ups for local sites
-#     "San Joaquin Public Health Consortium"       
 # 
 #   Michael Samuel
 #   2018
@@ -36,27 +33,22 @@
 
  # subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
  # subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
- subsiteList   <- c("Stanislaus")
- subsiteName   <- "Stanislaus County CBD"
+ # subsiteList   <- c("Stanislaus")
+ # subsiteName   <- "Stanislaus County CBD"
+ 
+ subsiteList   <- c("Santa Clara")
+ subsiteName   <- "Santa Clara County CBD"
  
  
- 
- 
- 
- #-- Load Packages ------------------------------------------------------------
+  #-- Load Packages ------------------------------------------------------------
 
  library(shiny)  
  library(shinyjs)
-# library(shinythemes)
-# library(shinymaterial) 
- 
+
  library(dplyr)
  library(readxl)
  library(readr) 
  
-# library(maptools)   
-# library(rgdal)      
-# library(maps)
  library(leaflet) 
  library(tmap)
  library(sf)
@@ -132,9 +124,7 @@ if (subSite){
 
 # --- Shiny Stuff and Constants -----------------------------------------------
 
-# med.age, m.YLL  
 lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
-
 
 #   yll                     yll                        YLL
 #   yllRate                 yll.rate                   YLL.rate
@@ -146,7 +136,6 @@ lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "me
 #   SMR                     SMR 
 
 #   similar nomenclature for confidence intervals
-
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
                 "YLL Rate per 100,000 population",
@@ -192,8 +181,8 @@ lListNoState  <- lList[lList != STATE]
 
 # if (sjcSite) {lList <- lList[lList %in% sjconsortium]}
 
-nC       <- 5
-myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
+# nC       <- 5
+# myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
 
 
 # --- END ---------------------------------------------------------------------
@@ -213,4 +202,10 @@ CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path)))
 # myCause  <- "Diabetes mellitus"
 
 
+# library(shinythemes)
+# library(shinymaterial) 
 
+
+# library(maptools)   
+# library(rgdal)      
+# library(maps)

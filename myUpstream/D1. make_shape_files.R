@@ -6,9 +6,9 @@
 #                                                                                     |   
 # =====================================================================================
 
-myDrive  <- "e:"                            
-myPlace  <- paste0(myDrive,"/0.CBD/myCBD")  
-upPlace  <- paste0(myDrive,"/0.CBD/myUpstream")  
+myDrive  <- getwd()                           
+myPlace  <- paste0(myDrive,"/myCBD")  
+upPlace  <- paste0(myDrive,"/myUpstream")  
 
 library(tigris)     # Other geographies: block_groups, blocks, counties, county_subdivisions, places, pumas, school_districts, states, zctas
 library(dplyr)

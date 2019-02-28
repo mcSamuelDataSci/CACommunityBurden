@@ -3,6 +3,7 @@
 *.Rproj
 myCBD/myData/real/*.*
 myCBD/rsconnect/*.*
-myUpstream/census.api.key.txt
+myUpstream/upstreamInfo/census.api.key.txt
 myUpstream/tempOutput/*.*
 myAnalyses/*.*
+myUpstream/oshpdHD2016_subset.rds

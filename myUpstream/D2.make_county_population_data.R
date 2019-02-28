@@ -11,9 +11,9 @@
 
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------
 
-myDrive    <- "E:"
-myPlace    <- paste0(myDrive,"/0.CBD/myCBD")
-upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
+myDrive    <- getwd()
+myPlace    <- paste0(myDrive,"/myCBD")
+upPlace    <- paste0(myDrive,"/myUpstream")
 
 library(dplyr)
 library(readxl)

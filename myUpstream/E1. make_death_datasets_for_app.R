@@ -29,9 +29,9 @@ SecureDataFile <- "e:/special/cbdDat0FULL.R"
 
 STATE    <- "California"
 
-myDrive <- "E:"  
-myPlace <- paste0(myDrive,"/0.CBD/myCBD") 
-upPlace <- paste0(myDrive,"/0.CBD/myUpstream") 
+myDrive <- getwd()  
+myPlace <- paste0(myDrive,"/myCBD") 
+upPlace <- paste0(myDrive,"/myUpstream") 
 
 library(tidyverse)
 library(epitools)

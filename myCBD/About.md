@@ -40,7 +40,5 @@ The CCB is intended to be an evolving tool-set developing new content and functi
 
 
 ### Licenses 
-* Use of this site is subject to CDPH’s Open Data Terms of Use found [here](https://data.chhs.ca.gov/pages/terms)
+* Use of this site is subject to the <a href="CDPH California Community Burden of Disease and Cost Engine Terms of Use 2-2019.pdf">CDPH California Community Burden of Disease and Cost Engine Terms of Use</a>
 * [R software](https://www.r-project.org/about.html) was used to build this site and all code used can be found on the GitHub repository located at [https://github.com/mcSamuelDataSci/CACommunityBurden](https://github.com/mcSamuelDataSci/CACommunityBurden)
-
-
