@@ -38,6 +38,11 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 </b></i></h4></ui>")
        
 
+#--Warning Messages Etc. -----------------------------------------
+
+tractWarning <- "NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"
+
+
 # DROP DOWN HELPS --------------------------------------------------
 
 

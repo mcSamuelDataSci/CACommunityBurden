@@ -30,6 +30,7 @@
       *  [California Cancer Data](https://www.cancer-rates.info/ca/) 1
  
  * **United States/International with California Specific (A) or California Sub-County Data (B)**
+   *  [County Health Rankings - Robert Wodd Johnson](http://www.countyhealthrankings.org/) 1,2,3,4,5; A
    *  [City Health Dashboard](https://www.cityhealthdashboard.com/) 1,2,3; A, B
    *  [500 Cities Project – CDC & Robert Wood Johnson Foundation](https://www.cdc.gov/500cities/) 1,2,3,5; B
       * [500 Cities methodology](https://www.cdc.gov/500cities/methodology.htm)

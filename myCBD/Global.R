@@ -16,12 +16,11 @@
 #
 # =============================================================================
 
-
 #-- Key Constants -----------------------------------------------------------
 
  whichData         <- "real"
  criticalNumber    <- 11
- subSite           <- FALSE
+ subSite           <- TRUE
  VERSION           <- "Version P1.1"
  myPlace           <- getwd()   
  STATE             <- "CALIFORNIA"
@@ -31,13 +30,12 @@
 
   pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 
- # subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
- # subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
- # subsiteList   <- c("Stanislaus")
- # subsiteName   <- "Stanislaus County CBD"
- 
- subsiteList   <- c("Santa Clara")
- subsiteName   <- "Santa Clara County CBD"
+# subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
+# subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
+# subsiteList   <- c("Stanislaus")
+# subsiteName   <- "Stanislaus County CBD"
+  subsiteList   <- c("Santa Clara")
+  subsiteName   <- "Santa Clara County CBD"
  
  
   #-- Load Packages ------------------------------------------------------------
@@ -55,7 +53,6 @@
  
  library(classInt)  
  library(RColorBrewer)
- library(epitools)
  library(plotly)
  library(fs)
  library(markdown)
@@ -91,51 +88,49 @@ load(path(myPlace,"/myData/","sdohTract.R"))
 load(path(myPlace,"/myData/","sdohComm.R"))
 load(path(myPlace,"/myData/","sdohCounty.R"))
 
+if (subSite){
+  mTitle <- subsiteName  
+  shape_County <- filter(shape_County, county %in% subsiteList)
+  shape_Comm   <- filter(shape_Comm,   county %in% subsiteList)
+  shape_Tract  <- filter(shape_Tract,  county %in% subsiteList)
+  
+  datCounty    <- filter(datCounty,    county %in% subsiteList)
+  datComm      <- filter(datComm,      county %in% subsiteList)
+  datTract     <- filter(datTract,     county %in% subsiteList)
+}
+
+
 #-- Load Info Files and Functions ---------------------------------------------
   
-  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))    #extra "/" as examples
+  gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sheet="main"))    
   
-  source(paste0(myPlace,"/myFunctions/helperFunctions/wrapSentence.R"))
-  source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
-  source(paste0(myPlace,"/myFunctions/helperFunctions/compass.R"))
-
   source(paste0(myPlace,"/myFunctions/make_MAPS.R"))
   source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R")) 
-  source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
   source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
   source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
   source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
   source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
+ #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
+
+  source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 
   source(paste0(myPlace,"/myData/appText/AppText.txt"))
   source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
-
-# === "SUB-SITE" Creation HERE ==============================================
-
-if (subSite){
-  mTitle <- subsiteName  
-  shape_County <- shape_County[shape_County$county %in% subsiteList,]
-  shape_Comm   <- shape_Comm[  shape_Comm $county  %in% subsiteList,]
-  shape_Tract  <- shape_Tract[ shape_Tract$county  %in% subsiteList,]
-  
-  datCounty <- datCounty[datCounty$county %in% subsiteList,]
-  datComm   <- datComm[datComm$county %in% subsiteList,]
-  datTract  <- datTract[datTract$county %in% subsiteList,]  }
 
 # --- Shiny Stuff and Constants -----------------------------------------------
 
 lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
 
-#   yll                     yll                        YLL
-#   yllRate                 yll.rate                   YLL.rate
-#   yllAdjustedRate         yll.adjusted.rate          YLL.adjusted.rate
-#   deaths                  ndeaths                    Ndeaths
-#   deathRate               death.rate
-#   deathAdjustedRate       death.adjusted.rate
-#   meanAge                 mean.age.at.death
-#   SMR                     SMR 
 
-#   similar nomenclature for confidence intervals
+#  (SOME DAY) edit measure names to standards (and similar nomenclature for confidence intervals):
+#  1  YLL                     yll                   
+#  2  YLLper                  yll.rate              
+#  3  YLL.adj.rate  e         yll.adjusted.rate     
+#  4  Ndeaths                 ndeaths               
+#  5  cDeathRate              death.rate
+#  6  aRate                   death.adjusted.rate
+#  7  mean.age                mean.age.at.death
+#  8  SMR                     SMR 
 
 lMeasuresC <- c("Years of Life Lost (YLL)",
                 "YLL Rate per 100,000 population",
@@ -147,20 +142,19 @@ lMeasuresC <- c("Years of Life Lost (YLL)",
                 "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
+lMeasuresShort   <- lMeasures[c(4,2,6,7,8)] 
 
-lMeasuresShort <- lMeasures[c(4,2,6,7,8)] # fix later
+fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+fullList          <- fullCauseList[,"LABEL"]
+names(fullList)   <- fullCauseList[,"causeList" ]
 
-fullCauseList       <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
-causeNum36        <- fullCauseList[,"LABEL"]
-names(causeNum36) <- fullCauseList[,"causeList" ]
+phList            <- fullCauseList[nchar(fullCauseList$LABEL) <= 3,]
+phCode            <- phList[,"LABEL"]
+names(phCode)     <- phList[,"causeList" ]
 
-phList   <- fullCauseList[nchar(fullCauseList$LABEL) <= 3,]
-phCode   <- phList[,"LABEL"]
-names(phCode) <- phList[,"causeList" ]
-
-bigList  <- fullCauseList[nchar(fullCauseList$LABEL) == 1,]
-bigCode  <- bigList[,"LABEL"]
-names(bigCode) <- bigList[,"causeList"]
+bigList           <- fullCauseList[nchar(fullCauseList$LABEL) == 1,]
+bigCode           <- bigList[,"LABEL"]
+names(bigCode)    <- bigList[,"causeList"]
 
 sdohVec  <- c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty", "parkaccess","houserepair")
 
@@ -179,12 +173,6 @@ lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
 
 
-# if (sjcSite) {lList <- lList[lList %in% sjconsortium]}
-
-# nC       <- 5
-# myColor1 <- rev(brewer.pal(nC,"RdYlBu"))
-
-
 # --- END ---------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 
@@ -201,10 +189,8 @@ CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path)))
 # myCause <- 104
 # myCause  <- "Diabetes mellitus"
 
-
 # library(shinythemes)
 # library(shinymaterial) 
-
 
 # library(maptools)   
 # library(rgdal)      
