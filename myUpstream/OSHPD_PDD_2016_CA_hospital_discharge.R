@@ -73,7 +73,7 @@ oshpdHD1   <- select(oshpdHD0,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, od
 #saving rds file--only needs to be run once to initially create the file
 saveRDS(oshpdHD1, file=path(upPlace,"upData/oshpdHD2016_subset.rds"))
 
-***************************************************************************************************************
+#***************************************************************************************************************#
 #Start code here if OSHPD 2016 subset has already been created:
 
 #loading oshpd rds file into R
