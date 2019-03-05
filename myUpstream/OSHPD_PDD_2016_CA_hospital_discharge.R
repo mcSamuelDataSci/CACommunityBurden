@@ -140,9 +140,6 @@ oshpd_test3 <- mutate(oshpd16_sample, diab_primary = ifelse(grepl(diabetes, diag
 
 
 
-#diab_any = ifelse(grepl(diabetes, diag_p|odiag1|odiag2), "1", "0")
-
-
 
 
 
