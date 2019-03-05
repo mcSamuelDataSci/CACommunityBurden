@@ -18,8 +18,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "G:/CCB/0.Secure.Data/"  # two possible locations for
-secure.location  <- "F:/0.Secure.Data/"      #   secure State data
+secure.location  <- "G:/CCB/0.Secure.Data/"  # secure location of data "F:/0.Secure.Data/"
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- "E:"  # ROOT Location of CBD Project

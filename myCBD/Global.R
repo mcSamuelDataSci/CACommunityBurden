@@ -18,26 +18,29 @@
 
 #-- Key Constants -----------------------------------------------------------
 
+ # DATA Constants
  whichData         <- "real"
- criticalNumber    <- 11
- subSite           <- FALSE
- VERSION           <- "Version P1.1"
- myPlace           <- getwd()   
+ myPlace           <- getwd()
  STATE             <- "CALIFORNIA"
  yearGrp           <- "2013-2017"
+
+ # TEXT Constants
+ VERSION           <- "Version P1.1"
+ criticalNumber    <- 11
  mTitle            <- "California Community Burden of Disease and Cost Engine"
  figureAttribution <- "California Department of Public Health"
 
-  pdf(NULL) # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
-
-# subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
-# subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
-# subsiteList   <- c("Stanislaus")
-# subsiteName   <- "Stanislaus County CBD"
-  subsiteList   <- c("Santa Clara")
-  subsiteName   <- "Santa Clara County CBD"
+ #SUBSITE Constants
+ subSite     <- FALSE
+#subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
+#subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
+ subsiteList <- c("Napa")
+ subsiteName <- "Napa County CBD"
  
- 
+  
+  # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
+  pdf(NULL) 
+  
   #-- Load Packages ------------------------------------------------------------
 
  library(shiny)  
