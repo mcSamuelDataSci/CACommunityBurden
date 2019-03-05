@@ -16,9 +16,9 @@ library(readxl)
 
 #Creating 2016 OSHPD PDD dataset from OSHPD sas7bdat file, subsetting our variables of interest
 #Note: This code should only be run once, to read in the original 2016 OSHPD PDD datafile and then create a subset with only the data of interest. This data will then be stored as an rds file in the subsequent code, which is what should be run in the future. 
-myDrive <- getwd()  #Change this the drive where your data is located--in my case, the H: drive
-myPlace <- paste0(myDrive,"/0.CBD/myCBD") 
-upPlace <- paste0(myDrive,"/0.CBD/myUpstream")
+myDrive <- getwd()  
+myPlace <- paste0(myDrive,"/myCBD") 
+upPlace <- paste0(myDrive,"/myUpstream")
 
 #Reading in OSHPD sas file using haven, and selecting variables of interest. 
 #Diagnosis Variables:
@@ -66,18 +66,110 @@ upPlace <- paste0(myDrive,"/0.CBD/myUpstream")
 #reading in OSHPD 2016 PDD data, subsetting
 oshpdHD0  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
 
-oshpdHD1   <- select(oshpdHD0,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag19, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr, patcnty, patzip, sex, agyrdsch, race_grp)
+#Subset with only variables of interest
+oshpd16_subset  <- select(oshpdHD0,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr, patcnty, patzip, sex, agyrdsch, race_grp)
 
+#1% random sample
+oshpd16_sample <- sample_n(oshpd16_subset, size = 0.01*nrow(oshpd16_subset), replace = F)
 
-#Now, create RDS file of osdhpdH1
+#Now, create RDS file of whole SAS file and random sample of SAS file 
+
 #saving rds file--only needs to be run once to initially create the file
-saveRDS(oshpdHD1, file=path(upPlace,"upData/oshpdHD2016_subset.rds"))
+
+#Saving 1% random sample as RDS file
+saveRDS(oshpd16_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
+
+#Saving subset as RDS file
+saveRDS(oshpd16_subset, file=path(upPlace,"upData/oshpdHD2016_subset.rds"))
 
 #***************************************************************************************************************#
 #Start code here if OSHPD 2016 subset has already been created:
+#***************************************************************************************************************#
+
 
 #loading oshpd rds file into R
-oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #creating an rds file of oshpdHD, which is the subset of OSHPD data with only the selected variables
+oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) 
+oshpd16_sample <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
+
+
+#OSHPD Hospitalization primary and any diagnoses analysis
+
+#reading in gbd.ICD.excel file}
+icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
+
+diabetes <- icd_map[110, 14] #this pulls out the information from row 110, column 14 of icd_map dataframe, which is the regEx for ICD-10-CM for diabetes.
+#We will use this condition to define diabetes 
+
+
+cols <- c(oshpd16_sample$diag_p, oshpd16_sample$odiag1, oshpd16_sample$odiag2)
+
+#Defining diabetes_primary and diabetes_any variables (using sample dataset)
+oshpd_test3 <- mutate(oshpd16_sample, diab_primary = ifelse(grepl(diabetes, diag_p), "1", "0"),
+                      diab_any = ifelse(grepl(diabetes, diag_p) | grepl(diabetes, odiag1)|
+                                          grepl(diabetes, odiag2)| grepl(diabetes, odiag3)|
+                                          grepl(diabetes, odiag4)|
+                                          grepl(diabetes, odiag5)|
+                                          grepl(diabetes, odiag6)|
+                                          grepl(diabetes, odiag7)|
+                                          grepl(diabetes, odiag8)|
+                                          grepl(diabetes, odiag9)|
+                                          grepl(diabetes, odiag10)|
+                                          grepl(diabetes, odiag11)|
+                                          grepl(diabetes, odiag12)|
+                                          grepl(diabetes, odiag13)|
+                                          grepl(diabetes, odiag14)|
+                                          grepl(diabetes, odiag15)|
+                                          grepl(diabetes, odiag16)|
+                                          grepl(diabetes, odiag17)|
+                                          grepl(diabetes, odiag18)|
+                                          grepl(diabetes, odiag19)|
+                                          grepl(diabetes, odiag20)|
+                                          grepl(diabetes, odiag21)|
+                                          grepl(diabetes, odiag22)|
+                                          grepl(diabetes, odiag23)|
+                                          grepl(diabetes, odiag24), "1", "0"))
+
+
+
+
+#case_when(
+  diag_p | odiag1 | odiag2 == diabetes ~ "1"
+)
+
+
+
+
+
+#diab_any = ifelse(grepl(diabetes, diag_p|odiag1|odiag2), "1", "0")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #MDC charge analysis
 #Groups by mdc variable and counts the number of hospitalizations with that mdc as well as the total charge for each mdc
@@ -105,12 +197,6 @@ ggplot(data = tWork, aes(x = MDC, y = number, fill = count_charges)) +  coord_fl
   facet_grid(. ~ count_charges,scales="free_x")
 
 
-
-
-#OSHPD Hospitalization primary and any diagnoses analysis
-
-#reading in gbd.ICD.excel file}
-icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 
 
 

@@ -36,18 +36,31 @@ measure_just_one <- function(url){
   return(data)
 }
 
-measure_data <- measure_just_one(make_url())
+# measure_data <- measure_just_one(make_url())
 
 # This function shows what happens when too much data is requested
 data_too_large <- function(url){
-  measure <- paste(as.character(c(3)), collapse = ",")
-  cause <- paste(as.character(c(294:461)), collapse = ",")  # Up to 294:460 works, but 294:461 (or more) gives lexical error
+  measure <- paste(as.character(c(1:4)), collapse = ",")
+  cause <- paste(as.character(c(294:700)), collapse = ",")  # Up to 294:460 works, but 294:461 (or more) gives lexical error Michael:294:731
   this_url <- paste0(url, "&measure_id=", measure, "&cause_id=", cause)
   data <- as.data.frame(jsonlite::fromJSON(this_url)$data)
   return(data)
 }
 
-data_too_large <- data_too_large(make_url())
+data_just_right <- function(url,causeID1=294,causeID2=700){
+  measure <- paste(as.character(c(1:4)), collapse = ",")
+  cause <- paste(as.character(c(causeID1:causeID2)), collapse = ",")  # Up to 294:460 works, but 294:461 (or more) gives lexical error Michael:294:731
+  this_url <- paste0(url, "&measure_id=", measure, "&cause_id=", cause)
+  data <- as.data.frame(jsonlite::fromJSON(this_url)$data)
+  return(data)
+}
+
+# data_too_large <- data_too_large(make_url())
+
+data_first_part  <- data_just_right(make_url(),294,700) 
+data_second_part <- data_just_right(make_url(),701,954)
+data_maybe_good  <- bind_rows(data_first_part,data_second_part)
+
 
 # Get data based on URL using loop to allow for larger JSON request
 get_data <- function(url){
@@ -60,6 +73,9 @@ get_data <- function(url){
   }
   return(data)
 }
+
+
+
 
 # Reformat the data
 format_data <- function(data_frame){
@@ -99,7 +115,12 @@ merge_with_parent <- function(val_data){
 }
 
 # Run functions to make all_data data set
-value_data <- get_data(make_url())
+
+
+# value_data <- get_data(make_url())
+
+value_data <- data_maybe_good
+
 value_data <- format_data(value_data)
 all_data <- merge_with_parent(value_data)
 

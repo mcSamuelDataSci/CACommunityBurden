@@ -1,7 +1,9 @@
 
-cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",  myMeasure = "YLLper",       myYear = 2015,
-                    mySex     = "Total",  myStateCut  = TRUE, myGeo     = "Census Tract", 
-                    myLabName = FALSE,    myCutSystem ="fisher") {
+# MAIN mapping function used by both Interactive and Static mapping functions
+
+cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLLper",       myYear = 2015,
+                    mySex     = "Total",   myStateCut  = TRUE,  myGeo     = "Census Tract", 
+                    myLabName = FALSE,     myCutSystem ="fisher") {
 
   if (1==2){
     myLHJ     = "Alpine";myCause     ="A";myMeasure = "YLLper";  myYear = 2015;
@@ -66,7 +68,6 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",  myMeasure = "YLLp
 temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
 if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
 
-
 myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
 
 samVec <- c(0,5,15,35,65,85,95)/100
@@ -80,130 +81,79 @@ add.alpha <- function(col, alpha=1){
 }
 
 #tmaptools::palette_explorer()
+
 myPal <- brewer.pal(5,"Blues") # rev(brewer.pal(5,"RdYlBu"))
 myPal <- add.alpha(myPal,.7)
-#myPal <- c("#D7191C","#FDAE61","#FFFFBF","#ABD9E9","#2C7BB6")
- #  , aes.palette=list(div="RdYlBu")
-#myPal <- rev(get_brewer_pal("RdYlB", n = 5, contrast = c(0, 0.7)))
 
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
-# # https://stackoverflow.com/questions/8161836/how-do-i-replace-na-values-with-zeros-in-an-r-dataframe
-# replace_missings <- function(x, replacement) {
-#   is_miss <- is.na(x)
-#   x[is_miss] <- replacement
-#   
-#   message(sum(is_miss), " missings replaced by the value ", replacement)
-#   x
-# }
-# 
-# map.1 <- replace_missings(map.1, replacement = 0)
 
-#https://rdrr.io/cran/tmap/man/tm_symbols.html
-
- tm_shape(map.1) + tm_polygons(col=myMeasure,palette = myPal, style="fixed",breaks=myBreaks,colorNA="white",
+ tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal, 
+                               style="fixed", breaks=myBreaks,
+                               colorNA="white",
                                title = lMeasuresC[lMeasures==myMeasure],
                                textNA = "0 deaths/or suppressed",
                                interval.closure="right",
-                             #  legend.hist=T,
+                              #legend.hist=T,
                                legend.reverse=T,
-                               #legend.format=text.less.than,
+                              #legend.format=text.less.than,
                                title.col=NA,id="name", 
                                popup.vars=c("Population: " = "pop",
                                             "Measure Value: "= myMeasure)
-                                            ) +
-   tm_layout(frame=F,main.title= myTit,main.title.size = 1.5,fontface = 2,
-           inner.margins =c(0.1,0.02,0.02,0.02),  
-           legend.outside = TRUE,
-           legend.outside.position = "right", 
-           legend.title.size = 1, legend.text.size = 1,legend.hist.height = .3
-          )  
-   
+                               ) +
+                    tm_layout(frame=F,
+                              main.title= myTit,
+                              main.title.size = 1.5,
+                              fontface = 2,
+                              inner.margins =c(0.1,0.02,0.02,0.02),  
+                              legend.outside = TRUE,
+                              legend.outside.position = "right", 
+                              legend.title.size = 1, 
+                              legend.text.size = 1,
+                              legend.hist.height = .3 
+                     ) 
+ }
+
+
+# Funtion used for Static Map ------------------------------------------------------------------------
+cbdMapXStat <- function(myLHJ= "Amador", myCause="A", myMeasure = "YLLper", myYear=2015, mySex="Total",
+                        myStateCut=TRUE,myGeo="Census Tract", myLabName=FALSE,myCutSystem="fisher") {
+
+ tmap_mode("plot")
+  
+ tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)   
+    
+ if (myLabName) tt.map <- tt.map + tm_text("geoLab") 
+  
+ tt.map <- tt.map + 
+           tm_credits(figureAttribution,position=c("center","BOTTOM")) +
+           tm_compass(type="arrow")
+           tt.map 
   }
 
 
-cbdMapXStat <- function(myLHJ= "Amador", 
-                        myCause="A",
-                        myMeasure = "YLLper", 
-                        myYear=2015,
-                        mySex="Total",
-                        myStateCut=TRUE,
-                        myGeo="Census Tract",
-                        myLabName=FALSE,
-                        myCutSystem="fisher") {
-  tmap_mode("plot")
-  
-  tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)   
-    
-      if (myLabName) tt.map <- tt.map + tm_text("geoLab") 
-  
+# Funtion used for Interactive Map --------------------------------------------------------------------
+
+cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A", myMeasure = "YLLper", myYear=2015, mySex="Total",
+                        myStateCut=TRUE,myGeo="Census Tract", myLabName=FALSE,myCutSystem="fisher") {
+
+ tmap_mode("view")
  
-  tt.map <- tt.map + tm_credits(figureAttribution,position=c("center","BOTTOM"))
-  
-    
-  tt.map 
-  }
+ tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)
 
-cbdMapXLeaf <- function(myLHJ= "Amador", 
-                        myCause="A",
-                        myMeasure = "YLLper", 
-                        myYear=2015,mySex="Total",
-                        myStateCut=TRUE,
-                        myGeo="Census Tract",
-                        myLabName=FALSE,
-                        myCutSystem="fisher") {
-   tmap_mode("view")
-   tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)
-   tt.map <- tt.map + tm_view(basemaps = "OpenStreetMap")
-   tmap_leaflet(tt.map)
+ tt.map <- tt.map + tm_view(basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
+ 
+ tmap_leaflet(tt.map)
 }
   
- #?? tm_basemap function not there???
-  # tm_basemap("Stamen.Watercolor") + 
-# FOR TESTING ----------------------------------------------------------------------------------------------
+
+# NOTES etc --------------------------------------------------------------------------------------------
 
 
-#values that can be used for testing code "outside" shiny:
-if (1==2){
-  myLHJ= "Amador"
-  myCause="0"
-  myMeasure = "YLLper"
-  myYear=2015
-  mySex="Female"
-  myStateCut=TRUE
-  myGeo="County"
-  cZoom=FALSE
-  myLabName=FALSE
-  myLabNum=FALSE
-  myCutSystem="fisher"
-  Level = "lev1"
-}
+# basemaps
+# # tm_basemap("Stamen.Watercolor")  
 
-
-# if (1==2){
-# # devtools::install_github("statnmap/HatchedPolygons")
-# library(HatchedPolygons);
-# cal.gono #spatial polygon data frame;
-# cal.gono.hatch<-hatched.SpatialPolygons(map.1,density=0.001,angle=45);
-# proj4string(cal.gono.hatch)<-proj4string(cal.gono);
-# tm_shape(cal.gono)+tm_polygon()+tm_shape(cal.gono.hatch)+tm_lines(col="grey");
-# mapx <- cbdMapX()
-# tmap_mode("plot")
-# 
-# # plot map
-# mapx
-# 
-# # view map with default view options
-# tmap_mode("view")
-# mapx
-# mapx + tm_view(alpha = 1, basemaps = "Stamen.Watercolor")
 
 # restore current mode
-tmap_mode("plot")
-
-#}
-
-# OLD STUFF - NOT USED FOR NOW --------------------------------------------------------------------------------
-
-#if (myMeasure=="med.age") {myColor1 <- rev(myColor1)}
+#tmap_mode("plot")
 
