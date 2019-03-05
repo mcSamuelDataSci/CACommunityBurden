@@ -20,7 +20,7 @@
 
  whichData         <- "real"
  criticalNumber    <- 11
- subSite           <- TRUE
+ subSite           <- FALSE
  VERSION           <- "Version P1.1"
  myPlace           <- getwd()   
  STATE             <- "CALIFORNIA"
