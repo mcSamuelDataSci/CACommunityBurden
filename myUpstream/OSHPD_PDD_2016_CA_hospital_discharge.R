@@ -101,8 +101,6 @@ diabetes <- icd_map[110, 14] #this pulls out the information from row 110, colum
 #We will use this condition to define diabetes 
 
 
-cols <- c(oshpd16_sample$diag_p, oshpd16_sample$odiag1, oshpd16_sample$odiag2)
-
 #Defining diabetes_primary and diabetes_any variables (using sample dataset)
 oshpd_test3 <- mutate(oshpd16_sample, diab_primary = ifelse(grepl(diabetes, diag_p), "1", "0"),
                       diab_any = ifelse(grepl(diabetes, diag_p) | grepl(diabetes, odiag1)|
@@ -131,12 +129,11 @@ oshpd_test3 <- mutate(oshpd16_sample, diab_primary = ifelse(grepl(diabetes, diag
 
 
 
+#Number of diabetes primary diagnosis visits:
+filter(oshpd_test3, diab_primary == "1") %>% nrow()
 
-#case_when(
-  diag_p | odiag1 | odiag2 == diabetes ~ "1"
-)
-
-
+#Number of diabetes any diagnosis visits:
+filter(oshpd_test3, diab_any == "1") %>% nrow()
 
 
 
