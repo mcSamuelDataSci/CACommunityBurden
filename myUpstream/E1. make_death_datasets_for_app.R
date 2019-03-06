@@ -23,9 +23,8 @@ whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
-SecureDataFile <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
+SecureDataFile  <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
 #SecureDataFile <- "h:/0.Secure.Data/myData/cbdDat0FULL.R"  
-SecureDataFile <- "e:/special/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
@@ -45,6 +44,9 @@ pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
 yearGrp <- "2013-2017"
+
+# ALL data will be supresssed for any strata that has number of deaths < the critical number below
+criticalNum <- 11
 
 #-- LOAD STANDARDS AND DATA MAPPING FILES ---------------------------------------------------------
 
@@ -604,7 +606,7 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 }
 
 
-criticalNum <- 11
+
 
 
 datTract     <- filter(datTract,     Ndeaths >= criticalNum)
