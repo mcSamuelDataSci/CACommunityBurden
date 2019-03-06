@@ -64,61 +64,41 @@ oshpd16_sample <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 #reading in gbd.ICD.excel file}
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 
-diabetes <- icd_map[110, 14] #this pulls out the information from row 110, column 14 of icd_map dataframe, which is the regEx for ICD-10-CM for diabetes.
+diabetes <- icd_map[110, "regEx_ICD10_CM"] #this pulls out the information from row 110, column 14 of icd_map dataframe, which is the regEx for ICD-10-CM for diabetes.
 #We will use this condition to define diabetes 
 
 
-#Defining diabetes_primary and diabetes_any variables (using sample dataset)
-oshpd_test3 <- mutate(oshpd16_sample, diab_primary = ifelse(grepl(diabetes, diag_p), "1", "0"),
-                      diab_any = ifelse(grepl(diabetes, diag_p) | grepl(diabetes, odiag1)|
-                                          grepl(diabetes, odiag2)| grepl(diabetes, odiag3)|
-                                          grepl(diabetes, odiag4)|
-                                          grepl(diabetes, odiag5)|
-                                          grepl(diabetes, odiag6)|
-                                          grepl(diabetes, odiag7)|
-                                          grepl(diabetes, odiag8)|
-                                          grepl(diabetes, odiag9)|
-                                          grepl(diabetes, odiag10)|
-                                          grepl(diabetes, odiag11)|
-                                          grepl(diabetes, odiag12)|
-                                          grepl(diabetes, odiag13)|
-                                          grepl(diabetes, odiag14)|
-                                          grepl(diabetes, odiag15)|
-                                          grepl(diabetes, odiag16)|
-                                          grepl(diabetes, odiag17)|
-                                          grepl(diabetes, odiag18)|
-                                          grepl(diabetes, odiag19)|
-                                          grepl(diabetes, odiag20)|
-                                          grepl(diabetes, odiag21)|
-                                          grepl(diabetes, odiag22)|
-                                          grepl(diabetes, odiag23)|
-                                          grepl(diabetes, odiag24), "1", "0"))
+#--Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
-#Writing functions to make the above code simpler/more reproducible:
+#dataset = dataset of interest (in this case, oshpd16_sample)
+#colname = what we want to name column, based on disease and whether diagnosis is based only on primary or any of 25 diagnosis codes (e.g. diabetes_any)
+#icd_regEx = regEx for disease of interest, as defined in gdb.ICD.Map.xlsx
+#index = variable indicating index we've defined: either 1 for diag_p (only primary diagnosis) or 1:25 for diag_p-odiag25 (any diagnosis code)
+#index variables will have to be defined prior to running function--although this makes the code not quite "self-annotated", R
+#doesn't seem to allow calling an index based on a range of variable names within a data.frame
 
 #apply(X, Margin, function, ...) X = an array, inclduing a matrix, Margin = vector giving the subscripts which the function will
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-oshpd16_sample$new <- apply(oshpd16_sample, 1, FUN = function(x) {
-  pattern <- grepl(diabetes, x)
-  if(any(pattern[(1)])) "1" else "0"
-} )
+diagnosis_definition <- function(dataset, col_name, icd_regEx, index) {
+ dataset[[col_name]] <- apply(dataset, 1, FUN = function(x) {
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(index)])) "1" else "0"
+  } )
+ dataset
+}
+#index_p = only primary diagnosis
+index_p <- 1
+#index_any = any diagnosis
+index_any <- 1:25
 
-oshpd16_sample$any <- apply(oshpd16_sample, 1, FUN = function(x) {
-  pattern <- grepl(diabetes, x)
-  if(any(pattern[(1:25)])) "1" else "0"
-} )
+oshpd_sample <- diagnosis_definition(oshpd16_sample, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
-filter(oshpd16_sample, new == 1) %>% nrow()
 
-filter(oshpd16_sample, any == 1) %>% nrow()
 
-#Number of diabetes primary diagnosis visits:
-filter(oshpd_test3, diab_primary == "1") %>% nrow()
 
-#Number of diabetes any diagnosis visits:
-filter(oshpd_test3, diab_any == "1") %>% nrow()
+
 
 
 
