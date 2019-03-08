@@ -1,22 +1,5 @@
 # title: pop.make.r
 # purpose: datasets of population denominators for CBD project (state, county, tract, mssa)
-# notes:
-#		county and state level use DOF data; tract and MSSA level use ACS data
-#		this code doesn't control ACS to DOF totals, but production code does.
-#		acs/dof are mid-year populations.
-# history:
-#	2019.02.25: moved to GitHub; changing paths; removed version number from filename.
-#				option to use local or remote (api) files for ACS 5-year tract populations.
-#	v10 2018.10.4: using predownloaded NHGIS ACS files instead of API. dropping DEC.
-#	v09 2018.9.27: revised. using code from CCB mainstream.
-#	v08 2018.7.19: added ability to combine multiple 5-yr ACS tract-level files; 
-#				   collapse ACS ages to common with deaths: age17.
-#				   remove code to read/use SEER/NCHS
-#	v07 2018.6.12: added month/datum to population datasets.
-#	v06	2018.5.10: bug fixes: decennial population datasets (county/state).
-#	v05 2018.5.8: added decennial population datasets (tract/MSSA).
-#	2018.5.2: fixed bug in section 2.2 when reading data to acs.varlist
-#	2018.3.5: first working version (population only)
 
 ## 1    SETUP		----------------------------------------------------------------------
 

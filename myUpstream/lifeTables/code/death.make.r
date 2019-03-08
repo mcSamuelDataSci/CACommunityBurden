@@ -1,17 +1,6 @@
 # title: death.make.r
 # purpose: calculate deaths for CCB project life tables (state, county, tract, mssa)
-# notes:
-#	if death data for 2015+ are included, edit the code to stop changing the year of death to year+2
-#	also the GEOID is problematic, many times it's wrong or missing compared to zip/county
-# history:
-#	2019.02.01: moved to GitHub; changing paths; removed version number from filename.
-#				not using GEOID in rawdata for county/state (using least-missing variable instead)
-#	2018.10.04: simplifying code to work with last 5-yr acs. fixing residence condition.
-#	2018.07.19: fixing ccb death tracts to move mock data to 2.2 (was 3.1); 
-#			   	summarizing ages to age17 (in common with ACS)
-#	2018.05.25: forked from death.make.v01 (to use CCB project death dataset)
-#	2018.05.14: first working version. (using CDPH data held by DOF)
-#	2018.05.08: project began
+# NOTES: erase fake months and years (lines 61-62) when using real dataset with months/years.
 
 ## 1    SETUP		----------------------------------------------------------------------
 
