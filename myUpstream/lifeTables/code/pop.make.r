@@ -97,7 +97,7 @@ acs.pop.tracts<-merge(
 acs.pop.tracts[, agell:=(5*floor(agell/5))]	# round to 5-yr ages (17 groups, no '1-4')
 acs.pop.tracts[agell<.maxage, ageul:=agell+4]			# update new age brackets
 acs.pop.tracts[agell>=.maxage, ageul:=199]				# update new age brackets
-acs.pop.tracts<-acs.pop.tracts[,.(estimate=sum(estimate), 
+acs.pop.tracts<-acs.pop.tracts[,.(nx=sum(estimate), 
 								  moe=sqrt(sum(moe^2))),
 							   by=.(GEOID,year,sex,agell,ageul)]				 # collapse
 
@@ -106,7 +106,7 @@ acs.pop.tracts<-acs.pop.tracts[,.(estimate=sum(estimate),
 #!! 		choose whether to merge and collapse to MSSA level or merely merge MSSA labels
 setkey(acs.pop.tracts,"GEOID") 									 # set GEOID as key for this file for merging
 acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts data with cbd.link	
-							   ][,.(estimate=sum(estimate), 
+							   ][,.(nx=sum(nx), 
 							   	 	moe=sqrt(sum(moe^2))),     
 							     	by=.(comID,year,sex,agell,ageul)] 	 # calculate the sum of estimates by MSSA id variables
 
