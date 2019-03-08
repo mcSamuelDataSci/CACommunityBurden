@@ -32,12 +32,13 @@ myPlace <- paste0(myDrive,"/myCBD")
 upPlace <- paste0(myDrive,"/myUpstream") 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
+.ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
+.clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
+.dofurl		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
 .nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # output deaths by tract
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
 .nxcounty	<- paste0(upPlace,"/lifeTables/dataOut/nxCounty.rds") # output deaths by county
 .nxstate	<- paste0(upPlace,"/lifeTables/dataOut/nxState.rds") # output deaths by state
-.ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
-.clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
 setwd(myDrive)
 
 ## 2	DATASETS	----------------------------------------------------------------------
@@ -76,6 +77,8 @@ acs.labels[, c("agell","ageul")
 acs.labels[is.na(ageul), ageul 
 		   := agell]                                             # replace NA values of age with the lower age
 acs.labels[, age:=NULL]                                          # drop full text age label
+acs.labels[, agell:=as.integer(agell)]				# eventually move this fix to pop.make.r
+acs.labels[, ageul:=as.integer(ageul)]				# eventually move this fix to pop.make.r
 
 ## 2.5 	ACS data: tract-level population by age/sex (long format, count and MOE in columns)
 # check if already have these data before pulling again from census
@@ -92,8 +95,6 @@ doGetAcs <- function(year) {
 acs.pop.tracts <- lapply(.acsyears, doGetAcs)					# loop over multiple years
 acs.pop.tracts <- rbindlist(acs.pop.tracts)						# convert from list to frame
 
-endhere
-
 ## 	2.6 merge labels for ACS tracts data
 setDT(acs.pop.tracts) 
 acs.pop.tracts[, NAME:=NULL]                                     # drop geography label (use GEOID only)
@@ -108,45 +109,28 @@ acs.pop.tracts<-merge(
 
 ##	3.1.3	recode age categories for ACS tracts data
 ##			collapse 23 ACS age groups into the same 18 groups (drop 18 21 22 62 67)
+##			ACS data users guide suggests geometric mean (sqrt of sum of squared MOEs) when combining estimates
 .maxage<-85
-acs.pop.tracts[, agell:=as.integer(agell)]				# eventually move this fix to pop.make.r
-acs.pop.tracts[, agell:=5*floor(agell/5)]						 # round to 5-yr ages (17 groups, no '1-4')
-acs.pop.tracts[agell<.maxage, ageul:=agell+4]						 # update new age brackets
-acs.pop.tracts[agell>=.maxage, ageul:=199]						 # update new age brackets
-acs.pop.tracts[, ageul:=as.numeric(ageul)]
-acs.pop.tracts<-acs.pop.tracts[,.(estimate=sum(estimate)),
+acs.pop.tracts[, agell:=(5*floor(agell/5))]	# round to 5-yr ages (17 groups, no '1-4')
+acs.pop.tracts[agell<.maxage, ageul:=agell+4]			# update new age brackets
+acs.pop.tracts[agell>=.maxage, ageul:=199]				# update new age brackets
+acs.pop.tracts<-acs.pop.tracts[,.(estimate=sum(estimate), 
+								  moe=sqrt(sum(moe^2))),
 							   by=.(GEOID,year,sex,agell,ageul)]				 # collapse
-
-# ## ACS data: tract level age-sex detail from file B01001 series
-# ##		for ease of use, these have been pre-downloaded and saved locally
-# ##		long format; variables: (acsyear GEOID agell ageul a f m)
-# acs.pop.tracts <- 	setDT(
-# 						read.dta13(.acs),
-# 						key="GEOID"
-# 					)
-# acs.pop.tracts <- 	melt.data.table(acs.pop.tracts, 
-# 							variable.name="sex",
-# 					   		id.vars=c("year","agell","ageul","GEOID"), 
-# 					   		value="nx"
-# 						 )                                       # convert dataset from wide to long format
-# acs.pop.tracts[,sex:=toupper(substr(sex,5,10))]
-# setkey(acs.pop.tracts,"GEOID")									 # melt unkeys the DT
 
 # 	3.1.4	collapse ACS tract data into MSSAs
 #!! 		this method does not export tracts which do not match, which previously were exported to subTracts.csv
 #!! 		choose whether to merge and collapse to MSSA level or merely merge MSSA labels
 setkey(acs.pop.tracts,"GEOID") 									 # set GEOID as key for this file for merging
 acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts data with cbd.link	
-							   ][,.(estimate=sum(estimate)),     
-							     by=.(comID,year,sex,agell,ageul)] 	 # calculate the sum of estimates by MSSA id variables
+							   ][,.(estimate=sum(estimate), 
+							   	 	moe=sqrt(sum(moe^2))),     
+							     	by=.(comID,year,sex,agell,ageul)] 	 # calculate the sum of estimates by MSSA id variables
 
-
-## 2.3	DOF data: county-level population by county/sex/age
-##		several	options here. (1): P-3 file (compressed CSV file with complete age/race/sex/ethnic detail)
-##							  (2): P-2 file (5-year age groups by sex, xlsx file)
-##							  (3): data.ca.gov portal via API (sex, age); SKIP county text label and pop_total
+## 2.3	DOF data: county & state population by sex/age
+##		data from data.ca.gov portal; SKIP county text label and pop_total
 dof.pop.county <- 	setDT(
-						read_csv(.dof,
+						read_csv(.dofurl,
 			 				col_types="i_iiii_"
 						)
 			 		)
@@ -165,6 +149,7 @@ dof.pop.county[agell==1,ageul:=4]
 dof.pop.county[agell>1 & agell<85,ageul:=agell+4]
 dof.pop.county[agell==85,ageul:=199]
 dof.pop.county[,age:=NULL]                                        # drop age variable, now that GEOID has been added
+# summarize
 dof.pop.county  <- 	melt.data.table(dof.pop.county, 
 							variable.name="sex",
 					   		id.vars=c("year","agell","ageul","GEOID"), 
@@ -173,6 +158,7 @@ dof.pop.county  <- 	melt.data.table(dof.pop.county,
 dof.pop.county[,sex:=toupper(substr(sex,5,10))]
 dof.pop.county<-dof.pop.county[,.(nx=sum(nx)),
 							by=.(year,GEOID,sex,agell,ageul)]	 # collapse
+# collapse to state
 dof.pop.state<-dof.pop.county[,.(nx=sum(nx)),
 							by=.(year,sex,agell,ageul)]			 # collapse
 dof.pop.state[,GEOID:="06000000000"]                             # new GEOID for state level dataset
@@ -182,13 +168,6 @@ dof.pop.state[,GEOID:="06000000000"]                             # new GEOID for
 ## 	3.1 	ACS tract estimates controlled to DOF total county population
 ##			!! TBD
 
-# 	3.2		collapse ACS tract data into MSSAs
-#!! 		this method does not export tracts which do not match, which previously were exported to subTracts.csv
-#!! 		choose whether to merge and collapse to MSSA level or merely merge MSSA labels
-acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts data with cbd.link	
-							   ][,.(nx=sum(nx)),     
-							     by=.(comID,year,sex,agell,ageul)] 	 # calculate the sum of estimates by MSSA id variables
-
 ##	4	CLEANUP		----------------------------------------------------------------------
 
 ##	4.2	export results for CCB calculations: county, tract, MSSA level datasets
@@ -196,8 +175,9 @@ acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts 
 ##		DOF age18: 0,1,5,10,15,...85+
 ##		variables: (GEOID or comID) year sex agell ageul estimate
 saveRDS(acs.pop.tracts, file=.nxtract)  		# GEOID
-saveRDS(acs.pop.mssa,   file=.nxmssa)  		# comID
+saveRDS(acs.pop.mssa,   file=.nxmssa)  			# comID
 saveRDS(dof.pop.county, file=.nxcounty) 		# GEOID
 saveRDS(dof.pop.state,  file=.nxstate)  		# GEOID
+
 
 # END
