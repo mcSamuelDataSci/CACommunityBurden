@@ -10,7 +10,11 @@
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
+
+
+
 ## 1.2  path and globals
+<<<<<<< HEAD
 myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
@@ -22,6 +26,22 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
 .dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
 setwd(myDrive)
+=======
+#.path      <- "c:/users/fieshary/projects/CACommunityBurden" # project directory
+.path       <- getwd()
+.deaths		  <- paste0(.path,"/myUpstream/upData/cbdDat0SAMP.R") # was 'forEthan.RDS'; raw file with deaths
+.cbdlink	  <- paste0(.path,"/myCBD/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
+.countylink <- paste0(.path,"/myCBD/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
+
+.tempPath <- "/myUpstream/lifeTables/dataOut"
+
+.dxtract	<- paste0(.path,.tempPath,"/dxTract.rds") # output deaths by tract
+.dxmssa		<- paste0(.path,.tempPath,"/dxMSSA.rds") # output deaths by mssa
+.dxcounty	<- paste0(.path,.tempPath,"/dxCounty.rds") # output deaths by county
+.dxstate	<- paste0(.path,.tempPath,"/dxState.rds") # output deaths by state
+
+#setwd(.path) 
+>>>>>>> 1e96168f9547852c6b2a9b99c4ee5b843056bfa7
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
