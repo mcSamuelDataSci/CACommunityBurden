@@ -10,7 +10,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "G:/CCB/0.Secure.Data/"  # secure location of data
+secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive <- getwd()  #Root location of CBD project
@@ -34,7 +34,7 @@ oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, 
   mutate(year = 2016)
 
 #Saving subset as RDS file
-saveRDS(oshpd_subset, file=path(.sl, "oshpd_subset.rds")) #I don't have access to G:/CCB/0.Secure/Data
+saveRDS(oshpd_subset, file=path(.sl, "oshpd_subset.rds"))
 
 #1% random sample
 set.seed(4)
@@ -55,7 +55,7 @@ saveRDS(oshpd16_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
 
 #loading oshpd rds file into R
-oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) 
+#oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) 
 oshpd16_sample <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 
 
