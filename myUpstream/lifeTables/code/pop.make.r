@@ -11,6 +11,7 @@ lapply(.pkg, require, character.only=TRUE)
 
 ## 1.2  path and globals
 myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
+myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
@@ -22,7 +23,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
 .nxcounty	<- paste0(upPlace,"/lifeTables/dataOut/nxCounty.rds") # output deaths by county
 .nxstate	<- paste0(upPlace,"/lifeTables/dataOut/nxState.rds") # output deaths by state
-setwd(myDrive)
+# setwd(myDrive)
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
