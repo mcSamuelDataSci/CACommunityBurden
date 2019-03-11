@@ -55,7 +55,7 @@ saveRDS(oshpd16_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
 
 #loading oshpd rds file into R
-#oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) 
+#oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #Should I change this to the secure location file path?
 oshpd16_sample <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 
 
@@ -92,6 +92,11 @@ diagnosis_definition <- function(dataset, col_name, icd_regEx, index) {
 index_p <- 1
 #index_any = any diagnosis
 index_any <- 1:25
+
+
+#NEW FILE TEST 
+index_test <- 1:4
+
 
 oshpd_sample <- diagnosis_definition(oshpd16_sample, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
