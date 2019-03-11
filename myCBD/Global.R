@@ -22,6 +22,7 @@
 
 #-- Key Constants -----------------------------------------------------------
 
+# new junk here.
  whichData         <- "real"
  criticalNumber    <- 11
  subSite           <- FALSE
