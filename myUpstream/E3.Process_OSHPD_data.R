@@ -45,7 +45,7 @@ oshpd_sample <- sample_n(oshpd_subset, size = 0.01*nrow(oshpd_subset), replace =
 #saving rds file--only needs to be run once to initially create the file
 
 #Saving 1% random sample as RDS file
-saveRDS(oshpd16_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
+saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
 
 
@@ -64,7 +64,7 @@ oshpd16_sample <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 #reading in gbd.ICD.excel file}
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 
-diabetes <- icd_map[110, "regEx_ICD10_CM"] #this pulls out the information from row 110, column 14 of icd_map dataframe, which is the regEx for ICD-10-CM for diabetes.
+diabetes <- icd_map[110, "regExICD10_CM"] #this pulls out the information from row 110, column 14 of icd_map dataframe, which is the regEx for ICD-10-CM for diabetes.
 #We will use this condition to define diabetes 
 
 
@@ -98,7 +98,7 @@ index_any <- 1:25
 index_test <- 1:4
 
 
-oshpd_sample <- diagnosis_definition(oshpd16_sample, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
+oshpd_sample2 <- diagnosis_definition(oshpd16_sample, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
 
 
