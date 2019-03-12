@@ -61,6 +61,10 @@
  * [An Introduction to Measures of Mortality Assessing Overall Health, Cause of Death Rankings, Health-Adjusted Life Expectancy, and Socioeconomic Conditions in Alameda County, California](http://www.acphd.org/media/482811/mofm.pdf)
 
 
+## Other CDPH Interactive Visualizations using R/R Shiny
+ 
+ * [Climate Change and Health Vulnerability Indicators](https://discovery.cdph.ca.gov/ohe/CCHVIz/)
+ * [California Opioid Overdose Surveillance Dashboard](https://discovery.cdph.ca.gov/CDIC/ODdash/)
 
 
 

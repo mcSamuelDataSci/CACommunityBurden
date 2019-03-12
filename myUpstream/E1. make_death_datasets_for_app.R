@@ -24,14 +24,13 @@ subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
 SecureDataFile <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
-#SecureDataFile <- "h:/0.Secure.Data/myData/cbdDat0FULL.R"  
-SecureDataFile <- "e:/special/cbdDat0FULL.R"  
+SecureDataFile <- "g:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
-myDrive <- "E:"  
-myPlace <- paste0(myDrive,"/0.CBD/myCBD") 
-upPlace <- paste0(myDrive,"/0.CBD/myUpstream") 
+myDrive <- getwd()  
+myPlace <- paste0(myDrive,"/myCBD") 
+upPlace <- paste0(myDrive,"/myUpstream") 
 
 library(tidyverse)
 library(epitools)
