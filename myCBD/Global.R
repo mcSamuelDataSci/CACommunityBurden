@@ -34,8 +34,8 @@ figureAttribution <- "California Department of Public Health"
 subSite     <- FALSE
 #subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
 #subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
-subsiteList <- c("Napa")
-subsiteName <- "Napa County CBD"
+subsiteList <- c("Stanislaus")
+subsiteName <- "Stanislaus County CBD"
 
 
 # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
