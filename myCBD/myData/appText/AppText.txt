@@ -20,9 +20,9 @@
 
 textIntroA <- "The California Community Burden of Disease Engine (CCB) is a tool to explore data on burden of disease in multiple levels of geographic granularity." 
 
-textIntroC <- " The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures, displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations." 
+textIntroC <- " The CCB currently displays over 15 years of California condition-specific mortality burden data, using a range of measures displayed at the statewide, county, community, and census tract levels, with interactive rankings, charts, maps and trend visualizations." 
 
-textNote.real <- "This version of app contains features that are rough and still being refined. It also undoubtedly contains bugs and may well generate uninterpretable error messages based on some selection combinations. More importantly, while we have done extensive review, there could be some errors in the calculations of some measures. While these are all concerns, we are confident the application in its current form will, overall, provide important and reliable insights. We look forward to and would appreciate any observations you make regarding bugs, errors, or anything else of concern. We also welcome supportive comments."
+textNote.real <- "This version of the app contains features that are still being tested and refined. While the contents have been reviewed extensively, the tool likely still contains 'bugs' and may generate error messages based on some selection combinations. While our team is continuously working to address any identified issues, we are confident the application in its current form will, overall, provide important and reliable insights. We look forward to and appreciate any observations you make regarding bugs, errors, or anything else of concern. We also welcome supportive comments."
 
 textNote.fake <- "NOTE: THIS VERSION OF THE ENGINE IS FOR DEMONSTRATION PURPOSES ONLY - THE DATA ARE NOT REAL - THEY ARE A RANDOM SUBSET OF RANDOMLY DISTORTED DATA"
 
@@ -38,7 +38,19 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 </b></i></h4></ui>")
        
 
+#--Warning Messages Etc. -----------------------------------------
+
+tractWarning <- "NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"
+
+
 # DROP DOWN HELPS --------------------------------------------------
+
+
+
+levelHelp  <- paste0('<li style="margin-left: 40px">The <b>Top Level</b> includes only the five most aggregated conditions (e.g. Cardiovascular diseases, Injuries) and All Causes combined.</li>
+<li style="margin-left: 40px">The <b>Public Health Level</b> includes a list of about 60 conditions. This Level provides greater clinical detail and public health program specificity than the Top Level. </li>
+<li style="margin-left: 40px">The <b>Detail Level</b> includes a small number further detailed conditions (e.g. Non-Hodgkin lymphoma, Opiod Use Disorders, Falls) <b>AND</b> includes all conditions in the Public Health Level. </li>
+')
 
 measureHelp <- paste0('<p>The current MEASURES of deaths are:</p> 
 <ui style="list-style-type:circle">
@@ -72,9 +84,11 @@ The "Public Health Level" is a separate mutually exclusive and exhaustive list o
 <br><br>
 A small number of the Public Health Level conditions are further broken down into the "Detail Level", for yet further specificity.
 <br><br>
-A diagram showing this full cause list hierarchy is available by clicking the "Cause List Info" link. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions can be found on the Technical Tab. 
+A diagram showing this full cause list hierarchy is available by clicking the "Cause List Info" link below. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions can be found on the Technical Tab. 
 <br><br>
-<a>href="gbd.ICD.MapIMAGE.pdf"</a>
+
+<a href="gbd.ICD.MapIMAGE.pdf"">Cause List Info</a>
+
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
