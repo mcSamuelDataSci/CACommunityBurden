@@ -6,4 +6,3 @@ myCBD/rsconnect/*.*
 myUpstream/upstreamInfo/census.api.key.txt
 myUpstream/tempOutput/*.*
 .Rhistory
-myAnalyses/*.*
