@@ -53,13 +53,13 @@ library(readr)
 library(leaflet) 
 library(tmap)
 library(sf)
-#library(ggplot2)
 
 library(classInt)  
 library(RColorBrewer)
-library(plotly)
+library(plotly)  # Note: also loads ggplot2
 library(fs)
 library(markdown)
+library(directlabels)  # Used to directly label lines in Trend plots
 
 # --- CBD Key Inputs ---------------------------------------------------------
 
@@ -84,9 +84,11 @@ shape_Tract$county <- as.character(shape_Tract$county)
 
 # Data: ----------------------------------------- 
 
-datTract  <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
-datComm   <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
-datCounty <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+datTract     <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
+datComm      <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
+datCounty    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+datCounty.RE <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RE.RDS"))
+
 
 load(path(myPlace,"/myData/","sdohTract.R"))
 load(path(myPlace,"/myData/","sdohComm.R"))
@@ -113,6 +115,7 @@ source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
+source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 

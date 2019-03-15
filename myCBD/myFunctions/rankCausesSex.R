@@ -11,10 +11,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
     myMeasure = "YLLper"
     myYear = 2015
     mySex = "Total"
-    library(fs)
-    library(ggplot2)
-    library(dplyr)
-    
+
     #datCounty <- readRDS(path("e:","0.CBD/myCBD/","/myData/",whichData,"datCounty.RDS"))
     datCounty <- readRDS(path(myPlace,"/myCBD/","/myData/",whichData,"datCounty.RDS"))
   }
