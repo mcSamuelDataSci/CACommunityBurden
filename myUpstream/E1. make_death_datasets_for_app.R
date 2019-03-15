@@ -19,7 +19,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
@@ -554,8 +554,9 @@ datState  <-  datCounty  %>% filter(county == STATE) %>%
          stateAdjustedRate = aRate) %>%
   select(year,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite) save(datState, file= paste0(upPlace,"/upData/datState.R"))
-if ( subSite) load(file= paste0(upPlace,"/upData/datState.R"))
+
+if (!subSite) save(datState, file= path(myPlace,"/myData/",whichDat,"datState.RDS"))
+if ( subSite) load(file= path(myPlace,"/myData/",whichDat,"datState.RDS"))
 
 datCounty            <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
                         mutate(SMRcrude = cDeathRate / stateCrudeRate,
