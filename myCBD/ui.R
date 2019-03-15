@@ -172,8 +172,14 @@ conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure',
    HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
    br(),br(),               
  
-   helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"), br(), br(),
+   helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"), br(), 
 
+   h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
+   
+   
+   
+   
+   
    actionButton("newsUse","News and Updates",style=myHelpButtonSty), br(),
  
    h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
