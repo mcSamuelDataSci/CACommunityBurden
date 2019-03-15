@@ -14,7 +14,7 @@ maxYear <- 2017
 myCex <- 1.6
 myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
-dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total")
+dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total",raceCode != "Multi-NH")
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
 
@@ -29,11 +29,15 @@ yRange     <- c("2000-2002","2003-2005","2006-2008","2009-2011","2012-2014","201
 yMid       <- c(2001,2004,2007,2010,2013,2016)
 dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
 
+
+myTrans <- "log"
+
+
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=raceCode, color=raceCode)) +
     geom_line(size=2)  +
-    scale_x_continuous(minor_breaks=2000:2017,breaks=2000:2017,expand=c(0,3)) +
-    scale_y_continuous(limits = c(0, NA)) +
-    scale_colour_discrete(guide = 'none') +   # removed legend
+    scale_x_continuous(minor_breaks=yMid,breaks=yMid,expand=c(0,3),labels=yRange) +
+    scale_y_continuous(limits = c(0, NA)) +                                                #,,limits = c(1, NA) trans=myTrans
+    scale_colour_discrete(guide = 'none') +   # removed legend 
     labs(y = myMeasure)  + 
     geom_dl(aes(label = raceCode), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
     geom_dl(aes(label = raceCode), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
@@ -43,6 +47,9 @@ dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
     theme(axis.text=element_text(size=mySize1),
           axis.title=element_text(size=mySize1,face="bold"),
           plot.title=element_text(family='', face='bold', colour='black', size=mySize2),
-          axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
+          axis.text.x = element_text(angle = 0,vjust = 0.5, hjust=.5)) 
   
+ #theme(axis.text.x = element_text(angle = 60, hjust = 1))
+ 
+ 
  }
