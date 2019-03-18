@@ -56,21 +56,34 @@ saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 #***************************************************************************************************************#
 
 
-#loading oshpd rds file into R
-#oshpd16_subset <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #Should I change this to the secure location file path?
-oshpd16_sample <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
+if (fullOSHPD) {
+  oshpd16 <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #maybe change to secure location?
+}
 
+if (sampleOSHPD) {
+  oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
+}
 
-#OSHPD Hospitalization primary and any diagnoses analysis
-
+##------------------------------------Reading in gbd.ICD.excel file and defining variable conditions to be used in function--------------------#
 #reading in gbd.ICD.excel file}
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 
-diabetes <- icd_map[110, "regExICD10_CM"] #this pulls out the information from row 110, column 14 of icd_map dataframe, which is the regEx for ICD-10-CM for diabetes.
-#We will use this condition to define diabetes 
+#Does it make sense to incorporate code similar to what was used for the death data that assesses variables based on CODE/LABEL levels?
+#levels, rather than individual names? 
 
 
-#--Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
+
+icd_map <- icd_map %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
+
+diabetes <- icd_map %>% filter(name == "C. Diabetes mellitus") %>% select(regExICD10_CM)
+
+depression <- icd_map %>% filter(name == "a. Major depressive disorder" | name == "b. Dysthymia") %>% select(regEx10)
+depression <- paste(depression[1,], depression[2,], sep = "|") %>% as.data.frame() #if we are including major depressive disorder and dysthmia
+#together as one group, then we need to paste the regEx from the two conditions together
+
+ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart disease") %>% select(regEx10)
+
+#--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
 #dataset = dataset of interest (in this case, oshpd16_sample)
 #colname = what we want to name column, based on disease and whether diagnosis is based only on primary or any of 25 diagnosis codes (e.g. diabetes_any)
@@ -95,12 +108,7 @@ index_p <- 1
 #index_any = any diagnosis
 index_any <- 1:25
 
-
-#NEW FILE TEST 
-index_test <- 1:4
-
-
-oshpd_sample2 <- diagnosis_definition(oshpd16_sample, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
+oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
 
 
