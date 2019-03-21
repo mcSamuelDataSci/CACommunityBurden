@@ -169,13 +169,8 @@ calculateYLLmeasures <- function(group_vars,levLab){
   
 }
 
-#Example:
-c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0") #lev0
-c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1") #lev1
-c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2") #lev2
-c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3") #lev3
-datCounty <- bind_rows(c.t1,c.t2,c.t3,c.t4)
 
+#Test change for using SourceTree
 
 
 
