@@ -69,7 +69,7 @@ observeEvent(input$myCAUSE, { current_Cause(input$myCAUSE) })
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode ) }
     if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_Cause()) } 
-    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = causeNum36,selected=current_Cause()  ) }
+    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()  ) }
 })
 
 
@@ -129,6 +129,12 @@ output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                inp
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
 output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))
 output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
+output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure))
+
+
+
+
+
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),

@@ -23,7 +23,6 @@ whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
-SecureDataFile <- "G:/CCB/0.Secure.Data/myData/cbdDat0FULL.R"     
 SecureDataFile <- "g:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
@@ -44,6 +43,9 @@ pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
 yearGrp <- "2013-2017"
+
+criticalNum <- 11
+
 
 #-- LOAD STANDARDS AND DATA MAPPING FILES ---------------------------------------------------------
 
@@ -552,8 +554,9 @@ datState  <-  datCounty  %>% filter(county == STATE) %>%
          stateAdjustedRate = aRate) %>%
   select(year,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite) save(datState, file= paste0(upPlace,"/upData/datState.R"))
-if ( subSite) load(file= paste0(upPlace,"/upData/datState.R"))
+
+if (!subSite) save(datState, file= path(myPlace,"/myData/",whichDat,"datState.RDS"))
+if ( subSite) load(file= path(myPlace,"/myData/",whichDat,"datState.RDS"))
 
 datCounty            <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
                         mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -603,7 +606,7 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 }
 
 
-criticalNum <- 11
+
 
 
 datTract     <- filter(datTract,     Ndeaths >= criticalNum)

@@ -5,43 +5,11 @@ if(1==2){
   mySex   = "Total"
 }
 
-if (2==3){
-
-# trend <- function(myLHJ="zz California",myCause=61,myMeasure = "YLL",mySex="Total") {
- 
- minYear <- 2001
- maxYear <- 2017
- 
- inDat <- datCounty
- dat.1 <- filter(inDat,county==myLHJ,(year >= minYear & year <= maxYear ),CAUSE == myCause,sex==mySex)
-
- plot(dat.1$year,dat.1[,myMeasure])
- 
- 
- 
- 
- 
- 
- 
- plot(dat.1$year,dat.1[,myMeasure],
-        type="l",lwd=3,col="blue",
-        xlab="Year",ylab=names(lMeasures[lMeasures==myMeasure]),
-        main=paste("Trend in",names(lMeasures[lMeasures==myMeasure]),"of",fullCauseList[fullCauseList[,1]==myCause,2],"in",myLHJ)) 
-#   
-#   
- }
 # https://stackoverflow.com/questions/29357612/plot-labels-at-ends-of-lines
-
-library(directlabels)
 
 
 trend <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL") {
- if(1==2){
-  myLHJ="CALIFORNIA" 
-  myCause="0"
-  myMeasure = "YLL"
- }
-  
+
 minYear <- 2000
 maxYear <- 2017
 

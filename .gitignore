@@ -1,9 +1,12 @@
 .gitignore
+.Rhistory
 .Rproj.user
 *.Rproj
+
 myCBD/myData/real/*.*
 myCBD/rsconnect/*.*
+
 myUpstream/upstreamInfo/census.api.key.txt
 myUpstream/tempOutput/*.*
-.Rhistory
-myAnalyses/*.*
+
+myAnalyses
