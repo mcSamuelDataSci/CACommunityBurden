@@ -19,6 +19,9 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
+fullOSHPD <- FALSE
+sampleOSHPD <- TRUE
+
 #-- Load Packages -------------------------------------------------------------
 
 library(tidyverse)
@@ -66,22 +69,15 @@ if (sampleOSHPD) {
 
 ##------------------------------------Reading in gbd.ICD.excel file and defining variable conditions to be used in function--------------------#
 #reading in gbd.ICD.excel file}
-icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
-
-#Does it make sense to incorporate code similar to what was used for the death data that assesses variables based on CODE/LABEL levels?
-#levels, rather than individual names? 
-
-
-
-icd_map <- icd_map %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
+icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
 
 diabetes <- icd_map %>% filter(name == "C. Diabetes mellitus") %>% select(regExICD10_CM)
 
-depression <- icd_map %>% filter(name == "a. Major depressive disorder" | name == "b. Dysthymia") %>% select(regEx10)
+depression <- icd_map %>% filter(name == "a. Major depressive disorder" | name == "b. Dysthymia") %>% select(regExICD10_CM)
 depression <- paste(depression[1,], depression[2,], sep = "|") %>% as.data.frame() #if we are including major depressive disorder and dysthmia
 #together as one group, then we need to paste the regEx from the two conditions together
 
-ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart disease") %>% select(regEx10)
+ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart disease") %>% select(regExICD10_CM)
 
 #--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
@@ -109,6 +105,76 @@ index_p <- 1
 index_any <- 1:25
 
 oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
+
+
+#------------------------------------------------------------------------------------Alternative/Additional?-----------------------------------------------------------------------#
+
+#Based on E1 make death datasets for app file
+
+allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #This sorts all of the LABEL variables that aren't missing (i.e. coded as NA)
+
+mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creates a new object, mapICD, of all non-missing CODE variables, and the corresponding regEx10
+#associated with them. This object will be used to assign CODE/LABELS to diagnoses later
+
+#Function from death code R script by MS
+
+icdToGroup <- function(inputVectorICD10) {
+  Cause   <- rep(NA,length(inputVectorICD10))
+  for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regExICD10_CM"],inputVectorICD10)] <- mapICD[i,"CODE"] } 
+  Cause}
+#What this says is: for the length of the input vector, match the ICD10 regEx codes to the corresponding CODE in mapICD
+
+##This is putting character strings of "NA" instead of NA values? 
+
+#Testing function on my test dataset
+oshpd16$icdCODE  <- icdToGroup(inputVectorICD10=oshpd16$diag_p)
+
+#This next section adds variables to the input vector (here, using test) breaking down the CODE into up to 4 levels
+codeLast4      <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
+nLast4         <- nchar(codeLast4) #counts number of characters 
+
+oshpd16          <- oshpd16  %>% mutate(lev0  = "0",
+                                  lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
+                                  lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
+                                  lev3  = ifelse(nLast4 == 4,codeLast4,NA) #if the number of characters is 4, puts the characters 2-5 from CODE string, otherwise assigns NA
+)
+
+#Now we have a dataset with levels based on disease categories than specific diseases--now instead of applying function, we just need to group by the number of cases with that category
+
+num_hosp_cases_primary <- function(data, levLab) {
+  num <- data %>% group_by_(levLab) %>% 
+    summarize(n_hosp = n()) 
+}
+
+test2 <- num_hosp_cases_primary(oshpd16, levLab = "lev2") 
+
+#Now what we need to do is match these grouping labels back to condition names--match function? 
+
+
+
+
+#Example based on this
+
+calculateYLLmeasures <- function(group_vars,levLab){
+  
+  dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
+    summarize(Ndeaths = n() , 
+              YLL     = sum(yll,   na.rm = TRUE),     # NEED TO ADD CIs
+              mean.age = mean(age,na.rm=TRUE)
+    ) %>%  ungroup 
+  
+  names(dat)[grep("lev", names(dat))] <- "CAUSE"
+  dat$Level                           <- levLab
+  dat %>%  data.frame
+  
+}
+
+#Example:
+c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0") #lev0
+c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1") #lev1
+c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2") #lev2
+c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3") #lev3
+datCounty <- bind_rows(c.t1,c.t2,c.t3,c.t4)
 
 
 
