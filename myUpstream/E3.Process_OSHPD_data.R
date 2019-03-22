@@ -71,41 +71,6 @@ if (sampleOSHPD) {
 #reading in gbd.ICD.excel file}
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
 
-diabetes <- icd_map %>% filter(name == "C. Diabetes mellitus") %>% select(regExICD10_CM)
-
-depression <- icd_map %>% filter(name == "a. Major depressive disorder" | name == "b. Dysthymia") %>% select(regExICD10_CM)
-depression <- paste(depression[1,], depression[2,], sep = "|") %>% as.data.frame() #if we are including major depressive disorder and dysthmia
-#together as one group, then we need to paste the regEx from the two conditions together
-
-ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart disease") %>% select(regExICD10_CM)
-
-#--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
-
-#dataset = dataset of interest (in this case, oshpd16_sample)
-#colname = what we want to name column, based on disease and whether diagnosis is based only on primary or any of 25 diagnosis codes (e.g. diabetes_any)
-#icd_regEx = regEx for disease of interest, as defined in gdb.ICD.Map.xlsx
-#index = variable indicating index we've defined: either 1 for diag_p (only primary diagnosis) or 1:25 for diag_p-odiag25 (any diagnosis code)
-#index variables will have to be defined prior to running function--although this makes the code not quite "self-annotated", R
-#doesn't seem to allow calling an index based on a range of variable names within a data.frame
-
-#apply(X, Margin, function, ...) X = an array, inclduing a matrix, Margin = vector giving the subscripts which the function will
-#be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
-#applied over rows (for multiple columns), we'll specify 1. 
-
-diagnosis_definition <- function(dataset, col_name, icd_regEx, index) {
-  dataset[[col_name]] <- apply(dataset, 1, FUN = function(x) {
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) "1" else "0"
-  } )
-  dataset
-}
-#index_p = only primary diagnosis
-index_p <- 1
-#index_any = any diagnosis
-index_any <- 1:25
-
-oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
-
 
 #------------------------------------------------------------------------------------Alternative/Additional?-----------------------------------------------------------------------#
 
@@ -148,7 +113,6 @@ num_hosp_cases_primary <- function(data, levLab) {
 
 test2 <- num_hosp_cases_primary(oshpd16, levLab = "lev2") 
 
-#Now what we need to do is match these grouping labels back to condition names--match function? 
 
 
 
@@ -172,6 +136,48 @@ calculateYLLmeasures <- function(group_vars,levLab){
 
 #Test change for using SourceTree
 
+
+
+
+
+
+#---------------------------------------------------------Other------------------------------------------------------------------#
+diabetes <- icd_map %>% filter(name == "C. Diabetes mellitus") %>% select(regExICD10_CM)
+
+depression <- icd_map %>% filter(name == "a. Major depressive disorder" | name == "b. Dysthymia") %>% select(regExICD10_CM)
+depression <- paste(depression[1,], depression[2,], sep = "|") %>% as.data.frame() #if we are including major depressive disorder and dysthmia
+#together as one group, then we need to paste the regEx from the two conditions together
+
+ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart disease") %>% select(regExICD10_CM)
+
+#--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
+
+#dataset = dataset of interest (in this case, oshpd16_sample)
+#colname = what we want to name column, based on disease and whether diagnosis is based only on primary or any of 25 diagnosis codes (e.g. diabetes_any)
+#icd_regEx = regEx for disease of interest, as defined in gdb.ICD.Map.xlsx
+#index = variable indicating index we've defined: either 1 for diag_p (only primary diagnosis) or 1:25 for diag_p-odiag25 (any diagnosis code)
+#index variables will have to be defined prior to running function--although this makes the code not quite "self-annotated", R
+#doesn't seem to allow calling an index based on a range of variable names within a data.frame
+
+#apply(X, Margin, function, ...) X = an array, inclduing a matrix, Margin = vector giving the subscripts which the function will
+#be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
+#applied over rows (for multiple columns), we'll specify 1. 
+
+diagnosis_definition <- function(dataset, col_name, icd_regEx, index) {
+  dataset[[col_name]] <- apply(dataset, 1, FUN = function(x) {
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(index)])) "1" else "0"
+  } )
+  dataset
+}
+#index_p = only primary diagnosis
+index_p <- 1
+#index_any = any diagnosis
+index_any <- 1:25
+
+oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
 
