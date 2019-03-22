@@ -89,10 +89,16 @@ icdToGroup <- function(inputVectorICD10) {
   Cause}
 #What this says is: for the length of the input vector, match the ICD10 regEx codes to the corresponding CODE in mapICD
 
-##This is putting character strings of "NA" instead of NA values? 
+
 
 #Testing function on my test dataset
-oshpd16$icdCODE  <- icdToGroup(inputVectorICD10=oshpd16$diag_p)
+oshpd16$icdCODE  <- icdToGroup(inputVectorICD10=oshpd16$diag_p) %>% as.character()
+
+oshpd16$icdCODE[oshpd16$icdCODE == "NA"] <- NA
+
+##This converts the NAs from characters to NA so subsequent code won't treat them as characters 
+
+
 
 #This next section adds variables to the input vector (here, using test) breaking down the CODE into up to 4 levels
 codeLast4      <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
@@ -101,19 +107,47 @@ nLast4         <- nchar(codeLast4) #counts number of characters
 oshpd16          <- oshpd16  %>% mutate(lev0  = "0",
                                   lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
                                   lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
-                                  lev3  = ifelse(nLast4 == 4,codeLast4,NA) #if the number of characters is 4, puts the characters 2-5 from CODE string, otherwise assigns NA
+                                  #lev3  = ifelse(nLast4 == 4,codeLast4,NA)
 )
 
-#Now we have a dataset with levels based on disease categories than specific diseases--now instead of applying function, we just need to group by the number of cases with that category
 
-num_hosp_cases_primary <- function(data, levLab) {
-  num <- data %>% group_by_(levLab) %>% 
-    summarize(n_hosp = n()) 
+
+#-------------Group by statement testing------------------------------------------------------------------#
+#General group_by test statement
+oshpd16 %>% group_by(patcnty, lev2) %>% 
+  summarize(n_hosp = n())
+
+
+
+#Group_by function
+num_test <- function(data, groupvar, levLab) {
+  
+  num <- data %>% group_by_(.dots = groupvar) %>% 
+    summarize(n_hosp = n()) %>% ungroup
+  #print(num)
+  names(num)[grep("lev", names(num))] <- "CAUSE"
+  num$Level                           <- levLab
+  num %>%  data.frame
 }
 
-test2 <- num_hosp_cases_primary(oshpd16, levLab = "lev2") 
+test2 <- num_test(oshpd16, groupvar = c("patcnty", "sex", "lev2"), levLab = "lev2") #This doesn't work because R says:  Column `c("patcnty", "sex", "lev2")` must be length 38426 (the number of rows) or one, not 3 
 
+#****What does the .dots = groupvar mean? if I only state: group_by_(groupvar), the function doesn't work ******
 
+#Testing quo--this works the same way as above, but it requires that the number of grouping variables stays the same
+num_test2 <- function(data, var1, var2, var3, levLab) {
+  var1 <- enquo(var1)
+  var2 <- enquo(var2)
+  var3 <- enquo(var3)
+  num <- data %>% group_by(!!var1, !!var2, !!var3) %>% 
+    summarize(n_hosp = n()) %>% ungroup
+  #print(num)
+  names(num)[grep("lev", names(num))] <- "CAUSE"
+  num$Level                           <- levLab
+  num %>%  data.frame
+}
+
+test3 <- num_test2(oshpd16, patcnty, sex, lev2, "lev2")
 
 
 
@@ -133,12 +167,14 @@ calculateYLLmeasures <- function(group_vars,levLab){
   
 }
 
+s.t1      <- calculateYLLmeasures(c("year","sex","lev0"),"lev0")
+s.t2      <- calculateYLLmeasures(c("year","sex","lev1"),"lev1")
+s.t3      <- calculateYLLmeasures(c("year","sex","lev2"),"lev2")
+s.t4      <- calculateYLLmeasures(c("year","sex","lev3"),"lev3")
+datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
+datState$county = STATE
 
-#Test change for using SourceTree
-
-
-
-
+datCounty <- bind_rows(datCounty,datState)
 
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
