@@ -67,10 +67,18 @@ if (sampleOSHPD) {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
-##------------------------------------Reading in gbd.ICD.excel file and defining variable conditions to be used in function--------------------#
+##------------------------------------Reading in data mapping/linkage files--------------------#
 #reading in gbd.ICD.excel file}
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
 
+#reading in county-codes-to-names linkage files --oshpd codes map to column "cdphcaCountyTxt"
+geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
+
+sex_num <- c("1", "2", "3", "4")
+
+sex_cat <- c("Male", "Female", "Other", "Unknown")
+
+OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame()
 
 #------------------------------------------------------------------------------------Alternative/Additional?-----------------------------------------------------------------------#
 
@@ -108,73 +116,68 @@ oshpd16          <- oshpd16  %>% mutate(lev0  = "0",
                                   lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
                                   lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
                                   #lev3  = ifelse(nLast4 == 4,codeLast4,NA)
-)
-
+) %>% left_join(., geoMap, by = c("patcnty"= "cdphcaCountyTxt")) %>% left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
 
 
 #-------------Group by statement testing------------------------------------------------------------------#
-#General group_by test statement
-oshpd16 %>% group_by(patcnty, lev2) %>% 
-  summarize(n_hosp = n())
-
 
 
 #Group_by function
-num_test <- function(data, groupvar, levLab) {
+#num_test <- function(data, groupvar, levLab) {
   
-  num <- data %>% group_by_(.dots = groupvar) %>% 
-    summarize(n_hosp = n()) %>% ungroup
+  #num <- data %>% group_by_(.dots = groupvar) %>% 
+    #summarize(n_hosp = n()) %>% ungroup
   #print(num)
-  names(num)[grep("lev", names(num))] <- "CAUSE"
-  num$Level                           <- levLab
-  num %>%  data.frame
-}
-
-test2 <- num_test(oshpd16, groupvar = c("patcnty", "sex", "lev2"), levLab = "lev2") #This doesn't work because R says:  Column `c("patcnty", "sex", "lev2")` must be length 38426 (the number of rows) or one, not 3 
-
-#****What does the .dots = groupvar mean? if I only state: group_by_(groupvar), the function doesn't work ******
-
-#Testing quo--this works the same way as above, but it requires that the number of grouping variables stays the same
-num_test2 <- function(data, var1, var2, var3, levLab) {
-  var1 <- enquo(var1)
-  var2 <- enquo(var2)
-  var3 <- enquo(var3)
-  num <- data %>% group_by(!!var1, !!var2, !!var3) %>% 
-    summarize(n_hosp = n()) %>% ungroup
-  #print(num)
-  names(num)[grep("lev", names(num))] <- "CAUSE"
-  num$Level                           <- levLab
-  num %>%  data.frame
-}
-
-test3 <- num_test2(oshpd16, patcnty, sex, lev2, "lev2")
+  #names(num)[grep("lev", names(num))] <- "CAUSE"
+  #num$Level                           <- levLab
+  #num %>%  data.frame
+#}
 
 
+#Group_by_at
 
-#Example based on this
-
-calculateYLLmeasures <- function(group_vars,levLab){
+calculate_num_costs <- function(data, groupvar, levLab) {
   
-  dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
-    summarize(Ndeaths = n() , 
-              YLL     = sum(yll,   na.rm = TRUE),     # NEED TO ADD CIs
-              mean.age = mean(age,na.rm=TRUE)
-    ) %>%  ungroup 
+  dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
+    summarize(n_hosp = n(), charges = sum(charge, na.rm = TRUE)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
   dat %>%  data.frame
-  
 }
 
-s.t1      <- calculateYLLmeasures(c("year","sex","lev0"),"lev0")
-s.t2      <- calculateYLLmeasures(c("year","sex","lev1"),"lev1")
-s.t3      <- calculateYLLmeasures(c("year","sex","lev2"),"lev2")
-s.t4      <- calculateYLLmeasures(c("year","sex","lev3"),"lev3")
-datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
-datState$county = STATE
+#lev1 = Top level
+#lev2 = public health level
 
-datCounty <- bind_rows(datCounty,datState)
+#-------Quick plot of hospitalization numbers------------------#
+#Top Level, statewide
+s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1")
+
+#total s.lev1
+s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+
+#Public Health level, statewide
+s.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2"), "lev2")
+
+#total s.lev2
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+
+
+#-------Quick plot of charges-----------------#
+#total s.lev1
+s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+
+#total s.lev2
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+
+
+
+
+
+
+
+
+
 
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
