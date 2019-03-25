@@ -35,8 +35,7 @@ oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cd
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr, dschdate, patcnty, patzip, sex, agyrdsch, race_grp) %>%
-  mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr, dschdate, patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
 
 #Saving subset as RDS file
 saveRDS(oshpd_subset, file=path(.sl, "oshpd_subset.rds"))
@@ -78,7 +77,7 @@ sex_num <- c("1", "2", "3", "4")
 
 sex_cat <- c("Male", "Female", "Other", "Unknown")
 
-OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame()
+OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
 
 #------------------------------------------------------------------------------------Alternative/Additional?-----------------------------------------------------------------------#
 
@@ -149,19 +148,21 @@ calculate_num_costs <- function(data, groupvar, levLab) {
 #lev1 = Top level
 #lev2 = public health level
 
-#-------Quick plot of hospitalization numbers------------------#
-#Top Level, statewide
-s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1")
+#-------------------------------------------------------------------------------------------------------------#
 
-#total s.lev1
-s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+#Top Level, statewide
+s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1") 
+
+
+#Top Level, county
+c.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1", "patcnty"), "lev1")
 
 #Public Health level, statewide
 s.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2"), "lev2")
 
-#total s.lev2
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+#Public health level, county
 
+c.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2", "patcnty"), "lev2")
 
 #-------Quick plot of charges-----------------#
 #total s.lev1
@@ -169,6 +170,7 @@ s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charge
 
 #total s.lev2
 s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+
 
 
 
