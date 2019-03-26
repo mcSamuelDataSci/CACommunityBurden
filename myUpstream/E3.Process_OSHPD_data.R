@@ -1,5 +1,5 @@
 # ====================================================================================================
-# "E3.Process_OSHPD_data.R" file                                                      |
+# "E3.Process_OSHPD_data.R" file                                                                     |
 #                                                                                                    |
 #            Reads in OSHPD 2016 PDD sas file, saves as rds file (random sample)                     |
 #            Used to assess hospitalizations for diabetes--primary diagnoses and all diagnoses.      |
@@ -57,15 +57,6 @@ saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 #Start code here if OSHPD 2016 subset has already been created:
 #***************************************************************************************************************#
 
-
-if (fullOSHPD) {
-  oshpd16 <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #maybe change to secure location?
-}
-
-if (sampleOSHPD) {
-  oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
-}
-
 ##------------------------------------Reading in data mapping/linkage files--------------------#
 #reading in gbd.ICD.excel file}
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
@@ -78,10 +69,60 @@ sex_num <- c("1", "2", "3", "4")
 sex_cat <- c("Male", "Female", "Other", "Unknown")
 
 OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
+ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
-#------------------------------------------------------------------------------------Alternative/Additional?-----------------------------------------------------------------------#
 
-#Based on E1 make death datasets for app file
+yF   <- 100000  # rate constant 
+pop5 <- 5       # 5 years
+pop1 <- 1       # 1 year
+
+yearGrp <- "2013-2017"
+
+criticalNum <- 11
+
+#-----------------------------------------------------------------------------------LOAD AND PROCESS POPULATION DATA-----------------------------------------------------------------------#
+
+# ungrouping important for subsequent data set merging
+popTract         <- readRDS(path(upPlace,"/upData/popTract2013.RDS")) %>% ungroup() 
+popTractSex      <- filter(popTract,ageG == "Total")
+popTractSexAgeG  <- filter(popTract,ageG != "Total")
+
+popCommSex       <- popTractSex     %>% group_by(yearG,county,comID,sex)      %>% summarise(pop=sum(pop))  %>% ungroup()  
+popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG,county,comID,sex,ageG) %>% summarise(pop=sum(pop))  %>% ungroup() 
+
+popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>% ungroup() 
+popCountySex     <- filter(popCounty,ageG == "Total")
+popCountySexAgeG <- filter(popCounty,ageG != "Total")
+
+popCounty.RACE        <- readRDS(path(upPlace,"/upData/popCounty_RE.RDS")) %>% ungroup() 
+popCountySex.RACE     <- filter(popCounty.RACE,ageG == "Total")
+popCountySexAgeG.RACE <- filter(popCounty.RACE,ageG != "Total")
+
+popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
+
+
+#--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
+
+
+if (fullOSHPD) {
+  oshpd16 <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #maybe change to secure location?
+}
+
+if (sampleOSHPD) {
+  oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
+}
+
+
+#-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
+
+aL            <-      ageMap$lAge     # lower age ranges
+aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
+aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
+aMark         <- findInterval(oshpd16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+oshpd16$ageG  <- aLabs[aMark]                                   # make new "ageG" variable based on two objects above 
+
+
+#----------------Map ICD-10-CM codes to GBD conditions-----------------------------------------------------------------------------------------#
 
 allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #This sorts all of the LABEL variables that aren't missing (i.e. coded as NA)
 
@@ -148,6 +189,14 @@ calculate_num_costs <- function(data, groupvar, levLab) {
 #lev1 = Top level
 #lev2 = public health level
 
+
+calculate_crude_rates <- function(data, yearN) {
+  data %>% mutate(cDeathRate = yF*n_hosp/(yearN*pop), 
+            rateLCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
+            rateUCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper)
+            
+}
+
 #-------------------------------------------------------------------------------------------------------------#
 
 #Top Level, statewide
@@ -170,6 +219,31 @@ s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charge
 
 #total s.lev2
 s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
