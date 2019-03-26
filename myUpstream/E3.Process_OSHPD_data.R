@@ -190,11 +190,12 @@ calculate_num_costs <- function(data, groupvar, levLab) {
 #lev2 = public health level
 
 
+if (1==2) {
 calculate_crude_rates <- function(data, yearN) {
   data %>% mutate(cDeathRate = yF*n_hosp/(yearN*pop), 
             rateLCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
             rateUCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper)
-            
+}
 }
 
 #-------------------------------------------------------------------------------------------------------------#
