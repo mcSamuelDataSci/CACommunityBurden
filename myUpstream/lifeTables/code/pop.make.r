@@ -131,15 +131,12 @@ dof.pop.county[, GEOID
 setkey(dof.pop.county,"GEOID")									 # key for later merging
 dof.pop.county[,fips:=NULL]                                      # drop fips variable, now that GEOID has been added
 # recode age to categories
-dof.pop.county[,agell:=age]
-dof.pop.county[agell>=2 & agell<=4,agell:=1]
-dof.pop.county[agell>=5 & agell<=85,agell:=as.integer(5*floor(agell/5))]
-dof.pop.county[agell>=86,agell:=85]
-dof.pop.county[agell==0,ageul:=1]
-dof.pop.county[agell==1,ageul:=4]
-dof.pop.county[agell>1 & agell<85,ageul:=agell+4]
-dof.pop.county[agell==85,ageul:=199]
-dof.pop.county[,age:=NULL]                                        # drop age variable, now that GEOID has been added
+dof.pop.county[age==0, ':=' (agell=0,ageul=0)]
+dof.pop.county[age>=1 & age<=4, ':=' (agell=1,ageul=4)]
+dof.pop.county[age>=5 & age<85, agell := 5*floor(age/5)]
+dof.pop.county[age>=5 & age<85, ageul := agell+4]
+dof.pop.county[age>=85, ':=' (agell=85,ageul=199)]				 # open-ended age group
+dof.pop.county[,age:=NULL]                                       # drop age variable
 # summarize
 dof.pop.county  <- 	melt.data.table(dof.pop.county, 
 							variable.name="sex",
