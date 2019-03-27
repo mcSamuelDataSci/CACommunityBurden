@@ -18,7 +18,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
 .ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
 .clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
-.acsurl		<- paste0(upPlace,"/lifeTables/dataIn/acs5_B01001_tracts.csv") # ACS-5yr population by tract, 2009-17
+.acsurl		<- paste0(upPlace,"/lifeTables/dataIn/acs5_B01001_tracts.csv.zip") # ACS-5yr population by tract, 2009-17
 .dofurl		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
 .nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # output deaths by tract
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
