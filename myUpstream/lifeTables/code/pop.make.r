@@ -125,7 +125,7 @@ dof.pop.county <- 	setDT(
 			 				col_types="i_iiii_"
 						)
 			 		)
-dof.pop.county[,pop_all:=pop_female+pop_male]					 # total pop by age
+dof.pop.county[,pop_total:=pop_female+pop_male]					 # total pop by age
 dof.pop.county[, GEOID
 			   :=sprintf("%05d000000",dof.pop.county$fips)]      # convert 4-digit FIPS into 11-character GEOID
 setkey(dof.pop.county,"GEOID")									 # key for later merging
