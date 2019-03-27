@@ -7,6 +7,10 @@ myCBD/myData/real/*.*
 myCBD/rsconnect/*.*
 
 myUpstream/upstreamInfo/census.api.key.txt
+myUpstream/lifeTables/dataIn/*.csv
+myUpstream/lifeTables/dataIn/*.dta
+myUpstream/lifeTables/dataIn/*.do
+myUpstream/lifeTables/dataIn/*.txt
 myUpstream/tempOutput/*.*
 
 myAnalyses

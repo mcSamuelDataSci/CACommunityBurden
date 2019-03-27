@@ -1,12 +1,10 @@
 # title: lifetable.make-ccb.r
 # purpose: life tables for mssa/county/state
-# notes:
-#	written for mssa. changes required for counties b/c ACS has only 0-4 age group
 
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","tidyr") 
+.pkg	<- c("data.table","tidyr","readr") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
@@ -48,45 +46,50 @@ setwd(myDrive)
 .nxmssa[,GEOID:=comID]
 
 ## 3.2	calculate how many years of exposure data required 
-doWindow <- function(d=NULL,t=10000) {
+doWindow <- function(d=NULL,t=10000) { 								# d=population dataset, t=critical PY exposure
 	return(d[,.(nx=sum(nx)),by=.(GEOID,year,sex)][					# sum nx by geo/sex
 						nx<t,.(GEOID,sex, 							# filter out those with <minimum PY, 
 							flag=ceiling((t/nx)/2))][				# calculate N years needed, rounded, by sex
 							,.(flag=max(flag)),by=GEOID][flag>1])	# report if need more than 1 year 
 }
+doWindow(.nxtract)[flag>5] 		# counties that require>5 years data.
+doWindow(.nxmssa)[flag>5]		# counties that require>5 years data.
+doWindow(.nxcounty)[flag>5]		# counties that require>5 years data.
 
 ## 3.2	table of start/end years needed for mssa, county, state.
 ## 3.3	extract N deaths during the specifed window for one area
 ## 3.4	extract PY exposure during the specifed window for one area
-##		not doing; all geos will use 5-year 2012-2016 window.
+
+# temporary solution: 5 years for all.
 ##		versions 01-02 handle this in more sophisticated way.
-##		a script evaluate the N years of deaths, population, and extracts
-##		the specific data for each geo from the master dx, nx datasets.
+##		a script evaluates the N required years of deaths, population, 
+## 		and extracts data for each geo from the master dx, nx datasets.
+##		for now: not doing custom start/end dates by geo; all geos will use 5-year 2013-2017 window.
 
 ## 3.5  summarize deaths 
 ##		todo: functionize and apply
-ltdx.mssa	<-.dxmssa[year>=2012 & year<=2016][,
+ltdx.mssa	<-.dxmssa[year>=2013 & year<=2017][,
 					.(dx=sum(dx)),
 					by=c("comID","sex","agell","ageul")]		# extract years overlapping ACS and summarize
-ltdx.county	<-.dxcounty[year>=2012 & year<=2016][,
+ltdx.county	<-.dxcounty[year>=2013 & year<=2017][,
 					.(dx=sum(dx)),
 					by=c("GEOID","sex","agell","ageul")]		# extract years overlapping ACS and summarize
-ltdx.state	<-.dxstate[year>=2012 & year<=2016][,
+ltdx.state	<-.dxstate[year>=2013 & year<=2017][,
 					.(dx=sum(dx)),
 					by=c("GEOID","sex","agell","ageul")]		# extract years overlapping ACS and summarize
 
 ## 3.6	summarize exposures
 ##		todo: functionize and apply
 ##	mssa
-ltnx.mssa	<-.nxmssa[year>=2012 & year<=2016][,
+ltnx.mssa	<-.nxmssa[year>=2013 & year<=2017][,
 					.(nx=sum(nx)),
 					by=c("comID","sex","agell","ageul")]		# extract years overlapping ACS and summarize
 ##	county
-ltnx.county	<-.nxcounty[year>=2012 & year<=2016][,
+ltnx.county	<-.nxcounty[year>=2013 & year<=2017][,
 					.(nx=sum(nx)),
 					by=c("GEOID","sex","agell","ageul")]		# extract years overlapping ACS and summarize
 ##	state
-ltnx.state	<-.nxstate[year>=2012 & year<=2016][,
+ltnx.state	<-.nxstate[year>=2013 & year<=2017][,
 					.(nx=sum(nx)),
 					by=c("GEOID","sex","agell","ageul")]		# extract years overlapping ACS and summarize
 
@@ -200,10 +203,10 @@ for (j in 1:mx.county[agell==0,.N]) {
 	dx<-mx.county[i==j,dx]
 	sex<-mx.county[i==j,sex]
 	i<-mx.county[i==j,i]
-	lt.county <- rbindlist(list(lt.county,                      # fast rbind result to lt.county
+	lt.county <- rbindlist(list(lt.county,                  # fast rbind result to lt.county
 					cbind(doLT(x,nx,dx,sex),j)))			# attach ID to life table
 }
-names(lt.county)[names(lt.county) == "j"] = "i"					# rename j column to i (ID of mx file)
+names(lt.county)[names(lt.county) == "j"] = "i"				# rename j column to i (ID of mx file)
 setkeyv(lt.county,c("i","x"))
 ##	state
 lt.state<-data.table()										# init empty dt
@@ -301,8 +304,7 @@ doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 ltci.mssa<-data.table() 										# initialize an empty DT
 .counter<-lt.mssa[x==0,.N]/10
 .pb <- txtProgressBar(min = 0, max = .counter, style = 3)		# show a text progress bar for loop
-#for (j in 1:2) {												# fast test just 2 lifetables
-for (j in 1:lt.mssa[x==0,.N]) {						
+for (j in 1:lt.mssa[x==0,.N]) {									# or "for (j in 1:2) {" for a quick test
 	ltci.mssa<-rbindlist(list(ltci.mssa, 						# fast rbind result to ltci.mssa (2 items)
 			  				cbind(data.table( 					# format results of exsim as DT
 			  				t(unlist(doLTCI(lt.mssa[i==j],      # run specific LT
@@ -321,16 +323,16 @@ setkeyv(ltci.mssa,c("i","x"))
 ltci.county<-data.table() 										# initialize an empty DT
 .counter<-lt.county[x==0,.N]/10
 .pb <- txtProgressBar(min = 0, max = .counter, style = 3)		# show a text progress bar for loop
-for (j in 1:lt.county[x==0,.N]) {						
-	ltci.county<-rbindlist(list(ltci.county, 						# fast rbind result to ltci.county (2 items)
+for (j in 1:lt.county[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
+	ltci.county<-rbindlist(list(ltci.county, 					# fast rbind result to ltci.county (2 items)
 			  				cbind(data.table( 					# format results of exsim as DT
-			  				t(unlist(doLTCI(lt.county[i==j],      # run specific LT
+			  				t(unlist(doLTCI(lt.county[i==j],    # run specific LT
 			  				which.x=0,ns=500,level=.95)[		# pass parameters for simulation
 			  				c(1,2,3,5)])))						# save just desired fields from exsim
 			  			  ,j)									# attach ID to simulation results; 
 			  )
 	)
-	setTxtProgressBar(.pb,j)												
+	#setTxtProgressBar(.pb,j)												
 }
 close(.pb)
 names(ltci.county)[names(ltci.county) == "j"] = "i"					# rename j column to i (ID of mx file)
@@ -340,10 +342,10 @@ setkeyv(ltci.county,c("i","x"))
 ltci.state<-data.table() 										# initialize an empty DT
 .counter<-lt.state[x==0,.N]/10
 .pb <- txtProgressBar(min = 0, max = .counter, style = 3)		# show a text progress bar for loop
-for (j in 1:lt.state[x==0,.N]) {						
+for (j in 1:lt.state[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
 	ltci.state<-rbindlist(list(ltci.state, 						# fast rbind result to ltci.state (2 items)
 			  				cbind(data.table( 					# format results of exsim as DT
-			  				t(unlist(doLTCI(lt.state[i==j],      # run specific LT
+			  				t(unlist(doLTCI(lt.state[i==j],     # run specific LT
 			  				which.x=0,ns=500,level=.95)[		# pass parameters for simulation
 			  				c(1,2,3,5)])))						# save just desired fields from exsim
 			  			  ,j)									# attach ID to simulation results; 
@@ -352,7 +354,7 @@ for (j in 1:lt.state[x==0,.N]) {
 	setTxtProgressBar(.pb,j)												
 }
 close(.pb)
-names(ltci.state)[names(ltci.state) == "j"] = "i"					# rename j column to i (ID of mx file)
+names(ltci.state)[names(ltci.state) == "j"] = "i"				# rename j column to i (ID of mx file)
 names(ltci.state)[names(ltci.state) == "which.x"] = "x"			# rename to agell
 setkeyv(ltci.state,c("i","x"))
 
@@ -368,7 +370,9 @@ doExHist <- function(dat=lt.mssa,idx=NULL,age=0,reps=500,ci=.95) {
 	abline(v=tmp$meanex,col=4)
 	abline(v=tmp$ciex,col=4)
 }
+doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
 doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
+doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
 
 # 4.6 	update mortality dataset with some parameters from results
 #		todo: functionalize/loop
@@ -377,11 +381,11 @@ names(mx.mssa)[names(mx.mssa) == "agell"] = "x" 						# rename agell to x for co
 lt.mssa<-lt.mssa[mx.mssa[,c("i","x","sex","comID")],nomatch=0] 			# add MSSA comID and sex by ID
 ltci.mssa<-ltci.mssa[mx.mssa[x==0,c("i","x","sex","comID")],nomatch=0]	# add MSSA comID and sex by ID
 #	county
-names(mx.county)[names(mx.county) == "agell"] = "x" 						# rename agell to x for consistency
+names(mx.county)[names(mx.county) == "agell"] = "x" 							# rename agell to x for consistency
 lt.county<-lt.county[mx.county[,c("i","x","sex","GEOID")],nomatch=0] 			# add COUNTY comID and sex by ID
 ltci.county<-ltci.county[mx.county[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add COUNTY comID and sex by ID
 #	state
-names(mx.state)[names(mx.state) == "agell"] = "x" 						# rename agell to x for consistency
+names(mx.state)[names(mx.state) == "agell"] = "x" 							# rename agell to x for consistency
 lt.state<-lt.state[mx.state[,c("i","x","sex","GEOID")],nomatch=0] 			# add STATE comID and sex by ID
 ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add STATE comID and sex by ID
 
