@@ -123,7 +123,8 @@ dx.state[is.na(sex),sex:="TOTAL"]
 dx.state<-dx.state[,.(dx=sum(dx)),
 				   by=.(year,sex,agell,ageul)] 						# collapse
 dx.state[, GEOID:="06000000000"]									# add GEOID
-dx.state<-dx.state[sex %in% c("MALE","FEMALE") & !is.na(agell)]		# nonmissing sex + age
+dx.state<-dx.state[sex %in% c("MALE","FEMALE","TOTAL") & 
+				   	!is.na(agell)]									# nonmissing sex + age
 # mssa
 dx.mssa<-dx.tract[cbd.link,nomatch=0,on='GEOID'][	                # merge tracts data with cbd.link	
 					!is.na(as.numeric(GEOID))][,  					# drop if missing GEOID
