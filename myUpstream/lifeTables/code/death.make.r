@@ -1,6 +1,7 @@
 # title: death.make.r
 # purpose: calculate deaths for CCB project life tables (state, county, tract, mssa)
 # NOTES: erase fake months and years (lines 61-62) when using real dataset with months/years.
+# todo: also use births by tract to split Census population age 0-4 group into 0-1 and 1-4? TBD.
 
 ## 1    SETUP		----------------------------------------------------------------------
 
@@ -28,21 +29,6 @@ if (whichData=="real") .deaths		<- "g:/0.Secure.Data/myData/cbdDat0FULL.R"
 .dxmssa		<- paste0(upPlace,"/lifeTables/dataOut/dxMSSA.rds") # output deaths by mssa
 .dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
 .dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
-
-# setwd(myDrive)
-
-#.path      <- "c:/users/fieshary/projects/CACommunityBurden" # project directory
-# .path       <- getwd()
-# .deaths		  <- paste0(.path,"/myUpstream/upData/cbdDat0SAMP.R") # was 'forEthan.RDS'; raw file with deaths
-# .cbdlink	  <- paste0(.path,"/myCBD/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
-# .countylink <- paste0(.path,"/myCBD/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
-
-# .tempPath <- "/myUpstream/lifeTables/dataOut"
-# 
-# .dxtract	<- paste0(.path,.tempPath,"/dxTract.rds") # output deaths by tract
-# .dxmssa		<- paste0(.path,.tempPath,"/dxMSSA.rds") # output deaths by mssa
-# .dxcounty	<- paste0(.path,.tempPath,"/dxCounty.rds") # output deaths by county
-# .dxstate	<- paste0(.path,.tempPath,"/dxState.rds") # output deaths by state
 
 #setwd(.path) 
 
@@ -73,24 +59,30 @@ setnames(cbdDat0SAMP, "county", "countyName")
 ## 3	ANALYSIS	----------------------------------------------------------------------
 
 ## 3.1	clean/summarize function -- note that DT does not return an object; edits in place.
-ageCats <- function(dat) {
-	dat[age==0 & age<=4, ':=' (agell=0,ageul=4)]				# first age group is 0-4, per ACS
+ageCats <- function(dat,first=NULL) {
+	if (first=="1-4") {
+		dat[age==0 & age<=4, ':=' (agell=0,ageul=4)]		# first age group is 0-4, per ACS
+	}
+	if (first=="0") {
+		dat[age==0, ':=' (agell=0,ageul=0)]					# first age group is 0 only, per DOF
+		dat[age>=1 & age<=4, ':=' (agell=1,ageul=4)] 
+	}
 	dat[age>=5 & age<85, agell := 5*floor(age/5)]
 	dat[age>=5 & age<85, ageul := agell+4]
-	dat[age>=85, ':=' (agell=85,ageul=199)]						# open-ended age group
-	dat[sex=="F",sex:="FEMALE"]									# change sex string to be unambiguous
-	dat[sex=="M",sex:="MALE"]								    # and to match with population files
+	dat[age>=85, ':=' (agell=85,ageul=199)]					# open-ended age group
+	dat[sex=="F",sex:="FEMALE"]								# change sex string to be unambiguous
+	dat[sex=="M",sex:="MALE"]								# and to match with population files
 }
 
 # tract
 dx.tract <- copy(setkey(cbdDat0SAMP, "GEOID"))
 
 if (whichData =="fake") {
-dx.tract[, month:=sample(1:12, length(dx.tract$year), replace=T)]	# fake months; ERASE LATER
-dx.tract[, year:=year+2]										    # fake years; ERASE LATER
+	dx.tract[, month:=sample(1:12, length(dx.tract$year), replace=T)]	# fake months; ERASE LATER
+	dx.tract[, year:=year+2]										    # fake years; ERASE LATER
 }
 
-ageCats(dx.tract) 
+ageCats(dx.tract,first="1-4") 
 dx.tract[, dx := 1]													# generate a count variable (1=person level file)
 dx.tract<-dx.tract[,.(dx=sum(dx)), 
 				   by=.(year,GEOID,sex,agell,ageul)]				# collapse
@@ -105,7 +97,7 @@ dx.tract<-dx.tract[as.numeric(GEOID)>=06000000000 &
 				   	!is.na(agell)]									# nonmissing age
 # county
 dx.county <- copy(setkey(cbdDat0SAMP, "countyName"))
-ageCats(dx.county)
+ageCats(dx.county, first="0")
 dx.county[, dx := 1]												# generate a count variable (1=person level file)
 dx.county<-dx.county[,.(dx=sum(dx)), 
 				   by=.(year,countyName,sex,agell,ageul)]			# collapse
@@ -121,7 +113,7 @@ dx.county<-dx.county[as.numeric(GEOID)>=06000000000 &
 					 	!is.na(agell)]								# nonmissing age
 # state
 dx.state<-copy(setkey(cbdDat0SAMP, "stateFIPS"))
-ageCats(dx.state)
+ageCats(dx.state, first="0")
 dx.state[, dx := 1]													# generate a count variable (1=person level file)
 dx.state<-dx.state[,.(dx=sum(dx)), 
 				   by=.(year,sex,agell,ageul)]						# collapse
