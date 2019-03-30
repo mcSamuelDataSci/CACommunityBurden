@@ -5,7 +5,7 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
-whichData     <- "fake"   # or real
+whichData     <- "fake"   
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
@@ -135,9 +135,37 @@ setkeyv(dx.mssa,c("comID","sex","agell"))							# sort
 ## 4	EXPORT		----------------------------------------------------------------------
 
 ##  4.1 export datasets
+
+
+# HARD WIRED CHANGES FOR RIGHT NOW
+
+
+if (whichData != "real"  ) {
+
 saveRDS(dx.tract,  file=.dxtract)
 saveRDS(dx.mssa,   file=.dxmssa)
 saveRDS(dx.county, file=.dxcounty)
 saveRDS(dx.state,  file=.dxstate)
+}
+
+
+if (whichData == "real"  ) {
+  
+    sPath <- "g:/0.Secure.Data/myData/"
+    
+  .dxtract	<- paste0(sPath,"dxTract.rds") # output deaths by tract
+  .dxmssa		<- paste0(sPath,"dxMSSA.rds") # output deaths by mssa
+  .dxcounty	<- paste0(sPath,"dxCounty.rds") # output deaths by county
+  .dxstate	<- paste0(sPath,"dxState.rds") # output deaths by state
+  
+  
+  
+  saveRDS(dx.tract,  file=.dxtract)
+  saveRDS(dx.mssa,   file=.dxmssa)
+  saveRDS(dx.county, file=.dxcounty)
+  saveRDS(dx.state,  file=.dxstate)
+}
+
+
 
 # END

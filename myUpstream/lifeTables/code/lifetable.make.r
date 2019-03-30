@@ -401,7 +401,7 @@ ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add 
 # 5		export data
 
 
-##HERE
+## MICHAEL EDITS HERE
 LTplace <- paste0(upPlace,"/lifeTables/dataOut/")
 
 saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))			# comID sex (char) x (age0) ex meanex ciex.low ciex.high
