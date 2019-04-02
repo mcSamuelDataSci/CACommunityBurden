@@ -1,3 +1,6 @@
+# removed discharge date for now?
+
+
 # ====================================================================================================
 # "E3.Process_OSHPD_data.R" file                                                                     |
 #                                                                                                    |
@@ -13,14 +16,17 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-.sl              <- secure.location  # short name to shorten lines of code below
+secure.location  <- "E:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-fullOSHPD <- FALSE
-sampleOSHPD <- TRUE
+whichDat <- "real"   # "real" or "fake"
+newData  <- FALSE
+
+# fullOSHPD <- FALSE
+# sampleOSHPD <- TRUE
 
 #-- Load Packages -------------------------------------------------------------
 
@@ -30,28 +36,53 @@ library(haven)
 library(fs)
 library(readxl)
 
+
+#------------------------------------------------------------------------------
+
+
+if(newData) {
+
 #Reading in oshpd 2016 PDD file
 oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
+oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat") )
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr, dschdate, patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
+# dschdate,
+
 
 #Saving subset as RDS file
 saveRDS(oshpd_subset, file=path(.sl, "oshpd_subset.rds"))
+saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
 
-#1% random sample
+
+#3% random sample, randomly permuted
 set.seed(4)
-oshpd_sample <- sample_n(oshpd_subset, size = 0.01*nrow(oshpd_subset), replace = F)
+#oshpd_sample <- sample_n(oshpd_subset, size = 0.01*nrow(oshpd_subset), replace = F)
+
+sampN1 <- 0.01*nrow(oshpd_subset)  
+sampN2 <- sampN1*2
+
+half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
+
+p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
+p2           <- sample_n(oshpd_subset[,30:31], sampN2)
+p3           <- sample_n(oshpd_subset[,32:37], sampN2)
+p3$race_grp  <- NA
+half2        <- cbind(p1,p2,p3)
+
+oshpd_sample <- rbind(half1,half2)
+
 
 #Now, create RDS file of whole SAS file and random sample of SAS file 
 
 #saving rds file--only needs to be run once to initially create the file
 
-#Saving 1% random sample as RDS file
+# Saving random sample as RDS file
 saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
-
+} # END if(newData)
 
 #***************************************************************************************************************#
 #Start code here if OSHPD 2016 subset has already been created:
@@ -104,11 +135,11 @@ popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
 #--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
 
 
-if (fullOSHPD) {
-  oshpd16 <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #maybe change to secure location?
+if (whichDat == "real") {
+  oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) #maybe change to secure location?  YES
 }
 
-if (sampleOSHPD) {
+if (whichDat == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
@@ -147,16 +178,19 @@ oshpd16$icdCODE[oshpd16$icdCODE == "NA"] <- NA
 ##This converts the NAs from characters to NA so subsequent code won't treat them as characters 
 
 
-
 #This next section adds variables to the input vector (here, using test) breaking down the CODE into up to 4 levels
-codeLast4      <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
-nLast4         <- nchar(codeLast4) #counts number of characters 
+codeLast4 <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
+nLast4    <- nchar(codeLast4) #counts number of characters 
 
-oshpd16          <- oshpd16  %>% mutate(lev0  = "0",
-                                  lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
-                                  lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
-                                  #lev3  = ifelse(nLast4 == 4,codeLast4,NA)
-) %>% left_join(., geoMap, by = c("patcnty"= "cdphcaCountyTxt")) %>% left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
+oshpd16   <- oshpd16  %>% 
+  mutate(lev0  = "0",
+         lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
+         lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
+         lev3  = ifelse(nLast4 == 4,codeLast4,NA) # MICHAEL this was commented out
+         ) %>% 
+  left_join(., select(geoMap,cdphcaCountyTxt,County=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>%    # added select....
+  left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
+
 
 
 #-------------Group by statement testing------------------------------------------------------------------#
@@ -223,40 +257,6 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charge
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #---------------------------------------------------------Other------------------------------------------------------------------#
 diabetes <- icd_map %>% filter(name == "C. Diabetes mellitus") %>% select(regExICD10_CM)
 
@@ -294,9 +294,5 @@ index_any <- 1:25
 oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-
-
 
 
