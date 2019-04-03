@@ -5,7 +5,7 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
-whichData     <- "real"   
+whichData     <- "real"   # "real" or "fake"
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
@@ -25,12 +25,8 @@ if (whichData=="real") .deaths		<- "g:/0.Secure.Data/myData/cbdDat0FULL.R"
 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
-.dxtract	<- paste0(upPlace,"/lifeTables/dataOut/dxTract.rds") # output deaths by tract
-.dxmssa		<- paste0(upPlace,"/lifeTables/dataOut/dxMSSA.rds") # output deaths by mssa
-.dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
-.dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
 
-#setwd(.path) 
+
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
@@ -136,34 +132,27 @@ setkeyv(dx.mssa,c("comID","sex","agell"))							# sort
 
 ##  4.1 export datasets
 
+if (whichData == "fake"  ) {
 
-# HARD WIRED CHANGES FOR RIGHT NOW
+ .midPath <- "/lifeTables/dataOut/"
 
+ saveRDS(dx.tract,  file=paste0(upPlace,.midPath,"dxTract.rds"))   # output deaths by tract
+ saveRDS(dx.mssa,   file=paste0(upPlace,.midPath,"dxMSSA.rds"))    # output deaths by mssa
+ saveRDS(dx.county, file=paste0(upPlace,.midPath,"dxCounty.rds"))  # output deaths by county
+ saveRDS(dx.state,  file=paste0(upPlace,.midPath,"dxState.rds"))   # output deaths by state
 
-if (whichData != "real"  ) {
-
-saveRDS(dx.tract,  file=.dxtract)
-saveRDS(dx.mssa,   file=.dxmssa)
-saveRDS(dx.county, file=.dxcounty)
-saveRDS(dx.state,  file=.dxstate)
 }
 
 
 if (whichData == "real"  ) {
   
-    sPath <- "g:/0.Secure.Data/myData/"
+ .midPath <- "g:/0.Secure.Data/myData/"
     
-  .dxtract	<- paste0(sPath,"dxTract.rds") # output deaths by tract
-  .dxmssa		<- paste0(sPath,"dxMSSA.rds") # output deaths by mssa
-  .dxcounty	<- paste0(sPath,"dxCounty.rds") # output deaths by county
-  .dxstate	<- paste0(sPath,"dxState.rds") # output deaths by state
-  
-  
-  
-  saveRDS(dx.tract,  file=.dxtract)
-  saveRDS(dx.mssa,   file=.dxmssa)
-  saveRDS(dx.county, file=.dxcounty)
-  saveRDS(dx.state,  file=.dxstate)
+ saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
+ saveRDS(dx.mssa,   file=paste0(.midPath,"dxMSSA.rds"))    # output deaths by mssa
+ saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county
+ saveRDS(dx.state,  file=paste0(.midPath,"dxState.rds"))   # output deaths by state
+ 
 }
 
 
