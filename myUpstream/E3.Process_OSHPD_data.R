@@ -22,7 +22,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichDat <- "real"   # "real" or "fake"
+whichDat <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -191,6 +191,9 @@ oshpd16   <- oshpd16  %>%
   left_join(., select(geoMap,cdphcaCountyTxt,County=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>%    # added select....
   left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
 
+oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
+oshpd16 <- bind_rows(oshpd16, oshpd16sex)
+
 
 
 #-------------Group by statement testing------------------------------------------------------------------#
@@ -233,6 +236,10 @@ calculate_crude_rates <- function(data, yearN) {
 }
 
 #-------------------------------------------------------------------------------------------------------------#
+
+
+testmerge <- merge(oshpd16, popCountySex, by = c("year", "county", "sex_cat"))
+
 
 #Top Level, statewide
 s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1") 
