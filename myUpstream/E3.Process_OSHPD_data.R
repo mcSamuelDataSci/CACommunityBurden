@@ -16,7 +16,7 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-secure.location  <- "E:/0.Secure.Data/"
+#secure.location  <- "E:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -35,6 +35,7 @@ library(ggplot2)
 library(haven)
 library(fs)
 library(readxl)
+library(epitools)
 
 
 #------------------------------------------------------------------------------
@@ -102,6 +103,7 @@ sex_cat <- c("Male", "Female", "Other", "Unknown")
 OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
+STATE <- "California" #Defining California to be included later in county population labelling/estimates (California represents total)
 
 yF   <- 100000  # rate constant 
 pop5 <- 5       # 5 years
@@ -188,11 +190,11 @@ oshpd16   <- oshpd16  %>%
          lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
          lev3  = ifelse(nLast4 == 4,codeLast4,NA) # MICHAEL this was commented out
          ) %>% 
-  left_join(., select(geoMap,cdphcaCountyTxt,County=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>%    # added select....
-  left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
+  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>%    # joins geoMap countyName and cdphcaCountyTxt variables to oshpd16 (all in one statement), renames countyName as county
+  left_join(., OSHPD_sex, by = c("sex" = "sex_num")) #joins sex category definitions
 
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
-oshpd16 <- bind_rows(oshpd16, oshpd16sex)
+oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
 
 
 
@@ -212,8 +214,8 @@ oshpd16 <- bind_rows(oshpd16, oshpd16sex)
 
 
 #Group_by_at
-
-calculate_num_costs <- function(data, groupvar, levLab) {
+#Function to sum number of hospitalizations and charges 
+sum_num_costs <- function(data, groupvar, levLab) {
   
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
     summarize(n_hosp = n(), charges = sum(charge, na.rm = TRUE)) 
@@ -227,49 +229,127 @@ calculate_num_costs <- function(data, groupvar, levLab) {
 #lev2 = public health level
 
 
-if (1==2) {
+#function to calculate crude hospitalization rates and charge-rates 
 calculate_crude_rates <- function(data, yearN) {
-  data %>% mutate(cDeathRate = yF*n_hosp/(yearN*pop), 
-            rateLCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
-            rateUCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper)
+  data %>% mutate(cHospRate = yF*n_hosp/(yearN*pop), 
+            hosp_rateLCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
+            hosp_rateUCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper,
+            cChargeRate = yF*charges/(yearN*pop),
+            charge_rateLCI     = yF*pois.approx(charges,yearN*pop, conf.level = 0.95)$lower,
+            charge_rateUCI     = yF*pois.approx(charges,yearN*pop, conf.level = 0.95)$upper)
 }
+
+
+
+#function to calculate age-adjusted hospitalization rates
+
+# https://github.com/cran/epitools/blob/master/R/ageadjust.direct.R
+
+ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 0.95) 
+{
+  if (missing(count) == TRUE & !missing(pop) == TRUE & is.null(rate) == TRUE)   count <- rate * pop
+  if (missing(pop) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     pop <- count/rate
+  if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(pop) == TRUE)  rate <- count/pop
+  
+  rate[is.na(pop)]   <- 0
+  rate[is.null(pop)] <- 0
+  pop[is.na(pop)]    <- 0
+  pop[is.null(pop)]  <- 0
+  
+  alpha <- 1 - conf.level
+  cruderate <- sum(count,na.rm=TRUE)/sum(pop,na.rm=TRUE)
+  stdwt <- stdpop/sum(stdpop,na.rm=TRUE)
+  dsr <- sum(stdwt * rate,na.rm=TRUE)
+  dsr.var <- sum((stdwt^2) * (count/pop^2))
+  dsr.se  <- sqrt(dsr.var)
+  wm<- max(stdwt/pop)
+  gamma.lci <- qgamma(alpha/2, shape = (dsr^2)/dsr.var, scale = dsr.var/dsr)
+  gamma.uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
+                      scale = (dsr.var+wm^2)/(dsr+wm))
+  
+  c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
+    uci = gamma.uci, se = dsr.se)
 }
 
-#-------------------------------------------------------------------------------------------------------------#
+#-------------------------------Creating summary dataset with number of hospitalizations and charges, by condition and gender (includes total)--------------------------------------#
 
-#Adding populations information
-popCountySex16 <- popCountySex %>% filter(., year == "2016")
+#Statewide
+s.lev0 <- sum_num_costs(oshpd16, c("sex", "lev0", "year"), "lev0")
+s.lev1 <- sum_num_costs(oshpd16, c("sex", "lev1", "year"), "lev1") #top level
+s.lev2 <- sum_num_costs(oshpd16, c("sex", "lev2", "year"), "lev2") #public health level
+s.lev3 <- sum_num_costs(oshpd16, c("sex", "lev3", "year"), "lev3")
+state_sum <- bind_rows(s.lev0, s.lev1, s.lev2, s.lev3)
+state_sum$county <- STATE #California as "county" variable
+
+#County
+c.lev0 <- sum_num_costs(oshpd16, c("sex", "lev0", "county", "year"), "lev0")
+c.lev1 <- sum_num_costs(oshpd16, c("sex", "lev1", "county", "year"), "lev1") #top level
+c.lev2 <- sum_num_costs(oshpd16, c("sex", "lev2", "county", "year"), "lev2") #public health level
+c.lev3 <- sum_num_costs(oshpd16, c("sex", "lev3", "county", "year"), "lev3") 
+county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
+
+#merging county and state
+total_sum <- bind_rows(state_sum, county_sum)
+
+total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county"))
+
+
+#calculating crude rates
+
+total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 
 
-#Top Level, statewide
-s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1") %>% mutate(County = "State")
 
 
-#Top Level, county
-c.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1", "County"), "lev1")
-
-#Public Health level, statewide
-s.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2"), "lev2") %>% mutate(County = "State")
-
-#Public health level, county
-
-c.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2", "County"), "lev2")
 
 
-##Do I create separate datasets for county and state? 
-datcounty <- bind_rows(c.lev1, c.lev2) %>% rename(county = County, sex = sex_cat)
 
-datcounty <- left_join(datcounty, popCountySex16, by = c("sex", "county"))
+
+
 
 
 
 #-------Quick plot of charges-----------------#
 #total s.lev1
-s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 
 #total s.lev2
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex_cat,scales="free_x")
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+
+
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~ .,scales="free_x")
+
+
+slev2test <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges))
+
+#Testing--grouping facet groups and ordering
+
+#group by sex before reorder
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+#seems to order based on Female charge/condition rankings
+
+#no group by sex before reorder
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+#seems to order based on Male charge/condition rankings
+
+#Alternative method?
+pd <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% top_n(10, charges) %>% ungroup() %>% arrange(sex, charges) %>% mutate(order = row_number())
+
+pd2 <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% top_n(10, charges) %>% arrange(sex, charges)
+#https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets
+
+ggplot(pd, aes(x = order, y = charges)) + geom_bar(stat = "identity") + coord_flip() + facet_grid(sex ~ .,scales="free_x") + scale_x_continuous(breaks = pd$order, labels = pd$CAUSE) + xlab("CAUSE") #This sort of works?
+
+pd %>% ggplot(., aes(x = order, y = charges)) + geom_bar(stat = "identity") + coord_flip() + facet_grid(. ~ sex,scales="free_x") + scale_x_continuous(breaks = pd$order, labels = pd$CAUSE) + xlab("CAUSE") #This doesn't work properly
+
+pd2 %>% ggplot(., aes(x = CAUSE, y = charges)) + geom_bar(stat = "identity") + coord_flip() + facet_grid(. ~ sex, scales = "free_x") 
+
+
+#Reorders in based on males charges
+
+# if remove male, based on total
+#if remove female, based on total 
 
 
 
