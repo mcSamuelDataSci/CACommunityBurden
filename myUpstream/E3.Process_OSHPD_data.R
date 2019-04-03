@@ -333,6 +333,8 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 #seems to order based on Male charge/condition rankings
 
+
+
 #Alternative method?
 pd <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% top_n(10, charges) %>% ungroup() %>% arrange(sex, charges) %>% mutate(order = row_number())
 
