@@ -5,7 +5,7 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
-whichData     <- "real"   # "real" or "fake"
+whichData     <- "fake"   # "real" or "fake"
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
@@ -21,7 +21,7 @@ myPlace <- paste0(myDrive,"/myCBD")
 upPlace <- paste0(myDrive,"/myUpstream") 
 
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
-if (whichData=="real") .deaths		<- "g:/0.Secure.Data/myData/cbdDat0FULL.R" 
+if (whichData=="real") .deaths		<- "h:/0.Secure.Data/myData/cbdDat0FULL.R" 
 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
@@ -146,7 +146,7 @@ if (whichData == "fake"  ) {
 
 if (whichData == "real"  ) {
   
- .midPath <- "g:/0.Secure.Data/myData/"
+ .midPath <- "h:/0.Secure.Data/myData/"
     
  saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
  saveRDS(dx.mssa,   file=paste0(.midPath,"dxMSSA.rds"))    # output deaths by mssa

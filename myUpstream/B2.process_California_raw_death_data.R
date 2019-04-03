@@ -18,10 +18,10 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "G:/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "H:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
-myDrive    <- "E:"  # ROOT Location of CBD Project
+myDrive    <- "F:"  # ROOT Location of CBD Project
 
 myPlace    <- paste0(myDrive,"/0.CBD/myCBD")
 upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
@@ -267,10 +267,10 @@ load(paste0(.sl,"/myData/cbdDat0FULL.R"))
 work <- cbdDat0FULL
 work <- work[,c("year","state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","raceCode","ICD10")]
 
-sampN1 <- 200000  
+sampN1 <- 400000  
 half1  <- sample_n(work,sampN1)  # sample function from dplyr
 
-sampN2       <- 300000
+sampN2       <- 600000
 p1           <- sample_n(work[,1:7],  sampN2)
 p2           <- sample_n(work[,8:10], sampN2)
 p3           <- sample_n(work[,10:11], sampN2)
