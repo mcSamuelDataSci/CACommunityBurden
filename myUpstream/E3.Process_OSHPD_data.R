@@ -237,23 +237,32 @@ calculate_crude_rates <- function(data, yearN) {
 
 #-------------------------------------------------------------------------------------------------------------#
 
+#Adding populations information
+popCountySex16 <- popCountySex %>% filter(., year == "2016")
 
-testmerge <- merge(oshpd16, popCountySex, by = c("year", "county", "sex_cat"))
 
 
 #Top Level, statewide
-s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1") 
+s.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1"), "lev1") %>% mutate(County = "State")
 
 
 #Top Level, county
-c.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1", "patcnty"), "lev1")
+c.lev1 <- calculate_num_costs(oshpd16, c("sex_cat", "lev1", "County"), "lev1")
 
 #Public Health level, statewide
-s.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2"), "lev2")
+s.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2"), "lev2") %>% mutate(County = "State")
 
 #Public health level, county
 
-c.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2", "patcnty"), "lev2")
+c.lev2 <- calculate_num_costs(oshpd16, c("sex_cat", "lev2", "County"), "lev2")
+
+
+##Do I create separate datasets for county and state? 
+datcounty <- bind_rows(c.lev1, c.lev2) %>% rename(county = County, sex = sex_cat)
+
+datcounty <- left_join(datcounty, popCountySex16, by = c("sex", "county"))
+
+
 
 #-------Quick plot of charges-----------------#
 #total s.lev1
