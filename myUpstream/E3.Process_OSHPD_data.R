@@ -318,40 +318,58 @@ s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder
 s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 
 
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~ .,scales="free_x")
+
+#----------Ordering based on charges for Total facet--------------------------------#
+
+#Testing reorder--this works, although it is a base R way 
+reordered_factor <- reorder(s.lev2$CAUSE[s.lev2$sex == "Total"], s.lev2$charges[s.lev2$sex == "Total"])
+
+s.lev2$CAUSE <- factor(s.lev2$CAUSE, levels = levels(reordered_factor)) 
 
 
-slev2test <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges))
+s.lev2 %>% filter(., CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 
-#Testing--grouping facet groups and ordering
 
-#group by sex before reorder
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+
+#Using forcats::fct_reorder--this allows you to reorder, but doesn't control the facet variable by which you want it ordered:
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+
+
+#This uses fct_reorder, based on an example here: https://stackoverflow.com/questions/54458018/passing-string-variable-to-forcatsfct-reorder. However, although the example works, I keep getting an error message when I try to run int on
+#this data: 
+#Error in mutate_impl(.data, dots) : 
+#Evaluation error: length(f) == length(.x) is not TRUE.
+
+
+s.lev2 %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~ .,scales="free_x") #Doesn't work
+
+#group by sex before filtered reorder--this does work?! (Don't really understand all the underlying mechanics of why it only works this way, but it seems like this is the way to go)
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 #seems to order based on Female charge/condition rankings
 
-#no group by sex before reorder
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
-#seems to order based on Male charge/condition rankings
 
 
 
-#Alternative method?
-pd <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% top_n(10, charges) %>% ungroup() %>% arrange(sex, charges) %>% mutate(order = row_number())
-
-pd2 <- s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% top_n(10, charges) %>% arrange(sex, charges)
-#https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets
-
-ggplot(pd, aes(x = order, y = charges)) + geom_bar(stat = "identity") + coord_flip() + facet_grid(sex ~ .,scales="free_x") + scale_x_continuous(breaks = pd$order, labels = pd$CAUSE) + xlab("CAUSE") #This sort of works?
-
-pd %>% ggplot(., aes(x = order, y = charges)) + geom_bar(stat = "identity") + coord_flip() + facet_grid(. ~ sex,scales="free_x") + scale_x_continuous(breaks = pd$order, labels = pd$CAUSE) + xlab("CAUSE") #This doesn't work properly
-
-pd2 %>% ggplot(., aes(x = CAUSE, y = charges)) + geom_bar(stat = "identity") + coord_flip() + facet_grid(. ~ sex, scales = "free_x") 
 
 
-#Reorders in based on males charges
 
-# if remove male, based on total
-#if remove female, based on total 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
