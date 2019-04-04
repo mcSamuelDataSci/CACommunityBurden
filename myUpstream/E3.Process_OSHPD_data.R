@@ -91,16 +91,22 @@ saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
 ##------------------------------------Reading in data mapping/linkage files--------------------#
 #reading in gbd.ICD.excel file}
-icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
+icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, nameOnly, CODE, LABEL, ICD10_CM, regExICD10_CM)
 
 #reading in county-codes-to-names linkage files --oshpd codes map to column "cdphcaCountyTxt"
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
 
+#sex categories
 sex_num <- c("1", "2", "3", "4")
-
 sex_cat <- c("Male", "Female", "Other", "Unknown")
-
 OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
+
+#race categories
+race_grp <- c("0", "1", "2", "3", "4", "5", "6")
+race_cat <- c("Unknown/Invalid/blank","White-NH", "Black-NH", "Hisp", "Asian-PI", "Native American/Alaskan Native", "Other")
+OSHPD_race_grp <- cbind(race_grp, race_cat) %>% as.data.frame() 
+
+
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
 STATE <- "California" #Defining California to be included later in county population labelling/estimates (California represents total)
@@ -190,9 +196,12 @@ oshpd16   <- oshpd16  %>%
          lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
          lev3  = ifelse(nLast4 == 4,codeLast4,NA) # MICHAEL this was commented out
          ) %>% 
-  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>%    # joins geoMap countyName and cdphcaCountyTxt variables to oshpd16 (all in one statement), renames countyName as county
-  left_join(., OSHPD_sex, by = c("sex" = "sex_num")) #joins sex category definitions
+  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% mutate(race_grp = as.factor(race_grp)) %>%
+  left_join(., OSHPD_race_grp, by = "race_grp") %>%
+  left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
 
+
+#Adding Total in order to create total/statewide estimates (for grouping function later)
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
 
@@ -271,7 +280,7 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
     uci = gamma.uci, se = dsr.se)
 }
 
-#-------------------------------Creating summary dataset with number of hospitalizations and charges, by condition and gender (includes total)--------------------------------------#
+#-----------------------COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA FILES AND CRUDE RATES------------------------------------------------------#
 
 #Statewide
 s.lev0 <- sum_num_costs(oshpd16, c("sex", "lev0", "year"), "lev0")
@@ -293,6 +302,7 @@ total_sum <- bind_rows(state_sum, county_sum)
 
 total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county"))
 
+#total_sum_pop$causeName <- icd_map[match(total_sum_pop$CAUSE,icd_map[,1]),"nameOnly"]  # Is this supposed to match names to conditions (via icd_map coding/guide)?
 
 #calculating crude rates
 
@@ -300,6 +310,12 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 
 
+#--------------------------------------------RACE-ETHNICITY COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA AND CRUDE RATES----------------------------------------------------#
+
+#popCountySex.RE dataset has populations by year groups (eg 2000-2002) instead of single years, and the race/ethnicity groups are different from the race_grp codes in OSHPD--how should we go about race-ethnicity summary data sets?
+
+
+#?
 
 
 
@@ -310,7 +326,28 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 
 
+
+
+
+
+
+
+
+
+#-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
+
+
+
+
+
+
+
+
+
+#********************************************************************************************************#
 #-------Quick plot of charges-----------------#
+#************************************************************************************************************#
+
 #total s.lev1
 s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 
