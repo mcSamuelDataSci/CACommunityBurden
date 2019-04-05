@@ -298,7 +298,7 @@ c.lev3 <- sum_num_costs(oshpd16, c("sex", "lev3", "county", "year"), "lev3")
 county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
 
 #merging county and state
-total_sum <- bind_rows(state_sum, county_sum)
+total_sum <- bind_rows(state_sum, county_sum) %>% as.data.frame()
 
 total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county"))
 
@@ -391,65 +391,123 @@ ageCounty <- full_join(total_sum_age, popCountySexAgeG, by = c("county", "year",
 
 #Calculating age-adjusted rates--why are we using ageadjust.direct.SAM instead of ageadjust.direct?
 
-countyAA <- ageCounty %>% group_by(county, year, sex, CAUSE) %>% summarize(aRate = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[2]*yF,
+countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, CAUSE, Level) %>% summarize(ahospRate = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[2]*yF,
                                                                            aLCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[3]*yF,
                                                                            aUCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[4]*yF,
                                                                            aSE = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[5]*yF) %>% filter(year == "2016")
 
-
-
-
-
-
-
-
-
-
+#countyAA contains age-adjusted hospitalization rates by CAUSE/level
 
 #********************************************************************************************************#
 #-------Quick plot of charges------------------------------------------------------------------------------------------------------#
 #************************************************************************************************************#
 
-#total s.lev1
-s.lev1 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+#####CHARGES RANKING############
 
-#total s.lev2
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+#SUMS-CHARGES
+#total CA, s.lev1
+total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+#total CA, s.lev2
+total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+
+#county rankings, lev1--this isn't really a useful visual
+total_sum %>% filter(!is.na(CAUSE), Level == "lev1") %>% ggplot(., aes(x = CAUSE, y = charges, fill = county)) + coord_flip() + geom_bar(stat = "identity", position = position_dodge()) 
+
+
+#CHARGE-RATES
+#total CA, s.lev1
+total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% 
+  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
+  ggplot(., aes(x = CAUSE, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+
+#total CA, s.lev2
+total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% 
+  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
+  ggplot(., aes(x = CAUSE, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+
+#------------SUM-NHOSP-----------#
+#total CA, s.lev1
+total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+#Or alternative facet:
+
+total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+#total CA, s.lev2
+total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+#Or alternative facet:
+total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(.~sex, scales = "free_x")
+
+#--------------CRUDE RATES-NHOSP------------#
+#total CA, s.lev1
+total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev1", county  == "California") %>% group_by(sex) %>%
+  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cHospRate))) %>%
+  ggplot(., aes(x = CAUSE, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+
+#total CA, s.lev2
+total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev2", county  == "California") %>% group_by(sex) %>%
+  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cHospRate))) %>%
+  ggplot(., aes(x = CAUSE, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+#-----------AGE-ADJUSTED RATES-NHOSP--------------------------#
+
+#total CA, s.lev1
+countyAA %>% filter(Level == "lev1", county  == "California") %>% group_by(sex) %>%
+  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(ahospRate))) %>%
+  ggplot(., aes(x = CAUSE, y = ahospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+
+#total CA, s.lev2
+countyAA %>% filter(Level == "lev2", county  == "California") %>% group_by(sex) %>%
+  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(ahospRate))) %>%
+  ggplot(., aes(x = CAUSE, y = ahospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
 
 
 
-#----------Ordering based on charges for Total facet--------------------------------#
+
+
+
+
+#----------How to set up axis order based on charges for Total facet--------------------------------#
 
 #Testing reorder--this works, although it is a base R way 
-reordered_factor <- reorder(s.lev2$CAUSE[s.lev2$sex == "Total"], s.lev2$charges[s.lev2$sex == "Total"])
+#reordered_factor <- reorder(s.lev2$CAUSE[s.lev2$sex == "Total"], s.lev2$charges[s.lev2$sex == "Total"])
 
-s.lev2$CAUSE <- factor(s.lev2$CAUSE, levels = levels(reordered_factor)) 
+#s.lev2$CAUSE <- factor(s.lev2$CAUSE, levels = levels(reordered_factor)) 
 
 
-s.lev2 %>% filter(., CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+#s.lev2 %>% filter(., CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 
 
 
 #Using forcats::fct_reorder--this allows you to reorder, but doesn't control the facet variable by which you want it ordered:
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+#s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
 
 
-#This uses fct_reorder, based on an example here: https://stackoverflow.com/questions/54458018/passing-string-variable-to-forcatsfct-reorder. However, although the example works, I keep getting an error message when I try to run int on
-#this data: 
-#Error in mutate_impl(.data, dots) : 
-#Evaluation error: length(f) == length(.x) is not TRUE.
-
-
-s.lev2 %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
-  ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~ .,scales="free_x") #Doesn't work
-
-#group by sex before filtered reorder--this does work?! (Don't really understand all the underlying mechanics of why it only works this way, but it seems like this is the way to go)
+#This uses fct_reorder, based on an example here: https://stackoverflow.com/questions/54458018/passing-string-variable-to-forcatsfct-reorder. 
 s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
-#seems to order based on Female charge/condition rankings
+
+#group by sex before filtered reorder--this does work! Need to group_by the variable by which you'll be filtering (e.g. here: "sex"), otherwise yields this error: #Error in mutate_impl(.data, dots) : 
+#Evaluation error: length(f) == length(.x) is not TRUE. (Don't really understand the underlying mechanics for why this works)
 
 
 
-
+#Figures to make:
+#Rank by charges--num vs crude rates 
+#Rank by n-hosp--num, crude rates, age-adjust
+#County vs state n-hosp rankings
 
 
 
@@ -490,7 +548,7 @@ ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart diseas
 #index variables will have to be defined prior to running function--although this makes the code not quite "self-annotated", R
 #doesn't seem to allow calling an index based on a range of variable names within a data.frame
 
-#apply(X, Margin, function, ...) X = an array, inclduing a matrix, Margin = vector giving the subscripts which the function will
+#apply(X, Margin, function, ...) X = an array, including a matrix, Margin = vector giving the subscripts which the function will
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
