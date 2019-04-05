@@ -336,6 +336,68 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 #-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
 
+# makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
+
+year     <- data.frame(year     = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
+yearG    <- data.frame(yearG    = yearGrp)
+yearG3   <- data.frame(yearG3   = sort(unique(cbdDat0$yearG3)))
+CAUSE1   <- data.frame(CAUSE    = allLabels) 
+CAUSE2   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
+CAUSE3   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
+sex      <- data.frame(sex      = c("Male","Female","Total"))
+ageG     <- data.frame(ageG     = sort(unique(cbdDat0$ageG)))
+county   <- data.frame(county   = c(geoMap$countyName,"California"))         
+comID    <- data.frame(comID    = unique(cbdLinkCA[,"comID"]))
+GEOID    <- data.frame(GEOID    = cbdLinkCA[,"GEOID"])
+raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)))
+
+# other cool approach from Adam:
+# fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageG))
+fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE1 cross join sex cross join ageG")
+fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
+fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
+
+
+#######CAUSE CHARACTER##################
+
+fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+
+#---------------------Age deaths (county and statewide)-------------------------------------
+#Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
+
+sA0 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev0"), "lev0") %>% mutate(county = STATE)
+sA1 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev1"), "lev1") %>% mutate(county = STATE)
+sA2 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev2"), "lev2") %>% mutate(county = STATE)
+sA3 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev3"), "lev3") %>% mutate(county = STATE)
+cA0 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev0"), "lev0") 
+cA1 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev1"), "lev1")
+cA2 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev2"), "lev2") 
+cA3 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev3"), "lev3") 
+
+total_sum_age <- bind_rows(sA0, sA1, sA2, sA3, cA0, cA1, cA2, cA3)
+
+#data cleaning
+total_sum_age <- filter(total_sum_age, !is.na(ageG)) #nothing removed
+total_sum_age <- filter(total_sum_age, !is.na(county)) #removed records with missing county
+#total_sum_age <- filter(total_sum_age, !is.na(CAUSE)) #remove missing cause?
+#total_sum_age <- filter(total_sum_age, !is.na(sex)) #remove missing sex?
+
+
+ageCounty <- full_join(total_sum_age, popCountySexAgeG, by = c("county", "year", "sex", "ageG")) %>% full_join(., popStandard[,c("ageG", "US2000POP")], by = "ageG") #joining population data and standard population data with summary hosp/charges by age and sex
+
+#Now we have a dataset with the number of hospitalizations for each CAUSE, by county, age group, gender, and "level", as well as info about the population and standard population for each demographic group--this dataset will be use to calculate age-adjusted rates
+
+#Calculating age-adjusted rates--why are we using ageadjust.direct.SAM instead of ageadjust.direct?
+
+countyAA <- ageCounty %>% group_by(county, year, sex, CAUSE) %>% summarize(aRate = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[2]*yF,
+                                                                           aLCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[3]*yF,
+                                                                           aUCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[4]*yF,
+                                                                           aSE = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[5]*yF) %>% filter(year == "2016")
+
+
+
 
 
 
@@ -345,7 +407,7 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 
 #********************************************************************************************************#
-#-------Quick plot of charges-----------------#
+#-------Quick plot of charges------------------------------------------------------------------------------------------------------#
 #************************************************************************************************************#
 
 #total s.lev1
