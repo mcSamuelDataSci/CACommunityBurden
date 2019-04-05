@@ -504,11 +504,6 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 
 
-#Figures to make:
-#Rank by charges--num vs crude rates 
-#Rank by n-hosp--num, crude rates, age-adjust
-#County vs state n-hosp rankings
-
 
 
 
