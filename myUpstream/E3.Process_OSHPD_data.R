@@ -53,7 +53,6 @@ oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, 
 
 
 #Saving subset as RDS file
-saveRDS(oshpd_subset, file=path(.sl, "oshpd_subset.rds"))
 saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
 
 
