@@ -90,7 +90,7 @@ saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
 ##------------------------------------Reading in data mapping/linkage files--------------------#
 #reading in gbd.ICD.excel file}
-icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, nameOnly, CODE, LABEL, ICD10_CM, regExICD10_CM)
+icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) 
 
 #reading in county-codes-to-names linkage files --oshpd codes map to column "cdphcaCountyTxt"
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
@@ -166,6 +166,17 @@ allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #This sorts all of the L
 
 mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creates a new object, mapICD, of all non-missing CODE variables, and the corresponding regEx10
 #associated with them. This object will be used to assign CODE/LABELS to diagnoses later
+
+fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+fullList          <- fullCauseList[,"LABEL"]
+names(fullList)   <- fullCauseList[,"causeList" ]
+
+fullCauseList[fullCauseList[,"LABEL"]== CAUSE,"nameOnly"]
+
+
+
+
+
 
 #Function from death code R script by MS
 
@@ -335,6 +346,7 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 #-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
 
+if {1==2
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
 year     <- data.frame(year     = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
@@ -360,8 +372,12 @@ fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE
 #######CAUSE CHARACTER##################
 
 fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+#fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+#fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+
+#What's the purpose of all of the above code? --> creates a matrix of all possible combinations--needed at an intermediate stage
+}
+
 
 #---------------------Age deaths (county and statewide)-------------------------------------
 #Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
@@ -405,8 +421,51 @@ countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, 
 
 #SUMS-CHARGES
 #total CA, s.lev1
-total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
-  ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+condition <- fullCauseList[match(total_sum[, "CAUSE"], fullCauseList[,"LABEL"]),"nameOnly"]
+
+tsum_CAUSE <- total_sum[, "CAUSE"]
+tsum_new <- total_sum %>% filter(!is.na(CAUSE))
+
+tsum_new2 <- tsum_new %>% select(CAUSE) %>% as.vector()
+
+tsum_new2 <- as.vector(t(tsum_new2))
+
+fullCauseList_LABEL <- fullCauseList[,"LABEL"] 
+
+fullCauseList_LABEL <- as.vector(t(fullCauseList_LABEL))
+
+match(tsum_new2, fullCauseList_LABEL)
+
+match(tsum_new[, "CAUSE"], fullCauseList_LABEL)
+
+condition <- fullCauseList[match(tsum_new[, "CAUSE"], fullCauseList_LABEL),"nameOnly"]
+
+
+
+match(tsum_CAUSE, fullCauseList_LABEL)               
+                   
+                   yearG   = yearMap[match(year,yearMap[,"year"]),"yearGroup5"]
+                   
+total_sum <- total_sum %>% mutate(fullCauseList[match(CAUSE, fullCauseList_LABEL), "nameOnly"])
+
+test <- total_sum
+
+junk <- fullCauseList[match(test$CAUSE, fullCauseList_LABEL), 3]
+
+names(junk) <- NA
+test$newname <- junk
+                   
+test %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = newname.NA, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x") 
+
+names(test)[8]<- "testname"
+
+
+
+test %>% ggplot(., aes(x = county, y = charges)) + coord_flip() + geom_bar(stat = "identity")
+
+#------------------------------------------------------------------------------------------------------------------
+
 
 #total CA, s.lev2
 total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
