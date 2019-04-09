@@ -31,7 +31,6 @@ newData  <- FALSE
 #-- Load Packages -------------------------------------------------------------
 
 library(tidyverse)
-library(ggplot2)
 library(haven)
 library(fs)
 library(readxl)
@@ -167,11 +166,11 @@ allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #This sorts all of the L
 mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creates a new object, mapICD, of all non-missing CODE variables, and the corresponding regEx10
 #associated with them. This object will be used to assign CODE/LABELS to diagnoses later
 
-fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
 
-fullCauseList[fullCauseList[,"LABEL"]== CAUSE,"nameOnly"]
+#fullCauseList[fullCauseList[,"LABEL"]== CAUSE,"nameOnly"]
 
 
 
@@ -346,7 +345,7 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 #-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
 
-if {1==2
+if (1==2) {
 # makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
 
 year     <- data.frame(year     = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
@@ -417,120 +416,150 @@ countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, 
 #-------Quick plot of charges------------------------------------------------------------------------------------------------------#
 #************************************************************************************************************#
 
-#####CHARGES RANKING############
 
-#SUMS-CHARGES
-#total CA, s.lev1
-condition <- fullCauseList[match(total_sum[, "CAUSE"], fullCauseList[,"LABEL"]),"nameOnly"]
+#-------------------------------------------------------------------------------------------------------------#
+#*******************************************Testing match function for adding name labels***********************#
+#-------------------------------------------------------------------------------------------------------------------#
+#Testing code to create names variable based on matching CODE with LABEL in fullCauseList
 
-tsum_CAUSE <- total_sum[, "CAUSE"]
-tsum_new <- total_sum %>% filter(!is.na(CAUSE))
+#Testing separately 
+condition <- fullCauseList[match(total_sum[, "CAUSE"], fullCauseList[,"LABEL"]),"nameOnly"] #this creates a tbl of the right length, but all NA values
 
-tsum_new2 <- tsum_new %>% select(CAUSE) %>% as.vector()
-
-tsum_new2 <- as.vector(t(tsum_new2))
+tsum_CAUSE <- total_sum[, "CAUSE"] #creates a vector of CAUSE in total_sum 
 
 fullCauseList_LABEL <- fullCauseList[,"LABEL"] 
 
-fullCauseList_LABEL <- as.vector(t(fullCauseList_LABEL))
+fullCauseList_LABEL <- as.vector(t(fullCauseList_LABEL)) #converting to vector
 
-match(tsum_new2, fullCauseList_LABEL)
+match(tsum_new2, fullCauseList_LABEL) #this works--need both elements to be vectors in order to match
 
-match(tsum_new[, "CAUSE"], fullCauseList_LABEL)
+condition2 <- fullCauseList[match(tsum_CAUSE, fullCauseList_LABEL),"nameOnly"] #this creates a tbl of appropriate length, with the names from column nameONly from the appropriate matches of vector1 and vector2
 
-condition <- fullCauseList[match(tsum_new[, "CAUSE"], fullCauseList_LABEL),"nameOnly"]
-
-
-
-match(tsum_CAUSE, fullCauseList_LABEL)               
-                   
-                   yearG   = yearMap[match(year,yearMap[,"year"]),"yearGroup5"]
-                   
-total_sum <- total_sum %>% mutate(fullCauseList[match(CAUSE, fullCauseList_LABEL), "nameOnly"])
-
-test <- total_sum
-
-junk <- fullCauseList[match(test$CAUSE, fullCauseList_LABEL), 3]
-
-names(junk) <- NA
-test$newname <- junk
-                   
-test %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
-  ggplot(., aes(x = newname.NA, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x") 
-
-names(test)[8]<- "testname"
+test <- total_sum #creating copy of total_sum for testing
 
 
 
-test %>% ggplot(., aes(x = county, y = charges)) + coord_flip() + geom_bar(stat = "identity")
+#Trying to create new column of matched values--
 
-#------------------------------------------------------------------------------------------------------------------
+test$junk <- fullCauseList[match(test$CAUSE, fullCauseList_LABEL), 3] #this creates a new column, which we want to call "junk" and contain the "namesOnly" data, but R appears to append the two together and names it: junk.namesOnly?
+
+names(test) #when checking the names of the columns: sex, CAUSE, year, n_hosp, charges, Level, county, and junk (which is what we named the column)
+
+#test ggplot                 
+test %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(junk = forcats::fct_reorder(junk, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = junk, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x") 
+#Error: column 'junk' must be a 1d atomic vector or a list
+
+##junk is saved as a dataframe instead of a variable, which is why we get the above vector 
+
+class(test$junk)
+class(test$sex)
+class(fullCauseList) #fullCauseList is somehow saved as a tbl when read in, rather than as a dataframe, which in turn, causes R to save the "junk" variable as a dataframe instead of a variable with a dataframe
+
+fullCauseList <- fullCauseList %>% as.data.frame() #in order to successfully match, need to first save fullCauseList as a dataframe instead of a tbl
+
+test2 <- mutate(total_sum, junk2 = fullCauseList[match(test$CAUSE, fullCauseList[, "LABEL"]), "nameOnly"]) #Now this works!
+
+
+
+
+#Alternative-- Pasting conditions2 to test--This works. Therefore, we should probably just do a join instead of trying to create a new variable using match:
+test2 <- cbind(total_sum, condition2)
+#test ggplot                 
+test2 %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x") 
+
+
+
+###WHAT IF WE JOIN INSTEAD OF MATCH? 
+#LABEL in fullCauseList is our key, we want to match to CAUSE in total_sum 
+
+test2 <- left_join(total_sum, fullCauseList, by = c("CAUSE" = "LABEL"))
+
+test2 %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(junk = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = junk, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x") 
+
+#-----------------------------------------------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+
+#####CHARGES RANKING############
+#SUMS-CHARGES
+#total CA, s.lev1
+total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
 
 
 #total CA, s.lev2
-total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% 
-  ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))%>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
+  ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~ ., scales = "free_x")
 
 
 #county rankings, lev1--this isn't really a useful visual
-total_sum %>% filter(!is.na(CAUSE), Level == "lev1") %>% ggplot(., aes(x = CAUSE, y = charges, fill = county)) + coord_flip() + geom_bar(stat = "identity", position = position_dodge()) 
+total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1") %>% 
+  ggplot(., aes(x = nameOnly, y = charges, fill = county)) + coord_flip() + geom_bar(stat = "identity", position = position_dodge()) 
 
 
 #CHARGE-RATES
 #total CA, s.lev1
-total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% 
-  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = CAUSE, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% 
+  mutate(CAUSE = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
+  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
 
 
 #total CA, s.lev2
-total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% 
-  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = CAUSE, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% 
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
+  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
 
 
 #------------SUM-NHOSP-----------#
 #total CA, s.lev1
-total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% 
+  group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
 
 #Or alternative facet:
 
-total_sum %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% 
+  group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
 
 #total CA, s.lev2
-total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% 
+  group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
 
 #Or alternative facet:
-total_sum %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = CAUSE, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(.~sex, scales = "free_x")
+total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% 
+  group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(.~sex, scales = "free_x")
 
 #--------------CRUDE RATES-NHOSP------------#
 #total CA, s.lev1
-total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev1", county  == "California") %>% group_by(sex) %>%
-  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cHospRate))) %>%
-  ggplot(., aes(x = CAUSE, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county  == "California") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cHospRate))) %>%
+  ggplot(., aes(x = nameOnly, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
 
 
 #total CA, s.lev2
-total_crude_rates %>% filter(!is.na(CAUSE), Level == "lev2", county  == "California") %>% group_by(sex) %>%
-  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(cHospRate))) %>%
-  ggplot(., aes(x = CAUSE, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county  == "California") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cHospRate))) %>%
+  ggplot(., aes(x = nameOnly, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
 
 #-----------AGE-ADJUSTED RATES-NHOSP--------------------------#
 
 #total CA, s.lev1
-countyAA %>% filter(Level == "lev1", county  == "California") %>% group_by(sex) %>%
-  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(ahospRate))) %>%
-  ggplot(., aes(x = CAUSE, y = ahospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+countyAA %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(Level == "lev1", county  == "California") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(ahospRate))) %>%
+  ggplot(., aes(x = nameOnly, y = ahospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
 
 
 #total CA, s.lev2
-countyAA %>% filter(Level == "lev2", county  == "California") %>% group_by(sex) %>%
-  mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(ahospRate))) %>%
-  ggplot(., aes(x = CAUSE, y = ahospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+countyAA %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(Level == "lev2", county  == "California") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(ahospRate))) %>%
+  ggplot(., aes(x = nameOnly, y = ahospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
 
 
 
