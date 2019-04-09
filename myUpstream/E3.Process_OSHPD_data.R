@@ -441,6 +441,10 @@ test <- total_sum #creating copy of total_sum for testing
 
 #Trying to create new column of matched values--
 
+#testing code--will get rid of eventually
+
+if(1==2){
+
 test$junk <- fullCauseList[match(test$CAUSE, fullCauseList_LABEL), 3] #this creates a new column, which we want to call "junk" and contain the "namesOnly" data, but R appears to append the two together and names it: junk.namesOnly?
 
 names(test) #when checking the names of the columns: sex, CAUSE, year, n_hosp, charges, Level, county, and junk (which is what we named the column)
@@ -469,7 +473,7 @@ test2 <- cbind(total_sum, condition2)
 test2 %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
   ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x") 
 
-
+}
 
 ###WHAT IF WE JOIN INSTEAD OF MATCH? 
 #LABEL in fullCauseList is our key, we want to match to CAUSE in total_sum 
@@ -486,6 +490,7 @@ test2 %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% gro
 
 #####CHARGES RANKING############
 #SUMS-CHARGES
+
 #total CA, s.lev1
 total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
   ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
@@ -499,6 +504,30 @@ total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))%>% filter(!
 #county rankings, lev1--this isn't really a useful visual
 total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1") %>% 
   ggplot(., aes(x = nameOnly, y = charges, fill = county)) + coord_flip() + geom_bar(stat = "identity", position = position_dodge()) 
+
+
+
+#-------------Writing function for the above pipeline to simply. Variables that change: dataset, level and y variable (charge, nhosp, rates)--can also make county variable change?
+
+oshpd_visualize <- function(df, lev, var){
+  var <- enquo(var)
+  df %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == lev, county == "California") %>% group_by(sex) %>% 
+    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(!!var))) %>% 
+  ggplot(., aes(x = nameOnly, y = !!var)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+}
+
+oshpd_visualize(total_sum, "lev1", "Fresno", charges) #lev1 is in quotes and doesn't have to be enquo() within the function because it is the specific value of the variable Level that we're interested in. The var that represents the variable of inter
+#does have to be put through enquo() at the beginning of the function because it is a variable name. 
+
+
+##Changing the county name will only work when the number of female and male cases are the same--if not, even with the group_by(sex) statement, we get the error message:  Evaluation error: length(f) == length(.x) is not TRUE.
+
+plottest<- total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Fresno") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(cChargeRate))) %>% 
+  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
 #CHARGE-RATES
