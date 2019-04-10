@@ -100,6 +100,8 @@ sex_num <- c("1", "2", "3", "4")
 sex_cat <- c("Male", "Female", "Other", "Unknown")
 OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
 
+
+#DISCUSS***
 #race categories
 race_grp <- c("0", "1", "2", "3", "4", "5", "6")
 race_cat <- c("Unknown/Invalid/blank","White-NH", "Black-NH", "Hisp", "Asian-PI", "Native American/Alaskan Native", "Other")
@@ -353,15 +355,15 @@ raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)))
 # other cool approach from Adam:
 # fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageG))
 fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE1 cross join sex cross join ageG")
-fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
-fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
+# fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
+# fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
 
 
 #######CAUSE CHARACTER##################
 
 fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+# fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+# fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 
 #---------------------Age deaths (county and statewide)-------------------------------------
 #Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
