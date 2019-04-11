@@ -18,11 +18,11 @@ rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
 
   dat.1$causeList <- fullCauseList[match(dat.1$CAUSE,fullCauseList[,"LABEL"]),"causeList"]
   
-  dat.1 <- dat.1[,c("causeList","Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate","SMR")]
+  dat.1 <- dat.1[,c("causeList","Ndeaths","cDeathRate","aRate","aLCI","aUCI","YLL","YLLper","YLL.adj.rate","SMR")]
   
   dat.1[,3:7] <- round(dat.1[3:7],1)
   
-   names(dat.1) <- c("Condition","Number of deaths","Crude Death Rate","Age-Adjusted Death Rate","Years of Life Lost (YLL)","YLL per 100,000 population","Age-Adjusted YLL Rate","Standard Mortality Ratio")
+   names(dat.1) <- c("Condition","Number of deaths","Crude Death Rate","Age-Adjusted Death Rate (AADR)","Lower 95% CI AADR","Upper 95% CI AADR","Years of Life Lost (YLL)","YLL per 100,000 population","Age-Adjusted YLL Rate","Standard Mortality Ratio")
   
   dat.1
   
