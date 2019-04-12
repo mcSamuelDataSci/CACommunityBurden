@@ -14,10 +14,10 @@ maxYear <- 2017
 myCex <- 1.6
 myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
-dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total",raceCode != "Multi-NH") %>%
+dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
          mutate(raceName = raceNameFull[match(raceCode,raceCodeFull)] )
 
-
+#,raceCode != "Multi-NH"
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
 
