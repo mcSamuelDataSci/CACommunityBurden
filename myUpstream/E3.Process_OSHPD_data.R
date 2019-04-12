@@ -536,13 +536,26 @@ plottest<- total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "L
 #total CA, s.lev1
 total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% 
   mutate(CAUSE = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex, scales = "free_x")
 
-
+mysex <- "Female"
+m
 #total CA, s.lev2
 total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% 
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == mysex) %>% pull(cChargeRate))) %>% 
+  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+
+
+#Fresno
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Fresno") %>% group_by(sex) %>% 
+  #mutate(nameOnly = forcats::fct_reorder(nameOnly, cChargeRate)) %>% 
+  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~sex, scales = "free_x")
+
+
+
+
+
 
 
 #------------SUM-NHOSP-----------#
