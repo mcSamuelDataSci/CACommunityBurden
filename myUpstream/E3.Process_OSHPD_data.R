@@ -295,42 +295,58 @@ county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
 #merging county and state
 total_sum <- bind_rows(state_sum, county_sum) %>% as.data.frame()
 
-total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county"))
+total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other") %>% filter(!is.na(CAUSE)) #removing unknown and other gender variables, and all NA CAUSES?
+
+#The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't of the same length. 
+#To address this problem, we need to add in observations for the non-gender corresponding CAUSES, and give them values of 0 for n_hosp and charges:
+
+spread_total_sum_pop <- total_sum_pop %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) #This uses the spread() function to turn the sex and CAUSE columns into 3 variables: Female, Male, and Total, 
+#which contain the CAUSE as the observation within each variable. 
+
+female_county_level <- spread_total_sum_pop %>% group_by(Female, county, Level) %>% summarise() #summarises all the CAUSES for females, by county and level
+
+male_county_level <- spread_total_sum_pop %>% group_by(Male, county, Level) %>% summarise() #summarises all the CAUSES for male, by county and level
 
 
+female_only <- anti_join(female_county_level, male_county_level, by = c("Female" = "Male", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
+
+male_only <- anti_join(male_county_level, female_county_level, by = c("Male" = "Female", "county", "Level")) #These are the CAUSE-county-level pairs that are in the male dataset but not the female dataset
+
+#Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges
 
 
+female_new <- male_only %>% rename(Female = Male) %>% rbind(., female_county_level) #adding male only dataset to the female data
+
+male_new <- female_only %>% rename(Male = Female) %>% rbind(., male_county_level) #adding female only dataset to the male data
 
 
+#Now joining original spread_total_sum_pop with these datasets, replacing NA with zeros
+spread_total_sum_pop_new <- full_join(spread_total_sum_pop, female_new, by = c("Female", "county", "Level")) %>% full_join(., male_new, by = c("Male", "county", "Level"))
+
+#Example of replacing NA data in selected column
+#dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
+
+#replacing year with 2016
+spread_total_sum_pop_new$year[is.na(spread_total_sum_pop_new$year)] <- 2016
+
+#replacing NA for n_hosp and charges with 0
+spread_total_sum_pop_new$n_hosp[is.na(spread_total_sum_pop_new$n_hosp)] <- 0
+
+spread_total_sum_pop_new$charges[is.na(spread_total_sum_pop_new$charges)] <- 0
+
+#replacing NA in ageG with "Total"
+spread_total_sum_pop_new$ageG[is.na(spread_total_sum_pop_new$ageG)] <- "Total"
 
 
+#Now we will gather this dataset to put it in the form of the original dataset, then re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
 
-
-
-
-####Other info add here
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+total_sum_pop_new <- gather(spread_total_sum_pop_new, key = "sex", "CAUSE", Female, Male, Total) %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y) %>% 
+  filter(!(sex == "Total" & n_hosp == 0)) %>% ungroup()
 
 
 #calculating crude rates
 
-total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
+total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
 
 
 
@@ -449,11 +465,22 @@ oshpd_visualize(total_sum, "lev1", charges, "California", "Total") #lev1, Califo
 #Notes on programming with dplyr and explanation of enquo(): https://dplyr.tidyverse.org/articles/programming.html
 
 
-##Changing the county name will only work when the number of female and male cases are the same--if not, even with the group_by(sex) statement, we get the error message:  Evaluation error: length(f) == length(.x) is not TRUE.
+#For non-California counties, if I specify sex == "Female", it orders in order by Female rankings. However, if I specify sex = "Male" or "Total" it doesn't order at all (same presentation as if ordering wasn't specified)--why??
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Tulare") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#why doesn't this work?
 
-plottest<- total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Fresno") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Tulare") %>% 
+  ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+
+
+
+##using crude rates
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Butte") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 
 #----------How to set up axis order based on charges for Total facet--------------------------------#
 
