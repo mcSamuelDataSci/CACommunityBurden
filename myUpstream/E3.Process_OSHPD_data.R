@@ -465,12 +465,19 @@ oshpd_visualize(total_sum, "lev1", charges, "California", "Total") #lev1, Califo
 #Notes on programming with dplyr and explanation of enquo(): https://dplyr.tidyverse.org/articles/programming.html
 
 
-#For non-California counties, if I specify sex == "Female", it orders in order by Female rankings. However, if I specify sex = "Male" or "Total" it doesn't order at all (same presentation as if ordering wasn't specified)--why??
-#also works for LA
-#Also works for San Diego
-#Also works for Orange
-#Also works for Riverside
-#Stops working at San Bernardino and smaller
+#For some non-California counties, if I specify sex == "Female", it orders in order by Female rankings. However, if I specify sex = "Male" or "Total" it doesn't order at all (same presentation as if ordering wasn't specified)--why??
+#also works for LA-no 0s
+#Also works for San Diego--no 0s
+#Also works for Orange--no 0s
+#Also works for Riverside--no 0s
+#Works for Sacramento--no 0s
+#Works for San Mateo--no 0s
+#Works for Stanislaus--no 0s
+#Works for Sonoma--no 0s
+#Works for Kern--no 0s
+#Works for Humboldt total but not male? has a 0 in male, not in female
+
+#It seems that we can only control the ordering for the counties where there are no 0 values. For counties where there are 0 values, we can plot (which we couldn't do before), but can't control the ordering. 
 
 total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Los Angeles") %>% group_by(sex) %>%
   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
