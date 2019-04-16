@@ -23,7 +23,7 @@ whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
-SecureDataFile <- "g:/0.Secure.Data/myData/cbdDat0FULL.R"  
+SecureDataFile <- "e:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
