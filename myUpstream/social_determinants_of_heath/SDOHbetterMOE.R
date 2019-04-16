@@ -177,5 +177,14 @@ sdoh_dat_county <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
                                moe_edu_C = round(100* (sqrt ( sum(moe_edu^2,na.rm=TRUE)) / N_edu_C),3)
                                
                      )
+sdoh_dat_community <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
+  group_by(comID) %>%
+  summarize(N_edu_C = sum(N_edu,na.rm=TRUE),
+            n_edu_C = sum(n_edu,na.rm=TRUE),
+            est_edu_C = round(100*(n_edu_C/N_edu_C),2),
+            est_edu_X = (sum(est_edu*N_edu,na.rm=TRUE)/N_edu_C),
+            moe_edu_C = round(100* (sqrt ( sum(moe_edu^2,na.rm=TRUE)) / N_edu_C),3)
+            
+  )
 
 
