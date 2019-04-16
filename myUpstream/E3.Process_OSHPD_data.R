@@ -521,29 +521,6 @@ fakedat %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!i
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #----------How to set up axis order based on charges for Total facet--------------------------------#
 
 #Testing reorder--this works, although it is a base R way 
@@ -567,91 +544,60 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 
 
+####------------------------------------------Creating new dataset to plot all metrics on same plot/facets---------------------------------------------------------#
+
+#total_sum_pop_new = contains n_hosp and charges
+
+#total_crude_rates = contains crude hospitalization and charge rates
+
+#countyAA = contains age-adjusted hospitalization rates
+
+#Will have to do a series of spread/gather/join to create dataset 
+
+
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges)
+
+calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
+
+calculated_aa_rates <- countyAA %>% gather(key = "type", value = "measure", ahospRate) # The problem here is that age-agjusted doesn't contain 0 values for non-congruent M/F pairs--need to address this
+
+
+calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates)
+
+#------Proof of concept----------------------------------------------#
+
+#This works!
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, measure)) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") ##
+#why doesn't this work?--why is female the default? 
+
+
+#This works too!!
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
+  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") ##
+
+#Now that we can see that this works, need to figure out how to make sure age-adjusted has all 0 values for non-congruent pairs, before creating calculated_aa_rates variable
+#---------------------------------------------------------------------------------:::#
+
+test_join <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
+#replacing NA with 0 for ahospRate
+
+test_join <- test_join %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
 
 
 
+calculated_aa_rates2 <- test_join %>% gather(key = "type", value = "measure", ahospRate)
+
+calculated_metrics2 <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates2)
 
 
+calculated_metrics2 %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
+  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "ahospRate") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") ##
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#####CHARGES RANKING############
-#SUMS-CHARGES
-
-#total CA, s.lev1
-total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
-  ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
-
-
-#total CA, s.lev2
-total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))%>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(charges))) %>% 
-  ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~ ., scales = "free_x")
-
-
-#county rankings, lev1--this isn't really a useful visual
-total_sum %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1") %>% 
-  ggplot(., aes(x = nameOnly, y = charges, fill = county)) + coord_flip() + geom_bar(stat = "identity", position = position_dodge()) 
-
-
-
-#-------------Writing function for the above pipeline to simply. Variables that change: dataset, level and y variable (charge, nhosp, rates)--can also make county variable change?
-
-oshpd_visualize <- function(df, lev, var){
-  var <- enquo(var)
-  df %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == lev, county == "California") %>% group_by(sex) %>% 
-    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(!!var))) %>% 
-  ggplot(., aes(x = nameOnly, y = !!var)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
-
-}
-
-oshpd_visualize(total_sum, "lev1", "Fresno", charges) #lev1 is in quotes and doesn't have to be enquo() within the function because it is the specific value of the variable Level that we're interested in. The var that represents the variable of inter
-#does have to be put through enquo() at the beginning of the function because it is a variable name. 
-
-
-##Changing the county name will only work when the number of female and male cases are the same--if not, even with the group_by(sex) statement, we get the error message:  Evaluation error: length(f) == length(.x) is not TRUE.
-
-total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Fresno") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
-
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-#CHARGE-RATES
-#total CA, s.lev1
-total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev1", county == "California") %>% group_by(sex) %>% 
-  mutate(CAUSE = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(cChargeRate))) %>% 
-  ggplot(., aes(x = nameOnly, y = cChargeRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex, scales = "free_x")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Because scales are so different, is this type of visualization misleading though? 
 
 
 
