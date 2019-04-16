@@ -300,12 +300,12 @@ total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "count
 #The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't of the same length. 
 #To address this problem, we need to add in observations for the non-gender corresponding CAUSES, and give them values of 0 for n_hosp and charges:
 
-spread_total_sum_pop <- total_sum_pop %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) #This uses the spread() function to turn the sex and CAUSE columns into 3 variables: Female, Male, and Total, 
+spread_total_sum_pop <- total_sum_pop %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) %>% ungroup() #This uses the spread() function to turn the sex and CAUSE columns into 3 variables: Female, Male, and Total, 
 #which contain the CAUSE as the observation within each variable. 
 
-female_county_level <- spread_total_sum_pop %>% group_by(Female, county, Level) %>% summarise() #summarises all the CAUSES for females, by county and level
+female_county_level <- spread_total_sum_pop %>% group_by(Female, county, Level) %>% summarise() %>% ungroup() %>% as.data.frame() #summarises all the CAUSES for females, by county and level
 
-male_county_level <- spread_total_sum_pop %>% group_by(Male, county, Level) %>% summarise() #summarises all the CAUSES for male, by county and level
+male_county_level <- spread_total_sum_pop %>% group_by(Male, county, Level) %>% summarise() %>% ungroup() %>% as.data.frame() #summarises all the CAUSES for male, by county and level
 
 
 female_only <- anti_join(female_county_level, male_county_level, by = c("Female" = "Male", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
@@ -315,9 +315,9 @@ male_only <- anti_join(male_county_level, female_county_level, by = c("Male" = "
 #Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges
 
 
-female_new <- male_only %>% rename(Female = Male) %>% rbind(., female_county_level) #adding male only dataset to the female data
+female_new <- male_only %>% rename(Female = Male) %>% bind_rows(., female_county_level) #adding male only dataset to the female data
 
-male_new <- female_only %>% rename(Male = Female) %>% rbind(., male_county_level) #adding female only dataset to the male data
+male_new <- female_only %>% rename(Male = Female) %>% bind_rows(., male_county_level) #adding female only dataset to the male data
 
 
 #Now joining original spread_total_sum_pop with these datasets, replacing NA with zeros
@@ -341,7 +341,7 @@ spread_total_sum_pop_new$ageG[is.na(spread_total_sum_pop_new$ageG)] <- "Total"
 #Now we will gather this dataset to put it in the form of the original dataset, then re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
 
 total_sum_pop_new <- gather(spread_total_sum_pop_new, key = "sex", "CAUSE", Female, Male, Total) %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y) %>% 
-  filter(!(sex == "Total" & n_hosp == 0)) %>% ungroup()
+  filter(!(sex == "Total" & n_hosp == 0)) %>% ungroup() %>% as.data.frame()
 
 
 #calculating crude rates
@@ -466,21 +466,83 @@ oshpd_visualize(total_sum, "lev1", charges, "California", "Total") #lev1, Califo
 
 
 #For non-California counties, if I specify sex == "Female", it orders in order by Female rankings. However, if I specify sex = "Male" or "Total" it doesn't order at all (same presentation as if ordering wasn't specified)--why??
-total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Tulare") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
-#why doesn't this work?
+#why doesn't this work?--why is female the default? 
+
+
+
+
+
+
+
+
+
+
 
 total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Tulare") %>% 
   ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 
 
+#############################Creating fake dataset to try to diagnose issue with sorting%##################################
+
+fakedat1 <- rep(2016, 21) %>% as.data.frame()
+names(fakedat1) <- "year"
+
+fakedat2 <- c(2154, 45, 0, 40, 30, 55, 85, 45, 66, 20, 48, 56, 12, 13, 15, 16, 17, 19, 30, 22, 21) %>% as.data.frame()
+names(fakedat2) <- "n_hosp"
+
+fakedat3 <- c(1111, 2222, 0, 4444, 5555, 3333, 4444, 777, 55555, 6666, 8888, 999, 1000, 2000, 49999, 5474, 2929, 34949, 2222, 3333, 100) %>% as.data.frame()
+names(fakedat3) <- "charges"
+
+fakedat4 <- rep("Alameda", 21) %>% as.data.frame()
+names(fakedat4) <- "county"
+
+fakedat5 <- rep("Total", 21) %>% as.data.frame()
+names(fakedat5) <- "ageG"
+
+fakedat6 <- c("Female", "Female", "Female", "Female", "Female", "Female", "Female", "Male", "Male", "Male", "Male", "Male", "Male", "Male", "Total", "Total", "Total", "Total", "Total", "Total", "Total") %>% as.data.frame()
+names(fakedat6) <- "sex"
+
+fakedat7 <- c("C01", "C02", "C03", "C04", "C05", "D01", "D03", "C01", "C02", "C03", "C04", "C05", "D01", "D03", "C01", "C02", "C03", "C04", "C05", "D01", "D03") %>% as.data.frame()
+names(fakedat7) <- "CAUSE"
+
+fakedat8 <- rep("lev2", 21) %>% as.data.frame()
+names(fakedat8) <- "Level"
+
+fakedat <- bind_cols(fakedat1, fakedat2, fakedat3, fakedat4, fakedat5, fakedat6, fakedat7, fakedat8) %>% as.data.frame()
 
 
-##using crude rates
-total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Butte") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+#This works--what is the difference between this dataset and total_sum_new? 
+fakedat %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #----------How to set up axis order based on charges for Total facet--------------------------------#
 
