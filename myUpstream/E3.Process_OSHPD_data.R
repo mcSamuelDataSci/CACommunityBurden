@@ -295,10 +295,13 @@ county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
 #merging county and state
 total_sum <- bind_rows(state_sum, county_sum) %>% as.data.frame()
 
-total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other") %>% filter(!is.na(CAUSE)) #removing unknown and other gender variables, and all NA CAUSES?
+total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other") %>% filter(!is.na(CAUSE)) ##removing unknown and other gender variables, and all NA CAUSES?
 
-#The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't of the same length. 
-#To address this problem, we need to add in observations for the non-gender corresponding CAUSES, and give them values of 0 for n_hosp and charges:
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------#
+#The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
+#To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
 
 spread_total_sum_pop <- total_sum_pop %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) %>% ungroup() #This uses the spread() function to turn the sex and CAUSE columns into 3 variables: Female, Male, and Total, 
 #which contain the CAUSE as the observation within each variable. 
@@ -344,33 +347,9 @@ total_sum_pop_new <- gather(spread_total_sum_pop_new, key = "sex", "CAUSE", Fema
   filter(!(sex == "Total" & n_hosp == 0)) %>% ungroup() %>% as.data.frame()
 
 
-#calculating crude rates
+#calculating crude rates, using total_sum_pop_new as the input dataset--0s for 0 level n_hosp and charges
 
 total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
-
-
-
-#--------------------------------------------RACE-ETHNICITY COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA AND CRUDE RATES----------------------------------------------------#
-
-#popCountySex.RE dataset has populations by year groups (eg 2000-2002) instead of single years, and the race/ethnicity groups are different from the race_grp codes in OSHPD--how should we go about race-ethnicity summary data sets?
-
-
-#?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -406,6 +385,7 @@ fullMatCounty <- mutate(fullMatCounty, county = as.character(county),           
 #fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
 
 #What's the purpose of all of the above code? --> creates a matrix of all possible combinations--needed at an intermediate stage
+
 }
 
 
@@ -442,6 +422,17 @@ countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, 
                                                                            aSE = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[5]*yF) %>% filter(year == "2016")
 
 #countyAA contains age-adjusted hospitalization rates by CAUSE/level
+
+#Now, need to address the fact that CAUSES may appear among females in a given county that don't appear among males, and vice versa as was dealt with above.
+
+#Since the dataset total_sum_pop_new contains 0-value nhosp/charges placeholders, we can join the countyAA dataset with this dataset to "add in" this values, then convert the NA ahospRate into 0. 
+
+countyAA_new <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
+
+
+countyAA_new <- county_AA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
+
+
 
 #********************************************************************************************************#
 #-------Quick plot of charges------------------------------------------------------------------------------------------------------#
@@ -563,7 +554,7 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 #total_crude_rates = contains crude hospitalization and charge rates
 
-#countyAA = contains age-adjusted hospitalization rates
+#countyAA_new = contains age-adjusted hospitalization rates
 
 #Will have to do a series of spread/gather/join to create dataset 
 
@@ -572,41 +563,14 @@ calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure",
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
-calculated_aa_rates <- countyAA %>% gather(key = "type", value = "measure", ahospRate) # The problem here is that age-agjusted doesn't contain 0 values for non-congruent M/F pairs--need to address this
+calculated_aa_rates <- countyAA_new %>% gather(key = "type", value = "measure", ahospRate) 
 
 
-calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates)
+calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates)
 
-#------Proof of concept----------------------------------------------#
+#----------Plotting----------------------------------------------------------------------#
 
-#This works!
 calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, measure)) %>% 
-  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") ##
-#why doesn't this work?--why is female the default? 
-
-
-#This works too!!
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
-  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
-  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") ##
-
-#Now that we can see that this works, need to figure out how to make sure age-adjusted has all 0 values for non-congruent pairs, before creating calculated_aa_rates variable
-#---------------------------------------------------------------------------------:::#
-
-test_join <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
-#replacing NA with 0 for ahospRate
-
-test_join <- test_join %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
-
-
-
-calculated_aa_rates2 <- test_join %>% gather(key = "type", value = "measure", ahospRate)
-
-calculated_metrics2 <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates2)
-
-
-calculated_metrics2 %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "ahospRate") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") ##
 
@@ -614,11 +578,12 @@ calculated_metrics2 %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %
 
 
 
+#--------------------------------------------RACE-ETHNICITY COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA AND CRUDE RATES----------------------------------------------------#
+
+#popCountySex.RE dataset has populations by year groups (eg 2000-2002) instead of single years, and the race/ethnicity groups are different from the race_grp codes in OSHPD--how should we go about race-ethnicity summary data sets?
 
 
-
-
-
+#?
 
 
 
