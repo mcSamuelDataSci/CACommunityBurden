@@ -389,7 +389,7 @@ fullMatCounty <- mutate(fullMatCounty, county = as.character(county),           
 }
 
 
-#---------------------Age deaths (county and statewide)-------------------------------------
+#---------------------Age deaths (county and statewide)-----------------------------------------------------#
 #Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
 
 sA0 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev0"), "lev0") %>% mutate(county = STATE)
@@ -572,9 +572,11 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "ahospRate") %>% pull(measure))) %>% 
-  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") ##
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
 #Because scales are so different, is this type of visualization misleading though? 
+
+
 
 
 
