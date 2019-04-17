@@ -389,7 +389,7 @@ fullMatCounty <- mutate(fullMatCounty, county = as.character(county),           
 }
 
 
-#---------------------Age deaths (county and statewide)-----------------------------------------------------#
+#---------------------Age hospitalizations (county and statewide)-----------------------------------------------------#
 #Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
 
 sA0 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev0"), "lev0") %>% mutate(county = STATE)
@@ -430,7 +430,7 @@ countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, 
 countyAA_new <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
 
 
-countyAA_new <- county_AA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
+countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
 
 
 
@@ -470,18 +470,42 @@ oshpd_visualize(total_sum, "lev1", charges, "California", "Total") #lev1, Califo
 
 #It seems that we can only control the ordering for the counties where there are no 0 values. For counties where there are 0 values, we can plot (which we couldn't do before), but can't control the ordering. 
 
-total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Los Angeles") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 #why doesn't this work?--why is female the default? 
 
 
 
 
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#why doesn't this work?--why is female the default? 
 
 
+alameda <- total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda")
+
+alameda$n_hosp[alameda$n_hosp == 0] <- 1
+
+alameda$charges[alameda$charges == 0] <- 1
+
+test <- total_sum_pop_new
+
+test$n_hosp[test$n_hosp == 0] <- 1
+
+test$charges[test$charges == 0] <- 1
+
+test$n_hosp[test$n_hosp == 14] <- 0
+
+plottest <- test %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") 
+
+plottest2 <- plottest %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) 
 
 
+fct_reorder(nameOnly, n_hosp)
+
+ggplot(plottest, aes(x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + facet_grid(sex ~.) ##
 
 
 
@@ -524,6 +548,7 @@ fakedat %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!i
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 
 
+#one spreadsheet same as before, one with additional column LABEL 
 
 #----------How to set up axis order based on charges for Total facet--------------------------------#
 
@@ -570,8 +595,8 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 #----------Plotting----------------------------------------------------------------------#
 
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
-  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "ahospRate") %>% pull(measure))) %>% 
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% filter(sex == "Female") %>%
+  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "n_hosp") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
 #Because scales are so different, is this type of visualization misleading though? 
