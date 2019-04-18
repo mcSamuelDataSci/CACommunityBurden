@@ -347,6 +347,9 @@ total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
 total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
 
 
+
+
+
 #calculating crude rates, using total_sum_pop_new as the input dataset--0s for 0 level n_hosp and charges
 
 total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
@@ -439,7 +442,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #************************************************************************************************************#
 
 #-------------Writing function for visualizations. Variables that change: dataset (df), level (lev), county (cnty), and y variable (var) (e.g. charge, nhosp, rates), stratification variable (mygender)
-t
+
 #For join: LABEL in fullCauseList is our key, we want to match to CAUSE in total_sum 
 
 oshpd_visualize <- function(df, lev, var, cnty, mygender){
@@ -478,9 +481,9 @@ total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
 
 
 
-total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% mutate(nameOnly = as.factor(nameOnly)) %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+total_crude_rates%>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "San Francisco") %>% mutate(nameOnly = as.factor(nameOnly)) %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(cHospRate))) %>% 
+  ggplot(., aes(x = nameOnly, y = cHospRate)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 #why doesn't this work?--why is female the default? 
 
 
@@ -507,46 +510,65 @@ fct_reorder(nameOnly, n_hosp)
 
 ggplot(plottest, aes(x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + facet_grid(sex ~.) ##
 
-
-
-total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Tulare") %>% 
+total_crude_rates %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Tulare") %>% 
   ggplot(., aes(x = nameOnly, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 
 
 #############################Creating fake dataset to try to diagnose issue with sorting%##################################
 
-fakedat1 <- rep(2016, 21) %>% as.data.frame()
-names(fakedat1) <- "year"
 
-fakedat2 <- c(2154, 45, 0, 40, 30, 55, 85, 45, 66, 20, 48, 56, 12, 13, 15, 16, 17, 19, 30, 22, 21) %>% as.data.frame()
-names(fakedat2) <- "n_hosp"
+##fakedata1
 
-fakedat3 <- c(1111, 2222, 0, 4444, 5555, 3333, 4444, 777, 55555, 6666, 8888, 999, 1000, 2000, 49999, 5474, 2929, 34949, 2222, 3333, 100) %>% as.data.frame()
-names(fakedat3) <- "charges"
+write.csv(total_sum_pop_new, "fakedata1.csv")
 
-fakedat4 <- rep("Alameda", 21) %>% as.data.frame()
-names(fakedat4) <- "county"
+fakedat <- read.csv("fakedata1.csv") %>% select(-X)
 
-fakedat5 <- rep("Total", 21) %>% as.data.frame()
-names(fakedat5) <- "ageG"
+#Same problem occurs 
 
-fakedat6 <- c("Female", "Female", "Female", "Female", "Female", "Female", "Female", "Male", "Male", "Male", "Male", "Male", "Male", "Male", "Total", "Total", "Total", "Total", "Total", "Total", "Total") %>% as.data.frame()
-names(fakedat6) <- "sex"
+fakedat %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#why doesn't this work?--why is female the default? 
 
-fakedat7 <- c("C01", "C02", "C03", "C04", "C05", "D01", "D03", "C01", "C02", "C03", "C04", "C05", "D01", "D03", "C01", "C02", "C03", "C04", "C05", "D01", "D03") %>% as.data.frame()
-names(fakedat7) <- "CAUSE"
-
-fakedat8 <- rep("lev2", 21) %>% as.data.frame()
-names(fakedat8) <- "Level"
-
-fakedat <- bind_cols(fakedat1, fakedat2, fakedat3, fakedat4, fakedat5, fakedat6, fakedat7, fakedat8) %>% as.data.frame()
+fakedat$n_hosp[fakedat$n_hosp == 0] <- 1
 
 
-#This works--what is the difference between this dataset and total_sum_new? 
-fakedat %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(n_hosp))) %>% 
+##fakedata2
+
+fakedat2 <- read.csv("fakedata2.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level))
+
+
+fakedat2 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 
+#This works. There are no zeros
+
+##fakedata3 --  has 0s 
+fakedat3 <- read.csv("fakedata3.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level))
+
+fakedat3 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+#This works. There are zeros. 
+
+
+#This seems to suggest that the addition of variables is creating the problem. Now I will try adding 0 level variables to a dataset. 
+
+##fakedata4--no females C01 Sacramento
+
+fakedat4a <- read.csv("fakedata4.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level), year = as.numeric(year))
+
+#bind_row option--is this possible? 
+
+fem_Sac <-  data_frame("Female", "C01", 2016, 0, 0, "lev2", "Sacramento")
+
+names(fem_Sac) <- c("sex", "CAUSE", "year", "n_hosp", "charges", "Level", "county")
+
+
+
+fakedat4a <- bind_rows(fakedat4a, fem_Sac)
 
 #one spreadsheet same as before, one with additional column LABEL 
 
