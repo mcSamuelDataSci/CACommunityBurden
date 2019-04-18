@@ -19,7 +19,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
@@ -31,7 +31,8 @@ myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 
-library(tidyverse)
+library(readr)
+library(dplyr)
 library(epitools)
 library(sqldf)
 

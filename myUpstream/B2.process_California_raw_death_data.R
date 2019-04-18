@@ -18,7 +18,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "H:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "E:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- "F:"  # ROOT Location of CBD Project
@@ -74,6 +74,7 @@ death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,
 
 if (local.installation) {
 death.datA   <- read.csv(paste0(.sl,localFileName), colClasses = "character")
+names(death.datA) <- paste0("F",1:ncol(death.datA))
 }
 
 

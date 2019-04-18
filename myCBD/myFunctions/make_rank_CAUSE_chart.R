@@ -22,15 +22,32 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
                     xlab = "Deaths (n)",  
                     col  = myCol, horiz = TRUE, space = .3, cex.lab = myCex,
                     xlim = c(0,1.04*max(filtered.df$Ndeaths,na.rm=TRUE)))
- box(lwd=bLwd)
+ grid(nx=NULL,ny=NA,lty=1)
+ t.plot <- barplot( filtered.df$Ndeaths,add=TRUE,
+                    xlab = "Deaths (n)",  
+                    col  = myCol, horiz = TRUE, space = .3, cex.lab = myCex,
+                    xlim = c(0,1.04*max(filtered.df$Ndeaths,na.rm=TRUE)))
+
+ 
+ 
+  box(lwd=bLwd)
  
  t.label <- fullCauseList[match(filtered.df$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
  wr.lap  <- wrap.labels(t.label ,30)
  axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.8)
-     
+ 
+    
+ 
+ 
+  
  par(mar=c(5,0,0,0))
  
  barplot(filtered.df$YLLper,
+         xlab="YLL per 100K pop",
+         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+         xlim=c(0,1.04*max(filtered.df$YLLper,na.rm=T)))
+ grid(nx=NULL,ny=NA,lty=1)
+ barplot(filtered.df$YLLper,add=TRUE,
          xlab="YLL per 100K pop",
          col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
          xlim=c(0,1.04*max(filtered.df$YLLper,na.rm=T)))
@@ -40,9 +57,19 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
          xlab="Age-Adjusted Rate",
          col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
          xlim=c(0,1.04*max(filtered.df$aRate,na.rm=T)))
+ grid(nx=NULL,ny=NA,lty=1)
+ barplot(filtered.df$aRate,add=TRUE,
+         xlab="Age-Adjusted Rate",
+         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+         xlim=c(0,1.04*max(filtered.df$aRate,na.rm=T)))
  box(lwd=bLwd)
    
  barplot(filtered.df$mean.age, 
+         xlab="Mean Age",
+         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+         xlim=c(0,1.04*max(filtered.df$mean.age,na.rm=T)))
+ grid(nx=NULL,ny=NA,lty=1)
+ barplot(filtered.df$mean.age, add=TRUE,
          xlab="Mean Age",
          col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
          xlim=c(0,1.04*max(filtered.df$mean.age,na.rm=T)))
@@ -53,6 +80,11 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
                      xlab="Stnd. Mortaility Ratio",
                      col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
                      xlim=c(0,1.04*max(filtered.df$SMR,na.rm=T)))
+  grid(nx=NULL,ny=NA,lty=1)
+  t.plot <- barplot((filtered.df$SMR),add=TRUE,
+                    xlab="Stnd. Mortaility Ratio",
+                    col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
+                    xlim=c(0,1.04*max(filtered.df$SMR,na.rm=T)))
   box(lwd=bLwd)
   abline(v=0.8,col="green")
   abline(v=1,col="gray")
