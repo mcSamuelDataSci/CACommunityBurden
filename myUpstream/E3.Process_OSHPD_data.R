@@ -296,55 +296,55 @@ county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
 total_sum <- bind_rows(state_sum, county_sum) %>% as.data.frame()
 
 total_sum_pop <- left_join(total_sum, popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other") %>% filter(!is.na(CAUSE)) ##removing unknown and other gender variables, and all NA CAUSES?
-
+#total_sum_pop doesn't have any lev3 data because CAUSE = NA for all lev3 in this situation (and information is identical to lev0)
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------#
 #The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
 #To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
 
-spread_total_sum_pop <- total_sum_pop %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) %>% ungroup() #This uses the spread() function to turn the sex and CAUSE columns into 3 variables: Female, Male, and Total, 
-#which contain the CAUSE as the observation within each variable. 
 
-female_county_level <- spread_total_sum_pop %>% group_by(Female, county, Level) %>% summarise() %>% ungroup() %>% as.data.frame() #summarises all the CAUSES for females, by county and level
+#******UPDATED TO MAKES during "duplicate" NAs don't appear during spread function stage****************
 
-male_county_level <- spread_total_sum_pop %>% group_by(Male, county, Level) %>% summarise() %>% ungroup() %>% as.data.frame() #summarises all the CAUSES for male, by county and level
+spread_female_sum_pop <-total_sum_pop %>% filter(sex == "Female") %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) %>% filter(!is.na(Female)) %>% select(year, Level, Female, county) %>% ungroup() %>% as.data.frame() #summarises all the CAUSES for females, by county and level
 
-
-female_only <- anti_join(female_county_level, male_county_level, by = c("Female" = "Male", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
-
-male_only <- anti_join(male_county_level, female_county_level, by = c("Male" = "Female", "county", "Level")) #These are the CAUSE-county-level pairs that are in the male dataset but not the female dataset
-
-#Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges
+spread_male_sum_pop <- total_sum_pop %>% filter(sex == "Male") %>% group_by(county, Level, sex) %>% spread(., sex, CAUSE) %>% filter(!is.na(Male)) %>% select(year, Level, Male, county) %>% ungroup() %>% as.data.frame() #summarises all the CAUSES for male, by county and level
 
 
-female_new <- male_only %>% rename(Female = Male) %>% bind_rows(., female_county_level) #adding male only dataset to the female data
+female_only <- anti_join(spread_female_sum_pop, spread_male_sum_pop, by = c("Female" = "Male", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
 
-male_new <- female_only %>% rename(Male = Female) %>% bind_rows(., male_county_level) #adding female only dataset to the male data
+male_only <- anti_join(spread_male_sum_pop, spread_female_sum_pop, by = c("Male" = "Female", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the male dataset but not the female dataset
+
+#Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
+
+add_males <- gather(female_only, key = "sex", value = "CAUSE", Female) %>% mutate(sex = "Male")
+
+add_females <- gather(male_only, key = "sex", value = "CAUSE", Male) %>% mutate(sex = "Female")
 
 
-#Now joining original spread_total_sum_pop with these datasets, replacing NA with zeros
-spread_total_sum_pop_new <- full_join(spread_total_sum_pop, female_new, by = c("Female", "county", "Level")) %>% full_join(., male_new, by = c("Male", "county", "Level"))
+
+#Now joining original total_sum_pop with these datasets, replacing NA with zeros
+total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level", "county", "sex", "CAUSE")) %>% full_join(., add_males, by = c("year", "Level", "county", "sex", "CAUSE"))
+
 
 #Example of replacing NA data in selected column
 #dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
 
 #replacing year with 2016
-spread_total_sum_pop_new$year[is.na(spread_total_sum_pop_new$year)] <- 2016
+total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
 
 #replacing NA for n_hosp and charges with 0
-spread_total_sum_pop_new$n_hosp[is.na(spread_total_sum_pop_new$n_hosp)] <- 0
+total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0
 
-spread_total_sum_pop_new$charges[is.na(spread_total_sum_pop_new$charges)] <- 0
+total_sum_pop_new$charges[is.na(total_sum_pop_new$charges)] <- 0
 
 #replacing NA in ageG with "Total"
-spread_total_sum_pop_new$ageG[is.na(spread_total_sum_pop_new$ageG)] <- "Total"
+total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
 
 
-#Now we will gather this dataset to put it in the form of the original dataset, then re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
+#Now we will  re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
 
-total_sum_pop_new <- gather(spread_total_sum_pop_new, key = "sex", "CAUSE", Female, Male, Total) %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y) %>% 
-  filter(!(sex == "Total" & n_hosp == 0)) %>% ungroup() %>% as.data.frame()
+total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
 
 
 #calculating crude rates, using total_sum_pop_new as the input dataset--0s for 0 level n_hosp and charges
@@ -439,7 +439,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #************************************************************************************************************#
 
 #-------------Writing function for visualizations. Variables that change: dataset (df), level (lev), county (cnty), and y variable (var) (e.g. charge, nhosp, rates), stratification variable (mygender)
-
+t
 #For join: LABEL in fullCauseList is our key, we want to match to CAUSE in total_sum 
 
 oshpd_visualize <- function(df, lev, var, cnty, mygender){
@@ -470,7 +470,7 @@ oshpd_visualize(total_sum, "lev1", charges, "California", "Total") #lev1, Califo
 
 #It seems that we can only control the ordering for the counties where there are no 0 values. For counties where there are 0 values, we can plot (which we couldn't do before), but can't control the ordering. 
 
-total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Fresno") %>% group_by(sex) %>%
   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 #why doesn't this work?--why is female the default? 
@@ -478,7 +478,7 @@ total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
 
 
 
-total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% mutate(nameOnly = as.factor(nameOnly)) %>% group_by(sex) %>%
   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
 #why doesn't this work?--why is female the default? 
