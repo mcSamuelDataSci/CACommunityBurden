@@ -304,7 +304,7 @@ total_sum_pop <- total_sum %>% filter(!is.na(CAUSE)) %>% left_join(., popCountyS
 #To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
 
 
-#******UPDATED TO MAKES during "duplicate" NAs don't appear during spread function stage****************
+#******UPDATED TO MAKE sure "duplicate" NAs don't appear during spread function stage****************
 
 spread_female_sum_pop <-total_sum_pop %>% filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
 
@@ -450,29 +450,11 @@ oshpd_visualize <- function(df, lev, var, cnty, mygender){
 }
 
 #Example:
-oshpd_visualize(total_sum, "lev1", charges, "California", "Total") #lev1, California, Total are in quotes and don't have to be enquo() within the function because they are the specific value of the variable Level that we're interested in. The var that represents the variable of interest
+total_sum_pop_new %>% arrange(CAUSE) %>% oshpd_visualize(., "lev2", charges, "Alameda", "Male")
+#Need to specify arrange(CAUSE) to dataset in order for this to work.  #lev1, California, Total are in quotes and don't have to be enquo() within the function because they are the specific value of the variable Level that we're interested in. The var that represents the variable of interest
 #does have to be put through enquo() at the beginning of the function because it is a variable name. 
 #Notes on programming with dplyr and explanation of enquo(): https://dplyr.tidyverse.org/articles/programming.html
 
-
-#For some non-California counties, if I specify sex == "Female", it orders in order by Female rankings. However, if I specify sex = "Male" or "Total" it doesn't order at all (same presentation as if ordering wasn't specified)--why??
-#also works for LA-no 0s
-#Also works for San Diego--no 0s
-#Also works for Orange--no 0s
-#Also works for Riverside--no 0s
-#Works for Sacramento--no 0s
-#Works for San Mateo--no 0s
-#Works for Stanislaus--no 0s
-#Works for Sonoma--no 0s
-#Works for Kern--no 0s
-#Works for Humboldt total but not male? has a 0 in male, not in female
-
-#It seems that we can only control the ordering for the counties where there are no 0 values. For counties where there are 0 values, we can plot (which we couldn't do before), but can't control the ordering. 
-
-total_sum_pop_new %>% arrange(CAUSE) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "San Francisco") %>% group_by(sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
-#Now this works!
 
 
 
@@ -723,8 +705,6 @@ calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
-
-
 test <- calculated_metrics %>% arrange(CAUSE)
 
 
@@ -736,6 +716,8 @@ test %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.n
 
 
 #BY SEX--now need to see whether ordering by sex works here too
+
+#Plotting type vs sex
 calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
@@ -746,7 +728,7 @@ calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>
   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges" & sex == "Male") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
-
+#arrange(CAUSE) first
 calculated_metrics %>% arrange(CAUSE) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% group_by(type, sex) %>%
   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges" & sex == "Male") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
