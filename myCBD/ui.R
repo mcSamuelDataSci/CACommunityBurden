@@ -85,7 +85,7 @@ sidebarPanel(width=3,
    selectInput("myCAUSE", HTML("Cause:"), choices=fullList, selected="0")),
  
  # myLHJ
- conditionalPanel(condition = fC(c(22,23,33,44,45,55,56)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,45,55,56,68)), 
    selectInput("myLHJ","County/State:",choices=lList,selected=STATE)),
 
  # myGeo
@@ -279,6 +279,11 @@ mainPanel(
    tabPanel("SOCIAL DETERMINANTS",
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
+ 
+    tabPanel("OSHPD",
+          br(), 
+          plotOutput("OSHPD", height=700), value = 68),
+ 
  
    tabPanel("Technical Documentation",
      br(), 

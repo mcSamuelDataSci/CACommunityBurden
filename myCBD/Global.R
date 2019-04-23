@@ -117,6 +117,7 @@ source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
+source(paste0(myPlace, "/myFunctions/make_OSHPD_chart.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
