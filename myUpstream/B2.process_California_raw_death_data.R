@@ -74,7 +74,14 @@ death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,
 
 if (local.installation) {
 death.datA   <- read.csv(paste0(.sl,localFileName), colClasses = "character")
+# Raw County VRBIS download files have no header row or local header row
+# This line assures column names are "F1", "F2"...."F192" consistant with
+# names used in "vInfo" file
 names(death.datA) <- paste0("F",1:ncol(death.datA))
+# FIPS code (F62) should be three character string with leading 0 (if needed)
+# This line assures this format.
+death.datA$F62  <- str_pad(death.datA$F62,3,pad="0")  
+
 }
 
 
@@ -115,7 +122,7 @@ death.datA$stateFIPS  <-"06"
 # County name based strictly on (mapping to) FIPS code (F62)
 # HARMONISE with CHSI: OKAY
 fipsCounty          <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) 
-death.datA$county      <- fipsCounty$countyName[match(death.datA$countyFIPS,fipsCounty$FIPSCounty)]        
+death.datA$county   <- fipsCounty$countyName[match(death.datA$countyFIPS,fipsCounty$FIPSCounty)]        
 
 # code no longer needed since FIPS code is read in as character, but valuable "snipit" for similar purposes:
 # death.datA$countyFIPS  <- str_pad(death.datA$countyFIPS,3,pad="0")  
