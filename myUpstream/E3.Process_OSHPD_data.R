@@ -1,5 +1,8 @@
+# removed discharge date for now?
+
+
 # ====================================================================================================
-# "E3.Process_OSHPD_data.R" file                                                      |
+# "E3.Process_OSHPD_data.R" file                                                                     |
 #                                                                                                    |
 #            Reads in OSHPD 2016 PDD sas file, saves as rds file (random sample)                     |
 #            Used to assess hospitalizations for diabetes--primary diagnoses and all diagnoses.      |
@@ -13,73 +16,164 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-.sl              <- secure.location  # short name to shorten lines of code below
+#secure.location  <- "E:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-fullOSHPD <- FALSE
-sampleOSHPD <- TRUE
+whichDat <- "fake"   # "real" or "fake"
+newData  <- FALSE
+
+# fullOSHPD <- FALSE
+# sampleOSHPD <- TRUE
 
 #-- Load Packages -------------------------------------------------------------
 
 library(tidyverse)
-library(ggplot2)
 library(haven)
 library(fs)
 library(readxl)
+library(epitools)
+
+
+#------------------------------------------------------------------------------
+
+
+if(newData) {
 
 #Reading in oshpd 2016 PDD file
 oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
+oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat") )
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr, dschdate, patcnty, patzip, sex, agyrdsch, race_grp) %>%
-  mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
+# dschdate,
+
 
 #Saving subset as RDS file
-saveRDS(oshpd_subset, file=path(.sl, "oshpd_subset.rds"))
+saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
 
-#1% random sample
+
+#3% random sample, randomly permuted
 set.seed(4)
-oshpd_sample <- sample_n(oshpd_subset, size = 0.01*nrow(oshpd_subset), replace = F)
+#oshpd_sample <- sample_n(oshpd_subset, size = 0.01*nrow(oshpd_subset), replace = F)
+
+sampN1 <- 0.01*nrow(oshpd_subset)  
+sampN2 <- sampN1*2
+
+half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
+
+p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
+p2           <- sample_n(oshpd_subset[,30:31], sampN2)
+p3           <- sample_n(oshpd_subset[,32:37], sampN2)
+p3$race_grp  <- NA
+half2        <- cbind(p1,p2,p3)
+
+oshpd_sample <- rbind(half1,half2)
+
 
 #Now, create RDS file of whole SAS file and random sample of SAS file 
 
 #saving rds file--only needs to be run once to initially create the file
 
-#Saving 1% random sample as RDS file
+# Saving random sample as RDS file
 saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
-
+} # END if(newData)
 
 #***************************************************************************************************************#
 #Start code here if OSHPD 2016 subset has already been created:
 #***************************************************************************************************************#
 
+##------------------------------------Reading in data mapping/linkage files--------------------#
+#reading in gbd.ICD.excel file}
+icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) 
 
-if (fullOSHPD) {
-  oshpd16 <- readRDS(file=path(upPlace,"upData/oshpdHD2016_subset.rds")) #maybe change to secure location?
+#reading in county-codes-to-names linkage files --oshpd codes map to column "cdphcaCountyTxt"
+geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
+
+#sex categories
+sex_num <- c("1", "2", "3", "4")
+sex_cat <- c("Male", "Female", "Other", "Unknown")
+OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
+
+
+#DISCUSS***
+#race categories
+race_grp <- c("0", "1", "2", "3", "4", "5", "6")
+race_cat <- c("Unknown/Invalid/blank","White-NH", "Black-NH", "Hisp", "Asian-PI", "Native American/Alaskan Native", "Other")
+OSHPD_race_grp <- cbind(race_grp, race_cat) %>% as.data.frame() 
+
+
+ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+
+STATE <- "California" #Defining California to be included later in county population labelling/estimates (California represents total)
+
+yF   <- 100000  # rate constant 
+pop5 <- 5       # 5 years
+pop1 <- 1       # 1 year
+
+yearGrp <- "2013-2017"
+
+criticalNum <- 11
+
+#-----------------------------------------------------------------------------------LOAD AND PROCESS POPULATION DATA-----------------------------------------------------------------------#
+
+# ungrouping important for subsequent data set merging
+popTract         <- readRDS(path(upPlace,"/upData/popTract2013.RDS")) %>% ungroup() 
+popTractSex      <- filter(popTract,ageG == "Total")
+popTractSexAgeG  <- filter(popTract,ageG != "Total")
+
+popCommSex       <- popTractSex     %>% group_by(yearG,county,comID,sex)      %>% summarise(pop=sum(pop))  %>% ungroup()  
+popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG,county,comID,sex,ageG) %>% summarise(pop=sum(pop))  %>% ungroup() 
+
+popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>% ungroup() 
+popCountySex     <- filter(popCounty,ageG == "Total")
+popCountySexAgeG <- filter(popCounty,ageG != "Total")
+
+popCounty.RACE        <- readRDS(path(upPlace,"/upData/popCounty_RE.RDS")) %>% ungroup() 
+popCountySex.RACE     <- filter(popCounty.RACE,ageG == "Total")
+popCountySexAgeG.RACE <- filter(popCounty.RACE,ageG != "Total")
+
+popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
+
+
+#--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
+
+
+if (whichDat == "real") {
+  oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) #maybe change to secure location?  YES
 }
 
-if (sampleOSHPD) {
+if (whichDat == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
-##------------------------------------Reading in gbd.ICD.excel file and defining variable conditions to be used in function--------------------#
-#reading in gbd.ICD.excel file}
-icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) %>% select(name, CODE, LABEL, ICD10_CM, regExICD10_CM)
+
+#-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
+
+aL            <-      ageMap$lAge     # lower age ranges
+aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
+aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
+aMark         <- findInterval(oshpd16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+oshpd16$ageG  <- aLabs[aMark]                                   # make new "ageG" variable based on two objects above 
 
 
-#------------------------------------------------------------------------------------Alternative/Additional?-----------------------------------------------------------------------#
-
-#Based on E1 make death datasets for app file
+#----------------Map ICD-10-CM codes to GBD conditions-----------------------------------------------------------------------------------------#
 
 allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #This sorts all of the LABEL variables that aren't missing (i.e. coded as NA)
 
 mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creates a new object, mapICD, of all non-missing CODE variables, and the corresponding regEx10
 #associated with them. This object will be used to assign CODE/LABELS to diagnoses later
+
+#If as.data.frame() isn't included as the final step when reading in fullCauseList, fullCauseList is stored as a tbl.df(), which causes problems if match() is used to create a new variable in a dataset later on. 
+fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
+fullList          <- fullCauseList[,"LABEL"]
+names(fullList)   <- fullCauseList[,"causeList" ]
+
+
 
 #Function from death code R script by MS
 
@@ -96,85 +190,559 @@ oshpd16$icdCODE  <- icdToGroup(inputVectorICD10=oshpd16$diag_p) %>% as.character
 
 oshpd16$icdCODE[oshpd16$icdCODE == "NA"] <- NA
 
-##This converts the NAs from characters to NA so subsequent code won't treat them as characters 
+##This converts the NAs from characters to NA so subsequent code won't treat them as characters, which is necessary when using str_sub to create the lev1, lev2, lev3 columns
 
 
+#This next section adds variables to the input vector, breaking down the CODE into up to 4 levels
+codeLast4 <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
+nLast4    <- nchar(codeLast4) #counts number of characters 
 
-#This next section adds variables to the input vector (here, using test) breaking down the CODE into up to 4 levels
-codeLast4      <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
-nLast4         <- nchar(codeLast4) #counts number of characters 
+oshpd16   <- oshpd16  %>% 
+  mutate(lev0  = "0",
+         lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
+         lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
+         lev3  = ifelse(nLast4 == 4,codeLast4,NA) 
+         ) %>% 
+  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% mutate(race_grp = as.factor(race_grp)) %>%
+  left_join(., OSHPD_race_grp, by = "race_grp") %>%
+  left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
 
-oshpd16          <- oshpd16  %>% mutate(lev0  = "0",
-                                  lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
-                                  lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
-                                  #lev3  = ifelse(nLast4 == 4,codeLast4,NA)
-)
+
+#Adding Total in order to create total/statewide estimates (for grouping function later)
+oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
+oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
 
 
 
 #-------------Group by statement testing------------------------------------------------------------------#
-#General group_by test statement
-oshpd16 %>% group_by(patcnty, lev2) %>% 
-  summarize(n_hosp = n())
 
 
-
-#Group_by function
-num_test <- function(data, groupvar, levLab) {
+#Group_by_at
+#Function to sum number of hospitalizations and charges 
+sum_num_costs <- function(data, groupvar, levLab) {
   
-  num <- data %>% group_by_(.dots = groupvar) %>% 
-    summarize(n_hosp = n()) %>% ungroup
-  #print(num)
-  names(num)[grep("lev", names(num))] <- "CAUSE"
-  num$Level                           <- levLab
-  num %>%  data.frame
-}
-
-test2 <- num_test(oshpd16, groupvar = c("patcnty", "sex", "lev2"), levLab = "lev2") #This doesn't work because R says:  Column `c("patcnty", "sex", "lev2")` must be length 38426 (the number of rows) or one, not 3 
-
-#****What does the .dots = groupvar mean? if I only state: group_by_(groupvar), the function doesn't work ******
-
-#Testing quo--this works the same way as above, but it requires that the number of grouping variables stays the same
-num_test2 <- function(data, var1, var2, var3, levLab) {
-  var1 <- enquo(var1)
-  var2 <- enquo(var2)
-  var3 <- enquo(var3)
-  num <- data %>% group_by(!!var1, !!var2, !!var3) %>% 
-    summarize(n_hosp = n()) %>% ungroup
-  #print(num)
-  names(num)[grep("lev", names(num))] <- "CAUSE"
-  num$Level                           <- levLab
-  num %>%  data.frame
-}
-
-test3 <- num_test2(oshpd16, patcnty, sex, lev2, "lev2")
-
-
-
-#Example based on this
-
-calculateYLLmeasures <- function(group_vars,levLab){
-  
-  dat <- cbdDat0 %>% group_by_(.dots = group_vars) %>% 
-    summarize(Ndeaths = n() , 
-              YLL     = sum(yll,   na.rm = TRUE),     # NEED TO ADD CIs
-              mean.age = mean(age,na.rm=TRUE)
-    ) %>%  ungroup 
+  dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
+    summarize(n_hosp = n(), charges = sum(charge, na.rm = TRUE)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
   dat %>%  data.frame
+}
+
+#lev1 = Top level
+#lev2 = public health level
+
+
+#function to calculate crude hospitalization rates and charge-rates 
+calculate_crude_rates <- function(data, yearN) {
+  data %>% mutate(cHospRate = yF*n_hosp/(yearN*pop), 
+            hosp_rateLCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
+            hosp_rateUCI     = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper,
+            cChargeRate = yF*charges/(yearN*pop),
+            charge_rateLCI     = yF*pois.approx(charges,yearN*pop, conf.level = 0.95)$lower,
+            charge_rateUCI     = yF*pois.approx(charges,yearN*pop, conf.level = 0.95)$upper)
+}
+
+
+
+#function to calculate age-adjusted hospitalization rates
+
+# https://github.com/cran/epitools/blob/master/R/ageadjust.direct.R
+
+ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 0.95) 
+{
+  if (missing(count) == TRUE & !missing(pop) == TRUE & is.null(rate) == TRUE)   count <- rate * pop
+  if (missing(pop) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     pop <- count/rate
+  if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(pop) == TRUE)  rate <- count/pop
+  
+  rate[is.na(pop)]   <- 0
+  rate[is.null(pop)] <- 0
+  pop[is.na(pop)]    <- 0
+  pop[is.null(pop)]  <- 0
+  
+  alpha <- 1 - conf.level
+  cruderate <- sum(count,na.rm=TRUE)/sum(pop,na.rm=TRUE)
+  stdwt <- stdpop/sum(stdpop,na.rm=TRUE)
+  dsr <- sum(stdwt * rate,na.rm=TRUE)
+  dsr.var <- sum((stdwt^2) * (count/pop^2))
+  dsr.se  <- sqrt(dsr.var)
+  wm<- max(stdwt/pop)
+  gamma.lci <- qgamma(alpha/2, shape = (dsr^2)/dsr.var, scale = dsr.var/dsr)
+  gamma.uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
+                      scale = (dsr.var+wm^2)/(dsr+wm))
+  
+  c(crude.rate = cruderate, adj.rate = dsr, lci = gamma.lci, 
+    uci = gamma.uci, se = dsr.se)
+}
+
+#-----------------------COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA FILES AND CRUDE RATES------------------------------------------------------#
+
+#Statewide
+s.lev0 <- sum_num_costs(oshpd16, c("sex", "lev0", "year"), "lev0")
+s.lev1 <- sum_num_costs(oshpd16, c("sex", "lev1", "year"), "lev1") #top level
+s.lev2 <- sum_num_costs(oshpd16, c("sex", "lev2", "year"), "lev2") #public health level
+s.lev3 <- sum_num_costs(oshpd16, c("sex", "lev3", "year"), "lev3")
+state_sum <- bind_rows(s.lev0, s.lev1, s.lev2, s.lev3)
+state_sum$county <- STATE #California as "county" variable
+
+#County
+c.lev0 <- sum_num_costs(oshpd16, c("sex", "lev0", "county", "year"), "lev0")
+c.lev1 <- sum_num_costs(oshpd16, c("sex", "lev1", "county", "year"), "lev1") #top level
+c.lev2 <- sum_num_costs(oshpd16, c("sex", "lev2", "county", "year"), "lev2") #public health level
+c.lev3 <- sum_num_costs(oshpd16, c("sex", "lev3", "county", "year"), "lev3") 
+county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
+
+#merging county and state
+total_sum <- bind_rows(state_sum, county_sum) %>% as.data.frame()
+
+total_sum_pop <- total_sum %>% filter(!is.na(CAUSE)) %>% left_join(., popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other", !is.na(county)) ##removing unknown and other gender variables, NA county, and NA CAUSES?
+#total_sum_pop doesn't have any lev3 data because CAUSE = NA for all lev3 in this situation (and information is identical to lev0)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------#
+#The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
+#To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
+
+
+#******UPDATED TO MAKE sure "duplicate" NAs don't appear during spread function stage****************
+
+spread_female_sum_pop <-total_sum_pop %>% filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
+
+spread_male_sum_pop <- total_sum_pop %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
+
+
+female_only <- anti_join(spread_female_sum_pop, spread_male_sum_pop, by = c("Female" = "Male", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
+
+male_only <- anti_join(spread_male_sum_pop, spread_female_sum_pop, by = c("Male" = "Female", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the male dataset but not the female dataset
+
+#Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
+
+add_males <- gather(female_only, key = "sex", value = "CAUSE", Female) %>% mutate(sex = "Male")
+
+add_females <- gather(male_only, key = "sex", value = "CAUSE", Male) %>% mutate(sex = "Female")
+
+
+#Now joining original total_sum_pop with these datasets, replacing NA with zeros
+total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level", "county", "sex", "CAUSE")) %>% full_join(., add_males, by = c("year", "Level", "county", "sex", "CAUSE"))
+
+
+#Example of replacing NA data in selected column
+#dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
+
+#replacing year with 2016
+total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
+
+#replacing NA for n_hosp and charges with 0
+total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0
+
+total_sum_pop_new$charges[is.na(total_sum_pop_new$charges)] <- 0
+
+#replacing NA in ageG with "Total"
+total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
+
+
+#Now we will  re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
+
+total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
+
+
+#calculating crude rates, using total_sum_pop_new as the input dataset--0s for 0 level n_hosp and charges
+
+total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
+
+
+
+#-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
+
+if (1==2) {
+# makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
+
+year     <- data.frame(year     = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
+yearG    <- data.frame(yearG    = yearGrp)
+yearG3   <- data.frame(yearG3   = sort(unique(cbdDat0$yearG3)))
+CAUSE1   <- data.frame(CAUSE    = allLabels) 
+CAUSE2   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
+CAUSE3   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
+sex      <- data.frame(sex      = c("Male","Female","Total"))
+ageG     <- data.frame(ageG     = sort(unique(cbdDat0$ageG)))
+county   <- data.frame(county   = c(geoMap$countyName,"California"))         
+comID    <- data.frame(comID    = unique(cbdLinkCA[,"comID"]))
+GEOID    <- data.frame(GEOID    = cbdLinkCA[,"GEOID"])
+raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)))
+
+# other cool approach from Adam:
+# fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageG))
+fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE1 cross join sex cross join ageG")
+# fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
+# fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
+
+
+#######CAUSE CHARACTER##################
+
+fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+#fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+#fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
+
+#What's the purpose of all of the above code? --> creates a matrix of all possible combinations--needed at an intermediate stage
+
+}
+
+
+#---------------------Age hospitalizations (county and statewide)-----------------------------------------------------#
+#Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
+
+sA0 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev0"), "lev0") %>% mutate(county = STATE)
+sA1 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev1"), "lev1") %>% mutate(county = STATE)
+sA2 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev2"), "lev2") %>% mutate(county = STATE)
+sA3 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev3"), "lev3") %>% mutate(county = STATE)
+cA0 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev0"), "lev0") 
+cA1 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev1"), "lev1")
+cA2 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev2"), "lev2") 
+cA3 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev3"), "lev3") 
+
+total_sum_age <- bind_rows(sA0, sA1, sA2, sA3, cA0, cA1, cA2, cA3)
+
+#data cleaning
+total_sum_age <- filter(total_sum_age, !is.na(ageG)) #nothing removed
+total_sum_age <- filter(total_sum_age, !is.na(county)) #removed records with missing county
+#total_sum_age <- filter(total_sum_age, !is.na(CAUSE)) #remove missing cause?
+#total_sum_age <- filter(total_sum_age, !is.na(sex)) #remove missing sex?
+
+
+ageCounty <- full_join(total_sum_age, popCountySexAgeG, by = c("county", "year", "sex", "ageG")) %>% full_join(., popStandard[,c("ageG", "US2000POP")], by = "ageG") #joining population data and standard population data with summary hosp/charges by age and sex
+
+#Now we have a dataset with the number of hospitalizations for each CAUSE, by county, age group, gender, and "level", as well as info about the population and standard population for each demographic group--this dataset will be use to calculate age-adjusted rates
+
+#Calculating age-adjusted rates--why are we using ageadjust.direct.SAM instead of ageadjust.direct?
+
+countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, CAUSE, Level) %>% summarize(ahospRate = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[2]*yF,
+                                                                           aLCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[3]*yF,
+                                                                           aUCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[4]*yF,
+                                                                           aSE = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[5]*yF) %>% filter(year == "2016")
+
+#countyAA contains age-adjusted hospitalization rates by CAUSE/level
+
+#Now, need to address the fact that CAUSES may appear among females in a given county that don't appear among males, and vice versa as was dealt with above.
+
+#Since the dataset total_sum_pop_new contains 0-value nhosp/charges placeholders, we can join the countyAA dataset with this dataset to "add in" this values, then convert the NA ahospRate into 0. 
+
+countyAA_new <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
+
+
+countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
+
+
+
+#********************************************************************************************************#
+#-------Quick plot of charges------------------------------------------------------------------------------------------------------#
+#************************************************************************************************************#
+
+#-------------Writing function for visualizations. Variables that change: dataset (df), level (lev), county (cnty), and y variable (var) (e.g. charge, nhosp, rates), stratification variable (mygender)
+
+#For join: LABEL in fullCauseList is our key, we want to match to CAUSE in total_sum 
+
+oshpd_visualize <- function(df, lev, var, cnty, mygender){
+  var <- enquo(var)
+  df %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == lev, county == cnty) %>% group_by(sex) %>% 
+    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == mygender) %>% pull(!!var))) %>% 
+    ggplot(., aes(x = nameOnly, y = !!var)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
   
 }
 
-s.t1      <- calculateYLLmeasures(c("year","sex","lev0"),"lev0")
-s.t2      <- calculateYLLmeasures(c("year","sex","lev1"),"lev1")
-s.t3      <- calculateYLLmeasures(c("year","sex","lev2"),"lev2")
-s.t4      <- calculateYLLmeasures(c("year","sex","lev3"),"lev3")
-datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
-datState$county = STATE
+#Example:
+total_sum_pop_new %>% arrange(CAUSE) %>% oshpd_visualize(., "lev2", charges, "Alameda", "Male")
+#Need to specify arrange(CAUSE) to dataset in order for this to work.  #lev1, California, Total are in quotes and don't have to be enquo() within the function because they are the specific value of the variable Level that we're interested in. The var that represents the variable of interest
+#does have to be put through enquo() at the beginning of the function because it is a variable name. 
+#Notes on programming with dplyr and explanation of enquo(): https://dplyr.tidyverse.org/articles/programming.html
 
-datCounty <- bind_rows(datCounty,datState)
+
+
+
+
+#############################Creating fake dataset to try to diagnose issue with sorting%##################################
+
+
+##--------------fakedata1-saved total_sum_pop_new as a csv file, read in as new dataframe---------------#
+
+write.csv(total_sum_pop_new, "fakedata1.csv") #Saving the data as a csv, then reading it in, to see if it was some sort of issue with the way the data was saved/stored. Reads in here as a data frame. 
+
+fakedat <- read.csv("fakedata1.csv") %>% select(-X)
+
+
+
+fakedat %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Alameda") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#Same problem occurs 
+
+
+##----------fakedata2--fake dataset that I created, doesn't have any missing/0 level variables--------------#
+
+fakedat2 <- read.csv("fakedata2.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level))
+
+
+fakedat2 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+#This works. There are no zeros
+
+##----------------fakedata3 -- has 0 level observations written in to the dataset, in the order of the rest of the dataset (each CAUSE in order, arranged together)-------------#
+fakedat3 <- read.csv("fakedata3.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level))
+
+fakedat3 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+#This works. There are zeros. 
+
+
+#This seems to suggest that the addition of variables is creating the problem. Now I will try adding 0 level variables to a dataset. 
+
+##-------------------fakedata4--no females C01 Sacramento-----------------------------------------------#
+
+fakedat4 <- read.csv("fakedata4.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level), year = as.numeric(year))
+
+#bind rows option
+fem_Sac <-  data.frame("Female", "C01", 2016, 0, 0, "lev2", "Sacramento")
+names(fem_Sac) <- c("sex", "CAUSE", "year", "n_hosp", "charges", "Level", "county")
+
+fakedat4a <- bind_rows(fakedat4, fem_Sac)
+
+
+
+fakedat4a <- bind_rows(fakedat4a, fem_Sac)
+
+
+fakedat4a %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#This works--binding row
+
+
+#Now adding data in the same process as I tried above for the oshpd data, through spread and gather
+
+fakedat4_fem <- fakedat4 %>% filter(sex == "Female") %>% spread(sex, CAUSE)
+
+fakedat4_male <- fakedat4 %>% filter(sex == "Male") %>% spread(sex, CAUSE)
+
+fem_only <- anti_join(fakedat4_fem, fakedat4_male, by = c("Female" = "Male", "year", "Level", "county"))
+
+male_only <- anti_join(fakedat4_male, fakedat4_fem, by = c("Male" = "Female", "year", "Level", "county")) %>% select(year, county, Male, Level)
+
+add_fem <- gather(male_only, key = "sex", value = "CAUSE", Male) %>% mutate(sex = "Female")
+
+fakedat4b <- full_join(fakedat4, add_fem, by = c("year", "Level", "sex", "county", "CAUSE"))
+
+fakedat4b$n_hosp[is.na(fakedat4b$n_hosp)] <- 0
+
+fakedat4b$charges[is.na(fakedat4b$charges)] <- 0
+
+
+fakedat4b %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Female") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#This also works
+
+
+#For both fakedat4a and fakedat4b, all the CAUSEs were arranged/grouped together. 
+
+
+##------------------------------------fakedat5--no females C01 Sacramento and no males C99 Sacramento--------------------------
+
+fakedat5 <- read.csv("fakedata5.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level), year = as.numeric(year))
+
+
+fakedat5_fem <- fakedat5 %>% filter(sex == "Female") %>% spread(sex, CAUSE)
+
+fakedat5_male <- fakedat5 %>% filter(sex == "Male") %>% spread(sex, CAUSE)
+
+fem_only5 <- anti_join(fakedat5_fem, fakedat5_male, by = c("Female" = "Male", "year", "Level", "county")) %>% select(-n_hosp, -charges)
+
+male_only5 <- anti_join(fakedat5_male, fakedat5_fem, by = c("Male" = "Female", "year", "Level", "county")) %>% select(-n_hosp, -charges)
+
+add_fem5 <- gather(male_only5, key = "sex", value = "CAUSE", Male) %>% mutate(sex = "Female")
+
+add_male5 <- gather(fem_only5, key = "sex", value = "CAUSE", Female) %>% mutate(sex = "Male")
+
+fakedat5 <- full_join(fakedat5, add_fem5, by = c("year", "Level", "sex", "county", "CAUSE")) %>% full_join(., add_male5, by = c("year", "Level", "sex", "county", "CAUSE"))
+
+fakedat5$n_hosp[is.na(fakedat5$n_hosp)] <- 0
+
+fakedat5$charges[is.na(fakedat5$charges)] <- 0
+
+
+fakedat5 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+
+#For Sacramento, reorders by Total, but not by Male?? This suggests that when new data is added for males and for females, it causes some sort of issue, since it didn't have a problem when only new female data was added
+
+
+#----------------------------------fakedat6-0 level Sac data in dataset already, ordered within the data structure rather than appended at the end of the data-------------------------#
+
+fakedat6 <- read.csv("fakedata6.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level), year = as.numeric(year))
+
+fakedat6 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+#This works--so it is obviously about the way the data is added/appended to the dataset that makes it a problem. 
+
+
+
+#Checking what's different between fakedat5b and fakedat6, since they contain the same information but fakedat5b is 4120 bytes and fakedat6 is 3832 bytes?
+#https://stackoverflow.com/questions/19119320/how-to-check-if-two-data-frames-are-equal
+
+identical(fakedat5, fakedat6) #FALSE
+
+all.equal(fakedat5, fakedat6) #this is because the new data is appended on the end of fakedat5, but not fakedat6
+#[1] "Component “sex”: 11 string mismatches"                   
+#[2] "Component “CAUSE”: 2 string mismatches"                  
+#[3] "Component “n_hosp”: Mean relative difference: 0.7692308" 
+#[4] "Component “charges”: Mean relative difference: 0.7727273"
+#[5] "Component “county”: 3 string mismatches"   
+
+#---------------------------------------fakedat7--now need to see what happens if I structure/order fakedat7 the same as fakedat5, ie the 0 level values appended at the end of the dataset--------------#
+
+fakedat7 <- read.csv("fakedata7.csv", header = TRUE) %>% mutate(sex = as.character(sex), CAUSE = as.character(CAUSE), Level = as.character(Level), year = as.numeric(year)) #3823 bytes, same as fakedat6
+
+
+identical(fakedat5b, fakedat7) #FALSE
+
+all.equal(fakedat5b, fakedat7) #TRUE--because they're ordered the same
+
+fakedat7 %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+
+##For Sacramento doesn't work for Males, but does for Total
+
+
+#The only thing different between fakedat7, which doesn't work, and fakedat6, which does, is how the data is arranged within the dataframe. IN fakedat6 all the CAUSES are arranged in a row down the column/the pattern
+#of the order of sex is the same (Female, Male, Total, Female, Male, Total, etc), but they aren't in fakedat7. Try reordering??
+
+#arranging only by sex--all genders groups are grouped, but CAUSE isn't grouped together
+
+fakedat7b <- fakedat7 %>% arrange(sex) 
+
+
+fakedat7b %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#This doesn't work--
+
+#arranging by sex and CAUSE--this order all genders of certain CAUSE together, then next gender of same cause, and so on
+fakedat7b <- fakedat7 %>% arrange(CAUSE, sex) 
+
+
+fakedat7b %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#This works!
+
+
+#arranging only by CAUSE--all the CAUSEs are in grouped together, but the pattern order of sex (eg Female, Male, Total) isn't always the same
+fakedat7b <- fakedat7 %>% arrange(CAUSE) 
+
+
+fakedat7b %>% mutate(CAUSE = as.character(CAUSE), county = as.character(county)) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Sacramento") %>% group_by(sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Male") %>% pull(n_hosp))) %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x") ##
+#This works--it seems that the bare minimum of what's necessary to be ordered properly is CAUSE
+
+
+
+
+
+#----------How to set up axis order based on charges for Total facet--------------------------------#
+
+#Testing reorder--this works, although it is a base R way 
+#reordered_factor <- reorder(s.lev2$CAUSE[s.lev2$sex == "Total"], s.lev2$charges[s.lev2$sex == "Total"])
+
+#s.lev2$CAUSE <- factor(s.lev2$CAUSE, levels = levels(reordered_factor)) 
+
+
+#s.lev2 %>% filter(., CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+
+
+
+#Using forcats::fct_reorder--this allows you to reorder, but doesn't control the facet variable by which you want it ordered:
+#s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+
+
+#This uses fct_reorder, based on an example here: https://stackoverflow.com/questions/54458018/passing-string-variable-to-forcatsfct-reorder. 
+s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+
+####------------------------------------------Creating new dataset to plot all metrics on same plot/facets---------------------------------------------------------#
+
+#total_sum_pop_new = contains n_hosp and charges
+
+#total_crude_rates = contains crude hospitalization and charge rates
+
+#countyAA_new = contains age-adjusted hospitalization rates
+
+#Will have to do a series of spread/gather/join to create dataset 
+
+
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges)
+
+calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
+
+calculated_aa_rates <- countyAA_new %>% gather(key = "type", value = "measure", ahospRate) 
+
+
+calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) 
+
+#----------Plotting----------------------------------------------------------------------#
+
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% filter(sex == "Female") %>%
+  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
+
+test <- calculated_metrics %>% arrange(CAUSE)
+
+
+test %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% filter(sex == "Female") %>%
+  group_by(type, sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges" & sex == "Female") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ ., scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
+
+#Arrange by CAUSE doesn't seem to be necessary for it to work here? 
+
+
+#BY SEX--now need to see whether ordering by sex works here too
+
+#Plotting type vs sex
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>%
+  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
+
+
+#This works--plotting facets of metrics by sex, and controlling the order!
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% group_by(type, sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges" & sex == "Male") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
+
+#arrange(CAUSE) first
+calculated_metrics %>% arrange(CAUSE) %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% group_by(type, sex) %>%
+  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges" & sex == "Male") %>% pull(measure))) %>% 
+  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
+#I don't exactly understand why for the calculated_metrics dataset, using arrange(CAUSE) doesn't seem to be necessary in order to control the ordering of the plots. 
+
+
+
+#--------------------------------------------RACE-ETHNICITY COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA AND CRUDE RATES----------------------------------------------------#
+
+#popCountySex.RE dataset has populations by year groups (eg 2000-2002) instead of single years, and the race/ethnicity groups are different from the race_grp codes in OSHPD--how should we go about race-ethnicity summary data sets?
+
+
+#?
+
 
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
@@ -195,7 +763,7 @@ ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart diseas
 #index variables will have to be defined prior to running function--although this makes the code not quite "self-annotated", R
 #doesn't seem to allow calling an index based on a range of variable names within a data.frame
 
-#apply(X, Margin, function, ...) X = an array, inclduing a matrix, Margin = vector giving the subscripts which the function will
+#apply(X, Margin, function, ...) X = an array, including a matrix, Margin = vector giving the subscripts which the function will
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
@@ -214,9 +782,5 @@ index_any <- 1:25
 oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-
-
 
 

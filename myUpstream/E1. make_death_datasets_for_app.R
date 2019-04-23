@@ -19,11 +19,11 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
-SecureDataFile <- "g:/0.Secure.Data/myData/cbdDat0FULL.R"  
+SecureDataFile <- "e:/0.Secure.Data/myData/cbdDat0FULL.R"  
 
 STATE    <- "California"
 
@@ -31,7 +31,8 @@ myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 
-library(tidyverse)
+library(readr)
+library(dplyr)
 library(epitools)
 library(sqldf)
 
@@ -248,6 +249,11 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
 
 # == build COUNTY-level file ======================================================================
 
+c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2")
+c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3")
+datCounty <- bind_rows(c.t1,c.t2,c.t3,c.t4)
 
 s.t1      <- calculateYLLmeasures(c("year","sex","lev0"),"lev0")
 s.t2      <- calculateYLLmeasures(c("year","sex","lev1"),"lev1")

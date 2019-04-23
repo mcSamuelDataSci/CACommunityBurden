@@ -11,6 +11,11 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  path and globals
 myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
+
+####HERE########
+myDrive <- getwd()
+
+
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
@@ -26,9 +31,13 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .dxmssa		<- paste0(upPlace,"/lifeTables/dataOut/dxMSSA.rds") # output deaths by mssa
 .dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
 .dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
-setwd(myDrive)
+
+####HERE########
+
+# setwd(myDrive)
 
 ## 2	DATASETS	----------------------------------------------------------------------
+
 
 .dxtract	<- readRDS(.dxtract)	
 .dxmssa		<- readRDS(.dxmssa)	
@@ -391,8 +400,12 @@ ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add 
 
 # 5		export data
 
-saveRDS(ltci.mssa, file="LTciMSSA.rds")			# comID sex (char) x (age0) ex meanex ciex.low ciex.high
-saveRDS(ltci.county, file="LTciCounty.rds")		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
-saveRDS(ltci.state, file="LTciState.rds")		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
+
+## MICHAEL EDITS HERE
+LTplace <- paste0(upPlace,"/lifeTables/dataOut/")
+
+saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))			# comID sex (char) x (age0) ex meanex ciex.low ciex.high
+saveRDS(ltci.county, file=paste0(LTplace,"LTciCounty.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
+saveRDS(ltci.state,  file=paste0(LTplace,"LTciState.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 
 # end

@@ -126,7 +126,7 @@ source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
 # --- Shiny Stuff and Constants -----------------------------------------------
 
-lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "mean.age","SMR")
+lMeasures <- c("Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate", "mean.age","SMR")
 
 
 #  (SOME DAY) edit measure names to standards (and similar nomenclature for confidence intervals):
@@ -139,14 +139,17 @@ lMeasures <- c("YLL","YLLper","YLL.adj.rate","Ndeaths","cDeathRate","aRate", "me
 #  7  mean.age                mean.age.at.death
 #  8  SMR                     SMR 
 
-lMeasuresC <- c("Years of Life Lost (YLL)",
-                "YLL Rate per 100,000 population",
-                "Age-Adjusted YLL Rate",
-                "Number of deaths",
-                "Crude Death Rate per 100,000 population",
-                "Age-Adjusted Death Rate",
-                "Mean Age at Death",
-                "Standard Mortality Ratio")
+
+
+lMeasuresC <- c(
+  "Number of deaths",
+  "Crude Death Rate per 100,000 population",
+  "Age-Adjusted Death Rate",
+  "Years of Life Lost (YLL)",
+  "YLL Rate per 100,000 population",
+  "Age-Adjusted YLL Rate",
+  "Mean Age at Death",
+  "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
 lMeasuresShort   <- lMeasures[c(4,2,6,7,8)] 
@@ -178,6 +181,21 @@ names(sdohVec) <- sdohVecL
 
 lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
+
+
+
+
+raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
+raceNameFull <- c("missing","White","Black","Native American","Asian","Hawaiian","Other","Multirace","unknown","Hispanic")
+
+
+raceNote     <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Hawaiian' is 'Native Hawaiian/Pacific Islander'"
+
+
+
+
+
+
 
 
 # --- END ---------------------------------------------------------------------

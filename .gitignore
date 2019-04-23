@@ -3,7 +3,11 @@
 .Rproj.user
 *.Rproj
 
-myCBD/myData/real/*.*
+myCBD/myData/real/datComm.RDS
+myCBD/myData/real/datTract.RDS
+myCBD/myData/real/datCounty.RDS
+myCBD/myData/real/datCounty.RE.RDS
+
 myCBD/rsconnect/*.*
 
 myUpstream/upstreamInfo/census.api.key.txt

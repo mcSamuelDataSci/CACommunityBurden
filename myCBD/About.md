@@ -36,7 +36,7 @@ The CCN is intended to be an evolving tool-set developing new content and functi
 
 
 ### Acknowledgements
-* [Martijn Tennekes](https://github.com/mtennekes), for modifications to his R tamp package, that he made on our request
+* [Martijn Tennekes](https://github.com/mtennekes), for modifications to his R tmap package, that he made on our request
 * [Zev Ross](http://www.zevross.com/) for a R function to "trim" the pesky islands off of California county coasts, and for other assistance
 
 

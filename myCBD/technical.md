@@ -1,4 +1,4 @@
-
+﻿
 * Note regarding data suppression
   * A number of steps have been taken to address data security issue, including 1) aggregation of year into 5-year groups for data displayed at the community and census tract level, 2) showing less granular cause of death data at more granular geographic levels, 3) suppressing all measures for "strata" or "cells" where the corresponding number of deaths is <11, and 4) excluding disaggregated data by sex for neonatal conditions. These procedures assure compliance with the California Health and Human Services Agency [Data De-Identification Guidelines](https://www.dhcs.ca.gov/dataandstats/Documents/DHCS-DDG-V2.0-120116.pdf)(DDG).
 
@@ -18,8 +18,8 @@
 * Data and other key inputs:
   * Death data
       * Provided by California Department of Health (CDPH), Center for Health Statistics and Informatics (CHSI) [CDPH/CHSI/Death Files](https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-Applications.aspx) (with key information and differences about these files [here)](https://www.cdph.ca.gov/Programs/CHSI/CDPH%20Document%20Library/HIRS-Comparison%20of%20CA%20Death%20Data%20Sources.pdf).
-        * Files used: &quot;Death Static Master Files (DSMF)&quot;  for 2000 to 2004 and &quot;California Comprehensive Death Files(CCDF)&quot;  2005-2017. 
-        * Deaths of California residents that occurred and were recorded outside of California have not yet been incorporated into any of the CCB working data 
+        * Files used: &quot;Death Static Master Files (DSMF)&quot;  for 2000 to 2004 and &quot;California Comprehensive Death Files (CCDF)&quot; for 2005 to 2017. 
+          * Because CCDF Files were used for 2005-2017, deaths of California residents that occurred and were recorded OUTSIDE of California those years have NOT yet been incorporated into any of the CCB working data, visualizations or tables. 
         * A death record was considered to be of a California resident based on field &quot;71, Residence State/Province&quot; for the most recent data and on field &quot;46 State of Residence&quot; for 2001-2004 data. A tiny fraction of these records geocoded to locations outside of California, and others had anomalies suggesting the possibility that the residence was not in California.  However, the number of such anomalies is relatively minuscule, such that they are extraordinarily unlikely to have any impact on observed patterns and trends.
         * County was based on field &quot;62, Decedent&#39;s County of Residence Based on City/State (NCHS Code)&quot; for 2011-2017 data and on field &quot;35, Place of Decedent&#39;s Residence&quot; for 2001-2004 data except when modified as noted in &quot;Census Tract Data Issues&quot; below.
         *  California death data are geocoded using the CDPH geocoding service, which uses StreetMap Premium for ArcGIS.  We have not determined if there is a confidence score or match score below which the census tract for an address is not provided. For 2011-2017, the years where the CCB uses these data to determine census tract and (and therefore communities), a high percentage of records geocoded to a valid census tract (96.4% to 97.2%)—the remaining records contained invalid addresses and/or other anomalies. 
