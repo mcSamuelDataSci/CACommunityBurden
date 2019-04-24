@@ -212,7 +212,7 @@ oshpd16   <- oshpd16  %>%
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
 
-
+##Need to calculate avgcharges too
 
 #-------------Group by statement testing------------------------------------------------------------------#
 
