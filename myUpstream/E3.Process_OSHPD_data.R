@@ -109,7 +109,7 @@ OSHPD_race_grp <- cbind(race_grp, race_cat) %>% as.data.frame()
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
-STATE <- "CALIFORNIA" #Defining California to be included later in county population labelling/estimates (California represents total)
+STATE <- "California" #Defining California to be included later in county population labelling/estimates (California represents total)
 
 yF   <- 100000  # rate constant 
 pop5 <- 5       # 5 years
@@ -451,6 +451,8 @@ calculated_aa_rates <- countyAA_new %>% gather(key = "type", value = "measure", 
 
 
 calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) 
+
+calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/real/countyOSHPD.rds"))
