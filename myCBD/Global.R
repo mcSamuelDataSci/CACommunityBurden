@@ -161,9 +161,9 @@ hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
                       ahospRate = "Age-Adjusted Hosp Rate",
                       charges = "Total Charges",
                       cChargeRate = "Crude Charge Rate",
-                      avgCharges = "Average Charges")
+                      avgcharge = "Average Charges")
 
-hospMeasuresShort <- hospDiscMeasures[c(-6)]
+#hospMeasuresShort <- hospDiscMeasures[c(-6)]
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
