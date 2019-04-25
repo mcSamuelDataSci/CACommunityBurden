@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "real"
+whichData         <- "fake"
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
@@ -154,6 +154,19 @@ lMeasuresC <- c(
 
 names(lMeasures) <- lMeasuresC
 lMeasuresShort   <- lMeasures[c(4,2,6,7,8)] 
+
+hospDiscMeasures <- c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgCharges")
+
+hospDiscMeasuresC <- c(
+  "Number of Hospitalizations",
+  "Crude Hosp Rate",
+  "Age-Adjusted Hosp Rate",
+  "Total Charges",
+  "Crude Charge Rate",
+  "Average Charges")
+
+names(hospDiscMeasures) <- hospDiscMeasuresC
+hospMeasuresShort <- hospDiscMeasures[c(-6)]
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
 fullList          <- fullCauseList[,"LABEL"]
