@@ -222,7 +222,9 @@ oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = s
 sum_num_costs <- function(data, groupvar, levLab) {
   
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
-    summarize(n_hosp = n(), charges = sum(charge, na.rm = TRUE)) 
+    summarize(n_hosp = n(), 
+              charges = sum(charge, na.rm = TRUE),
+              avgcharge = mean(charge)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
@@ -332,10 +334,12 @@ total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level
 #replacing year with 2016
 total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
 
-#replacing NA for n_hosp and charges with 0
+#replacing NA for n_hosp, charges, avgcharge with 0
 total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0
 
 total_sum_pop_new$charges[is.na(total_sum_pop_new$charges)] <- 0
+
+total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$avgcharge)] <- 0
 
 #replacing NA in ageG with "Total"
 total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
@@ -443,7 +447,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #Will have to do a series of spread/gather/join to create dataset 
 
 
-calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges)
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
@@ -460,7 +464,7 @@ saveRDS(calculated_metrics, file = path(myPlace, "myData/real/countyOSHPD.rds"))
 
 #----------Plotting----------------------------------------------------------------------#
 
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "CALIFORNIA") %>% filter(sex == "Total") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
