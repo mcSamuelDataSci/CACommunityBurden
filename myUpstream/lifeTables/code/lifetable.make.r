@@ -10,7 +10,6 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  path and globals
-myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
 
 ####HERE########
 myDrive <- getwd()
