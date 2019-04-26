@@ -159,13 +159,22 @@ lMeasuresShort   <- lMeasures[c(4,2,6,7,8)]
 
 hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
                       cHospRate = "Crude Hosp Rate",
-                      ahospRate = "Age-Adjusted Hosp Rate",
+                      ahospRate = "Age-Adjusted Hospitalization Rate",
                       charges = "Total Charges",
                       cChargeRate = "Crude Charge Rate",
                       avgcharge = "Average Charges")
 
-#hospMeasuresShort <- hospDiscMeasures[c(-6)]
+hospDiscMeasuresShort <- hospDiscMeasures[c(-2)]
 
+
+hospDiscMeasures2 <- c("Number of Hospitalizations" = "n_hosp",
+                       "Crude Hosp Rate" = "cHospRate",
+                       "Age-Adjusted Hospitalization Rate" = "ahospRate",
+                       "Total Charges" = "charges",
+                       "Crude Charge Rate" = "cChargeRate",
+                       "Average Charges" = "avgcharge")
+
+hospDiscMeasures2Short <- hospDiscMeasures2[c(-2)]
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
 fullList          <- fullCauseList[,"LABEL"]
