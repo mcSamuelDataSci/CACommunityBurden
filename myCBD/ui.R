@@ -106,7 +106,7 @@ sidebarPanel(width=3,
                round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
  
  # mySex
- conditionalPanel(condition = fC(c(22,23,33,44,66)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,66, 68)), 
    radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  # myLev
@@ -160,7 +160,7 @@ sidebarPanel(width=3,
 
  # myOSHPDtype
  conditionalPanel(condition = fC(c(68)),
-                  selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hospDiscMeasures2Short)),
+                  selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hospMeasures2Short)),
 
 # Figure Download buttons ---------------------------------------------------
 
