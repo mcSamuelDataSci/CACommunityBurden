@@ -15,7 +15,7 @@ shinyServer(function(input, output,session) {
 
 # -------------------------------------------------------------------------------  
 
-  # "onclick" is a function from shinyjs package
+# "onclick" is a function from shinyjs package
 # used here to move to specified tab when specified image in clicked
 # first perameter is id associated with images from home page main pannel
 #  see ui.R  "tabPanel("Home Page"..."
@@ -79,6 +79,23 @@ observeEvent(input$myLHJ, {
   if(input$myLHJ != STATE){updateSelectInput(session, "myGeo", selected = "Community") }
 })
 
+
+observeEvent(input$ID,{
+  if(input$ID %in% c(44,55,56)) 
+  {updateSelectInput(session, "myCAUSE", choices = phCode,selected=current_Cause()  )}
+})
+    
+
+observeEvent(input$ID,{
+  if(input$ID %in% c(22,23)  & input$myGeo=="Census Tract" ) 
+  {updateSelectInput(session, "myCAUSE", choices = bigCode )}
+})
+
+
+
+
+
+
 # not used now, but saved as examples of other reactivity
 # observeEvent(input$ID,{
 #  if(input$ID %in% c(33,34,44,45,55)) 
@@ -92,6 +109,12 @@ observeEvent(input$myLHJ, {
 #for two input use:
 # observeEvent(input$test1 | input$test2, {
 #    if(input$test1==0 && input$test2==0){
+
+
+
+
+
+
 
 #--------------------------------------------------------------------------------
 # Render Application Maps and Charts --------------------------------------------

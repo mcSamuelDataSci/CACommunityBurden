@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "fake"
+whichData         <- "real"
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
@@ -60,6 +60,7 @@ library(plotly)  # Note: also loads ggplot2
 library(fs)
 library(markdown)
 library(directlabels)  # Used to directly label lines in Trend plots
+library(scales)
 
 # --- CBD Key Inputs ---------------------------------------------------------
 
