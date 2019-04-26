@@ -155,7 +155,9 @@ lMeasuresC <- c(
 names(lMeasures) <- lMeasuresC
 lMeasuresShort   <- lMeasures[c(4,2,6,7,8)] 
 
-
+#This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
+#Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
+  
 hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
                       cHospRate = "Crude Hosp Rate",
                       ahospRate = "Age-Adjusted Hospitalization Rate",
@@ -163,17 +165,12 @@ hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
                       cChargeRate = "Crude Charge Rate",
                       avgcharge = "Average Charges")
 
-hospDiscMeasuresShort <- hospDiscMeasures[c(-2)]
+hospDiscMeasuresShort <- hospDiscMeasures[c(-2)] #Not including Crude Hosp Rate
 
+#This is for labeling the dropdown menu of options--hospDiscMeasures vector won't work, it will use the abbreviated values (n_hosp etc) as the dropdown labels
+hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Total Charges", "Crude Charge Rate", "Average Charges")
 
-hospDiscMeasures2 <- c("Number of Hospitalizations" = "n_hosp",
-                       "Crude Hosp Rate" = "cHospRate",
-                       "Age-Adjusted Hospitalization Rate" = "ahospRate",
-                       "Total Charges" = "charges",
-                       "Crude Charge Rate" = "cChargeRate",
-                       "Average Charges" = "avgcharge")
-
-hospDiscMeasures2Short <- hospDiscMeasures2[c(-2)]
+hospMeasures2Short <- hospMeasures2[c(-2)]
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
 fullList          <- fullCauseList[,"LABEL"]
