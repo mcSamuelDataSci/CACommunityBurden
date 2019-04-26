@@ -542,7 +542,7 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
 #Need to define which conditions we're interested in
-fullCauseListICD
+filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
 
 #--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
@@ -557,20 +557,61 @@ fullCauseListICD
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-diagnosis_definition <- function(dataset, col_name, icd_regEx, index) {
-  dataset[[col_name]] <- apply(dataset, 1, FUN = function(x) {
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) "1" else "0"
-  } )
-  dataset
-}
 #index_p = only primary diagnosis
 index_p <- 1
 #index_any = any diagnosis
 index_any <- 1:25
 
-oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+diagnosis_definition <- function(dataset, colname, label, index = index_any) {
+  dataset[[colname]] <- apply(dataset, 1, FUN = function(x) {
+    icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(index)])) label else NA
+  } )
+  return(dataset)
+}
 
+
+oshpd_sample2 <- oshpd16 %>% select(-icdCODE, -lev0, -lev1, -lev2, -lev3) %>% diagnosis_definition(., "diabetes_any", "D01", index_any)
+
+oshpd_sample2 <- diagnosis_definition(oshpd_sample2, "hypertensive_HD_any", "C01", index_any)
+
+oshpd_sample2 <- diagnosis_definition(oshpd_sample2, "ischemic_HD_any", "C02", index_any)
+
+#The only variables that are changing are colname and label values--can we pull these values from an external vector/list/dataset and then run through the function for each observation
+
+
+testdiag <- oshpd16 %>% dplyr::select(diag_p, starts_with("odiag")) %>% as.data.frame() %>%
+  mutate_at(funs(bin = ifelse(. == "D01", "D01", 0)))
+
+
+
+colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
+labels <- c("D01", "C01", "C02")
+
+##****#
+testfunction <- function(dataset, colnames, labels, index) {
+  loop_length <- seq_along(colnames)
+  for (i in 1: loop_length) {
+    colnames[i] <- apply(dataset, 1, FUN = function(x) {
+      icd_regEx <- filter(fullCauseListICD, LABEL == labels[i] %>% pull(regExICD10_CM))
+      pattern <- grepl(icd_regEx, x)
+      if(any(pattern[(index)])) labels[i] else NA
+    })
+  }
+}
+
+test <- testfunction(oshpd16, colnames, labels, index_any)
+
+
+do.call(diagnosis_definition, list(colnames, labels))
+
+testlist<- as.list(colnames, labels, )
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+for (i in 1: length(colnames)) {
+  test[length(colnames)] <- diagnosis_definition(oshpd16, colnames[i], labels[i], index_any)
+  
+}
 
