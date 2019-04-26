@@ -183,6 +183,9 @@ acs.rent <- rbind(acs.rent,filter(acs.rent,variable=="B25070_010") %>% mutate(re
 
 
 
+# Code to explore MOE calculation in different situations
+if (1==2){
+
 junk <-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
                 year = ACSYear, variables = sprintf("B25106_0%02d",3:6),
                 key=.ckey, moe_level=90) %>% 
@@ -193,10 +196,10 @@ junk <-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
          dumbSum  =         sum(B25106_004_estimate,B25106_005_estimate, B25106_006_estimate, B25106_003_estimate),
          smartSum =         select(., c(B25106_004_estimate,B25106_005_estimate, B25106_006_estimate, B25106_003_estimate)) %>% apply(1, sum, na.rm=TRUE), 
          sillyMOE  =        select(., c(B25106_004_moe,B25106_005_moe, B25106_006_moe, B25106_003_moe)) %>% apply(1,sum,na.rm=TRUE),
-         maybeMOE1 =        select(., c(B25106_004_moe,B25106_005_moe, B25106_006_moe, B25106_003_moe)) %>% apply(1,moe_sum,na.rm=TRUE) ,
+         maybeMOE1 =        select(., c(B25106_004_moe,B25106_005_moe, B25106_006_moe, B25106_003_moe)) %>% apply(1,moe_sum,estimate = NULL,na.rm=TRUE) ,
          maybeMOE2 =        sqrt( B25106_004_moe^2 + B25106_005_moe^2 + B25106_006_moe^2 + B25106_003_moe^2) 
-         
   )
+}
 
 
 
