@@ -89,7 +89,9 @@ acs.education<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
                        year = ACSYear, variables = c("B15003_001", sprintf("B15003_0%02d",22:25)), 
                        key=.ckey, moe_level=90) %>% 
   mutate(edu= ifelse( variable=="B15003_001","total","edu"),
-         NAME=NULL)%>%
+         NAME=NULL) %>%
+#check this
+
   group_by(GEOID,edu) %>%
   #summarize(n=sum(estimate),moe=moe_sum(moe,estimate,na.rm=F)) %>%
   summarize(n=sum(estimate),moen=moe_sum(moe[which(estimate!=0)],which(estimate!=0,arr.ind=T))) %>%  #,na.rm=F
@@ -183,6 +185,7 @@ acs.rent <- rbind(acs.rent,filter(acs.rent,variable=="B25070_010") %>% mutate(re
 
 
 
+
 # Code to explore MOE calculation in different situations
 if (1==2){
 
@@ -272,62 +275,60 @@ acs.mortg<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
 } # end if 1==2
 
 
+
 sdoh_dat_tract <- Reduce(function(x,y) merge(x,y,all=TRUE),mget(ls(pattern='acs.+')))
 
 cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census 
                                   # dataframe linking comID and comName
 
-
-sdoh_dat_county <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
-                     group_by(county) %>%
-                     summarize(N_edu = sum(N_edu,na.rm=TRUE),
-                               n_edu = sum(n_edu,na.rm=TRUE),
-                               est_edu = round(100*(n_edu/N_edu),2)
-                               )
-
-
-#removing for now error since moen not here...
-# just education
-if (1==3){
-sdoh_dat_county <- left_join(acs.education,cbdLinkCA,by="GEOID") %>%
-  group_by(county) %>%
-  summarize(N_edu = sum(N_edu,na.rm=TRUE),
-            n_edu = sum(n_edu,na.rm=TRUE),
-            est_edu = round(100*(n_edu/N_edu),2),
-            moen  = moe_sum(moen, estimate =  n_edu, na.rm = TRUE),
-            moeN = moe_sum(moeN, estimate =  N_edu, na.rm = TRUE),
-            moe_edu = round(100*moe_ratio(n_edu,N_edu,moen,moeN),3)
-  )
-}
-
-
-if (1==2) {
-
-sdoh_dat_county <- left_join(acs.education,cbdLinkCA,by="GEOID") %>%
-  group_by(county) %>%
-  summarize(N_edu_C = sum(N_edu,na.rm=TRUE),
-            n_edu_C = sum(n_edu,na.rm=TRUE),
-            est_edu_C = round(100*(n_edu_C/N_edu_C),2),
-            est_edu_X = (sum(est_edu*N_edu,na.rm=TRUE)/N_edu_C),
-            moe_edu_C = round(100* (sqrt ( sum(moe_edu^2,na.rm=TRUE)) / N_edu_C),3),
-            moe_SUM  = sqrt ( sum(moe_edu^2,na.rm=TRUE)),
-            moe_SUM_BEN  = moe_sum(moe_edu, estimate = NULL, na.rm = TRUE),
-            moe_n  = moe_sum(moen, estimate =  n_edu, na.rm = TRUE),
-            moe_N  = moe_sum(moeN, estimate =  N_edu, na.rm = TRUE) ) %>%
-            mutate(moeXXX = moe_ratio(n_edu_C,N_edu_C,moe_n,moe_N)
-           
-  )
-}
+#bens           
+sdoh_dat_countyB <-  left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
+                    select(matches('GEOID|county|n_|N_')) %>%
+                    gather(table,obs,-county,-GEOID) %>%
+                    mutate(type= ifelse( grepl('moe',table),"moe","n")) %>%
+                    spread(type,obs) %>%
+                    group_by(county,table) %>%
+                    summarize(n    = sum(n,na.rm=TRUE),
+                              moe = moe_sum(moe,n,na.rm=TRUE)) %>%
+                    mutate(n= ifelse(grepl('moe',table),moe,n),moe=NULL) %>%
+                    spread(table,n) %>%
+                    mutate(est_edu = round(100*( n_edu/N_edu ),2),
+                           moe_edu = round(100*( moe_ratio(n_edu,N_edu,moen_edu,moeN_edu) ),2),
+                           est_net = round(100*( n_net/N_net ),2),
+                           moe_net = round(100*( moe_ratio(n_net,N_net,moen_net,moeN_net) ),2),
+                           est_pov = round(100*( n_pov/N_pov ),2),
+                           moe_pov = round(100*( moe_ratio(n_pov,N_pov,moen_pov,moeN_pov) ),2),
+                           est_rent30up = round(100*( n_rent30up/N_rent ),2),
+                           moe_rent30up = round(100*( moe_ratio(n_rent30up,N_rent,moen_rent30up,moeN_rent) ),2),
+                           est_rent50up = round(100*( n_rent50up/N_rent ),2),
+                           moe_rent50up = round(100*( moe_ratio(n_rent50up,N_rent,moen_rent50up,moeN_rent) ),2) ) %>%
+                   select(-matches('n_|N_'))
 
 
 sdoh_dat_community <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
-  group_by(comID) %>%
-  summarize(N_edu_C = sum(N_edu,na.rm=TRUE),
-            n_edu_C = sum(n_edu,na.rm=TRUE),
-            est_edu_C = round(100*(n_edu_C/N_edu_C),2),
-            est_edu_X = (sum(est_edu*N_edu,na.rm=TRUE)/N_edu_C),
-            moe_edu_C = round(100* (sqrt ( sum(moe_edu^2,na.rm=TRUE)) / N_edu_C),3)
-            
-  )
+                  select(matches('GEOID|comID|n_|N_')) %>%
+                  gather(table,obs,-comID,-GEOID) %>%
+                  mutate(type= ifelse( grepl('moe',table),"moe","n")) %>%
+                  spread(type,obs) %>%
+                  group_by(comID,table) %>%
+                  summarize(n    = sum(n,na.rm=TRUE),
+                            moe = moe_sum(moe,n,na.rm=TRUE)) %>%
+                  mutate(n= ifelse(grepl('moe',table),moe,n),moe=NULL) %>%
+                  spread(table,n) %>%
+                  mutate(est_edu = round(100*( n_edu/N_edu ),2),
+                         moe_edu = round(100*( moe_ratio(n_edu,N_edu,moen_edu,moeN_edu) ),2),
+                         est_net = round(100*( n_net/N_net ),2),
+                         moe_net = round(100*( moe_ratio(n_net,N_net,moen_net,moeN_net) ),2),
+                         est_pov = round(100*( n_pov/N_pov ),2),
+                         moe_pov = round(100*( moe_ratio(n_pov,N_pov,moen_pov,moeN_pov) ),2),
+                         est_rent30up = round(100*( n_rent30up/N_rent ),2),
+                         moe_rent30up = round(100*( moe_ratio(n_rent30up,N_rent,moen_rent30up,moeN_rent) ),2),
+                         est_rent50up = round(100*( n_rent50up/N_rent ),2),
+                         moe_rent50up = round(100*( moe_ratio(n_rent50up,N_rent,moen_rent50up,moeN_rent) ),2) ) %>%
+                  select(-matches('n_|N_'))  
+  
+                
+
+
 
 
