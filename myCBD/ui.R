@@ -17,7 +17,7 @@
 
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
-# funtion used as "short-cut" when making criteria for conditionals below
+# function used as "short-cut" when making criteria for conditionals below
 fC <- function(vec) {
   tRep <- length(vec)-1
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
@@ -106,7 +106,7 @@ sidebarPanel(width=3,
                round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
  
  # mySex
- conditionalPanel(condition = fC(c(22,23,33,44,66)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,66, 68)), 
    radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  # myLev
@@ -156,8 +156,11 @@ sidebarPanel(width=3,
  
  # myX
  conditionalPanel(condition = fC(c(66)),
-   selectInput(  "myX",        "Socal Determinant of Health Variable:", choices=sdohVec)),
- 
+   selectInput(  "myX",        "Social Determinant of Health Variable:", choices=sdohVec)),
+
+ # myOSHPDtype
+ conditionalPanel(condition = fC(c(68)),
+                  selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hospMeasures2Short)),
 
 # Figure Download buttons ---------------------------------------------------
 

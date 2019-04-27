@@ -109,7 +109,7 @@ OSHPD_race_grp <- cbind(race_grp, race_cat) %>% as.data.frame()
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
-STATE <- "CALIFORNIA" #Defining California to be included later in county population labelling/estimates (California represents total)
+STATE <- "California" #Defining California to be included later in county population labelling/estimates (California represents total)
 
 yF   <- 100000  # rate constant 
 pop5 <- 5       # 5 years
@@ -172,7 +172,7 @@ mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creat
 fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
-
+fullCauseListICD <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly", "regExICD10_CM")] %>% arrange(LABEL) %>% as.data.frame()
 
 
 #Function from death code R script by MS
@@ -212,7 +212,7 @@ oshpd16   <- oshpd16  %>%
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
 
-
+##Need to calculate avgcharges too
 
 #-------------Group by statement testing------------------------------------------------------------------#
 
@@ -222,7 +222,9 @@ oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = s
 sum_num_costs <- function(data, groupvar, levLab) {
   
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
-    summarize(n_hosp = n(), charges = sum(charge, na.rm = TRUE)) 
+    summarize(n_hosp = n(), 
+              charges = sum(charge, na.rm = TRUE),
+              avgcharge = mean(charge)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
@@ -332,10 +334,12 @@ total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level
 #replacing year with 2016
 total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
 
-#replacing NA for n_hosp and charges with 0
+#replacing NA for n_hosp, charges, avgcharge with 0
 total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0
 
 total_sum_pop_new$charges[is.na(total_sum_pop_new$charges)] <- 0
+
+total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$avgcharge)] <- 0
 
 #replacing NA in ageG with "Total"
 total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
@@ -443,7 +447,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #Will have to do a series of spread/gather/join to create dataset 
 
 
-calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges)
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
@@ -452,13 +456,15 @@ calculated_aa_rates <- countyAA_new %>% gather(key = "type", value = "measure", 
 
 calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) 
 
+calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
+
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/real/countyOSHPD.rds"))
 
 
 #----------Plotting----------------------------------------------------------------------#
 
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "CALIFORNIA") %>% filter(sex == "Total") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
@@ -535,13 +541,8 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
-diabetes <- icd_map %>% filter(name == "C. Diabetes mellitus") %>% select(regExICD10_CM)
-
-depression <- icd_map %>% filter(name == "a. Major depressive disorder" | name == "b. Dysthymia") %>% select(regExICD10_CM)
-depression <- paste(depression[1,], depression[2,], sep = "|") %>% as.data.frame() #if we are including major depressive disorder and dysthmia
-#together as one group, then we need to paste the regEx from the two conditions together
-
-ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart disease") %>% select(regExICD10_CM)
+#Need to define which conditions we're interested in
+filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
 
 #--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
@@ -556,20 +557,61 @@ ischaemic_heart_disease <- icd_map %>% filter(name == "3. Ischaemic heart diseas
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-diagnosis_definition <- function(dataset, col_name, icd_regEx, index) {
-  dataset[[col_name]] <- apply(dataset, 1, FUN = function(x) {
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) "1" else "0"
-  } )
-  dataset
-}
 #index_p = only primary diagnosis
 index_p <- 1
 #index_any = any diagnosis
 index_any <- 1:25
 
-oshpd_sample2 <- diagnosis_definition(oshpd16, "diabetes_p", diabetes, index_p) %>% diagnosis_definition(., "diabetes_any", diabetes, index_any)
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+diagnosis_definition <- function(dataset, colname, label, index = index_any) {
+  dataset[[colname]] <- apply(dataset, 1, FUN = function(x) {
+    icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(index)])) label else NA
+  } )
+  return(dataset)
+}
 
+
+oshpd_sample2 <- oshpd16 %>% select(-icdCODE, -lev0, -lev1, -lev2, -lev3) %>% diagnosis_definition(., "diabetes_any", "D01", index_any)
+
+oshpd_sample2 <- diagnosis_definition(oshpd_sample2, "hypertensive_HD_any", "C01", index_any)
+
+oshpd_sample2 <- diagnosis_definition(oshpd_sample2, "ischemic_HD_any", "C02", index_any)
+
+#The only variables that are changing are colname and label values--can we pull these values from an external vector/list/dataset and then run through the function for each observation
+
+
+testdiag <- oshpd16 %>% dplyr::select(diag_p, starts_with("odiag")) %>% as.data.frame() %>%
+  mutate_at(funs(bin = ifelse(. == "D01", "D01", 0)))
+
+
+
+colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
+labels <- c("D01", "C01", "C02")
+
+##****#
+testfunction <- function(dataset, colnames, labels, index) {
+  loop_length <- seq_along(colnames)
+  for (i in 1: loop_length) {
+    colnames[i] <- apply(dataset, 1, FUN = function(x) {
+      icd_regEx <- filter(fullCauseListICD, LABEL == labels[i] %>% pull(regExICD10_CM))
+      pattern <- grepl(icd_regEx, x)
+      if(any(pattern[(index)])) labels[i] else NA
+    })
+  }
+}
+
+test <- testfunction(oshpd16, colnames, labels, index_any)
+
+
+do.call(diagnosis_definition, list(colnames, labels))
+
+testlist<- as.list(colnames, labels, )
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+for (i in 1: length(colnames)) {
+  test[length(colnames)] <- diagnosis_definition(oshpd16, colnames[i], labels[i], index_any)
+  
+}
 
