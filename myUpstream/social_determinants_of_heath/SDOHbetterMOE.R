@@ -159,8 +159,10 @@ acs.rent<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
                          key=.ckey, moe_level=90) %>% 
   mutate(rent= ifelse( variable=="B25070_001",
                        "N_rent",
-               ifelse( variable=="B25070_002" | variable=="B25070_003" | variable=="B25070_004" , 
+               ifelse( variable=="B25070_007" | variable=="B25070_008" |
+                       variable=="B25070_009" | variable=="B25070_010", 
                        "rent30up",
+              # else if( variable=="B25070_010")
                        "rent50up")),
          NAME=NULL) %>%
   group_by(GEOID,rent) %>%
@@ -170,7 +172,10 @@ acs.rent<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
   unite(temp,descriptor,rent) %>%
   spread(temp,value) %>%
   rename(N_rent=n_N_rent, moeN_rent=moe_N_rent)# %>%
-  mutate(est_rent00to19 = n_rent00to19/N_rent,
+  
+
+
+mutate(est_rent00to19 = n_rent00to19/N_rent,
          est_rent20to29 = n_rent20to29/N_rent,
          est_rent30up   = n_rent30up/N_rent,
          moe_rent00to19 = moe_ratio(n_rent00to19, N_rent,moe_rent00to19,moe_rent),
