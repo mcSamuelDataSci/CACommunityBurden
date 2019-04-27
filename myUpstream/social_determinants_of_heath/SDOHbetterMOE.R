@@ -1,3 +1,10 @@
+##############
+# SDOH API PULL
+# Education, Netuse, Poverty, Rent
+# ACS and resulting datasets are mutually exclusive unless otherwise noted
+# Apr 24 2019
+##############
+
 #1 Setting Paths, and Packages
 myDrive <-  getwd()  
 myPlace <- paste0(myDrive,"/myCBD/")  
@@ -9,9 +16,7 @@ upPlace <- paste0(myDrive,"/myUpstream/")
 .inst       <- .packages %in% installed.packages() 
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst]) 
 lapply(.packages, require, character.only=TRUE)           
-
 .ckey 	<- read_file(paste0(upPlace,"upstreamInfo/census.api.key.txt"))
-
 
 #2 User Input Variables
 #Variable Descriptions: https://www.census.gov/data/developers/data-sets.html
@@ -45,7 +50,7 @@ acs.netuse<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
          moe_net=moe_ratio(n_net,N_net,moen_net,moeN_net)
          ,NAME=NULL)
 
-# ACS Table B17001 POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY AGE (by race, mutually exclusive)
+# ACS Table B17001 POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY AGE (by race)
 # B17001_002 "Income in the past 12 months below poverty level" / B17001_001 "Total"
 # Related measures ------
 # B17003 POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT
@@ -73,7 +78,7 @@ acs.poverty<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
          moe_pov=moe_ratio(n_pov,N_pov,moen_pov,moeN_pov),
          NAME=NULL)
   
-# ACS Table B15003 EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER (by grade level, mutually exclusive)
+# ACS Table B15003 EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER (by grade level)
 # B15003_022-25 "Bachelor's degree - Doctorate degree" / B15003_001 "Total"
 # Related measures ------
 # B15001_001	SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER (by age grouping and grade level)
@@ -83,20 +88,21 @@ acs.education<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
                        year = ACSYear, variables = c("B15003_001", sprintf("B15003_0%02d",22:25)), 
                        key=.ckey, moe_level=90) %>% 
   mutate(edu= ifelse( variable=="B15003_001","total","edu"),
-         NAME=NULL)%>%
+         NAME=NULL) %>%
   group_by(GEOID,edu) %>%
   #summarize(n=sum(estimate),moe=moe_sum(moe,estimate,na.rm=F)) %>%
-  summarize(n=sum(estimate),moe=moe_sum(moe[which(estimate!=0)],which(estimate!=0,arr.ind=T))) %>%  #,na.rm=F
-  gather(descriptor,value,n,moe) %>%
+  summarize(n=sum(estimate),moen=moe_sum(moe[which(estimate!=0)],which(estimate!=0,arr.ind=T))) %>%  #,na.rm=F
+  gather(descriptor,value,n,moen) %>%
   unite(temp,descriptor,edu) %>%
   spread(temp,value) %>%
-  rename(N_edu=n_total,moen_edu=moe_edu,moeN_edu=moe_total) %>%
+  rename(N_edu=n_total,moeN_edu=moen_total) %>%
   mutate(est_edu=n_edu/N_edu,
          moe_edu=moe_ratio(n_edu,N_edu,moen_edu,moeN_edu))
 
 # raw measure is percnet in categories. Aggretated here for interpretablhy and consistany with Alameda measures.
 
 # ACS Table B25070 GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME IN THE PAST 12 MONTHS
+# Non-mutually exclusive resultant table:
 # B25070_007-010 "30.0 to 50.0 percent or more" / B25070_001 "Total" &
 # B25070_010     "50.0 percent or more"         / B25070_001 "Total"
 # Related measures ------
@@ -158,30 +164,38 @@ acs.rent<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
                          year = ACSYear, variables = c("B25070_001",(sprintf("B25070_0%02d",7:10))),
                          key=.ckey, moe_level=90) %>% 
   mutate(rent= ifelse( variable=="B25070_001",
-                       "N_rent",
-               ifelse( variable=="B25070_007" | variable=="B25070_008" |
-                       variable=="B25070_009" | variable=="B25070_010", 
-                       "rent30up",
-              # else if( variable=="B25070_010")
-                       "rent50up")),
-         NAME=NULL) %>%
+                       "N_rent","rent30up"),
+         NAME=NULL)
+acs.rent <- rbind(acs.rent,filter(acs.rent,variable=="B25070_010") %>% mutate(rent="rent50up")) %>%
   group_by(GEOID,rent) %>%
   #summarize(n=sum(estimate),moe=moe_sum(moe,estimate,na.rm=F)) %>%
-  summarize(n=sum(estimate),moe=moe_sum(moe[which(estimate!=0)],which(estimate!=0,arr.ind=T))) %>%  #,na.rm=F
-  gather(descriptor,value,n,moe) %>%
+  summarize(n=sum(estimate),moen=moe_sum(moe[which(estimate!=0)],which(estimate!=0,arr.ind=T))) %>%  #,na.rm=F
+  gather(descriptor,value,n,moen) %>%
   unite(temp,descriptor,rent) %>%
   spread(temp,value) %>%
-  rename(N_rent=n_N_rent, moeN_rent=moe_N_rent)# %>%
-  
-
-
-mutate(est_rent00to19 = n_rent00to19/N_rent,
-         est_rent20to29 = n_rent20to29/N_rent,
-         est_rent30up   = n_rent30up/N_rent,
-         moe_rent00to19 = moe_ratio(n_rent00to19, N_rent,moe_rent00to19,moe_rent),
-         moe_rent20to29 = moe_ratio(n_rent20to29, N_rent,moe_rent20to29,moe_rent),
-         moe_rent30up   = moe_ratio(n_rent30up  , N_rent,moe_rent30up  ,moe_rent)
+  rename(N_rent=n_N_rent, moeN_rent=moen_N_rent) %>%
+  mutate(est_rent30up = n_rent30up/N_rent,
+         est_rent50up = n_rent50up/N_rent,
+         moe_rent30up = moe_ratio(n_rent30up, N_rent,moen_rent30up,moeN_rent),
+         moe_rent50up = moe_ratio(n_rent50up, N_rent,moen_rent50up,moeN_rent)
         ) 
+
+
+
+junk <-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
+                year = ACSYear, variables = sprintf("B25106_0%02d",3:6),
+                key=.ckey, moe_level=90) %>% 
+  gather(descriptor,value,estimate,moe) %>%
+  unite(temp,variable,descriptor) %>%
+  spread(temp,value)  %>%  
+  mutate(junkSum  =          (B25106_004_estimate + B25106_005_estimate + B25106_006_estimate + B25106_003_estimate),
+         dumbSum  =         sum(B25106_004_estimate,B25106_005_estimate, B25106_006_estimate, B25106_003_estimate),
+         smartSum =         select(., c(B25106_004_estimate,B25106_005_estimate, B25106_006_estimate, B25106_003_estimate)) %>% apply(1, sum, na.rm=TRUE), 
+         sillyMOE  =        select(., c(B25106_004_moe,B25106_005_moe, B25106_006_moe, B25106_003_moe)) %>% apply(1,sum,na.rm=TRUE),
+         maybeMOE1 =        select(., c(B25106_004_moe,B25106_005_moe, B25106_006_moe, B25106_003_moe)) %>% apply(1,moe_sum,na.rm=TRUE) ,
+         maybeMOE2 =        sqrt( B25106_004_moe^2 + B25106_005_moe^2 + B25106_006_moe^2 + B25106_003_moe^2) 
+         
+  )
 
 
 
@@ -254,27 +268,69 @@ acs.mortg<-get_acs(state = 06, geography = "tract", survey = ACSSurvey,
 } # end if 1==2
 
 
-combined<-Reduce(function(x,y) merge(x,y,all=TRUE),mget(ls(pattern='acs.+')))
-
-sdoh_dat_tract <- full_join(acs.education,acs.poverty,by="GEOID") %>%
-                  full_join(acs.netuse %>% select(-NAME)) %>%
-                  full_join(acs.rent)
+sdoh_dat_tract <- Reduce(function(x,y) merge(x,y,all=TRUE),mget(ls(pattern='acs.+'))) 
 
 cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census 
                                   # dataframe linking comID and comName
 
-
-
-
-
-sdoh_dat_county <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
+#michaels
+sdoh_dat_countyM <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
                      group_by(county) %>%
                      summarize(N_edu = sum(N_edu,na.rm=TRUE),
                                n_edu = sum(n_edu,na.rm=TRUE),
                                est_edu = round(100*(n_edu/N_edu),2)
-                               )
+                               ) 
+#bens           
+sdoh_dat_countyB <-  left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
+                    select(matches('GEOID|county|n_|N_')) %>%
+                    gather(table,obs,-county,-GEOID) %>%
+                    mutate(type= ifelse( grepl('moe',table),"moe","n")) %>%
+                    spread(type,obs) %>%
+                    group_by(county,table) %>%
+                    summarize(n    = sum(n,na.rm=TRUE),
+                              moe = moe_sum(moe,n,na.rm=TRUE)) %>%
+                    mutate(n= ifelse(grepl('moe',table),moe,n),moe=NULL) %>%
+                    spread(table,n) %>%
+                    mutate(est_edu = round(100*( n_edu/N_edu ),2),
+                           moe_edu = round(100*( moe_ratio(n_edu,N_edu,moen_edu,moeN_edu) ),2),
+                           est_net = round(100*( n_net/N_net ),2),
+                           moe_net = round(100*( moe_ratio(n_net,N_net,moen_net,moeN_net) ),2),
+                           est_pov = round(100*( n_pov/N_pov ),2),
+                           moe_pov = round(100*( moe_ratio(n_pov,N_pov,moen_pov,moeN_pov) ),2),
+                           est_rent30up = round(100*( n_rent30up/N_rent ),2),
+                           moe_rent30up = round(100*( moe_ratio(n_rent30up,N_rent,moen_rent30up,moeN_rent) ),2),
+                           est_rent50up = round(100*( n_rent50up/N_rent ),2),
+                           moe_rent50up = round(100*( moe_ratio(n_rent50up,N_rent,moen_rent50up,moeN_rent) ),2) ) %>%
+                   select(-matches('n_|N_'))
 
+
+sdoh_dat_community <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
+                  select(matches('GEOID|comID|n_|N_')) %>%
+                  gather(table,obs,-comID,-GEOID) %>%
+                  mutate(type= ifelse( grepl('moe',table),"moe","n")) %>%
+                  spread(type,obs) %>%
+                  group_by(comID,table) %>%
+                  summarize(n    = sum(n,na.rm=TRUE),
+                            moe = moe_sum(moe,n,na.rm=TRUE)) %>%
+                  mutate(n= ifelse(grepl('moe',table),moe,n),moe=NULL) %>%
+                  spread(table,n) %>%
+                  mutate(est_edu = round(100*( n_edu/N_edu ),2),
+                         moe_edu = round(100*( moe_ratio(n_edu,N_edu,moen_edu,moeN_edu) ),2),
+                         est_net = round(100*( n_net/N_net ),2),
+                         moe_net = round(100*( moe_ratio(n_net,N_net,moen_net,moeN_net) ),2),
+                         est_pov = round(100*( n_pov/N_pov ),2),
+                         moe_pov = round(100*( moe_ratio(n_pov,N_pov,moen_pov,moeN_pov) ),2),
+                         est_rent30up = round(100*( n_rent30up/N_rent ),2),
+                         moe_rent30up = round(100*( moe_ratio(n_rent30up,N_rent,moen_rent30up,moeN_rent) ),2),
+                         est_rent50up = round(100*( n_rent50up/N_rent ),2),
+                         moe_rent50up = round(100*( moe_ratio(n_rent50up,N_rent,moen_rent50up,moeN_rent) ),2) ) %>%
+                  select(-matches('n_|N_'))  
+  
+                
+
+#removing for now error since moen not here...
 # just education
+if (1==3){
 sdoh_dat_county <- left_join(acs.education,cbdLinkCA,by="GEOID") %>%
   group_by(county) %>%
   summarize(N_edu = sum(N_edu,na.rm=TRUE),
@@ -284,7 +340,7 @@ sdoh_dat_county <- left_join(acs.education,cbdLinkCA,by="GEOID") %>%
             moeN = moe_sum(moeN, estimate =  N_edu, na.rm = TRUE),
             moe_edu = round(100*moe_ratio(n_edu,N_edu,moen,moeN),3)
   )
-
+}
 
 
 if (1==2) {
@@ -303,13 +359,9 @@ sdoh_dat_county <- left_join(acs.education,cbdLinkCA,by="GEOID") %>%
             mutate(moeXXX = moe_ratio(n_edu_C,N_edu_C,moe_n,moe_N)
            
   )
-}
-
-
-
 
 sdoh_dat_community <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
-  group_by(comID) %>%
+  group_by(comID) #%>%
   summarize(N_edu_C = sum(N_edu,na.rm=TRUE),
             n_edu_C = sum(n_edu,na.rm=TRUE),
             est_edu_C = round(100*(n_edu_C/N_edu_C),2),
@@ -317,5 +369,9 @@ sdoh_dat_community <- left_join(sdoh_dat_tract,cbdLinkCA,by="GEOID") %>%
             moe_edu_C = round(100* (sqrt ( sum(moe_edu^2,na.rm=TRUE)) / N_edu_C),3)
             
   )
+  
+  }
+
+
 
 
