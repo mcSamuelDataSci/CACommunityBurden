@@ -4,6 +4,9 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
  myCol <- "blue"            #mycol <- rep("blue",nrow(filtered.df))
  bLwd <- 2
   
+ 
+ if(myLev=="lev3") myLev <- c("lev2","lev3")
+ 
  filtered.df <- filter(datCounty,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
  filtered.df <- filtered.df[order( filtered.df[,myMeasure],na.last = FALSE),]
 
@@ -52,7 +55,10 @@ rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Tot
          col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
          xlim=c(0,1.04*max(filtered.df$YLLper,na.rm=T)))
  box(lwd=bLwd)
-   
+
+ 
+ 
+ 
  barplot(filtered.df$aRate,
          xlab="Age-Adjusted Rate",
          col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,

@@ -45,7 +45,7 @@ myTrans <- "log"
     scale_colour_discrete(guide = 'none') +   # removed legend 
     labs(y = myMeasure)  + 
     geom_dl(aes(label = raceName), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
-  #  geom_dl(aes(label = raceCode), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
+    geom_dl(aes(label = raceName), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
     labs(title =myTit,size=mySize2) +
     labs(y = lMeasuresC[lMeasures==myMeasure]) +
    labs(caption = raceNote) +

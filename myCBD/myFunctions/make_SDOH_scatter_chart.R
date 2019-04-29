@@ -16,20 +16,20 @@ pal <- c("red", "blue", "green")
 # https://plotly-book.cpsievert.me/scatter-traces.html
          
 
-scatterSDOH <- function(myCause="0", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="abovepoverty"){
+scatterSDOH <- function(myCause="0", myMeasure = "aRate",mySex="Total",myGeo="Community",t.x="est_pov"){
  if(1==2){
   myCause="0"
   myMeasure = "aRate"
   mySex="Total"
-  myGeo="Community"
-  t.x="abovepoverty"
+  myGeo="County"
+  t.x="est_pov"
 }
   
 if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
   
   
-t.y <- 8  
+t.y <- 11  # Dumb quick fix to select measure column
 xL <-  which(sdohVec == t.x)
 xM <-  which(lMeasures== myMeasure)
 
@@ -57,7 +57,7 @@ if (myGeo=="County") {
 }
 
 
-sdohWork <- sdohWork[,c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty","parkaccess","houserepair",myMeasure,"pop","county","region")]
+sdohWork <- sdohWork[,c(sdohVec,myMeasure,"pop","county","region")]
 
 sdohWorkList <- as.list(sdohWork)  
 

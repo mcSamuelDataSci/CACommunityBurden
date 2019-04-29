@@ -15,14 +15,14 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-#secure.location  <- "E:/0.Secure.Data/"
+# secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
+secure.location  <- "E:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichDat <- "fake"   # "real" or "fake"
+whichDat <- "real"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -517,17 +517,6 @@ total_sum_pop_new %>% arrange(CAUSE) %>% oshpd_visualize(., "lev2", charges, "Al
 
 #This uses fct_reorder, based on an example here: https://stackoverflow.com/questions/54458018/passing-string-variable-to-forcatsfct-reorder. 
 s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
-
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-
-
-
-
-
-
-
 
 
 

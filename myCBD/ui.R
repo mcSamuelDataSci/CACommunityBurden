@@ -13,6 +13,7 @@
 # =============================================================================
 
 
+
 # STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
 
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
@@ -61,6 +62,21 @@ shinyUI(fluidPage(theme = "bootstrap.css",
  tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   
   
  
+# code from here https://community.rstudio.com/t/shiny-slider-new-design/24765/4
+#  so that slider bar does not fill with color
+    tags$style(
+     ".irs-bar {",
+     "  border-color: transparent;",
+     "  background-color: transparent;",
+     "}",
+     ".irs-bar-edge {",
+     "  border-color: transparent;",
+     "  background-color: transparent;",
+     "}"
+   ),
+ 
+ 
+ 
 # SIDEBARS -----------------------------------------------------------------------
 
 sidebarPanel(width=3, 
@@ -94,17 +110,20 @@ sidebarPanel(width=3,
                choices=c("County","Community","Census Tract"))),
  conditionalPanel(condition = paste("(input.myGeo == 'Census Tract') & (",fC(c(22,23)),")"), 
                  helpText(h6(tractWarning,style="color:red"))) ,
-                 
+
+
+ 
  # myYear
  conditionalPanel(condition = 
    paste(
-     "(!(input.myGeo == 'Community' | input.myGeo == 'Census Tract') 
-        && (", fC(c(22,23)),") ) 
-     | (", fC(c(33,34,45,44)),")"
+     "( (input.myGeo == 'County') && (", fC(c(22,23)),") ) 
+     |( (input.myLHJ == 'CALIFORNIA') && (", fC(c(44)),") ) 
+     | (", fC(c(33)),")"
    ),
-   sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
-               round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
- 
+sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
+            round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
+
+
  # mySex
  conditionalPanel(condition = fC(c(22,23,33,44,66, 68)), 
    radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
@@ -126,11 +145,12 @@ sidebarPanel(width=3,
  # myMeasure
  conditionalPanel(condition = fC(c(22,23,34,44,55,56,66)), 
    actionButton( "measureHelp", label="?",style=myButtonSty) ,
-   radioButtons(  "myMeasure",  "Measure:", choices=lMeasures,selected="YLL.adj.rate")),
+   radioButtons(  "myMeasure",  "Measure:", choices=lMeasures, selected="YLLper")),
  
  # myMeasureShort
  conditionalPanel(condition = fC(c(33)),
-   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort)),
+   #actionButton( "measureHelp", label="?",style=myButtonSty) ,              
+   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort, selected="YLLper")),
  
  # myCutSystem
  conditionalPanel(condition = fC(c(22,23)),
@@ -145,10 +165,9 @@ sidebarPanel(width=3,
  conditionalPanel(condition = 
    paste(
      "(",fC(c(44)),") &&",
-     "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'YLLper') | 
-        (input.myMeasure == 'aRate'))"
+     "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'aRate'))"
      ),
-   checkboxInput("myCI",       "95% CIs?", value=FALSE)),
+   checkboxInput("myCI",       "95% CIs", value=FALSE)),
  
  # myRefLine
  conditionalPanel(condition = fC(c(44)),
@@ -165,7 +184,7 @@ sidebarPanel(width=3,
 # Figure Download buttons ---------------------------------------------------
 
 conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
-conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure')),       
+conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure'),br(),br()),       
 
 
 # Home page side bar text ---------------------------------------------------
@@ -178,10 +197,6 @@ conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure',
    helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"), br(), 
 
    h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
-   
-   
-   
-   
    
    actionButton("newsUse","News and Updates",style=myHelpButtonSty), br(),
  
@@ -203,13 +218,15 @@ conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure',
  
 # Text on other pages  -----------------------------------------
 
- conditionalPanel(condition = fC(c(22,23,33,45,44,55,66)),
-                  helpText(br(),helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
- ),
-
- conditionalPanel(condition = fC(c(33,45,44,55,66)),
+ conditionalPanel(condition = fC(c(33,45,44,55,56,66)),
                  paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;")
  ,
+ 
+ conditionalPanel(condition = fC(c(22,23,33,45,44,55,56,66)),
+                  helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
+ ),
+
+ 
 
  conditionalPanel(condition = "input.ID != 11",
                  br(),HTML('<left><img src="CDPH.gif" height="125" width="150"></left>') 
@@ -283,7 +300,7 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
-    tabPanel("OSHPD",
+    tabPanel("HOSPITAL DISCHARGE",
           br(), 
           plotOutput("OSHPD", height=700), value = 68),
  

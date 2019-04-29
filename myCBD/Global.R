@@ -142,7 +142,6 @@ lMeasures <- c("Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate", "me
 #  8  SMR                     SMR 
 
 
-
 lMeasuresC <- c(
   "Number of deaths",
   "Crude Death Rate per 100,000 population",
@@ -154,7 +153,16 @@ lMeasuresC <- c(
   "Standard Mortality Ratio")
 
 names(lMeasures) <- lMeasuresC
-lMeasuresShort   <- lMeasures[c(4,2,6,7,8)] 
+lMeasuresShort   <- lMeasures[c(1,5,3,7,8)] 
+
+
+lMeasures <- lMeasures[-8]  # Removes SMR from main measures list
+
+
+
+
+
+
 
 #This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
 #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
@@ -185,16 +193,35 @@ bigList           <- fullCauseList[nchar(fullCauseList$LABEL) == 1,]
 bigCode           <- bigList[,"LABEL"]
 names(bigCode)    <- bigList[,"causeList"]
 
-sdohVec  <- c("hpi2score", "insured", "inpreschool", "bachelorsed", "abovepoverty", "parkaccess","houserepair")
+
+
+
+#-- Social Determinants of Health Measures and Names
+
+
+sdohVec  <- c("hpi2score", 
+              "insured", 
+              "est_edu",
+              "inpreschool",
+              "est_pov",
+              "est_rent30up",
+              "est_rent50up",
+              "houserepair", 
+              "parkaccess",
+              "est_net")
 
 sdohVecL <- c(
   "Healthy Places Index score",                                   
   "Percentage of adults aged 18 to 64 years currently insured",
+  "Percent of the Population over 25 with a Bachelor's degree or greater",
   "Percentage of 3 and 4 year olds enrolled in school",                    
-  "Percentage of population over age 25 with a bachelor's education or higher",      
-  "Percent of the population with an income exceeding 200% of federal poverty level",
+  "Percent of the population with an income below federal poverty level", # ORexceeding 200% of federal poverty level",
+  "Percentage of renters paying more that 30% of household income for rent",
+  "Percentage of renters paying more that 50% of household income for rent",
+  "Percent of households with kitchen facilities and plumbing",
   "Percentage of the population living within a half-mile of a park, beach, or open space greater than 1 acre",
-  "Percent of households with kitchen facilities and plumbing")
+  "Percent with an Internet subscription" 
+  )
 
 names(sdohVec) <- sdohVecL
 
@@ -205,10 +232,10 @@ lListNoState  <- lList[lList != STATE]
 
 
 raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
-raceNameFull <- c("missing","White","Black","Native American","Asian","Hawaiian","Other","Multirace","unknown","Hispanic")
+raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","Multirace","unknown","Hispanic")
 
 
-raceNote     <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Hawaiian' is 'Native Hawaiian/Pacific Islander'"
+raceNote     <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
 
 
 

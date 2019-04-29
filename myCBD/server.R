@@ -43,6 +43,8 @@ observeEvent(input$causeHelp,     {myModal(causeHelp)})
 observeEvent(input$cutmethodHelp, {myModal(cutmethodHelp)})
 observeEvent(input$statecutHelp,  {myModal(stateCutHelp)})
 observeEvent(input$measureHelp,   {myModal(measureHelp)})
+observeEvent(input$levelHelp,     {myModal(levelHelp)})
+
 
 
 # generates help "objects" used for tab help buttons, as above
@@ -75,16 +77,25 @@ observeEvent(input$myGeo, {
 
 # if myLHJ is not STATE (e.g. "CALIFORNIA"), then myGeo is "Community" so
 #  that county map will not show just overall county data
+
 observeEvent(input$myLHJ, {
-  if(input$myLHJ != STATE){updateSelectInput(session, "myGeo", selected = "Community") }
+  if(input$myLHJ != STATE & input$ID %in% c(22,23)){updateSelectInput(session, "myGeo", selected = "Community") }
 })
 
 
+# Hard wire... Trend only COUNTY for now
 observeEvent(input$ID,{
-  if(input$ID %in% c(44,55,56)) 
-  {updateSelectInput(session, "myCAUSE", choices = phCode,selected=current_Cause()  )}
+  if(input$ID %in% c(55) ) 
+  {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()  )}
 })
     
+
+observeEvent(input$ID,{
+  if(input$ID %in% c(44,56) &  input$myGeo=="Community") 
+  {updateSelectInput(session, "myCAUSE", choices = phCode,selected=current_Cause()  )}
+})
+
+
 
 observeEvent(input$ID,{
   if(input$ID %in% c(22,23)  & input$myGeo=="Census Tract" ) 

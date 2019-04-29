@@ -19,7 +19,7 @@
 
 # -- Designate locations and load packages---------------------------------------------------------
 
-whichDat <- "fake"
+whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
@@ -32,6 +32,7 @@ myPlace <- paste0(myDrive,"/myCBD")
 upPlace <- paste0(myDrive,"/myUpstream") 
 
 library(readr)
+library(stringr)
 library(dplyr)
 library(epitools)
 library(sqldf)
@@ -116,7 +117,8 @@ cbdDat0       <- mutate(cbdDat0,
                          age     = as.numeric(age),                                                  # redundant...
                          ICD10   = as.character(ICD10),                                              # redundant...
                          comID   = cbdLinkCA[match(cbdDat0$GEOID,cbdLinkCA[,"GEOID"]),"comID"],   
-                         yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],
+                       # yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],
+                         yll     = ifelse(age > 75, 0, 75-age),
                          yearG   = yearMap[match(year,yearMap[,"year"]),"yearGroup5"], 
                          yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"] 
                         )
