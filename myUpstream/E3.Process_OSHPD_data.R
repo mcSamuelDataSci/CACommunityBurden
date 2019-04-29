@@ -172,7 +172,7 @@ mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creat
 fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
-fullCauseListICD <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly", "regExICD10_CM")] %>% arrange(LABEL) %>% as.data.frame()
+#fullCauseListICD <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly", "regExICD10_CM")] %>% arrange(LABEL) %>% as.data.frame()
 
 
 #Function from death code R script by MS
@@ -459,7 +459,7 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
 #Saving RDS file of this dataframe
-saveRDS(calculated_metrics, file = path(myPlace, "myData/real/countyOSHPD.rds"))
+saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSHPD.rds"))
 
 
 #----------Plotting----------------------------------------------------------------------#
