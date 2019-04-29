@@ -1,20 +1,14 @@
 
 calculated_metrics <- readRDS(file = path(myPlace, "myData/real/countyOSHPD.rds"))
 
-# hospDiscMeasures <-  hospDiscMeasures[-5]
-
-
 #saving type as factor and specifies the order controls the order in which the facet panels are displayed in ggplot
 oshpdPlot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total" ) {
          
    plotData <-    calculated_metrics %>% 
                   mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>% 
-                #    mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges",                "avgcharge"))) %>% 
                    mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
                    left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% 
-                #  filter(!is.na(CAUSE), Level == "lev2", county == myCounty, type != "Crude Hosp Rate") %>% 
                    filter(!is.na(CAUSE), Level == "lev2", county == myCounty, !(type %in% c("Crude Hosp Rate","Crude Charge Rate"))) %>% 
-    
                    filter(sex == mySex) %>%
                    group_by(type) %>% 
                     mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myOSHPDtype) %>% 
