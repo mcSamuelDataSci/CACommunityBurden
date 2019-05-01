@@ -156,8 +156,8 @@ names(lMeasures) <- lMeasuresC
 lMeasuresShort   <- lMeasures[c(1,5,3,7,8)] 
 
 
-lMeasures <- lMeasures[-8]  # Removes SMR from main measures list
-
+lMeasures  <- lMeasures[-8]  # Removes SMR from main measures list
+lMeasuresC <- lMeasuresC[-8]
 
 
 
