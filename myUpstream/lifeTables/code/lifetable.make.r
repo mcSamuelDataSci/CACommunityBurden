@@ -10,7 +10,9 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  dataset flag
-whichData     <- "fake"   # "real" or "fake" death data
+whichData     <- "real"   # "real" or "fake" death data
+.midPath <- "e:/0.Secure.Data/myData/"
+
 
 ## 1.3  paths
 myDrive <- getwd()
@@ -24,14 +26,26 @@ LTplace <- paste0(upPlace,"/lifeTables/dataOut/")
 .ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
 .clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
 .dofurl		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
+
 .nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # output deaths by tract
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
 .nxcounty	<- paste0(upPlace,"/lifeTables/dataOut/nxCounty.rds") # output deaths by county
 .nxstate	<- paste0(upPlace,"/lifeTables/dataOut/nxState.rds") # output deaths by state
+
 .dxtract	<- paste0(upPlace,"/lifeTables/dataOut/dxTract.rds") # output deaths by tract
 .dxmssa		<- paste0(upPlace,"/lifeTables/dataOut/dxMSSA.rds") # output deaths by mssa
 .dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
 .dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
+
+
+
+if (whichData == "real"){
+.dxtract	<- paste0(.midPath,"dxTract.rds") # output deaths by tract
+.dxmssa		<- paste0(.midPath,"dxMSSA.rds") # output deaths by mssa
+.dxcounty	<- paste0(.midPath,"dxCounty.rds") # output deaths by county
+.dxstate	<- paste0(.midPath,"dxState.rds") # output deaths by state
+}
+
 
 ## 1.5  setwd
 setwd(myDrive)
