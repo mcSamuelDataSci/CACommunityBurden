@@ -1,9 +1,12 @@
+# ADD visNetwork to "install packages" file
+
 library(dplyr)
 library(magrittr)
 library(visNetwork)
 library(stringr)
 library(shiny)
 library(shinyWidgets)
+library(data.table)
 
 
 # Load and format data-----------------------------------------------------------------------
@@ -30,29 +33,49 @@ colnames(risk_data)[12] <- 'display'
 cause_data$display <- 'cause'
 risk_data$display <- 'risk'
 
-data <- bind_rows(cause_data, risk_data)
+data <- bind_rows(cause_data, risk_data) %>%
+  mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
+                        ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
+
+
+
+
+dater <- data.frame(id_num = c(1:10), parent_id = rep(c(6:10), 2), level = c(1,2,2,2,3,4,3,2,2,3)) %>%
+  mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
+                        ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
+# ^Mutating here to show include items that don't have "children" in lower levels
+
+
 
 # Define constants -----------------------------------------------------------------------
 NUM_NODES <- 25
 CAUSE_YEARS <- sort(unique(cause_data$year_id))
 RISK_YEARS <- sort(unique(risk_data$year_id))
-LEFT_X <- 0
-RIGHT_X <- 800
 LABEL_LENGTH <- 25
-HALF_BOX_WIDTH <- LABEL_LENGTH*10.5
+LEFT_X <- -LABEL_LENGTH*25 + 425
+RIGHT_X <- 800
+HALF_BOX_WIDTH <- LABEL_LENGTH*13.4
+
+Y_SPACE_FACTOR <- 80
+FONT_SIZE <- 45
+HEIGHT_FACTOR <- 6
+HEIGHT_ADD <- 80
+DRAG_ON <- FALSE
+WIDTH <- '100%'
+HEIGHT_CONSTRAINT <- 60
 
 # Create nodes function -----------------------------------------------------------------------
-create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_from, year_to, display_in) {
+create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_from, year_to, display_in, num_nodes) {
 
   left_nodes <- data %>%
-    filter(display == display_in, level == level_in, year_id == year_from,
+    filter(display == display_in, grepl(level_in, level), year_id == year_from,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
     arrange(id_num) %>%
     mutate(rank = rank(-val, ties.method = 'first')) %>%
-    filter(rank <= NUM_NODES)
+    filter(rank <= num_nodes)
   
   right_nodes <- data %>%
-    filter(display == display_in, level == level_in, year_id == year_to,
+    filter(display == display_in, grepl(level_in, level), year_id == year_to,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in,
            id_name %in% left_nodes$id_name) %>%
     arrange(id_num) %>%
@@ -81,22 +104,22 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_
                                           endpoints$mm_title[as.numeric(paste(selected_data$measure_id, selected_data$metric_id, sep = ""))],
                                           " (", selected_data$lower, "-", selected_data$upper, ")",
                                           sep =""),
-                            x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)), y = selected_data$rank2*55) # -nrow(selected_data)*8
+                            x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)), y = selected_data$rank2*Y_SPACE_FACTOR - NUM_NODES*15) # -nrow(selected_data)*8
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
                            x = c(rep(LEFT_X+HALF_BOX_WIDTH, NUM_NODES), rep(RIGHT_X-HALF_BOX_WIDTH, NUM_NODES)), y = label_nodes$y)
   
   title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
-                            x = c(LEFT_X, RIGHT_X), y = 1, id = 0:-1, shape = 'text',
-                            font = list(face = 'Bold', size = 35))
+                            x = c(LEFT_X, RIGHT_X), y = -NUM_NODES*15, id = 0:-1, shape = 'text',
+                            font = list(face = 'Bold', size = 45))
   
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
   nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes))
   
   edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)), to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
-                      dashes = c(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)]),
-                      arrows = c(rep("to", NUM_NODES), rep("", 2*NUM_NODES)))
-  
+                      dashes = ifelse(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)], "[20,15]", "false"))
+                      #arrows = c(rep("to", NUM_NODES), rep("", 2*NUM_NODES)))
+
   return(list("nodes" = nodes, "edges" = edges))
 }
 
@@ -120,13 +143,17 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Metabolic risks         \n')
   }
   visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
-    visNodes(fixed = TRUE, shape = 'box', font = list(face = 'Monaco', size = 35)) %>%
-    visEdges(width = 3, smooth = FALSE) %>%
+    visOptions(height = (nrow(edges)+1)*HEIGHT_FACTOR + HEIGHT_ADD, width = WIDTH) %>%
+    visNodes(heightConstraint = HEIGHT_CONSTRAINT, fixed = TRUE, shape = 'box', font = list(face = 'Monaco', size = FONT_SIZE)) %>%
+    visEdges(width = 4, smooth = FALSE, hoverWidth = 0) %>%
     visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
               addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
                                     font = list(face = 'Bold', size = 40, align = 'left')),
-              stepY = 150, main = "Legend") %>%
-    visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = FALSE, selectable = FALSE) %>% # %>% visConfigure(enabled = TRUE, showButton = TRUE)
+              stepY = 150) %>%
+    visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = DRAG_ON, selectable = FALSE) %>% # %>% visConfigure(enabled = TRUE, showButton = TRUE)
+    # visEvents(hoverNode = "function(nodes) {
+    #     Shiny.onInputChange('current_node_id', nodes);
+    #           ;}") %>%
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
     visGroups(groupname = groups[3], color = '#A0DCA4')
@@ -143,6 +170,7 @@ valid_years <- function(display) {
 }
 
 requirements <- function(display, years) {
+  req(years[1] != years[2])
   if (req(display) == "risk") {
     req(years[1] %in% RISK_YEARS)
     req(years[2] %in% RISK_YEARS)
@@ -166,6 +194,12 @@ ui <- fluidPage(
                   label = h4("Display:"),
                   choices = list("Cause" = "cause", "Risk" = "risk"),
                   selected = "risk"),
+      
+      sliderInput("num_nodes",
+                  label = h4("Show top:"),
+                  min = 1,
+                  max = 50,
+                  value = 25),
       
       sliderInput("level",
                   label = h4("Level:"),
@@ -217,7 +251,7 @@ server <- function(input, output) {
     # error messages don't appear during processing lag time.
     requirements(input$display, input$year)
 
-    nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric, input$year[1], input$year[2], input$display)
+    nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric, input$year[1], input$year[2], input$display, input$num_nodes)
     nodes <- nodes_and_edges$nodes
     edges <- nodes_and_edges$edges
 
