@@ -172,7 +172,8 @@ mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creat
 fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
-fullCauseListICD <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly", "regExICD10_CM")] %>% arrange(LABEL) %>% as.data.frame()
+
+
 
 
 #Function from death code R script by MS
@@ -531,7 +532,7 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
 #Need to define which conditions we're interested in
-filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
+#filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
 
 #--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
@@ -546,72 +547,67 @@ filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-#testdiag <- oshpd16 %>% dplyr::select(diag_p, starts_with("odiag")) %>% as.data.frame() %>%
-  #use this code as a way to indicate that we're only interested in diag_p, odiag vars?? instead of index?
 
-diagnosis_definition <- function(colname, label) {
-  oshpd16 <- oshpd16 %>% dplyr::select(diag_p, starts_with("odiag"))
-  oshpd16[[colname]] <- apply(oshpd16, 1, FUN = function(x) {
-    icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(1:ncol(oshpd16))])) label else NA
-  } )
-  return(oshpd16)
+
+#defining paste function to include sep = "|"
+pastex <- function(...) {
+  paste(..., sep = "|")
+}
+
+p <- function(v) {
+  Reduce(f=pastex, x = v)
 }
 
 
-oshpd_test <- oshpd16 %>% select(-icdCODE, -lev0, -lev1, -lev2, -lev3) %>% diagnosis_definition(., "diabetes_any", "D01")
-
-oshpd_test <- diagnosis_definition(oshpd_sample2, "hypertensive_HD_any", "C01")
-
-oshpd_test <- diagnosis_definition(oshpd_sample2, "ischemic_HD_any", "C02")
-
-#The only variables that are changing are colname and label values--can we pull these values from an external vector/list/dataset and then run through the function for each observation
+test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExICD10_CM)) %>% group_by(LABEL) %>% mutate(newICDcode = p(regExICD10_CM)) %>% select(LABEL, newICDcode) %>% unique()
+testmap2 <- left_join(test_map, select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-#Testing loops???
+diagnosis_definition <- function(df, label) {
+  index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
+  df[[label]] <- apply(df, 1, FUN = function(x) {
+    icd_regEx <- filter(testmap2, LABEL == label) %>% pull(newICDcode)
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(index)])) 1 else 0
+  } )
+  return(df)
+}
 
-colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
-labels <- c("D01", "C01", "C02")
-testdata <- cbind(colnames, labels) %>% as.vector()
-
-for (i in 1: length(colnames)) {
-  test <- diagnosis_definition(colnames[i], labels[i])
+oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
+for (i in 1: nrow(testmap2)) {
+  oshpd_test <- diagnosis_definition(oshpd_test,testmap2$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
   
-} #dataset re-writes over itself, so the only column that is created is the last column (ischemic C02 column). 
+} 
 
 
-df <- oshpd16
-
+#***************************************************************************
 diagnosis_definition2 <- function(df, colname, label) {
-  df <- df %>% dplyr::select(diag_p, starts_with("odiag"))
+  index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
   df[[colname]] <- apply(df, 1, FUN = function(x) {
     icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
     pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(1:ncol(df))])) label else NA
+    if(any(pattern[(index)])) label else NA
   } )
   return(df)
 }
 
 
-for (i in 1:length(colnames)) {
-  df <- diagnosis_definition2(df, colnames[i], labels[i])
-}
+#example input
+colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
+
+labels <- c("D01", "C01", "C02")
 
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#use while instead of for loop? https://stackoverflow.com/questions/35013990/r-how-to-add-columns-to-a-dataset-incrementally-using-a-loop
-
-num_variables <- length(colnames)
-i <- 1
-
-while (i <= num_variables) {
-  test <- diagnosis_definition(colnames[1:i], labels[1:i])
-
-  print(str(test))
+oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
+for (i in 1: nrow(colnames)) {
+  oshpd_test <- diagnosis_definition(oshpd_test,colnames[i], labels[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
   
-  i <- i + 1
-}
+}  
 
-#this only made the first column, so it's not really what we want either
+
+1
+O4413
+        Z3A31
+
+#This combination doesn't get flagged as maternal????
 
