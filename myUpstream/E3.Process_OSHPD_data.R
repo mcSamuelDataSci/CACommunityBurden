@@ -573,12 +573,32 @@ oshpd_test <- diagnosis_definition(oshpd_sample2, "ischemic_HD_any", "C02")
 
 colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
 labels <- c("D01", "C01", "C02")
-testdata <- cbind(colnames, labels) %>% as.data.frame()
+testdata <- cbind(colnames, labels) %>% as.vector()
 
 for (i in 1: length(colnames)) {
   test <- diagnosis_definition(colnames[i], labels[i])
   
 } #dataset re-writes over itself, so the only column that is created is the last column (ischemic C02 column). 
+
+
+df <- oshpd16
+
+diagnosis_definition2 <- function(df, colname, label) {
+  df <- df %>% dplyr::select(diag_p, starts_with("odiag"))
+  df[[colname]] <- apply(df, 1, FUN = function(x) {
+    icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(1:ncol(df))])) label else NA
+  } )
+  return(df)
+}
+
+
+for (i in 1:length(colnames)) {
+  df <- diagnosis_definition2(df, colnames[i], labels[i])
+}
+
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #use while instead of for loop? https://stackoverflow.com/questions/35013990/r-how-to-add-columns-to-a-dataset-incrementally-using-a-loop
 
@@ -586,7 +606,7 @@ num_variables <- length(colnames)
 i <- 1
 
 while (i <= num_variables) {
-  test <- diagnosis_definition(colnames[1:i,], labels[1:i,])
+  test <- diagnosis_definition(colnames[1:i], labels[1:i])
 
   print(str(test))
   
@@ -594,6 +614,4 @@ while (i <= num_variables) {
 }
 
 #this only made the first column, so it's not really what we want either
-
-
 
