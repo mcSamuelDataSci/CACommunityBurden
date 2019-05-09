@@ -22,7 +22,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichDat <- "fake"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -143,11 +143,11 @@ popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
 #--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
 
 
-if (whichDat == "real") {
+if (whichData == "real") {
   oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) #maybe change to secure location?  YES
 }
 
-if (whichDat == "fake") {
+if (whichData == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
@@ -547,23 +547,28 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-
+##CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN
 
 #defining paste function to include sep = "|"
 pastex <- function(...) {
   paste(..., sep = "|")
 }
 
+#function for pasting all icd codes for a given label together in one variable
 p <- function(v) {
-  Reduce(f=pastex, x = v)
+  Reduce(x = v, f=pastex)
 }
+#Note that Reduce is a base R function, but there is also a purrr::reduce() function that apparently performs the same general
+#purpose, but the input variables are set up somewhat differently. I haven't been able to successfully use purrr::reduce() instead of Reduce()
 
 
+#creating input data
 test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExICD10_CM)) %>% group_by(LABEL) %>% mutate(newICDcode = p(regExICD10_CM)) %>% select(LABEL, newICDcode) %>% unique()
+#left joining with names associated with ICD/label
 testmap2 <- left_join(test_map, select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-diagnosis_definition <- function(df, label) {
+any_diagnosis_definition <- function(df, label) {
   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
   df[[label]] <- apply(df, 1, FUN = function(x) {
     icd_regEx <- filter(testmap2, LABEL == label) %>% pull(newICDcode)
@@ -575,39 +580,23 @@ diagnosis_definition <- function(df, label) {
 
 oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
 for (i in 1: nrow(testmap2)) {
-  oshpd_test <- diagnosis_definition(oshpd_test,testmap2$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
+  oshpd_test <- any_diagnosis_definition(oshpd_test,testmap2$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
   
 } 
 
 
-#***************************************************************************
-diagnosis_definition2 <- function(df, colname, label) {
-  index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
-  df[[colname]] <- apply(df, 1, FUN = function(x) {
-    icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) label else NA
-  } )
-  return(df)
-}
+#Summarizing any definition data--this isn't efficient, and also doesn't capture age/gender/county information, but demonstrates general goal:
+
+summary_any_def <- oshpd_test %>% summarise(A07 = sum(A07),
+                                            A08 = sum(A08),
+                                            D01 = sum(D01),
+                                            D03 = sum(D03),
+                                            C99 = sum(C99),
+                                            C01 = sum(C01),
+                                            C02 = sum(C02),
+                                            C03 = sum(C03),
+                                            C04 = sum(C04),
+                                            C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05)
 
 
-#example input
-colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
-
-labels <- c("D01", "C01", "C02")
-
-
-oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
-for (i in 1: nrow(colnames)) {
-  oshpd_test <- diagnosis_definition(oshpd_test,colnames[i], labels[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
-  
-}  
-
-
-1
-O4413
-        Z3A31
-
-#This combination doesn't get flagged as maternal????
-
+summary_any_df2 <- oshpd_test %>% group_by()
