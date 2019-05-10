@@ -293,7 +293,8 @@ mainPanel(
    tabPanel("Trend",
      br(), 
      plotOutput("trend", width="100%",height=700),  value = 55),
- 
+  # plotlyOutput("trend", width="100%",height=700),  value = 55),
+  
    tabPanel("Race Trend",
           br(), 
           plotOutput("trendRace", width="100%",height=700),  value = 56),

@@ -162,7 +162,12 @@ output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, inp
 output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
 output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))
+
 output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
+#output$trend        <- renderPlotly(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
+
+
+
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans))
 
 output$OSHPD    <- renderPlotly(         oshpdPlot(input$myLHJ, input$myOSHPDtype, input$mySex))

@@ -49,7 +49,7 @@ tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), g
           axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
   
  tplot
-# ggplotly(tplot)
+ # ggplotly(tplot)
 
 
 }
