@@ -155,11 +155,11 @@ lMeasuresC <- c(
 names(lMeasures) <- lMeasuresC
 lMeasuresShort   <- lMeasures[c(1,5,3,7,8)] 
 
+xJunk        <- names(lMeasuresShort)
+names(xJunk) <- lMeasuresShort
 
 lMeasures  <- lMeasures[-8]  # Removes SMR from main measures list
 lMeasuresC <- lMeasuresC[-8]
-
-
 
 
 
@@ -232,10 +232,10 @@ lListNoState  <- lList[lList != STATE]
 
 
 raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
-raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","Multirace","unknown","Hispanic")
+raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","**Multirace**","unknown","Hispanic")
 
 
-raceNote     <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
+raceNote     <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'\n '**Multirace data are NOT RELIABLE due to changing data collection practices'"
 
 
 
