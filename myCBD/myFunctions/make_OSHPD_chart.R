@@ -61,7 +61,7 @@ plotly::ggplotly(plot) #This (with renderPlot in server) doesn't plot on the das
           #strip.text.x = element_text(size = 15)) #increases the size of the facet labels
   
   
-}
+
 
 
 

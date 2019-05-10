@@ -173,6 +173,12 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
  conditionalPanel(condition = fC(c(44)),
    checkboxInput("myRefLine",  "Reference Line", value=FALSE)),
  
+
+ # myLogTrans
+ conditionalPanel(condition = fC(c(56)),
+  checkboxInput("myLogTrans",  "Log Transform of Y Axis", value=FALSE)),
+
+
  # myX
  conditionalPanel(condition = fC(c(66)),
    selectInput(  "myX",        "Social Determinant of Health Variable:", choices=sdohVec)),

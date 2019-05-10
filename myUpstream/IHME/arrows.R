@@ -9,6 +9,7 @@ library(shinyWidgets)
 library(data.table)
 
 
+
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("API_endpoints.csv", header = TRUE)
 cause_data <- readRDS("cause_data.rds")

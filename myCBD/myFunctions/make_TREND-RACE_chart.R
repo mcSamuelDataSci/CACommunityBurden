@@ -32,18 +32,15 @@ yRange     <- c("2000-2002","2003-2005","2006-2008","2009-2011","2012-2014","201
 yMid       <- c(2001,2004,2007,2010,2013,2016)
 dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
 
-
-myLogTrans <- FALSE
-myTrans    <- ifelse(logTrans,'log2','identity')
-
+myTrans    <- ifelse(myLogTrans,'log2','identity')
+myMin      <- ifelse(myLogTrans,NA,0)
 
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=raceCode, color=raceCode)) +
     geom_line(size=2)  + geom_point() +
     scale_x_continuous(minor_breaks=yMid,breaks=yMid,expand=c(0,3),labels=yRange) +
     # scale_x_continuous(minor_breaks=yMid,breaks=yMid,labels=yRange) +
     #   expand_limits(x = c(0, .2)) +
-    scale_y_continuous(limits = c(0, NA)) +    
-    scale_y_continuous(trans=myTrans) + 
+    scale_y_continuous(limits = c(myMin, NA),trans=myTrans) + 
    #,,limits = c(1, NA) trans=myTrans
     scale_colour_discrete(guide = 'none') +   # removed legend 
     labs(y = myMeasure)  + 
