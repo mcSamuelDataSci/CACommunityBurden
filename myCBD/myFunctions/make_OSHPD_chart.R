@@ -13,7 +13,7 @@ oshpdPlot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospital
                    group_by(type) %>% 
                     mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myOSHPDtype) %>% 
                    pull(measure)))  
-  
+
 plot <- ggplot(plotData, aes(x = nameOnly, y = measure)) + 
       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
       facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
@@ -27,7 +27,7 @@ plot <- ggplot(plotData, aes(x = nameOnly, y = measure)) +
           axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
           strip.text.x = element_text(size = 15)) #increases the size of the facet labels
 
-plotly::ggplotly(plot) #This (with renderPlot in server) doesn't plot on the dashboard browser, only viewer pane
+plotly::ggplotly(plot)
 
 }
 
@@ -35,20 +35,20 @@ plotly::ggplotly(plot) #This (with renderPlot in server) doesn't plot on the das
 #Other option: facet_grid(labeller=labeller(type = hospDiscMeasuresShort))--label at the end, however, this prevents wrapping of strip heading text for facets (can only do one or the other)
 
 #---------------------------------------Other plotly option----------------------------------------------------#
-#oshpdPlotly <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total" ) {
+oshpdPlotly <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total" ) {
   
-  # #plotData <-    calculated_metrics %>% 
-  #   #mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>% 
-  #   #mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
-  #   #left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% 
-  #   filter(!is.na(CAUSE), Level == "lev2", county == myCounty, !(type %in% c("Crude Hosp Rate","Crude Charge Rate"))) %>% 
-  #   filter(sex == mySex) %>%
-  #   group_by(type) %>% 
-  #   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myOSHPDtype) %>% 
-  #                                            pull(measure)))  
-  # 
-  # plotly::plot_ly(plotData, x = ~nameOnly, y = ~measure, orientation = "h") %>% add_bars() 
-  #   
+  plotData <-    calculated_metrics %>% 
+  mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>% 
+   mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
+     left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% 
+     filter(!is.na(CAUSE), Level == "lev2", county == myCounty, !(type %in% c("Crude Hosp Rate","Crude Charge Rate"))) %>% 
+     filter(sex == mySex) %>%
+    group_by(type) %>% 
+     mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myOSHPDtype) %>% 
+                                              pull(measure)))  
+  
+  plotly::plot_ly(plotData, x = ~nameOnly, y = ~measure) %>% add_bars() %>% layout(autosize = FALSE)
+   } 
   #   #facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
   #   #theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
     #scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
@@ -61,7 +61,7 @@ plotly::ggplotly(plot) #This (with renderPlot in server) doesn't plot on the das
           #strip.text.x = element_text(size = 15)) #increases the size of the facet labels
   
   
-}
+oshpdPlotly(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total" )
 
 
 
