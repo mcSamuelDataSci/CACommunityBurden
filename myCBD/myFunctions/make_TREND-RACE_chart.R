@@ -6,7 +6,7 @@ if(1==2){
   mySex   = "Total"
 }
 
-trendRace <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL") {
+trendRace <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL",myLogTrans=FALSE) {
 
 minYear <- 2000
 maxYear <- 2017
@@ -19,7 +19,7 @@ dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
 
 #,raceCode != "Multi-NH"
 
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
+if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
 myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ," by RACE/ETHNIC Group*, ",minYear," to ",maxYear)
 myTit <-  wrap.labels(myTit,80)
@@ -33,15 +33,18 @@ yMid       <- c(2001,2004,2007,2010,2013,2016)
 dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
 
 
-myTrans <- "log"
+myLogTrans <- FALSE
+myTrans    <- ifelse(logTrans,'log2','identity')
 
 
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=raceCode, color=raceCode)) +
     geom_line(size=2)  + geom_point() +
     scale_x_continuous(minor_breaks=yMid,breaks=yMid,expand=c(0,3),labels=yRange) +
-  # scale_x_continuous(minor_breaks=yMid,breaks=yMid,labels=yRange) +
+    # scale_x_continuous(minor_breaks=yMid,breaks=yMid,labels=yRange) +
     #   expand_limits(x = c(0, .2)) +
-    scale_y_continuous(limits = c(0, NA)) +                                                #,,limits = c(1, NA) trans=myTrans
+    scale_y_continuous(limits = c(0, NA)) +    
+    scale_y_continuous(trans=myTrans) + 
+   #,,limits = c(1, NA) trans=myTrans
     scale_colour_discrete(guide = 'none') +   # removed legend 
     labs(y = myMeasure)  + 
     geom_dl(aes(label = raceName), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +

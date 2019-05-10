@@ -19,7 +19,7 @@ myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 inDat <- datCounty
 dat.1 <- filter(inDat,county == myLHJ,CAUSE == myCause)
 
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those; could be some other error")
+if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
 myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
 
@@ -32,7 +32,7 @@ mySize2 <- 20
 myCex1  <- 1.8
 
 
- ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
+tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
     geom_line(size=2)  +
     scale_x_continuous(minor_breaks=2000:2017,breaks=2000:2017,expand=c(0,3)) +
     scale_y_continuous(limits = c(0, NA)) +
@@ -48,5 +48,8 @@ myCex1  <- 1.8
           plot.title=element_text(family='', face='bold', colour='black', size=mySize2),
           axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
   
+ tplot
+# ggplotly(tplot)
+
 
 }

@@ -602,6 +602,46 @@ datCounty.RE <- datCounty.RE %>%
 
 
 
+# 
+# temp  <- mutate(datCounty,
+#                     badRecord = ifelse( ( sex=="Female" & CAUSE %in% c("B12") ) |          # Prostate Cancer
+#                                         ( sex== "Male"  & CAUSE %in% c("B09","B10","B11")), # Breast, Uterine, Ovary
+#                                       1,0)
+#                     )
+# 
+# 
+# temp   <- datCounty.RE
+ # temp2  <- mutate(temp, supIndicator = mySuppress(temp,gBy,"Ndeaths"))
+ # temp3  <- filter(temp2,supIndicator==1) 
+ # temp4  <- filter(temp3,CAUSE=="C",sex=="Total")
+ # temp5 <- filter(temp4,county=="San Francisco")
+# 
+# 
+# temp <- datCounty %>% arrange(county,year,Level,CAUSE,sex)  
+
+
+
+source(path(upPlace,"upstreamInfo","suppressionFunction.R"))
+#gBy   <-  c("county","yearG3","Level","CAUSE")         # FOR MAIN
+gBy   <-  c("county","yearG3","Level","CAUSE","sex")   # FOR RACE
+
+
+
+temp <- datCounty.RE
+temp2 <- datCounty.RE
+
+
+
+
+
+datCounty.RE <- mutate(datCounty.RE, supIndicator = mySuppress(temp,gBy,"Ndeaths"))
+datCounty.RE <-  filter(datCounty.RE,supIndicator != 1)
+
+
+junk <- filter(datCounty.RE,CAUSE=="C",county=="San Francisco",sex=="Total")
+
+
+
 if (1==2){
 datTract  <- readRDS(path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 datComm   <- readRDS(path(myPlace,"/myData/",whichDat,"datComm.RDS"))
@@ -616,6 +656,13 @@ datTract     <- filter(datTract,     Ndeaths >= criticalNum)
 datComm      <- filter(datComm,      Ndeaths >= criticalNum)
 datCounty    <- filter(datCounty,    Ndeaths >= criticalNum)
 datCounty.RE <- filter(datCounty.RE, Ndeaths >= criticalNum)
+
+
+
+
+
+
+
 
 
 datTract     <- filter(datTract,    !(CAUSE=="A09" & sex %in% c("Male","Female")))

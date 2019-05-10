@@ -1,4 +1,4 @@
-
+﻿
 ##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
     *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
@@ -72,8 +72,8 @@
 
 
 
-
-
+[//]: # ( sites for consideration)
+[//]: # ( https://strongstartindex.org/)
 
 
 
