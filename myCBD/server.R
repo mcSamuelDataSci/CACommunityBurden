@@ -165,7 +165,7 @@ output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, inp
 output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure))
 
-output$OSHPD    <- renderPlot(         oshpdPlot(input$myLHJ, input$myOSHPDtype, input$mySex))
+output$OSHPD    <- renderPlotly(         oshpdPlot(input$myLHJ, input$myOSHPDtype, input$mySex))
 
 
 

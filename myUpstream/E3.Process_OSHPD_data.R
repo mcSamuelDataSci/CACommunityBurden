@@ -22,7 +22,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichDat <- "fake"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -143,11 +143,11 @@ popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
 #--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
 
 
-if (whichDat == "real") {
+if (whichData == "real") {
   oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) #maybe change to secure location?  YES
 }
 
-if (whichDat == "fake") {
+if (whichData == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
@@ -172,7 +172,8 @@ mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creat
 fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
-fullCauseListICD <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly", "regExICD10_CM")] %>% arrange(LABEL) %>% as.data.frame()
+
+
 
 
 #Function from death code R script by MS
@@ -531,7 +532,7 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 #---------------------------------------------------------Other------------------------------------------------------------------#
 #Need to define which conditions we're interested in
-filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
+#filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
 
 #--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
 
@@ -546,54 +547,56 @@ filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-#testdiag <- oshpd16 %>% dplyr::select(diag_p, starts_with("odiag")) %>% as.data.frame() %>%
-  #use this code as a way to indicate that we're only interested in diag_p, odiag vars?? instead of index?
+##CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN
 
-diagnosis_definition <- function(colname, label) {
-  oshpd16 <- oshpd16 %>% dplyr::select(diag_p, starts_with("odiag"))
-  oshpd16[[colname]] <- apply(oshpd16, 1, FUN = function(x) {
-    icd_regEx <- filter(fullCauseListICD, LABEL == label) %>% pull(regExICD10_CM)
+#defining paste function to include sep = "|"
+pastex <- function(...) {
+  paste(..., sep = "|")
+}
+
+#function for pasting all icd codes for a given label together in one variable
+p <- function(v) {
+  Reduce(x = v, f=pastex)
+}
+#Note that Reduce is a base R function, but there is also a purrr::reduce() function that apparently performs the same general
+#purpose, but the input variables are set up somewhat differently. I haven't been able to successfully use purrr::reduce() instead of Reduce()
+
+
+#creating input data
+test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExICD10_CM)) %>% group_by(LABEL) %>% mutate(newICDcode = p(regExICD10_CM)) %>% select(LABEL, newICDcode) %>% unique()
+#left joining with names associated with ICD/label
+testmap2 <- left_join(test_map, select(icd_map, nameOnly, LABEL), by = c("LABEL"))
+
+
+any_diagnosis_definition <- function(df, label) {
+  index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
+  df[[label]] <- apply(df, 1, FUN = function(x) {
+    icd_regEx <- filter(testmap2, LABEL == label) %>% pull(newICDcode)
     pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(1:ncol(oshpd16))])) label else NA
+    if(any(pattern[(index)])) 1 else 0
   } )
-  return(oshpd16)
+  return(df)
 }
 
-
-oshpd_test <- oshpd16 %>% select(-icdCODE, -lev0, -lev1, -lev2, -lev3) %>% diagnosis_definition(., "diabetes_any", "D01")
-
-oshpd_test <- diagnosis_definition(oshpd_sample2, "hypertensive_HD_any", "C01")
-
-oshpd_test <- diagnosis_definition(oshpd_sample2, "ischemic_HD_any", "C02")
-
-#The only variables that are changing are colname and label values--can we pull these values from an external vector/list/dataset and then run through the function for each observation
-
-
-#Testing loops???
-
-colnames <- c("diabetes_any", "hypertensive_HD_any", "ischemic_HD_any")
-labels <- c("D01", "C01", "C02")
-testdata <- cbind(colnames, labels) %>% as.data.frame()
-
-for (i in 1: length(colnames)) {
-  test <- diagnosis_definition(colnames[i], labels[i])
+oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
+for (i in 1: nrow(testmap2)) {
+  oshpd_test <- any_diagnosis_definition(oshpd_test,testmap2$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
   
-} #dataset re-writes over itself, so the only column that is created is the last column (ischemic C02 column). 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#use while instead of for loop? https://stackoverflow.com/questions/35013990/r-how-to-add-columns-to-a-dataset-incrementally-using-a-loop
-
-num_variables <- length(colnames)
-i <- 1
-
-while (i <= num_variables) {
-  test <- diagnosis_definition(colnames[1:i,], labels[1:i,])
-
-  print(str(test))
-  
-  i <- i + 1
-}
-
-#this only made the first column, so it's not really what we want either
+} 
 
 
+#Summarizing any definition data--this isn't efficient, and also doesn't capture age/gender/county information, but demonstrates general goal:
 
+summary_any_def <- oshpd_test %>% summarise(A07 = sum(A07),
+                                            A08 = sum(A08),
+                                            D01 = sum(D01),
+                                            D03 = sum(D03),
+                                            C99 = sum(C99),
+                                            C01 = sum(C01),
+                                            C02 = sum(C02),
+                                            C03 = sum(C03),
+                                            C04 = sum(C04),
+                                            C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05)
+
+
+summary_any_df2 <- oshpd_test %>% group_by()

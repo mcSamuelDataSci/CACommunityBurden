@@ -302,7 +302,7 @@ mainPanel(
  
     tabPanel("HOSPITAL DISCHARGE",
           br(), 
-          plotOutput("OSHPD", height=700), value = 68),
+          plotlyOutput("OSHPD", height=700), value = 68),
  
  
    tabPanel("Technical Documentation",
