@@ -309,11 +309,11 @@ mainPanel(
  
     tabPanel("HOSPITAL DISCHARGE (1)",
           br(), 
-          plotlyOutput("OSHPD", height=700), value = 68),
+          plotOutput("OSHPD1", height=700), value = 68),
  
    tabPanel("HOSPITAL DISCHARGE (2)",
           br(), 
-         # plotlyOutput("OSHPD", height=700), 
+          plotlyOutput("OSHPD2", height=700), 
           value = 69),
  
  
