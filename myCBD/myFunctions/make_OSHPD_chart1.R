@@ -55,7 +55,7 @@ if(1==2){
     axis.title.x = element_blank(), #removes measure label
     axis.text.y = element_text(size = 15), #increases size of disease condition labels
     axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
-    strip.text.x = element_text(size = 10)) #increases the size of the facet labels
+    strip.text.x = element_text(size = 15)) #increases the size of the facet labels
 }
 
 
