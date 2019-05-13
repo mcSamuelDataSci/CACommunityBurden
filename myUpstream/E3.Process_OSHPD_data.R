@@ -22,8 +22,8 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
-newData  <- FALSE
+whichData <- "real"   # "real" or "fake"
+newData  <- TRUE
 
 # fullOSHPD <- FALSE
 # sampleOSHPD <- TRUE
@@ -40,15 +40,16 @@ library(epitools)
 #------------------------------------------------------------------------------
 
 
+
 if(newData) {
 
 #Reading in oshpd 2016 PDD file
-oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
+# oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
 oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat") )
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
 # dschdate,
 
 
@@ -98,6 +99,9 @@ geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to C
 sex_num <- c("1", "2", "3", "4")
 sex_cat <- c("Male", "Female", "Other", "Unknown")
 OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
+
+
+
 
 
 #DISCUSS***
@@ -151,6 +155,36 @@ if (whichData == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
+
+
+#---Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
+
+library(DT)
+
+# rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
+
+hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=")
+mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
+drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
+
+mdcWork <- oshpd_subset %>% group_by(mdc) %>%
+                            summarise(n_hosp = n(), 
+                                      charges = sum(charge, na.rm = TRUE),
+                                      avgcharge = mean(charge)) %>%
+                            left_join(mdcNames,by='mdc') %>%
+                            select(mdcNames,n_hosp,charges,avgcharge)
+
+datatable(mdcWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
+
+
+drgWork <- oshpd_subset %>% group_by(msdrg) %>%
+  summarise(n_hosp = n(), 
+            charges = sum(charge, na.rm = TRUE),
+            avgcharge = mean(charge)) %>%
+  left_join(drgNames,by='msdrg') %>%
+  select(drgNames,n_hosp,charges,avgcharge)
+
+datatable(drgWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
 
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
 
