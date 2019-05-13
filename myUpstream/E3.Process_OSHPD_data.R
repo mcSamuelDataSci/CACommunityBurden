@@ -23,7 +23,7 @@ myPlace <- paste0(myDrive,"/myCBD")
 upPlace <- paste0(myDrive,"/myUpstream")
 
 whichData <- "real"   # "real" or "fake"
-newData  <- TRUE
+newData  <- FALSE
 
 # fullOSHPD <- FALSE
 # sampleOSHPD <- TRUE
@@ -166,7 +166,7 @@ hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, se
 mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
 drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
 
-mdcWork <- oshpd_subset %>% group_by(mdc) %>%
+mdcWork <- oshpd16  %>% group_by(mdc) %>%
                             summarise(n_hosp = n(), 
                                       charges = sum(charge, na.rm = TRUE),
                                       avgcharge = mean(charge)) %>%
@@ -176,7 +176,7 @@ mdcWork <- oshpd_subset %>% group_by(mdc) %>%
 datatable(mdcWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
 
 
-drgWork <- oshpd_subset %>% group_by(msdrg) %>%
+drgWork <- oshpd16 %>% group_by(msdrg) %>%
   summarise(n_hosp = n(), 
             charges = sum(charge, na.rm = TRUE),
             avgcharge = mean(charge)) %>%

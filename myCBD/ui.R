@@ -101,7 +101,7 @@ sidebarPanel(width=3,
    selectInput("myCAUSE", HTML("Cause:"), choices=fullList, selected="0")),
  
  # myLHJ
- conditionalPanel(condition = fC(c(22,23,33,44,45,55,56,68)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,45,55,56,68,69)), 
    selectInput("myLHJ","County/State:",choices=lList,selected=STATE)),
 
  # myGeo
@@ -125,7 +125,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
 
 
  # mySex
- conditionalPanel(condition = fC(c(22,23,33,44,66, 68)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,66, 68,69)), 
    radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  # myLev
@@ -139,7 +139,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
     checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  
  # myN
- conditionalPanel(condition = fC(c(33,34)),
+ conditionalPanel(condition = fC(c(33,34,68,69)),
    numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
  
  # myMeasure
@@ -184,7 +184,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
    selectInput(  "myX",        "Social Determinant of Health Variable:", choices=sdohVec)),
 
  # myOSHPDtype
- conditionalPanel(condition = fC(c(68)),
+ conditionalPanel(condition = fC(c(68,69)),
                   selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hospMeasures2Short)),
 
 # Figure Download buttons ---------------------------------------------------
@@ -307,9 +307,15 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
-    tabPanel("HOSPITAL DISCHARGE",
+    tabPanel("HOSPITAL DISCHARGE (1)",
           br(), 
           plotlyOutput("OSHPD", height=700), value = 68),
+ 
+   tabPanel("HOSPITAL DISCHARGE (2)",
+          br(), 
+         # plotlyOutput("OSHPD", height=700), 
+          value = 69),
+ 
  
  
    tabPanel("Technical Documentation",
