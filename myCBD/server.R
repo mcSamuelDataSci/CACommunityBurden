@@ -130,6 +130,8 @@ observeEvent(input$ID,{
 #--------------------------------------------------------------------------------
 # Render Application Maps and Charts --------------------------------------------
 
+
+
 output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
 # t.map1            <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
 # output$cbdMapTL   <- renderLeaflet(t.map1)
@@ -174,7 +176,8 @@ output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtyp
 
 output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
 
-output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+
+output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
 
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
 

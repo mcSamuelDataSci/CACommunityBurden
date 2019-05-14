@@ -179,12 +179,19 @@ hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
 
 hospDiscMeasuresShort <- hospDiscMeasures[c(-2, -5)] #Not including Crude Hosp Rate
 
+
+
 #This is for labeling the dropdown menu of options--hospDiscMeasures vector won't work, it will use the abbreviated values (n_hosp etc) as the dropdown labels
 hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Total Charges", "Crude Charge Rate", "Average Charges")
 
 hospMeasures2Short <- hospMeasures2[c(-2, -5)]
 
+#for mdc_drg
+hospDiscMeasuresShort2 <- hospDiscMeasures[c(-2,-3,-5)]
+
 mdc_drg_names <- c("MDC", "DRG")
+
+hospMeasures3 <- c("Number of Hospitalizations", "Total Charges", "Average Charges")
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)

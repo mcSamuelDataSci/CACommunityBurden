@@ -22,7 +22,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -531,10 +531,11 @@ library(DT)
 
 # rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
 
-hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=")
+hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=") 
 mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
 drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
 
+hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
 ##-----MDC dataset----------##
 mdc_state <- sum_num_costs(oshpd16, c("year", "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
@@ -592,11 +593,9 @@ total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
 
 total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
 
-total_mdc_drg_new <- mutate(total_mdc_drg_new, n_hosp = as.numeric(n_hosp))
-
-
 mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
 
+mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
 #Saving RDS file of this dataframe
 saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
