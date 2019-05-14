@@ -156,35 +156,6 @@ if (whichData == "fake") {
 }
 
 
-#---Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
-
-library(DT)
-
-# rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
-
-hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=")
-mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
-drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
-
-mdcWork <- oshpd16  %>% group_by(mdc) %>%
-                            summarise(n_hosp = n(), 
-                                      charges = sum(charge, na.rm = TRUE),
-                                      avgcharge = mean(charge)) %>%
-                            left_join(mdcNames,by='mdc') %>%
-                            select(mdcNames,n_hosp,charges,avgcharge)
-
-datatable(mdcWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
-
-
-drgWork <- oshpd16 %>% group_by(msdrg) %>%
-  summarise(n_hosp = n(), 
-            charges = sum(charge, na.rm = TRUE),
-            avgcharge = mean(charge)) %>%
-  left_join(drgNames,by='msdrg') %>%
-  select(drgNames,n_hosp,charges,avgcharge)
-
-datatable(drgWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
-
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
 
 aL            <-      ageMap$lAge     # lower age ranges
@@ -554,12 +525,151 @@ s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = fo
 
 
 
-#--------------------------------------------RACE-ETHNICITY COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA AND CRUDE RATES----------------------------------------------------#
+#---------------------------------------------------------Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
 
-#popCountySex.RE dataset has populations by year groups (eg 2000-2002) instead of single years, and the race/ethnicity groups are different from the race_grp codes in OSHPD--how should we go about race-ethnicity summary data sets?
+library(DT)
+
+# rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
+
+hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=")
+mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
+drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
 
 
-#?
+##-----MDC dataset----------##
+mdc_state <- sum_num_costs(oshpd16, c("year", "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
+
+mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% select(-Level)
+
+total_mdc <- bind_rows(mdc_state, mdc_county) %>% filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% mutate(diagnosis_var = "mdc")
+
+
+##----DRG dataset--------##
+
+drg_state <- sum_num_costs(oshpd16, c("year", "msdrg", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
+
+drg_county <- sum_num_costs(oshpd16, c("year", "county", "msdrg", "sex"), "") %>% select(-Level)
+
+total_drg <- bind_rows(drg_state, drg_county) %>% filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% mutate(diagnosis_var = "drg")
+
+
+#Joining both together
+total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "mdc" = "msdrg"))
+
+
+#******Creating 0 level values for discordant gender pairs****************
+
+mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
+
+mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
+
+
+mdc_drg_female_only <- anti_join(mdc_drg_female_sum, mdc_drg_male_sum, by = c("Female" = "Male", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the female dataset but not the male dataset
+
+mdc_drg_male_only <- anti_join(mdc_drg_male_sum, mdc_drg_female_sum, by = c("Male" = "Female", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the male dataset but not the female dataset
+
+#Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
+
+mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc", Female) %>% mutate(sex = "Male")
+
+mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc", Male) %>% mutate(sex = "Female")
+
+
+#Now joining original total_sum_pop with these datasets, replacing NA with zeros
+total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc", "diagnosis_var"))
+
+
+#Example of replacing NA data in selected column
+#dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
+
+#replacing year with 2016
+total_mdc_drg_new$year[is.na(total_mdc_drg_new$year)] <- 2016
+
+#replacing NA for n_hosp, charges, avgcharge with 0
+total_mdc_drg_new$n_hosp[is.na(total_mdc_drg_new$n_hosp)] <- 0
+
+total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
+
+total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
+
+total_mdc_drg_new <- mutate(total_mdc_drg_new, n_hosp = as.numeric(n_hosp))
+
+
+mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
+
+
+#Saving RDS file of this dataframe
+saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mdcWork <- oshpd16  %>% group_by(mdc, sex) %>%
+  summarise(n_hosp = n(), 
+            charges = sum(charge, na.rm = TRUE),
+            avgcharge = mean(charge)) %>%
+  left_join(mdcNames,by='mdc') %>%
+  select(mdcNames,n_hosp,charges,avgcharge)
+
+datatable(mdcWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
+
+
+
+drgWork <- oshpd16 %>% group_by(msdrg) %>%
+  summarise(n_hosp = n(), 
+            charges = sum(charge, na.rm = TRUE),
+            avgcharge = mean(charge)) %>%
+  left_join(drgNames,by='msdrg') %>%
+  select(drgNames,n_hosp,charges,avgcharge)
+
+datatable(drgWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
