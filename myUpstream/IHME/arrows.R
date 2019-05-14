@@ -6,9 +6,6 @@ library(visNetwork)
 library(stringr)
 library(shiny)
 library(shinyWidgets)
-library(data.table)
-
-
 
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("API_endpoints.csv", header = TRUE)
