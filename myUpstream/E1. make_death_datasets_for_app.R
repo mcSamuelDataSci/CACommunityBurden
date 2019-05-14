@@ -628,7 +628,7 @@ datCounty <- mutate(datCounty, supIndicator = mySuppress(datCounty,gBy,"Ndeaths"
 datCounty <- filter(datCounty,supIndicator != 1)
 
 gBy          <- c("county","yearG3","Level","CAUSE","sex")   # FOR RACE
-datCounty.RE <- mutate(datCounty.RE, supIndicator = mySuppress(temp,gBy,"Ndeaths"))
+datCounty.RE <- mutate(datCounty.RE, supIndicator = mySuppress(datCounty.RE,gBy,"Ndeaths"))
 datCounty.RE <- filter(datCounty.RE,supIndicator != 1)
 
 
