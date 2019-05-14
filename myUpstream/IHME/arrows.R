@@ -38,18 +38,7 @@ data <- bind_rows(cause_data, risk_data) %>%
   mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
                         ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
 
-
-
-
-dater <- data.frame(id_num = c(1:10), parent_id = rep(c(6:10), 2), level = c(1,2,2,2,3,4,3,2,2,3)) %>%
-  mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
-                        ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
-# ^Mutating here to show include items that don't have "children" in lower levels
-
-
-
 # Define constants -----------------------------------------------------------------------
-NUM_NODES <- 25
 CAUSE_YEARS <- sort(unique(cause_data$year_id))
 RISK_YEARS <- sort(unique(risk_data$year_id))
 LABEL_LENGTH <- 25
@@ -66,7 +55,8 @@ WIDTH <- '100%'
 HEIGHT_CONSTRAINT <- 60
 
 # Create nodes function -----------------------------------------------------------------------
-create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_from, year_to, display_in, num_nodes) {
+create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
+                         year_from, year_to, display_in, num_nodes) {
 
   left_nodes <- data %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_from,
@@ -82,7 +72,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_
     arrange(id_num) %>%
     mutate(rank = rank(-val, ties.method = 'first'))
   
-  # Reset number of nodes in case it is less than original number of nodes
+  # Reset number of nodes in case it is less than original number of nodes requested
   NUM_NODES <- nrow(left_nodes)
   
   # Determine longest id_name for node label formatting
@@ -93,9 +83,12 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_
     group_by(year_id) %>%
     mutate(rank2 = rank(rank))  # rank2 for y location of nodes
   selected_data$change <- rep(round((right_nodes$val-left_nodes$val)/left_nodes$val, 4), 2)
-
+  
+  # Three groups of nodes: Labels, Edges, and Titles
   label_nodes <- data.frame(selected_data, id = (nrow(selected_data)+1):(2*nrow(selected_data)),
-                            label = substr(str_pad(paste(selected_data$rank, selected_data$id_name), width = LABEL_LENGTH, side = "right"), start = 1, stop = LABEL_LENGTH), #label = sapply(strwrap(selected_data$cause_name, 20, simplify = FALSE), paste, collapse='\n')
+                            label = substr(str_pad(paste(selected_data$rank, selected_data$id_name),
+                                                   width = LABEL_LENGTH, side = "right"),
+                                           start = 1, stop = LABEL_LENGTH),
                             group = selected_data$first_parent,
                             title = paste(selected_data$id_name,
                                           "<br><b>Year: </b>", selected_data$year_id,
@@ -105,10 +98,13 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_
                                           endpoints$mm_title[as.numeric(paste(selected_data$measure_id, selected_data$metric_id, sep = ""))],
                                           " (", selected_data$lower, "-", selected_data$upper, ")",
                                           sep =""),
-                            x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)), y = selected_data$rank2*Y_SPACE_FACTOR - NUM_NODES*15) # -nrow(selected_data)*8
+                            x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)),
+                            y = selected_data$rank2*Y_SPACE_FACTOR - NUM_NODES*15)
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
-                           x = c(rep(LEFT_X+HALF_BOX_WIDTH, NUM_NODES), rep(RIGHT_X-HALF_BOX_WIDTH, NUM_NODES)), y = label_nodes$y)
+                           x = c(rep(LEFT_X+HALF_BOX_WIDTH, NUM_NODES),
+                                 rep(RIGHT_X-HALF_BOX_WIDTH, NUM_NODES)),
+                           y = label_nodes$y)
   
   title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
                             x = c(LEFT_X, RIGHT_X), y = -NUM_NODES*15, id = 0:-1, shape = 'text',
@@ -117,9 +113,10 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in, year_
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
   nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes))
   
-  edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)), to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
-                      dashes = ifelse(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)], "[20,15]", "false"))
-                      #arrows = c(rep("to", NUM_NODES), rep("", 2*NUM_NODES)))
+  edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)),
+                      to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
+                      dashes = ifelse(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)],
+                                      "[20,15]", "false"))
 
   return(list("nodes" = nodes, "edges" = edges))
 }
@@ -145,21 +142,19 @@ vis_network <- function(nodes, edges, subtitle, display) {
   }
   visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
     visOptions(height = (nrow(edges)+1)*HEIGHT_FACTOR + HEIGHT_ADD, width = WIDTH) %>%
-    visNodes(heightConstraint = HEIGHT_CONSTRAINT, fixed = TRUE, shape = 'box', font = list(face = 'Monaco', size = FONT_SIZE)) %>%
+    visNodes(heightConstraint = HEIGHT_CONSTRAINT, fixed = TRUE,
+             shape = 'box', font = list(face = 'Monaco', size = FONT_SIZE)) %>%
     visEdges(width = 4, smooth = FALSE, hoverWidth = 0) %>%
     visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
               addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
-                                    font = list(face = 'Bold', size = 40, align = 'left')),
-              stepY = 150) %>%
-    visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = DRAG_ON, selectable = FALSE) %>% # %>% visConfigure(enabled = TRUE, showButton = TRUE)
-    # visEvents(hoverNode = "function(nodes) {
-    #     Shiny.onInputChange('current_node_id', nodes);
-    #           ;}") %>%
+                                    font = list(face = 'Bold', size = 40, align = 'left')), stepY = 150) %>%
+    visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = DRAG_ON, selectable = FALSE) %>%
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
     visGroups(groupname = groups[3], color = '#A0DCA4')
 }
 
+# Need to update years because cause and risk data sets have data available for different sets of years
 valid_years <- function(display) {
   if (display == "cause") {
     years <- CAUSE_YEARS
@@ -210,7 +205,8 @@ ui <- fluidPage(
       
       selectInput("measure",
                   label = h4("Measure:"),
-                  choices = list("Deaths" = 1, "DALYs (Disability-Adjusted Life Years)" = 2, "YLDs (Years Lived with Disability)" = 3, "YLLs (Years of Life Lost)" = 4),
+                  choices = list("Deaths" = 1, "DALYs (Disability-Adjusted Life Years)" = 2,
+                                 "YLDs (Years Lived with Disability)" = 3, "YLLs (Years of Life Lost)" = 4),
                   selected = 3),
       
       uiOutput("available_years"),
@@ -252,7 +248,8 @@ server <- function(input, output) {
     # error messages don't appear during processing lag time.
     requirements(input$display, input$year)
 
-    nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric, input$year[1], input$year[2], input$display, input$num_nodes)
+    nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
+                                    input$year[1], input$year[2], input$display, input$num_nodes)
     nodes <- nodes_and_edges$nodes
     edges <- nodes_and_edges$edges
 
