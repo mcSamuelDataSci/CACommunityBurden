@@ -198,8 +198,8 @@ hospDiscMeasuresShort2 <- hospDiscMeasures[c(-2,-3,-5)]
 mdc_drg_names <- c("Major Diagnostic Code" = "mdc", "Diagnostic Related Groups" = "drg")
 
 
-
-hospMeasures3 <- c("Number of Hospitalizations", "Total Charges", "Average Charges")
+#for mdc_drg
+hospMeasures3 <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)

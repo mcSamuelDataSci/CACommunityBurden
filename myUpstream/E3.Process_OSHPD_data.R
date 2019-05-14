@@ -597,6 +597,7 @@ mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_
 
 mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
+
 #Saving RDS file of this dataframe
 saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
 
