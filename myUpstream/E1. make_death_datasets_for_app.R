@@ -622,24 +622,14 @@ datCounty.RE <- datCounty.RE %>%
 
 
 source(path(upPlace,"upstreamInfo","suppressionFunction.R"))
-#gBy   <-  c("county","yearG3","Level","CAUSE")         # FOR MAIN
-gBy   <-  c("county","yearG3","Level","CAUSE","sex")   # FOR RACE
 
+gBy       <-  c("county","year","Level","CAUSE")         # FOR MAIN
+datCounty <- mutate(datCounty, supIndicator = mySuppress(datCounty,gBy,"Ndeaths"))
+datCounty <- filter(datCounty,supIndicator != 1)
 
-
-temp <- datCounty.RE
-temp2 <- datCounty.RE
-
-
-
-
-
+gBy          <- c("county","yearG3","Level","CAUSE","sex")   # FOR RACE
 datCounty.RE <- mutate(datCounty.RE, supIndicator = mySuppress(temp,gBy,"Ndeaths"))
-datCounty.RE <-  filter(datCounty.RE,supIndicator != 1)
-
-
-junk <- filter(datCounty.RE,CAUSE=="C",county=="San Francisco",sex=="Total")
-
+datCounty.RE <- filter(datCounty.RE,supIndicator != 1)
 
 
 if (1==2){
@@ -649,21 +639,10 @@ datCounty <- readRDS(path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 }
 
 
-
-
-
 datTract     <- filter(datTract,     Ndeaths >= criticalNum)
 datComm      <- filter(datComm,      Ndeaths >= criticalNum)
-datCounty    <- filter(datCounty,    Ndeaths >= criticalNum)
-datCounty.RE <- filter(datCounty.RE, Ndeaths >= criticalNum)
-
-
-
-
-
-
-
-
+# datCounty    <- filter(datCounty,    Ndeaths >= criticalNum)
+# datCounty.RE <- filter(datCounty.RE, Ndeaths >= criticalNum)
 
 datTract     <- filter(datTract,    !(CAUSE=="A09" & sex %in% c("Male","Female")))
 datComm      <- filter(datComm,     !(CAUSE=="A09" & sex %in% c("Male","Female")))

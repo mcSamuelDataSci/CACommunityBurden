@@ -7,9 +7,9 @@ mySuppress <- function(myDat,gBy,NcolName,critN=11)  {
            mutate(suppress1   = ifelse(myN < critN,1,0) # supress if N < critN
            ) %>%   
            group_by_(.dots = gBy) %>%
-             mutate(rowsSuppressedA = sum(suppress1==1,na.rm=TRUE) ,
-                     nextSmallestN   = min(myN[myN > critN],na.rm=TRUE),  # find next smallest N
-                     suppress2       = ifelse((rowsSuppressedA== 1 & myN==nextSmallestN),1,0), # complementarly supression if only one row suppressed
+             mutate(rowsSuppressedA  = sum(suppress1==1,na.rm=TRUE) ,
+                     nextSmallestN   = min(myN[myN >= critN],na.rm=TRUE),  # find next smallest N
+                     suppress2       = ifelse((rowsSuppressedA== 1 & myN==nextSmallestN),1,0), # suppress complementarly row if only one row suppressed
                      SUPPRESS        = ifelse(suppress1==1 | suppress2==1,1,0) # final supression indicator
            ) 
            
