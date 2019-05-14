@@ -1,7 +1,7 @@
 #make MDC/DRG plot
 
 
-mdc_drg <- readRDS(file = path(myPlace, "myData/fake/mdc_drg.rds"))
+mdc_drg <- readRDS(file = path(myPlace, "myData/real/mdc_drg.rds"))
 
 
 # #---------------------------------------Plotly subplots option----------------------------------------------------#

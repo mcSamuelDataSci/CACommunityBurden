@@ -22,7 +22,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -49,7 +49,7 @@ oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat"
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, mdc, msdrg) %>% mutate(year = 2016)
 # dschdate,
 
 
