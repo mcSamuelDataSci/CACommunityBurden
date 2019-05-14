@@ -125,7 +125,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
 
 
  # mySex
- conditionalPanel(condition = fC(c(22,23,33,44,66, 68,69)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,66, 68,69, 70)), 
    radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  # myLev
@@ -139,7 +139,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
     checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
  
  # myN
- conditionalPanel(condition = fC(c(33,34,68,69)),
+ conditionalPanel(condition = fC(c(33,34,68,69, 70)),
    numericInput( "myN",        "How Many:", value=10,min=1,max=50)),
  
  # myMeasure
@@ -184,8 +184,13 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
    selectInput(  "myX",        "Social Determinant of Health Variable:", choices=sdohVec)),
 
  # myOSHPDtype
- conditionalPanel(condition = fC(c(68,69)),
+ conditionalPanel(condition = fC(c(68,69, 70)),
                   selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hospMeasures2Short)),
+
+#myVar
+
+  conditionalPanel(condition = fC(c(70)),
+                   selectInput("myVar", "Variable:", choice = mdc_drg_names)),
 
 # Figure Download buttons ---------------------------------------------------
 
@@ -316,7 +321,9 @@ mainPanel(
           plotlyOutput("OSHPD2", height=700), 
           value = 69),
  
- 
+  tabPanel("MDC/DRG",
+           br(),
+           plotOutput("mdcdrg", height = 700), value = 70),
  
    tabPanel("Technical Documentation",
      br(), 

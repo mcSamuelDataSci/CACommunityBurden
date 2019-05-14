@@ -120,12 +120,14 @@ source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
+source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 
 source(paste0(myPlace,"/myData/appText/AppText.txt"))
 source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
+
 
 # --- Shiny Stuff and Constants -----------------------------------------------
 
@@ -181,6 +183,9 @@ hospDiscMeasuresShort <- hospDiscMeasures[c(-2, -5)] #Not including Crude Hosp R
 hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Total Charges", "Crude Charge Rate", "Average Charges")
 
 hospMeasures2Short <- hospMeasures2[c(-2, -5)]
+
+mdc_drg_names <- c("MDC", "DRG")
+
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
 fullList          <- fullCauseList[,"LABEL"]
