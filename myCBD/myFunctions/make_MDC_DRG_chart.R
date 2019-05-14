@@ -19,7 +19,7 @@ mdc_drg_plot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospi
   #creates dataframe with data only for CAUSEs from myOSHPDtype_N_cause, i.e. the top N CAUSES for the specified myOSHPDtype
   plotData <- mdc_drg %>%
     mutate(type = factor(type, levels = c("n_hosp","charges","avgcharge"))) %>%
-    mutate(type = plyr::revalue(type, hospDiscMeasuresShort2), type = as.character(type)) %>% #replaces values with full name labels
+    mutate(type = plyr::revalue(type, hospDiscMeasuresShort2)) %>% #replaces values with full name labels
     left_join(., hdCodes, by = c("mdc" = "mdc_drg_codes")) %>%
     filter(county == myCounty, sex == mySex, diagnosis_var == myVar, mdc %in% mdc_drg_N_cause) %>% 
     group_by(type) %>%
