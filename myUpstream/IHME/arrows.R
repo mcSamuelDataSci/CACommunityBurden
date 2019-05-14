@@ -38,18 +38,18 @@ data <- bind_rows(cause_data, risk_data) %>%
 # Define constants -----------------------------------------------------------------------
 CAUSE_YEARS <- sort(unique(cause_data$year_id))
 RISK_YEARS <- sort(unique(risk_data$year_id))
-LABEL_LENGTH <- 25
+LABEL_LENGTH <- 20
 LEFT_X <- -LABEL_LENGTH*25 + 425
-RIGHT_X <- 800
-HALF_BOX_WIDTH <- LABEL_LENGTH*13.4
+RIGHT_X <- 1000
+EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*18
 
-Y_SPACE_FACTOR <- 80
-FONT_SIZE <- 45
+Y_SPACE_FACTOR <- 100
+FONT_SIZE <- 60
 HEIGHT_FACTOR <- 6
-HEIGHT_ADD <- 80
-DRAG_ON <- FALSE
+HEIGHT_ADD <- 200
+DRAG_ON <- TRUE
 WIDTH <- '100%'
-HEIGHT_CONSTRAINT <- 60
+HEIGHT_CONSTRAINT <- 80
 
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
@@ -96,16 +96,16 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                           " (", selected_data$lower, "-", selected_data$upper, ")",
                                           sep =""),
                             x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)),
-                            y = selected_data$rank2*Y_SPACE_FACTOR - NUM_NODES*15)
+                            y = selected_data$rank2*Y_SPACE_FACTOR - NUM_NODES*30)
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
-                           x = c(rep(LEFT_X+HALF_BOX_WIDTH, NUM_NODES),
-                                 rep(RIGHT_X-HALF_BOX_WIDTH, NUM_NODES)),
+                           x = c(rep(LEFT_X+EDGE_NODE_ADJUSTMENT, NUM_NODES),
+                                 rep(RIGHT_X-EDGE_NODE_ADJUSTMENT, NUM_NODES)),
                            y = label_nodes$y)
   
   title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
-                            x = c(LEFT_X, RIGHT_X), y = -NUM_NODES*15, id = 0:-1, shape = 'text',
-                            font = list(face = 'Bold', size = 45))
+                            x = c(LEFT_X, RIGHT_X), y = -NUM_NODES*30, id = 0:-1, shape = 'text',
+                            font = list(face = 'Bold', size = 60))
   
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
   nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes))
@@ -113,7 +113,8 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)),
                       to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
                       dashes = ifelse(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)],
-                                      "[20,15]", "false"))
+                                      "[20,15]", "false"),
+                      arrows = c(rep("to", NUM_NODES), rep("", 2*NUM_NODES)))
 
   return(list("nodes" = nodes, "edges" = edges))
 }
@@ -138,9 +139,9 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Metabolic risks         \n')
   }
   visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
-    visOptions(height = (nrow(edges)+1)*HEIGHT_FACTOR + HEIGHT_ADD, width = WIDTH) %>%
+    visOptions(height = 650, width = WIDTH) %>%
     visNodes(heightConstraint = HEIGHT_CONSTRAINT, fixed = TRUE,
-             shape = 'box', font = list(face = 'Monaco', size = FONT_SIZE)) %>%
+             shape = 'box', font = list(face = 'Courier Bold', size = FONT_SIZE)) %>%
     visEdges(width = 4, smooth = FALSE, hoverWidth = 0) %>%
     visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
               addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
@@ -234,8 +235,8 @@ server <- function(input, output) {
   output$available_years <- renderUI({
     sliderTextInput("year",
                     label = h4("Years:"),
-                    choices = valid_years(input$display), # sort(unique(c(nodes_and_edges$years))),
-                    selected = range(valid_years(input$display)), # range(nodes_and_edges$years),
+                    choices = valid_years(input$display),
+                    selected = range(valid_years(input$display)),
                     grid = TRUE)
   })
   
