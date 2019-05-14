@@ -1,6 +1,12 @@
+fC <- function(vec) {
+  tRep <- length(vec)-1
+  paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
+}
 
-    sidebarPanel(
-      
+
+
+conditionalPanel(condition = fC(c(90)),
+
       selectInput("display",
                   label = h4("Display:"),
                   choices = list("Cause" = "cause", "Risk" = "risk"),

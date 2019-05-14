@@ -192,6 +192,13 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
   conditionalPanel(condition = fC(c(70)),
                    selectInput("myVar", "Variable:", choice = mdc_drg_names)),
 
+
+
+source(path(myPlace,"/IHMEwork/arrows_UI.Part1.R")),
+
+
+
+
 # Figure Download buttons ---------------------------------------------------
 
 conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
@@ -324,6 +331,9 @@ mainPanel(
   tabPanel("MDC/DRG",
            br(),
            plotOutput("mdcdrg", height = 700), value = 70),
+
+  tabPanel("IHME Risk", img(src="tempIHME.png"),value = 90),
+ 
  
    tabPanel("Technical Documentation",
      br(), 
