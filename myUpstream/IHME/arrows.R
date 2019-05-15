@@ -70,9 +70,6 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   # Reset number of nodes in case it is less than original number of nodes requested
   NUM_NODES <- nrow(left_nodes)
   
-  # Determine longest id_name for node label formatting
-  LONGEST <- max(nchar(left_nodes$id_name))+3
-  
   # Combine left and right nodes into selected_data
   selected_data <- bind_rows(left_nodes, right_nodes) %>%
     group_by(year_id) %>%
