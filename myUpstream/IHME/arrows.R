@@ -116,6 +116,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                       "[20,15]", "false"),
                       arrows = c(rep("to", NUM_NODES), rep("", 2*NUM_NODES)))
 
+
   return(list("nodes" = nodes, "edges" = edges))
 }
 
@@ -139,9 +140,11 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Metabolic risks         \n')
   }
   visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
+
     visOptions(height = 650, width = WIDTH) %>%
     visNodes(heightConstraint = HEIGHT_CONSTRAINT, fixed = TRUE,
              shape = 'box', font = list(face = 'Courier Bold', size = FONT_SIZE)) %>%
+
     visEdges(width = 4, smooth = FALSE, hoverWidth = 0) %>%
     visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
               addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),

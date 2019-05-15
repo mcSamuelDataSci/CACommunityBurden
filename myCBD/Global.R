@@ -109,7 +109,13 @@ if (subSite){
 
 #-- Load Info Files and Functions ---------------------------------------------
 
-gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sheet="main"))    
+gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sheet="main"))
+
+#Saved OSHPD MDC_DRG file in myCBD/myInfo
+
+hdCodes   <- read.delim(paste0(myPlace, "/myInfo/MDC_DRG.txt"), header = FALSE, sep = "=") 
+hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
+
 
 source(paste0(myPlace,"/myFunctions/make_MAPS.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R")) 
@@ -179,12 +185,21 @@ hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
 
 hospDiscMeasuresShort <- hospDiscMeasures[c(-2, -5)] #Not including Crude Hosp Rate
 
+
+
 #This is for labeling the dropdown menu of options--hospDiscMeasures vector won't work, it will use the abbreviated values (n_hosp etc) as the dropdown labels
 hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Total Charges", "Crude Charge Rate", "Average Charges")
 
 hospMeasures2Short <- hospMeasures2[c(-2, -5)]
 
-mdc_drg_names <- c("MDC", "DRG")
+#for mdc_drg
+hospDiscMeasuresShort2 <- hospDiscMeasures[c(-2,-3,-5)]
+
+mdc_drg_names <- c("Major Diagnostic Code" = "mdc", "Diagnostic Related Groups" = "drg")
+
+
+#for mdc_drg
+hospMeasures3 <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
@@ -198,6 +213,8 @@ names(phCode)     <- phList[,"causeList" ]
 bigList           <- fullCauseList[nchar(fullCauseList$LABEL) == 1,]
 bigCode           <- bigList[,"LABEL"]
 names(bigCode)    <- bigList[,"causeList"]
+
+
 
 
 

@@ -49,7 +49,7 @@ oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat"
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, mdc, msdrg) %>% mutate(year = 2016)
 # dschdate,
 
 
@@ -531,10 +531,11 @@ library(DT)
 
 # rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
 
-hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=")
+hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=") 
 mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
 drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
 
+hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
 ##-----MDC dataset----------##
 mdc_state <- sum_num_costs(oshpd16, c("year", "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
@@ -592,10 +593,9 @@ total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
 
 total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
 
-total_mdc_drg_new <- mutate(total_mdc_drg_new, n_hosp = as.numeric(n_hosp))
-
-
 mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
+
+mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
 
 #Saving RDS file of this dataframe
