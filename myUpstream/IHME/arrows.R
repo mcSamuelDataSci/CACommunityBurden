@@ -141,7 +141,7 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Behavioral risks       \n',
                 'Metabolic risks         \n')
   }
-  visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
+  visNetwork(nodes, edges, main = "<h3>California</h3>", submain = paste0("<h4>", subtitle, "</h4>")) %>%
     visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
