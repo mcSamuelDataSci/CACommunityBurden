@@ -41,7 +41,7 @@ RISK_YEARS <- sort(unique(risk_data$year_id))
 LABEL_LENGTH <- 20
 LEFT_X <- -130
 RIGHT_X <- 130
-EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*4.2
+EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*4.3
 
 Y_SPACE_FACTOR <- 25
 FONT_SIZE <- 15
@@ -112,7 +112,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                       to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
                       dashes = ifelse(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)],
                                       "[20,15]", "false"),
-                      arrows = c(rep("to", NUM_NODES), rep("", 2*NUM_NODES)))
+                      arrows = list(to = list(enabled = c(rep(TRUE, NUM_NODES), rep(FALSE, 2*NUM_NODES)), scaleFactor = 0.5)))
 
 
   return(list("nodes" = nodes, "edges" = edges))
