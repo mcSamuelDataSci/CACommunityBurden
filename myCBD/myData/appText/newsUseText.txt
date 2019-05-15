@@ -1,6 +1,7 @@
 newsUse <- paste0('
 <li>Welcome to the CCB!</li>
 <br>
+<li> 5/14/2019 -- Race/Ethnicity Trend Tab added</li>
 <li> 2/15/2019 -- Soft launch of public site !</li>
 <li> 1/2019 -- "Cirrhosis of the liver" has been separated out from "Digestive diseases"</li>
 <li> 1/2019 -- SMR (Standard Mortality Ratio) is now calculated based on age-adjusted rates</li>
