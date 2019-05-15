@@ -40,6 +40,7 @@ CAUSE_YEARS <- sort(unique(cause_data$year_id))
 RISK_YEARS <- sort(unique(risk_data$year_id))
 LABEL_LENGTH <- 30
 EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
+MAX_NODES <- 25
 
 Y_SPACE_FACTOR <- 25
 FONT_SIZE <- 15
@@ -54,14 +55,14 @@ RIGHT_X <- 175 #WIDTH/3.5
 
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
-                         year_from, year_to, display_in, num_nodes) {
+                         year_from, year_to, display_in) {
 
   left_nodes <- data %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_from,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
     arrange(id_num) %>%
     mutate(rank = rank(-val, ties.method = 'first')) %>%
-    filter(rank <= num_nodes)
+    filter(rank <= MAX_NODES)
   
   right_nodes <- data %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_to,
@@ -191,12 +192,6 @@ ui <- fluidPage(
                   choices = list("Cause" = "cause", "Risk" = "risk"),
                   selected = "risk"),
       
-      sliderInput("num_nodes",
-                  label = h4("Show top:"),
-                  min = 1,
-                  max = 50,
-                  value = 25),
-      
       sliderInput("level",
                   label = h4("Level:"),
                   min = 0,
@@ -249,7 +244,7 @@ server <- function(input, output) {
     requirements(input$display, input$year)
 
     nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
-                                    input$year[1], input$year[2], input$display, input$num_nodes)
+                                    input$year[1], input$year[2], input$display)
     nodes <- nodes_and_edges$nodes
     edges <- nodes_and_edges$edges
 
