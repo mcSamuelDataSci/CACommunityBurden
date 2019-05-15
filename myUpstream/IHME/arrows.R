@@ -39,15 +39,17 @@ data <- bind_rows(cause_data, risk_data) %>%
 CAUSE_YEARS <- sort(unique(cause_data$year_id))
 RISK_YEARS <- sort(unique(risk_data$year_id))
 LABEL_LENGTH <- 20
-LEFT_X <- -LABEL_LENGTH*25 + 425
-RIGHT_X <- 1000
-EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*18
+LEFT_X <- -130
+RIGHT_X <- 130
+EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*4.2
 
-Y_SPACE_FACTOR <- 100
-FONT_SIZE <- 60
+Y_SPACE_FACTOR <- 25
+FONT_SIZE <- 15
+TITLE_FONT_SIZE <- 12
 DRAG_ON <- TRUE
-WIDTH <- '100%'
-HEIGHT_CONSTRAINT <- 80
+NODE_HEIGHT_CONSTRAINT <- 5
+HEIGHT <- '175%'
+WIDTH <- 500
 
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
@@ -81,6 +83,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                             label = substr(str_pad(paste(selected_data$rank, selected_data$id_name),
                                                    width = LABEL_LENGTH, side = "right"),
                                            start = 1, stop = LABEL_LENGTH),
+                            margin = list(top = 2, bottom = 2, left = 2, right = 2),
                             group = selected_data$first_parent,
                             title = paste(selected_data$id_name,
                                           "<br><b>Year: </b>", selected_data$year_id,
@@ -91,7 +94,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                           " (", selected_data$lower, "-", selected_data$upper, ")",
                                           sep =""),
                             x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)),
-                            y = selected_data$rank2*Y_SPACE_FACTOR - NUM_NODES*30)
+                            y = selected_data$rank2*Y_SPACE_FACTOR - (650/2))
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
                            x = c(rep(LEFT_X+EDGE_NODE_ADJUSTMENT, NUM_NODES),
@@ -99,8 +102,8 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                            y = label_nodes$y)
   
   title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
-                            x = c(LEFT_X, RIGHT_X), y = -NUM_NODES*30, id = 0:-1, shape = 'text',
-                            font = list(face = 'Bold', size = 60))
+                            x = c(LEFT_X, RIGHT_X), y = 8-(650/2), id = 0:-1, shape = 'text',
+                            font = list(face = 'Bold', size = TITLE_FONT_SIZE))
   
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
   nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes))
@@ -135,19 +138,18 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Metabolic risks         \n')
   }
   visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
-
-    visOptions(height = 650, width = WIDTH) %>%
-    visNodes(heightConstraint = HEIGHT_CONSTRAINT, fixed = TRUE,
+    visOptions(height = HEIGHT, width = WIDTH) %>%
+    visNodes(fixed = TRUE, heightConstraint = NODE_HEIGHT_CONSTRAINT,
              shape = 'box', font = list(face = 'Courier Bold', size = FONT_SIZE)) %>%
-
-    visEdges(width = 4, smooth = FALSE, hoverWidth = 0) %>%
+    visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
     visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
               addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
                                     font = list(face = 'Bold', size = 40, align = 'left')), stepY = 150) %>%
     visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = DRAG_ON, selectable = FALSE) %>%
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
-    visGroups(groupname = groups[3], color = '#A0DCA4')
+    visGroups(groupname = groups[3], color = '#A0DCA4') %>%
+    visHierarchicalLayout()
 }
 
 # Need to update years because cause and risk data sets have data available for different sets of years
