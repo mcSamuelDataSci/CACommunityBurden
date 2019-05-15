@@ -43,7 +43,7 @@ EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 
 Y_SPACE_FACTOR <- 25
 FONT_SIZE <- 15
-TITLE_FONT_SIZE <- 12
+TITLE_FONT_SIZE <- 15
 DRAG_ON <- FALSE
 NODE_HEIGHT_CONSTRAINT <- 10
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7
@@ -105,7 +105,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                            y = label_nodes$y)
   
   title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
-                            x = c(LEFT_X, RIGHT_X), y = 8-(650/2), id = 0:-1, shape = 'text',
+                            x = c(LEFT_X, RIGHT_X), y = 1-(650/2), id = 0:-1, shape = 'text',
                             font = list(face = 'Bold', size = TITLE_FONT_SIZE))
   
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
