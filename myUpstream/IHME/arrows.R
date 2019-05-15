@@ -114,7 +114,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)),
                       to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
                       dashes = ifelse(selected_data$rank[1:NUM_NODES] < selected_data$rank[(NUM_NODES+1):(2*NUM_NODES)],
-                                      "[20,15]", "false"),
+                                      "[6,4.5]", "false"),
                       arrows = list(to = list(enabled = c(rep(TRUE, NUM_NODES), rep(FALSE, 2*NUM_NODES)), scaleFactor = 0.5)))
 
 
