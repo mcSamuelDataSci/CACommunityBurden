@@ -38,19 +38,19 @@ data <- bind_rows(cause_data, risk_data) %>%
 # Define constants -----------------------------------------------------------------------
 CAUSE_YEARS <- sort(unique(cause_data$year_id))
 RISK_YEARS <- sort(unique(risk_data$year_id))
-LABEL_LENGTH <- 23
-LEFT_X <- -130
-RIGHT_X <- 130
-EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.5
+LABEL_LENGTH <- 30
+EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 
 Y_SPACE_FACTOR <- 25
 FONT_SIZE <- 15
 TITLE_FONT_SIZE <- 12
-DRAG_ON <- TRUE
+DRAG_ON <- FALSE
 NODE_HEIGHT_CONSTRAINT <- 10
-NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.5
+NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7
 HEIGHT <- '175%'
-WIDTH <- 500
+WIDTH <- 600
+LEFT_X <- -175 #-WIDTH/3.5
+RIGHT_X <- 175 #WIDTH/3.5
 
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
@@ -81,9 +81,11 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   
   # Three groups of nodes: Labels, Edges, and Titles
   label_nodes <- data.frame(selected_data, id = (nrow(selected_data)+1):(2*nrow(selected_data)),
-                            label = substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH), # label = substr(str_pad(paste(selected_data$rank, selected_data$id_name), width = LABEL_LENGTH, side = "right"), start = 1, stop = LABEL_LENGTH),
-                            margin = list(top = 4, bottom = 4, left = 2, right = 2),
-                            heightConstraint = list(minimum = NODE_HEIGHT_CONSTRAINT, maximum = NODE_HEIGHT_CONSTRAINT),
+                            label = ifelse(nchar(paste(selected_data$rank, selected_data$id_name)) > LABEL_LENGTH,
+                                           paste0(substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH-3), "..."),
+                            substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH)), # label = substr(str_pad(paste(selected_data$rank, selected_data$id_name), width = LABEL_LENGTH, side = "right"), start = 1, stop = LABEL_LENGTH),
+                            margin = list('top' = 3, 'bottom' = 3, 'left' = 2, 'right' = 0),
+                            # heightConstraint = list(minimum = NODE_HEIGHT_CONSTRAINT, maximum = NODE_HEIGHT_CONSTRAINT),
                             widthConstraint = list(minimum = NODE_WIDTH_CONSTRAINT, maximum = NODE_WIDTH_CONSTRAINT),
                             group = selected_data$first_parent,
                             title = paste(selected_data$id_name,
@@ -139,9 +141,8 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Metabolic risks         \n')
   }
   visNetwork(nodes, edges, main = "California", submain = paste(subtitle)) %>%
-    visOptions(height = HEIGHT, width = WIDTH) %>%
-    visNodes(fixed = TRUE,
-             shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
+    visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
+    visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
     visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
               addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
