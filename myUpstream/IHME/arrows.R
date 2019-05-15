@@ -13,7 +13,7 @@ cause_data <- readRDS("cause_data.rds")
 risk_data <- readRDS("risk_data.rds") %>%
   select(., -cause_id)
 
-cause_data$first_parent <- ifelse(cause_data$cause_id %in% c(295:409), 'Communicable, maternal, neonatal, and nutritional diseases',
+cause_data$first_parent <- ifelse(cause_data$cause_id %in% c(295:408), 'Communicable, maternal, neonatal, and nutritional diseases',
                                   ifelse(cause_data$cause_id %in% c(409:686),'Non-communicable diseases',
                                          ifelse(cause_data$cause_id >= 687,'Injuries','0')))
 
@@ -47,7 +47,7 @@ FONT_SIZE <- 15
 TITLE_FONT_SIZE <- 15
 DRAG_ON <- FALSE
 NODE_HEIGHT_CONSTRAINT <- 10
-NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7
+NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 HEIGHT <- '175%'
 WIDTH <- 600
 LEFT_X <- -175 #-WIDTH/3.5
@@ -83,9 +83,9 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   # Three groups of nodes: Labels, Edges, and Titles
   label_nodes <- data.frame(selected_data, id = (nrow(selected_data)+1):(2*nrow(selected_data)),
                             label = ifelse(nchar(paste(selected_data$rank, selected_data$id_name)) > LABEL_LENGTH,
-                                           paste0(substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH-3), "..."),
+                                           paste0(substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH-4), "..."),
                             substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH)), # label = substr(str_pad(paste(selected_data$rank, selected_data$id_name), width = LABEL_LENGTH, side = "right"), start = 1, stop = LABEL_LENGTH),
-                            margin = list('top' = 3, 'bottom' = 3, 'left' = 2, 'right' = 0),
+                            margin = list('top' = 3, 'bottom' = 3, 'left' = 2, 'right' = -2),
                             # heightConstraint = list(minimum = NODE_HEIGHT_CONSTRAINT, maximum = NODE_HEIGHT_CONSTRAINT),
                             widthConstraint = list(minimum = NODE_WIDTH_CONSTRAINT, maximum = NODE_WIDTH_CONSTRAINT),
                             group = selected_data$first_parent,
