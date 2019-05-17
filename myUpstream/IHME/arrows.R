@@ -9,55 +9,54 @@ library(shinyWidgets)
 
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("API_endpoints.csv", header = TRUE)
-cause_data <- readRDS("cause_data.rds")
+
+cause_data <- readRDS("cause_data.rds") %>%
+  rename('id_num' = 'cause_id', 'id_name' = 'cause_name', 'display' = 'acause') %>%
+  mutate(display = 'cause')
+
 risk_data <- readRDS("risk_data.rds") %>%
-  select(., -cause_id)
+  select(-cause_id) %>%
+  rename('id_num' = 'risk_id', 'id_name' = 'risk_name', 'display' = 'risk_short_name') %>%
+  mutate(display = 'risk')
 
-cause_data$first_parent <- ifelse(cause_data$cause_id %in% c(295:408), 'Communicable, maternal, neonatal, and nutritional diseases',
-                                  ifelse(cause_data$cause_id %in% c(409:686),'Non-communicable diseases',
-                                         ifelse(cause_data$cause_id >= 687,'Injuries','0')))
+cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
+                  'Non-communicable diseases',
+                  'Injuries')
 
-risk_data$first_parent <- ifelse(risk_data$sort_order %in% c(2:34), 'Environmental/occupational risks',
-                                  ifelse(risk_data$sort_order %in% c(35:78),'Behavioral risks',
-                                         ifelse(risk_data$sort_order >= 79,'Metabolic risks','0')))
+risk_groups <- c('Environmental/ occupational risks',
+                 'Behavioral risks',
+                 'Metabolic risks')
 
-colnames(cause_data)[1] <- 'id_num'
-colnames(risk_data)[1] <- 'id_num'
-colnames(cause_data)[11] <- 'id_name'
-colnames(risk_data)[11] <- 'id_name'
+cause_data$first_parent <- ifelse(cause_data$id_num %in% c(295:408), cause_groups[1],
+                                  ifelse(cause_data$id_num %in% c(409:686), cause_groups[2],
+                                         ifelse(cause_data$id_num >= 687, cause_groups[3],'0')))
 
-colnames(cause_data)[12] <- 'display'
-colnames(risk_data)[12] <- 'display'
-cause_data$display <- 'cause'
-risk_data$display <- 'risk'
+risk_data$first_parent <- ifelse(risk_data$sort_order %in% c(2:34), risk_groups[1],
+                                  ifelse(risk_data$sort_order %in% c(35:78), risk_groups[2],
+                                         ifelse(risk_data$sort_order >= 79, risk_groups[3],'0')))
 
 data <- bind_rows(cause_data, risk_data) %>%
   mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
                         ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
 
 # Define constants -----------------------------------------------------------------------
-CAUSE_YEARS <- sort(unique(cause_data$year_id))
-RISK_YEARS <- sort(unique(risk_data$year_id))
-LABEL_LENGTH <- 30
-EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
+# Play with them at your own risk
 MAX_NODES <- 25
-
-LEGEND_SPACE_FACTOR <- 35
-Y_SPACE_FACTOR <- 25
+LABEL_LENGTH <- 30
 FONT_SIZE <- 15
 TITLE_FONT_SIZE <- 15
-DRAG_ON <- TRUE
-NODE_HEIGHT_CONSTRAINT <- 10
+WIDTH <- 800
+HEIGHT <- '197%'
+Y_SPACE_FACTOR <- 25
+LEGEND_SPACE_FACTOR <- 35
+
+CAUSE_YEARS <- sort(unique(cause_data$year_id))
+RISK_YEARS <- sort(unique(risk_data$year_id))
+EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 LEGEND_NODE_WIDTH_CONSTRAINT <- 196
-HEIGHT <- '197%'
-WIDTH <- 800
 LEFT_X <- -(WIDTH/2 - 115)
 RIGHT_X <- LEFT_X+350
-# HEIGHT <- '175%'
-# WIDTH <- 600
-# LEFT_X <- -175 #-WIDTH/3.5
-# RIGHT_X <- 175 #WIDTH/3.5
 
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
@@ -86,14 +85,13 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
     mutate(rank2 = rank(rank))  # rank2 for y location of nodes
   selected_data$change <- rep(round((right_nodes$val-left_nodes$val)/left_nodes$val, 4), 2)
   
-  # Three groups of nodes: Labels, Edges, and Titles
+  # Four groups of nodes: label, edge, title, legend
   label_nodes <- data.frame(selected_data, id = (nrow(selected_data)+1):(2*nrow(selected_data)),
                             label = ifelse(nchar(paste(selected_data$rank, selected_data$id_name)) > LABEL_LENGTH,
                                            paste0(substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH-4), "..."),
-                            substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH)), # label = substr(str_pad(paste(selected_data$rank, selected_data$id_name), width = LABEL_LENGTH, side = "right"), start = 1, stop = LABEL_LENGTH),
+                            substr(paste(selected_data$rank, selected_data$id_name), 1, LABEL_LENGTH)),
                             margin = list('top' = 3, 'bottom' = 3, 'left' = 2, 'right' = -2),
-                            # heightConstraint = list(minimum = NODE_HEIGHT_CONSTRAINT, maximum = NODE_HEIGHT_CONSTRAINT),
-                            widthConstraint = list(minimum = NODE_WIDTH_CONSTRAINT, maximum = NODE_WIDTH_CONSTRAINT),
+                            widthConstraint = NODE_WIDTH_CONSTRAINT,
                             group = selected_data$first_parent,
                             title = paste(selected_data$id_name,
                                           "<br><b>Year: </b>", selected_data$year_id,
@@ -128,22 +126,14 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                       paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(-2,-1,0,0),
                             x = c(rep((LEFT_X+RIGHT_X)/2, 2), LEFT_X, RIGHT_X), y = c(-365, -345, 1-(650/2), 1-(650/2)), id = 0:-3, shape = 'text',
                             font = list(face = 'bold', size = TITLE_FONT_SIZE))
-  
-  # title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
-  #                           x = c(LEFT_X, RIGHT_X), y = 1-(650/2), id = 0:-1, shape = 'text',
-  #                           font = list(face = 'bold', size = TITLE_FONT_SIZE))
 
   if (display_in == "cause") {
-    groups <- data.frame(label = c('Communicable, maternal, neonatal, and nutritional diseases',
-                                   'Non-communicable diseases',
-                                   'Injuries'),
+    groups <- data.frame(label = cause_groups,
                          y = c(0.7, 2.15, 3.15)*LEGEND_SPACE_FACTOR - (650/2),
                          margin = list('top' = 5, 'bottom' = c(-30, -16, -1), 'left' = 15, 'right' = -200))
   }
   else {
-    groups <- data.frame(label = c('Environmental/ occupational risks',
-                                   'Behavioral risks',
-                                   'Metabolic risks'),
+    groups <- data.frame(label = risk_groups,
                          y = c(0.7,1.7, 2.45)*LEGEND_SPACE_FACTOR - (650/2),
                          margin = list('top' = 5, 'bottom' = c(-15, 0, -1), 'left' = 15, 'right' = -200))
   }
@@ -169,28 +159,17 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
 
 # Create vis network (and supplemental) functions -----------------------------------------------------------------------
 vis_network <- function(nodes, edges, display) {
-  length <- nchar('and nutritional diseases')
   if (display == "cause") {
-    groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
-                'Non-communicable diseases',
-                'Injuries',
-                'Communicable, maternal,\nneonatal, and nutritional\ndiseases',
-                'Non-communicable               \ndiseases\n',
-                '\nInjuries                                               \n')
+    groups <- cause_groups
   }
   else {
-    groups <- c('Environmental/occupational risks',
-                'Behavioral risks',
-                'Metabolic risks',
-                'Environmental/\noccupational risks',
-                'Behavioral risks       \n',
-                'Metabolic risks         \n')
+    groups <- risk_groups
   }
   visNetwork(nodes, edges) %>%
     visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
-    visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = DRAG_ON, selectable = FALSE) %>%
+    visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = FALSE, selectable = FALSE) %>%
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
     visGroups(groupname = groups[3], color = '#A0DCA4') %>%
