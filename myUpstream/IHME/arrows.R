@@ -42,16 +42,22 @@ LABEL_LENGTH <- 30
 EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 MAX_NODES <- 25
 
+LEGEND_SPACE_FACTOR <- 35
 Y_SPACE_FACTOR <- 25
 FONT_SIZE <- 15
 TITLE_FONT_SIZE <- 15
-DRAG_ON <- FALSE
+DRAG_ON <- TRUE
 NODE_HEIGHT_CONSTRAINT <- 10
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
+LEGEND_NODE_WIDTH_CONSTRAINT <- 196
 HEIGHT <- '175%'
-WIDTH <- 600
-LEFT_X <- -175 #-WIDTH/3.5
-RIGHT_X <- 175 #WIDTH/3.5
+WIDTH <- 800
+LEFT_X <- -(WIDTH/2 - 115)
+RIGHT_X <- LEFT_X+350
+# HEIGHT <- '175%'
+# WIDTH <- 600
+# LEFT_X <- -175 #-WIDTH/3.5
+# RIGHT_X <- 175 #WIDTH/3.5
 
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
@@ -108,9 +114,30 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
                             x = c(LEFT_X, RIGHT_X), y = 1-(650/2), id = 0:-1, shape = 'text',
                             font = list(face = 'Bold', size = TITLE_FONT_SIZE))
+
+  if (display_in == "cause") {
+    groups <- data.frame(label = c('Communicable, maternal, neonatal, and nutritional diseases',
+                                   'Non-communicable diseases',
+                                   'Injuries'),
+                         y = c(0.7, 2.15, 3.15)*LEGEND_SPACE_FACTOR - (650/2),
+                         margin = list('top' = 5, 'bottom' = c(-30, -16, -1), 'left' = 15, 'right' = -200))
+  }
+  else {
+    groups <- data.frame(label = c('Environmental/ occupational risks',
+                                   'Behavioral risks',
+                                   'Metabolic risks'),
+                         y = c(0.7,1.7, 2.45)*LEGEND_SPACE_FACTOR - (650/2),
+                         margin = list('top' = 5, 'bottom' = c(-15, 0, -1), 'left' = 15, 'right' = -200))
+  }
   
+  legend_nodes <- cbind(groups, data.frame(rank = c(1, 2, 3), shape = 'box', id = -2:-4,
+                                           color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
+                                           font = list(face = 'Bold', size = TITLE_FONT_SIZE),
+                                           widthConstraint = LEGEND_NODE_WIDTH_CONSTRAINT,
+                                           x = RIGHT_X + NODE_WIDTH_CONSTRAINT/2 + 20))
+
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
-  nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes))
+  nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes, legend_nodes))
   
   edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)),
                       to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
@@ -145,9 +172,6 @@ vis_network <- function(nodes, edges, subtitle, display) {
     visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
-    visLegend(width = .25, position = 'right', zoom = FALSE, useGroups = FALSE,
-              addNodes = data.frame(shape = 'box', label = groups[4:6], color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
-                                    font = list(face = 'Bold', size = 40, align = 'left')), stepY = 150) %>%
     visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = DRAG_ON, selectable = FALSE) %>%
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
