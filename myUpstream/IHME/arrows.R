@@ -50,7 +50,7 @@ DRAG_ON <- TRUE
 NODE_HEIGHT_CONSTRAINT <- 10
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 LEGEND_NODE_WIDTH_CONSTRAINT <- 196
-HEIGHT <- '175%'
+HEIGHT <- '197%'
 WIDTH <- 800
 LEFT_X <- -(WIDTH/2 - 115)
 RIGHT_X <- LEFT_X+350
@@ -104,16 +104,34 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                           " (", selected_data$lower, "-", selected_data$upper, ")",
                                           sep =""),
                             x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)),
-                            y = selected_data$rank2*Y_SPACE_FACTOR - (650/2))
+                            y = selected_data$rank2*Y_SPACE_FACTOR - (327))
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
                            x = c(rep(LEFT_X+EDGE_NODE_ADJUSTMENT, NUM_NODES),
                                  rep(RIGHT_X-EDGE_NODE_ADJUSTMENT, NUM_NODES)),
                            y = label_nodes$y)
   
-  title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
-                            x = c(LEFT_X, RIGHT_X), y = 1-(650/2), id = 0:-1, shape = 'text',
-                            font = list(face = 'Bold', size = TITLE_FONT_SIZE))
+  title_nodes <- data.frame(label = c("California", paste(switch(metric_id_in,
+                                                                 '1' = 'Number',
+                                                                 '2' = 'Percent',
+                                                                 '3' = 'Rate (per 100,000)'),
+                                                          switch(measure_id_in,
+                                                                 '1' = 'Deaths',
+                                                                 '2' = 'DALYs',
+                                                                 '3' = 'YLDs',
+                                                                 '4' = 'YLLs'),
+                                                          switch(sex_id_in,
+                                                                 '1' = 'Males',
+                                                                 '2' = 'Females',
+                                                                 '3' = 'Both Sexes'),
+                                                          sep = ", "),
+                                      paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(-2,-1,0,0),
+                            x = c(rep((LEFT_X+RIGHT_X)/2, 2), LEFT_X, RIGHT_X), y = c(-365, -345, 1-(650/2), 1-(650/2)), id = 0:-3, shape = 'text',
+                            font = list(face = 'bold', size = TITLE_FONT_SIZE))
+  
+  # title_nodes <- data.frame(label = c(paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(0,0),
+  #                           x = c(LEFT_X, RIGHT_X), y = 1-(650/2), id = 0:-1, shape = 'text',
+  #                           font = list(face = 'bold', size = TITLE_FONT_SIZE))
 
   if (display_in == "cause") {
     groups <- data.frame(label = c('Communicable, maternal, neonatal, and nutritional diseases',
@@ -130,7 +148,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                          margin = list('top' = 5, 'bottom' = c(-15, 0, -1), 'left' = 15, 'right' = -200))
   }
   
-  legend_nodes <- cbind(groups, data.frame(rank = c(1, 2, 3), shape = 'box', id = -2:-4,
+  legend_nodes <- cbind(groups, data.frame(rank = c(1, 2, 3), shape = 'box', id = -4:-6,
                                            color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
                                            font = list(face = 'Bold', size = TITLE_FONT_SIZE),
                                            widthConstraint = LEGEND_NODE_WIDTH_CONSTRAINT,
@@ -150,7 +168,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
 }
 
 # Create vis network (and supplemental) functions -----------------------------------------------------------------------
-vis_network <- function(nodes, edges, subtitle, display) {
+vis_network <- function(nodes, edges, display) {
   length <- nchar('and nutritional diseases')
   if (display == "cause") {
     groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
@@ -168,7 +186,7 @@ vis_network <- function(nodes, edges, subtitle, display) {
                 'Behavioral risks       \n',
                 'Metabolic risks         \n')
   }
-  visNetwork(nodes, edges, main = "<h3>California</h3>", submain = paste0("<h4>", subtitle, "</h4>")) %>%
+  visNetwork(nodes, edges) %>%
     visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
@@ -272,23 +290,7 @@ server <- function(input, output) {
     nodes <- nodes_and_edges$nodes
     edges <- nodes_and_edges$edges
 
-    vis_network(nodes, edges,
-                subtitle = paste(switch(input$metric,
-                                        '1' = 'Number',
-                                        '2' = 'Percent',
-                                        '3' = 'Rate (per 100,000)'),
-                                 switch(input$measure,
-                                        '1' = 'Deaths',
-                                        '2' = 'DALYs',
-                                        '3' = 'YLDs',
-                                        '4' = 'YLLs'),
-                                 switch(input$sex,
-                                        '1' = 'Males',
-                                        '2' = 'Females',
-                                        '3' = 'Both Sexes'),
-                                 sep = ", "),
-                input$display
-    )
+    vis_network(nodes, edges, input$display)
   })
 }
 
