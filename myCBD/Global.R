@@ -25,7 +25,7 @@ STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
 
 # TEXT Constants
-VERSION           <- "Version P1.1"
+VERSION           <- "Version P1.3"
 criticalNumber    <- 11
 mTitle            <- "California Community Burden of Disease and Cost Engine"
 figureAttribution <- "California Department of Public Health"

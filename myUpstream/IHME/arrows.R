@@ -58,6 +58,7 @@ LEGEND_NODE_WIDTH_CONSTRAINT <- 196
 LEFT_X <- -(WIDTH/2 - 115)
 RIGHT_X <- LEFT_X+350
 
+
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                          year_from, year_to, display_in) {
@@ -103,12 +104,14 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                           sep =""),
                             x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)),
                             y = selected_data$rank2*Y_SPACE_FACTOR - (327))
+
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
                            x = c(rep(LEFT_X+EDGE_NODE_ADJUSTMENT, NUM_NODES),
                                  rep(RIGHT_X-EDGE_NODE_ADJUSTMENT, NUM_NODES)),
                            y = label_nodes$y)
   
+
   title_nodes <- data.frame(label = c("California", paste(switch(metric_id_in,
                                                                  '1' = 'Number',
                                                                  '2' = 'Percent',
@@ -137,6 +140,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                          y = c(0.7,1.7, 2.45)*LEGEND_SPACE_FACTOR - (650/2),
                          margin = list('top' = 5, 'bottom' = c(-15, 0, -1), 'left' = 15, 'right' = -200))
   }
+
   
   legend_nodes <- cbind(groups, data.frame(rank = c(1, 2, 3), shape = 'box', id = -4:-6,
                                            color = c('#E9A291', '#C6E2FF', '#A0DCA4'),
@@ -154,6 +158,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                       arrows = list(to = list(enabled = c(rep(TRUE, NUM_NODES), rep(FALSE, 2*NUM_NODES)), scaleFactor = 0.5)))
 
 
+
   return(list("nodes" = nodes, "edges" = edges))
 }
 
@@ -165,11 +170,13 @@ vis_network <- function(nodes, edges, display) {
   else {
     groups <- risk_groups
   }
+
   visNetwork(nodes, edges) %>%
     visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
     visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = FALSE, selectable = FALSE) %>%
+
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
     visGroups(groupname = groups[3], color = '#A0DCA4') %>%
