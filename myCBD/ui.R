@@ -45,7 +45,9 @@ shinyUI(fluidPage(theme = "bootstrap.css",
      @import url('//fonts.googleapis.com/css?family=Open+Sans');
      * {font-family: 'Open Sans';line-height: 1.5;}
      a {text-decoration: none; color: #0000EE;}
-                   ")   )   ),
+                   ")   )
+   
+   ),
                   
  # from prior attempts to set fonts etc - maybe something useful here  
   # tags$head(tags$style(HTML('
@@ -200,7 +202,7 @@ conditionalPanel(condition = fC(c(70)),
 
 
 
-source(path(myPlace,"/IHMEwork/arrows_UI.Part1.R")),
+# source(paste0(myPlace,"/IHMEwork/arrows_UI.Part1.R")),
 
 
 
@@ -326,20 +328,20 @@ mainPanel(
      plotlyOutput("scatter", height=700), value = 66),
  
     tabPanel("HOSPITAL DISCHARGE (1)",
-          br(), 
+          br(),
           plotOutput("OSHPD1", height=700), value = 68),
- 
+
    tabPanel("HOSPITAL DISCHARGE (2)",
-          br(), 
-          plotlyOutput("OSHPD2", height=700), 
+          br(),
+          plotlyOutput("OSHPD2", height=700),
           value = 69),
- 
+
   tabPanel("MDC/DRG",
            br(),
            plotOutput("mdcdrg", height = 700), value = 70),
 
   tabPanel("IHME Risk", img(src="tempIHME.png"),value = 90),
- 
+
  
    tabPanel("Technical Documentation",
      br(), 
