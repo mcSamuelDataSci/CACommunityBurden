@@ -202,7 +202,7 @@ conditionalPanel(condition = fC(c(70)),
 
 
 
-# source(paste0(myPlace,"/IHMEwork/arrows_UI.Part1.R")),
+ source(paste0(myPlace,"/IHMEwork/arrows_UI.Part.R")),
 
 
 
@@ -340,7 +340,7 @@ mainPanel(
            br(),
            plotOutput("mdcdrg", height = 700), value = 70),
 
-  tabPanel("IHME Risk", img(src="tempIHME.png"),value = 90),
+  tabPanel("IHME Risk", visNetworkOutput("network"),value = 90),
 
  
    tabPanel("Technical Documentation",
