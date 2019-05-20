@@ -759,6 +759,9 @@ summary_any <- bind_rows(summary_any_CA, summary_any_county)
 
 summary_any$county[summary_any$county == "California"] <- "CALIFORNIA"
 
-summary_any %>% filter(county == "CALIFORNIA") %>% 
+#TEST PLOT
+summary_any %>% filter(county == "CALIFORNIA") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
   ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + 
   geom_bar(stat = "identity") + facet_wrap(. ~ sex, scales = "free_x") 
+
+#brainstorming other plot ideas--plot any vs diag_p on the same plot (grouped bars?)? organize dataframe better, save
