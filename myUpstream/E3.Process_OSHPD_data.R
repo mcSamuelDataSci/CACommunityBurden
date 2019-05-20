@@ -22,7 +22,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -707,8 +707,7 @@ p <- function(v) {
 
 #creating input data
 test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExICD10_CM)) %>% group_by(LABEL) %>% mutate(newICDcode = p(regExICD10_CM)) %>% select(LABEL, newICDcode) %>% unique()
-#left joining with names associated with ICD/label
-testmap2 <- left_join(test_map, select(icd_map, nameOnly, LABEL), by = c("LABEL"))
+
 
 
 any_diagnosis_definition <- function(df, label) {
@@ -722,15 +721,15 @@ any_diagnosis_definition <- function(df, label) {
 }
 
 oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
-for (i in 1: nrow(testmap2)) {
-  oshpd_test <- any_diagnosis_definition(oshpd_test,testmap2$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
+for (i in 1: nrow(test_map)) {
+  oshpd_test <- any_diagnosis_definition(oshpd_test,test_map$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
   
 } 
 
 
-#Summarizing any definition data--this isn't efficient, and also doesn't capture age/gender/county information, but demonstrates general goal:
+#Summarizing any definition data--this isn't efficient, but demonstrates general goal:
 
-summary_any_def <- oshpd_test %>% summarise(A07 = sum(A07),
+summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise(A07 = sum(A07),
                                             A08 = sum(A08),
                                             D01 = sum(D01),
                                             D03 = sum(D03),
@@ -739,7 +738,27 @@ summary_any_def <- oshpd_test %>% summarise(A07 = sum(A07),
                                             C02 = sum(C02),
                                             C03 = sum(C03),
                                             C04 = sum(C04),
-                                            C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05)
+                                            C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05) %>% mutate(county = STATE) %>% 
+  filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-summary_any_df2 <- oshpd_test %>% group_by()
+summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise(A07 = sum(A07),
+                                                                 A08 = sum(A08),
+                                                                 D01 = sum(D01),
+                                                                 D03 = sum(D03),
+                                                                 C99 = sum(C99),
+                                                                 C01 = sum(C01),
+                                                                 C02 = sum(C02),
+                                                                 C03 = sum(C03),
+                                                                 C04 = sum(C04),
+                                                                 C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05) %>% 
+  filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
+
+
+summary_any <- bind_rows(summary_any_CA, summary_any_county)
+
+summary_any$county[summary_any$county == "California"] <- "CALIFORNIA"
+
+summary_any %>% filter(county == "CALIFORNIA") %>% 
+  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + 
+  geom_bar(stat = "identity") + facet_wrap(. ~ sex, scales = "free_x") 
