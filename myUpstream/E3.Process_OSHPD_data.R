@@ -10,7 +10,6 @@
 #                                                                                                    |   
 # ====================================================================================================
 
-# fingers crossed
 
 #-- Set Locations Etc-----------------------------------------------------------------------
 
@@ -126,6 +125,8 @@ criticalNum <- 11
 #**OSHPD ID Kaiser data**#
 oshpd_ID   <- read.delim(paste0(upPlace,"/OSHPD/oshpd_id.txt"), header = FALSE, sep = "=", colClasses = "character") %>% rename(ID = V1, hospname = V2) 
 
+oshpd_ID$ID <- str_trim(oshpd_ID$ID) #removing white space at end of ID
+
 kaiser_ID <- filter(oshpd_ID, grepl('KAISER', hospname)) %>% pull(ID)
 
 
@@ -167,16 +168,12 @@ if (whichData == "fake") {
 
 ##Filter oshpd_sample to not include kaiser_id
 
-kaiser_id2 <- c("014132", "014326", "014337", "070990", "074097", "104062", "190429", "190431", "190432",
-                "190434", "191450", "196035", "196403", "210992", "304409", "314024", "334025", "334048", 
-                "340913", "342344", "361223", "370730", "380857", "394009", "410806", "414139", "431506", 
-                "434153", "434218", "480989", "484044", "494019")
+oshpd16_no_kaiser <- filter(oshpd16, !oshpd_id %in% kaiser_ID) 
 
-oshpd16_no_kaiser <- filter(oshpd16, !oshpd_id %in% kaiser_id2) #why does this work, but kaiser_id doesn't??
 #And why the icdCODE unitiliased column error??
 
 
-oshpd16_no_kaiser <- filter(oshpd16, !oshpd_id %in% kaiser_id) 
+
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
 
 aL            <-      ageMap$lAge     # lower age ranges
