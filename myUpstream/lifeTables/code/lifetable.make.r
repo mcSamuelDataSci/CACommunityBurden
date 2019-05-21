@@ -52,11 +52,11 @@ setwd(myDrive)
 .dxmssa[,GEOID:=comID] 
 .nxmssa[,GEOID:=comID]
 
-## 2.3  for fake data, reduce exposure (censor geographies, but more accurate ex)
-.dxstate[year>=2015,(dx=sum(dx)),by=.(GEOID,year)] # looks like approx 45%??
-if (whichData=="fake") .nxmssa[,nx:=nx*.45] # inflate deaths to compensate for sample size
-if (whichData=="fake") .nxcounty[,nx:=nx*.45] # inflate deaths to compensate for sample size
-if (whichData=="fake") .nxstate[,nx:=nx*.45] # inflate deaths to compensate for sample size
+## 2.3  for fake data, reduce exposure (censors geographies, but should provide more accurate ex)
+.factor<-.dxstate[year>=2013 & year<=2017 & sex=="TOTAL",(dx=sum(dx))]/1282663 # ratio of sampled to actual deaths 2013-17
+if (whichData=="fake") .nxmssa[,nx:=nx*.factor] # inflate deaths to compensate for sample size
+if (whichData=="fake") .nxcounty[,nx:=nx*.factor] # inflate deaths to compensate for sample size
+if (whichData=="fake") .nxstate[,nx:=nx*.factor] # inflate deaths to compensate for sample size
 
 ## 3	ANALYSIS (LIFE TABLE)	----------------------------------------------------------
 ## - there are 9 years of exposure (population) data, so that is a limit of ACS.
@@ -225,10 +225,10 @@ for (j in 1:mx.state[agell==0,.N]) {
 	dx<-mx.state[i==j,dx]
 	sex<-mx.state[i==j,sex]
 	i<-mx.state[i==j,i]
-	lt.state <- rbindlist(list(lt.state,                      # fast rbind result to lt.state
+	lt.state <- rbindlist(list(lt.state,                    # fast rbind result to lt.state
 					cbind(doLT(x,nx,dx,sex),j)))			# attach ID to life table
 }
-names(lt.state)[names(lt.state) == "j"] = "i"					# rename j column to i (ID of mx file)
+names(lt.state)[names(lt.state) == "j"] = "i"				# rename j column to i (ID of mx file)
 setkeyv(lt.state,c("i","x"))
 
 ## 3.9  function to produce a life table from qx values only (used in simulation for CI)
@@ -388,15 +388,15 @@ lt.mssa<-lt.mssa[mx.mssa[,c("i","x","sex","comID")],nomatch=0] 			# add MSSA com
 ltci.mssa<-ltci.mssa[mx.mssa[x==0,c("i","x","sex","comID")],nomatch=0]	# add MSSA comID and sex by ID
 ## county
 names(mx.county)[names(mx.county) == "agell"] = "x" 							# rename agell to x for consistency
-lt.county<-lt.county[mx.county[,c("i","x","sex","GEOID")],nomatch=0] 			# add COUNTY comID and sex by ID
-ltci.county<-ltci.county[mx.county[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add COUNTY comID and sex by ID
+lt.county<-lt.county[mx.county[,c("i","x","sex","GEOID")],nomatch=0] 			# add COUNTY GEOID and sex by ID
+ltci.county<-ltci.county[mx.county[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add COUNTY GEOID and sex by ID
 ## state
 names(mx.state)[names(mx.state) == "agell"] = "x" 							# rename agell to x for consistency
-lt.state<-lt.state[mx.state[,c("i","x","sex","GEOID")],nomatch=0] 			# add STATE comID and sex by ID
-ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add STATE comID and sex by ID
+lt.state<-lt.state[mx.state[,c("i","x","sex","GEOID")],nomatch=0] 			# add STATE GEOID and sex by ID
+ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add STATEGEOID and sex by ID
 
 ## 5.2  export datasets
-saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))			# comID sex (char) x (age0) ex meanex ciex.low ciex.high
+saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.county, file=paste0(LTplace,"LTciCounty.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.state,  file=paste0(LTplace,"LTciState.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 
