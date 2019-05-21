@@ -49,7 +49,7 @@ oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat"
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, mdc, msdrg) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, mdc, msdrg, oshpd_id) %>% mutate(year = 2016)
 # dschdate,
 
 
@@ -68,7 +68,7 @@ half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
 
 p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
 p2           <- sample_n(oshpd_subset[,30:31], sampN2)
-p3           <- sample_n(oshpd_subset[,32:37], sampN2)
+p3           <- sample_n(oshpd_subset[,32:38], sampN2)
 p3$race_grp  <- NA
 half2        <- cbind(p1,p2,p3)
 
@@ -102,8 +102,6 @@ OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an exc
 
 
 
-
-
 #DISCUSS***
 #race categories
 race_grp <- c("0", "1", "2", "3", "4", "5", "6")
@@ -122,6 +120,14 @@ pop1 <- 1       # 1 year
 yearGrp <- "2013-2017"
 
 criticalNum <- 11
+
+
+
+#**OSHPD ID Kaiser data**#
+oshpd_ID   <- read.delim(paste0(upPlace,"/OSHPD/oshpd_id.txt"), header = FALSE, sep = "=", colClasses = "character") %>% rename(ID = V1, hospname = V2) 
+
+kaiser_ID <- filter(oshpd_ID, grepl('KAISER', hospname)) %>% pull(ID)
+
 
 #-----------------------------------------------------------------------------------LOAD AND PROCESS POPULATION DATA-----------------------------------------------------------------------#
 
@@ -156,6 +162,21 @@ if (whichData == "fake") {
 }
 
 
+
+#-------------------------------------------------------------OSHPD NO KAISER-----------------------------------------------------------------------#
+
+##Filter oshpd_sample to not include kaiser_id
+
+kaiser_id2 <- c("014132", "014326", "014337", "070990", "074097", "104062", "190429", "190431", "190432",
+                "190434", "191450", "196035", "196403", "210992", "304409", "314024", "334025", "334048", 
+                "340913", "342344", "361223", "370730", "380857", "394009", "410806", "414139", "431506", 
+                "434153", "434218", "480989", "484044", "494019")
+
+oshpd16_no_kaiser <- filter(oshpd16, !oshpd_id %in% kaiser_id2) #why does this work, but kaiser_id doesn't??
+#And why the icdCODE unitiliased column error??
+
+
+oshpd16_no_kaiser <- filter(oshpd16, !oshpd_id %in% kaiser_id) 
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
 
 aL            <-      ageMap$lAge     # lower age ranges
