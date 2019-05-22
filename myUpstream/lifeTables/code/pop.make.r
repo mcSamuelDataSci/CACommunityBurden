@@ -18,6 +18,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
 .clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
 .acsurl		<- paste0(upPlace,"/lifeTables/dataIn/acs5_B01001_tracts.csv.zip") # ACS-5yr population by tract, 2009-17
+.nchsurl	<- paste0(upPlace,"/lifeTables/dataIn/nchsPOP.csv.zip")
 .dofurl		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
 .nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # output deaths by tract
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
@@ -149,6 +150,13 @@ dof.pop.county<-dof.pop.county[,.(nx=sum(nx)),
 dof.pop.state<-dof.pop.county[,.(nx=sum(nx)),
 							by=.(year,sex,agell,ageul)]			 # collapse
 dof.pop.state[,GEOID:="06000000000"]                             # new GEOID for state level dataset
+
+## 2.4 	NCHS data: county and state pop by age/sex
+nchs.pop.county <- setDT(read_csv(.nchsurl,col_types="icciii"))
+# collapse to state
+nchs.pop.state<-nchs.pop.county[,.(nx=sum(nx)),
+							  by=.(year,sex,agell,ageul)]			 # collapse
+nchs.pop.state[,GEOID:="06000000000"]                             # new GEOID for state level dataset
 
 ##	3	ANALYSIS	----------------------------------------------------------------------
 
