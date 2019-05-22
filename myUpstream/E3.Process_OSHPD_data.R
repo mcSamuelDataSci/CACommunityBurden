@@ -68,7 +68,7 @@ half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
 
 p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
 p2           <- sample_n(oshpd_subset[,30:31], sampN2)
-p3           <- sample_n(oshpd_subset[,32:38], sampN2)
+p3           <- sample_n(oshpd_subset[,32:40], sampN2)
 p3$race_grp  <- NA
 half2        <- cbind(p1,p2,p3)
 
@@ -476,6 +476,9 @@ calculated_aa_rates <- countyAA_new %>% gather(key = "type", value = "measure", 
 calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) 
 
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
+
+##THIS ONLY SEEMS TO HAVE A08 MALES AS CHARGES NA, WHICH ISN'T CORRECT
+
 
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSHPD.rds"))
