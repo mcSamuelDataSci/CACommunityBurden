@@ -27,7 +27,6 @@ if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
 
-
 ## 2	DATASETS	----------------------------------------------------------------------
 
 ## 2.1 	tract-to-MSSA crosswalk
@@ -50,8 +49,11 @@ if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL # rename cbdDat0SAMP to work w
 if (whichData=="dof") cbdDat0SAMP <- read_csv(.deaths)
 
 ## 2.4 	inspect missingness
-colMeans(!is.na(cbdDat0SAMP)) # % nonmissing: stateFIPS 100%, county 99.9%, GEOID 73%
 setDT(cbdDat0SAMP)
+cbdDat0SAMP[GEOID=="",GEOID:=NA] # recode empty GEOID to missing
+colMeans(!is.na(cbdDat0SAMP[year %in% 2010:2017])) # % nonmissing: stateFIPS 100%, county 99.9%, GEOID 96.9%
+
+## 2.5 rename county->countyName
 setnames(cbdDat0SAMP, "county", "countyName")
 
 ## 3	ANALYSIS	----------------------------------------------------------------------
@@ -74,12 +76,6 @@ ageCats <- function(dat,first=NULL) {
 
 # tract
 dx.tract <- copy(setkey(cbdDat0SAMP, "GEOID"))
-
-if (whichData =="fake") {
-	dx.tract[, month:=sample(1:12, length(dx.tract$year), replace=T)]	# fake months; ERASE LATER
-	dx.tract[, year:=year+2]										    # fake years; ERASE LATER
-}
-
 ageCats(dx.tract,first="1-4") 
 dx.tract[, dx := 1]													# generate a count variable (1=person level file)
 dx.tract<-dx.tract[,.(dx=sum(dx)), 
@@ -135,26 +131,20 @@ setkeyv(dx.mssa,c("comID","sex","agell"))							# sort
 ##  4.1 export datasets
 
 if (whichData == "fake"  ) {
-
  .midPath <- "/lifeTables/dataOut/"
-
  saveRDS(dx.tract,  file=paste0(upPlace,.midPath,"dxTract.rds"))   # output deaths by tract
  saveRDS(dx.mssa,   file=paste0(upPlace,.midPath,"dxMSSA.rds"))    # output deaths by mssa
  saveRDS(dx.county, file=paste0(upPlace,.midPath,"dxCounty.rds"))  # output deaths by county
  saveRDS(dx.state,  file=paste0(upPlace,.midPath,"dxState.rds"))   # output deaths by state
-
 }
 
 
 if (whichData == "real"  ) {
-  
  .midPath <- "h:/0.Secure.Data/myData/"
-    
  saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
  saveRDS(dx.mssa,   file=paste0(.midPath,"dxMSSA.rds"))    # output deaths by mssa
  saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county
  saveRDS(dx.state,  file=paste0(.midPath,"dxState.rds"))   # output deaths by state
- 
 }
 
 
