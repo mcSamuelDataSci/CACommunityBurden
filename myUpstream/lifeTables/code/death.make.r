@@ -14,6 +14,7 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  path and globals
+myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
 myDrive <- getwd()
 
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -21,10 +22,10 @@ upPlace <- paste0(myDrive,"/myUpstream")
 
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
 if (whichData=="real") .deaths		<- "h:/0.Secure.Data/myData/cbdDat0FULL.R" 
+if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
-
 
 
 ## 2	DATASETS	----------------------------------------------------------------------
@@ -42,11 +43,13 @@ county.link <- setDT(
 	key="countyName"
 )
 county.link[, GEOID:=paste0("06",FIPSCounty,"000000")]
+
 ## 2.3	CDPH deaths microdata -- CCB datasets
-load(.deaths) # named cbdDat0SAMP
+if (whichData=="fake" | whichData=="real") load(.deaths) # named cbdDat0SAMP
+if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL # rename cbdDat0SAMP to work with rest of code
+if (whichData=="dof") cbdDat0SAMP <- read_csv(.deaths)
 
-if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL
-
+## 2.4 	inspect missingness
 colMeans(!is.na(cbdDat0SAMP)) # % nonmissing: stateFIPS 100%, county 99.9%, GEOID 73%
 setDT(cbdDat0SAMP)
 setnames(cbdDat0SAMP, "county", "countyName")
