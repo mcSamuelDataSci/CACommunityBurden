@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -324,30 +324,11 @@ total_sum_pop <- total_sum %>% filter(!is.na(CAUSE)) %>% left_join(., popCountyS
 #total_sum_pop doesn't have any lev3 data because CAUSE = NA for all lev3 in this situation (and information is identical to lev0)
 
 
-#checking 0 charges
+#checking NA charges
+total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
 
-#Statewide
-s.lev0g <- sum_num_costs(oshpd16_charge0, c("sex", "lev0", "year"), "lev0")
-s.lev1g <- sum_num_costs(oshpd16_charge0, c("sex", "lev1", "year"), "lev1") #top level
-s.lev2g <- sum_num_costs(oshpd16_charge0, c("sex", "lev2", "year"), "lev2") #public health level
-s.lev3g <- sum_num_costs(oshpd16_charge0, c("sex", "lev3", "year"), "lev3")
-state_sumg <- bind_rows(s.lev0g, s.lev1g, s.lev2g, s.lev3g)
-state_sumg$county <- STATE #California as "county" variable
-
-#County
-c.lev0g <- sum_num_costs(oshpd16_charge0, c("sex", "lev0", "county", "year"), "lev0")
-c.lev1g <- sum_num_costs(oshpd16_charge0, c("sex", "lev1", "county", "year"), "lev1") #top level
-c.lev2g <- sum_num_costs(oshpd16_charge0, c("sex", "lev2", "county", "year"), "lev2") #public health level
-c.lev3g <- sum_num_costs(oshpd16_charge0, c("sex", "lev3", "county", "year"), "lev3") 
-county_sumg <- bind_rows(c.lev0g, c.lev1g, c.lev2g, c.lev3g)
-
-testtotal_sum <- bind_rows(state_sumg, county_sumg) %>% as.data.frame() %>% filter(Level == "lev1" | Level == "lev2", !is.na(CAUSE), county != "California")
-
-total_sum_pop_new_NA <- filter(total_sum_pop_new, is.na(charges))
-
-
-
-
+##All of the NA cases that are present in the dataset at this point are cases in which there was only one hospitalization for a given CAUSE-gender-county, and the charge happened to be 0/NA. All the others (ie where there were multiple
+#cases for a given CAUSE-gender-county combination) in which some of the charges happened to be 0/NA are grouped where total charges is calculated by removing NA values. 
 
 #----------------------------------------------------------------------------------------------------------------------------------------#
 #The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
@@ -507,7 +488,8 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
-##THIS ONLY SEEMS TO HAVE A08 MALES AS CHARGES NA, WHICH ISN'T CORRECT
+
+test <- calculated_metrics %>% filter(type == "charges") #for real data, all of the NA charges visits are male A08 values
 
 
 #Saving RDS file of this dataframe
