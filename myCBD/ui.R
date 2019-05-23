@@ -202,9 +202,10 @@ conditionalPanel(condition = fC(c(70)),
 
 
 
- source(paste0(myPlace,"/IHMEwork/arrows_UI.Part.R")),
-
-
+ source(paste0(myPlace,"/IHMEwork/arrows_UI.Part.R"),local=TRUE)$value,
+# not clear what this local=TRUE and then $value does, but it is need so that the word
+# "TRUE" does not show up on each page of the app...odd...
+#  https://community.rstudio.com/t/why-there-is-a-true-in-the-bottom/21552
 
 
 # Figure Download buttons ---------------------------------------------------
