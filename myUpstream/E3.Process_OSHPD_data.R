@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -48,12 +48,13 @@ oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat"
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, mdc, msdrg, oshpd_id) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, oshpd_id, los_adj, los) %>% mutate(year = 2016)
 # dschdate,
 
 
 #Saving subset as RDS file
 saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
+
 
 
 #3% random sample, randomly permuted
@@ -67,7 +68,7 @@ half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
 
 p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
 p2           <- sample_n(oshpd_subset[,30:31], sampN2)
-p3           <- sample_n(oshpd_subset[,32:38], sampN2)
+p3           <- sample_n(oshpd_subset[,32:40], sampN2)
 p3$race_grp  <- NA
 half2        <- cbind(p1,p2,p3)
 
@@ -122,14 +123,6 @@ criticalNum <- 11
 
 
 
-#**OSHPD ID Kaiser data**#
-oshpd_ID   <- read.delim(paste0(upPlace,"/OSHPD/oshpd_id.txt"), header = FALSE, sep = "=", colClasses = "character") %>% rename(ID = V1, hospname = V2) 
-
-oshpd_ID$ID <- str_trim(oshpd_ID$ID) #removing white space at end of ID
-
-kaiser_ID <- filter(oshpd_ID, grepl('KAISER', hospname)) %>% pull(ID)
-
-
 #-----------------------------------------------------------------------------------LOAD AND PROCESS POPULATION DATA-----------------------------------------------------------------------#
 
 # ungrouping important for subsequent data set merging
@@ -164,14 +157,11 @@ if (whichData == "fake") {
 
 
 
-#-------------------------------------------------------------OSHPD NO KAISER-----------------------------------------------------------------------#
+#-------------------------------------------------------------OSHPD LOOKING AT CHARGES INFO-----------------------------------------------------------------------#
 
-##Filter oshpd_sample to not include kaiser_id
+##changing charge = 0 to NA value
 
-oshpd16_no_kaiser <- filter(oshpd16, !oshpd_id %in% kaiser_ID) 
-
-#And why the icdCODE unitiliased column error??
-
+oshpd16$charge[oshpd16$charge == 0] <- NA
 
 
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
@@ -246,12 +236,15 @@ sum_num_costs <- function(data, groupvar, levLab) {
   
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
     summarize(n_hosp = n(), 
-              charges = sum(charge, na.rm = TRUE),
-              avgcharge = mean(charge)) 
+              charges = sum(charge, na.rm = TRUE), #this still converts cases where there was only 1 with NA charges to 0 for charges
+              avgcharge = mean(charge, na.rm = TRUE)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
+  dat$charges[dat$charges == 0] <- NA
   dat %>%  data.frame
+  
+  
 }
 
 #lev1 = Top level
@@ -350,7 +343,7 @@ add_females <- gather(male_only, key = "sex", value = "CAUSE", Male) %>% mutate(
 #Now joining original total_sum_pop with these datasets, replacing NA with zeros
 total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level", "county", "sex", "CAUSE")) %>% full_join(., add_males, by = c("year", "Level", "county", "sex", "CAUSE"))
 
-
+##The issue now is distinguishing between NA that really should be changed to 0s--i.e 0 n_hosp, so 0 charges, and the 0 charges that we defined as NA earlier--need to keep these as NA
 #Example of replacing NA data in selected column
 #dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
 
@@ -358,11 +351,14 @@ total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level
 total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
 
 #replacing NA for n_hosp, charges, avgcharge with 0
-total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0
+total_sum_pop_new$charges[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes NA -> 0 for cases where n_hosp was NA, not a number of hospitalizations
 
-total_sum_pop_new$charges[is.na(total_sum_pop_new$charges)] <- 0
+total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA, not a real number of hospitalizations
 
-total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$avgcharge)] <- 0
+total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
+
+
+
 
 #replacing NA in ageG with "Total"
 total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
@@ -481,13 +477,16 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
+##THIS ONLY SEEMS TO HAVE A08 MALES AS CHARGES NA, WHICH ISN'T CORRECT
+
+
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSHPD.rds"))
 
 
 #----------Plotting----------------------------------------------------------------------#
 
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "CALIFORNIA") %>% filter(sex == "Total") %>%
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
