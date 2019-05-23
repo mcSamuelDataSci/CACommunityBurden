@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -641,67 +641,6 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-mdcWork <- oshpd16  %>% group_by(mdc, sex) %>%
-  summarise(n_hosp = n(), 
-            charges = sum(charge, na.rm = TRUE),
-            avgcharge = mean(charge)) %>%
-  left_join(mdcNames,by='mdc') %>%
-  select(mdcNames,n_hosp,charges,avgcharge)
-
-datatable(mdcWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
-
-
-
-drgWork <- oshpd16 %>% group_by(msdrg) %>%
-  summarise(n_hosp = n(), 
-            charges = sum(charge, na.rm = TRUE),
-            avgcharge = mean(charge)) %>%
-  left_join(drgNames,by='msdrg') %>%
-  select(drgNames,n_hosp,charges,avgcharge)
-
-datatable(drgWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #---------------------------------------------------------Other------------------------------------------------------------------#
 #Need to define which conditions we're interested in
 #filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
@@ -742,7 +681,7 @@ test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExIC
 any_diagnosis_definition <- function(df, label) {
   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
   df[[label]] <- apply(df, 1, FUN = function(x) {
-    icd_regEx <- filter(testmap2, LABEL == label) %>% pull(newICDcode)
+    icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
     pattern <- grepl(icd_regEx, x)
     if(any(pattern[(index)])) 1 else 0
   } )
@@ -756,31 +695,13 @@ for (i in 1: nrow(test_map)) {
 } 
 
 
-#Summarizing any definition data--this isn't efficient, but demonstrates general goal:
+#Summarizing any definition data:
 
-summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise(A07 = sum(A07),
-                                            A08 = sum(A08),
-                                            D01 = sum(D01),
-                                            D03 = sum(D03),
-                                            C99 = sum(C99),
-                                            C01 = sum(C01),
-                                            C02 = sum(C02),
-                                            C03 = sum(C03),
-                                            C04 = sum(C04),
-                                            C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05) %>% mutate(county = STATE) %>% 
+summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise(A07 = sum(A07),
-                                                                 A08 = sum(A08),
-                                                                 D01 = sum(D01),
-                                                                 D03 = sum(D03),
-                                                                 C99 = sum(C99),
-                                                                 C01 = sum(C01),
-                                                                 C02 = sum(C02),
-                                                                 C03 = sum(C03),
-                                                                 C04 = sum(C04),
-                                                                 C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05) %>% 
+summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
