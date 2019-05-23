@@ -48,7 +48,9 @@ temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRa
                    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 
                    pull(measure)))  
   
-   
+#Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
+ SMR <- 1
+ 
  xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
       facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
@@ -60,12 +62,18 @@ temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRa
           axis.title.x = element_blank(), #removes measure label
           axis.text.y = element_text(size = 15), #increases size of disease condition labels
           axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
-          strip.text.x = element_text(size = 15)) #increases the size of the facet labels
+          strip.text.x = element_text(size = 15)) + #increases the size of the facet labels 
+          geom_hline(data = data.frame(yint = SMR, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "red")
 # }
 
- xtemp
  
-ggplotly(xtemp)
+ 
+ 
+ 
+ xtemp 
+ 
+ 
+ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
 
 
  
