@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -159,9 +159,12 @@ if (whichData == "fake") {
 
 #-------------------------------------------------------------OSHPD LOOKING AT CHARGES INFO-----------------------------------------------------------------------#
 
+
+
+
 ##changing charge = 0 to NA value
 
-oshpd16$charge[oshpd16$charge == 0] <- NA
+#oshpd16$charge[oshpd16$charge == 0] <- NA
 
 
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
@@ -224,8 +227,12 @@ oshpd16   <- oshpd16  %>%
 #Adding Total in order to create total/statewide estimates (for grouping function later)
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
+###-------------------------------------------OSHPD CHARGE 0 test ----------------------------------------------#
 
-##Need to calculate avgcharges too
+oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
+
+oshpd16$charge[oshpd16$charge == 0] <- NA
+
 
 #-------------Group by statement testing------------------------------------------------------------------#
 
@@ -242,7 +249,7 @@ sum_num_costs <- function(data, groupvar, levLab) {
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
   dat$charges[dat$charges == 0] <- NA
-  dat %>%  data.frame
+  dat %>% data.frame()
   
   
 }
@@ -317,6 +324,31 @@ total_sum_pop <- total_sum %>% filter(!is.na(CAUSE)) %>% left_join(., popCountyS
 #total_sum_pop doesn't have any lev3 data because CAUSE = NA for all lev3 in this situation (and information is identical to lev0)
 
 
+#checking 0 charges
+
+#Statewide
+s.lev0g <- sum_num_costs(oshpd16_charge0, c("sex", "lev0", "year"), "lev0")
+s.lev1g <- sum_num_costs(oshpd16_charge0, c("sex", "lev1", "year"), "lev1") #top level
+s.lev2g <- sum_num_costs(oshpd16_charge0, c("sex", "lev2", "year"), "lev2") #public health level
+s.lev3g <- sum_num_costs(oshpd16_charge0, c("sex", "lev3", "year"), "lev3")
+state_sumg <- bind_rows(s.lev0g, s.lev1g, s.lev2g, s.lev3g)
+state_sumg$county <- STATE #California as "county" variable
+
+#County
+c.lev0g <- sum_num_costs(oshpd16_charge0, c("sex", "lev0", "county", "year"), "lev0")
+c.lev1g <- sum_num_costs(oshpd16_charge0, c("sex", "lev1", "county", "year"), "lev1") #top level
+c.lev2g <- sum_num_costs(oshpd16_charge0, c("sex", "lev2", "county", "year"), "lev2") #public health level
+c.lev3g <- sum_num_costs(oshpd16_charge0, c("sex", "lev3", "county", "year"), "lev3") 
+county_sumg <- bind_rows(c.lev0g, c.lev1g, c.lev2g, c.lev3g)
+
+testtotal_sum <- bind_rows(state_sumg, county_sumg) %>% as.data.frame() %>% filter(Level == "lev1" | Level == "lev2", !is.na(CAUSE), county != "California")
+
+total_sum_pop_new_NA <- filter(total_sum_pop_new, is.na(charges))
+
+
+
+
+
 #----------------------------------------------------------------------------------------------------------------------------------------#
 #The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
 #To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
@@ -368,8 +400,6 @@ total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
 
 total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
 
-
-#calculating crude rates, using total_sum_pop_new as the input dataset--0s for 0 level n_hosp and charges
 
 total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
 
