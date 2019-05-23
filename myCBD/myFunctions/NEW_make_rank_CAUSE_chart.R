@@ -22,7 +22,7 @@ rankCause2  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="To
   
   
 if (1==2) {
-myCounty = "Alameda"
+myCounty = "CALIFORNIA"
 myMeasure = "Number of deaths"
 mySex = "Total" 
 myYear = 2017
@@ -39,7 +39,7 @@ temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRa
 
 
 
-## oshpdPlot <- function(myCounty = "Alameda", myMeasure = "Number of deaths", mySex = "Total" ) {
+## oshpdPlot <- function(myCounty = "Alameda", myMeasure = "Number of deaths", mySex = "Total" ) 
          
    plotData <-     temp %>%
                    filter(!is.na(CAUSE), Level == "lev2", county == myCounty) %>% 
@@ -47,7 +47,8 @@ temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRa
                    group_by(type)    %>% 
                    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 
                    pull(measure)))  
-  
+
+   if (myCounty != "CALIFORNIA") {
 #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
  SMR <- 1
  
@@ -63,17 +64,38 @@ temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRa
           axis.text.y = element_text(size = 15), #increases size of disease condition labels
           axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
           strip.text.x = element_text(size = 15)) + #increases the size of the facet labels 
-          geom_hline(data = data.frame(yint = SMR, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "red")
-# }
+          geom_hline(data = data.frame(yint = SMR, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "red") #adds SMR line only to SMR facet
+# 
+xtemp 
 
+#ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
+   }
+   
+   if (myCounty == "CALIFORNIA") {
+     
+     plotData <- plotData %>% filter(type != "Standard Mortality Ratio")
+     
+     xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
+       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
+       facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
+       theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
+       scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
+       scale_x_discrete(labels = scales::wrap_format(10)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+       #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
+       theme(axis.title.y = element_blank(), #removes nameOnly label
+             axis.title.x = element_blank(), #removes measure label
+             axis.text.y = element_text(size = 15), #increases size of disease condition labels
+             axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+             strip.text.x = element_text(size = 15))  #increases the size of the facet labels 
+     xtemp
+   }
  
  
  
  
- xtemp 
  
  
-ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
+
 
 
  
