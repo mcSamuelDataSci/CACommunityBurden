@@ -726,5 +726,19 @@ total_primary$county[total_primary$county == "California"] <- "CALIFORNIA"
 any_primary <- bind_rows(summary_any, total_primary)
 
 #any vs primary on the same plot
-any_primary %>% filter(sex == "Female", county == "Madera") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
+any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
   coord_flip()
+
+
+#stackbars--primary as a percentage of any
+
+#prepping data
+any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(sex, CAUSE, county, year) %>% mutate(any_prim_diff = any - primary) %>% #calculates difference between any and primary n_hosp 
+  gather(key = "diag_type", value = "n_hosp", primary, any_prim_diff) %>% #gathers so we have n_hosp and diag_type columns again 
+  select(-any) #removes primary column
+
+
+#stacked bar plot--is this a better visual? 
+
+any_primary_diff %>% 
+  filter(sex == "Total", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + coord_flip()
