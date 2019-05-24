@@ -733,12 +733,11 @@ any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., ae
 #stackbars--primary as a percentage of any
 
 #prepping data
-any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(sex, CAUSE, county, year) %>% mutate(any_prim_diff = any - primary) %>% #calculates difference between any and primary n_hosp 
-  gather(key = "diag_type", value = "n_hosp", primary, any_prim_diff) %>% #gathers so we have n_hosp and diag_type columns again 
+any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(sex, CAUSE, county, year) %>% mutate(any_diff = any - primary) %>% #calculates difference between any and primary n_hosp 
+  gather(key = "diag_type", value = "n_hosp", primary, any_diff) %>% #gathers so we have n_hosp and diag_type columns again 
   select(-any) #removes primary column
 
 
-#stacked bar plot--is this a better visual? 
-
+#stacked bar plot--is this a better visual?
 any_primary_diff %>% 
   filter(sex == "Total", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + coord_flip()
