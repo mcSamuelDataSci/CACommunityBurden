@@ -53,7 +53,10 @@ setDT(cbdDat0SAMP)
 cbdDat0SAMP[GEOID=="",GEOID:=NA] # recode empty GEOID to missing
 colMeans(!is.na(cbdDat0SAMP[year %in% 2010:2017])) # % nonmissing: stateFIPS 100%, county 99.9%, GEOID 96.9%
 
-## 2.5 rename county->countyName
+## 2.5  inspect tracts coded in different county
+cbdDat0SAMP[GEOID!="" & countyFIPS!=substr(GEOID,3,5)]  # deaths may be coded to tracts not in the same county
+
+## 2.6 rename county->countyName
 setnames(cbdDat0SAMP, "county", "countyName")
 
 ## 3	ANALYSIS	----------------------------------------------------------------------
