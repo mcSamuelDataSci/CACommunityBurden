@@ -71,6 +71,7 @@ xtemp
   
  #plotly version??
 
+if(1==2) {
 
   if (myCounty != "CALIFORNIA") {
   #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
@@ -84,4 +85,4 @@ xtemp
   #this doesn't really do what we want either
 }
 
-
+}

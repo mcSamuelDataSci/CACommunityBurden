@@ -715,3 +715,16 @@ summary_any %>% filter(county == "CALIFORNIA") %>% group_by(sex) %>% mutate(name
   geom_bar(stat = "identity") + facet_wrap(. ~ sex, scales = "free_x") 
 
 #brainstorming other plot ideas--plot any vs diag_p on the same plot (grouped bars?)? organize dataframe better, save
+
+summary_any <- summary_any %>% mutate(diag_type = "any", year = 2016) %>% rename(CAUSE = LABEL)
+
+total_primary <- total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
+  select(sex, CAUSE, year, n_hosp, Level, county, nameOnly) %>% filter(Level == "lev2") %>% mutate(diag_type = "primary") %>% select(-Level)
+
+total_primary$county[total_primary$county == "California"] <- "CALIFORNIA"
+
+any_primary <- bind_rows(summary_any, total_primary)
+
+#any vs primary on the same plot
+any_primary %>% filter(sex == "Female", county == "Madera") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
+  coord_flip()
