@@ -24,20 +24,19 @@ oshpdPlot2<- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospital
   
   #OPTION 2-- sorts that based on the ordering variable (eg n_hosp), it pulls the top N rows for n_hosp, and those variables are what are the corresponding conditions for all the other values
   #create a vector of CAUSE for top N of myOSHPDtype
-  myOSHPDtype_N_cause <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>%
+  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>%
     mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
-    left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
-    filter(!is.na(CAUSE), Level == "lev2", county == myCounty) %>%
-    filter(sex == mySex) %>%
+    left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))
+  
+  
+  myOSHPDtype_N_cause <- calculated_metrics %>%
+    filter(!is.na(CAUSE), Level == "lev2", county == myCounty, sex == mySex) %>%
     group_by(type) %>% arrange(desc(measure)) %>% dplyr::slice(1:myN) %>% #this selects the top N rows for myOSHPDtype
     filter(type == myOSHPDtype) %>% ungroup() %>% pull(CAUSE) 
   
   #creates dataframe with data only for CAUSEs from myOSHPDtype_N_cause, i.e. the top N CAUSES for the specified myOSHPDtype
   plotData <- calculated_metrics %>%
-    mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>%
-    mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
-    left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
-    filter(!is.na(CAUSE), Level == "lev2", county == myCounty, !(type %in% c("Crude Hosp Rate","Crude Charge Rate"))) %>% filter(., CAUSE %in% myOSHPDtype_N_cause) %>% filter(sex == mySex) %>%
+    filter(!is.na(CAUSE), Level == "lev2", county == myCounty, !(type %in% c("Crude Hosp Rate","Crude Charge Rate"))) %>% filter(., CAUSE %in% myOSHPDtype_N_cause, sex == mySex) %>%
     group_by(type) %>%
     mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myOSHPDtype) %>%
                                              pull(measure)))

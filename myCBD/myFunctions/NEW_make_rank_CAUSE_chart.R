@@ -1,32 +1,6 @@
 
-rankCause2  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
+rankCause2 <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", mySex = "Total", myLev = "lev2", myN = 10, myYear = 2017){ 
   
-  myCex <- 1.6
-  myCol <- "blue"            #mycol <- rep("blue",nrow(filtered.df))
-  bLwd <- 2
-  
-  
-  if(myLev=="lev3") myLev <- c("lev2","lev3")
-  
-  filtered.df <- filter(datCounty,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
-  
-  
-  Nrows.df          <- nrow(filtered.df)
-  Nrows.to.display  <- min(Nrows.df,myN) 
-  filtered.df       <- filtered.df[((Nrows.df-Nrows.to.display+1):Nrows.df),]
-
-  
-# works below here  
-# =============================================================================  
-  
-  
-  
-if (1==2) {
-myCounty = "CALIFORNIA"
-myMeasure = "Number of deaths"
-mySex = "Total" 
-myYear = 2017
-}
 
 xMeasures <- lMeasuresShort[c(1,3,2,4,5)]
 
@@ -37,12 +11,15 @@ temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRa
                       mutate(type = plyr::revalue(type, xJunk))    %>% #replaces values with full name labels
                       left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))  
 
+#create a vector of CAUSE for top N 
+temp_N_cause <- temp %>%
+  filter(sex == mySex, Level == myLev, year == myYear) %>%
+  group_by(type) %>% arrange(desc(measure)) %>% dplyr::slice(1:myN) %>% #this selects the top N rows for myOSHPDtype
+  filter(type == myMeasure) %>% ungroup() %>% pull(CAUSE)
 
-
-## oshpdPlot <- function(myCounty = "Alameda", myMeasure = "Number of deaths", mySex = "Total" ) 
-         
+#creates dataframe with data only for CAUSEs from temp_N_cause, i.e. the top N CAUSES for the specified temp_N_cause        
    plotData <-     temp %>%
-                   filter(!is.na(CAUSE), Level == "lev2", county == myCounty) %>% 
+                   filter(!is.na(CAUSE), Level == myLev, county == myCounty, CAUSE %in% temp_N_cause) %>% 
                    filter(sex == mySex, year == myYear) %>%
                    group_by(type)    %>% 
                    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 
@@ -90,19 +67,21 @@ xtemp
      xtemp
    }
  
- 
- 
- 
- 
- 
-
-
-
- 
-################################################################### 
- 
 }
- 
- 
- 
-#Other option: facet_grid(labeller=labeller(type = hospDiscMeasuresShort))--label at the end, however, this prevents wrapping of strip heading text for facets (can only do one or the other)
+  
+ #plotly version??
+
+
+  if (myCounty != "CALIFORNIA") {
+  #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
+  SMR <- 1
+  
+  xtemp <- plotData %>% filter(type == "Standard Mortality Ratio") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, type = "bar", name = "Standard Mortality Ratio")  
+  
+   xtemp <- layout(xtemp, shapes = list(type = "line", fillcolor = "red", opacity = 1, x0 = 0, x1 = 0, xref = 'measure', y0 = 0, y1 = 1, yref = 'y'))
+
+  xtemp 
+  #this doesn't really do what we want either
+}
+
+
