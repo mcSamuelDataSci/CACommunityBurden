@@ -10,7 +10,6 @@
 #                                                                                                    |   
 # ====================================================================================================
 
-# fingers crossed
 
 #-- Set Locations Etc-----------------------------------------------------------------------
 
@@ -49,12 +48,13 @@ oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat"
 
 
 #Subset with only variables of interest
-oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, mdc, msdrg) %>% mutate(year = 2016)
+oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, oshpd_id, los_adj, los) %>% mutate(year = 2016)
 # dschdate,
 
 
 #Saving subset as RDS file
 saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
+
 
 
 #3% random sample, randomly permuted
@@ -68,7 +68,7 @@ half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
 
 p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
 p2           <- sample_n(oshpd_subset[,30:31], sampN2)
-p3           <- sample_n(oshpd_subset[,32:37], sampN2)
+p3           <- sample_n(oshpd_subset[,32:40], sampN2)
 p3$race_grp  <- NA
 half2        <- cbind(p1,p2,p3)
 
@@ -102,8 +102,6 @@ OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an exc
 
 
 
-
-
 #DISCUSS***
 #race categories
 race_grp <- c("0", "1", "2", "3", "4", "5", "6")
@@ -122,6 +120,8 @@ pop1 <- 1       # 1 year
 yearGrp <- "2013-2017"
 
 criticalNum <- 11
+
+
 
 #-----------------------------------------------------------------------------------LOAD AND PROCESS POPULATION DATA-----------------------------------------------------------------------#
 
@@ -154,6 +154,17 @@ if (whichData == "real") {
 if (whichData == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
+
+
+
+#-------------------------------------------------------------OSHPD LOOKING AT CHARGES INFO-----------------------------------------------------------------------#
+
+
+
+
+##changing charge = 0 to NA value
+
+#oshpd16$charge[oshpd16$charge == 0] <- NA
 
 
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
@@ -216,8 +227,12 @@ oshpd16   <- oshpd16  %>%
 #Adding Total in order to create total/statewide estimates (for grouping function later)
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
+###-------------------------------------------OSHPD CHARGE 0 test ----------------------------------------------#
 
-##Need to calculate avgcharges too
+oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
+
+oshpd16$charge[oshpd16$charge == 0] <- NA
+
 
 #-------------Group by statement testing------------------------------------------------------------------#
 
@@ -228,12 +243,15 @@ sum_num_costs <- function(data, groupvar, levLab) {
   
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
     summarize(n_hosp = n(), 
-              charges = sum(charge, na.rm = TRUE),
-              avgcharge = mean(charge)) 
+              charges = sum(charge, na.rm = TRUE), #this still converts cases where there was only 1 with NA charges to 0 for charges
+              avgcharge = mean(charge, na.rm = TRUE)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
-  dat %>%  data.frame
+  dat$charges[dat$charges == 0] <- NA
+  dat %>% data.frame()
+  
+  
 }
 
 #lev1 = Top level
@@ -306,6 +324,12 @@ total_sum_pop <- total_sum %>% filter(!is.na(CAUSE)) %>% left_join(., popCountyS
 #total_sum_pop doesn't have any lev3 data because CAUSE = NA for all lev3 in this situation (and information is identical to lev0)
 
 
+#checking NA charges
+total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
+
+##All of the NA cases that are present in the dataset at this point are cases in which there was only one hospitalization for a given CAUSE-gender-county, and the charge happened to be 0/NA. All the others (ie where there were multiple
+#cases for a given CAUSE-gender-county combination) in which some of the charges happened to be 0/NA are grouped where total charges is calculated by removing NA values. 
+
 #----------------------------------------------------------------------------------------------------------------------------------------#
 #The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
 #To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
@@ -332,7 +356,7 @@ add_females <- gather(male_only, key = "sex", value = "CAUSE", Male) %>% mutate(
 #Now joining original total_sum_pop with these datasets, replacing NA with zeros
 total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level", "county", "sex", "CAUSE")) %>% full_join(., add_males, by = c("year", "Level", "county", "sex", "CAUSE"))
 
-
+##The issue now is distinguishing between NA that really should be changed to 0s--i.e 0 n_hosp, so 0 charges, and the 0 charges that we defined as NA earlier--need to keep these as NA
 #Example of replacing NA data in selected column
 #dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
 
@@ -340,11 +364,14 @@ total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level
 total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
 
 #replacing NA for n_hosp, charges, avgcharge with 0
-total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0
+total_sum_pop_new$charges[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes NA -> 0 for cases where n_hosp was NA, not a number of hospitalizations
 
-total_sum_pop_new$charges[is.na(total_sum_pop_new$charges)] <- 0
+total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA, not a real number of hospitalizations
 
-total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$avgcharge)] <- 0
+total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
+
+
+
 
 #replacing NA in ageG with "Total"
 total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
@@ -354,8 +381,6 @@ total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
 
 total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
 
-
-#calculating crude rates, using total_sum_pop_new as the input dataset--0s for 0 level n_hosp and charges
 
 total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
 
@@ -463,13 +488,17 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
+
+test <- calculated_metrics %>% filter(type == "charges") #for real data, all of the NA charges visits are male A08 values
+
+
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSHPD.rds"))
 
 
 #----------Plotting----------------------------------------------------------------------#
 
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "CALIFORNIA") %>% filter(sex == "Total") %>%
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
   group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
@@ -612,67 +641,6 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-mdcWork <- oshpd16  %>% group_by(mdc, sex) %>%
-  summarise(n_hosp = n(), 
-            charges = sum(charge, na.rm = TRUE),
-            avgcharge = mean(charge)) %>%
-  left_join(mdcNames,by='mdc') %>%
-  select(mdcNames,n_hosp,charges,avgcharge)
-
-datatable(mdcWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
-
-
-
-drgWork <- oshpd16 %>% group_by(msdrg) %>%
-  summarise(n_hosp = n(), 
-            charges = sum(charge, na.rm = TRUE),
-            avgcharge = mean(charge)) %>%
-  left_join(drgNames,by='msdrg') %>%
-  select(drgNames,n_hosp,charges,avgcharge)
-
-datatable(drgWork) %>% formatRound('n_hosp',digits=0,mark=",") %>% formatCurrency(c('charges', 'avgcharge'),digits = 0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #---------------------------------------------------------Other------------------------------------------------------------------#
 #Need to define which conditions we're interested in
 #filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
@@ -713,7 +681,7 @@ test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExIC
 any_diagnosis_definition <- function(df, label) {
   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
   df[[label]] <- apply(df, 1, FUN = function(x) {
-    icd_regEx <- filter(testmap2, LABEL == label) %>% pull(newICDcode)
+    icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
     pattern <- grepl(icd_regEx, x)
     if(any(pattern[(index)])) 1 else 0
   } )
@@ -727,31 +695,13 @@ for (i in 1: nrow(test_map)) {
 } 
 
 
-#Summarizing any definition data--this isn't efficient, but demonstrates general goal:
+#Summarizing any definition data:
 
-summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise(A07 = sum(A07),
-                                            A08 = sum(A08),
-                                            D01 = sum(D01),
-                                            D03 = sum(D03),
-                                            C99 = sum(C99),
-                                            C01 = sum(C01),
-                                            C02 = sum(C02),
-                                            C03 = sum(C03),
-                                            C04 = sum(C04),
-                                            C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05) %>% mutate(county = STATE) %>% 
+summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise(A07 = sum(A07),
-                                                                 A08 = sum(A08),
-                                                                 D01 = sum(D01),
-                                                                 D03 = sum(D03),
-                                                                 C99 = sum(C99),
-                                                                 C01 = sum(C01),
-                                                                 C02 = sum(C02),
-                                                                 C03 = sum(C03),
-                                                                 C04 = sum(C04),
-                                                                 C05 = sum(C05)) %>% gather(key = LABEL, value = n_hosp, A07, A08, D01, D03, C99, C01, C02, C03, C04, C05) %>% 
+summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
@@ -765,3 +715,29 @@ summary_any %>% filter(county == "CALIFORNIA") %>% group_by(sex) %>% mutate(name
   geom_bar(stat = "identity") + facet_wrap(. ~ sex, scales = "free_x") 
 
 #brainstorming other plot ideas--plot any vs diag_p on the same plot (grouped bars?)? organize dataframe better, save
+
+summary_any <- summary_any %>% mutate(diag_type = "any", year = 2016) %>% rename(CAUSE = LABEL)
+
+total_primary <- total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
+  select(sex, CAUSE, year, n_hosp, Level, county, nameOnly) %>% filter(Level == "lev2") %>% mutate(diag_type = "primary") %>% select(-Level)
+
+total_primary$county[total_primary$county == "California"] <- "CALIFORNIA"
+
+any_primary <- bind_rows(summary_any, total_primary)
+
+#any vs primary on the same plot
+any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
+  coord_flip()
+
+
+#stackbars--primary as a percentage of any
+
+#prepping data
+any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(sex, CAUSE, county, year) %>% mutate(any_diff = any - primary) %>% #calculates difference between any and primary n_hosp 
+  gather(key = "diag_type", value = "n_hosp", primary, any_diff) %>% #gathers so we have n_hosp and diag_type columns again 
+  select(-any) #removes primary column
+
+
+#stacked bar plot--is this a better visual?
+any_primary_diff %>% 
+  filter(sex == "Total", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + coord_flip()
