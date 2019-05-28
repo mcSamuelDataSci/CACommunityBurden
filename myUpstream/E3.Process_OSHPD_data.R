@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -157,16 +157,6 @@ if (whichData == "fake") {
 
 
 
-#-------------------------------------------------------------OSHPD LOOKING AT CHARGES INFO-----------------------------------------------------------------------#
-
-
-
-
-##changing charge = 0 to NA value
-
-#oshpd16$charge[oshpd16$charge == 0] <- NA
-
-
 #-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
 
 aL            <-      ageMap$lAge     # lower age ranges
@@ -227,11 +217,17 @@ oshpd16   <- oshpd16  %>%
 #Adding Total in order to create total/statewide estimates (for grouping function later)
 oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
-###-------------------------------------------OSHPD CHARGE 0 test ----------------------------------------------#
+
+#Calculating charge/day from los_adj and charges
+
+oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
+###-------------------------------------------OSHPD CHARGE AND CHARGE_PER_TDAY 0 to NA ----------------------------------------------#
 
 oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
 
 oshpd16$charge[oshpd16$charge == 0] <- NA
+
+oshpd16$charge_per_day[oshpd16$charge_per_day == 0] <- NA
 
 
 #-------------Group by statement testing------------------------------------------------------------------#
@@ -244,7 +240,8 @@ sum_num_costs <- function(data, groupvar, levLab) {
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
     summarize(n_hosp = n(), 
               charges = sum(charge, na.rm = TRUE), #this still converts cases where there was only 1 with NA charges to 0 for charges
-              avgcharge = mean(charge, na.rm = TRUE)) 
+              avgcharge = mean(charge, na.rm = TRUE),
+              avgcharge_per_day = mean(charge_per_day, na.rm = TRUE)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
@@ -368,6 +365,8 @@ total_sum_pop_new$charges[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes NA -
 
 total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA, not a real number of hospitalizations
 
+total_sum_pop_new$avgcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
 total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
 
 
@@ -477,7 +476,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #Will have to do a series of spread/gather/join to create dataset 
 
 
-calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, avgcharge_per_day)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
@@ -498,8 +497,9 @@ saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSH
 
 #----------Plotting----------------------------------------------------------------------#
 
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "California") %>% filter(sex == "Total") %>%
-  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
+
+calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "CALIFORNIA") %>% filter(sex == "Total") %>%
+  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "n_hosp") %>% pull(measure))) %>% 
   ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
 
 
