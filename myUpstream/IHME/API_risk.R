@@ -61,7 +61,7 @@ merge_with_parent <- function(value_data){
   return(merge(value_data, as.data.frame(parent$data), by="risk_id"))
 }
 
-# Load and format data-----------------------------------------------------------------------
+# API calls and data formatting-----------------------------------------------------------------------
 
 start_time <- Sys.time()
 
@@ -77,17 +77,18 @@ output_data <- bind_rows(make_data_subset(URL=make_url(), 1, 82, 199),
   mutate_at(vars(c(1:11,14:ncol(.))), funs(as.numeric)) %>%
   mutate_at(vars(c(1:11,14:ncol(.))), funs(round(.,digits=4)))
 
-saveRDS(output_data, "risk_data.rds")
+# Save data-----------------------------------------------------------------------
 
-# Get runtime to check for potential efficiency improvements
-end_time = Sys.time()
-print(end_time-start_time)
+myDrive <- getwd()  # Root location of CBD project
+myPlace <- paste0(myDrive,"/myCBD") 
+saveRDS(output_data, file = path(myPlace,"/myData/risk_data.rds"))
+
 
 # Removal of non-necessary objects-----------------------------------------------------------------------
 
-rm(list=setdiff(ls(), "output_data"))
+# rm(list=setdiff(ls(), "output_data"))
 
-# Tests-----------------------------------------------------------------------
+# Tests -----------------------------------------------------------------------
 
 # Check if data is same as IHME
 
