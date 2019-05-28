@@ -190,22 +190,24 @@ lMeasuresC <- lMeasuresC[-8]
 hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
                       cHospRate = "Crude Hosp Rate",
                       ahospRate = "Age-Adjusted Hospitalization Rate",
+                      avg_los = "Average Length of Stay (Days)",
                       charges = "Total Charges",
                       cChargeRate = "Crude Charge Rate",
                       avgcharge = "Average Charges",
-                      avgcharge_per_day = "Average Charges Per Day")
+                      avgcharge_per_day = "Average Charges Per Day"
+                      )
 
-hospDiscMeasuresShort <- hospDiscMeasures[c(-2, -5)] #Not including Crude Hosp or Charge Rate
+hospDiscMeasuresShort <- hospDiscMeasures[c(-2, -6)] #Not including Crude Hosp or Charge Rate
 
 
 
 #This is for labeling the dropdown menu of options--hospDiscMeasures vector won't work, it will use the abbreviated values (n_hosp etc) as the dropdown labels
-hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Total Charges", "Crude Charge Rate", "Average Charges", "Average Charges Per Day", "Average Length of Stay")
+hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Average Length of Stay (Days)", "Total Charges", "Crude Charge Rate", "Average Charges", "Average Charges Per Day")
 
-hospMeasures2Short <- hospMeasures2[c(-2, -5)]
+hospMeasures2Short <- hospMeasures2[c(-2, -6)]
 
 #for mdc_drg
-hospDiscMeasuresShort2 <- hospDiscMeasures[c(-2,-3,-5)]
+hospDiscMeasuresShort2 <- hospDiscMeasures[c(-2,-3,-4,-6,-8)]
 
 mdc_drg_names <- c("Major Diagnostic Code" = "mdc", "Diagnostic Related Groups" = "drg")
 

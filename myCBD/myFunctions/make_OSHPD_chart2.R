@@ -24,7 +24,7 @@ oshpdPlot2<- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospital
   
   #OPTION 2-- sorts that based on the ordering variable (eg n_hosp), it pulls the top N rows for n_hosp, and those variables are what are the corresponding conditions for all the other values
   #create a vector of CAUSE for top N of myOSHPDtype
-  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge"))) %>%
+  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day"))) %>%
     mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
     left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))
   
@@ -49,7 +49,13 @@ oshpdPlot2<- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospital
   
   avgcharges <- plotData %>% filter(type == "Average Charges") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Average Charges")
   
-  subplot(num_hosp, aahosp, charges, avgcharges, shareY = TRUE) %>% layout(yaxis = list(title = ""))
+  avg_los <- plotData %>% filter(type == "Average Length of Stay (Days)") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Average Length of Stay (Days)")
+  
+  avgcharge_per_day <- plotData %>% filter(type == "Average Charges Per Day") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Average Charges Per Day")
+  
+
+  
+  subplot(num_hosp, aahosp, avg_los, charges, avgcharges, avgcharge_per_day, shareY = TRUE) %>% layout(yaxis = list(title = ""))
 
   
 }
