@@ -113,23 +113,26 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                            y = label_nodes$y)
   
 
-  title_nodes <- data.frame(label = c("California", paste(switch(metric_id_in,
-                                                                 '1' = 'Number',
-                                                                 '2' = 'Percent',
-                                                                 '3' = 'Rate (per 100,000)'),
-                                                          switch(measure_id_in,
-                                                                 '1' = 'Deaths',
-                                                                 '2' = 'DALYs',
-                                                                 '3' = 'YLDs',
-                                                                 '4' = 'YLLs'),
-                                                          switch(sex_id_in,
-                                                                 '1' = 'Males',
-                                                                 '2' = 'Females',
-                                                                 '3' = 'Both Sexes'),
-                                                          sep = ", "),
+  title_nodes <- data.frame(label = c("<b>California</b>",  # California Title is now off the chart. Can delete it here, or move it's y-coordinate down to show it.
+                                      paste(switch(metric_id_in,
+                                                   '1' = 'Number of total',
+                                                   '2' = 'Percent of total',
+                                                   '3' = 'Rate, per 100,000, of'),
+                                            switch(measure_id_in,
+                                                   '1' = 'Deaths',
+                                                   '2' = 'Disability Adjusted Life Years',
+                                                   '3' = 'Years Lived with Disability',
+                                                   '4' = 'Years of Life Lost'),
+                                            'for',
+                                            switch(sex_id_in,
+                                                   '1' = 'males',
+                                                   '2' = 'females',
+                                                   '3' = 'both sexes'),
+                                            "in California",
+                                            sep = " "),
                                       paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(-2,-1,0,0),
-                            x = c(rep((LEFT_X+RIGHT_X)/2, 2), LEFT_X, RIGHT_X), y = c(-365, -345, 1-(650/2), 1-(650/2)), id = 0:-3, shape = 'text',
-                            font = list(face = 'bold', size = TITLE_FONT_SIZE))
+                            x = c(rep((LEFT_X+RIGHT_X)/2, 2), LEFT_X, RIGHT_X), y = c(-400, -365, 1-(650/2), 1-(650/2)), id = 0:-3, shape = 'text',
+                            font = list(face = 'Bold', size = TITLE_FONT_SIZE))
 
   if (display_in == "cause") {
     groups <- data.frame(label = cause_groups,
@@ -177,7 +180,6 @@ vis_network <- function(nodes, edges, display) {
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
     visInteraction(hover = TRUE, hoverConnectedEdges = TRUE, zoomView = FALSE, dragView = FALSE, selectable = FALSE) %>%
-
     visGroups(groupname = groups[1], color = '#E9A291') %>%
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
     visGroups(groupname = groups[3], color = '#A0DCA4') %>%
