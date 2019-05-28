@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -241,6 +241,7 @@ sum_num_costs <- function(data, groupvar, levLab) {
     summarize(n_hosp = n(), 
               charges = sum(charge, na.rm = TRUE), #this still converts cases where there was only 1 with NA charges to 0 for charges
               avgcharge = mean(charge, na.rm = TRUE),
+              avg_los = mean(los_adj, na.rm = TRUE),
               avgcharge_per_day = mean(charge_per_day, na.rm = TRUE)) 
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
@@ -476,7 +477,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #Will have to do a series of spread/gather/join to create dataset 
 
 
-calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, avgcharge_per_day)
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
