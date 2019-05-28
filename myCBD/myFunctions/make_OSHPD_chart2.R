@@ -24,7 +24,7 @@ oshpdPlot2<- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospital
   
   #OPTION 2-- sorts that based on the ordering variable (eg n_hosp), it pulls the top N rows for n_hosp, and those variables are what are the corresponding conditions for all the other values
   #create a vector of CAUSE for top N of myOSHPDtype
-  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "charges", "cChargeRate", "avgcharge"))) %>%
+  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge"))) %>%
     mutate(type = plyr::revalue(type, hospDiscMeasures)) %>% #replaces values with full name labels
     left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))
   
