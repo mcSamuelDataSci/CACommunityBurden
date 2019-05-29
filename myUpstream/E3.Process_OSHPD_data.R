@@ -794,8 +794,8 @@ library(circlize)
 chordDiagram(dat, transparency = 0.5)
 
 #in group_any_primary, let name = any_name, feature = primary_name, Freq = n_hosp_any
-chord_any_primary <- group_any_primary %>% select(primary_name, any_name, n_hosp_any) #Direction "from" primary_name (the grouping variable) "to" the any_name
+chord_any_primary <- group_any_primary %>%  select(primary_name, any_name, n_hosp_any) %>% group_by(primary_name) #Direction "from" primary_name (the grouping variable) "to" the any_name
 
-chordDiagram(chord_any_primary, transparency = 0.5, directional = 1) #directional = 1 means from col1 to col2
+chordDiagram(chord_any_primary, transparency = 0.1, directional = 1) #directional = 1 means from col1 to col2
 
 #This doesn't plot quite how I want it though............
