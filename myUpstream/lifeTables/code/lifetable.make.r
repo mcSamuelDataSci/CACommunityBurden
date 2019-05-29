@@ -74,8 +74,10 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 
 ## 3.2  for fake data, weight exposure to accord to dx (censors geographies, but should provide more accurate ex)
 if (whichData=="fake") {
-	.dxstate[year>=2013 & year<=2017 & sex=="TOTAL",(dx=sum(dx))] # sampled deaths statewide 2013-2017
-	.factor<-.dxstate[year>=2013 & year<=2017 & sex=="TOTAL",(dx=sum(dx))]/1282663 # ratio of sampled to actual deaths
+	.actual<-data.table(year=c(2010:2018),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
+	.dxstate[year>=2013 & year<=2017 & sex=="TOTAL",(dx=sum(dx))]                 # sampled deaths statewide 2013-2017
+	.factor<-.dxstate[year>=2013 & year<=2017 & sex=="TOTAL",(dx=sum(dx))]/
+									.actual[year %in% 2013:2017,.(sum(dx))]       # ratio of sampled to actual deaths
 	.nxmssa[,nx:=nx*.factor] # inflate deaths to compensate for sample size
 	.nxcounty[,nx:=nx*.factor] # inflate deaths to compensate for sample size
 	.nxstate[,nx:=nx*.factor] # inflate deaths to compensate for sample size
