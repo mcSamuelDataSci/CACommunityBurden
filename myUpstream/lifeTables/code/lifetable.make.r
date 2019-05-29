@@ -90,35 +90,47 @@ doCheckPY <- function(d=NULL,t=10000) { 							# d=population dataset, t=critica
 }
 
 ## 3.5  list of areas that will not be processed due to too few PY (to plug in to map as blanks)
-.zeroTract <-doCheckPY(.nxtract,t=15000)[flag>5] 		# tracts that require>N years data. (10/15k PY: 874/2543 of 9170)
-.zeroMSSA  <-doCheckPY(.nxmssa,t=15000)[flag>5]		  	# MSSAs that require>5 years data. (10/15k PY: 27/39 of 542)
-.zeroCounty<-doCheckPY(.nxcounty,t=15000)[flag>3]		# counties that require>N years data. (15k PY: 1/3 of 58)
+.zeroTract <-doCheckPY(.nxtract,t=10000)[flag>5] 		# tracts that require>N years data. (5/10/15k PY: 281/874/2543 of 9170)
+.zeroMSSA  <-doCheckPY(.nxmssa,t=10000)[flag>5]		  	# MSSAs that require>5 years data. (5/10/15k PY: 71/127/146 of 542)
+.zeroCounty<-doCheckPY(.nxcounty,t=10000)[flag>3]		# counties that require>N years data. (5/10/15k PY: 5/11/17 of 58)
 
 ## 3.6	add to list of areas to skip due to too few geocoded deaths
-.zeroTract <- merge(.zeroTract,.missTract,all=TRUE,by="GEOID")  # tract: 2841 censored
-.zeroMSSA <-  merge(.zeroMSSA,.missMSSA,all=TRUE,by="GEOID")    # MSSA: 542 censored
+.zeroTract <- merge(.zeroTract,.missTract,all=TRUE,by="GEOID")  # tract: 1264 censored
+.zeroMSSA <-  merge(.zeroMSSA,.missMSSA,all=TRUE,by="GEOID")    # MSSA: 165 censored
+.zeroMSSA[,comID:=GEOID]
 
 ## 3.6  summarize deaths 
+ltdx.tract	<-.dxtract[year>=2013 & year<=2017                              # extract years overlapping ACS 
+					& (GEOID %in% .zeroTract$GEOID)==FALSE][,               # extract areas that meet exposure threshold
+					    .(dx=sum(dx)), by=c("GEOID","sex","agell","ageul")] # collapse 
 ltdx.mssa	<-.dxmssa[year>=2013 & year<=2017                               # extract years overlapping ACS 
 					& (comID %in% .zeroMSSA$GEOID)==FALSE][,                # extract areas that meet exposure threshold
 						.(dx=sum(dx)), by=c("comID","sex","agell","ageul")] # collapse 
-ltdx.county	<-.dxcounty[year>=2013 & year<=2017                             # extract years overlapping ACS 
+ltdx.county	<-.dxcounty[year>=2015 & year<=2017                             # extract years overlapping ACS 
 						& (GEOID %in% .zeroCounty$GEOID)==FALSE][,          # extract areas that meet exposure threshold
 						.(dx=sum(dx)), by=c("GEOID","sex","agell","ageul")] # collapse 
-ltdx.state	<-.dxstate[year>=2013 & year<=2017][,                           # extract years overlapping ACS 
+ltdx.state	<-.dxstate[year>=2017 & year<=2017][,                           # extract years overlapping ACS 
 						.(dx=sum(dx)), by=c("GEOID","sex","agell","ageul")] # collapse 
 
 ## 3.7	summarize exposures 
+ltnx.tract	<-.nxtract[year>=2013 & year<=2017                              # extract years overlapping ACS 
+						& (GEOID %in% .zeroTract$GEOID)==FALSE][,           # extract areas that meet exposure threshold
+						 .(nx=sum(nx)),by=c("GEOID","sex","agell","ageul")]	# collapse 
 ltnx.mssa	<-.nxmssa[year>=2013 & year<=2017                               # extract years overlapping ACS 
 					& (comID %in% .zeroMSSA$GEOID)==FALSE][,                # extract areas that meet exposure threshold
 						.(nx=sum(nx)),by=c("comID","sex","agell","ageul")]	# collapse 
-ltnx.county	<-.nxcounty[year>=2013 & year<=2017                             # extract years overlapping ACS 
+ltnx.county	<-.nxcounty[year>=2015 & year<=2017                             # extract years overlapping ACS 
 						& (GEOID %in% .zeroCounty$GEOID)==FALSE][,          # extract areas that meet exposure threshold
 						.(nx=sum(nx)),by=c("GEOID","sex","agell","ageul")]	# collapse 
-ltnx.state	<-.nxstate[year>=2013 & year<=2017][,                           # extract years overlapping ACS 
+ltnx.state	<-.nxstate[year>=2017 & year<=2017][,                           # extract years overlapping ACS 
 						.(nx=sum(nx)),by=c("GEOID","sex","agell","ageul")]	# collapse 
 
 ## 3.8 	merge deaths and exposures (mx data)
+##  tract
+setkeyv(ltnx.tract,c("GEOID","sex","agell","ageul"))	
+setkeyv(ltdx.tract,c("GEOID","sex","agell","ageul"))	
+mx.tract <-merge(ltnx.tract, ltdx.tract, 
+				by=c("GEOID","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
 ##	mssa
 setkeyv(ltnx.mssa,c("comID","sex","agell","ageul"))	
 setkeyv(ltdx.mssa,c("comID","sex","agell","ageul"))	
@@ -136,26 +148,40 @@ mx.state <-merge(ltnx.state, ltdx.state,
 				 by=c("GEOID","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
 
 ## 3.9 	rectangularize and collapse by new age groups
-## 		i=id for each life table.
+## 		i=id for each life table. ageul missing after 'complete' step
+##	tract
+length(unique(mx.tract[sex=="TOTAL",GEOID]))                     # n valid tracts
+mx.tract<-setDT(complete(mx.tract,GEOID,sex,agell))				 # (tidyr) rectangularize and key as DT
+length(unique(mx.tract[sex=="TOTAL",GEOID]))                     # n valid tracts
+mx.tract[is.na(nx), nx:=0]										 # fill in new missing values with 0
+mx.tract[is.na(dx), dx:=0]
+mx.tract[, i:=.GRP, by=c("GEOID","sex")] 						 # create an ID variable for each LT
+setkeyv(mx.tract,c("i","agell"))	
+length(unique(mx.tract[sex=="TOTAL" & dx==0,GEOID]))             # n tracts w/empty death cells (IMPUTE LATER)
+length(unique(mx.tract[sex=="TOTAL" & dx>=nx,GEOID]))            # n tracts w/more deaths than nx estimated (IMPUTE LATER)
 ##	mssa
+length(unique(mx.mssa[sex=="TOTAL",comID]))                      # n valid MSSA
 mx.mssa<-setDT(complete(mx.mssa,comID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.mssa[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.mssa[is.na(dx), dx:=0]
 mx.mssa[, i:=.GRP, by=c("comID","sex")] 						 # create an ID variable for each LT
 setkeyv(mx.mssa,c("i","agell"))	
+length(unique(mx.mssa[sex=="TOTAL" & dx==0,comID]))              # empty death cells (potential error in mx)
+length(unique(mx.mssa[sex=="TOTAL" & dx>=nx,comID]))             # more deaths than persons (potential error in mx)
 ##	county
 mx.county<-setDT(complete(mx.county,GEOID,sex,agell))			 # (tidyr) rectangularize and key as DT
 mx.county[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.county[is.na(dx), dx:=0]
 mx.county[, i:=.GRP, by=c("GEOID","sex")] 						 # create an ID variable for each LT
 setkeyv(mx.county,c("i","agell"))	
+length(unique(mx.county[sex=="TOTAL" & dx==0,GEOID]))            # empty death cells (potential error in mx)
+length(unique(mx.county[sex=="TOTAL" & dx>=nx,GEOID]))           # more deaths than persons (potential error in mx)
 ##	state
 mx.state<-setDT(complete(mx.state,GEOID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.state[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.state[is.na(dx), dx:=0]
 mx.state[, i:=.GRP, by=c("GEOID","sex")] 						 # create an ID variable for each LT
 setkeyv(mx.state,c("i","agell"))	
-
 
 ## 4	ANALYSIS (LIFE TABLE)	----------------------------------------------------------
 ## - there are 9 years of exposure (population) data, so that is a limit of ACS.
