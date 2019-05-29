@@ -29,9 +29,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 ## 2	DATASETS	----------------------------------------------------------------------
 
 ## 2.1 	tract-to-MSSA crosswalk
-cbd.link <- setDT(read_csv(.cbdlink),
-	key="GEOID"	                                  
-)
+cbd.link <- setDT(read_csv(.cbdlink), key="GEOID")
 
 #
 # census api does not guarantee uptime or stability. for example, on 3/22/19 can only access 2015+ 5-year acs.
