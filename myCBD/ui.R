@@ -152,7 +152,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
  # myMeasureShort
  conditionalPanel(condition = fC(c(33)),
    #actionButton( "measureHelp", label="?",style=myButtonSty) ,              
-   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasuresShort, selected="YLLper")),
+   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasures_dashboardShort, selected="YLL Rate per 100,000 population")),
  
  # myCutSystem
  conditionalPanel(condition = fC(c(22,23)),

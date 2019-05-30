@@ -199,7 +199,7 @@ output$rankCauseFigure <- downloadHandler(filename=function(){paste0("CAUSE",".p
 
 
 output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
-output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
+output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort,  input$mySex, input$myLev, input$myN,input$myYear))
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
 output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))
 

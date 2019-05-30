@@ -1,120 +1,102 @@
-rankCause  <- function(myLHJ="Amador",myMeasure = "aRate",myYear=2017,mySex="Total",myLev="lev1",myN=10) {
 
- myCex <- 1.6
- myCol <- "blue"            #mycol <- rep("blue",nrow(filtered.df))
- bLwd <- 2
+rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", mySex = "Total", myLev = "lev2", myN = 10, myYear = 2017){ 
   
- 
- if(myLev=="lev3") myLev <- c("lev2","lev3")
- 
- filtered.df <- filter(datCounty,county==myLHJ,year==myYear,sex==mySex,Level %in% myLev,CAUSE !=0)
- filtered.df <- filtered.df[order( filtered.df[,myMeasure],na.last = FALSE),]
-
- if (myMeasure=="mean.age"){
-  filtered.df <- filtered.df[order( filtered.df[,myMeasure],na.last = NA,decreasing=TRUE),]
-  }
-   
- Nrows.df          <- nrow(filtered.df)
- Nrows.to.display  <- min(Nrows.df,myN) 
- filtered.df       <- filtered.df[((Nrows.df-Nrows.to.display+1):Nrows.df),]
   
- layout(matrix(c(1,1,1,2,3,4,5),1,7,byrow=TRUE))
- par(mar=c(5,25,0,0),oma = c(3, 0, 3, 0))
- 
- t.plot <- barplot( filtered.df$Ndeaths,
-                    xlab = "Deaths (n)",  
-                    col  = myCol, horiz = TRUE, space = .3, cex.lab = myCex,
-                    xlim = c(0,1.04*max(filtered.df$Ndeaths,na.rm=TRUE)))
- # grid(nx=NULL,ny=NA,lty=1)
- # t.plot <- barplot( filtered.df$Ndeaths,add=TRUE,
- #                    xlab = "Deaths (n)",  
- #                    col  = myCol, horiz = TRUE, space = .3, cex.lab = myCex,
- #                    xlim = c(0,1.04*max(filtered.df$Ndeaths,na.rm=TRUE)))
-
- 
- 
-  box(lwd=bLwd)
- 
- t.label <- fullCauseList[match(filtered.df$CAUSE,fullCauseList[,"LABEL"]),"nameOnly"]
- wr.lap  <- wrap.labels(t.label ,30)
- axis(side=2,at=t.plot,labels=wr.lap,las=2,cex.axis=1.8)
- 
-    
- 
- 
+if(1==2) {
+  myCounty = "Alameda"
+  myMeasure = "Age-Adjusted Death Rate"
+  mySex = "Total"
+  myLev = "lev2"
+  myN = 10
+  myYear = 2017
+}  
   
- par(mar=c(5,0,0,0))
- 
- 
- barplot(filtered.df$aRate,
-         xlab="Age-Adjusted Rate",
-         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-         xlim=c(0,1.04*max(filtered.df$aRate,na.rm=T)))
- # grid(nx=NULL,ny=NA,lty=1)
- # barplot(filtered.df$aRate,add=TRUE,
- #         xlab="Age-Adjusted Rate",
- #         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
- #         xlim=c(0,1.04*max(filtered.df$aRate,na.rm=T)))
- box(lwd=bLwd)
- 
- 
- barplot(filtered.df$YLLper,
-         xlab="YLL per 100K pop",
-         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-         xlim=c(0,1.04*max(filtered.df$YLLper,na.rm=T)))
- # grid(nx=NULL,ny=NA,lty=1)
- # barplot(filtered.df$YLLper,add=TRUE,
- #         xlab="YLL per 100K pop",
- #         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
- #         xlim=c(0,1.04*max(filtered.df$YLLper,na.rm=T)))
- box(lwd=bLwd)
 
+  
+library(tidyr)
+
+temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRate,mean.age,SMR)  %>% 
+                      select(year,sex,Level,CAUSE,county,type,measure) %>%
+                      mutate(type = factor(type,levels= lMeasuresShort))    %>% #orders factor
+                      mutate(type = plyr::revalue(type, lMeasuresCShort))    %>% #replaces values with full name labels
+                      left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))  
+
+#create a vector of CAUSE for top N 
+temp_N_cause <- temp %>%
+  filter(sex == mySex, Level == myLev, year == myYear, county == myCounty) %>%
+  group_by(type) %>% arrange(desc(measure)) %>% dplyr::slice(1:myN) %>% #this selects the top N rows for myOSHPDtype
+  filter(type == myMeasure) %>% ungroup() %>% pull(CAUSE)
+
+#creates dataframe with data only for CAUSEs from temp_N_cause, i.e. the top N CAUSES for the specified temp_N_cause        
+   plotData <-     temp %>%
+                   filter(!is.na(CAUSE), Level == myLev, county == myCounty, CAUSE %in% temp_N_cause) %>% 
+                   filter(sex == mySex, year == myYear) %>%
+                   group_by(type)    %>% 
+                   mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 
+                   pull(measure)))  
+
+   if (myCounty != "CALIFORNIA") {
+#Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
+ SMR <- 1
  
- 
+ xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
+      coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
+      facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
+      theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
+      #scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
+      scale_x_discrete(labels = scales::wrap_format(10)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+    #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
+    theme(axis.title.y = element_blank(), #removes nameOnly label
+          axis.title.x = element_blank(), #removes measure label
+          axis.text.y = element_text(size = 15), #increases size of disease condition labels
+          axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+          strip.text.x = element_text(size = 15)) + #increases the size of the facet labels 
+          geom_hline(data = data.frame(yint = 1, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "grey") +#adds SMR line only to SMR facet
+          geom_hline(data = data.frame(yint = 0.8, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "green") +
+          geom_hline(data = data.frame(yint = 1.2, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "red")
+
+   }
    
- barplot(filtered.df$mean.age, 
-         xlab="Mean Age",
-         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-         xlim=c(0,1.04*max(filtered.df$mean.age,na.rm=T)))
- # grid(nx=NULL,ny=NA,lty=1)
- # barplot(filtered.df$mean.age, add=TRUE,
- #         xlab="Mean Age",
- #         col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
- #         xlim=c(0,1.04*max(filtered.df$mean.age,na.rm=T)))
- box(lwd=bLwd)
+   if (myCounty == "CALIFORNIA"){
+     
+     plotData <- plotData %>% filter(type != "Standard Mortality Ratio")
+     
+     xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
+       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
+       facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
+       theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
+       scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
+       scale_x_discrete(labels = scales::wrap_format(10)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+       #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
+       theme(axis.title.y = element_blank(), #removes nameOnly label
+             axis.title.x = element_blank(), #removes measure label
+             axis.text.y = element_text(size = 15), #increases size of disease condition labels
+             axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+             strip.text.x = element_text(size = 15))  #increases the size of the facet labels 
+   }
  
- if (myLHJ != "CALIFORNIA") {
-  t.plot <- barplot((filtered.df$SMR),
-                     xlab="Stnd. Mortaility Ratio",
-                     col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-                     xlim=c(0,1.04*max(filtered.df$SMR,na.rm=T)))
-  # grid(nx=NULL,ny=NA,lty=1)
-  # t.plot <- barplot((filtered.df$SMR),add=TRUE,
-  #                   xlab="Stnd. Mortaility Ratio",
-  #                   col=myCol,horiz=TRUE,space=.3,cex.lab=myCex,
-  #                   xlim=c(0,1.04*max(filtered.df$SMR,na.rm=T)))
-  box(lwd=bLwd)
-  abline(v=0.8,col="green")
-  abline(v=1,col="gray")
-  abline(v=1.2,col="red")
-  text(1,.1,"state rate",srt=90,col="black",cex=1.3,adj=c(0,.5))
- }
- 
- sexLab <- ""
- if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
-   
- mtext(paste0("Measures by Cause in ",myYear," in ",myLHJ,sexLab),outer = TRUE,cex=1.6,line=1,font=2)
- mtext(figureAttribution,side=1,outer = TRUE,line=2)
- 
- 
+   xtemp
+}
+  
+
+
+ #plotly version??
+
+if(1==2) {
+  
+  #ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
+
+  if (myCounty != "CALIFORNIA") {
+  #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
+  SMR <- 1
+  
+  xtemp <- plotData %>% filter(type == "Standard Mortality Ratio") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, type = "bar", name = "Standard Mortality Ratio")  
+  
+   xtemp <- layout(xtemp, shapes = list(type = "line", fillcolor = "red", opacity = 1, x0 = 0, x1 = 0, xref = 'measure', y0 = 0, y1 = 1, yref = 'y'))
+
+  xtemp 
+  #this doesn't really do what we want either
 }
 
-
-if(1==2){
-  myLHJ="Amador"
-  myMeasure = "aRate"
-  myYear=2017
-  mySex="Total"
-  myLev="lev1"
-  myN=10
 }
+
