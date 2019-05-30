@@ -277,6 +277,24 @@ doLT <- function(x, Nx, Dx, sex, ax=NULL) {
 }
 
 ## 4.2 call to LT function
+## tract
+lt.tract<-data.table()										# init empty dt
+.pb <- txtProgressBar(min = 0, max = mx.tract[agell==0,.N], style = 3)		# show a text progress bar for loop
+for (j in 1:mx.tract[agell==0,.N]) {						
+	x<-mx.tract[i==j,agell]
+	nx<-mx.tract[i==j,nx]
+	dx<-mx.tract[i==j,dx]
+	sex<-mx.tract[i==j,sex]
+	lt.tract <- rbindlist(list(lt.tract,                  # fast rbind results
+								cbind(i=mx.tract[i==j,i],              # attach ID to life table
+									  GEOID=mx.tract[i==j,GEOID],
+									  sex,
+									  year=mx.tract[i==j,year],
+									  doLT(x,nx,dx,sex))))				
+	setTxtProgressBar(.pb,j)												
+}
+close(.pb)
+setkeyv(lt.tract,c("i","x"))
 ##	mssa
 lt.mssa<-data.table()													# init empty dt
 .pb <- txtProgressBar(min = 0, max = mx.mssa[agell==0,.N], style = 3)	# show a text progress bar for loop
@@ -334,7 +352,7 @@ setkeyv(lt.state,c("i","x"))
 lt.state[x==0 & sex=="TOTAL",c("GEOID","sex","year","ex")] # CA state e0
 
 ## 4.3  function to produce a life table from qx values only (used in simulation for CI)
-doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5.5) {
+doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
 	m <- length(x)
 	n <- c(diff(x), NA)
 	qx[is.na(qx)] <- 0
@@ -410,6 +428,27 @@ doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 }
 
 ## 4.5   call to CI function
+##
+##	tract
+ltci.tract<-data.table() 										# initialize an empty DT
+.counter<-lt.tract[x==0,.N]
+.pb <- txtProgressBar(min = 0, max = .counter, style = 3)		# show a text progress bar for loop
+for (j in 1:lt.tract[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
+	ltci.tract<-rbindlist(list(ltci.tract, 					# fast rbind result to ltci.tract (2 items)
+								cbind(data.table( 					# format results of exsim as DT
+									t(unlist(doLTCI(lt.tract[i==j],    # run specific LT
+													which.x=0,ns=500,level=.95)[		# pass parameters for simulation
+														c(1,2,3,5)])))						# save just desired fields from exsim
+									,j)									# attach ID to simulation results; 
+	)
+	)
+	setTxtProgressBar(.pb,j)												
+}
+names(ltci.tract)[names(ltci.tract) == "j"] = "i"				# rename j column to i (ID of mx file)
+names(ltci.tract)[names(ltci.tract) == "which.x"] = "agell"	# rename to agell
+setkeyv(ltci.tract,c("i","agell"))
+ltci.tract<-ltci.tract[mx.tract[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
+##
 ##	mssa
 ltci.mssa<-data.table() 										# initialize an empty DT
 .counter<-lt.mssa[x==0,.N]
@@ -482,6 +521,7 @@ doExHist <- function(dat=NULL,idx=NULL,age=0,reps=500,ci=.95) {
 	abline(v=tmp$meanex,col=4)
 	abline(v=tmp$ciex,col=4)
 }
+doExHist(dat=lt.tract,idx=1,age=0,reps=500,ci=.9)
 doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
 doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
 doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
@@ -489,6 +529,7 @@ doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
 ## 6	EXPORT DATA	----------------------------------------------------------
 
 ## 6.1  export datasets
+saveRDS(ltci.tract,  file=paste0(LTplace,"LTciTract.rds"))      # GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.county, file=paste0(LTplace,"LTciCounty.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.state,  file=paste0(LTplace,"LTciState.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
