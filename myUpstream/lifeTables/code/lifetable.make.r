@@ -166,72 +166,67 @@ mx.mssa <-merge(ltnx.mssa, ltdx.mssa,
 setkeyv(ltnx.county,c("GEOID","year","sex","agell","ageul"))	
 setkeyv(ltdx.county,c("GEOID","year","sex","agell","ageul"))	
 mx.county <-merge(ltnx.county, ltdx.county, 
-				  by=c("GEOID","year","sex","agell","ageul"), all=TRUE) # merge pop, death data
+				  by=c("GEOID","year","sex","agell","ageul"), all=TRUE)  # merge pop, death data
+mx.county[sex=="TOTAL" & year==2017 & GEOID=="06037000000"][
+									,.(nx=sum(nx),dx=sum(dx))]			 # check county PY and Dx (3 yrs combined)
 ##	state
 setkeyv(ltnx.state,c("GEOID","year","sex","agell","ageul"))	
 setkeyv(ltdx.state,c("GEOID","year","sex","agell","ageul"))	
 mx.state <-merge(ltnx.state, ltdx.state, 
 				 by=c("GEOID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
+mx.state[sex=="TOTAL" & year==2017][,.(nx=sum(nx),dx=sum(dx))]			 # check state PY and Dx (1 year)
 
 ## 3.9 	rectangularize and collapse by new age groups
 ## 		i=id for each life table. ageul missing after 'complete' step
 ##	tract
-length(unique(mx.tract[sex=="TOTAL",GEOID]))                     # n valid tracts
 mx.tract<-setDT(complete(mx.tract,GEOID,sex,agell))				 # (tidyr) rectangularize and key as DT
-length(unique(mx.tract[sex=="TOTAL",GEOID]))                     # n valid tracts
 mx.tract[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.tract[is.na(dx), dx:=0]
-mx.tract[, i:=.GRP, by=c("GEOID","sex")] 						 # create an ID variable for each LT
+mx.tract[, i:=.GRP, by=c("GEOID","sex","year")]					 # create an ID variable for each LT
 setkeyv(mx.tract,c("i","agell"))	
-length(unique(mx.tract[sex=="TOTAL" & dx==0,GEOID]))             # n tracts w/empty death cells (IMPUTE LATER)
-length(unique(mx.tract[sex=="TOTAL" & dx>=nx,GEOID]))            # n tracts w/more deaths than nx estimated (IMPUTE LATER)
 ##	mssa
-length(unique(mx.mssa[sex=="TOTAL",comID]))                      # n valid MSSA
 mx.mssa<-setDT(complete(mx.mssa,comID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.mssa[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.mssa[is.na(dx), dx:=0]
-mx.mssa[, i:=.GRP, by=c("comID","sex")] 						 # create an ID variable for each LT
+mx.mssa[, i:=.GRP, by=c("comID","sex","year")] 					 # create an ID variable for each LT
 setkeyv(mx.mssa,c("i","agell"))	
-length(unique(mx.mssa[sex=="TOTAL" & dx==0,comID]))              # empty death cells (potential error in mx)
-length(unique(mx.mssa[sex=="TOTAL" & dx>=nx,comID]))             # more deaths than persons (potential error in mx)
 ##	county
-mx.county<-setDT(complete(mx.county,GEOID,sex,agell))			 # (tidyr) rectangularize and key as DT
 mx.county[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.county[is.na(dx), dx:=0]
-mx.county[, i:=.GRP, by=c("GEOID","sex")] 						 # create an ID variable for each LT
+mx.county[, i:=.GRP, by=c("GEOID","sex","year")]				 # create an ID variable for each LT
 setkeyv(mx.county,c("i","agell"))	
-length(unique(mx.county[sex=="TOTAL" & dx==0,GEOID]))            # empty death cells (potential error in mx)
-length(unique(mx.county[sex=="TOTAL" & dx>=nx,GEOID]))           # more deaths than persons (potential error in mx)
 ##	state
-mx.state<-setDT(complete(mx.state,GEOID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.state[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.state[is.na(dx), dx:=0]
-mx.state[, i:=.GRP, by=c("GEOID","sex")] 						 # create an ID variable for each LT
+mx.state[, i:=.GRP, by=c("GEOID","sex","year")]					 # create an ID variable for each LT
 setkeyv(mx.state,c("i","agell"))	
 
 ## 3.1	figure for CONSORT style flowchart
 ## 	tract
-length(unique(.nxtract[,GEOID]))                                 # n total tracts: 9170
-length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][!is.na(nx),GEOID]))
-																 # n tracts with data for 2013-17: 8057
-length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][nx==0,GEOID]))  
-																 # n tracts with 0 population: 37 (excluded)
-length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][nx>=1 & nx<10000,GEOID]))
-																# n tracts w/1-9999 exposure in preceding 5 yrs: 84
-length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][nx>=10000,GEOID])) 
-																 # n tracts w/10k+ exposure in preceding 5 yrs: 7936
-length(unique(mx.tract[sex=="TOTAL",GEOID]))                     # n valid tracts with 10k+95% geocoded: 6907
-length(unique(mx.tract[sex=="TOTAL" & dx>=nx,GEOID]))            # n tracts w/more deaths than nx estimated (IMPUTE LATER): ???
-length(mx.tract[sex=="TOTAL" & dx==0,.(n=length(dx)),by=GEOID][n>=1 & n<=4,GEOID]) # n tracts w/1-4 or empty death cells (IMPUTE LATER): ???
-length(mx.tract[sex=="TOTAL" & dx==0,.(n=length(dx)),by=GEOID][n>=5,GEOID])        # n tracts w/5+ empty death cells (IMPUTE LATER): ???
+if (whichData=="real") {
+	length(unique(.nxtract[,GEOID]))                                 # n total tracts: 9170
+	length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][!is.na(nx),GEOID]))
+																	 # n tracts with data for 2013-17: 8057
+	length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][nx==0,GEOID]))  
+																	 # n tracts with 0 population: 38 (excluded)
+	length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][nx>=1 & nx<10000,GEOID]))
+																	 # n tracts w/1-9999 exposure in preceding 5 yrs: 84
+	length(unique(.nxtract[year %in% 2013:2017, .(nx=sum(nx)), by=GEOID][nx>=10000,GEOID])) 
+																	 # n tracts w/10k+ exposure in preceding 5 yrs: 7936
+	length(unique(mx.tract[sex=="TOTAL",GEOID]))                     # n valid tracts with 10k+95% geocoded: 6907
+	length(unique(mx.tract[sex=="TOTAL" & dx>=nx,GEOID]))            # n tracts w/more deaths than nx estimated (IMPUTE LATER): ???
+	length(mx.tract[sex=="TOTAL" & dx==0,.(n=length(dx)),by=GEOID][n>=1 & n<=4,GEOID]) # n tracts w/1-4 or empty death cells (IMPUTE LATER): ???
+	length(mx.tract[sex=="TOTAL" & dx==0,.(n=length(dx)),by=GEOID][n>=5,GEOID])        # n tracts w/5+ empty death cells (IMPUTE LATER): ???
+}
 
 ## 4	ANALYSIS (LIFE TABLE)	----------------------------------------------------------
 ## - there are 9 years of exposure (population) data, so that is a limit of ACS.
 ## - rules of thumb are 10,000 or 15k PY of exposure for a stable LT in a high-e0 population.
 ## - earlier versions return a table of start/end years needed, working back from 2017.
-## - temporarily, we are using a 5 years window for all (2013-2017 5 year ACS samples).
+## - temporarily, we are using a 5 years window for all tracts, 3 years for counties, 1 year for state level life table.
 ## - ACS population estimates include uncertainty, not accounted for here.
 ## - for this version, no spatiotemporal smoothing.
+## - for time series, moving window, e.g. 2010 is from pooled 2006-10 ACS, 2011 from pooled 2007-11, etc.
 
 ## 4.1	generic function to produce a life table from minimum inputs
 ## 		x is a vector of age groups, nx is the corresponding vector of pop, dx of deaths
@@ -255,7 +250,7 @@ doLT <- function(x, Nx, Dx, sex, ax=NULL) {
           			ax[1] <- 0.053 + 2.800*mx[1]
         		}
       		}
-      		if(!grepl("F",sex[1])){ 		# ax values for men
+      		if(!grepl("F",sex[1])){ 	 	    # ax values for men
         		if(mx[1]>=0.107) {
           			ax[1] <- 0.330
         		}
@@ -283,31 +278,44 @@ doLT <- function(x, Nx, Dx, sex, ax=NULL) {
 
 ## 4.2 call to LT function
 ##	mssa
-lt.mssa<-data.table()										# init empty dt
+lt.mssa<-data.table()													# init empty dt
+.pb <- txtProgressBar(min = 0, max = mx.mssa[agell==0,.N], style = 3)	# show a text progress bar for loop
 for (j in 1:mx.mssa[agell==0,.N]) {						
 	x<-mx.mssa[i==j,agell]
 	nx<-mx.mssa[i==j,nx]
 	dx<-mx.mssa[i==j,dx]
 	sex<-mx.mssa[i==j,sex]
-	i<-mx.mssa[i==j,i]
-	lt.mssa <- rbindlist(list(lt.mssa,                      # fast rbind result to lt.mssa
-					cbind(doLT(x,nx,dx,sex),j)))			# attach ID to life table
+	lt.mssa <- rbindlist(list(lt.mssa,                      # fast rbind result to lt.county
+					cbind(i=mx.mssa[i==j,i],                # attach ID to life table
+						  comID=mx.mssa[i==j,comID],
+						  sex,
+						  year=mx.mssa[i==j,year],
+						  doLT(x,nx,dx,sex))))	
+	setTxtProgressBar(.pb,j)												
 }
-names(lt.mssa)[names(lt.mssa) == "j"] = "i"					# rename j column to i (ID of mx file)
+close(.pb)
 setkeyv(lt.mssa,c("i","x"))
 ##	county
 lt.county<-data.table()										# init empty dt
+.pb <- txtProgressBar(min = 0, max = mx.county[agell==0,.N], style = 3)		# show a text progress bar for loop
 for (j in 1:mx.county[agell==0,.N]) {						
 	x<-mx.county[i==j,agell]
 	nx<-mx.county[i==j,nx]
 	dx<-mx.county[i==j,dx]
 	sex<-mx.county[i==j,sex]
-	i<-mx.county[i==j,i]
 	lt.county <- rbindlist(list(lt.county,                  # fast rbind result to lt.county
-					cbind(doLT(x,nx,dx,sex),j)))			# attach ID to life table
+					cbind(i=mx.county[i==j,i],              # attach ID to life table
+						  GEOID=mx.county[i==j,GEOID],
+						  sex,
+						  year=mx.county[i==j,year],
+						  doLT(x,nx,dx,sex))))				
+	setTxtProgressBar(.pb,j)												
 }
-names(lt.county)[names(lt.county) == "j"] = "i"				# rename j column to i (ID of mx file)
+close(.pb)
 setkeyv(lt.county,c("i","x"))
+lt.county[GEOID=="06001000000" & sex=="TOTAL" & x==0, c("GEOID","sex","year","ex")]       # ALAMEDA COUNTY (CHECK)
+lt.county[GEOID=="06033000000" & sex=="TOTAL" & x==0, c("GEOID","sex","year","ex")]       # LAKE COUNTY (CHECK)
+lt.county[GEOID=="06115000000" & sex=="TOTAL" & x==0, c("GEOID","sex","year","ex")]       # YUBA COUNTY (CHECK)
 ##	state
 lt.state<-data.table()										# init empty dt
 for (j in 1:mx.state[agell==0,.N]) {						
@@ -315,12 +323,15 @@ for (j in 1:mx.state[agell==0,.N]) {
 	nx<-mx.state[i==j,nx]
 	dx<-mx.state[i==j,dx]
 	sex<-mx.state[i==j,sex]
-	i<-mx.state[i==j,i]
 	lt.state <- rbindlist(list(lt.state,                    # fast rbind result to lt.state
-					cbind(doLT(x,nx,dx,sex),j)))			# attach ID to life table
+					cbind(i=mx.state[i==j,i],               # attach ID to life table
+						  GEOID=mx.state[i==j,GEOID],
+						  sex,
+						  year=mx.state[i==j,year],
+						  doLT(x,nx,dx,sex))))			
 }
-names(lt.state)[names(lt.state) == "j"] = "i"				# rename j column to i (ID of mx file)
 setkeyv(lt.state,c("i","x"))
+lt.state[x==0 & sex=="TOTAL",c("GEOID","sex","year","ex")] # CA state e0
 
 ## 4.3  function to produce a life table from qx values only (used in simulation for CI)
 doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5.5) {
@@ -416,8 +427,10 @@ for (j in 1:lt.mssa[x==0,.N]) {									# or "for (j in 1:2) {" for a quick test
 }
 close(.pb)
 names(ltci.mssa)[names(ltci.mssa) == "j"] = "i"					# rename j column to i (ID of mx file)
-names(ltci.mssa)[names(ltci.mssa) == "which.x"] = "x"			# rename to agell
-setkeyv(ltci.mssa,c("i","x"))
+names(ltci.mssa)[names(ltci.mssa) == "which.x"] = "agell"		# rename to agell
+setkeyv(ltci.mssa,c("i","agell"))
+ltci.mssa<-ltci.mssa[mx.mssa[agell==0,c("i","agell","sex","comID","year")],nomatch=0]	# merge sex and geo identifiers
+##
 ##	county
 ltci.county<-data.table() 										# initialize an empty DT
 .counter<-lt.county[x==0,.N]
@@ -433,9 +446,11 @@ for (j in 1:lt.county[x==0,.N]) {								# or "for (j in 1:2) {" for a quick tes
 	)
 	setTxtProgressBar(.pb,j)												
 }
-names(ltci.county)[names(ltci.county) == "j"] = "i"					# rename j column to i (ID of mx file)
-names(ltci.county)[names(ltci.county) == "which.x"] = "x"			# rename to agell
-setkeyv(ltci.county,c("i","x"))
+names(ltci.county)[names(ltci.county) == "j"] = "i"				# rename j column to i (ID of mx file)
+names(ltci.county)[names(ltci.county) == "which.x"] = "agell"	# rename to agell
+setkeyv(ltci.county,c("i","agell"))
+ltci.county<-ltci.county[mx.county[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
+##
 ##	state
 ltci.state<-data.table() 										# initialize an empty DT
 for (j in 1:lt.state[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
@@ -449,8 +464,9 @@ for (j in 1:lt.state[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
 	)
 }
 names(ltci.state)[names(ltci.state) == "j"] = "i"				# rename j column to i (ID of mx file)
-names(ltci.state)[names(ltci.state) == "which.x"] = "x"			# rename to agell
-setkeyv(ltci.state,c("i","x"))
+names(ltci.state)[names(ltci.state) == "which.x"] = "agell"		# rename to agell
+setkeyv(ltci.state,c("i","agell"))
+ltci.state<-ltci.state[mx.state[x==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
 
 ## 5	DIAGNOSTICS	----------------------------------------------------------
 
@@ -472,21 +488,7 @@ doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
 
 ## 6	EXPORT DATA	----------------------------------------------------------
 
-## 6.1 	update mortality dataset with some parameters from results
-## mssa
-names(mx.mssa)[names(mx.mssa) == "agell"] = "x" 						# rename agell to x for consistency
-lt.mssa<-lt.mssa[mx.mssa[,c("i","x","sex","comID")],nomatch=0] 			# add MSSA comID and sex by ID
-ltci.mssa<-ltci.mssa[mx.mssa[x==0,c("i","x","sex","comID")],nomatch=0]	# add MSSA comID and sex by ID
-## county
-names(mx.county)[names(mx.county) == "agell"] = "x" 							# rename agell to x for consistency
-lt.county<-lt.county[mx.county[,c("i","x","sex","GEOID")],nomatch=0] 			# add COUNTY GEOID and sex by ID
-ltci.county<-ltci.county[mx.county[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add COUNTY GEOID and sex by ID
-## state
-names(mx.state)[names(mx.state) == "agell"] = "x" 							# rename agell to x for consistency
-lt.state<-lt.state[mx.state[,c("i","x","sex","GEOID")],nomatch=0] 			# add STATE GEOID and sex by ID
-ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add STATEGEOID and sex by ID
-
-## 6.2  export datasets
+## 6.1  export datasets
 saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.county, file=paste0(LTplace,"LTciCounty.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.state,  file=paste0(LTplace,"LTciState.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
