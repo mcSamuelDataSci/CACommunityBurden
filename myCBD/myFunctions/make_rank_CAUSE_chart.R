@@ -1,7 +1,7 @@
 
 rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", mySex = "Total", myLev = "lev2", myN = 10, myYear = 2017){ 
   
-  
+#(for testing code outside of the app) 
 if(1==2) {
   myCounty = "Alameda"
   myMeasure = "Age-Adjusted Death Rate"
@@ -11,10 +11,7 @@ if(1==2) {
   myYear = 2017
 }  
   
-
-  
-library(tidyr)
-
+#ordering dataset, replaces short names with full names
 temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRate,mean.age,SMR)  %>% 
                       select(year,sex,Level,CAUSE,county,type,measure) %>%
                       mutate(type = factor(type,levels= lMeasuresShort))    %>% #orders factor
@@ -35,9 +32,10 @@ temp_N_cause <- temp %>%
                    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 
                    pull(measure)))  
 
+##Creating ggplot facet grid plots
+   
    if (myCounty != "CALIFORNIA") {
 #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
- SMR <- 1
  
  xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
@@ -80,11 +78,11 @@ temp_N_cause <- temp %>%
   
 
 
- #plotly version??
+ #ggplotly and/or plotly version?
 
 if(1==2) {
   
-  #ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
+  ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
 
   if (myCounty != "CALIFORNIA") {
   #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
