@@ -77,15 +77,16 @@ output_data <- bind_rows(make_data_subset(make_url(),1,294,450),make_data_subset
   mutate_at(vars(c(1:10,13:ncol(.))), funs(as.numeric)) %>%
   mutate_at(vars(c(1:10,13:ncol(.))), funs(round(.,digits=4)))
 
-saveRDS(output_data, "cause_data.rds")
 
-# Get runtime to check for potential efficiency improvements
-end_time = Sys.time()
-print(end_time-start_time)
+# Save data-----------------------------------------------------------------------
+
+myDrive <- getwd()  # Root location of CBD project
+myPlace <- paste0(myDrive,"/myCBD") 
+saveRDS(output_data, file = path(myPlace,"/myData/cause_data.rds"))
 
 # Removal of non-necessary objects-----------------------------------------------------------------------
 
-rm(list=setdiff(ls(), "output_data"))
+# rm(list=setdiff(ls(), "output_data"))
 
 # Tests-----------------------------------------------------------------------
 
