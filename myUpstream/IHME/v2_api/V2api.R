@@ -26,7 +26,6 @@ v1_risk_meta_subset <- "metadata/risk/?risk_set_id=1"
 
 # Load names and hierarchies-----------------------------------------------------------------------
 
-names <- read.csv("v2ids_and_names.csv", header = TRUE)
 cause_hierarchy <- read.csv("v2cause_hierarchy.csv", header = TRUE)
 risk_hierarchy <- read.csv("v2risk_hierarchy.csv", header = TRUE)
 
@@ -94,18 +93,18 @@ make_data_subset <- function(URL){
 
 # after for loop-------------------
 
-#' merge_with_parent <- function(value_data, meta_subset){
-#'   #'Input: value_data as created by make_data_subset function
-#'   #'Output: data frame of value_data, now including parent data
-#'   #'Parent Data Fields: cause_id, cause_name, acause, sort_order, level, parent_id
-#'   #'cause_set_id is basically level?
-#' 
-#'   parent  <- jsonlite::fromJSON(paste0(v1_api_root, meta_subset,"&",key_text))
-#'   colnames(parent$data) <- parent$meta$fields
-#'   return(merge(value_data, as.data.frame(parent$data), by="cause_id"))
-#'   in code: # Add parent
-#'   #merged_cause_data <- merge_with_parent(v2cause, v1_cause_meta_subset)
-#' }
+merge_with_parent <- function(value_data, meta_subset){
+  #'Input: value_data as created by make_data_subset function
+  #'Output: data frame of value_data, now including parent data
+  #'Parent Data Fields: cause_id, cause_name, acause, sort_order, level, parent_id
+  #'cause_set_id is basically level?
+
+  parent  <- jsonlite::fromJSON(paste0(v1_api_root, meta_subset,"&",key_text))
+  colnames(parent$data) <- parent$meta$fields
+  return(merge(value_data, as.data.frame(parent$data), by="cause_id"))
+  in code: # Add parent
+  #merged_cause_data <- merge_with_parent(v2cause, v1_cause_meta_subset)
+}
 
 add_cause_hierarchy <- function(df) {
   return(merge(df, cause_hierarchy[1:6], by = "cause_id"))
@@ -116,7 +115,7 @@ add_risk_hierarchy <- function(df) {
 }
 
 make_numeric <- function(df) {
-  cols.num <- c(1:10, 12:14)
+  cols.num <- c(1:10, 13:15)
   df[cols.num] <- sapply(df[cols.num], as.numeric)
   return(df)
 }
@@ -148,20 +147,39 @@ get_data <- function(cause) {
   return(big_data)
 }
 
+causeData <- get_data(cause = TRUE)
+riskData <- get_data(cause = FALSE)
+
+# hierarchy using METADATA ----------------------------
+
 # Risk
-v2risk_data <- get_data(cause = FALSE) %>%
-  add_risk_hierarchy() %>%
-  select(-cause_id, -rei_type) %>%
+v2risk_data_meta <- riskData %>%
+  merge_with_parent(value_data = ., meta_subset = risk_meta_subset, merge_by = 'risk_id') %>%
+  select(-cause_id) %>%
   make_numeric()
 
 
 # Cause
-v2cause_data <- get_data(cause = TRUE) %>%
-  add_hierarchy() %>%
-  select(-cause_outline) %>%
+v2cause_data_meta <- causeData %>%
+  merge_with_parent(value_data = ., meta_subset = cause_meta_subset, merge_by = 'cause_id') %>%
   make_numeric()
 
+# hierarchy using supplemental CSVs ----------------------------
+# Risk
+v2risk_data_csv <- riskData %>%
+  add_risk_hierarchy() %>%
+  select(-cause_id, -rei_type) #%>%
+#make_numeric()
+
+# Cause
+v2cause_data_csv <- causeData %>%
+  add_cause_hierarchy() %>%
+  select(-cause_outline) #%>%
+#make_numeric()
+
 # # Save data-----------------------------------------------------------------------
+saveRDS(v2risk_data_meta, file = "v2risk_data.RDS")
+saveRDS(v2cause_data_meta, file = "v2cause_data.RDS")
 # 
 # myDrive <- getwd()  # Root location of CBD project
 # myPlace <- paste0(myDrive,"/myCBD") 
