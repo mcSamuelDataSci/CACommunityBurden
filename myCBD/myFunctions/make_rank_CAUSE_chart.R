@@ -9,6 +9,8 @@ if(1==2) {
   myLev = "lev2"
   myN = 10
   myYear = 2017
+
+  library(tidyr)
 }  
   
 #ordering dataset, replaces short names with full names

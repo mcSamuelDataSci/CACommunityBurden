@@ -48,6 +48,7 @@ library(shinyjs)
 library(shinyWidgets)
 
 library(dplyr)
+library(tidyr)
 library(magrittr)
 library(readxl)
 library(readr) 
