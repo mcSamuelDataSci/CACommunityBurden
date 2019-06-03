@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "real"
+whichData         <- "fake"
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
@@ -148,6 +148,80 @@ source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
 
 # --- Shiny Stuff and Constants -----------------------------------------------
+
+
+#--------------------
+
+
+
+deathMeasures <- c("Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate", "mean.age","SMR")
+
+deathMeasuresNames <- c(
+  "Number of deaths",
+  "Crude Death Rate per 100,000 population",
+  "Age-Adjusted Death Rate",
+  "Years of Life Lost (YLL)",
+  "YLL Rate per 100,000 population",
+  "Age-Adjusted YLL Rate",
+  "Mean Age at Death",
+  "Standard Mortality Ratio")
+
+deathMeasures_Dropdown         <- deathMeasures
+names(deathMeasures_Dropdown)  <- deathMeasuresNames
+
+deathMeasures_Revalue          <- deathMeasuresNames
+names(deathMeasures_Revalue)   <- deathMeasures
+
+shortList <- c(1,3,5,7,8)
+dM_short       <- deathMeasures[shortList]
+dMNames_short  <- deathMeasuresNames[shortList]
+dMDropdown_short <- deathMeasures_Dropdown[shortList]
+dMRevalue_short  <- deathMeasures_Revalue[shortList]
+
+#dMeasuresShort <- ....[1,3,5,7,8]
+
+
+
+lMeasuresShort   <- lMeasures[c(1,5,3,7,8)] #for ranking factors
+
+###This works for creating a variable to be used to assign long names to short names in the function. However, if we use that same input in the dashboard, it uses the short names (the names)
+#instead of the long names (the values). 
+
+
+# lMeasuresCShort <- lMeasuresC[c(1,5,3,7,8)]
+
+#For replacing values with full names in function
+#names(lMeasuresCShort) <- lMeasuresShort  
+
+
+#Names in dashboard dropdown
+
+lMeasures_dashboard <- c(
+  "Number of deaths",
+  "Crude Death Rate per 100,000 population",
+  "Age-Adjusted Death Rate",
+  "Years of Life Lost (YLL)",
+  "YLL Rate per 100,000 population",
+  "Age-Adjusted YLL Rate",
+  "Mean Age at Death",
+  "Standard Mortality Ratio")
+
+lMeasures_dashboardShort <- lMeasures_dashboard[c(1,5,3,7,8)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-----------------------
+
 
 lMeasures <- c("Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate", "mean.age","SMR")
 

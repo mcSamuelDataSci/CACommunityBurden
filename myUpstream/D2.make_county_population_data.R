@@ -26,6 +26,13 @@ ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard a
 aL      <-      ageMap$lAge
 aU      <- c(-1,ageMap$uAge)
 
+
+# === National Institutes of Health - SEER Data ==========================================================================================
+# U.S. Population Data - 1969-2017
+# county population estimates by age, sex, race, and Hispanic origin
+# https://seer.cancer.gov/popdata/
+  
+
 # === California DEPARTMENT OF FINANCE DATA ==========================================================================================
 
 tDatDOF  <- read_csv("https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv",col_types="_ciiiii") 

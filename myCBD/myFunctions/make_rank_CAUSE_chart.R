@@ -13,22 +13,25 @@ if(1==2) {
   library(tidyr)
 }  
   
+  
+  if(myLev=="lev3") myLev <- c("lev2","lev3")
+  
 #ordering dataset, replaces short names with full names
 temp <- datCounty %>% gather(key = "type", value = "measure", Ndeaths,YLLper,aRate,mean.age,SMR)  %>% 
                       select(year,sex,Level,CAUSE,county,type,measure) %>%
-                      mutate(type = factor(type,levels= lMeasuresShort))    %>% #orders factor
-                      mutate(type = plyr::revalue(type, lMeasuresCShort))    %>% #replaces values with full name labels
+                      mutate(type = factor(type,levels= dM_short))    %>% #orders factor
+                      mutate(type = plyr::revalue(type, dMRevalue_short))    %>% #replaces values with full name labels
                       left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))  
 
 #create a vector of CAUSE for top N 
 temp_N_cause <- temp %>%
-  filter(sex == mySex, Level == myLev, year == myYear, county == myCounty) %>%
+  filter(sex == mySex, Level %in% myLev, year == myYear, county == myCounty) %>%
   group_by(type) %>% arrange(desc(measure)) %>% dplyr::slice(1:myN) %>% #this selects the top N rows for myOSHPDtype
   filter(type == myMeasure) %>% ungroup() %>% pull(CAUSE)
 
 #creates dataframe with data only for CAUSEs from temp_N_cause, i.e. the top N CAUSES for the specified temp_N_cause        
    plotData <-     temp %>%
-                   filter(!is.na(CAUSE), Level == myLev, county == myCounty, CAUSE %in% temp_N_cause) %>% 
+                   filter(!is.na(CAUSE), Level %in% myLev, county == myCounty, CAUSE %in% temp_N_cause) %>% 
                    filter(sex == mySex, year == myYear) %>%
                    group_by(type)    %>% 
                    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 

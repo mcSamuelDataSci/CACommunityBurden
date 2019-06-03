@@ -18,6 +18,12 @@
 
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
+
+#names(lMeasures) <- lMeasuresC
+
+
+
+
 # function used as "short-cut" when making criteria for conditionals below
 fC <- function(vec) {
   tRep <- length(vec)-1
@@ -147,12 +153,12 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
  # myMeasure
  conditionalPanel(condition = fC(c(22,23,34,44,55,56,66)), 
    actionButton( "measureHelp", label="?",style=myButtonSty) ,
-   radioButtons(  "myMeasure",  "Measure:", choices=lMeasures, selected="YLLper")),
+   radioButtons(  "myMeasure",  "Measure:", choices=deathMeasures_Dropdown, selected="YLLper")),
  
  # myMeasureShort
  conditionalPanel(condition = fC(c(33)),
    #actionButton( "measureHelp", label="?",style=myButtonSty) ,              
-   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=lMeasures_dashboardShort, selected="YLL Rate per 100,000 population")),
+   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=dMNames_short, selected="YLL Rate per 100,000 population")),
  
  # myCutSystem
  conditionalPanel(condition = fC(c(22,23)),
