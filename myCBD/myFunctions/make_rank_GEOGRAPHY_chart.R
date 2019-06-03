@@ -30,7 +30,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
                  dat.1     <- datComm  %>% filter(county==myLHJ,yearG==yearGrp,sex==mySex,CAUSE==myCause, comID != "Unknown")  %>%
                  arrange(!is.na(plotter),plotter) %>%
                  mutate(lab =wrap.labels(comName,30))
-    tit       <- paste0("Community Ranking of ",lMeasuresC[lMeasures==myMeasure]," for ",causeLab," in ",myLHJ," in ",yearGrp,sexLab) 
+    tit       <- paste0("Community Ranking of ",deathMeasuresNames[deathMeasures == myMeasure]," for ",causeLab," in ",myLHJ," in ",yearGrp,sexLab) 
     sMeasure  <- datCounty$plotter[datCounty$county==myLHJ]
     }
     
@@ -38,7 +38,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     
     if (!cZoom) { dat.1     <- datCounty  %>%   arrange(!is.na(plotter),plotter) %>%
                                  mutate(lab =county)
-                 tit       <- paste0("County Ranking of ",lMeasuresC[lMeasures==myMeasure]," for ",causeLab," in ",myYear,sexLab)
+                 tit       <- paste0("County Ranking of ",deathMeasuresNames[deathMeasures == myMeasure]," for ",causeLab," in ",myYear,sexLab)
                  sMeasure  <- dat.1$plotter[dat.1$county==STATE]
                  }
   
@@ -57,13 +57,13 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,
                       border="black",
                       offset=0,
-                      xlab=names(lMeasures[lMeasures==myMeasure]))
+                      xlab=names(deathMeasuresNames[deathMeasures == myMeasure]))
     
     grid(nx=NULL,ny=NA)
     # t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,add=TRUE,
     #                   border="black",
     #                   offset=0,
-    #                   xlab=names(lMeasures[lMeasures==myMeasure]))
+    #                   xlab=names(deathMeasuresNames[deathMeasures == myMeasure]))
     # 
     
     axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1)

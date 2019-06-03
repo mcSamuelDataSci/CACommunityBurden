@@ -334,14 +334,14 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
-    tabPanel("HOSPITAL DISCHARGE (1)",
-          br(),
-          plotOutput("OSHPD1", height=700), value = 68),
+#    tabPanel("HOSPITAL DISCHARGE (1)",
+#          br(),
+#          plotOutput("OSHPD1", height=700), value = 68),
 
-   tabPanel("HOSPITAL DISCHARGE (2)",
-          br(),
-          plotlyOutput("OSHPD2", height=700),
-          value = 69),
+#   tabPanel("HOSPITAL DISCHARGE (2)",
+#          br(),
+#          plotlyOutput("OSHPD2", height=700),
+#          value = 69),
 
   tabPanel("MDC/DRG",
            br(),

@@ -21,7 +21,7 @@ dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-myTit <- paste0("Trend in ",lMeasuresC[lMeasures==myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ," by RACE/ETHNIC Group*, ",minYear," to ",maxYear)
+myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ," by RACE/ETHNIC Group*, ",minYear," to ",maxYear)
 myTit <-  wrap.labels(myTit,80)
 
 mySize1 <- 18
@@ -47,7 +47,7 @@ myMin      <- ifelse(myLogTrans,NA,0)
     geom_dl(aes(label = raceName), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
     geom_dl(aes(label = raceName), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
     labs(title =myTit,size=mySize2) +
-    labs(y = lMeasuresC[lMeasures==myMeasure]) +
+    labs(y = deathMeasuresNames[deathMeasures == myMeasure]) +
    labs(caption = raceNote) +
    theme_bw() +
     theme(axis.text=element_text(size=mySize1),

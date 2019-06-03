@@ -48,7 +48,7 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLL
     myTitGeo   <- " by Community"
     }  
   
- myTit  <- paste0(lMeasuresC[lMeasures==myMeasure],
+ myTit  <- paste0(deathMeasuresNames[deathMeasures == myMeasure],
                     " from ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
                     " in ",myTitYear,myTitGeo,sexLab,geoLab)
  myTit  <- wrap.labels(myTit,80)
@@ -91,7 +91,7 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal, 
                                style="fixed", breaks=myBreaks,
                                colorNA="white",
-                               title = lMeasuresC[lMeasures==myMeasure],
+                               title = deathMeasuresNames[deathMeasures == myMeasure],
                                textNA = "0 deaths/or suppressed",
                                interval.closure="right",
                               #legend.hist=T,

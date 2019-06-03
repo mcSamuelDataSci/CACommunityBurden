@@ -230,7 +230,7 @@ geoLabel   <- renderText({if (input$myLHJ==STATE)      geoLab    <- ""      else
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
 
 output$map_title <- renderUI({h4(strong(
-                    HTML(paste0(   lMeasuresC[lMeasures == input$myMeasure],
+                    HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
                                    " from ",
                                    fullCauseList[fullCauseList[,"LABEL"]==input$myCAUSE,"nameOnly"][1],     # FIX this [1] here now since second element is NA
                                    " in ",span(timeLabel(),style="color:blue"),

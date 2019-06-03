@@ -64,7 +64,7 @@ rankCauseSex  <- function(myLHJ="CALIFORNIA",myMeasure = "YLL",myYear=2017,myLev
  ## dat.1$info<-dat.1$order
 
   # Creating Title variable
-  myMeasureAlias <-  lMeasuresC[lMeasures==myMeasure]
+  myMeasureAlias <-  deathMeasuresNames[deathMeasures == myMeasure]
 
   # Plot (https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets)
   g <- ggplot(dat.1, aes(x=order,y=info)) +
