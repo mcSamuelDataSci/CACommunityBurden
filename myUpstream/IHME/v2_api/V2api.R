@@ -4,9 +4,7 @@ library(docstring)
 options(stringsAsFactors=FALSE)
 options(max.print = 50)
 
-
 # IHME API key, v2 root, and subsets-----------------------------------------------------------------------
-
 
 ihme_key <- "5a4fc200e1af720001c84cf91e34303eca334ffa8a35722aac008232"
 key_text <- paste0("authorization=",ihme_key)
@@ -23,45 +21,6 @@ v1_cause_meta_subset <- "metadata/cause/?cause_set_id=3"
 v1_risk_meta_subset <- "metadata/risk/?risk_set_id=1"
 
 # “2017” (for GBD rounds) and “single/multi” (for single-year data vs. cross-year data – version 2’s bigger than version 1)
-
-# Load names and hierarchies-----------------------------------------------------------------------
-
-cause_hierarchy <- read.csv("v2cause_hierarchy.csv", header = TRUE)
-risk_hierarchy <- read.csv("v2risk_hierarchy.csv", header = TRUE)
-
-# Format Hierarchies-----------------------------------------------------------------------
-
-format_risk <- function(risk_hierarchy) {
-  risk_groups <- c('Environmental/ occupational risks',
-                   'Behavioral risks',
-                   'Metabolic risks')
-  risk_hierarchy$first_parent <- ifelse(risk_hierarchy$sort_order %in% c(2, 8:39), risk_groups[1],
-                                        ifelse(risk_hierarchy$sort_order %in% c(3, 40:81), risk_groups[2],
-                                               ifelse(risk_hierarchy$sort_order %in% c(4, 82:87), risk_groups[3],'0')))
-  return(risk_hierarchy)
-}
-
-risk_hierarchy = format_risk(risk_hierarchy)
-
-format_cause <- function(cause_hierarchy) {
-  cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
-                    'Non-communicable diseases',
-                    'Injuries')
-
-  for (row in 1:nrow(cause_hierarchy)) {
-    if (substr(cause_hierarchy[row, 5], 0, 1) == 'A') {
-      cause_hierarchy$firstparent[row] = cause_groups[1]
-    } else if (substr(cause_hierarchy[row, 5], 0, 1) == 'B') {
-      cause_hierarchy$firstparent[row] = cause_groups[2]
-    } else if (substr(cause_hierarchy[row, 5], 0, 1) == 'C') {
-      cause_hierarchy$firstparent[row] = cause_groups[3]
-    }
-  }
-  return(cause_hierarchy)
-}
-
-cause_hierarchy = format_cause(cause_hierarchy)
-
 
 # Define functions-----------------------------------------------------------------------
 
@@ -93,6 +52,16 @@ make_data_subset <- function(URL){
 
 # after for loop-------------------
 
+parent_recursive <- function(row, df) {
+  if (row[,'level'] == 0) {
+    return('0')
+  } else if (row[,'level'] == 1) {
+    return(row[,'id_name'])
+  } else {
+    parent_recursive(df[which(df[,'id_num'] == row[,'parent_id']), ], df)
+  }
+}
+
 merge_with_parent <- function(value_data, meta_subset){
   #'Input: value_data as created by make_data_subset function
   #'Output: data frame of value_data, now including parent data
@@ -101,23 +70,24 @@ merge_with_parent <- function(value_data, meta_subset){
 
   parent  <- jsonlite::fromJSON(paste0(v1_api_root, meta_subset,"&",key_text))
   colnames(parent$data) <- parent$meta$fields
-  return(merge(value_data, as.data.frame(parent$data), by="cause_id"))
-  in code: # Add parent
-  #merged_cause_data <- merge_with_parent(v2cause, v1_cause_meta_subset)
-}
-
-add_cause_hierarchy <- function(df) {
-  return(merge(df, cause_hierarchy[1:6], by = "cause_id"))
-}
-
-add_risk_hierarchy <- function(df) {
-  return(merge(df, risk_hierarchy[1:6], by.x = "risk_id", by.y = "rei_id"))
+  parent <- as.data.frame(parent$data) %>%
+    rename('id_num' = 1, 'id_name' = 2, 'display' = 3)
+  
+  for (row in 1:nrow(parent)) {  # Use apply() here?
+    parent[row, 'first_parent'] <- parent_recursive(parent[row,], parent)
+  }
+  
+  parent <- parent %>%
+    mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
+                          ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
+  
+  return(merge(value_data, parent, by='id_num'))
 }
 
 make_numeric <- function(df) {
-  cols.num <- c(1:10, 13:15)
+  cols.num <- c(1:10, 13, 15)
   df[cols.num] <- sapply(df[cols.num], as.numeric)
-  return(df)
+  df[,8:10] <-round(df[,8:10],4)  # Is 4 the right number of decimal places?
 }
 
 
@@ -150,36 +120,29 @@ get_data <- function(cause) {
 causeData <- get_data(cause = TRUE)
 riskData <- get_data(cause = FALSE)
 
-# hierarchy using METADATA ----------------------------
-
 # Risk
-v2risk_data_meta <- riskData %>%
-  merge_with_parent(value_data = ., meta_subset = risk_meta_subset, merge_by = 'risk_id') %>%
+v2risk_data <- riskData %>%
+  rename('id_num' = 'risk_id') %>% # Could change to id_name = risk_short_name
+  merge_with_parent(value_data = ., meta_subset = risk_meta_subset) %>%
+  mutate(display = 'risk') %>%
   select(-cause_id) %>%
   make_numeric()
 
-
 # Cause
-v2cause_data_meta <- causeData %>%
-  merge_with_parent(value_data = ., meta_subset = cause_meta_subset, merge_by = 'cause_id') %>%
+v2cause_data <- causeData %>%
+  rename('id_num' = 'cause_id') %>%
+  merge_with_parent(value_data = ., meta_subset = cause_meta_subset) %>%
+  mutate(display = 'cause') %>%
   make_numeric()
 
-# hierarchy using supplemental CSVs ----------------------------
-# Risk
-v2risk_data_csv <- riskData %>%
-  add_risk_hierarchy() %>%
-  select(-cause_id, -rei_type) #%>%
-#make_numeric()
-
-# Cause
-v2cause_data_csv <- causeData %>%
-  add_cause_hierarchy() %>%
-  select(-cause_outline) #%>%
-#make_numeric()
 
 # # Save data-----------------------------------------------------------------------
-saveRDS(v2risk_data_meta, file = "v2risk_data.RDS")
-saveRDS(v2cause_data_meta, file = "v2cause_data.RDS")
+output <- bind_rows(v2cause_data, v2risk_data)
+saveRDS(output, file = "v2data.RDS")
+
+# saveRDS(v2risk_data_meta, file = "v2risk_data.RDS")
+# saveRDS(v2cause_data_meta, file = "v2cause_data.RDS")
+
 # 
 # myDrive <- getwd()  # Root location of CBD project
 # myPlace <- paste0(myDrive,"/myCBD") 
