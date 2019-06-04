@@ -198,7 +198,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
 
 # myOSHPDtype-mdcdrg
 conditionalPanel(condition = fC(c(70)),
-                 selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCNames_short)),
+                 selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down)),
 
 
 #myVar(MDC/DRG)

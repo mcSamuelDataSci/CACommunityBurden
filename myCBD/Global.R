@@ -176,7 +176,8 @@ names(deathMeasures_Revalue)   <- deathMeasures
 shortdeathList <- c(1,3,5,7,8)
 dM_short       <- deathMeasures[shortdeathList]
 dMNames_short  <- deathMeasuresNames[shortdeathList]
-dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
+
+#dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
 dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
 
 
@@ -200,8 +201,11 @@ hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown men
 
 
 #for mdc_drg
+
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
 hMDCNames_short <- hospMeasuresNames[shortMDCList]
+
+hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
 
 MDC_DRG <- c("mdc", "drg")
 MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")
