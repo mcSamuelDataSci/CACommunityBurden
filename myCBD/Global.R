@@ -195,8 +195,8 @@ names(hospMeasures_Revalue) <- hospMeasures
 
 shorthospList <- c(-2, -6)
 shortMDCList <- c(-2,-3,-4,-6,-8)
-hM_short <- hospMeasures[shorthospList] #Used in shiny app dropdown menu
-hMNames_short <- hospMeasuresNames[shorthospList]
+hM_short <- hospMeasures[shorthospList] 
+hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
 
 
 #for mdc_drg

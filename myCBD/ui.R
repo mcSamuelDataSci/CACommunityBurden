@@ -150,7 +150,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
  conditionalPanel(condition = fC(c(33,34,68,69,70)),
    numericInput( "myN",        "How Many:", value=10,min=1,max= 50)),
  
- # myMeasure--WHERE IS THIS USED? 
+ # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?) 
  conditionalPanel(condition = fC(c(22,23,34,44,55,56,66)), 
    actionButton( "measureHelp", label="?",style=myButtonSty) ,
    radioButtons(  "myMeasure",  "Measure:", choices=deathMeasures_Dropdown, selected="YLLper")),
