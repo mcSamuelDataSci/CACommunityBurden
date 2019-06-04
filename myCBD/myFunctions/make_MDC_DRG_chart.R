@@ -12,7 +12,7 @@ mdc_drg_plot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospi
   
   #sorts that based on the ordering variable (eg n_hosp), it pulls the top N rows for n_hosp, and those variables are what are the corresponding conditions for all the other values
   #create a vector of CAUSE for top N of myOSHPDtype
-mdc_drg <- mdc_drg %>% mutate(type = plyr::revalue(type, hospDiscMeasuresShort2)) %>% 
+mdc_drg <- mdc_drg %>% mutate(type = plyr::revalue(type, hMDCRevalue_short)) %>% 
     mutate(measure = case_when(type == "Number of Hospitalizations" ~ measure,
                                type == "Total Charges" ~ measure/1000,
                               type == "Average Charges" ~ measure/1000)) %>%
