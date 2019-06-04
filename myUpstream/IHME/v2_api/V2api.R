@@ -4,9 +4,7 @@ library(docstring)
 options(stringsAsFactors=FALSE)
 options(max.print = 50)
 
-
 # IHME API key, v2 root, and subsets-----------------------------------------------------------------------
-
 
 ihme_key <- "5a4fc200e1af720001c84cf91e34303eca334ffa8a35722aac008232"
 key_text <- paste0("authorization=",ihme_key)
@@ -62,7 +60,6 @@ format_cause <- function(cause_hierarchy) {
 
 cause_hierarchy = format_cause(cause_hierarchy)
 
-
 # Define functions-----------------------------------------------------------------------
 
 # in for loop-------------------
@@ -102,7 +99,8 @@ merge_with_parent <- function(value_data, meta_subset){
   parent  <- jsonlite::fromJSON(paste0(v1_api_root, meta_subset,"&",key_text))
   colnames(parent$data) <- parent$meta$fields
   return(merge(value_data, as.data.frame(parent$data), by="cause_id"))
-  in code: # Add parent
+  
+  # Add parent
   #merged_cause_data <- merge_with_parent(v2cause, v1_cause_meta_subset)
 }
 
@@ -180,6 +178,8 @@ v2cause_data_csv <- causeData %>%
 # # Save data-----------------------------------------------------------------------
 saveRDS(v2risk_data_meta, file = "v2risk_data.RDS")
 saveRDS(v2cause_data_meta, file = "v2cause_data.RDS")
+
+
 # 
 # myDrive <- getwd()  # Root location of CBD project
 # myPlace <- paste0(myDrive,"/myCBD") 
