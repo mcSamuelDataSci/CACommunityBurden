@@ -11,34 +11,15 @@ library(shinyWidgets)
 
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("v1API_endpoints.csv", header = TRUE)
-
-cause_data <- readRDS("v2cause_data.rds") %>%
-  rename('id_num' = 'cause_id', 'id_name' = 'cause_name', 'display' = 'acause') %>%
-  mutate(display = 'cause')
-
-risk_data <- readRDS("v2risk_data.rds") %>%
-  rename('id_num' = 'risk_id', 'id_name' = 'risk_name', 'display' = 'risk_short_name') %>%
-  mutate(display = 'risk')
+data <- readRDS("v2data.RDS")
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
                   'Non-communicable diseases',
                   'Injuries')
 
-risk_groups <- c('Environmental/ occupational risks',
+risk_groups <- c('Environmental/occupational risks',
                  'Behavioral risks',
                  'Metabolic risks')
-
-cause_data$first_parent <- ifelse(cause_data$id_num %in% c(295:408), cause_groups[1],
-                                  ifelse(cause_data$id_num %in% c(409:686), cause_groups[2],
-                                         ifelse(cause_data$id_num >= 687, cause_groups[3],'0')))
-
-risk_data$first_parent <- ifelse(risk_data$sort_order %in% c(2:34), risk_groups[1],
-                                  ifelse(risk_data$sort_order %in% c(35:78), risk_groups[2],
-                                         ifelse(risk_data$sort_order >= 79, risk_groups[3],'0')))
-
-data <- bind_rows(cause_data, risk_data) %>%
-  mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
-                        ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
 
 # Define constants -----------------------------------------------------------------------
 # Play with them at your own risk
@@ -51,8 +32,8 @@ HEIGHT <- '197%'
 Y_SPACE_FACTOR <- 25
 LEGEND_SPACE_FACTOR <- 35
 
-CAUSE_YEARS <- sort(unique(cause_data$year_id))
-RISK_YEARS <- sort(unique(risk_data$year_id))
+CAUSE_YEARS <- 1980:2017  # sort(unique(cause_data$year_id))
+RISK_YEARS <- 1990:2017  # sort(unique(risk_data$year_id))
 EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 LEGEND_NODE_WIDTH_CONSTRAINT <- 196

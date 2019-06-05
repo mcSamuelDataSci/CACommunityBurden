@@ -17,14 +17,14 @@ cause_subset2016 <- "data/gbd/2016/cause/single/?"
 risk_subset2017 <- "data/gbd/2017/risk/single/?"
 risk_subset2016 <- "data/gbd/2016/risk/single/?"
 
-v1_cause_meta_subset <- "metadata/cause/?cause_set_id=3"
-v1_risk_meta_subset <- "metadata/risk/?risk_set_id=1"
+cause_meta_subset <- "metadata/cause/?cause_set_id=3"
+risk_meta_subset <- "metadata/risk/?risk_set_id=1"
 
 # “2017” (for GBD rounds) and “single/multi” (for single-year data vs. cross-year data – version 2’s bigger than version 1)
 
 # Define functions-----------------------------------------------------------------------
 
-# in for loop-------------------
+# Get Data functions-------------------
 
 make_url <- function(subset, measure_id, year_id="", location_id=527, sex_id, age_group_id=22, metric_id, risk_id="", cause_id="") {
   #' Make URL for cause endpoint. Two degrees of freedom for every endpoint means that you can 
@@ -50,7 +50,7 @@ make_data_subset <- function(URL){
   return(as.data.frame(data$data))
 }
 
-# after for loop-------------------
+# Format Data functions-------------------
 
 parent_recursive <- function(row, df) {
   if (row[,'level'] == 0) {
@@ -87,7 +87,8 @@ merge_with_parent <- function(value_data, meta_subset){
 make_numeric <- function(df) {
   cols.num <- c(1:10, 13, 15)
   df[cols.num] <- sapply(df[cols.num], as.numeric)
-  df[,8:10] <-round(df[,8:10],4)  # Is 4 the right number of decimal places?
+  df[,8:10] <- round(df[,8:10],4)  # Is 4 the right number of decimal places?
+  return(df)
 }
 
 
@@ -135,10 +136,9 @@ v2cause_data <- causeData %>%
   mutate(display = 'cause') %>%
   make_numeric()
 
-
-# # Save data-----------------------------------------------------------------------
 output <- bind_rows(v2cause_data, v2risk_data)
 saveRDS(output, file = "v2data.RDS")
+
 
 # saveRDS(v2risk_data_meta, file = "v2risk_data.RDS")
 # saveRDS(v2cause_data_meta, file = "v2cause_data.RDS")
