@@ -150,7 +150,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
  conditionalPanel(condition = fC(c(33,34,68,69,70)),
    numericInput( "myN",        "How Many:", value=10,min=1,max= 50)),
  
- # myMeasure
+ # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?) 
  conditionalPanel(condition = fC(c(22,23,34,44,55,56,66)), 
    actionButton( "measureHelp", label="?",style=myButtonSty) ,
    radioButtons(  "myMeasure",  "Measure:", choices=deathMeasures_Dropdown, selected="YLLper")),
@@ -193,18 +193,18 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
 
  # myOSHPDtype
  conditionalPanel(condition = fC(c(68,69)),
-                  selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hospMeasures2Short)),
+                  selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hMNames_short)),
 
 
 # myOSHPDtype-mdcdrg
 conditionalPanel(condition = fC(c(70)),
-                 selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hospMeasures3)),
+                 selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down)),
 
 
-#myVar
+#myVar(MDC/DRG)
 
   conditionalPanel(condition = fC(c(70)),
-                   selectInput("myVar", "Variable:", choice = mdc_drg_names)),
+                   selectInput("myVar", "Variable:", choice = MDCDRG_Dropdown)),
 
 
 
@@ -334,14 +334,14 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
-#    tabPanel("HOSPITAL DISCHARGE (1)",
-#          br(),
-#          plotOutput("OSHPD1", height=700), value = 68),
+    tabPanel("HOSPITAL DISCHARGE (1)",
+          br(),
+          plotOutput("OSHPD1", height=700), value = 68),
 
-#   tabPanel("HOSPITAL DISCHARGE (2)",
-#          br(),
-#          plotlyOutput("OSHPD2", height=700),
-#          value = 69),
+   tabPanel("HOSPITAL DISCHARGE (2)",
+          br(),
+          plotlyOutput("OSHPD2", height=700),
+          value = 69),
 
   tabPanel("MDC/DRG",
            br(),

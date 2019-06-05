@@ -173,43 +173,46 @@ names(deathMeasures_Dropdown)  <- deathMeasuresNames
 deathMeasures_Revalue          <- deathMeasuresNames
 names(deathMeasures_Revalue)   <- deathMeasures
 
-shortList <- c(1,3,5,7,8)
-dM_short       <- deathMeasures[shortList]
-dMNames_short  <- deathMeasuresNames[shortList]
-dMDropdown_short <- deathMeasures_Dropdown[shortList]
-dMRevalue_short  <- deathMeasures_Revalue[shortList]
+shortdeathList <- c(1,3,5,7,8)
+dM_short       <- deathMeasures[shortdeathList]
+dMNames_short  <- deathMeasuresNames[shortdeathList]
+
+#dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
+dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
 
 
 #This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
 #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
-  
-hospDiscMeasures <- c(n_hosp = "Number of Hospitalizations",
-                      cHospRate = "Crude Hosp Rate",
-                      ahospRate = "Age-Adjusted Hospitalization Rate",
-                      avg_los = "Average Length of Stay (Days)",
-                      charges = "Total Charges",
-                      cChargeRate = "Crude Charge Rate",
-                      avgcharge = "Average Charges",
-                      avgcharge_per_day = "Average Charges Per Day"
-                      )
-
-hospDiscMeasuresShort <- hospDiscMeasures[c(-2, -6)] #Not including Crude Hosp or Charge Rate
 
 
+hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day")
 
-#This is for labeling the dropdown menu of options--hospDiscMeasures vector won't work, it will use the abbreviated values (n_hosp etc) as the dropdown labels
-hospMeasures2 <- c("Number of Hospitalizations","Crude Hosp Rate", "Age-Adjusted Hospitalization Rate", "Average Length of Stay (Days)", "Total Charges", "Crude Charge Rate", "Average Charges", "Average Charges Per Day")
+hospMeasuresNames <- c("Number of Hospitalizations", "Crude Hospitalization Rate", "Age-Adjusted Hospitalization Rate", "Average Length of Stay (Days)", "Total Charges",
+                       "Crude Charge Rate", "Average Charges", "Average Charge per Day")
 
-hospMeasures2Short <- hospMeasures2[c(-2, -6)]
+hospMeasures_Revalue <- hospMeasuresNames #used in function to rename from short to long names
+names(hospMeasures_Revalue) <- hospMeasures
 
-#for mdc_drg
-hospDiscMeasuresShort2 <- hospDiscMeasures[c(-2,-3,-4,-6,-8)]
 
-mdc_drg_names <- c("Major Diagnostic Code" = "mdc", "Diagnostic Related Groups" = "drg")
+shorthospList <- c(-2, -6)
+shortMDCList <- c(-2,-3,-4,-6,-8)
+hM_short <- hospMeasures[shorthospList] 
+hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
 
 
 #for mdc_drg
-hospMeasures3 <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
+
+hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
+hMDCNames_short <- hospMeasuresNames[shortMDCList]
+
+hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
+
+MDC_DRG <- c("mdc", "drg")
+MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")
+
+MDCDRG_Dropdown <- MDC_DRG 
+names(MDCDRG_Dropdown) <- MDC_DRGNames
+
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)

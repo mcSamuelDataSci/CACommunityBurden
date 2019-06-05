@@ -1,5 +1,5 @@
 # removed discharge date for now?
-
+# https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
 
 # ====================================================================================================
 # "E3.Process_OSHPD_data.R" file                                                                     |
@@ -21,8 +21,8 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
-newData  <- FALSE
+whichData <- "real"   # "real" or "fake"
+newData  <- TRUE
 
 # fullOSHPD <- FALSE
 # sampleOSHPD <- TRUE
@@ -127,9 +127,9 @@ criticalNum <- 11
 
 # ungrouping important for subsequent data set merging
 popTract         <- readRDS(path(upPlace,"/upData/popTract2013.RDS")) %>% ungroup() 
-popTractSex      <- filter(popTract,ageG == "Total")
 popTractSexAgeG  <- filter(popTract,ageG != "Total")
 
+popTractSex      <- filter(popTract,ageG == "Total")
 popCommSex       <- popTractSex     %>% group_by(yearG,county,comID,sex)      %>% summarise(pop=sum(pop))  %>% ungroup()  
 popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG,county,comID,sex,ageG) %>% summarise(pop=sum(pop))  %>% ungroup() 
 
@@ -798,4 +798,4 @@ chord_any_primary <- group_any_primary %>%  select(primary_name, any_name, n_hos
 
 chordDiagram(chord_any_primary, transparency = 0.1, directional = 1) #directional = 1 means from col1 to col2
 
-#This doesn't plot quite how I want it though............
+#This isn't great either......
