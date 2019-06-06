@@ -68,10 +68,14 @@ merge_with_parent <- function(value_data, meta_subset){
   #'Parent Data Fields: cause_id, cause_name, acause, sort_order, level, parent_id
   #'cause_set_id is basically level?
 
-  parent  <- jsonlite::fromJSON(paste0(v1_api_root, meta_subset,"&",key_text))
+  parent  <- jsonlite::fromJSON(paste0(v2_api_root, meta_subset,"&",key_text))
   colnames(parent$data) <- parent$meta$fields
   parent <- as.data.frame(parent$data) %>%
     rename('id_num' = 1, 'id_name' = 2, 'display' = 3)
+  
+  if (meta_subset == risk_meta_subset) {
+    parent[2,'id_name'] <- 'Environmental/ occupational risks'
+  }
   
   for (row in 1:nrow(parent)) {  # Use apply() here?
     parent[row, 'first_parent'] <- parent_recursive(parent[row,], parent)
@@ -129,6 +133,7 @@ v2risk_data <- riskData %>%
   select(-cause_id) %>%
   make_numeric()
 
+
 # Cause
 v2cause_data <- causeData %>%
   rename('id_num' = 'cause_id') %>%
@@ -137,16 +142,11 @@ v2cause_data <- causeData %>%
   make_numeric()
 
 output <- bind_rows(v2cause_data, v2risk_data)
-saveRDS(output, file = "v2data.RDS")
+# saveRDS(output, file = "v2data.RDS")
 
-
-# saveRDS(v2risk_data_meta, file = "v2risk_data.RDS")
-# saveRDS(v2cause_data_meta, file = "v2cause_data.RDS")
-
-# 
-# myDrive <- getwd()  # Root location of CBD project
-# myPlace <- paste0(myDrive,"/myCBD") 
-# saveRDS(output_data, file = path(myPlace,"/myData/cause_data.rds"))
+myDrive <- getwd()  # Root location of CBD project
+myPlace <- paste0(myDrive,"/myCBD")
+saveRDS(output_data, file = path(myPlace,"/myData/v2IHME.rds"))
 # 
 # # See new cause ids-----------------------------------------------------------------------
 # 
