@@ -18,37 +18,13 @@ shinyServer(function(input, output,session) {
 # IHME WORK (TEMP) ########################  
   #source(paste0(myPlace,"/IHMEwork/arrows_Server.Part.R"))
   
-  
-  output$available_years <- renderUI({
-     sliderTextInput("yearX",
-                     label = h4("Years:"),
-                     choices = valid_years(input$displayX),
-                     selected = range(valid_years(input$displayX)),
-                     grid = TRUE)
-   })
-  
-  
-  
   output$network <- renderVisNetwork({
-    
-    # We must require data input is valid before outputting plot so that temporary
-    # error messages don't appear during processing lag time.
-    
-     requirements(input$displayX, input$yearX)
-    
     nodes_and_edges <- create_nodes(input$levelX, input$measureX, input$sexX, input$metricX,
                                     input$yearX[1], input$yearX[2], input$displayX)
                                     nodes <- nodes_and_edges$nodes
     edges <- nodes_and_edges$edges
-    
     vis_network(nodes, edges, input$displayX)
   })
-  
-  
-  
-  
-  
-  
   
   
 # -------------------------------------------------------------------------------  
