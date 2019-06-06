@@ -6,8 +6,8 @@
 
 endpoints <- read.csv(path(myPlace,"/myInfo/","IHME_API_endpoints.csv"), header = TRUE)
 
-data <- readRDS(paste0(myPlace, "/myData/v2IHME.RDS"))
-
+data <- readRDS(paste0(myPlace, "/myData/v2IHME.RDS")) %>%
+  subset(., year_id >= 1990) 
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
                   'Non-communicable diseases',

@@ -11,7 +11,9 @@ library(shinyWidgets)
 
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("v1API_endpoints.csv", header = TRUE)
-data <- readRDS("v2IHME.RDS")
+
+data <- readRDS("v2IHME.RDS") %>%
+  subset(., year_id >= 1990)
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
                   'Non-communicable diseases',
