@@ -174,10 +174,12 @@ ui <- fluidPage(
     # Inputs
     sidebarPanel(
       
-      selectInput("display",
-                  label = h4("Display:"),
-                  choices = list("Cause" = "cause", "Risk" = "risk"),
-                  selected = "risk"),
+      radioGroupButtons(
+        inputId = "display", label = h4("Display:"), 
+        choices = c("Cause" = "cause", "Risk" = "risk"),
+        selected = "risk",
+        justified = TRUE, status = "primary",
+      ),
       
       sliderInput("level",
                   label = h4("Level:"),
@@ -197,15 +199,19 @@ ui <- fluidPage(
                       selected = range(VALID_YEARS),
                       grid = TRUE),
       
-      selectInput("sex",
-                  label = h4("Sex:"),
-                  choices = list("Male" = 1, "Female" = 2, "Both" = 3),
-                  selected = 3),
+      radioGroupButtons(
+        inputId = "sex", label = h4("Sex:"), 
+        choices = c("Male" = 1, "Female" = 2, "Both" = 3),
+        selected = 3,
+        justified = TRUE, status = "primary"
+      ),
       
-      selectInput("metric", 
-                  label = h4("Metric/Units:"),
-                  choices = list("Number" = 1, "Percent" = 2, "Rate" = 3),
-                  selected = 1)
+      radioGroupButtons(
+        inputId = "metric", label = h4("Metric:"), 
+        choices = c("#" = 1, "Rate" = 3, "%" = 3),
+        selected = 3,
+        justified = TRUE, status = "primary"
+      )
     ),
     # Outputs
     mainPanel(
