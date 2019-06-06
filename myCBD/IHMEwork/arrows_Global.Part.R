@@ -6,16 +6,7 @@
 
 endpoints <- read.csv(path(myPlace,"/myInfo/","IHME_API_endpoints.csv"), header = TRUE)
 
-cause_data <- readRDS(path(myPlace,"/myData/cause_data.rds")) %>%
-  rename('id_num' = 'cause_id', 'id_name' = 'cause_name', 'display' = 'acause') %>%
-  mutate(display = 'cause')
-
-risk_data <- readRDS(path(myPlace,"/myData/risk_data.rds")) %>%
-  select(-cause_id) %>%
-  rename('id_num' = 'risk_id', 'id_name' = 'risk_name', 'display' = 'risk_short_name') %>%
-  mutate(display = 'risk')
-
-
+data <- readRDS(paste0(myPlace, "/myData/v2IHME.RDS"))
 
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
@@ -26,19 +17,8 @@ risk_groups <- c('Environmental/ occupational risks',
                  'Behavioral risks',
                  'Metabolic risks')
 
-cause_data$first_parent <- ifelse(cause_data$id_num %in% c(295:408), cause_groups[1],
-                                  ifelse(cause_data$id_num %in% c(409:686), cause_groups[2],
-                                         ifelse(cause_data$id_num >= 687, cause_groups[3],'0')))
-
-risk_data$first_parent <- ifelse(risk_data$sort_order %in% c(2:34), risk_groups[1],
-                                  ifelse(risk_data$sort_order %in% c(35:78), risk_groups[2],
-                                         ifelse(risk_data$sort_order >= 79, risk_groups[3],'0')))
-
-data <- bind_rows(cause_data, risk_data) %>%
-  mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
-                        ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
-
 # Define constants -----------------------------------------------------------------------
+VALID_YEARS <- c(1990:2017)
 # Play with them at your own risk
 MAX_NODES <- 25
 LABEL_LENGTH <- 30
@@ -49,8 +29,6 @@ HEIGHT <- '197%'
 Y_SPACE_FACTOR <- 25
 LEGEND_SPACE_FACTOR <- 35
 
-CAUSE_YEARS <- sort(unique(cause_data$year_id))
-RISK_YEARS <- sort(unique(risk_data$year_id))
 EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 LEGEND_NODE_WIDTH_CONSTRAINT <- 196
@@ -184,27 +162,4 @@ vis_network <- function(nodes, edges, display) {
     visGroups(groupname = groups[2], color = '#C6E2FF') %>%
     visGroups(groupname = groups[3], color = '#A0DCA4') %>%
     visHierarchicalLayout()
-}
-
-# Need to update years because cause and risk data sets have data available for different sets of years
-valid_years <- function(display) {
-  if (display == "cause") {
-    years <- CAUSE_YEARS
-  }
-  else {
-    years <- RISK_YEARS
-  }
-  return(years)
-}
-
-requirements <- function(display, years) {
-  req(years[1] != years[2])
-  if (req(display) == "risk") {
-    req(years[1] %in% RISK_YEARS)
-    req(years[2] %in% RISK_YEARS)
-  }
-  else {
-    req(years[1] %in% CAUSE_YEARS)
-    req(years[2] %in% CAUSE_YEARS)
-  }
 }

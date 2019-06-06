@@ -23,7 +23,11 @@ conditionalPanel(condition = fC(c(90)),
                   choices = list("Deaths" = 1, "DALYs (Disability-Adjusted Life Years)" = 2, "YLDs (Years Lived with Disability)" = 3, "YLLs (Years of Life Lost)" = 4),
                   selected = 3),
       
-      uiOutput("available_years"),
+      sliderTextInput("yearX",
+                      label = h4("Years:"),
+                      choices = as.character(VALID_YEARS),
+                      selected = range(VALID_YEARS),
+                      grid = TRUE),
       
       selectInput("sexX",
                   label = h4("Sex:"),
