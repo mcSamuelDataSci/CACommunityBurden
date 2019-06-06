@@ -11,7 +11,7 @@ library(shinyWidgets)
 
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("v1API_endpoints.csv", header = TRUE)
-data <- readRDS("v2data.RDS")
+data <- readRDS("v2IHME.RDS")
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
                   'Non-communicable diseases',
@@ -33,8 +33,6 @@ HEIGHT <- '197%'
 Y_SPACE_FACTOR <- 25
 LEGEND_SPACE_FACTOR <- 35
 
-CAUSE_YEARS <- c(1980:2017)  # sort(unique(cause_data$year_id))
-RISK_YEARS <- c(1990:2017)  # sort(unique(risk_data$year_id))
 EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 LEGEND_NODE_WIDTH_CONSTRAINT <- 196

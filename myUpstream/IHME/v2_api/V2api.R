@@ -91,6 +91,7 @@ merge_with_parent <- function(value_data, meta_subset){
 make_numeric <- function(df) {
   cols.num <- c(1:10, 13, 15)
   df[cols.num] <- sapply(df[cols.num], as.numeric)
+  df[df$metric_id == 2, 8:10] <- df[df$metric_id == 2, 8:10]*100
   df[,8:10] <- round(df[,8:10],4)  # Is 4 the right number of decimal places?
   return(df)
 }
@@ -142,6 +143,7 @@ v2cause_data <- causeData %>%
   make_numeric()
 
 output <- bind_rows(v2cause_data, v2risk_data)
+
 # saveRDS(output, file = "v2data.RDS")
 
 myDrive <- getwd()  # Root location of CBD project
