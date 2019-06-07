@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- TRUE
 
 # fullOSHPD <- FALSE
@@ -221,13 +221,17 @@ oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = s
 #Calculating charge/day from los_adj and charges
 
 oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
-###-------------------------------------------OSHPD CHARGE AND CHARGE_PER_TDAY 0 to NA ----------------------------------------------#
+###-------------------------------------------OSHPD CHARGE AND CHARGE_PER_TDAY 0 and 1 to NA ----------------------------------------------#
 
-oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
+#oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
 
-oshpd16$charge[oshpd16$charge == 0] <- NA
+oshpd16$charge[oshpd16$charge == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
 
-oshpd16$charge_per_day[oshpd16$charge_per_day == 0] <- NA
+oshpd16$charge[oshpd16$charge == 1] <- NA
+
+oshpd16$charge_per_day[oshpd16$charge_per_day == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
+
+oshpd16$charge_per_day[oshpd16$charge_per_day == 1] <- NA
 
 
 #-------------Group by statement testing------------------------------------------------------------------#
