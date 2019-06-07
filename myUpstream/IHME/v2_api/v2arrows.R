@@ -12,13 +12,8 @@ library(shinyWidgets)
 # Load and format data-----------------------------------------------------------------------
 endpoints <- read.csv("v1API_endpoints.csv", header = TRUE)
 
-cause_data <- readRDS("v2cause_data.rds") %>%
-  rename('id_num' = 'cause_id', 'id_name' = 'cause_name', 'display' = 'acause') %>%
-  mutate(display = 'cause')
-
-risk_data <- readRDS("v2risk_data.rds") %>%
-  rename('id_num' = 'risk_id', 'id_name' = 'risk_name', 'display' = 'risk_short_name') %>%
-  mutate(display = 'risk')
+data <- readRDS("v2IHME.RDS") %>%
+  subset(., year_id >= 1990)
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
                   'Non-communicable diseases',
@@ -28,19 +23,8 @@ risk_groups <- c('Environmental/ occupational risks',
                  'Behavioral risks',
                  'Metabolic risks')
 
-cause_data$first_parent <- ifelse(cause_data$id_num %in% c(295:408), cause_groups[1],
-                                  ifelse(cause_data$id_num %in% c(409:686), cause_groups[2],
-                                         ifelse(cause_data$id_num >= 687, cause_groups[3],'0')))
-
-risk_data$first_parent <- ifelse(risk_data$sort_order %in% c(2:34), risk_groups[1],
-                                  ifelse(risk_data$sort_order %in% c(35:78), risk_groups[2],
-                                         ifelse(risk_data$sort_order >= 79, risk_groups[3],'0')))
-
-data <- bind_rows(cause_data, risk_data) %>%
-  mutate(level = ifelse(id_num %in% setdiff(id_num, parent_id) & level == 2, paste(2,3,4, sep =","),
-                        ifelse(id_num %in% setdiff(id_num, parent_id) & level == 3, paste(3,4, sep=","), level)))
-
 # Define constants -----------------------------------------------------------------------
+VALID_YEARS <- c(1990:2017)
 # Play with them at your own risk
 MAX_NODES <- 25
 LABEL_LENGTH <- 30
@@ -51,8 +35,6 @@ HEIGHT <- '197%'
 Y_SPACE_FACTOR <- 25
 LEGEND_SPACE_FACTOR <- 35
 
-CAUSE_YEARS <- sort(unique(cause_data$year_id))
-RISK_YEARS <- sort(unique(risk_data$year_id))
 EDGE_NODE_ADJUSTMENT <- LABEL_LENGTH*3.35
 NODE_WIDTH_CONSTRAINT <- LABEL_LENGTH*7.2
 LEGEND_NODE_WIDTH_CONSTRAINT <- 196
@@ -111,7 +93,6 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                            x = c(rep(LEFT_X+EDGE_NODE_ADJUSTMENT, NUM_NODES),
                                  rep(RIGHT_X-EDGE_NODE_ADJUSTMENT, NUM_NODES)),
                            y = label_nodes$y)
-  
 
   title_nodes <- data.frame(label = c("California", paste(switch(metric_id_in,
                                                                  '1' = 'Number',
@@ -184,36 +165,12 @@ vis_network <- function(nodes, edges, display) {
     visHierarchicalLayout()
 }
 
-# Need to update years because cause and risk data sets have data available for different sets of years
-valid_years <- function(display) {
-  if (display == "cause") {
-    years <- CAUSE_YEARS
-  }
-  else {
-    years <- RISK_YEARS
-  }
-  return(years)
-}
-
-requirements <- function(display, years) {
-  req(years[1] != years[2])
-  if (req(display) == "risk") {
-    req(years[1] %in% RISK_YEARS)
-    req(years[2] %in% RISK_YEARS)
-  }
-  else {
-    req(years[1] %in% CAUSE_YEARS)
-    req(years[2] %in% CAUSE_YEARS)
-  }
-}
-
-
 # SHINY-----------------------------------------------------------------------
 
 # UI---------------------------------------------------------------------------
 ui <- fluidPage(
   sidebarLayout(
-    # Inputs: Select variables to plot
+    # Inputs
     sidebarPanel(
       
       selectInput("display",
@@ -233,7 +190,11 @@ ui <- fluidPage(
                                  "YLDs (Years Lived with Disability)" = 3, "YLLs (Years of Life Lost)" = 4),
                   selected = 3),
       
-      uiOutput("available_years"),
+      sliderTextInput("year",
+                      label = h4("Years:"),
+                      choices = as.character(VALID_YEARS),
+                      selected = range(VALID_YEARS),
+                      grid = TRUE),
       
       selectInput("sex",
                   label = h4("Sex:"),
@@ -245,7 +206,7 @@ ui <- fluidPage(
                   choices = list("Number" = 1, "Percent" = 2, "Rate" = 3),
                   selected = 1)
     ),
-    # Output: Show diagram
+    # Outputs
     mainPanel(
       visNetworkOutput("network")
     )
@@ -255,29 +216,13 @@ ui <- fluidPage(
 # Server---------------------------------------------------------------------------
 
 server <- function(input, output) {
-  #  -----------------------------------------------------------------------
-  # Years input must be defined in server because it is reactive to the Display input.
-  # (Risk and Cause have different years of available data)
-  output$available_years <- renderUI({
-    sliderTextInput("year",
-                    label = h4("Years:"),
-                    choices = valid_years(input$display),
-                    selected = range(valid_years(input$display)),
-                    grid = TRUE)
-  })
-  
+
   output$network <- renderVisNetwork({
 
-    # We must require data input is valid before outputting plot so that temporary
-    # error messages don't appear during processing lag time.
-    requirements(input$display, input$year)
-
     nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
-                                    input$year[1], input$year[2], input$display)
-    nodes <- nodes_and_edges$nodes
-    edges <- nodes_and_edges$edges
+                                    paste(input$year[1]), paste(input$year[2]), input$display)
 
-    vis_network(nodes, edges, input$display)
+    vis_network(nodes_and_edges$nodes, nodes_and_edges$edges, input$display)
   })
 }
 

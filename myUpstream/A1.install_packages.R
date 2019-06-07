@@ -8,17 +8,17 @@
 
 
 #-OTHER/Misc.------------------------------------------------------------------------------------
-    install.packages("tidyverse")  # data "wrangling" and other stuff
-  # install.packages("fs")         # for path() function -- # installed with tidyverse
+  # install.packages("tidyverse")  # data "wrangling" and other stuff
+    install.packages("fs")         # for path() function -- # installed with tidyverse
 
 #-DATA MANIPULATION------------------------------------------------------------------------------
-  # install.packages("dplyr")
+    install.packages("dplyr")
     install.packages("data.table")
 
 #-READING Data ----------------------------------------------------------------------------------
-  # install.packages("readr")   # read .csv and others -- # installed with tidyverse
-  # install.packages("haven")     # read SAS files       -- # installed with tidyverse
-  # install.packages("readxl")    # read Excel           -- # installed with tidyverse
+    install.packages("readr")   # read .csv and others -- # installed with tidyverse
+    install.packages("haven")     # read SAS files       -- # installed with tidyverse
+    install.packages("readxl")    # read Excel           -- # installed with tidyverse
 
 #-MAPPING/GIS-------------------------------------------------------------------------------------
   # install.packages("maptools"); 
@@ -37,8 +37,9 @@
     install.packages("epitools")
     install.packages("sqldf")
     install.packages("plotly")
-  # install.packages("ggplot2")      # installed with tidyverse
+    install.packages("ggplot2")      # installed with tidyverse
   # install.packages("scatterD3")  # not used? 
+    install.packages("visNetwork")
 
 #-For SHINY----------------------------------------------------------------------------------------- 
     install.packages("shiny")
