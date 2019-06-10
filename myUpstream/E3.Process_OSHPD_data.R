@@ -249,7 +249,7 @@ oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100) + scale_x_cont
 #histogram, excluding max
 oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 5000, by = 100)) + scale_x_continuous(labels = scales::comma)
 
-#histogram, removing 0 and 1 charges
+#histogram, removing 0 and 1 los_adj
 oshpd16 %>% filter(los_adj != 1) %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 500, by = 100)) + scale_x_continuous(labels = scales::comma)
 
 oshpd16 %>% filter(los_adj > 100) %>% nrow() #11132 greater than 100 days
@@ -261,9 +261,43 @@ oshpd16 %>% filter(los_adj > 365) %>% nrow() #2046 greater than 1 year
 
 #What should the exclusion cut-off be for los_adj? 365 days? Less than that? 
 
+#----------------------------------------------------------------------------------------------------------------------------------------------#
+#Some of these extreme los/charges may not even apply to the CAUSE/icdCodes that we're capturing though. Now only looking at values for our CAUSES of interest
+
+oshpd16test <- oshpd16 %>% filter(!is.na(icdCODE)) 
+
+#min charge
+min(oshpd16test$charge)
+#max charge
+max(oshpd16test$charge)
+
+#max los
+max(oshpd16test$los_adj) #6995
+
+#histogram of los 
+oshpd16test %>%  ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 600, by = 10)) + scale_x_continuous(labels = scales::comma)
+
+#table of los_adj
+
+los_table <- table(oshpd16test$los_adj) %>% as.data.frame() %>% rename(los_adj = Var1)
+
+#total charges
+charges_table <- table(oshpd16test$charge) %>% as.data.frame() %>% rename(charge = Var1)
+#table of charges---Note that if charges are greater than the max seven digit input field size, they are listed as $9,999,999. Also, when a patient's length of stay is more than 365 days, only
+#the last 365 days of charges are reported. HOWEVER, there are some charges with 8 digits listed, even though OSHPD info said standard format before December 2018 only have 7 digits? 
+#https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
+
+
+#histogram of charges
+oshpd16test %>% filter(charge != 1 & charge != 0) %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100, breaks = seq(0, 7000000, by = 1000)) + scale_x_continuous(labels = scales::comma)
+
+#what do charges 2 and 3 mean? Are they also some sort of pro bono/not real charges info? 
 
 
 
+
+
+#-----------------------------*_*_*_*_*_*_*_*_*_*_
 
 oshpd16$charge[oshpd16$charge == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
 
