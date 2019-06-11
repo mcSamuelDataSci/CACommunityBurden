@@ -659,7 +659,7 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-##CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN
+##--------------CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN----------#
 
 #defining paste function to include sep = "|"
 pastex <- function(...) {
@@ -678,7 +678,7 @@ p <- function(v) {
 test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExICD10_CM)) %>% group_by(LABEL) %>% mutate(newICDcode = p(regExICD10_CM)) %>% select(LABEL, newICDcode) %>% unique()
 
 
-
+#-----------------------------FUNCTION FOR mapping icd code to diagnoses code variables--------------------------------#
 any_diagnosis_definition <- function(df, label) {
   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
   df[[label]] <- apply(df, 1, FUN = function(x) {
@@ -689,6 +689,10 @@ any_diagnosis_definition <- function(df, label) {
   return(df)
 }
 
+
+#-----------------------------------Creating new dataset with the "any" columns------------------------------------------#
+#The problem with this is that it takes hours to process the real oshpd dataset (3 million + records) and append the new column to it. May need to 
+#re-write function so that new columns are created as separate dataframes, and then append all the columns to the oshpd dataset. 
 oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
 for (i in 1: nrow(test_map)) {
   oshpd_test <- any_diagnosis_definition(oshpd_test,test_map$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
@@ -696,7 +700,58 @@ for (i in 1: nrow(test_map)) {
 } 
 
 
-#---------------------------------------------------------PLOTTING --------------------------------------------------------------------------------------------------------------#
+#--------------------------------------New function, one column at a time-------------------------------------------------------#
+
+
+
+any_diag2 <- function(df,label) {
+  index <- grep("diag", colnames(df)) #gives index of all cols with names that include diag in them, which is what we want to run the function over
+  newvar <- apply(df, 1, FUN = function(x) {
+    icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+    pattern <- grepl(icd_regEx, x)
+    if(any(pattern[(index)])) 1 else 0
+  })
+  return(newvar)
+}
+
+
+A07 <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) %>% any_diag2(., "A07") #this gives an error message
+
+
+#-------------mutate statement??----------------
+
+A07<- (filter(test_map, LABEL == "A07") %>% pull(newICDcode))
+
+oshpd16new <- oshpd16 %>% mutate(A07 = ifelse(grepl(A07, diag_p)|
+                                                grepl(A07, odiag1)|
+                                                grepl(A07, odiag2)|
+                                                grepl(A07, odiag3)|
+                                                grepl(A07, odiag4)|
+                                                grepl(A07, odiag5)|, 1, 0))
+
+oshpd16new %>% filter(A07 == 1) %>% nrow()
+
+
+
+#using the function created above in a mutate option rather than a for loop:
+
+#took about 2 minutes per new variable
+
+oshpd16new2 <- oshpd16 %>% mutate(A07 = any_diag2(oshpd16, label = "A07"),
+                                  A08 = any_diag2(oshpd16, label = "A08"),
+                                  D01 = any_diag2(oshpd16, label = "D01"))
+
+
+
+oshpd16new2 <- oshpd16new2 %>% mutate(D03 = any_diag2(oshpd16, label = "D03") )
+#A07 = apply(oshpd16[1:25], 1, function(x){if(any(grepl(A07,x))) 1 else 0}
+
+
+
+
+
+
+#---------------------------------------------------------PLOTTING ANY Vs PRIMARY--------------------------------------------------------------------------------------------------------------#
 
 summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
