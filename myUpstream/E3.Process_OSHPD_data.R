@@ -678,6 +678,42 @@ p <- function(v) {
 test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExICD10_CM)) %>% group_by(LABEL) %>% mutate(newICDcode = p(regExICD10_CM)) %>% select(LABEL, newICDcode) %>% unique()
 
 
+
+#--------------------------------------FUNCTION FOR CALCULATING ANY VS PRIMARY-------------------------------------------------------#
+
+
+#creating a new variable where all codes are pasted together 
+oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
+                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
+                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
+                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
+                                                  odiag22, odiag23, odiag24,sep = "|")) 
+
+#This pastes all the ||| separators together at the end of the variable once the odiag columns contain NA--this doesn't seem to create a problem with the grepl statement below though. 
+
+
+#This function loops through the LABEL codes in test_map, pulls out the ICD regex expression that matches that LABEL code, and then runs that regex expression against the all_diag variable (which contains
+#all of the regex ICD codes for a given visit)--using the mutate statement, a new indicator variable is created, named LABEL (eg if LABEL is A07, new column is named A07), with 1 if any of LABEL ICD codes
+#are present, 0 otherwise. 
+
+any_diag_code <- function(df){
+  for (i in 1: nrow(test_map)){
+    label = test_map$LABEL[i]
+    code_def <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+    df <- df %>% mutate(!!label := ifelse(grepl(code_def, all_diag), 1, 0))
+    }
+  return(df) #need to include return df in order to have the df return with multiple  new columns appended to it (otherwise it returns a null value)
+  
+  }
+
+#Need to define oshpd16test2 as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
+oshpd16test2 <- oshpd16new
+
+oshpd16test2 <- any_diag_code(oshpd16test2)
+
+
+
+#------------------------------------------------------------------------------------------------OLD OPTION--TAKES TOO LONG TO PROCESS----------------------------------------------------------#
 #-----------------------------FUNCTION FOR mapping icd code to diagnoses code variables--------------------------------#
 any_diagnosis_definition <- function(df, label) {
   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
@@ -699,93 +735,6 @@ for (i in 1: nrow(test_map)) {
   
 } 
 
-
-#--------------------------------------New function, one column at a time-------------------------------------------------------#
-
-
-
-any_diag2 <- function(df,label) {
-  index <- grep("diag", colnames(df)) #gives index of all cols with names that include diag in them, which is what we want to run the function over
-  newvar <- apply(df, 1, FUN = function(x) {
-    icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) 1 else 0
-  })
-  return(newvar)
-}
-
-
-
-
-#-------------mutate statement??----------------
-
-A07_code<- (filter(test_map, LABEL == "A07") %>% pull(newICDcode))
-
-oshpd16new <- oshpd16 %>% mutate(A07 = ifelse(grepl(A07, diag_p)|
-                                                grepl(A07, odiag1)|
-                                                grepl(A07, odiag2)|
-                                                grepl(A07, odiag3)|
-                                                grepl(A07, odiag4)|
-                                                grepl(A07, odiag5)| 1, 0))
-
-oshpd16new %>% filter(A07 == 1) %>% nrow()
-
-
-
-#using the function created above in a mutate option rather than a for loop:
-
-#took about 2 minutes per new variable-sample data
-#took 1 hour 5 minutes for 1 new variable--real data
-
-
-oshpd16new2 <- oshpd16 %>% mutate(A07 = any_diag2(oshpd16, label = "A07"))
-
-
-
-oshpd16new2 <- oshpd16new2 %>% mutate(D03 = any_diag2(oshpd16, label = "D03") )
-#A07 = apply(oshpd16[1:25], 1, function(x){if(any(grepl(A07,x))) 1 else 0}
-
-
-
-#---------------------------------------------alternative option----------------------------------------------------#
-
-
-#creating a new variable where all codes are pasted together 
-oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
-                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
-                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
-                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
-                                                  odiag22, odiag23, odiag24,sep = "|")) 
-
-#This pastes all the ||| separators together at the end of the variable once the odiag columns contain NA--this doesn't seem to create a problem with the grepl statement below though. 
-
-
-#function to define code strings:
-code_def <- function(label) {
-  code <- filter(test_map, LABEL == label) %>% pull(newICDcode)
-}
-A07_code <- code_def("A07")
-A08_code <- code_def("A08")
-D01_code <- code_def("D01")
-D03_code <- code_def("D03")
-#This is repetitive--can we make this into a function?
-
-
-
-any_diag_code <- function(df,label, labname){
-  lab_name_enquo <- enquo(labname)
-  labname <- quo(lab_name_enquo)
-  code_def <- filter(test_map, LABEL == label) %>% pull(newICDcode)
-  
-  df %>% mutate(labname = ifelse(grepl(code_def, all_diag), 1, 0))
-}
-
-#need to figure out how to assign column name, but otherwise this works!
-#assesing whtether A07 codes are present in all_diag variable--this runs much faster
-oshpd16new <- oshpd16new %>% mutate(A07 = ifelse(grepl(A07_code, all_diag), 1, 0))
-
-
-oshpd16test <- any_diag_code(oshpd16new, "A07", A07)
 
 
 #---------------------------------------------------------PLOTTING ANY Vs PRIMARY--------------------------------------------------------------------------------------------------------------#
