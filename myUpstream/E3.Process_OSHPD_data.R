@@ -715,19 +715,18 @@ any_diag2 <- function(df,label) {
 }
 
 
-A07 <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) %>% any_diag2(., "A07") #this gives an error message
 
 
 #-------------mutate statement??----------------
 
-A07<- (filter(test_map, LABEL == "A07") %>% pull(newICDcode))
+A07_code<- (filter(test_map, LABEL == "A07") %>% pull(newICDcode))
 
 oshpd16new <- oshpd16 %>% mutate(A07 = ifelse(grepl(A07, diag_p)|
                                                 grepl(A07, odiag1)|
                                                 grepl(A07, odiag2)|
                                                 grepl(A07, odiag3)|
                                                 grepl(A07, odiag4)|
-                                                grepl(A07, odiag5)|, 1, 0))
+                                                grepl(A07, odiag5)| 1, 0))
 
 oshpd16new %>% filter(A07 == 1) %>% nrow()
 
@@ -735,11 +734,11 @@ oshpd16new %>% filter(A07 == 1) %>% nrow()
 
 #using the function created above in a mutate option rather than a for loop:
 
-#took about 2 minutes per new variable
+#took about 2 minutes per new variable-sample data
+#took 1 hour 5 minutes for 1 new variable--real data
 
-oshpd16new2 <- oshpd16 %>% mutate(A07 = any_diag2(oshpd16, label = "A07"),
-                                  A08 = any_diag2(oshpd16, label = "A08"),
-                                  D01 = any_diag2(oshpd16, label = "D01"))
+
+oshpd16new2 <- oshpd16 %>% mutate(A07 = any_diag2(oshpd16, label = "A07"))
 
 
 
@@ -748,7 +747,45 @@ oshpd16new2 <- oshpd16new2 %>% mutate(D03 = any_diag2(oshpd16, label = "D03") )
 
 
 
+#---------------------------------------------alternative option----------------------------------------------------#
 
+
+#creating a new variable where all codes are pasted together 
+oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
+                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
+                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
+                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
+                                                  odiag22, odiag23, odiag24,sep = "|")) 
+
+#This pastes all the ||| separators together at the end of the variable once the odiag columns contain NA--this doesn't seem to create a problem with the grepl statement below though. 
+
+
+#function to define code strings:
+code_def <- function(label) {
+  code <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+}
+A07_code <- code_def("A07")
+A08_code <- code_def("A08")
+D01_code <- code_def("D01")
+D03_code <- code_def("D03")
+#This is repetitive--can we make this into a function?
+
+
+
+any_diag_code <- function(df,label, labname){
+  lab_name_enquo <- enquo(labname)
+  labname <- quo(lab_name_enquo)
+  code_def <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+  
+  df %>% mutate(labname = ifelse(grepl(code_def, all_diag), 1, 0))
+}
+
+#need to figure out how to assign column name, but otherwise this works!
+#assesing whtether A07 codes are present in all_diag variable--this runs much faster
+oshpd16new <- oshpd16new %>% mutate(A07 = ifelse(grepl(A07_code, all_diag), 1, 0))
+
+
+oshpd16test <- any_diag_code(oshpd16new, "A07", A07)
 
 
 #---------------------------------------------------------PLOTTING ANY Vs PRIMARY--------------------------------------------------------------------------------------------------------------#
