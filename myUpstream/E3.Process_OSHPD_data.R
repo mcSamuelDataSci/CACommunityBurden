@@ -708,57 +708,25 @@ any_diag_code <- function(df){
 
 #Need to define oshpd16test2 as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
 oshpd16test2 <- oshpd16new
-
 oshpd16test2 <- any_diag_code(oshpd16test2)
 
 
+#-----Summarizing oshpd any vs primary data-------#
 
-#------------------------------------------------------------------------------------------------OLD OPTION--TAKES TOO LONG TO PROCESS----------------------------------------------------------#
-#-----------------------------FUNCTION FOR mapping icd code to diagnoses code variables--------------------------------#
-any_diagnosis_definition <- function(df, label) {
-  index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
-  df[[label]] <- apply(df, 1, FUN = function(x) {
-    icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) 1 else 0
-  } )
-  return(df)
-}
-
-
-#-----------------------------------Creating new dataset with the "any" columns------------------------------------------#
-#The problem with this is that it takes hours to process the real oshpd dataset (3 million + records) and append the new column to it. May need to 
-#re-write function so that new columns are created as separate dataframes, and then append all the columns to the oshpd dataset. 
-oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
-for (i in 1: nrow(test_map)) {
-  oshpd_test <- any_diagnosis_definition(oshpd_test,test_map$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
-  
-} 
-
-
-
-#---------------------------------------------------------PLOTTING ANY Vs PRIMARY--------------------------------------------------------------------------------------------------------------#
-
-summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
+#summary_any dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes (diag_p through odiag24), by county and sex. 
+summary_any_CA <- oshpd16test2 %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
+summary_any_county <- oshpd16test2 %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-summary_any <- bind_rows(summary_any_CA, summary_any_county)
+summary_any <- bind_rows(summary_any_CA, summary_any_county) %>% mutate(diag_type = "any", year = 2016) %>% rename(CAUSE = LABEL)
 
 summary_any$county[summary_any$county == "California"] <- "CALIFORNIA"
 
-#TEST PLOT
-summary_any %>% filter(county == "CALIFORNIA") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + 
-  geom_bar(stat = "identity") + facet_wrap(. ~ sex, scales = "free_x") 
-
-#brainstorming other plot ideas--plot any vs diag_p on the same plot (grouped bars?)? organize dataframe better, save
-
-summary_any <- summary_any %>% mutate(diag_type = "any", year = 2016) %>% rename(CAUSE = LABEL)
+#------------To plot comparisons of any vs primary diagnoses, need to join primary diagnoses n_hosp summary data with summary_any:
 
 total_primary <- total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
   select(sex, CAUSE, year, n_hosp, Level, county, nameOnly) %>% filter(Level == "lev2") %>% mutate(diag_type = "primary") %>% select(-Level)
@@ -767,32 +735,26 @@ total_primary$county[total_primary$county == "California"] <- "CALIFORNIA"
 
 any_primary <- bind_rows(summary_any, total_primary)
 
-#any vs primary on the same plot
-any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
-  coord_flip()
-
-
-#stackbars--primary as a percentage of any
-
-#prepping data
+#calculating difference between any n_hosp and primary n_hosp in order to plot as a stacked bar plot (since primary is a subset of any in this dataset)
 any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(sex, CAUSE, county, year) %>% mutate(any_diff = any - primary) %>% #calculates difference between any and primary n_hosp 
   gather(key = "diag_type", value = "n_hosp", primary, any_diff) %>% #gathers so we have n_hosp and diag_type columns again 
   select(-any) #removes primary column
 
 
+#-----PLOTTING-----#
+#any vs primary on the same plot
+any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
+  coord_flip()
+
 #stacked bar plot--is this a better visual?
 any_primary_diff %>% 
   filter(sex == "Total", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + coord_flip()
 
-
-
-
-
-#Any-primary comparisons
-codeLast4 <- str_sub(oshpd_test$icdCODE,2,5) #puts characters 2-5 from the CODE string
+#----------------------------------Any-primary comparisons---------------------------------------------#
+codeLast4 <- str_sub(oshpd16test2$icdCODE,2,5) #puts characters 2-5 from the CODE string
 nLast4    <- nchar(codeLast4) #counts number of characters 
 
-oshpd_test   <- oshpd_test  %>% 
+oshpd_test   <- oshpd16test2  %>% 
   mutate(lev0  = "0",
          lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
          lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
@@ -804,18 +766,78 @@ group_any_primary <- oshpd_test %>% group_by(lev2) %>% summarise_at(vars(A07:C05
   left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>% mutate(county = STATE) %>% 
   left_join(., select(icd_map, nameOnly, LABEL), by = c("any" = "LABEL")) %>% rename(any_name = nameOnly)
 
-
-
-#GROUPED BAR PLOT FOR THIS??
+#GROUPED BAR PLOT FOR THIS?
 group_any_primary %>% ggplot(., aes(fill = any_name, x = primary_name, y = n_hosp_any)) + geom_bar(position = "dodge", stat = "identity") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-
 
 #grouped, not including the primary/any LABEL pairs
 group_any_primary %>% filter(primary != any) %>% ggplot(., aes(fill = any_name, x = primary_name, y = n_hosp_any)) + geom_bar(position = "dodge", stat = "identity")  +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 #this visualization isn't great, but it's the general idea about what we might want to visualize
+
+
+
+#-------------------------------------------------------------------------------------------------------------#
+library(ggraph)
+library(igraph)
+library(viridis)
+
+flare <- flare
+edges=flare$edges
+vertices = flare$vertices
+mygraph <- graph_from_data_frame( edges, vertices=vertices )
+
+# Control the size of each circle: (use the size column of the vertices data frame)
+png("~/Dropbox/R_GG/R_GRAPH/#314_custom_circle_packing1.png", height = 480, width=480)
+ggraph(mygraph, layout = 'circlepack', weight="size") + 
+  geom_node_circle() +
+  theme_void()
+
+
+group_any_nopairs <- group_any_primary %>% filter( primary_name == "Hypertensive heart disease")
+
+edges_any_primary <- group_any_nopairs %>% select(primary_name, any_name) %>% rename(from = primary_name, to = any_name)
+
+vertices_any_primary <- group_any_nopairs %>% select(any_name, n_hosp_any) %>% rename(size = n_hosp_any, name = any_name) %>% mutate(size = as.numeric(size))
+
+mygraph2 <- graph_from_data_frame(edges_any_primary, vertices = vertices_any_primary)
+
+ggraph(mygraph2, layout = 'circlepack', weight="size") + 
+  geom_node_circle() +
+  geom_node_label( aes(label=name, filter=leaf)) +
+  theme_void()
+
+#WHY doesn't it recognize size as weight? 
+
+# #------------------------------------------------------------------------------------------------OLD OPTION--TAKES TOO LONG TO PROCESS----------------------------------------------------------#
+# #-----------------------------FUNCTION FOR mapping icd code to diagnoses code variables--------------------------------#
+# any_diagnosis_definition <- function(df, label) {
+#   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
+#   df[[label]] <- apply(df, 1, FUN = function(x) {
+#     icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+#     pattern <- grepl(icd_regEx, x)
+#     if(any(pattern[(index)])) 1 else 0
+#   } )
+#   return(df)
+# }
+# 
+# 
+# #-----------------------------------Creating new dataset with the "any" columns------------------------------------------#
+# #The problem with this is that it takes hours to process the real oshpd dataset (3 million + records) and append the new column to it. May need to 
+# #re-write function so that new columns are created as separate dataframes, and then append all the columns to the oshpd dataset. 
+# oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
+# for (i in 1: nrow(test_map)) {
+#   oshpd_test <- any_diagnosis_definition(oshpd_test,test_map$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
+#   
+# } 
+# 
+# 
+
+
+#---------------------------------------------------------PLOTTING ANY Vs PRIMARY--------------------------------------------------------------------------------------------------------------#
+
+
+
 
 
 
