@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- TRUE
 
 # fullOSHPD <- FALSE
@@ -740,15 +740,11 @@ any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(se
   gather(key = "diag_type", value = "n_hosp", primary, any_diff) %>% #gathers so we have n_hosp and diag_type columns again 
   select(-any) #removes primary column
 
+#Saving RDS file of primary-any dataframe for stacked bar plot
+saveRDS(any_primary_diff, file = path(myPlace, "myData/",whichData,"/any_primary_stackedbar.rds"))
 
-#-----PLOTTING-----#
-#any vs primary on the same plot
-any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
-  coord_flip()
 
-#stacked bar plot--is this a better visual?
-any_primary_diff %>% 
-  filter(sex == "Total", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + coord_flip()
+
 
 #----------------------------------Any-primary comparisons---------------------------------------------#
 codeLast4 <- str_sub(oshpd16test2$icdCODE,2,5) #puts characters 2-5 from the CODE string
@@ -761,53 +757,26 @@ oshpd_test   <- oshpd16test2  %>%
          lev3  = ifelse(nLast4 == 4,codeLast4,NA) 
   ) %>% select(-lev0, -lev1, -lev3)
 
-#what any are associated with primaries? 
-group_any_primary <- oshpd_test %>% group_by(lev2) %>% summarise_at(vars(A07:C05), sum) %>% filter(!is.na(lev2)) %>% 
-  left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>% mutate(county = STATE) %>% 
+#what any are associated with primaries?
+#state level
+group_any_primary_state <- oshpd_test %>% group_by(lev2, sex) %>% summarise_at(vars(A07:C05), sum) %>% filter(!is.na(lev2)) %>% 
+  left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>%
+  left_join(., select(icd_map, nameOnly, LABEL), by = c("any" = "LABEL")) %>% rename(any_name = nameOnly) %>% mutate(county = STATE)
+
+group_any_primary_state$county <- "CALIFORNIA"
+
+#by county
+group_any_primary_county <- oshpd_test %>% group_by(lev2, county, sex) %>% summarise_at(vars(A07:C05), sum) %>% filter(!is.na(lev2)) %>% 
+  left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>% 
   left_join(., select(icd_map, nameOnly, LABEL), by = c("any" = "LABEL")) %>% rename(any_name = nameOnly)
 
-#GROUPED BAR PLOT FOR THIS?
-group_any_primary %>% ggplot(., aes(fill = any_name, x = primary_name, y = n_hosp_any)) + geom_bar(position = "dodge", stat = "identity") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
-#grouped, not including the primary/any LABEL pairs
-group_any_primary %>% filter(primary != any) %>% ggplot(., aes(fill = any_name, x = primary_name, y = n_hosp_any)) + geom_bar(position = "dodge", stat = "identity")  +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+group_any_primary <- bind_rows(group_any_primary_state, group_any_primary_county) %>% filter(!is.na(county), !is.na(sex))
 
-#this visualization isn't great, but it's the general idea about what we might want to visualize
+#Saving RDS file of this dataframe--shows the number of "any" diagnoses associated with each primary diagnosis
+saveRDS(group_any_primary, file = path(myPlace, "myData/",whichData,"/group_any_primary.rds"))
 
 
-
-#-------------------------------------------------------------------------------------------------------------#
-library(ggraph)
-library(igraph)
-library(viridis)
-
-flare <- flare
-edges=flare$edges
-vertices = flare$vertices
-mygraph <- graph_from_data_frame( edges, vertices=vertices )
-
-# Control the size of each circle: (use the size column of the vertices data frame)
-png("~/Dropbox/R_GG/R_GRAPH/#314_custom_circle_packing1.png", height = 480, width=480)
-ggraph(mygraph, layout = 'circlepack', weight="size") + 
-  geom_node_circle() +
-  theme_void()
-
-
-group_any_nopairs <- group_any_primary %>% filter( primary_name == "Hypertensive heart disease")
-
-edges_any_primary <- group_any_nopairs %>% select(primary_name, any_name) %>% rename(from = primary_name, to = any_name)
-
-vertices_any_primary <- group_any_nopairs %>% select(any_name, n_hosp_any) %>% rename(size = n_hosp_any, name = any_name) %>% mutate(size = as.numeric(size))
-
-mygraph2 <- graph_from_data_frame(edges_any_primary, vertices = vertices_any_primary)
-
-ggraph(mygraph2, layout = 'circlepack', weight="size") + 
-  geom_node_circle() +
-  geom_node_label( aes(label=name, filter=leaf)) +
-  theme_void()
-
-#WHY doesn't it recognize size as weight? 
 
 # #------------------------------------------------------------------------------------------------OLD OPTION--TAKES TOO LONG TO PROCESS----------------------------------------------------------#
 # #-----------------------------FUNCTION FOR mapping icd code to diagnoses code variables--------------------------------#
@@ -833,32 +802,3 @@ ggraph(mygraph2, layout = 'circlepack', weight="size") +
 # 
 # 
 
-
-#---------------------------------------------------------PLOTTING ANY Vs PRIMARY--------------------------------------------------------------------------------------------------------------#
-
-
-
-
-
-
-#Circular barplot? https://jokergoo.github.io/circlize_book/book/the-chorddiagram-function.html#directional-relations
-name=c(3,10,10,3,6,7,8,3,6,1,2,2,6,10,2,3,3,10,4,5,9,10)
-feature=paste("feature ", c(1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5) , sep="")
-dat <- data.frame(name,feature)
-dat <- with(dat, table(name, feature))
-dat <- as.data.frame(dat)
-# Charge the circlize library
-library(circlize)
-#Note: If you use it in published research, please cite:
-#Gu, Z. circlize implements and enhances circular visualization 
-#in R. Bioinformatics 2014.
-
-# Make the circular plot
-chordDiagram(dat, transparency = 0.5)
-
-#in group_any_primary, let name = any_name, feature = primary_name, Freq = n_hosp_any
-chord_any_primary <- group_any_primary %>%  select(primary_name, any_name, n_hosp_any) %>% group_by(primary_name) #Direction "from" primary_name (the grouping variable) "to" the any_name
-
-chordDiagram(chord_any_primary, transparency = 0.1, directional = 1) #directional = 1 means from col1 to col2
-
-#This isn't great either......
