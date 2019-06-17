@@ -223,13 +223,21 @@ ui <- fluidPage(
 # Server---------------------------------------------------------------------------
 
 server <- function(input, output) {
-
-  output$network <- renderVisNetwork({
-
+  
+  nodeNetwork <- reactive({
     nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
                                     paste(input$year[1]), paste(input$year[2]), input$display)
-
+    
     vis_network(nodes_and_edges$nodes, nodes_and_edges$edges, input$display)
+  })
+
+  output$network <- renderVisNetwork({
+    nodeNetwork()
+
+    # nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
+    #                                 paste(input$year[1]), paste(input$year[2]), input$display)
+    # 
+    # vis_network(nodes_and_edges$nodes, nodes_and_edges$edges, input$display)
   })
 }
 
