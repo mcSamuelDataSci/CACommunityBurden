@@ -221,8 +221,8 @@ oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
 
 #------------------------CHARGES------------------------------#
 #histogram of charges
-min(oshpd16$charge, na.rm = TRUE)
-max(oshpd16$charge, na.rm = TRUE)
+min(oshpd16$charge, na.rm = TRUE) #0
+max(oshpd16$charge, na.rm = TRUE) #73,798,776
 
 #total histogram
 oshpd16 %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100) + scale_x_continuous(labels = scales::comma)
@@ -267,9 +267,9 @@ oshpd16 %>% filter(los_adj > 365) %>% nrow() #2046 greater than 1 year
 oshpd16test <- oshpd16 %>% filter(!is.na(icdCODE)) 
 
 #min charge
-min(oshpd16test$charge)
+min(oshpd16test$charge) #0
 #max charge
-max(oshpd16test$charge)
+max(oshpd16test$charge) #62,982,371
 
 #max los
 max(oshpd16test$los_adj) #6995
@@ -683,6 +683,15 @@ test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExIC
 
 
 #creating a new variable where all codes are pasted together 
+
+paste_stop <- function(df,...){
+for(i in 1:25) {
+  paste(..., sep = "|") 
+    if (is.na(df$...)) {break}
+  } 
+}
+#this ^ doesn't work
+
 oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
                                                   odiag5, odiag6, odiag7, odiag8, odiag9,
                                                   odiag10, odiag11, odiag12, odiag13, odiag14,
