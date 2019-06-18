@@ -208,7 +208,7 @@ ui <- fluidPage(
       
       radioGroupButtons(
         inputId = "metric", label = h4("Metric:"), 
-        choices = c("#" = 1, "Rate" = 3, "%" = 3),
+        choices = c("#" = 1, "Rate" = 3, "%" = 2),
         selected = 3,
         justified = TRUE, status = "primary"
       )
