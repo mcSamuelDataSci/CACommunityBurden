@@ -195,7 +195,7 @@ names(hospMeasures_Revalue) <- hospMeasures
 
 
 shorthospList <- c(-2, -6)
-shortMDCList <- c(-2,-3,-4,-6,-8)
+shortMDCList <- c(-2,-3,-4,-6,-8, -10)
 hM_short <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
 
@@ -205,7 +205,7 @@ hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown men
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
 hMDCNames_short <- hospMeasuresNames[shortMDCList]
 
-hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
+hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)", "Median Charges (in thousands)")
 
 MDC_DRG <- c("mdc", "drg")
 MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")

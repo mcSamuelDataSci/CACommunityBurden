@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- TRUE
 
 # fullOSHPD <- FALSE
@@ -607,14 +607,14 @@ total_drg <- bind_rows(drg_state, drg_county) %>% filter(sex == "Male" | sex == 
 
 #Joining both together
 
-total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_code = mdc)
+total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_codes = mdc)
 
 
 #-------------------------------------------------Creating 0 level values for discordant gender pairs---------------------------------------------------------------#
 
-mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_code) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
+mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
 
-mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_code) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
+mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
 
 
 mdc_drg_female_only <- anti_join(mdc_drg_female_sum, mdc_drg_male_sum, by = c("Female" = "Male", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the female dataset but not the male dataset
@@ -623,13 +623,13 @@ mdc_drg_male_only <- anti_join(mdc_drg_male_sum, mdc_drg_female_sum, by = c("Mal
 
 #Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
 
-mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc_drg_code", Female) %>% mutate(sex = "Male")
+mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc_drg_codes", Female) %>% mutate(sex = "Male")
 
-mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc_drg_code", Male) %>% mutate(sex = "Female")
+mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc_drg_codes", Male) %>% mutate(sex = "Female")
 
 
 #Now joining original total_sum_pop with these datasets, replacing NA with zeros
-total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc_drg_code", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc_drg_code", "diagnosis_var"))
+total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var"))
 
 
 #Example of replacing NA data in selected column
@@ -653,7 +653,7 @@ total_mdc_drg_new$medcharge_per_day[is.na(total_mdc_drg_new$medcharge_per_day)] 
 
 total_mdc_drg_new$avg_los[is.na(total_mdc_drg_new$avg_los)] <- 0
 
-mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge) %>% select(year, mdc_drg_code, sex, county, diagnosis_var, type, measure)
+mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge) %>% select(year, mdc_drg_codes, sex, county, diagnosis_var, type, measure)
 
 mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
