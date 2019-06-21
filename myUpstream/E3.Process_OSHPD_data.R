@@ -702,12 +702,13 @@ test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExIC
 
 #creating a new variable where all codes are pasted together 
 
-##
+if(1==2){
 paste_stop <- function(df,...){
 for(i in 1:25) {
   paste(..., sep = "|") 
     if (is.na(df$...)) {break}
   } 
+}
 }
 #this ^ doesn't work
 
@@ -734,19 +735,19 @@ any_diag_code <- function(df){
   
   }
 
-#Need to define oshpd16test2 as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
-oshpd16test2 <- oshpd16new
-oshpd16test2 <- any_diag_code(oshpd16test2)
+#Need to define oshpd16an_primary as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
+oshpd16any_primary <- oshpd16new
+oshpd16any_primary <- any_diag_code(oshpd16any_primary)
 
 
 #-----Summarizing oshpd any vs primary data-------#
 
-#summary_any dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes (diag_p through odiag24), by county and sex. 
-summary_any_CA <- oshpd16test2 %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
+#summary_any dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes (diag_p through odiag24), by sex (statewide numbers) 
+summary_any_CA <- oshpd16any_primary %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
-
-summary_any_county <- oshpd16test2 %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
+#summary_any_county dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes, by county and sex
+summary_any_county <- oshpd16any_primary %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
@@ -775,10 +776,10 @@ saveRDS(any_primary_diff, file = path(myPlace, "myData/",whichData,"/any_primary
 
 
 #----------------------------------Any-primary comparisons---------------------------------------------#
-codeLast4 <- str_sub(oshpd16test2$icdCODE,2,5) #puts characters 2-5 from the CODE string
+codeLast4 <- str_sub(oshpd16any_primary$icdCODE,2,5) #puts characters 2-5 from the CODE string
 nLast4    <- nchar(codeLast4) #counts number of characters 
 
-oshpd_test   <- oshpd16test2  %>% 
+oshpd_test   <- oshpd16any_primary  %>% 
   mutate(lev0  = "0",
          lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
          lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)

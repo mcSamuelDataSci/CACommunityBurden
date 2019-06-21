@@ -25,7 +25,58 @@ anyprimary2 <- function(myCounty = "CALIFORNIA", mySex = "Total") {
     geom_bar(position = "dodge", stat = "identity")  +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
   
+  
+  
+  #grid plot
+  group_any_primary %>% filter(primary != any, county == myCounty, sex == mySex) %>%
+    ggplot(., aes(fill = any_name, x = any_name, y = n_hosp_any)) + 
+    coord_flip() +
+    geom_bar(position = "dodge", stat = "identity") + 
+    facet_grid(. ~ primary_name, scales = "free_x", labeller=labeller(primary_name = label_wrap_gen(5))) +
+    scale_x_discrete(name = "Any diagnosis") + #changes the label of the x axis (y axis when the coordinates flip and the plot comes out)
+    theme(
+      axis.title.x = element_blank(), #removes measure label
+      axis.text.y = element_text(size = 10), #increases size of disease condition labels
+      axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+      strip.text.x = element_text(size = 10)) + #increases the size of the facet labels
+    labs(fill = "Diagnosis") #changes legend title 
+  
+  
+ 
+  #or facet wrap?
+  group_any_primary %>% filter(primary != any, county == myCounty, sex == mySex) %>%
+    ggplot(., aes(fill = any_name, x = any_name, y = n_hosp_any)) + 
+    coord_flip() +
+    geom_bar(position = "dodge", stat = "identity") + 
+    facet_wrap(. ~ primary_name, scales = "free_x", labeller=labeller(primary_name = label_wrap_gen(20))) +
+    scale_x_discrete(name = "Any diagnosis") + #changes the label of the x axis (y axis when the coordinates flip and the plot comes out)
+    theme(
+        axis.title.x = element_blank(), #removes measure label
+        axis.text.y = element_text(size = 10), #increases size of disease condition labels
+        axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+        strip.text.x = element_text(size = 10)) + #increases the size of the facet labels
+    labs(fill = "Diagnosis") #changes legend title 
+    
+  
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
