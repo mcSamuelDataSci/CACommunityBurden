@@ -319,8 +319,11 @@ sum_num_costs <- function(data, groupvar, levLab) {
     summarize(n_hosp = n(), 
               charges = sum(charge, na.rm = TRUE), #this still converts cases where there was only 1 with NA charges to 0 for charges
               avgcharge = mean(charge, na.rm = TRUE),
+              medcharge = median(charge, na.rm = TRUE), #adding median charge to compare to average charge
               avg_los = mean(los_adj, na.rm = TRUE),
-              avgcharge_per_day = mean(charge_per_day, na.rm = TRUE)) 
+              avgcharge_per_day = mean(charge_per_day, na.rm = TRUE),
+              medcharge_per_day = median(charge_per_day, na.rm = TRUE)) #adding median charge per day
+              
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
@@ -443,6 +446,10 @@ total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 
 
 total_sum_pop_new$avgcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
 
+total_sum_pop_new$medcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
+total_sum_pop_new$medcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
 total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
 
 #replacing NA in ageG with "Total"
@@ -549,7 +556,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #Will have to do a series of spread/gather/join to create dataset 
 
 
-calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day)
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day, medcharge, medcharge_per_day)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
@@ -597,7 +604,7 @@ drg_county <- sum_num_costs(oshpd16, c("year", "county", "msdrg", "sex"), "") %>
 total_drg <- bind_rows(drg_state, drg_county) %>% filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% mutate(diagnosis_var = "drg")
 
 #Joining both together
-total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "mdc" = "msdrg"))
+total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge","mdc" = "msdrg"))
 
 
 #-------------------------------------------------Creating 0 level values for discordant gender pairs---------------------------------------------------------------#
