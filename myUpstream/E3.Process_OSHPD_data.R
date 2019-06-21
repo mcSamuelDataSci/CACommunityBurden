@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- TRUE
 
 # fullOSHPD <- FALSE
@@ -702,6 +702,7 @@ test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExIC
 
 #creating a new variable where all codes are pasted together 
 
+##
 paste_stop <- function(df,...){
 for(i in 1:25) {
   paste(..., sep = "|") 

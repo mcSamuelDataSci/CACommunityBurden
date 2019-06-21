@@ -185,10 +185,10 @@ dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
 #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
 
 
-hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day")
+hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day")
 
 hospMeasuresNames <- c("Number of Hospitalizations", "Crude Hospitalization Rate", "Age-Adjusted Hospitalization Rate", "Average Length of Stay (Days)", "Total Charges",
-                       "Crude Charge Rate", "Average Charges", "Average Charge per Day")
+                       "Crude Charge Rate", "Average Charges", "Average Charges per Day", "Median Charges", "Median Charges per Day")
 
 hospMeasures_Revalue <- hospMeasuresNames #used in function to rename from short to long names
 names(hospMeasures_Revalue) <- hospMeasures
