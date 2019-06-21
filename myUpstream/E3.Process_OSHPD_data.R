@@ -450,6 +450,8 @@ total_sum_pop_new$medcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 
 
 total_sum_pop_new$medcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
 
+total_sum_pop_new$avg_los[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
 total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
 
 #replacing NA in ageG with "Total"
@@ -604,14 +606,15 @@ drg_county <- sum_num_costs(oshpd16, c("year", "county", "msdrg", "sex"), "") %>
 total_drg <- bind_rows(drg_state, drg_county) %>% filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% mutate(diagnosis_var = "drg")
 
 #Joining both together
-total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge","mdc" = "msdrg"))
+
+total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_code = mdc)
 
 
 #-------------------------------------------------Creating 0 level values for discordant gender pairs---------------------------------------------------------------#
 
-mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
+mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_code) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
 
-mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
+mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_code) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
 
 
 mdc_drg_female_only <- anti_join(mdc_drg_female_sum, mdc_drg_male_sum, by = c("Female" = "Male", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the female dataset but not the male dataset
@@ -620,13 +623,13 @@ mdc_drg_male_only <- anti_join(mdc_drg_male_sum, mdc_drg_female_sum, by = c("Mal
 
 #Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
 
-mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc", Female) %>% mutate(sex = "Male")
+mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc_drg_code", Female) %>% mutate(sex = "Male")
 
-mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc", Male) %>% mutate(sex = "Female")
+mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc_drg_code", Male) %>% mutate(sex = "Female")
 
 
 #Now joining original total_sum_pop with these datasets, replacing NA with zeros
-total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc", "diagnosis_var"))
+total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc_drg_code", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc_drg_code", "diagnosis_var"))
 
 
 #Example of replacing NA data in selected column
@@ -635,12 +638,14 @@ total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year"
 #replacing year with 2016
 total_mdc_drg_new$year[is.na(total_mdc_drg_new$year)] <- 2016
 
-#replacing NA for n_hosp, charges, avgcharge with 0
+#replacing NA for n_hosp, charges, avgcharge, medcharge,  with 0
 total_mdc_drg_new$n_hosp[is.na(total_mdc_drg_new$n_hosp)] <- 0
 
 total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
 
 total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
+
+total_mdc_drg_new$medcharge[is.na]
 
 mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
 
