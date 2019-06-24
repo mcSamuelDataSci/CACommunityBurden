@@ -185,17 +185,17 @@ dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
 #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
 
 
-hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day")
+hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day")
 
 hospMeasuresNames <- c("Number of Hospitalizations", "Crude Hospitalization Rate", "Age-Adjusted Hospitalization Rate", "Average Length of Stay (Days)", "Total Charges",
-                       "Crude Charge Rate", "Average Charges", "Average Charge per Day")
+                       "Crude Charge Rate", "Average Charges", "Average Charges per Day", "Median Charges", "Median Charges per Day")
 
 hospMeasures_Revalue <- hospMeasuresNames #used in function to rename from short to long names
 names(hospMeasures_Revalue) <- hospMeasures
 
 
 shorthospList <- c(-2, -6)
-shortMDCList <- c(-2,-3,-4,-6,-8)
+shortMDCList <- c(-2,-3,-4,-6,-8, -10)
 hM_short <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
 
@@ -205,7 +205,7 @@ hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown men
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
 hMDCNames_short <- hospMeasuresNames[shortMDCList]
 
-hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)")
+hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)", "Average Charges (in thousands)", "Median Charges (in thousands)")
 
 MDC_DRG <- c("mdc", "drg")
 MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")

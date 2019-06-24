@@ -11,7 +11,7 @@
 # ====================================================================================================
 
 
-#-- Set Locations Etc-----------------------------------------------------------------------
+#---SET LOCATIONS-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
@@ -21,13 +21,13 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- TRUE
 
 # fullOSHPD <- FALSE
 # sampleOSHPD <- TRUE
 
-#-- Load Packages -------------------------------------------------------------
+#-------------------------------------------------LOAD PACKAGES -----------------------------------------------------------------------------------------------------------------------------------#
 
 library(tidyverse)
 library(haven)
@@ -36,7 +36,7 @@ library(readxl)
 library(epitools)
 
 
-#------------------------------------------------------------------------------
+#-----------------------------LOADING/CREATING OSHPD DATASET FROM ORIGINAL DATA FILE----------------------------------------------------------------------------------------#
 
 
 
@@ -84,12 +84,21 @@ saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
 
 } # END if(newData)
 
-#***************************************************************************************************************#
-#Start code here if OSHPD 2016 subset has already been created:
-#***************************************************************************************************************#
+
+#--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
+
+
+if (whichData == "real") {
+  oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) 
+}
+
+if (whichData == "fake") {
+  oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
+}
+
 
 ##------------------------------------Reading in data mapping/linkage files--------------------#
-#reading in gbd.ICD.excel file}
+#reading in gbd.ICD.excel file
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) 
 
 #reading in county-codes-to-names linkage files --oshpd codes map to column "cdphcaCountyTxt"
@@ -99,7 +108,6 @@ geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to C
 sex_num <- c("1", "2", "3", "4")
 sex_cat <- c("Male", "Female", "Other", "Unknown")
 OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
-
 
 
 #DISCUSS***
@@ -144,26 +152,15 @@ popCountySexAgeG.RACE <- filter(popCounty.RACE,ageG != "Total")
 popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
 
 
-#--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
 
 
-if (whichData == "real") {
-  oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) #maybe change to secure location?  YES
-}
-
-if (whichData == "fake") {
-  oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
-}
-
-
-
-#-----------------------------------------------Add Age-Group variable ---------------------------------------------------------#
+#----------------------------------------------ADD AGE-GROUp VARIABLE---------------------------------------------------------#
 
 aL            <-      ageMap$lAge     # lower age ranges
 aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
 aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
 aMark         <- findInterval(oshpd16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-oshpd16$ageG  <- aLabs[aMark]                                   # make new "ageG" variable based on two objects above 
+
 
 
 #----------------Map ICD-10-CM codes to GBD conditions-----------------------------------------------------------------------------------------#
@@ -178,10 +175,7 @@ fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","na
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
 
-
-
-
-#Function from death code R script by MS
+#Function for mapping icd code to disease group
 
 icdToGroup <- function(inputVectorICD10) {
   Cause   <- rep(NA,length(inputVectorICD10))
@@ -189,15 +183,16 @@ icdToGroup <- function(inputVectorICD10) {
   Cause}
 #What this says is: for the length of the input vector, match the ICD10 regEx codes to the corresponding CODE in mapICD
 
+#-----------------------------ADDING VARIABLES TO OSHPD DATASET---------------------------------------------#
 
+#Adding age groups
+oshpd16$ageG  <- aLabs[aMark] 
 
-#Testing function on my test dataset
+#Using icdToGroup Function to map icd codes from diag_p variable to disease group
 oshpd16$icdCODE  <- icdToGroup(inputVectorICD10=oshpd16$diag_p) %>% as.character()
 
-oshpd16$icdCODE[oshpd16$icdCODE == "NA"] <- NA
-
 ##This converts the NAs from characters to NA so subsequent code won't treat them as characters, which is necessary when using str_sub to create the lev1, lev2, lev3 columns
-
+oshpd16$icdCODE[oshpd16$icdCODE == "NA"] <- NA
 
 #This next section adds variables to the input vector, breaking down the CODE into up to 4 levels
 codeLast4 <- str_sub(oshpd16$icdCODE,2,5) #puts characters 2-5 from the CODE string
@@ -221,34 +216,119 @@ oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = s
 #Calculating charge/day from los_adj and charges
 
 oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
-###-------------------------------------------OSHPD CHARGE AND CHARGE_PER_TDAY 0 to NA ----------------------------------------------#
-
-oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
-
-oshpd16$charge[oshpd16$charge == 0] <- NA
-
-oshpd16$charge_per_day[oshpd16$charge_per_day == 0] <- NA
+###-------------------------------------------EXPLORATORY ANALYSIS OF LENGTH OF STAY AND CHARGES (REAL OSHPD DATA, NOT SAMPLE)----------------------------------------------#
 
 
-#-------------Group by statement testing------------------------------------------------------------------#
+#------------------------CHARGES------------------------------#
+#histogram of charges
+min(oshpd16$charge, na.rm = TRUE) #0
+max(oshpd16$charge, na.rm = TRUE) #73,798,776
+
+#total histogram
+oshpd16 %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100) + scale_x_continuous(labels = scales::comma)
+
+#histogram, excluding max
+oshpd16 %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100, breaks = seq(0, 500000, by = 1000)) + scale_x_continuous(labels = scales::comma)
+
+#histogram, removing 0 and 1 charges
+oshpd16 %>% filter(charge != 0 & charge != 1) %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100, breaks = seq(0, 500000, by = 1000)) + scale_x_continuous(labels = scales::comma)
+
+
+# OSHPD CHARGE AND CHARGE_PER_TDAY 0 and 1 to NA --hospitals that don't report charges (eg Kaiser) are assigned charges of 0, pro bono cases as assigned charges of 1
+#oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
+
+#------------------LENGTH OF STAY-----------------------------------#
+
+#histogram of charges
+min(oshpd16$los_adj, na.rm = TRUE)
+max(oshpd16$los_adj, na.rm = TRUE) #9373
+
+#total histogram
+oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100) + scale_x_continuous(labels = scales::comma)
+
+#histogram, excluding max
+oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 5000, by = 100)) + scale_x_continuous(labels = scales::comma)
+
+#histogram, removing 0 and 1 los_adj
+oshpd16 %>% filter(los_adj != 1) %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 500, by = 100)) + scale_x_continuous(labels = scales::comma)
+
+oshpd16 %>% filter(los_adj > 100) %>% nrow() #11132 greater than 100 days
+
+oshpd16 %>% filter(los_adj > 200) %>% nrow() #4074 greater than 200 days
+
+oshpd16 %>% filter(los_adj > 365) %>% nrow() #2046 greater than 1 year
+ 
+
+#What should the exclusion cut-off be for los_adj? 365 days? Less than that? 
+
+#----------------------------------------------------------------------------------------------------------------------------------------------#
+#Some of these extreme los/charges may not even apply to the CAUSE/icdCodes that we're capturing though. Now only looking at values for our CAUSES of interest
+
+oshpd16test <- oshpd16 %>% filter(!is.na(icdCODE)) 
+
+#min charge
+min(oshpd16test$charge) #0
+#max charge
+max(oshpd16test$charge) #62,982,371
+
+#max los
+max(oshpd16test$los_adj) #6995
+
+#histogram of los 
+oshpd16test %>%  ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 600, by = 10)) + scale_x_continuous(labels = scales::comma)
+
+#table of los_adj
+
+los_table <- table(oshpd16test$los_adj) %>% as.data.frame() %>% rename(los_adj = Var1)
+
+#total charges
+charges_table <- table(oshpd16test$charge) %>% as.data.frame() %>% rename(charge = Var1)
+#table of charges---Note that if charges are greater than the max seven digit input field size, they are listed as $9,999,999. Also, when a patient's length of stay is more than 365 days, only
+#the last 365 days of charges are reported. HOWEVER, there are some charges with 8 digits listed, even though OSHPD info said standard format before December 2018 only have 7 digits? 
+#https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
+
+
+#histogram of charges
+oshpd16test %>% filter(charge != 1 & charge != 0) %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100, breaks = seq(0, 7000000, by = 1000)) + scale_x_continuous(labels = scales::comma)
+
+#what do charges 2 and 3 mean? Are they also some sort of pro bono/not real charges info? 
+
+
+
+
+
+#-----------------------------*_*_*_*_*_*_*_*_*_*_
+
+oshpd16$charge[oshpd16$charge == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
+
+oshpd16$charge[oshpd16$charge == 1] <- NA
+
+oshpd16$charge_per_day[oshpd16$charge_per_day == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
+
+oshpd16$charge_per_day[oshpd16$charge_per_day == 1] <- NA
+
+
+#-------------OSHPD CALCULATIONS FOR TOTAL VISITS/CHARGES AND CRUDE RATES------------------------------------------------------------------#
 
 
 #Group_by_at
-#Function to sum number of hospitalizations and charges 
+#Function to sum number of hospitalizations and charges, calculate mean charges, mean length of stay, and mean charge per day
 sum_num_costs <- function(data, groupvar, levLab) {
   
   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
     summarize(n_hosp = n(), 
               charges = sum(charge, na.rm = TRUE), #this still converts cases where there was only 1 with NA charges to 0 for charges
               avgcharge = mean(charge, na.rm = TRUE),
+              medcharge = median(charge, na.rm = TRUE), #adding median charge to compare to average charge
               avg_los = mean(los_adj, na.rm = TRUE),
-              avgcharge_per_day = mean(charge_per_day, na.rm = TRUE)) 
+              avgcharge_per_day = mean(charge_per_day, na.rm = TRUE),
+              medcharge_per_day = median(charge_per_day, na.rm = TRUE)) #adding median charge per day
+              
   
   names(dat)[grep("lev", names(dat))] <- "CAUSE"
   dat$Level                           <- levLab
   dat$charges[dat$charges == 0] <- NA
   dat %>% data.frame()
-  
   
 }
 
@@ -333,8 +413,6 @@ total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
 #To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
 
 
-#******UPDATED TO MAKE sure "duplicate" NAs don't appear during spread function stage****************
-
 spread_female_sum_pop <-total_sum_pop %>% filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
 
 spread_male_sum_pop <- total_sum_pop %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
@@ -368,10 +446,13 @@ total_sum_pop_new$avgcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 
 
 total_sum_pop_new$avgcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
 
+total_sum_pop_new$medcharge[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
+total_sum_pop_new$medcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
+total_sum_pop_new$avg_los[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+
 total_sum_pop_new$n_hosp[is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
-
-
-
 
 #replacing NA in ageG with "Total"
 total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
@@ -422,8 +503,8 @@ fullMatCounty <- mutate(fullMatCounty, county = as.character(county),           
 }
 
 
-#---------------------Age hospitalizations (county and statewide)-----------------------------------------------------#
-#Using summary function that was already created instead of doing group-by statements as was done in E1 R script? 
+#---------------------Age-adjusted hospitalizations (county and statewide)-----------------------------------------------------#
+#Using summary function that was already created 
 
 sA0 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev0"), "lev0") %>% mutate(county = STATE)
 sA1 <- sum_num_costs(oshpd16, c("year", "sex", "ageG", "lev1"), "lev1") %>% mutate(county = STATE)
@@ -463,7 +544,7 @@ countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% group_by(county, year, sex, 
 countyAA_new <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
 
 
-countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) # think this works
+countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) 
 
 
 ####------------------------------------------Creating new dataset to plot all metrics on same plot/facets---------------------------------------------------------#
@@ -477,7 +558,7 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 #Will have to do a series of spread/gather/join to create dataset 
 
 
-calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day)
+calculated_sums <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day, medcharge, medcharge_per_day)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
@@ -496,65 +577,6 @@ test <- calculated_metrics %>% filter(type == "charges") #for real data, all of 
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSHPD.rds"))
 
 
-#----------Plotting----------------------------------------------------------------------#
-
-
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "CALIFORNIA") %>% filter(sex == "Total") %>%
-  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "n_hosp") %>% pull(measure))) %>% 
-  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ type, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
-
-
-#Plotting type vs sex
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>%
-  group_by(type) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges") %>% pull(measure))) %>% 
-  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
-
-
-#This works--plotting facets of metrics by sex, and controlling the order!
-calculated_metrics %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == "lev2", county == "Amador") %>% group_by(type, sex) %>%
-  mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == "charges" & sex == "Male") %>% pull(measure))) %>% 
-  ggplot(., aes(x = nameOnly, y = measure)) + coord_flip() + geom_bar(stat = "identity") + facet_wrap(type ~ sex, scales = "free_x") + scale_y_continuous(labels = scales::comma) ##
-
-
-#Possible visualization function
-oshpd_visualize <- function(df, lev, var, cnty, mygender){
-  var <- enquo(var)
-  df %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>% filter(!is.na(CAUSE), Level == lev, county == cnty) %>% group_by(sex) %>% 
-    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == mygender) %>% pull(!!var))) %>% 
-    ggplot(., aes(x = nameOnly, y = !!var)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(sex ~., scales = "free_x")
-  
-}
-
-#Example:
-total_sum_pop_new %>% arrange(CAUSE) %>% oshpd_visualize(., "lev2", charges, "Alameda", "Male")
-#Need to specify arrange(CAUSE) to dataset in order for this to work.  #lev1, California, Total are in quotes and don't have to be enquo() within the function because they are the specific value of the variable Level that we're interested in. The var that represents the variable of interest
-#does have to be put through enquo() at the beginning of the function because it is a variable name. 
-#Notes on programming with dplyr and explanation of enquo(): https://dplyr.tidyverse.org/articles/programming.html
-
-
-
-
-#----------How to set up axis order based on charges for Total facet--------------------------------#
-
-#Testing reorder--this works, although it is a base R way 
-#reordered_factor <- reorder(s.lev2$CAUSE[s.lev2$sex == "Total"], s.lev2$charges[s.lev2$sex == "Total"])
-
-#s.lev2$CAUSE <- factor(s.lev2$CAUSE, levels = levels(reordered_factor)) 
-
-
-#s.lev2 %>% filter(., CAUSE != is.na(CAUSE)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
-
-
-
-#Using forcats::fct_reorder--this allows you to reorder, but doesn't control the facet variable by which you want it ordered:
-#s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, charges)) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
-
-
-#This uses fct_reorder, based on an example here: https://stackoverflow.com/questions/54458018/passing-string-variable-to-forcatsfct-reorder. 
-s.lev2 %>% filter(CAUSE != is.na(CAUSE)) %>% group_by(sex) %>% mutate(CAUSE = forcats::fct_reorder(CAUSE, filter(., sex == "Total") %>% pull(charges))) %>% ggplot(., aes(x = CAUSE, y = charges)) + coord_flip() + geom_bar(stat = "identity") + facet_grid(. ~ sex,scales="free_x")
-
-
-
 #---------------------------------------------------------Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
 
 library(DT)
@@ -567,7 +589,7 @@ drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
 
 hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
-##-----MDC dataset----------##
+##------------------------------------------------------------------------MDC dataset---------------------------------------------------------------------##
 mdc_state <- sum_num_costs(oshpd16, c("year", "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
 
 mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% select(-Level)
@@ -575,7 +597,7 @@ mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% 
 total_mdc <- bind_rows(mdc_state, mdc_county) %>% filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% mutate(diagnosis_var = "mdc")
 
 
-##----DRG dataset--------##
+##------------------------------------------------------DRG dataset-------------------------------------------------------------------------------------------##
 
 drg_state <- sum_num_costs(oshpd16, c("year", "msdrg", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
 
@@ -583,16 +605,16 @@ drg_county <- sum_num_costs(oshpd16, c("year", "county", "msdrg", "sex"), "") %>
 
 total_drg <- bind_rows(drg_state, drg_county) %>% filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% mutate(diagnosis_var = "drg")
 
-
 #Joining both together
-total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "mdc" = "msdrg"))
+
+total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_codes = mdc)
 
 
-#******Creating 0 level values for discordant gender pairs****************
+#-------------------------------------------------Creating 0 level values for discordant gender pairs---------------------------------------------------------------#
 
-mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
+mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
 
-mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
+mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
 
 
 mdc_drg_female_only <- anti_join(mdc_drg_female_sum, mdc_drg_male_sum, by = c("Female" = "Male", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the female dataset but not the male dataset
@@ -601,13 +623,13 @@ mdc_drg_male_only <- anti_join(mdc_drg_male_sum, mdc_drg_female_sum, by = c("Mal
 
 #Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
 
-mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc", Female) %>% mutate(sex = "Male")
+mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc_drg_codes", Female) %>% mutate(sex = "Male")
 
-mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc", Male) %>% mutate(sex = "Female")
+mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc_drg_codes", Male) %>% mutate(sex = "Female")
 
 
 #Now joining original total_sum_pop with these datasets, replacing NA with zeros
-total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc", "diagnosis_var"))
+total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var"))
 
 
 #Example of replacing NA data in selected column
@@ -616,14 +638,22 @@ total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year"
 #replacing year with 2016
 total_mdc_drg_new$year[is.na(total_mdc_drg_new$year)] <- 2016
 
-#replacing NA for n_hosp, charges, avgcharge with 0
+#replacing NA for n_hosp, charges, avgcharge, medcharge, avg_los, avgcharge_per_day, medcharge_per_day  with 0
 total_mdc_drg_new$n_hosp[is.na(total_mdc_drg_new$n_hosp)] <- 0
 
 total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
 
 total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
 
-mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge)
+total_mdc_drg_new$medcharge[is.na(total_mdc_drg_new$medcharge)] <- 0
+
+total_mdc_drg_new$avgcharge_per_day[is.na(total_mdc_drg_new$avgcharge_per_day)] <- 0
+
+total_mdc_drg_new$medcharge_per_day[is.na(total_mdc_drg_new$medcharge_per_day)] <- 0
+
+total_mdc_drg_new$avg_los[is.na(total_mdc_drg_new$avg_los)] <- 0
+
+mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge) %>% select(year, mdc_drg_codes, sex, county, diagnosis_var, type, measure)
 
 mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
@@ -632,21 +662,9 @@ mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
 
 
+#---------------------------------------------------------CALCULATING ANY VS PRIMARY DIAGNOSES------------------------------------------------------------------#
 
-
-
-
-
-
-
-
-
-
-#---------------------------------------------------------Other------------------------------------------------------------------#
-#Need to define which conditions we're interested in
-#filter(fullCauseListICD, LABEL == "C01") %>% pull(regExICD10_CM) #This is how we can pull the reExICD10-CM code of interest within the function
-
-#--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------
+#--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------#
 
 #dataset = dataset of interest (in this case, oshpd16_sample)
 #colname = what we want to name column, based on disease and whether diagnosis is based only on primary or any of 25 diagnosis codes (e.g. diabetes_any)
@@ -659,7 +677,7 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
 #be applied over. E.g. 1 indicates rows, 2 indicates columns, c(1,2) indicates rows and columns. Since we want the function
 #applied over rows (for multiple columns), we'll specify 1. 
 
-##CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN
+##--------------CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN----------#
 
 #defining paste function to include sep = "|"
 pastex <- function(...) {
@@ -679,45 +697,65 @@ test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% filter(!is.na(regExIC
 
 
 
-any_diagnosis_definition <- function(df, label) {
-  index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
-  df[[label]] <- apply(df, 1, FUN = function(x) {
-    icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
-    pattern <- grepl(icd_regEx, x)
-    if(any(pattern[(index)])) 1 else 0
-  } )
-  return(df)
+#--------------------------------------FUNCTION FOR CALCULATING ANY VS PRIMARY-------------------------------------------------------#
+
+
+#creating a new variable where all codes are pasted together 
+
+if(1==2){
+paste_stop <- function(df,...){
+for(i in 1:25) {
+  paste(..., sep = "|") 
+    if (is.na(df$...)) {break}
+  } 
 }
+}
+#this ^ doesn't work
 
-oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
-for (i in 1: nrow(test_map)) {
-  oshpd_test <- any_diagnosis_definition(oshpd_test,test_map$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
+oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
+                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
+                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
+                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
+                                                  odiag22, odiag23, odiag24,sep = "|")) 
+
+#This pastes all the ||| separators together at the end of the variable once the odiag columns contain NA--this doesn't seem to create a problem with the grepl statement below though. 
+
+
+#This function loops through the LABEL codes in test_map, pulls out the ICD regex expression that matches that LABEL code, and then runs that regex expression against the all_diag variable (which contains
+#all of the regex ICD codes for a given visit)--using the mutate statement, a new indicator variable is created, named LABEL (eg if LABEL is A07, new column is named A07), with 1 if any of LABEL ICD codes
+#are present, 0 otherwise. 
+
+any_diag_code <- function(df){
+  for (i in 1: nrow(test_map)){
+    label = test_map$LABEL[i]
+    code_def <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+    df <- df %>% mutate(!!label := ifelse(grepl(code_def, all_diag), 1, 0))
+    }
+  return(df) #need to include return df in order to have the df return with multiple  new columns appended to it (otherwise it returns a null value)
   
-} 
+  }
+
+#Need to define oshpd16an_primary as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
+oshpd16any_primary <- oshpd16new
+oshpd16any_primary <- any_diag_code(oshpd16any_primary)
 
 
-#Summarizing any definition data:
+#-----Summarizing oshpd any vs primary data-------#
 
-summary_any_CA <- oshpd_test %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
+#summary_any dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes (diag_p through odiag24), by sex (statewide numbers) 
+summary_any_CA <- oshpd16any_primary %>% group_by(sex) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07: C05) %>% mutate(county = STATE) %>% 
+  filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
+
+#summary_any_county dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes, by county and sex
+summary_any_county <- oshpd16any_primary %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 
 
-summary_any_county <- oshpd_test %>% group_by(sex, county) %>% summarise_at(vars(A07:C05), sum) %>% gather(key = LABEL, value = n_hosp, A07:C05) %>% 
-  filter(sex == "Female" | sex == "Male" | sex == "Total") %>% left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
-
-
-summary_any <- bind_rows(summary_any_CA, summary_any_county)
+summary_any <- bind_rows(summary_any_CA, summary_any_county) %>% mutate(diag_type = "any", year = 2016) %>% rename(CAUSE = LABEL)
 
 summary_any$county[summary_any$county == "California"] <- "CALIFORNIA"
 
-#TEST PLOT
-summary_any %>% filter(county == "CALIFORNIA") %>% group_by(sex) %>% mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., sex == "Total") %>% pull(n_hosp))) %>% 
-  ggplot(., aes(x = nameOnly, y = n_hosp)) + coord_flip() + 
-  geom_bar(stat = "identity") + facet_wrap(. ~ sex, scales = "free_x") 
-
-#brainstorming other plot ideas--plot any vs diag_p on the same plot (grouped bars?)? organize dataframe better, save
-
-summary_any <- summary_any %>% mutate(diag_type = "any", year = 2016) %>% rename(CAUSE = LABEL)
+#------------To plot comparisons of any vs primary diagnoses, need to join primary diagnoses n_hosp summary data with summary_any:
 
 total_primary <- total_sum_pop_new %>% left_join(., fullCauseList, by = c("CAUSE" = "LABEL")) %>%
   select(sex, CAUSE, year, n_hosp, Level, county, nameOnly) %>% filter(Level == "lev2") %>% mutate(diag_type = "primary") %>% select(-Level)
@@ -726,76 +764,70 @@ total_primary$county[total_primary$county == "California"] <- "CALIFORNIA"
 
 any_primary <- bind_rows(summary_any, total_primary)
 
-#any vs primary on the same plot
-any_primary %>% filter(sex == "Female", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(position = "dodge", stat = "identity") +
-  coord_flip()
-
-
-#stackbars--primary as a percentage of any
-
-#prepping data
+#calculating difference between any n_hosp and primary n_hosp in order to plot as a stacked bar plot (since primary is a subset of any in this dataset)
 any_primary_diff <- any_primary %>% spread(., diag_type, n_hosp) %>% group_by(sex, CAUSE, county, year) %>% mutate(any_diff = any - primary) %>% #calculates difference between any and primary n_hosp 
   gather(key = "diag_type", value = "n_hosp", primary, any_diff) %>% #gathers so we have n_hosp and diag_type columns again 
   select(-any) #removes primary column
 
-
-#stacked bar plot--is this a better visual?
-any_primary_diff %>% 
-  filter(sex == "Total", county == "CALIFORNIA") %>% ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + geom_bar(stat = "identity") + coord_flip()
+#Saving RDS file of primary-any dataframe for stacked bar plot
+saveRDS(any_primary_diff, file = path(myPlace, "myData/",whichData,"/any_primary_stackedbar.rds"))
 
 
 
 
-
-#Any-primary comparisons
-codeLast4 <- str_sub(oshpd_test$icdCODE,2,5) #puts characters 2-5 from the CODE string
+#----------------------------------Any-primary comparisons---------------------------------------------#
+codeLast4 <- str_sub(oshpd16any_primary$icdCODE,2,5) #puts characters 2-5 from the CODE string
 nLast4    <- nchar(codeLast4) #counts number of characters 
 
-oshpd_test   <- oshpd_test  %>% 
+oshpd_test   <- oshpd16any_primary  %>% 
   mutate(lev0  = "0",
          lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
          lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
          lev3  = ifelse(nLast4 == 4,codeLast4,NA) 
   ) %>% select(-lev0, -lev1, -lev3)
 
-#what any are associated with primaries? 
-group_any_primary <- oshpd_test %>% group_by(lev2) %>% summarise_at(vars(A07:C05), sum) %>% filter(!is.na(lev2)) %>% 
-  left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>% mutate(county = STATE) %>% 
+#what any are associated with primaries?
+#state level
+group_any_primary_state <- oshpd_test %>% group_by(lev2, sex) %>% summarise_at(vars(A07:C05), sum) %>% filter(!is.na(lev2)) %>% 
+  left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>%
+  left_join(., select(icd_map, nameOnly, LABEL), by = c("any" = "LABEL")) %>% rename(any_name = nameOnly) %>% mutate(county = STATE)
+
+group_any_primary_state$county <- "CALIFORNIA"
+
+#by county
+group_any_primary_county <- oshpd_test %>% group_by(lev2, county, sex) %>% summarise_at(vars(A07:C05), sum) %>% filter(!is.na(lev2)) %>% 
+  left_join(., select(icd_map, nameOnly, LABEL), by = c("lev2" = "LABEL")) %>% rename(primary_name = nameOnly, primary = lev2) %>% gather(key = any, value = n_hosp_any, A07: C05) %>% 
   left_join(., select(icd_map, nameOnly, LABEL), by = c("any" = "LABEL")) %>% rename(any_name = nameOnly)
 
 
+group_any_primary <- bind_rows(group_any_primary_state, group_any_primary_county) %>% filter(!is.na(county), !is.na(sex))
 
-#GROUPED BAR PLOT FOR THIS??
-group_any_primary %>% ggplot(., aes(fill = any_name, x = primary_name, y = n_hosp_any)) + geom_bar(position = "dodge", stat = "identity") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-
-
-#grouped, not including the primary/any LABEL pairs
-group_any_primary %>% filter(primary != any) %>% ggplot(., aes(fill = any_name, x = primary_name, y = n_hosp_any)) + geom_bar(position = "dodge", stat = "identity")  +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-#this visualization isn't great, but it's the general idea about what we might want to visualize
+#Saving RDS file of this dataframe--shows the number of "any" diagnoses associated with each primary diagnosis
+saveRDS(group_any_primary, file = path(myPlace, "myData/",whichData,"/group_any_primary.rds"))
 
 
 
-#Circular barplot? https://jokergoo.github.io/circlize_book/book/the-chorddiagram-function.html#directional-relations
-name=c(3,10,10,3,6,7,8,3,6,1,2,2,6,10,2,3,3,10,4,5,9,10)
-feature=paste("feature ", c(1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5) , sep="")
-dat <- data.frame(name,feature)
-dat <- with(dat, table(name, feature))
-dat <- as.data.frame(dat)
-# Charge the circlize library
-library(circlize)
-#Note: If you use it in published research, please cite:
-#Gu, Z. circlize implements and enhances circular visualization 
-#in R. Bioinformatics 2014.
+# #------------------------------------------------------------------------------------------------OLD OPTION--TAKES TOO LONG TO PROCESS----------------------------------------------------------#
+# #-----------------------------FUNCTION FOR mapping icd code to diagnoses code variables--------------------------------#
+# any_diagnosis_definition <- function(df, label) {
+#   index <- grep("diag", colnames(df)) #gives the index of all cols with names that include diag in them, which is what we want to run the function over
+#   df[[label]] <- apply(df, 1, FUN = function(x) {
+#     icd_regEx <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+#     pattern <- grepl(icd_regEx, x)
+#     if(any(pattern[(index)])) 1 else 0
+#   } )
+#   return(df)
+# }
+# 
+# 
+# #-----------------------------------Creating new dataset with the "any" columns------------------------------------------#
+# #The problem with this is that it takes hours to process the real oshpd dataset (3 million + records) and append the new column to it. May need to 
+# #re-write function so that new columns are created as separate dataframes, and then append all the columns to the oshpd dataset. 
+# oshpd_test <- oshpd16 %>% select(-lev0, -lev1, -lev2, -lev3) #removing levels for primary diagnosis
+# for (i in 1: nrow(test_map)) {
+#   oshpd_test <- any_diagnosis_definition(oshpd_test,test_map$LABEL[i]) #need to make input df the name of the "final" output df in order to make sure each column is iteratively added, doesn't write over itself
+#   
+# } 
+# 
+# 
 
-# Make the circular plot
-chordDiagram(dat, transparency = 0.5)
-
-#in group_any_primary, let name = any_name, feature = primary_name, Freq = n_hosp_any
-chord_any_primary <- group_any_primary %>%  select(primary_name, any_name, n_hosp_any) %>% group_by(primary_name) #Direction "from" primary_name (the grouping variable) "to" the any_name
-
-chordDiagram(chord_any_primary, transparency = 0.1, directional = 1) #directional = 1 means from col1 to col2
-
-#This isn't great either......

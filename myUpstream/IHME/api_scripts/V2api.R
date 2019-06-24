@@ -96,7 +96,6 @@ make_numeric <- function(df) {
   return(df)
 }
 
-
 # Load and format data-----------------------------------------------------------------------
 # make_url() defaults: subset=cause_subset2017, measure_id="", year_id="", location_id=527,
 #                      sex_id="", age_group_id=22, metric_id="", risk_id="", cause_id=""
@@ -149,19 +148,7 @@ output <- bind_rows(v2cause_data, v2risk_data)
 myDrive <- getwd()  # Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD")
 saveRDS(output_data, file = path(myPlace,"/myData/v2IHME.rds"))
-# 
-# # See new cause ids-----------------------------------------------------------------------
-# 
-# parent  <- jsonlite::fromJSON(paste0(v1_api_root, v1_risk_meta_subset,"&",key_text))
-# colnames(parent$data) <- parent$meta$fields
-# meta <- as.data.frame(parent$data)
-# 
-# url <- make_url(subset = cause_subset2017, measure_id = 1, sex_id = 3, metric_id = 1, year_id = 2017)
-# df <- make_data_subset(url)
-# 
-# old_cause_ids <- setdiff(meta3$cause_id, v2cause$cause_id)
-# new_cause_ids <- setdiff(v2cause$cause_id, meta3$cause_id)
-# 
+
 # # visualize smoking data-----------------------------------------------------------------------
 # 
 # url2 <- make_risk_url(subset = risk_subset2017, risk_id = 99, age_id = 22, metric_id = 1, measure_id = 1, sex_id = 3)

@@ -7,7 +7,7 @@ oshpdPlot2<- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospital
   
 
 #Ordering dataset, converting "type" values from short names to full names
-calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day"))) %>%
+calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day"))) %>%
   mutate(type = plyr::revalue(type, hospMeasures_Revalue)) %>% #replaces values with full name labels
   left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))
   
@@ -38,11 +38,13 @@ calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels =
   
   avg_los <- plotData %>% filter(type == "Average Length of Stay (Days)") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Average Length of Stay (Days)")
   
-  avgcharge_per_day <- plotData %>% filter(type == "Average Charges Per Day") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Average Charges Per Day")
+  avgcharge_per_day <- plotData %>% filter(type == "Average Charges per Day") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Average Charges Per Day")
   
-
+  medcharge <- plotData %>% filter(type == "Median Charges") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Median Charges")
   
-  subplot(num_hosp, aahosp, avg_los, charges, avgcharges, avgcharge_per_day, shareY = TRUE) %>% layout(yaxis = list(title = ""))
+  medcharge_per_day <- plotData %>% filter(type == "Median Charges per Day") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, orientation = "h", type = "bar", name = "Median Charges per Day")
+  
+  subplot(num_hosp, aahosp, avg_los, charges, avgcharges, avgcharge_per_day, medcharge, medcharge_per_day, shareY = TRUE) %>% layout(yaxis = list(title = ""))
 
   
 }

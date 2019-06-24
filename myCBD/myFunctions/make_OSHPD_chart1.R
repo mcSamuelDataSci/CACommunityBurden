@@ -9,7 +9,7 @@ oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospita
 
 
 #Ordering dataset, converting "type" values from short names to full names
-  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day"))) %>%
+  calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels = c("n_hosp", "cHospRate", "ahospRate", "avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day"))) %>%
     mutate(type = plyr::revalue(type, hospMeasures_Revalue)) %>% #replaces values with full name labels
     left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))
   

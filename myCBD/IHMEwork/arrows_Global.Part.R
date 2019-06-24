@@ -40,21 +40,20 @@ RIGHT_X <- LEFT_X+350
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                           year_from, year_to, display_in) {
 
-  
+  right_nodes <- data %>%
+    filter(display == display_in, grepl(level_in, level), year_id == year_to,
+           measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
+    arrange(id_num) %>%
+    mutate(rank = rank(-val, ties.method = 'first')) %>%
+    filter(rank <= MAX_NODES)
   
   left_nodes <- data %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_from,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
     arrange(id_num) %>%
     mutate(rank = rank(-val, ties.method = 'first')) %>%
-    filter(rank <= MAX_NODES)
-  
-  right_nodes <- data %>%
-    filter(display == display_in, grepl(level_in, level), year_id == year_to,
-           measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in,
-           id_name %in% left_nodes$id_name) %>%
-    arrange(id_num) %>%
-    mutate(rank = rank(-val, ties.method = 'first'))
+    filter(id_num %in% right_nodes$id_num)
+    
   
   # Reset number of nodes in case it is less than original number of nodes requested
   NUM_NODES <- nrow(left_nodes)

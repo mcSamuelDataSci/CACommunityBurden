@@ -1,7 +1,3 @@
-# ADD visNetwork to "install packages" file
-# Another change
-
-
 library(dplyr)
 library(magrittr)
 library(visNetwork)
@@ -9,10 +5,11 @@ library(stringr)
 library(shiny)
 library(shinyWidgets)
 
-# Load and format data-----------------------------------------------------------------------
-endpoints <- read.csv("v1API_endpoints.csv", header = TRUE)
+# Data-----------------------------------------------------------------------
 
-data <- readRDS("v2IHME.RDS") %>%
+endpoints <- read.csv("../data/v1API_endpoints.csv", header = TRUE)
+
+data <- readRDS("../data/v2IHME.RDS") %>%
   subset(., year_id >= 1990)
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
@@ -23,9 +20,9 @@ risk_groups <- c('Environmental/ occupational risks',
                  'Behavioral risks',
                  'Metabolic risks')
 
-# Define constants -----------------------------------------------------------------------
+# Constants -----------------------------------------------------------------------
+
 VALID_YEARS <- c(1990:2017)
-# Play with them at your own risk
 MAX_NODES <- 25
 LABEL_LENGTH <- 30
 FONT_SIZE <- 15
@@ -41,24 +38,25 @@ LEGEND_NODE_WIDTH_CONSTRAINT <- 196
 LEFT_X <- -(WIDTH/2 - 115)
 RIGHT_X <- LEFT_X+350
 
+# Functions -----------------------------------------------------------------------
 
-# Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                          year_from, year_to, display_in) {
+  
+  right_nodes <- data %>%
+    filter(display == display_in, grepl(level_in, level), year_id == year_to,
+           measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
+    arrange(id_num) %>%
+    mutate(rank = rank(-val, ties.method = 'first')) %>%
+    filter(rank <= MAX_NODES)
 
+  
   left_nodes <- data %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_from,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
     arrange(id_num) %>%
     mutate(rank = rank(-val, ties.method = 'first')) %>%
-    filter(rank <= MAX_NODES)
-  
-  right_nodes <- data %>%
-    filter(display == display_in, grepl(level_in, level), year_id == year_to,
-           measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in,
-           id_name %in% left_nodes$id_name) %>%
-    arrange(id_num) %>%
-    mutate(rank = rank(-val, ties.method = 'first'))
+    filter(id_num %in% right_nodes$id_num)
   
   # Reset number of nodes in case it is less than original number of nodes requested
   NUM_NODES <- nrow(left_nodes)
@@ -144,7 +142,6 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
   return(list("nodes" = nodes, "edges" = edges))
 }
 
-# Create vis network (and supplemental) functions -----------------------------------------------------------------------
 vis_network <- function(nodes, edges, display) {
   if (display == "cause") {
     groups <- cause_groups
@@ -165,18 +162,19 @@ vis_network <- function(nodes, edges, display) {
     visHierarchicalLayout()
 }
 
-# SHINY-----------------------------------------------------------------------
+# Shiny UI---------------------------------------------------------------------------
 
-# UI---------------------------------------------------------------------------
 ui <- fluidPage(
   sidebarLayout(
     # Inputs
     sidebarPanel(
       
-      selectInput("display",
-                  label = h4("Display:"),
-                  choices = list("Cause" = "cause", "Risk" = "risk"),
-                  selected = "risk"),
+      radioGroupButtons(
+        inputId = "display", label = h4("Display:"), 
+        choices = c("Cause" = "cause", "Risk" = "risk"),
+        selected = "risk",
+        justified = TRUE, status = "primary"
+      ),
       
       sliderInput("level",
                   label = h4("Level:"),
@@ -196,15 +194,19 @@ ui <- fluidPage(
                       selected = range(VALID_YEARS),
                       grid = TRUE),
       
-      selectInput("sex",
-                  label = h4("Sex:"),
-                  choices = list("Male" = 1, "Female" = 2, "Both" = 3),
-                  selected = 3),
+      radioGroupButtons(
+        inputId = "sex", label = h4("Sex:"), 
+        choices = c("Male" = 1, "Female" = 2, "Both" = 3),
+        selected = 3,
+        justified = TRUE, status = "primary"
+      ),
       
-      selectInput("metric", 
-                  label = h4("Metric/Units:"),
-                  choices = list("Number" = 1, "Percent" = 2, "Rate" = 3),
-                  selected = 1)
+      radioGroupButtons(
+        inputId = "metric", label = h4("Metric:"), 
+        choices = c("#" = 1, "Rate" = 3, "%" = 2),
+        selected = 3,
+        justified = TRUE, status = "primary"
+      )
     ),
     # Outputs
     mainPanel(
@@ -213,16 +215,19 @@ ui <- fluidPage(
   )
 )
 
-# Server---------------------------------------------------------------------------
+# Shiny Server---------------------------------------------------------------------------
 
 server <- function(input, output) {
-
-  output$network <- renderVisNetwork({
-
+  
+  nodeNetwork <- reactive({
     nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
                                     paste(input$year[1]), paste(input$year[2]), input$display)
-
+    
     vis_network(nodes_and_edges$nodes, nodes_and_edges$edges, input$display)
+  })
+
+  output$network <- renderVisNetwork({
+    nodeNetwork()
   })
 }
 
