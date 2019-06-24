@@ -145,8 +145,9 @@ observeEvent(input$ID,{
 # Render Application Maps and Charts --------------------------------------------
 
 
+# use dbounce() below to "delay" rendering of may to avoid temporary error
 
-output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
 # t.map1            <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
 # output$cbdMapTL   <- renderLeaflet(t.map1)
 
