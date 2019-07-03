@@ -1,6 +1,6 @@
 #make MDC/DRG plot
 
-mdc_drg      <- readRDS(path(myPlace,"/myData/real/mdc_drg.rds"))
+mdc_drg      <- readRDS(path(myPlace,"/myData/fake/mdc_drg.rds"))
 
 
 mdc_drg_plot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myVar = "drg" ) {

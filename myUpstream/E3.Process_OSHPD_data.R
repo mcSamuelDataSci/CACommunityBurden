@@ -15,13 +15,13 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-secure.location  <- "E:/0.Secure.Data/"
+secure.location  <- "G:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- TRUE
 
 # fullOSHPD <- FALSE
@@ -234,7 +234,8 @@ oshpd16 %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100, breaks = seq(0,
 oshpd16 %>% filter(charge != 0 & charge != 1) %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100, breaks = seq(0, 500000, by = 1000)) + scale_x_continuous(labels = scales::comma)
 
 
-# OSHPD CHARGE AND CHARGE_PER_TDAY 0 and 1 to NA --hospitals that don't report charges (eg Kaiser) are assigned charges of 0, pro bono cases as assigned charges of 1
+# OSHPD CHARGE AND CHARGE_PER_TDAY 0 and 1 to NA --hospitals that don't report charges (eg Kaiser) are assigned charges of 0, 
+# pro bono cases as assigned charges of 1
 #oshpd16_charge0 <- oshpd16 %>% filter(charge == 0)
 
 #------------------LENGTH OF STAY-----------------------------------#

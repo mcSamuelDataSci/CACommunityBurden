@@ -492,6 +492,11 @@ ageComm   <- full_join(fullMatComm,datAA1,by = c("comID","yearG","sex","ageG","C
 ageComm$Ndeaths[is.na(ageComm$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageComm$YLL[is.na(ageComm$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
+
+### LINE BELOW ADDED 7/2/2018
+ageComm <- filter(ageComm,!is.na(ageG))
+
+
 commAA <- ageComm %>% group_by(comID,yearG,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
