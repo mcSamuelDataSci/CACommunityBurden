@@ -39,8 +39,9 @@ filter2 <- function(f1_output, measure_id_in) {
 bar_plot <- function(filtered, measure) {
   plot_width <- max(filtered$val)*PLOT_WIDTH_MULTIPLIER
   percent_sign <- switch(filtered$metric[1],
-                         "",
-                         "%")
+                         "Number",
+                         "Percent",
+                         "Per 100,000")
   plot_title <- switch(measure,
                        "Deaths",
                        "Disability-Adjusted Life Years",
@@ -56,7 +57,7 @@ bar_plot <- function(filtered, measure) {
     coord_flip() +
     geom_bar(position="dodge", stat="identity", width=BAR_WIDTH, fill=color) + 
     geom_text(hjust=0, aes(x=id_name,y=0, label=paste0(" ", rank, ". ", id_name))) +
-    annotate(geom="text", hjust=1, x=filtered$id_name, y=plot_width, label=paste0(filtered$val, percent_sign)) +
+    annotate(geom="text", hjust=1, x=filtered$id_name, y=plot_width, label=filtered$val) +
     theme(panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),
           panel.background=element_blank(),
@@ -66,8 +67,9 @@ bar_plot <- function(filtered, measure) {
           axis.title.y=element_blank(),
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank(),
-          plot.title=element_text(size=16, face="bold")) +
-    ggtitle(plot_title) +
+          plot.title=element_text(size=16, face="bold", vjust=-4),
+          plot.subtitle=element_text(size=10, face="bold", hjust=1, vjust=-2)) +
+    labs(title=plot_title, subtitle=percent_sign) +
     scale_y_continuous(expand = c(0,0), limits = c(0, plot_width))
 }
 
