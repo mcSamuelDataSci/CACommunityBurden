@@ -7,8 +7,6 @@ library(ggplot2)
 # Data-----------------------------------------------------------------------
 
 data <- readRDS("../data/v2IHME.RDS")
-data[data$metric_id == 1, 8:10] <- round(data[data$metric_id == 1,8:10])
-data[data$metric_id == 2, 8:10] <- round(data[data$metric_id == 2,8:10], 2)
 
 # Constants-----------------------------------------------------------------------
 
@@ -117,7 +115,7 @@ ui <- fluidPage(
       
       radioGroupButtons("metric",
                         label = h4("Metric:"), 
-                        choices = c("#" = 1, "%" = 2),
+                        choices = c("#" = 1, "%" = 2, "Rate" = 3),
                         selected = 1,
                         justified = TRUE, status = "primary")
       ),
