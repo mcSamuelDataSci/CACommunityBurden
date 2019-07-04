@@ -6,7 +6,7 @@ library(ggplot2)
 
 # Data-----------------------------------------------------------------------
 
-data <- readRDS("../data/v2IHME.RDS")
+data <- readRDS("../../data/v2IHME.RDS")
 data[data$metric_id == 1, 8:10] <- round(data[data$metric_id == 1,8:10])
 data[data$metric_id == 2, 8:10] <- round(data[data$metric_id == 2,8:10], 2)
 
@@ -18,6 +18,8 @@ DALY_ID <- 2
 YLD_ID <- 3
 YLL_ID <- 4
 SHOW_TOP <- 15
+BAR_WIDTH <- 0.9
+PLOT_WIDTH_MULTIPLIER <- 1.2
 
 # Functions-----------------------------------------------------------------------
 
@@ -36,15 +38,17 @@ filter2 <- function(f1_output, measure_id_in) {
     filter(rank <= SHOW_TOP)
 }
 
-bar_plot <- function(filtered, metric) {
-  plot_width <- max(filtered$val)*1.2
-  plot_title <- switch(metric,
+bar_plot <- function(filtered, measure) {
+  plot_width <- max(filtered$val)*PLOT_WIDTH_MULTIPLIER
+  percent_sign <- switch(filtered$metric[1],
+                         "",
+                         "%")
+  plot_title <- switch(measure,
                        "Deaths",
                        "Disability-Adjusted Life Years",
                        "Years Lived with Disability",
-                       "Years of Life Lost"
-                  )
-  color <- switch(metric,
+                       "Years of Life Lost")
+  color <- switch(measure,
                   "#8F98B5",
                   "#E9A291",
                   "#8ECAE3",
@@ -52,9 +56,9 @@ bar_plot <- function(filtered, metric) {
   
   ggplot(data=filtered, aes(x=reorder(id_name, val),y=val)) +
     coord_flip() +
-    geom_bar(position="dodge", stat="identity", width=0.9, fill=color) + 
+    geom_bar(position="dodge", stat="identity", width=BAR_WIDTH, fill=color) + 
     geom_text(hjust=0, aes(x=id_name,y=0, label=paste0(" ", rank, ". ", id_name))) +
-    annotate(geom="text", hjust=1, x=filtered$id_name, y=plot_width, label=filtered$val) +
+    annotate(geom="text", hjust=1, x=filtered$id_name, y=plot_width, label=paste0(filtered$val, percent_sign)) +
     theme(panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),
           panel.background=element_blank(),
