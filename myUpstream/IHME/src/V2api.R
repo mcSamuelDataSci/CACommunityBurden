@@ -20,8 +20,6 @@ risk_subset2016 <- "data/gbd/2016/risk/single/?"
 cause_meta_subset <- "metadata/cause/?cause_set_id=3"
 risk_meta_subset <- "metadata/risk/?risk_set_id=1"
 
-# “2017” (for GBD rounds) and “single/multi” (for single-year data vs. cross-year data – version 2’s bigger than version 1)
-
 # Define functions-----------------------------------------------------------------------
 
 # Get Data functions-------------------
@@ -91,8 +89,9 @@ merge_with_parent <- function(value_data, meta_subset){
 make_numeric <- function(df) {
   cols.num <- c(1:10, 13, 15)
   df[cols.num] <- sapply(df[cols.num], as.numeric)
-  df[df$metric_id == 2, 8:10] <- df[df$metric_id == 2, 8:10]*100
-  df[,8:10] <- round(df[,8:10],4)  # Is 4 the right number of decimal places?
+  df[df$metric_id == 1, 8:10] <- round(df[df$metric_id == 1, 8:10])         # Round number to 0 decimal
+  df[df$metric_id == 2, 8:10] <- round(df[df$metric_id == 2, 8:10]*100, 1)  # Multiply Percent by 100, round to 1 decimal
+  df[df$metric_id == 3, 8:10] <- round(df[df$metric_id == 3, 8:10]*100000)  # Multiply Rate by 100,000, round to 0 decimal
   return(df)
 }
 
@@ -143,11 +142,11 @@ v2cause_data <- causeData %>%
 
 output <- bind_rows(v2cause_data, v2risk_data)
 
-# saveRDS(output, file = "v2data.RDS")
+saveRDS(output, file = "../data/v2IHME.RDS")
 
-myDrive <- getwd()  # Root location of CBD project
-myPlace <- paste0(myDrive,"/myCBD")
-saveRDS(output_data, file = path(myPlace,"/myData/v2IHME.rds"))
+# myDrive <- getwd()  # Root location of CBD project
+# myPlace <- paste0(myDrive,"/myCBD")
+# saveRDS(output_data, file = path(myPlace,"/myData/v2IHME.rds"))
 
 # # visualize smoking data-----------------------------------------------------------------------
 # 

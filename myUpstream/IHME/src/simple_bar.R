@@ -7,8 +7,6 @@ library(ggplot2)
 # Data-----------------------------------------------------------------------
 
 data <- readRDS("../data/v2IHME.RDS")
-data[data$metric_id == 1, 8:10] <- round(data[data$metric_id == 1,8:10])
-data[data$metric_id == 2, 8:10] <- round(data[data$metric_id == 2,8:10], 2)
 
 # Constants-----------------------------------------------------------------------
 
@@ -18,6 +16,8 @@ DALY_ID <- 2
 YLD_ID <- 3
 YLL_ID <- 4
 SHOW_TOP <- 15
+BAR_WIDTH <- 0.9
+PLOT_WIDTH_MULTIPLIER <- 1.2
 
 # Functions-----------------------------------------------------------------------
 
@@ -36,15 +36,18 @@ filter2 <- function(f1_output, measure_id_in) {
     filter(rank <= SHOW_TOP)
 }
 
-bar_plot <- function(filtered, metric) {
-  plot_width <- max(filtered$val)*1.2
-  plot_title <- switch(metric,
+bar_plot <- function(filtered, measure) {
+  plot_width <- max(filtered$val)*PLOT_WIDTH_MULTIPLIER
+  percent_sign <- switch(filtered$metric[1],
+                         "Number",
+                         "Percent",
+                         "Per 100,000")
+  plot_title <- switch(measure,
                        "Deaths",
                        "Disability-Adjusted Life Years",
                        "Years Lived with Disability",
-                       "Years of Life Lost"
-                  )
-  color <- switch(metric,
+                       "Years of Life Lost")
+  color <- switch(measure,
                   "#8F98B5",
                   "#E9A291",
                   "#8ECAE3",
@@ -52,7 +55,7 @@ bar_plot <- function(filtered, metric) {
   
   ggplot(data=filtered, aes(x=reorder(id_name, val),y=val)) +
     coord_flip() +
-    geom_bar(position="dodge", stat="identity", width=0.9, fill=color) + 
+    geom_bar(position="dodge", stat="identity", width=BAR_WIDTH, fill=color) + 
     geom_text(hjust=0, aes(x=id_name,y=0, label=paste0(" ", rank, ". ", id_name))) +
     annotate(geom="text", hjust=1, x=filtered$id_name, y=plot_width, label=filtered$val) +
     theme(panel.grid.major=element_blank(),
@@ -64,8 +67,9 @@ bar_plot <- function(filtered, metric) {
           axis.title.y=element_blank(),
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank(),
-          plot.title=element_text(size=16, face="bold")) +
-    ggtitle(plot_title) +
+          plot.title=element_text(size=16, face="bold", vjust=-4),
+          plot.subtitle=element_text(size=10, face="bold", hjust=1, vjust=-2)) +
+    labs(title=plot_title, subtitle=percent_sign) +
     scale_y_continuous(expand = c(0,0), limits = c(0, plot_width))
 }
 
@@ -113,8 +117,8 @@ ui <- fluidPage(
       
       radioGroupButtons("metric",
                         label = h4("Metric:"), 
-                        choices = c("#" = 1, "%" = 2),
-                        selected = 1,
+                        choices = c("#" = 1, "%" = 2, "Rate" = 3),
+                        selected = 3,
                         justified = TRUE, status = "primary")
       ),
     mainPanel(
