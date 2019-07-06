@@ -5,7 +5,15 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
+
+####
+#### EDIT AS APPROPRIATE"
 whichData     <- "real"   # "real" or "fake"
+securePath    <- "e:/0.Secure.Data/myData/"
+####
+####
+
+
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
@@ -20,12 +28,12 @@ myPlace <- paste0(myDrive,"/myCBD")
 upPlace <- paste0(myDrive,"/myUpstream") 
 
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
-if (whichData=="real") .deaths		<- "e:/0.Secure.Data/myData/cbdDat0FULL.R" 
+if (whichData=="real") .deaths		<- paste0(securePath,"cbdDat0FULL.R") 
+# needed? if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
+
 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
-
-
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
@@ -42,13 +50,21 @@ county.link <- setDT(
 	key="countyName"
 )
 county.link[, GEOID:=paste0("06",FIPSCounty,"000000")]
+
 ## 2.3	CDPH deaths microdata -- CCB datasets
-load(.deaths) # named cbdDat0SAMP
+if (whichData=="fake" | whichData=="real") load(.deaths) # named cbdDat0SAMP
+if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL # rename cbdDat0SAMP to work with rest of code
+if (whichData=="dof") cbdDat0SAMP <- read_csv(.deaths)
 
-if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL
-
-colMeans(!is.na(cbdDat0SAMP)) # % nonmissing: stateFIPS 100%, county 99.9%, GEOID 73%
+## 2.4 	inspect missingness
 setDT(cbdDat0SAMP)
+cbdDat0SAMP[GEOID=="",GEOID:=NA] # recode empty GEOID to missing
+colMeans(!is.na(cbdDat0SAMP[year %in% 2010:2017])) # % nonmissing: stateFIPS 100%, county 99.9%, GEOID 96.9%
+
+## 2.5  inspect tracts coded in different county
+cbdDat0SAMP[GEOID!="" & countyFIPS!=substr(GEOID,3,5)]  # deaths may be coded to tracts not in the same county
+
+## 2.6 rename county->countyName
 setnames(cbdDat0SAMP, "county", "countyName")
 
 ## 3	ANALYSIS	----------------------------------------------------------------------
@@ -71,12 +87,6 @@ ageCats <- function(dat,first=NULL) {
 
 # tract
 dx.tract <- copy(setkey(cbdDat0SAMP, "GEOID"))
-
-if (whichData =="fake") {
-	dx.tract[, month:=sample(1:12, length(dx.tract$year), replace=T)]	# fake months; ERASE LATER
-	dx.tract[, year:=year+2]										    # fake years; ERASE LATER
-}
-
 ageCats(dx.tract,first="1-4") 
 dx.tract[, dx := 1]													# generate a count variable (1=person level file)
 dx.tract<-dx.tract[,.(dx=sum(dx)), 
@@ -132,26 +142,20 @@ setkeyv(dx.mssa,c("comID","sex","agell"))							# sort
 ##  4.1 export datasets
 
 if (whichData == "fake"  ) {
-
  .midPath <- "/lifeTables/dataOut/"
-
  saveRDS(dx.tract,  file=paste0(upPlace,.midPath,"dxTract.rds"))   # output deaths by tract
  saveRDS(dx.mssa,   file=paste0(upPlace,.midPath,"dxMSSA.rds"))    # output deaths by mssa
  saveRDS(dx.county, file=paste0(upPlace,.midPath,"dxCounty.rds"))  # output deaths by county
  saveRDS(dx.state,  file=paste0(upPlace,.midPath,"dxState.rds"))   # output deaths by state
-
 }
 
 
 if (whichData == "real"  ) {
-  
- .midPath <- "e:/0.Secure.Data/myData/"
-    
- saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
- saveRDS(dx.mssa,   file=paste0(.midPath,"dxMSSA.rds"))    # output deaths by mssa
- saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county
- saveRDS(dx.state,  file=paste0(.midPath,"dxState.rds"))   # output deaths by state
- 
+
+ saveRDS(dx.tract,  file=paste0(securePath,"dxTract.rds"))   # output deaths by tract
+ saveRDS(dx.mssa,   file=paste0(securePath,"dxMSSA.rds"))    # output deaths by mssa
+ saveRDS(dx.county, file=paste0(securePath,"dxCounty.rds"))  # output deaths by county
+ saveRDS(dx.state,  file=paste0(securePath,"dxState.rds"))   # output deaths by state
 }
 
 
