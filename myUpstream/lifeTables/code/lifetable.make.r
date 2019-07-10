@@ -12,13 +12,7 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  dataset flag
-<<<<<<< HEAD
 whichData     <- "real"   # "real" or "fake" death data
-.midPath <- "e:/0.Secure.Data/myData/"
-
-=======
-whichData     <- "fake"   # "real" or "fake" death data
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 
 ## 1.3  paths
 myDrive <- getwd()
@@ -29,23 +23,6 @@ LTplace <- paste0(upPlace,"/lifeTables/dataOut/")
 ## 1.4  links
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
-<<<<<<< HEAD
-.ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
-.clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
-.dofurl		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
-
-.nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # output deaths by tract
-.nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
-.nxcounty	<- paste0(upPlace,"/lifeTables/dataOut/nxCounty.rds") # output deaths by county
-.nxstate	<- paste0(upPlace,"/lifeTables/dataOut/nxState.rds") # output deaths by state
-
-.dxtract	<- paste0(upPlace,"/lifeTables/dataOut/dxTract.rds") # output deaths by tract
-.dxmssa		<- paste0(upPlace,"/lifeTables/dataOut/dxMSSA.rds") # output deaths by mssa
-.dxcounty	<- paste0(upPlace,"/lifeTables/dataOut/dxCounty.rds") # output deaths by county
-.dxstate	<- paste0(upPlace,"/lifeTables/dataOut/dxState.rds") # output deaths by state
-
-
-=======
 .nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # input deaths by tract
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # input deaths by mssa
 .nxcounty	<- paste0(upPlace,"/lifeTables/dataOut/nxCounty.rds") # input deaths by county
@@ -61,24 +38,9 @@ LTplace <- paste0(upPlace,"/lifeTables/dataOut/")
 
 ## 1.5  setwd
 setwd(myDrive)
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
-
-if (whichData == "real"){
-.dxtract	<- paste0(.midPath,"dxTract.rds") # output deaths by tract
-.dxmssa		<- paste0(.midPath,"dxMSSA.rds") # output deaths by mssa
-.dxcounty	<- paste0(.midPath,"dxCounty.rds") # output deaths by county
-.dxstate	<- paste0(.midPath,"dxState.rds") # output deaths by state
-}
-
-
-<<<<<<< HEAD
-## 1.5  setwd
-setwd(myDrive)
 
 ## 2	DATASETS	----------------------------------------------------------------------
 
-=======
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ## 2.1  load datasets
 .dxtract	<- readRDS(.dxtract)	
 .dxmssa		<- readRDS(.dxmssa)	
@@ -89,9 +51,6 @@ setwd(myDrive)
 .nxcounty	<- readRDS(.nxcounty)
 .nxstate	<- readRDS(.nxstate)	
 
-<<<<<<< HEAD
-## 2.2  temp rename comID to GEOID for consistency with functions using GEOID
-=======
 ## 3	DATA CLEANING	------------------------------------------------------------------
 
 ## 3.1	calculate what share of the deaths in the tract's parent county are not geocoded to the tract level
@@ -111,7 +70,6 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 .missMSSA <-.diff[abs(dpc)>=.05][cbd.link,nomatch=0,on='countyFIPS'][,.(dpc=mean(dpc)),by="comID"]
 
 ## 3.1  temp rename comID to GEOID for consistency with functions using GEOID 
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 .dxmssa[,GEOID:=comID] 
 .nxmssa[,GEOID:=comID]
 .missMSSA[,GEOID:=comID]
@@ -127,27 +85,8 @@ if (whichData=="fake") {
 	.nxstate[,nx:=round(nx*.factor)] # inflate deaths to compensate for sample size
 }
 
-<<<<<<< HEAD
-## 2.3  for fake data, reduce exposure (censor geographies, but more accurate ex)
-.dxstate[year>=2015,(dx=sum(dx)),by=.(GEOID,year)] # looks like approx 45%??
-if (whichData=="fake") .nxmssa[,nx:=nx*.45] # inflate deaths to compensate for sample size
-if (whichData=="fake") .nxcounty[,nx:=nx*.45] # inflate deaths to compensate for sample size
-if (whichData=="fake") .nxstate[,nx:=nx*.45] # inflate deaths to compensate for sample size
-
-## 3	ANALYSIS (LIFE TABLE)	----------------------------------------------------------
-## - there are 9 years of exposure (population) data, so that is a limit of ACS.
-## - rules of thumb are 10,000 or 15k PY of exposure for a stable LT in a high-e0 population.
-## - earlier versions return a table of start/end years needed, working back from 2017.
-## - temporarily, we are using a 5 years window for all (2013-2017 5 year ACS samples).
-## - ACS population estimates include uncertainty, not accounted for here.
-## - for this version, no spatiotemporal smoothing.
-
-## 3.1	function: calculate how many years of exposure data required for stable LT
-doWindow <- function(d=NULL,t=10000) { 								# d=population dataset, t=critical PY exposure
-=======
 ## 3.3	function: calculate how many years of exposure data required for stable LT
 doCheckPY <- function(d=NULL,t=10000) { 							# d=population dataset, t=critical PY exposure
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 	return(d[,.(nx=sum(nx)),by=.(GEOID,year,sex)][					# sum nx by geo/sex
 		nx<t,.(GEOID,sex, 							    # filter out those with <minimum PY, 
 			   flag=ceiling((t/nx)/2))][				# calculate N years needed, rounded, by sex
@@ -187,40 +126,6 @@ doExtract <- function(d=NULL, nyrs=NA, end=2017, level=NA) {
 	return(tmp)
 }
 
-<<<<<<< HEAD
-## 3.2  list of areas that will not be processed (to plug in to map as blanks)
-.zeroTract <-doWindow(.nxtract)[flag>5] 		# tracts that require>N years data. (874/9170)
-.zeroMSSA  <-doWindow(.nxmssa)[flag>5]		  # MSSAs that require>N years data. (27/542)
-.zeroCounty<-doWindow(.nxcounty)[flag>5]		# counties that require>N years data. (1/58)
-
-## 3.3  summarize deaths 
-ltdx.mssa	<-.dxmssa[year>=2013 & year<=2017        # extract years overlapping ACS 
-                & (comID %in% .zeroMSSA$GEOID)==FALSE][, # extract areas that meet exposure threshold
-					      .(dx=sum(dx)),
-					      by=c("comID","sex","agell","ageul")]		
-ltdx.county	<-.dxcounty[year>=2013 & year<=2017    # extract years overlapping ACS 
-                & (GEOID %in% .zeroCounty$GEOID)==FALSE][, # extract areas that meet exposure threshold
-					      .(dx=sum(dx)),
-					      by=c("GEOID","sex","agell","ageul")]		 
-ltdx.state	<-.dxstate[year>=2013 & year<=2017][,  # extract years overlapping ACS 
-					      .(dx=sum(dx)),
-					      by=c("GEOID","sex","agell","ageul")]		
-
-## 3.4	summarize exposures
-ltnx.mssa	<-.nxmssa[year>=2013 & year<=2017        # extract years overlapping ACS 
-                & (comID %in% .zeroMSSA$GEOID)==FALSE][, # extract areas that meet exposure threshold
-               .(nx=sum(nx)),
-               by=c("comID","sex","agell","ageul")]		
-ltnx.county	<-.nxcounty[year>=2013 & year<=2017    # extract years overlapping ACS 
-                & (GEOID %in% .zeroCounty$GEOID)==FALSE][, # extract areas that meet exposure threshold
-               .(nx=sum(nx)),
-               by=c("GEOID","sex","agell","ageul")]		 
-ltnx.state	<-.nxstate[year>=2013 & year<=2017][,  # extract years overlapping ACS 
-               .(nx=sum(nx)),
-               by=c("GEOID","sex","agell","ageul")]		
-
-## 3.5 	merge deaths and exposures
-=======
 ## 3.8	summarize deaths
 # generate deaths time series, where each year represents a moving 5-year window of pooled deaths, e.g. 2010==2016-10
 # the code runs these two steps (step 1 is show for 1 year and then in an lapply)
@@ -252,7 +157,6 @@ setkeyv(ltnx.tract,c("GEOID","year","sex","agell","ageul"))
 setkeyv(ltdx.tract,c("GEOID","year","sex","agell","ageul"))	
 mx.tract <-merge(ltnx.tract, ltdx.tract, 
 				by=c("GEOID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ##	mssa
 setkeyv(ltnx.mssa,c("comID","year","sex","agell","ageul"))	
 setkeyv(ltdx.mssa,c("comID","year","sex","agell","ageul"))	
@@ -269,11 +173,6 @@ mx.county[sex=="TOTAL" & year==2017 & GEOID=="06037000000"][
 setkeyv(ltnx.state,c("GEOID","year","sex","agell","ageul"))	
 setkeyv(ltdx.state,c("GEOID","year","sex","agell","ageul"))	
 mx.state <-merge(ltnx.state, ltdx.state, 
-<<<<<<< HEAD
-				by=c("GEOID","sex","agell","ageul"), all=TRUE)	# merge pop, death data
-
-## 3.6 	rectangularize and collapse by new age groups
-=======
 				 by=c("GEOID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
 mx.state[sex=="TOTAL" & year==2017][,.(nx=sum(nx),dx=sum(dx))]			 # check state PY and Dx (1 year)
 
@@ -285,7 +184,6 @@ mx.tract[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.tract[is.na(dx), dx:=0]
 mx.tract[, i:=.GRP, by=c("GEOID","sex","year")]					 # create an ID variable for each LT
 setkeyv(mx.tract,c("i","agell"))	
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ##	mssa
 mx.mssa<-setDT(complete(mx.mssa,comID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.mssa[is.na(nx), nx:=0]										 # fill in new missing values with 0
@@ -303,9 +201,6 @@ mx.state[is.na(dx), dx:=0]
 mx.state[, i:=.GRP, by=c("GEOID","sex","year")]					 # create an ID variable for each LT
 setkeyv(mx.state,c("i","agell"))	
 
-<<<<<<< HEAD
-## 3.7	generic function to produce a life table from minimum inputs
-=======
 ## 3.1	figure for CONSORT style flowchart
 ## 	tract
 if (whichData=="real") {
@@ -334,7 +229,6 @@ if (whichData=="real") {
 ## - for time series, moving window, e.g. 2010 is from pooled 2006-10 ACS, 2011 from pooled 2007-11, etc.
 
 ## 4.1	generic function to produce a life table from minimum inputs
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ## 		x is a vector of age groups, nx is the corresponding vector of pop, dx of deaths
 ##		sex is M or MALE or F or FEMALE (used to calc ax); ax is an optional vector of ax values
 doLT <- function(x, Nx, Dx, sex, ax=NULL) {
@@ -382,9 +276,6 @@ doLT <- function(x, Nx, Dx, sex, ax=NULL) {
 	return(data.table(x, n, Nx, Dx, mx, ax, qx, px, lx, dx, Lx, Tx, ex))
 }
 
-<<<<<<< HEAD
-## 3.8 call to LT function
-=======
 ## 4.2 call to LT function
 ## tract
 lt.tract<-data.table()										# init empty dt
@@ -404,7 +295,6 @@ for (j in 1:mx.tract[agell==0,.N]) {
 }
 close(.pb)
 setkeyv(lt.tract,c("i","x"))
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ##	mssa
 lt.mssa<-data.table()													# init empty dt
 .pb <- txtProgressBar(min = 0, max = mx.mssa[agell==0,.N], style = 3)	# show a text progress bar for loop
@@ -461,13 +351,8 @@ for (j in 1:mx.state[agell==0,.N]) {
 setkeyv(lt.state,c("i","x"))
 lt.state[x==0 & sex=="TOTAL",c("GEOID","sex","year","ex")] # CA state e0
 
-<<<<<<< HEAD
-## 3.9  function to produce a life table from qx values only (used in simulation for CI)
-doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5.5) {
-=======
 ## 4.3  function to produce a life table from qx values only (used in simulation for CI)
 doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 	m <- length(x)
 	n <- c(diff(x), NA)
 	qx[is.na(qx)] <- 0
@@ -510,11 +395,7 @@ doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
 	return(data.table(x, n, ax, qx, px, lx, dx, Lx, Tx, ex))
 }
 
-<<<<<<< HEAD
-## 3.10   function to calculate confidence interval around life expectancy
-=======
 ## 4.4   function to calculate confidence interval around life expectancy
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ## - E. Andreev and V. Shkolnikov. 2010. "Spreadsheet for calculation of confidence limits 
 ##   for any life table or healthy-life table quantity". MPIDR Technical Report 2010-005.
 doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
@@ -546,9 +427,6 @@ doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 	            which.x=which.x)) 							    # the age
 }
 
-<<<<<<< HEAD
-## 3.11   call to CI function
-=======
 ## 4.5   call to CI function
 ##
 ##	tract
@@ -571,7 +449,6 @@ names(ltci.tract)[names(ltci.tract) == "which.x"] = "agell"	# rename to agell
 setkeyv(ltci.tract,c("i","agell"))
 ltci.tract<-ltci.tract[mx.tract[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
 ##
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ##	mssa
 ltci.mssa<-data.table() 										# initialize an empty DT
 .counter<-lt.mssa[x==0,.N]
@@ -608,17 +485,11 @@ for (j in 1:lt.county[x==0,.N]) {								# or "for (j in 1:2) {" for a quick tes
 	)
 	setTxtProgressBar(.pb,j)												
 }
-<<<<<<< HEAD
-names(ltci.county)[names(ltci.county) == "j"] = "i"					# rename j column to i (ID of mx file)
-names(ltci.county)[names(ltci.county) == "which.x"] = "x"			# rename to agell
-setkeyv(ltci.county,c("i","x"))
-=======
 names(ltci.county)[names(ltci.county) == "j"] = "i"				# rename j column to i (ID of mx file)
 names(ltci.county)[names(ltci.county) == "which.x"] = "agell"	# rename to agell
 setkeyv(ltci.county,c("i","agell"))
 ltci.county<-ltci.county[mx.county[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
 ##
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ##	state
 ltci.state<-data.table() 										# initialize an empty DT
 for (j in 1:lt.state[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
@@ -638,13 +509,7 @@ ltci.state<-ltci.state[mx.state[x==0,c("i","agell","sex","GEOID","year")],nomatc
 
 ## 5	DIAGNOSTICS	----------------------------------------------------------
 
-<<<<<<< HEAD
-## 4	DIAGNOSTICS	----------------------------------------------------------
-
-## 4.1 	diagnostic plots
-=======
 ## 5.1 	diagnostic plots
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 ## - these are of a de novo simulation, not the output dataset
 ## - use to check any single LT for typical results, by its idx value
 doExHist <- function(dat=NULL,idx=NULL,age=0,reps=500,ci=.95) {
@@ -661,32 +526,11 @@ doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
 doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
 doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
 
-<<<<<<< HEAD
-## 5	EXPORT DATA	----------------------------------------------------------
-
-## 5.1 	update mortality dataset with some parameters from results
-## mssa
-names(mx.mssa)[names(mx.mssa) == "agell"] = "x" 						# rename agell to x for consistency
-lt.mssa<-lt.mssa[mx.mssa[,c("i","x","sex","comID")],nomatch=0] 			# add MSSA comID and sex by ID
-ltci.mssa<-ltci.mssa[mx.mssa[x==0,c("i","x","sex","comID")],nomatch=0]	# add MSSA comID and sex by ID
-## county
-names(mx.county)[names(mx.county) == "agell"] = "x" 							# rename agell to x for consistency
-lt.county<-lt.county[mx.county[,c("i","x","sex","GEOID")],nomatch=0] 			# add COUNTY comID and sex by ID
-ltci.county<-ltci.county[mx.county[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add COUNTY comID and sex by ID
-## state
-names(mx.state)[names(mx.state) == "agell"] = "x" 							# rename agell to x for consistency
-lt.state<-lt.state[mx.state[,c("i","x","sex","GEOID")],nomatch=0] 			# add STATE comID and sex by ID
-ltci.state<-ltci.state[mx.state[x==0,c("i","x","sex","GEOID")],nomatch=0]	# add STATE comID and sex by ID
-
-## 5.2  export datasets
-saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))			# comID sex (char) x (age0) ex meanex ciex.low ciex.high
-=======
 ## 6	EXPORT DATA	----------------------------------------------------------
 
 ## 6.1  export datasets
 saveRDS(ltci.tract,  file=paste0(LTplace,"LTciTract.rds"))      # GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.mssa,   file=paste0(LTplace,"LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
->>>>>>> 78c740abf9492b31900b4b1cd663107aede7df24
 saveRDS(ltci.county, file=paste0(LTplace,"LTciCounty.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 saveRDS(ltci.state,  file=paste0(LTplace,"LTciState.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 

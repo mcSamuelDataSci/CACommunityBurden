@@ -6,7 +6,7 @@ library(ggplot2)
 
 # Data-----------------------------------------------------------------------
 
-data <- readRDS("../data/v2IHME.RDS")
+data     <- readRDS("d:/0.CBD/myUpstream/IHME/data/v2IHME.RDS")
 
 # Constants-----------------------------------------------------------------------
 

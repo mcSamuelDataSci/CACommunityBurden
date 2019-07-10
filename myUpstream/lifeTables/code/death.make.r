@@ -5,15 +5,7 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
-
-####
-#### EDIT AS APPROPRIATE"
 whichData     <- "real"   # "real" or "fake"
-securePath    <- "e:/0.Secure.Data/myData/"
-####
-####
-
-
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
@@ -22,15 +14,16 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  path and globals
+myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
 myDrive <- getwd()
 
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
+..securePath <- "g:/0.Secure.Data/myData/"
 
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
-if (whichData=="real") .deaths		<- paste0(securePath,"cbdDat0FULL.R") 
-# needed? if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
-
+if (whichData=="real") .deaths		<- "g:/0.Secure.Data/myData/cbdDat0FULL.R" 
+if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
 
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
@@ -151,11 +144,10 @@ if (whichData == "fake"  ) {
 
 
 if (whichData == "real"  ) {
-
- saveRDS(dx.tract,  file=paste0(securePath,"dxTract.rds"))   # output deaths by tract
- saveRDS(dx.mssa,   file=paste0(securePath,"dxMSSA.rds"))    # output deaths by mssa
- saveRDS(dx.county, file=paste0(securePath,"dxCounty.rds"))  # output deaths by county
- saveRDS(dx.state,  file=paste0(securePath,"dxState.rds"))   # output deaths by state
+ saveRDS(dx.tract,  file=paste0(.securePath,"dxTract.rds"))   # output deaths by tract
+ saveRDS(dx.mssa,   file=paste0(.securePath,"dxMSSA.rds"))    # output deaths by mssa
+ saveRDS(dx.county, file=paste0(.securePath,"dxCounty.rds"))  # output deaths by county
+ saveRDS(dx.state,  file=paste0(.securePath,"dxState.rds"))   # output deaths by state
 }
 
 

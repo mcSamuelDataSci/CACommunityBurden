@@ -4,6 +4,7 @@ if(1==2){
   myCause="0"
   myMeasure = "aRate"
   mySex   = "Total"
+  myLogTrans=FALSE
 }
 
 trendRace <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL",myLogTrans=FALSE) {
