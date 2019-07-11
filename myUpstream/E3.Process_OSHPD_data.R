@@ -134,24 +134,11 @@ criticalNum <- 11
 #-----------------------------------------------------------------------------------LOAD AND PROCESS POPULATION DATA-----------------------------------------------------------------------#
 
 # ungrouping important for subsequent data set merging
-popTract         <- readRDS(path(upPlace,"/upData/popTract2013.RDS")) %>% ungroup() 
-popTractSexAgeG  <- filter(popTract,ageG != "Total")
-
-popTractSex      <- filter(popTract,ageG == "Total")
-popCommSex       <- popTractSex     %>% group_by(yearG,county,comID,sex)      %>% summarise(pop=sum(pop))  %>% ungroup()  
-popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG,county,comID,sex,ageG) %>% summarise(pop=sum(pop))  %>% ungroup() 
-
 popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>% ungroup() 
 popCountySex     <- filter(popCounty,ageG == "Total")
 popCountySexAgeG <- filter(popCounty,ageG != "Total")
 
-popCounty.RACE        <- readRDS(path(upPlace,"/upData/popCounty_RE.RDS")) %>% ungroup() 
-popCountySex.RACE     <- filter(popCounty.RACE,ageG == "Total")
-popCountySexAgeG.RACE <- filter(popCounty.RACE,ageG != "Total")
-
 popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
-
-
 
 
 #----------------------------------------------ADD AGE-GROUp VARIABLE---------------------------------------------------------#
