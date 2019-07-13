@@ -4,6 +4,9 @@ library(readxl)
 library(fs)
 library(stringr)
 
+
+myYear <- 2017
+
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
@@ -38,7 +41,24 @@ tb.dat  <- read_excel(tb.url) %>%
 
 
 
-dcdc.dat <- bind_rows(std.dat,idb.dat,vpd.dat,tb.dat)
+dcdc.dat <- bind_rows(std.dat,idb.dat,vpd.dat,tb.dat) 
+             
+    
+# note -- TB data has local health jurisdictions, such that Berkeley, Long Beach, and Passadena data are not 
+#  included in their respective counties
+#  the "mutate", "group_by", and "summarize" code below "fix" this issue
+
+dcdc.work <- dcdc.dat %>%
+              filter(Sex=="Total",Year==2017) %>%
+              mutate(County=ifelse(Jurisdiction %in% c("Long Beach","Pasadena"), "Los Angeles",
+                            ifelse(Jurisdiction == "Berkeley", "Alameda",
+                            Jurisdiction))
+              ) %>%
+              group_by(Year,County,Disease) %>%       
+              summarize(Cases=sum(Cases)) %>%
+              select(Year, County, Disease, Cases)
+             
+write_csv(dcdc.work, "Z:/lghcBurdenView/Data/CID/dcdcData2017.csv") 
 
 
   

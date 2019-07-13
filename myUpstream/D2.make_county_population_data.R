@@ -11,9 +11,9 @@
 
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------
 
-myDrive    <- "E:"
-myPlace    <- paste0(myDrive,"/0.CBD/myCBD")
-upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
+myDrive    <- getwd()
+myPlace    <- paste0(myDrive,"/myCBD")
+upPlace    <- paste0(myDrive,"/myUpstream")
 
 library(dplyr)
 library(readxl)
@@ -98,21 +98,16 @@ tDat     <-  tDat %>%  mutate( raceCode   = vLab[match(raceE,rCode)])
 yearMap   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx")))
 tDat      <- tDat %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
                                
-popCounty_RE <- tDat %>% group_by(yearG3, county, sex, ageG, raceCode) %>% 
+popCounty_RE_3year <- tDat %>% group_by(yearG3, county, sex, ageG, raceCode) %>% 
                          summarize(pop  = sum(pop)) %>%
                          ungroup()
 
-# table(popCounty_RE$sex,useNA = "ifany")
-# table(popCounty_RE$ageG,useNA = "ifany")
-# table(popCounty_RE$raceCode,useNA = "ifany")
+
+
 
 # ======================================================================================================================================
 
 saveRDS(popCounty,    file = paste0(upPlace,"/upData/popCounty.RDS"))
-saveRDS(popCounty_RE, file = paste0(upPlace,"/upData/popCounty_RE.RDS"))
+saveRDS(popCounty_RE_3year, file = paste0(upPlace,"/upData/popCounty_RE_3year.RDS"))
 
 
-# popCounty_RE %>%
-#   filter(year==2017,ageG=="Total",sex=="Total",county != "California",raceCode=="Total") %>%
-#   group_by(sex) %>%
-#   mutate(newPop=sum(pop)) %>% ungroup()

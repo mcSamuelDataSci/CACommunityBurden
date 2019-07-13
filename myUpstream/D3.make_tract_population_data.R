@@ -29,9 +29,9 @@ lapply(.pkg, require, character.only=TRUE)
 
 #MCS
 
-myDrive <- "E:"  
-myPlace <- paste0(myDrive,"/0.CBD/myCBD") 
-upPlace <- paste0(myDrive,"/0.CBD/myUpstream")
+myDrive <- getwd()  
+myPlace <- paste0(myDrive,"/myCBD") 
+upPlace <- paste0(myDrive,"/myUpstream")
 
 .ckey <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) 
 
@@ -97,7 +97,7 @@ acs.pop.tracts<-merge(
 				)                                                # merge ACS tract dataset with with age, sex labels
 acs.pop.tracts <- acs.pop.tracts[, 
 					c("GEOID","sex","agell","ageul","estimate")] # keep needed variables only
-acs.pop.tracts[, yearG := yearGrp] 	                                 # add year to dataset
+acs.pop.tracts[, yearG5 := yearGrp] 	                                 # add year to dataset
 
 
 # ===========================================================================================================================
@@ -121,14 +121,14 @@ popTractWork <- merge(popTractWork,linker,by=c("GEOID"),all=TRUE) %>%
 # may need to add comName back?
 
 # NOT ALL NEEDED -- CHECK:
-popAgeSex            <- popTractWork %>% group_by(yearG,county,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
-popAge               <- popTractWork %>% group_by(yearG,county,GEOID,comID,ageG)     %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total")
-popSex               <- popTractWork %>% group_by(yearG,county,GEOID,comID,sex)      %>% summarise(pop=sum(estimate)) %>% mutate(               ageG = "Total")
-pop                  <- popTractWork %>% group_by(yearG,county,GEOID,comID)          %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total", ageG = "Total")
+popAgeSex            <- popTractWork %>% group_by(yearG5,county,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
+popAge               <- popTractWork %>% group_by(yearG5,county,GEOID,comID,ageG)     %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total")
+popSex               <- popTractWork %>% group_by(yearG5,county,GEOID,comID,sex)      %>% summarise(pop=sum(estimate)) %>% mutate(               ageG = "Total")
+pop                  <- popTractWork %>% group_by(yearG5,county,GEOID,comID)          %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total", ageG = "Total")
 
-popTractSexAgeGTotal2013  <- bind_rows(pop,popSex,popAge,popAgeSex) %>%
-                                    select(yearG,county,GEOID,comID,sex,ageG,pop) %>%
-                                    arrange(yearG,county,GEOID,comID) %>%
+popTractSexAgeGTotal  <- bind_rows(pop,popSex,popAge,popAgeSex) %>%
+                                    select(yearG5,county,GEOID,comID,sex,ageG,pop) %>%
+                                    arrange(yearG5,county,GEOID,comID) %>%
                                  ungroup()
 
-saveRDS(popTractSexAgeGTotal2013, file=paste0(upPlace,"/upData/popTract2013.RDS"))
+saveRDS(popTractSexAgeGTotal, file=paste0(upPlace,"/upData/popTract.RDS"))

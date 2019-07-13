@@ -21,10 +21,10 @@
 secure.location  <- "E:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
-myDrive    <- "F:"  # ROOT Location of CBD Project
+myDrive    <- getwd()
 
-myPlace    <- paste0(myDrive,"/0.CBD/myCBD")
-upPlace    <- paste0(myDrive,"/0.CBD/myUpstream")
+myPlace    <- paste0(myDrive,"/myCBD")
+upPlace    <- paste0(myDrive,"/myUpstream")
 
 #-- EDIT for Local versus State installation -------------------------------------------------
 
