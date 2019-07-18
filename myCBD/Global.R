@@ -97,10 +97,11 @@ shape_Tract$county <- as.character(shape_Tract$county)
 
 # Data: ----------------------------------------- 
 
-datTract     <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
-datComm      <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
-datCounty    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
-datCounty.RE <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RE.RDS"))
+datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
+datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
+datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS"))
+datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS"))
 
 #FIX THIS
 mdc_drg      <- readRDS(path(myPlace,"/myData/real/mdc_drg.rds"))

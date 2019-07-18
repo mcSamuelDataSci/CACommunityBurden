@@ -27,7 +27,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     
  
     if (cZoom) { datComm$plotter <- datComm[,myMeasure]
-                 dat.1     <- datComm  %>% filter(county==myLHJ,yearG==yearGrp,sex==mySex,CAUSE==myCause, comID != "Unknown")  %>%
+                 dat.1     <- datComm  %>% filter(county==myLHJ,yearG5==yearGrp,sex==mySex,CAUSE==myCause, comID != "Unknown")  %>%
                  arrange(!is.na(plotter),plotter) %>%
                  mutate(lab =wrap.labels(comName,30))
     tit       <- paste0("Community Ranking of ",deathMeasuresNames[deathMeasures == myMeasure]," for ",causeLab," in ",myLHJ," in ",yearGrp,sexLab) 

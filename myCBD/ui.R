@@ -126,7 +126,7 @@ sidebarPanel(width=3,
    paste(
      "( (input.myGeo == 'County') && (", fC(c(22,23)),") ) 
      |( (input.myLHJ == 'CALIFORNIA') && (", fC(c(44)),") ) 
-     | (", fC(c(33)),")"
+     | (", fC(c(33,45)),")"
    ),
 sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
             round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
@@ -160,6 +160,12 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
    #actionButton( "measureHelp", label="?",style=myButtonSty) ,              
    selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=dMNames_short, selected="YLL Rate per 100,000 population")),
  
+
+# myYearGrouping
+conditionalPanel(condition = fC(c(55)),
+                 radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three"))),
+
+
  # myCutSystem
  conditionalPanel(condition = fC(c(22,23)),
    actionButton("cutmethodHelp", label="?",style=myButtonSty) ,

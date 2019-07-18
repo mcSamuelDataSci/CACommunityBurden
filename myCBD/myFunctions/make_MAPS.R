@@ -1,12 +1,12 @@
 
 # MAIN mapping function used by both Interactive and Static mapping functions
 
-cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLLper",       myYear = 2015,
-                    mySex     = "Total",   myStateCut  = TRUE,  myGeo     = "Census Tract", 
+cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YLLper",       myYear = 2015,
+                    mySex     = "Total",   myStateCut  = TRUE,  myGeo     = "Community", 
                     myLabName = FALSE,     myCutSystem ="fisher") {
 
   if (1==2){
-    myLHJ     = "Alpine";myCause     ="A";myMeasure = "YLLper";  myYear = 2015;
+    myLHJ     = "Aamador";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
     mySex     = "Total";myStateCut  = TRUE; myGeo     = "Community";
     myLabName = FALSE;  myCutSystem ="fisher" 
   }
@@ -32,7 +32,7 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLL
     }
   
   if (myGeo == "Census Tract") { 
-    dat.1      <- filter(datTract,yearG==yearGrp,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = GEOID)
+    dat.1      <- filter(datTract,yearG5==yearGrp,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = GEOID)
     map.1      <- left_join(shape_Tract, dat.1, by=c("county","GEOID"))
     map.1$name <- map.1$GEOID
     myTitYear  <- yearGrp
@@ -40,7 +40,7 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLL
     }
 
   if (myGeo == "Community") {
-    dat.1      <- filter(datComm,yearG==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% 
+    dat.1      <- filter(datComm,yearG5==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% 
                           mutate(geoLab = wrap.labels(comName,15))
     map.1      <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
     map.1$name <- map.1$comName
@@ -55,7 +55,11 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLL
   
  if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 
- if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
+ 
+# HELP why doesn't this one line stop the function when Amador and TB????
+# CRASHES!
+# message is generated, but code still runs somewhere???
+if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
 
  nCut <- 5
 
@@ -65,8 +69,15 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A",   myMeasure = "YLL
 
 # fix NAs ?
 
-temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
-if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
+## WORKING ON FIX
+
+ 
+# HELP
+# with these two lines below in
+# app CRASHES when using trend fuction with TB and Amador
+
+# temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
+# if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
 
 myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
 

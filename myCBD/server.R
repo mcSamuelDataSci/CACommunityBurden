@@ -148,6 +148,7 @@ observeEvent(input$ID,{
 # use dbounce() below to "delay" rendering of may to avoid temporary error
 
 output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
+
 # t.map1            <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
 # output$cbdMapTL   <- renderLeaflet(t.map1)
 
@@ -180,7 +181,7 @@ output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                inp
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
 output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))
 
-output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
+output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYearGrouping))
 #output$trend        <- renderPlotly(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
 
 

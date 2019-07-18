@@ -15,7 +15,7 @@ maxYear <- 2017
 myCex <- 1.6
 myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
-dat.1 <- filter(datCounty.RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
+dat.1 <- filter(datCounty_RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
          mutate(raceName = raceNameFull[match(raceCode,raceCodeFull)] )
 
 #,raceCode != "Multi-NH"
