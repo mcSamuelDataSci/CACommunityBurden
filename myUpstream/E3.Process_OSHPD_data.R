@@ -15,7 +15,7 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-secure.location  <- "E:/0.Secure.Data/"
+secure.location  <- "g:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -647,7 +647,7 @@ mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
 
 #Saving RDS file of this dataframe
-saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/MDC_DRG.rds"))
+saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 
 
 #---------------------------------------------------------CALCULATING ANY VS PRIMARY DIAGNOSES------------------------------------------------------------------#

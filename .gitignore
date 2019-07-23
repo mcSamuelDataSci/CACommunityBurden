@@ -11,7 +11,7 @@ myCBD/myData/real/datCounty_RE.RDS
 myCBD/myData/real/datCounty_3year.RDS
 
 myCBD/myData/real/countyOSHPD.rds
-myCBD/myData/real/MDC_DRG.rds
+myCBD/myData/real/mdc_drg.rds
 
 
 myCBD/myData/real/any_primary_stackedbar.rds
