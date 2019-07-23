@@ -13,6 +13,10 @@ myCBD/myData/real/countyOSHPD.rds
 myCBD/myData/real/MDC_DRG.rds
 
 
+myCBD/myData/real/any_primary_stackedbar.rds
+myCBD/myData/real/group_any_primary.rds
+
+
 myCBD/rsconnect/*.*
 myUpstream/upstreamInfo/census.api.key.txt
 myUpstream/upData/cbdDat0SAMP.R
