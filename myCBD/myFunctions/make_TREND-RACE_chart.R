@@ -53,7 +53,7 @@ myMin      <- ifelse(myLogTrans,NA,0)
    theme_bw() +
     theme(axis.text=element_text(size=mySize1),
           axis.title=element_text(size=mySize1,face="bold"),
-          plot.title=element_text(family='', face='bold', colour='black', size=mySize2),
+          plot.title=element_text(family='', face='bold', colour='black', size=myTitleSize, color=myTitleColor),
           axis.text.x = element_text(angle = 0,vjust = 0.5, hjust=.5),
           plot.caption = element_text(hjust = 0, face = "italic",size=14)) 
   

@@ -13,8 +13,6 @@
 
 shinyServer(function(input, output,session) {
 
-  
-  
 # IHME WORK (TEMP) ########################  
   #source(paste0(myPlace,"/IHMEwork/arrows_Server.Part.R"))
   
@@ -89,12 +87,21 @@ observeEvent(input$myGeo, {
 })
 
 
+
 # if myLHJ is not STATE (e.g. "CALIFORNIA"), then myGeo is "Community" so
 #  that county map will not show just overall county data
 
 observeEvent(input$myLHJ, {
   if(input$myLHJ != STATE & input$ID %in% c(22,23)){updateSelectInput(session, "myGeo", selected = "Community") }
 })
+
+observeEvent(input$ID, {
+  if(input$myLHJ != STATE & input$ID %in% c(22,23)){updateSelectInput(session, "myGeo", selected = "Community") }
+})
+
+
+
+
 
 
 # Hard wire... Trend only COUNTY for now
@@ -145,12 +152,20 @@ observeEvent(input$ID,{
 # Render Application Maps and Charts --------------------------------------------
 
 
+
+output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+
+
+# ALL HELL BREAKS LOOSE WITH dbounce
 # use dbounce() below to "delay" rendering of may to avoid temporary error
+# output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
 
-output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
 
-# t.map1            <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
-# output$cbdMapTL   <- renderLeaflet(t.map1)
+
+
+ #  mapJunk          <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
+
+#  output$cbdMapTL   <- renderLeaflet(mapJunk)
 
 
 output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
@@ -177,6 +192,8 @@ output$rankCauseFigure <- downloadHandler(filename=function(){paste0("CAUSE",".p
 
 
 output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+
+
 output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort,  input$mySex, input$myLev, input$myN,input$myYear))
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
 output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))

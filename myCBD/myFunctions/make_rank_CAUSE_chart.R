@@ -1,19 +1,7 @@
 
 rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", mySex = "Total", myLev = "lev2", myN = 10, myYear = 2017){ 
   
-#(for testing code outside of the app) 
-if(1==2) {
-  myCounty = "Alameda"
-  myMeasure = "Age-Adjusted Death Rate"
-  mySex = "Total"
-  myLev = "lev2"
-  myN = 10
-  myYear = 2017
 
-  library(tidyr)
-}  
-  
-  
   if(myLev=="lev3") myLev <- c("lev2","lev3")
   
 #ordering dataset, replaces short names with full names
@@ -37,50 +25,67 @@ temp_N_cause <- temp %>%
                    mutate(nameOnly = forcats::fct_reorder(nameOnly, filter(., type == myMeasure)  %>% 
                    pull(measure)))  
 
+   
+   sexLab <- ""
+   if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
+   tit <- paste0("Measures by Cause in ",myYear," in ",myCounty,sexLab)
+   
+   
+
 ##Creating ggplot facet grid plots
    
-   if (myCounty != "CALIFORNIA") {
+   if (myCounty == "CALIFORNIA") {
+     plotData <- plotData %>% filter(type != "Standard Mortality Ratio")
+   }
+     
+     
 #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
  
  xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
       facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
+      
       theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
       #scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
       scale_x_discrete(labels = scales::wrap_format(10)) + #x-axis is condition label--wrapping text so it stacks on top of each other
-    #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
-    theme(axis.title.y = element_blank(), #removes nameOnly label
+    labs(title = tit) +
+       #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis  
+    theme(plot.title = element_text(size=myTitleSize, color=myTitleColor),
+          axis.title.y = element_blank(), #removes nameOnly label
           axis.title.x = element_blank(), #removes measure label
           axis.text.y = element_text(size = 15), #increases size of disease condition labels
           axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
-          strip.text.x = element_text(size = 15)) + #increases the size of the facet labels 
+          strip.text.x = element_text(size = 15))  #increases the size of the facet labels 
+ 
+ if (myCounty != "CALIFORNIA") {
+
+   xtemp <- xtemp +
+   
           geom_hline(data = data.frame(yint = 1, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "grey") +#adds SMR line only to SMR facet
           geom_hline(data = data.frame(yint = 0.8, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "green") +
           geom_hline(data = data.frame(yint = 1.2, type = "Standard Mortality Ratio"), aes(yintercept = yint), color = "red")
 
    }
    
-   if (myCounty == "CALIFORNIA"){
-     
-     plotData <- plotData %>% filter(type != "Standard Mortality Ratio")
-     
-     xtemp <-     ggplot(plotData, aes(x = nameOnly, y = measure)) + 
-       coord_flip() + geom_bar(stat = "identity", fill = "blue") + 
-       facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) + 
-       theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
-       scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
-       scale_x_discrete(labels = scales::wrap_format(10)) + #x-axis is condition label--wrapping text so it stacks on top of each other
-       #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
-       theme(axis.title.y = element_blank(), #removes nameOnly label
-             axis.title.x = element_blank(), #removes measure label
-             axis.text.y = element_text(size = 15), #increases size of disease condition labels
-             axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
-             strip.text.x = element_text(size = 15))  #increases the size of the facet labels 
-   }
- 
+   
    xtemp
+ 
 }
   
+
+
+#(for testing code outside of the app) 
+if(1==2) {
+  myCounty = "Alameda"
+  myMeasure = "Age-Adjusted Death Rate"
+  mySex = "Total"
+  myLev = "lev2"
+  myN = 10
+  myYear = 2017
+}
+
+
+
 
 
  #ggplotly and/or plotly version?

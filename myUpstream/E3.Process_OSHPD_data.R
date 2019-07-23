@@ -15,14 +15,14 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-secure.location  <- "G:/0.Secure.Data/"
+secure.location  <- "E:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
 whichData <- "real"   # "real" or "fake"
-newData  <- TRUE
+newData  <- FALSE
 
 # fullOSHPD <- FALSE
 # sampleOSHPD <- TRUE
@@ -80,7 +80,7 @@ oshpd_sample <- rbind(half1,half2)
 #saving rds file--only needs to be run once to initially create the file
 
 # Saving random sample as RDS file
-saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
+saveRDS(oshpd_sample, file = path(upPlace, "/oshpd16_sample.rds"))
 
 } # END if(newData)
 

@@ -1,6 +1,5 @@
 #make MDC/DRG plot
 
-mdc_drg      <- readRDS(path(myPlace,"/myData/fake/mdc_drg.rds"))
 
 
 mdc_drg_plot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myVar = "drg" ) {
@@ -43,7 +42,7 @@ type == "Median Charges" ~ "Median Charges (in thousands)")) %>% left_join(., hd
     theme(axis.title.y = element_blank(), #removes nameOnly label
           axis.title.x = element_blank(), #removes measure label
           axis.text.y = element_text(size = 10), #increases size of disease condition labels
-          axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+          axis.text.x = element_text(size = 10, face="bold",angle = 90, hjust = 1), #controls size of measure labels
           strip.text.x = element_text(size = 15)) #increases the size of the facet labels
 
   

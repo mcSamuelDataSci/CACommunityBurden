@@ -78,7 +78,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
    
     axis(side=3)
    
-   mtext(tit,cex=1.6,line=3,font=2)
+   mtext(tit,cex=1.6,line=3,font=2,col = myTitleColor)
    
     
   }

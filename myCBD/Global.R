@@ -1,3 +1,8 @@
+# way to make tmap title size same as ggplot title size?
+# convert rank geography function to ggplot2
+# scale all titles so they fit with various size windows/monitors
+
+
 # =============================================================================
 # "Global.R" file     
 #
@@ -25,7 +30,7 @@ STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
 
 # TEXT Constants
-VERSION           <- "Version P1.3"
+VERSION           <- "Version P1.4"
 criticalNumber    <- 11
 mTitle            <- "California Community Burden of Disease and Cost Engine"
 figureAttribution <- "California Department of Public Health"
@@ -40,6 +45,11 @@ subsiteName <- "Stanislaus County CBD"
 
 # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 pdf(NULL) 
+
+
+# DISPLAY Constants
+myTitleSize <- 22
+myTitleColor <- "darkblue"
 
 #-- Load Packages ------------------------------------------------------------
 
@@ -103,8 +113,10 @@ datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS"))
 datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS"))
 
-#FIX THIS
-mdc_drg      <- readRDS(path(myPlace,"/myData/real/mdc_drg.rds"))
+#FIX THIS --- OSHPD
+mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
+calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+
 
 load(path(myPlace,"/myData/","sdohTract.R"))
 load(path(myPlace,"/myData/","sdohComm.R"))

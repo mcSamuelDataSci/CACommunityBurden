@@ -76,8 +76,8 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 # with these two lines below in
 # app CRASHES when using trend fuction with TB and Amador
 
-# temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
-# if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
+ temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
+ if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
 
 myBreaks    <- classIntervals(myRange,style=myCutSystem,breaks=NULL,n=nCut)$brks
 

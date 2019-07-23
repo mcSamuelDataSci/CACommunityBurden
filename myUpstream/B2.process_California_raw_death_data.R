@@ -18,7 +18,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "E:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "G:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- getwd()

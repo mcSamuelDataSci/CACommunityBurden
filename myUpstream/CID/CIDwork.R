@@ -28,7 +28,8 @@ idb.dat <- read_csv(idb.url) %>%
   mutate(Rate=as.numeric(str_remove(Rate, "[*]")),
          County=str_to_title(County)
          ) %>%
-  select(Jurisdiction=County,Year,Sex,Disease,Cases,Rate,LCI=`Lower 95% CI`,UCI=`Upper 95% CI`)
+  select(Jurisdiction=County,Year,Sex,Disease,Cases,Rate,LCI=`Lower 95% CI`,UCI=`Upper 95% CI`) %>%
+  mutate(Sex=str_to_title(Sex))
 
 vpd.dat <- read_csv(vpd.url) %>% 
   mutate(Sex="Total") %>%
@@ -56,7 +57,8 @@ dcdc.work <- dcdc.dat %>%
               ) %>%
               group_by(Year,County,Disease) %>%       
               summarize(Cases=sum(Cases)) %>%
-              select(Year, County, Disease, Cases)
+              select(Year, County, Disease, Cases) %>% ungroup() %>%
+              mutate(County=ifelse(County=="California","CALIFORNIA",County))
              
 write_csv(dcdc.work, "Z:/lghcBurdenView/Data/CID/dcdcData2017.csv") 
 

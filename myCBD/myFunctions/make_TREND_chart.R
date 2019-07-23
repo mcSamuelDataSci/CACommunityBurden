@@ -62,7 +62,7 @@ tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), g
    theme_bw() +
     theme(axis.text=element_text(size=mySize1),
           axis.title=element_text(size=mySize1,face="bold"),
-          plot.title=element_text(family='', face='bold', colour='black', size=mySize2),
+          plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
           axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
   
  tplot

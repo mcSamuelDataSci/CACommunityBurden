@@ -1,4 +1,4 @@
-﻿
+
 ##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
     *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
@@ -65,7 +65,8 @@
  
  * [Climate Change and Health Vulnerability Indicators](https://discovery.cdph.ca.gov/ohe/CCHVIz/)
  * [California Opioid Overdose Surveillance Dashboard](https://discovery.cdph.ca.gov/CDIC/ODdash/)
-
+ * [Disparities/SDOH Prototype](https://phdataviz.shinyapps.io/HCI_Viz/)
+ * [Infectious Diseases Prototype](https://discovery.dev.cdph.ca.gov/fusion/cidVIS/)
 
 ## Resource for Program Action
 [The Community Guide - online guide to what works to promote healthy communities - Community Preventive Services Task Force](https://www.thecommunityguide.org/)

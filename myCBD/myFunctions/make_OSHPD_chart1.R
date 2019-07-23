@@ -1,7 +1,6 @@
 #OSHPD Chart 1 = ggplot version
 
 
-calculated_metrics <- readRDS(file = path(myPlace, "myData/fake/countyOSHPD.rds"))
 
 
 # #---------------------------------------Plotly subplots option----------------------------------------------------#
@@ -39,9 +38,7 @@ oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospita
     theme(axis.title.y = element_blank(), #removes nameOnly label
     axis.title.x = element_blank(), #removes measure label
     axis.text.y = element_text(size = 15), #increases size of disease condition labels
-    axis.text.x = element_text(size = 10, face="bold"), #controls size of measure labels
+    axis.text.x = element_text(size = 10, face="bold",angle = 90, hjust = 1), #controls size of measure labels
     strip.text.x = element_text(size = 15)) #increases the size of the facet labels
   
 }
-
-
