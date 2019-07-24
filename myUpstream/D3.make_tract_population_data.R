@@ -12,6 +12,9 @@
 #!		do the county labels need to be added to the population datasets at this time or later?
 
 
+library(dplyr)
+
+
 yearGrp <- "2013-2017"
 
 ## 1    SETUP		----------------------------------------------------------------------
@@ -60,11 +63,21 @@ acs.labels <- setDT (
 )
 
 ## 2.4 	ACS data: tract-level population by age/sex (long format, count and MOE in columns)
-acs.pop.tracts <- 	get_acs(state = 06, geography = "tract",  # all tracts in CA (FIPS state code = 06)
-						survey = "acs5", year = 2016,         # ACS options
+acs.pop.tracts.2017 <- 	get_acs(state = 06, geography = "tract",  # all tracts in CA (FIPS state code = 06)
+						survey = "acs5", year = 2017,         # ACS options
 						variables = acs.varlist,              # ACS variable requested (B01003_001 = total population)
 						key=.ckey, moe_level=90               # global variable containing Census API key
-					)
+					      )   %>%
+            mutate(yearG5="2013-2017")
+
+acs.pop.tracts.2012 <- 	get_acs(state = 06, geography = "tract",  # all tracts in CA (FIPS state code = 06)
+                           survey = "acs5", year = 2012,         # ACS options
+                           variables = acs.varlist,              # ACS variable requested (B01003_001 = total population)
+                           key=.ckey, moe_level=90  )  %>%           # global variable containing Census API key
+     mutate(yearG5="2008-2012")
+
+
+
 
 ##	3	ANALYSIS	----------------------------------------------------------------------
 
@@ -97,7 +110,10 @@ acs.pop.tracts<-merge(
 				)                                                # merge ACS tract dataset with with age, sex labels
 acs.pop.tracts <- acs.pop.tracts[, 
 					c("GEOID","sex","agell","ageul","estimate")] # keep needed variables only
-acs.pop.tracts[, yearG5 := yearGrp] 	                                 # add year to dataset
+
+
+########
+# acs.pop.tracts[, yearG5 := yearGrp] 	                                 # add year to dataset
 
 
 # ===========================================================================================================================
