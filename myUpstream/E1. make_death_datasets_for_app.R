@@ -44,7 +44,10 @@ yF   <- 100000  # rate constant
 pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
-yearGrp <- "2013-2017"
+# yearGrp <- "2013-2017"
+  yearGrp <- c("2008-2012","2013-2017")
+
+
 
 criticalNum <- 11
 
@@ -330,7 +333,7 @@ c.t1      <- calculateYLLmeasures(c("comID","yearG5","sex","lev0"),"lev0")
 c.t2      <- calculateYLLmeasures(c("comID","yearG5","sex","lev1"),"lev1")
 c.t3      <- calculateYLLmeasures(c("comID","yearG5","sex","lev2"),"lev2")
 datComm   <- bind_rows(c.t1,c.t2,c.t3)     %>%
-                filter(yearG5 == yearGrp)  %>%   # 2013-2017 ONLY!!!
+                filter(yearG5  %in%  yearGrp)  %>%   # 2013-2017 ONLY!!!
                 arrange(comID,yearG5,CAUSE)
 
 datComm  <- merge(datComm,popCommSex,by = c("yearG5","comID","sex"),all=TRUE)
@@ -348,7 +351,7 @@ c.t1      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev0"),"lev0")
 c.t2      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev1"),"lev1")
 
 datTract  <- bind_rows(c.t1,c.t2) %>% 
-                filter(yearG5 == yearGrp)  %>%    # 2013-2017 ONLY!!!
+                filter(yearG5  %in%  yearGrp)  %>%    # 2013-2017 ONLY!!!
                 arrange(GEOID,yearG5,CAUSE)
 # NOTE -- includes many with NA GEOID
 
@@ -511,7 +514,7 @@ tA3      <- cbdDat0 %>% group_by(comID, yearG5, sex, ageG,CAUSE=lev2) %>% summar
 datAA1 <- bind_rows(tA1,tA2,tA3)  %>% filter(comID != "")  
 
 ageComm   <- full_join(fullMatComm,datAA1,by = c("comID","yearG5","sex","ageG","CAUSE"))  %>% 
-             filter(yearG5 == yearGrp)                                                     %>%
+             filter(yearG5  %in%  yearGrp)                                                     %>%
              full_join(popCommSexAgeG, by = c("comID","yearG5","sex","ageG"))             %>%
              full_join(popStandard[,c("ageG","US2000POP")],by="ageG")                     
 
@@ -543,7 +546,7 @@ tA2      <- cbdDat0 %>% group_by(GEOID, yearG5, sex, ageG,CAUSE=lev1) %>% summar
 datAA1 <- bind_rows(tA1,tA2)  %>% filter(GEOID != "")  
 
 ageTract   <- full_join(fullMatTract,datAA1,by = c("GEOID","yearG5","sex","ageG","CAUSE"))  %>% 
-              filter(yearG5 == yearGrp)                                                      %>%
+              filter(yearG5  %in%  yearGrp)                                                      %>%
               full_join(popTractSexAgeG,by = c("GEOID","yearG5","sex","ageG"))              %>% 
               full_join(popStandard[,c("ageG","US2000POP")],by="ageG")                      
 

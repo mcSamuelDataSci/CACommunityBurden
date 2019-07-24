@@ -73,10 +73,10 @@ acs.pop.tracts.2017 <- 	get_acs(state = 06, geography = "tract",  # all tracts i
 acs.pop.tracts.2012 <- 	get_acs(state = 06, geography = "tract",  # all tracts in CA (FIPS state code = 06)
                            survey = "acs5", year = 2012,         # ACS options
                            variables = acs.varlist,              # ACS variable requested (B01003_001 = total population)
-                           key=.ckey, moe_level=90  )  %>%           # global variable containing Census API key
-     mutate(yearG5="2008-2012")
+                           key=.ckey, moe_level=90  ) %>%        # global variable containing Census API key
+                           mutate(yearG5="2008-2012")
 
-
+acs.pop.tracts <- bind_rows(acs.pop.tracts.2012,acs.pop.tracts.2017)
 
 
 ##	3	ANALYSIS	----------------------------------------------------------------------
@@ -109,7 +109,7 @@ acs.pop.tracts<-merge(
 					all.x=TRUE                                   # keeping even if no match in acs.labels
 				)                                                # merge ACS tract dataset with with age, sex labels
 acs.pop.tracts <- acs.pop.tracts[, 
-					c("GEOID","sex","agell","ageul","estimate")] # keep needed variables only
+					c("yearG5","GEOID","sex","agell","ageul","estimate")] # keep needed variables only
 
 
 ########
@@ -123,7 +123,7 @@ library(dplyr)
 popTractWork <- as.data.frame(acs.pop.tracts)
 
 library(readxl)
-ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Groups and Standard US 2000 pop.xlsx"),sheet = "data"))
+ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge   # lower age ranges
 aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
 
