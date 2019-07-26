@@ -1,7 +1,7 @@
 #Plotting options for visualizing any vs primary OSHPD data
 
 #Stacked bar plot:
-any_primary_diff <- readRDS(file = path(myPlace, "myData/fake/any_primary_stackedbar.rds"))
+any_primary_diff <- readRDS(file = path(myPlace, "myData/real/any_primary_stackedbar.rds"))
 
 
 anyprimary1 <- function(myCounty = "CALIFORNIA", mySex = "Total"){
@@ -15,7 +15,7 @@ anyprimary1 <- function(myCounty = "CALIFORNIA", mySex = "Total"){
 
 #Grouped bar plot for showing which "any" diagnoses are associated with primary diagnoses
 
-group_any_primary <- readRDS(file = path(myPlace, "myData/fake/group_any_primary.rds"))
+group_any_primary <- readRDS(file = path(myPlace, "myData/real/group_any_primary.rds"))
 
 anyprimary2 <- function(myCounty = "CALIFORNIA", mySex = "Total") {
   

@@ -1,0 +1,10 @@
+eduCode,eduName
+1,"""A  8th grade or less"""
+2,"""B  9th through 12th grade - no diploma"""
+3,"""C  High School Graduate or GED Completed"""
+4,"""D  Some college credit - no degree"""
+5,"""E  Associate Degree"""
+6,"""F  Bachelors Degree"""
+7,"""G  Masters Degree"""
+8,"""H  Doctorate Degree or Professional Degree"""
+9,"""I  Unknown"""

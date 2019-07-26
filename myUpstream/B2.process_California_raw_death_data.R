@@ -1,3 +1,9 @@
+####  CHECK NUMERIC VERSUS CHARACTER FOR ALL INPUT VALUES AND CODING 
+############
+############
+
+
+
 # =============================================================================
 # process_raw_death_data.R
 #  Inputs:
@@ -91,6 +97,8 @@ names(death.datA) <- vInfo$varName           # name columns based on varName!
 
 death.datA$year               <- as.numeric(death.datA$year)
 death.datA$multiraceStatus    <- as.numeric(death.datA$multiraceStatus)
+death.datA$education          <- as.numeric(death.datA$education)
+
 
 # AGE -----
 # HARMONISE with CHSI: OKAY
@@ -178,8 +186,12 @@ death.datA$raceCode[is.na(death.datA$raceCode)] <-"-missing"
 if (state.installation) {
 
 
-vInfo <- filter(raw.death.variable.info,y2000to2004 == 1) # 2000-2004 variable column locations
-vInfo <- vInfo[order(vInfo$mStart),]   # columns need to be read in order with read_fwf function !!  
+vInfo  <- filter(raw.death.variable.info,y2000to2004 == 1) # 2000-2004 variable column locations
+vInfo  <- vInfo[order(vInfo$mStart),]   # columns need to be read in order with read_fwf function !!  
+
+vInfo2 <- vInfo
+vInfo2[vInfo$varName=="education","mEnd"] <- 202 # for 2000-2002 education is 2 column character
+                                                 # year of education
 
 .f0 <- paste0(.sl,"rawDeathData/Death2000.txt")
 .f1 <- paste0(.sl,"rawDeathData/Death2001.txt")
@@ -188,13 +200,19 @@ vInfo <- vInfo[order(vInfo$mStart),]   # columns need to be read in order with r
 .f4 <- paste0(.sl,"rawDeathData/Death2004.txt")
 
 # reading from flat files based on start and end positions and names as defined in vInfo  
-ca00 <- read_fwf(file=.f0,col_positions=fwf_positions(start=vInfo$mStart, end=vInfo$mEnd, col_names = vInfo$varName),skip=0)
-ca01 <- read_fwf(file=.f1,col_positions=fwf_positions(start=vInfo$mStart, end=vInfo$mEnd, col_names = vInfo$varName),skip=0)
-ca02 <- read_fwf(file=.f2,col_positions=fwf_positions(start=vInfo$mStart, end=vInfo$mEnd, col_names = vInfo$varName),skip=0)
-ca03 <- read_fwf(file=.f3,col_positions=fwf_positions(start=vInfo$mStart, end=vInfo$mEnd, col_names = vInfo$varName),skip=0)
-ca04 <- read_fwf(file=.f4,col_positions=fwf_positions(start=vInfo$mStart, end=vInfo$mEnd, col_names = vInfo$varName),skip=0)
+ca00 <- read_fwf(file=.f0,col_positions=fwf_positions(start=vInfo2$mStart, end=vInfo2$mEnd, col_names = vInfo$varName),col_types="cccccccccccc",skip=0)
+ca01 <- read_fwf(file=.f1,col_positions=fwf_positions(start=vInfo2$mStart, end=vInfo2$mEnd, col_names = vInfo$varName),col_types="cccccccccccc",skip=0)
+ca02 <- read_fwf(file=.f2,col_positions=fwf_positions(start=vInfo2$mStart, end=vInfo2$mEnd, col_names = vInfo$varName),col_types="cccccccccccc",skip=0)
+ca03 <- read_fwf(file=.f3,col_positions=fwf_positions(start=vInfo$mStart,  end=vInfo$mEnd,  col_names = vInfo$varName),col_types="cccccccccccc",skip=0)
+ca04 <- read_fwf(file=.f4,col_positions=fwf_positions(start=vInfo$mStart,  end=vInfo$mEnd,  col_names = vInfo$varName),col_types="cccccccccccc",skip=0)
 
-death.datB <- rbind(ca00,ca01,ca02,ca03,ca04)
+death.datB <- rbind(ca00,ca01,ca02,ca03,ca04)   %>%
+                mutate(education=ifelse(year %in% 2000:2002,NA,education))  #remove 2001-2002 education data for now
+
+
+death.datB$year               <- as.numeric(death.datB$year)
+death.datB$education          <- as.numeric(death.datB$education)
+
 
 # AGE -----
 # HARMONISE with CHSI: OKAY (except for possible tiny issue related to ageUnit=9, which here assumes age is in years)
