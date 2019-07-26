@@ -9,13 +9,17 @@ myCBD/myData/real/datTract.RDS
 myCBD/myData/real/datCounty.RDS
 myCBD/myData/real/datCounty_RE.RDS
 myCBD/myData/real/datCounty_3year.RDS
+myCBD/myData/real/datCounty_EDU.RDS
+
+myCBD/myData/real/analysisDataSets/*.*
+
 
 myCBD/myData/real/countyOSHPD.rds
 myCBD/myData/real/mdc_drg.rds
-
-
 myCBD/myData/real/any_primary_stackedbar.rds
 myCBD/myData/real/group_any_primary.rds
+
+
 
 
 myCBD/rsconnect/*.*
