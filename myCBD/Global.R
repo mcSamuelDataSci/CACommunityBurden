@@ -24,7 +24,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "real"
+whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
@@ -110,8 +110,8 @@ shape_Tract$county <- as.character(shape_Tract$county)
 datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
 datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
-datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS"))
-datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS"))
+datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
+#datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
 
 #FIX THIS --- OSHPD
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
