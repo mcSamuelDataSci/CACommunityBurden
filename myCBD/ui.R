@@ -200,8 +200,7 @@ conditionalPanel(condition = fC(c(55)),
  # myOSHPDtype
  conditionalPanel(condition = fC(c(68,69)),
                   selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hMNames_short)),
-
-
+                  
 # myOSHPDtype-mdcdrg
 conditionalPanel(condition = fC(c(70)),
                  selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down)),
@@ -330,7 +329,7 @@ mainPanel(
   
    tabPanel("Race Trend",
           br(), 
-          plotOutput("trendRace", width="100%",height=700),  value = 56),
+          plotOutput("trendRace", width="100%",height = 700),  value = 56),
  
  
    tabPanel("DATA TABLE",
@@ -340,9 +339,10 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
+ #testing reactive hover? 
     tabPanel("HOSPITAL DISCHARGE (1)",
           br(),
-          plotOutput("OSHPD1", height=700), value = 68),
+          plotOutput("OSHPD1", height=700, hover = "plot_hover"), verbatimTextOutput("info"), value = 68),
 
    tabPanel("HOSPITAL DISCHARGE (2)",
           br(),

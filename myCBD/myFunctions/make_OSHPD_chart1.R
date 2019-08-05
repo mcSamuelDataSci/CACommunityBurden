@@ -28,8 +28,9 @@ oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospita
                                              pull(measure)))
 
 #Creating ggplot facet grid plot
-  ggplot(plotData, aes(x = nameOnly, y = measure)) +
-    coord_flip() + geom_bar(stat = "identity", fill = "blue") +
+ggplot(plotData, aes(x = nameOnly, y = measure)) +
+    coord_flip() +
+    geom_bar(stat = "identity", fill = "blue") +
     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
     theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
@@ -41,4 +42,7 @@ oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospita
     axis.text.x = element_text(size = 10, face="bold",angle = 90, hjust = 1), #controls size of measure labels
     strip.text.x = element_text(size = 15)) #increases the size of the facet labels
   
+
 }
+
+
