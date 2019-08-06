@@ -124,12 +124,9 @@ calculated_metrics <- calculated_metrics %>% mutate(type = factor(type, levels =
     layout(annotations = list(text = "Median Charges per Day", font = f, xref = "paper", yref = "paper", yanchor = "bottom", xanchor = "center", align = "center",
                               x = 0.5, y = 1,showarrow = FALSE))
   
-  
-subplot(num_hosp, aahosp, avg_los,charges, avgcharges, avgcharge_per_day, medcharge, medcharge_per_day) %>% layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE) 
- 
-if(1==2){
+
   subplot1 <- subplot(num_hosp, aahosp, avg_los, shareY = TRUE) %>% 
-    layout(autosize = T, titleY = "", showlegend = FALSE, ) 
+    layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE) 
     
   subplot2 <- subplot(charges, avgcharges, avgcharge_per_day, shareY = TRUE) %>% 
     layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE) 
@@ -140,7 +137,7 @@ if(1==2){
   subplot(subplot1, subplot2, subplot3, shareY = TRUE, nrows = 3) %>%
     layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE) 
   #showlegend = FALSE removes legend, which creates more room on right side of plot
- }
+ 
   
   }
 

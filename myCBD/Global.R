@@ -211,10 +211,16 @@ shorthospList <- c(-2, -6)
 shortMDCList <- c(-2,-3,-4,-6,-8, -10)
 hM_short <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
+MDC_DRG_ICD <- c("icd10_cm", "mdc", "drg")
+MDC_DRG_ICD_names <- c("ICD-10-CM", "Major Diagnostic Code", "Diagnostic Related Groups")
 
+MDC_DRG_ICD_Dropdown <- MDC_DRG_ICD
+names(MDC_DRG_ICD_Dropdown) <- MDC_DRG_ICD_names
 
 #for mdc_drg
 
+#CD-commenting out to test full_oshpd code
+if(1==2){
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
 hMDCNames_short <- hospMeasuresNames[shortMDCList]
 
@@ -225,7 +231,7 @@ MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")
 
 MDCDRG_Dropdown <- MDC_DRG 
 names(MDCDRG_Dropdown) <- MDC_DRGNames
-
+}
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
