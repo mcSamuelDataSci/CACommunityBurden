@@ -146,6 +146,7 @@ gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"),
 hdCodes   <- read.delim(paste0(myPlace, "/myInfo/MDC_DRG.txt"), header = FALSE, sep = "=") 
 hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
+full_CAUSE_mdcdrg_list <- read.csv(paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"), header = TRUE, sep = ",")
 
 source(paste0(myPlace,"/myFunctions/make_MAPS.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R")) 
@@ -211,6 +212,7 @@ shorthospList <- c(-2, -6)
 shortMDCList <- c(-2,-3,-4,-6,-8, -10)
 hM_short <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
+
 MDC_DRG_ICD <- c("icd10_cm", "mdc", "drg")
 MDC_DRG_ICD_names <- c("ICD-10-CM", "Major Diagnostic Code", "Diagnostic Related Groups")
 

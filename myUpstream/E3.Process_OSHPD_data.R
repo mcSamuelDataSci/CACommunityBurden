@@ -659,12 +659,20 @@ full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg) %>% mutate(CAUSE = 
                                                                                           diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
   
 
-saveRDS(full_osphd_summary, file = path(myPlace, "myData/", whichData, "/full_oshpd_summary.rds"))
+saveRDS(full_oshpd_summary, file = path(myPlace, "myData/", whichData, "/full_oshpd_summary.rds"))
 
 
+#Joining fullCauseList and hdCodes into one reference dataset--maybe this can eventually be moved to global file/outside of function?:
 
+fullCauseList_ed <- select(fullCauseList, LABEL, nameOnly) %>% rename(names = nameOnly)
 
+hdCodes_ed <- hdCodes %>% rename(LABEL = mdc_drg_codes)
 
+full_CAUSE_mdcdrg_list <- bind_rows(fullCauseList_ed, hdCodes_ed)
+
+write_csv(full_CAUSE_mdcdrg_list, path = paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"))
+
+#write.table(full_CAUSE_mdcdrg_list, paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.txt"),sep="\t",row.names=TRUE)
 
 
 
