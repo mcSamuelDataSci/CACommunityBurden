@@ -116,6 +116,7 @@ datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RE.RDS")
 #FIX THIS --- OSHPD
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
 calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
 
 
 load(path(myPlace,"/myData/","sdohTract.R"))
@@ -221,8 +222,7 @@ names(MDC_DRG_ICD_Dropdown) <- MDC_DRG_ICD_names
 
 #for mdc_drg
 
-#CD-commenting out to test full_oshpd code
-if(1==2){
+
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
 hMDCNames_short <- hospMeasuresNames[shortMDCList]
 
@@ -233,7 +233,7 @@ MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")
 
 MDCDRG_Dropdown <- MDC_DRG 
 names(MDCDRG_Dropdown) <- MDC_DRGNames
-}
+
 
 
 fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
