@@ -42,3 +42,4 @@ oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospita
     strip.text.x = element_text(size = 15)) #increases the size of the facet labels
   
 }
+

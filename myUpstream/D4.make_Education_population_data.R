@@ -5,12 +5,9 @@
 # Apr 24 2019
 ##############
 
-
-
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
-
 
 
 #1 Setting Paths, and Packages
@@ -56,14 +53,14 @@ t1.ed1_2017 <- getEd(2017,"acs1")
 
 
 # t.ed5_2005.09 <- getEd(2009,"acs5")   # generates ERROR
-t.ed5_2006.10 <- getEd(2010,"acs5")
-t.ed5_2007.11 <- getEd(2011,"acs5")
-t.ed5_2008.12 <- getEd(2012,"acs5")
-t.ed5_2009.13 <- getEd(2013,"acs5")
-t.ed5_2010.14 <- getEd(2014,"acs5")
-t.ed5_2011.15 <- getEd(2015,"acs5")
-t.ed5_2012.16 <- getEd(2016,"acs5")
-t.ed5_2013.17 <- getEd(2017,"acs5")
+# t.ed5_2006.10 <- getEd(2010,"acs5")
+# t.ed5_2007.11 <- getEd(2011,"acs5")
+# t.ed5_2008.12 <- getEd(2012,"acs5")
+# t.ed5_2009.13 <- getEd(2013,"acs5")
+# t.ed5_2010.14 <- getEd(2014,"acs5")
+# t.ed5_2011.15 <- getEd(2015,"acs5")
+# t.ed5_2012.16 <- getEd(2016,"acs5")
+# t.ed5_2013.17 <- getEd(2017,"acs5")
 
 
 
@@ -101,7 +98,7 @@ education$group <- case_when(
   education$level == "Master's degree"           ~ 7,
   education$level == "Professional school degree"~ 8,
   education$level == "Doctorate degree"          ~ 8,
-  education$level == "No schooling completed"    ~ 9,
+  education$level == "No schooling completed"    ~ 1,
   education$level == "All levels"                ~ 10
   )
 

@@ -112,7 +112,7 @@ observeEvent(input$ID,{
     
 
 observeEvent(input$ID,{
-  if(input$ID %in% c(44,56) &  input$myGeo=="Community") 
+  if(input$ID %in% c(44,56,57) &  input$myGeo=="Community") 
   {updateSelectInput(session, "myCAUSE", choices = phCode,selected=current_Cause()  )}
 })
 
@@ -204,6 +204,10 @@ output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, inp
 
 
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans))
+
+output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
+
+
 
 output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
 

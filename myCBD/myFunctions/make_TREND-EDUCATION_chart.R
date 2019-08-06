@@ -1,48 +1,41 @@
 
 if(1==2){
-  myLHJ="CALIFORNIA" 
+  myLHJ="Contra Costa" 
+  myLHJ="CALIFORNIA"
   myCause="0"
   myMeasure = "cDeathRate"
+  myMeasure = "aRate"
   mySex   = "Total"
   myLogTrans=FALSE
 }
 
 
-eduMap     <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
-
-
-
-
-#TEMP
-#datCounty_EDU$eduCode <- as.numeric(datCounty_EDU$eduCode )
-
-
-
+eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
+datCounty_EDU <- readRDS(path(myPlace,"/myData/real","datCounty_EDU.RDS"))
 datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
 
 
-
-trendRace <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "cDeathRate",myLogTrans=FALSE) {
+trendEducation <- function(myLHJ="CALIFORNIA",myCause="A",mySex,myMeasure = "cDeathRate",myLogTrans=FALSE) {
 
 minYear <- 2012
 maxYear <- 2017
 
 myCex <- 1.6
-myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
+myCol <- "blue"
 
-dat.1 <- filter(datCounty_EDU,county == myLHJ,CAUSE == myCause, sex=="Total") 
+dat.1 <- filter(datCounty_EDU,county == myLHJ,CAUSE == myCause, sex==mySex) 
 
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ," by RACE/ETHNIC Group*, ",minYear," to ",maxYear)
+myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ," by EDUCATION Group, ",minYear," to ",maxYear,", ",mySex,", >24 years-old only, (crude age-adjustement)")
 myTit <-  wrap.labels(myTit,80)
 
-myTit <- "TEMP"
+#myTit <- myLHJ
 
 mySize1 <- 18
 mySize2 <- 20
-myCex1  <- 1.5
+myCex1  <- 1
 
 yRange     <- minYear:maxYear
 yMid       <- minYear:maxYear
@@ -71,9 +64,8 @@ myMin      <- ifelse(myLogTrans,NA,0)
           axis.text.x = element_text(angle = 0,vjust = 0.5, hjust=.5),
           plot.caption = element_text(hjust = 0, face = "italic",size=14)) 
   
- 
- 
  #theme(axis.text.x = element_text(angle = 60, hjust = 1))
  
  
  }
+

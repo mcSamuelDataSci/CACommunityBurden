@@ -1,3 +1,9 @@
+# slickify HOME PAGE and all other pages
+# add google analytics
+
+
+
+
 # way to make tmap title size same as ggplot title size?
 # convert rank geography function to ggplot2
 # scale all titles so they fit with various size windows/monitors
@@ -28,6 +34,8 @@ whichData         <- "real"
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
+
+testPage <- TRUE
 
 # TEXT Constants
 VERSION           <- "Version P1.4"
@@ -153,6 +161,8 @@ source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
+source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
+
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))

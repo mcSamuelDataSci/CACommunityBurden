@@ -73,9 +73,20 @@ if (state.installation) {
  ca06    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2006.csv"), colClasses = "character")
  ca05    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2005.csv"), colClasses = "character")
  
+ 
 death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
+# %>%
+# mutate(LRD=)
+
+# OOSca17    <- read.csv(paste0(.sl,"rawDeathData/forOutOfState/Samuel_CCMDF_Deaths-2016.csv"), colClasses = "character")
+
+
 }
+
+
+
+
 
 
 if (local.installation) {
@@ -91,13 +102,27 @@ death.datA$F62  <- str_pad(death.datA$F62,3,pad="0")
 }
 
 
-vInfo             <- filter(raw.death.variable.info,y2005onward == 1)  # 2005-current variable names 
+vInfo             <- filter(raw.death.variable.info, CCDF == 1)  # CCDF 2005-current variable names 
 death.datA        <- death.datA[vInfo$seqID1]   # select only needed columns of 2005-2015 data!
 names(death.datA) <- vInfo$varName           # name columns based on varName!
+
+
+
+
+
+
 
 death.datA$year               <- as.numeric(death.datA$year)
 death.datA$multiraceStatus    <- as.numeric(death.datA$multiraceStatus)
 death.datA$education          <- as.numeric(death.datA$education)
+
+
+temp <- ca17[vInfo$seqID1]
+temp <- OOSca17[vInfo$seqID1]
+names(temp) <- vInfo$varName
+
+
+
 
 
 # AGE -----
@@ -186,7 +211,7 @@ death.datA$raceCode[is.na(death.datA$raceCode)] <-"-missing"
 if (state.installation) {
 
 
-vInfo  <- filter(raw.death.variable.info,y2000to2004 == 1) # 2000-2004 variable column locations
+vInfo  <- filter(raw.death.variable.info, DSMF_00_04 == 1) # 2000-2004 variable column locations
 vInfo  <- vInfo[order(vInfo$mStart),]   # columns need to be read in order with read_fwf function !!  
 
 vInfo2 <- vInfo

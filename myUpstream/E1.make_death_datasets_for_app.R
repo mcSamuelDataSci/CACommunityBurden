@@ -6,7 +6,6 @@
 #            load population denominator data                                 
 #            load death data (cbdDat0)                                        
 #            build functions for YLL and rate calcuations                     
-#            contruct initial tract, community & county CBD data files        
 #            process data and calculate age-adjusted rates                    
 #            final merges and processing of main CBD data files               
 #            export files for use in CBD app                              
@@ -67,6 +66,7 @@ geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to C
 cbdLinkCA  <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census 
 comName    <- unique(cbdLinkCA[,c("comID","comName")])                                    # dataframe linking comID and comName
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+ageMap_EDU  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "dataEducation"))
 
 
 #== LOAD AND PROCESS POPULATION DATA ==============================================================
@@ -91,8 +91,13 @@ popCountySexAgeG_3year  <- popCountySexAgeG %>%
                            group_by(yearG3,county,sex,ageG) %>%
                            summarize(pop=sum(pop))
 
-popCountyEducation      <- readRDS(path(upPlace,"/upData/popCounty_Education.RDS")) %>% ungroup()  %>%
-                               select(year,county,sex,eduCode,pop=n)
+
+
+
+popCounty_EDU        <- readRDS(path(upPlace,"/upData/popCounty_Education.RDS")) %>% ungroup() 
+popCountySex_EDU     <- filter(popCounty_EDU,ageG_EDU == "Total") %>% select(-ageG_EDU) # no need for ageG
+popCountySexAgeG_EDU <- filter(popCounty_EDU,ageG_EDU != "Total")
+
 
 
 popTract         <- readRDS(path(upPlace,"/upData/popTract.RDS")) %>% ungroup() 
@@ -102,7 +107,8 @@ popTractSexAgeG  <- filter(popTract,ageG != "Total")
 popCommSex       <- popTractSex     %>% group_by(yearG5,county,comID,sex)      %>% summarise(pop=sum(pop))  %>% ungroup()  
 popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG5,county,comID,sex,ageG) %>% summarise(pop=sum(pop))  %>% ungroup() 
 
-popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
+popStandard         <- ageMap    %>% mutate(ageG = paste0(lAge," - ",uAge))
+popStandard_EDU     <- ageMap_EDU %>% mutate(ageG_EDU = paste0(lAge," - ",uAge))
 
 
 
@@ -140,7 +146,8 @@ cbdDat0       <- mutate(cbdDat0,
                        # yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],
                          yll     = ifelse(age > 75, 0, 75-age),
                          yearG5  = yearMap[match(year,yearMap[,"year"]),"yearGroup5"], 
-                         yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"] 
+                         yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"],
+                         education = ifelse(education == 8,7,education)  # one "Graduate or professional degree" category for now
                         ) %>%
                 rename(eduCode = education) 
 
@@ -162,6 +169,16 @@ aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "
 aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
 aMark         <- findInterval(cbdDat0$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 cbdDat0$ageG  <- aLabs[aMark]                                   # make new "ageG" variable based on two objects above 
+
+
+
+
+aL_EDU            <-     ageMap_EDU$lAge     # lower age ranges
+aU_EDU            <- c(-1,ageMap_EDU$uAge)     # upper age ranges, plus inital value of "-1" for lower limit
+aLabs_EDU         <- c("less",paste(aL_EDU,"-",aU_EDU[-1])) # make label for ranges
+aMark_EDU         <- findInterval(cbdDat0$age,c(-1,24,aU_EDU[2:5]),left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+cbdDat0$ageG_EDU  <- aLabs_EDU[aMark_EDU]  
+
 
 
 # -- Map ICD-10 codes to GBD conditions ----------------------------------------
@@ -344,7 +361,7 @@ datCounty_RE <- calculateRates(datCounty_RE,1)
 
 ##### AGE > 25 ONLY
 cbdDat0_SAVE <- cbdDat0
-cbdDat0 <- filter(cbdDat0,age > 25)
+cbdDat0 <- filter(cbdDat0, age >= 25)
 
 
 c.t1.EDU      <- calculateYLLmeasures(c("county","year","sex","eduCode","lev0"),"lev0")
@@ -361,8 +378,10 @@ datState.EDU$county = STATE
 datCounty_EDU <- bind_rows(datCounty_EDU, datState.EDU)
 
 
-datCounty_EDU <- merge(datCounty_EDU, popCountyEducation, by = c("year","county","sex","eduCode"))
+datCounty_EDU <- merge(datCounty_EDU, popCountySex_EDU, by = c("year","county","sex","eduCode"))
 datCounty_EDU <- calculateRates(datCounty_EDU,1)
+
+
 
 
 cbdDat0 <- cbdDat0_SAVE
@@ -545,6 +564,61 @@ countyAA.RE <- ageCounty.RE %>% group_by(county,yearG3,sex,raceCode,CAUSE) %>%
 countyAA.RE <- countyAA.RE[!(countyAA.RE$oDeaths==0),c("county","yearG3","sex","raceCode","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
 
 
+
+
+
+
+
+# -- EDUCATION COUNTY 1-YEAR SELECTED COUNTIES (age-adjusted) -_----------------
+# ------------------------------------------------------------------------------
+
+
+cbdDat0_SAVE <- cbdDat0
+cbdDat0 <- filter(cbdDat0, age >= 25, year > 2011)  # 2000-2002 education not processed
+                                                    # pop data currenlty only  > 2006
+
+tA1      <- cbdDat0 %>% group_by(county,year, sex, ageG_EDU, eduCode, CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(county,year, sex, ageG_EDU, eduCode, CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA3      <- cbdDat0 %>% group_by(county,year, sex, ageG_EDU, eduCode, CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+
+tA5      <- cbdDat0 %>% group_by(       year, sex, ageG_EDU, eduCode, CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA6      <- cbdDat0 %>% group_by(       year, sex, ageG_EDU, eduCode, CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA7      <- cbdDat0 %>% group_by(       year, sex, ageG_EDU, eduCode, CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+
+datAA1 <- bind_rows(tA1,tA2,tA3,tA5,tA6,tA7)  %>% ungroup()  # UNGROUP HERE!!!!
+
+#datAA1 <- filter(datAA1,!is.na(ageG))   ... NONE
+# datAA1 <- filter(datAA1,!is.na(county)) # remove 758 records with missing county ### removed this from RACE DATA......
+
+
+
+
+ageCounty.EDU   <- full_join(datAA1 ,popCountySexAgeG_EDU, by = c("county","year","sex","ageG_EDU","eduCode")) %>%
+  full_join(popStandard_EDU[,c("ageG_EDU","US2000POP")], by="ageG_EDU")   %>%
+  filter(pop > 0) # this needs to be done more carefully, but removed counties with data not available from ACS
+
+
+
+
+
+ageCounty.EDU$Ndeaths[is.na(ageCounty.EDU$Ndeaths)] <- 0  
+ageCounty.EDU$YLL[is.na(ageCounty.EDU$YLL)]         <- 0  
+
+countyAA.EDU <- ageCounty.EDU %>% group_by(county,year,sex,eduCode,CAUSE) %>%
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+
+countyAA.EDU <- countyAA.EDU[!(countyAA.EDU$oDeaths==0),c("county","year","sex","eduCode","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
+
+
+cbdDat0 <- cbdDat0_SAVE
+
+
+
 # -- COMMUNITY (age-adjusted) --------------------------------------------------
 # ------------------------------------------------------------------------------
 
@@ -684,6 +758,7 @@ datCounty_RE <- datCounty_RE                                    %>%
 
 # -- EDUCATION ------------------------------------------------------------------
 
+datCounty_EDU <- merge(datCounty_EDU,countyAA.EDU, by = c("county","year","sex","eduCode","CAUSE"),all=TRUE)
 
 datCounty_EDU <- datCounty_EDU                                  %>% 
   filter(!(is.na(CAUSE)))                                       %>%  
