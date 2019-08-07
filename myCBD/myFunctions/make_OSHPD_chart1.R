@@ -28,10 +28,10 @@ full_CAUSE_mdcdrg_list <- full_CAUSE_mdcdrg_list %>% mutate(names = as.character
   plotData <- full_oshpd_summary %>%
     filter(!is.na(CAUSE), county == myCounty, !(type %in% c("Crude Hospitalization Rate","Crude Charge Rate"))) %>% filter(., CAUSE %in% myOSHPDtype_N_cause, sex == mySex) %>%
     group_by(type) %>%
-    mutate(nameOnly = forcats::fct_reorder(names, filter(., type == myOSHPDtype) %>%
+    mutate(names = forcats::fct_reorder(names, filter(., type == myOSHPDtype) %>%
                                              pull(measure)))
 #Creating ggplot facet grid plot
-  if(1==2){
+  
 ggplot(plotData, aes(x = names, y = measure)) +
     coord_flip() +
     geom_bar(stat = "identity", fill = "blue") +
@@ -46,17 +46,17 @@ ggplot(plotData, aes(x = names, y = measure)) +
     axis.text.x = element_text(size = 10, face="bold",angle = 90, hjust = 1), #controls size of measure labels
     strip.text.x = element_text(size = 10)) #increases the size of the facet labels
 #strip.text.x = element_blank()) to remove facet labels--may be useful if converting to ggplotly and wanting to add annotations? 
-}
+
 #Lollipop plot as alternative to bar plot--will probably save space, and may be able to add value labels inside? 
 
-ggplot(plotData, aes(x = names, y = measure, label = paste0(comma(round(measure, 0))))) +
-    geom_segment(aes(x = names, xend = names, y = 0, yend = measure)) +
-    geom_point(size = 1) + 
-    geom_text(nudge_x = 0.5, size = 2) +
-    coord_flip() +
-    facet_wrap(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(20))) +
-    theme(axis.title.y = element_blank(),
-          axis.title.x = element_blank())
+# ggplot(plotData, aes(x = names, y = measure, label = paste0(comma(round(measure, 0))))) +
+#     geom_segment(aes(x = names, xend = names, y = 0, yend = measure)) +
+#     geom_point(size = 1) + 
+#     geom_text(nudge_x = 0.5, size = 2) +
+#     coord_flip() +
+#     facet_wrap(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(20))) +
+#     theme(axis.title.y = element_blank(),
+#           axis.title.x = element_blank())
 
 
  
