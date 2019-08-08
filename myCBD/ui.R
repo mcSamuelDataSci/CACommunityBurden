@@ -208,7 +208,7 @@ conditionalPanel(condition = fC(c(70)),
 
 #myVar(ICD/MDC/DRG)
 
-  conditionalPanel(condition = fC(c(68, 70)),
+  conditionalPanel(condition = fC(c(68,69,70)),
                    selectInput("myVar", "Variable:", choice = MDC_DRG_ICD_Dropdown)),
 
 

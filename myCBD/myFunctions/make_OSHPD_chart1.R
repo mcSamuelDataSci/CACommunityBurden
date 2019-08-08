@@ -60,7 +60,7 @@ g<- ggplot(plotData, aes(x = names, y = measure, label = paste0(comma(round(meas
 
 ggplotly(g)
 
-#testing just one variable
+#testing just one variable https://plot.ly/r/dumbbell-plots/#dot-and-dumbbell-plots
 plotData %>% filter(type == "Total Charges") %>% plot_ly(.) %>%
   add_segments(y = ~names, yend = ~names, x = ~measure, xend = ~0, showlegend = FALSE, hoverinfo = "none") %>% #adding hoverinfo = "none"
   #to the add_segments sections ensures that there isn't hover text for the "0 end" of the segment, but there will be for the marker!
