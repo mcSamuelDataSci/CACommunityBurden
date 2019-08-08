@@ -85,7 +85,7 @@ medcharge <- plotly_function_dollar("Median Charges")
 medcharge_per_day <- plotly_function_dollar("Median Charges per Day")
   
   
-
+if(myVar == "icd10_cm"){
   subplot1 <- subplot(num_hosp, aahosp, avg_los, shareY = TRUE) %>% 
     layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE) 
     
@@ -100,6 +100,21 @@ medcharge_per_day <- plotly_function_dollar("Median Charges per Day")
   #showlegend = FALSE removes legend, which creates more room on right side of plot
  
   #why does it show up as orange instead of blue? --and "blue" is listed as the legend? 
+}
+
+else if(myVar == "mdc" | myVar == "drg"){
+  subplot1 <- subplot(num_hosp, charges, shareY = TRUE) %>%
+    layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE)
+  
+  subplot2 <- subplot(avgcharges, medcharge, shareY = TRUE) %>%
+    layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE)
+    
+  subplot(subplot1, subplot2, shareY = TRUE, nrows = 1) %>%
+    layout(autosize = T, yaxis = list(title = ""), showlegend = FALSE, margin = c(l = 0.5, r = 0.5))  
+  #
+}
+
+
   }
 
 
