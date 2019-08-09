@@ -24,7 +24,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "G:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "E:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- getwd()
@@ -59,6 +59,7 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
 
+ ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
  ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
@@ -73,6 +74,7 @@ if (state.installation) {
  ca06    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2006.csv"), colClasses = "character")
  ca05    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2005.csv"), colClasses = "character")
  
+
  
 death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
@@ -105,8 +107,6 @@ death.datA$F62  <- str_pad(death.datA$F62,3,pad="0")
 vInfo             <- filter(raw.death.variable.info, CCDF == 1)  # CCDF 2005-current variable names 
 death.datA        <- death.datA[vInfo$seqID1]   # select only needed columns of 2005-2015 data!
 names(death.datA) <- vInfo$varName           # name columns based on varName!
-
-
 
 
 
