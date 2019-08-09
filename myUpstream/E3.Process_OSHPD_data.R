@@ -650,6 +650,41 @@ mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 
 
+#-----------------------------------------------JOINING MDC/DRG SUMMARY DATA WITH ICD-10-CM SUMMARY DATA---------------------------------------------------------#
+
+calculated_metrics <- mutate(calculated_metrics, diagnosis_var = "icd10_cm")
+
+full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
+                                                                                          diagnosis_var == "mdc" ~ mdc_drg_codes,
+                                                                                          diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
+  
+
+saveRDS(full_oshpd_summary, file = path(myPlace, "myData/", whichData, "/full_oshpd_summary.rds"))
+
+
+#Joining fullCauseList and hdCodes into one reference dataset--maybe this can eventually be moved to global file/outside of function?:
+
+fullCauseList_ed <- select(fullCauseList, LABEL, nameOnly) %>% rename(names = nameOnly)
+
+hdCodes_ed <- hdCodes %>% rename(LABEL = mdc_drg_codes)
+
+full_CAUSE_mdcdrg_list <- bind_rows(fullCauseList_ed, hdCodes_ed)
+
+write_csv(full_CAUSE_mdcdrg_list, path = paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"))
+
+#write.table(full_CAUSE_mdcdrg_list, paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.txt"),sep="\t",row.names=TRUE)
+
+
+
+
+
+
+
+
+
+
+
+
 #---------------------------------------------------------CALCULATING ANY VS PRIMARY DIAGNOSES------------------------------------------------------------------#
 
 #--------------------------------------------------Writing function to create indicator variable for different conditions based on diagnosis codes-----------------------------#

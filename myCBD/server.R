@@ -205,13 +205,15 @@ output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, inp
 
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans))
 
+
 output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
 
 
 
-output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
+# output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
+output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
 
-output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
+output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
 
 
 output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myLHJ, input$myOSHPDtype_mdcdrg, input$mySex, input$myN, input$myVar))

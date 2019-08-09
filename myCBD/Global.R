@@ -124,6 +124,7 @@ datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")
 #FIX THIS --- OSHPD
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
 calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
 
 
 load(path(myPlace,"/myData/","sdohTract.R"))
@@ -154,6 +155,7 @@ gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"),
 hdCodes   <- read.delim(paste0(myPlace, "/myInfo/MDC_DRG.txt"), header = FALSE, sep = "=") 
 hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
+full_CAUSE_mdcdrg_list <- read.csv(paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"), header = TRUE, sep = ",")
 
 source(paste0(myPlace,"/myFunctions/make_MAPS.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R")) 
@@ -222,8 +224,14 @@ shortMDCList <- c(-2,-3,-4,-6,-8, -10)
 hM_short <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
 
+MDC_DRG_ICD <- c("icd10_cm", "mdc", "drg")
+MDC_DRG_ICD_names <- c("ICD-10-CM", "Major Diagnostic Code", "Diagnostic Related Groups")
+
+MDC_DRG_ICD_Dropdown <- MDC_DRG_ICD
+names(MDC_DRG_ICD_Dropdown) <- MDC_DRG_ICD_names
 
 #for mdc_drg
+
 
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
 hMDCNames_short <- hospMeasuresNames[shortMDCList]

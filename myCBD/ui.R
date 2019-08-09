@@ -206,10 +206,10 @@ conditionalPanel(condition = fC(c(70)),
                  selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down)),
 
 
-#myVar(MDC/DRG)
+#myVar(ICD/MDC/DRG)
 
-  conditionalPanel(condition = fC(c(70)),
-                   selectInput("myVar", "Variable:", choice = MDCDRG_Dropdown)),
+  conditionalPanel(condition = fC(c(68,69,70)),
+                   selectInput("myVar", "Variable:", choice = MDC_DRG_ICD_Dropdown)),
 
 
 
@@ -380,10 +380,10 @@ mainPanel(
      br(), 
      plotlyOutput("scatter", height=700), value = 66),
  
- #testing reactive hover? 
+ 
     tabPanel("HOSPITAL DISCHARGE (1)",
           br(),
-          plotOutput("OSHPD1", height=700, hover = "plot_hover"), verbatimTextOutput("info"), value = 68),
+          plotOutput("OSHPD1", height=700),  value = 68),
 
    tabPanel("HOSPITAL DISCHARGE (2)",
           br(),
