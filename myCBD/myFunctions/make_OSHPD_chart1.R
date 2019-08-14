@@ -26,46 +26,25 @@ full_CAUSE_mdcdrg_list <- full_CAUSE_mdcdrg_list %>% mutate(names = as.character
 
 #creates dataframe with data only for CAUSEs from myOSHPDtype_N_cause, i.e. the top N CAUSES for the specified myOSHPDtype
   plotData <- full_oshpd_summary %>%
-    filter(!is.na(CAUSE), county == myCounty, !(type %in% c("Crude Hospitalization Rate","Crude Charge Rate"))) %>% filter(., CAUSE %in% myOSHPDtype_N_cause, sex == mySex) %>%
+    filter(!is.na(CAUSE), county == myCounty, (type %in% c("Number of Hospitalizations","Average Length of Stay (Days)", "Total Charges", "Median Charges"))) %>% filter(., CAUSE %in% myOSHPDtype_N_cause, sex == mySex) %>%
     group_by(type) %>%
     mutate(names = forcats::fct_reorder(names, filter(., type == myOSHPDtype) %>%
                                              pull(measure)))
 #Creating ggplot facet grid plot
   
-# ggplot(plotData, aes(x = names, y = measure)) +
-#     coord_flip() +
-#     geom_bar(stat = "identity", fill = "blue") +
-#     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
-#     theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
-#     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
-#     scale_x_discrete(labels = scales::wrap_format(18)) + #x-axis is condition label--wrapping text so it stacks on top of each other
-#     #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
-#     theme(axis.title.y = element_blank(), #removes nameOnly label
-#     axis.title.x = element_blank(), #removes measure label
-#     axis.text.y = element_text(size = 10), #increases size of disease condition labels
-#     axis.text.x = element_text(size = 10, face="bold",angle = 90, hjust = 1), #controls size of measure labels
-#     strip.text.x = element_text(size = 10)) #increases the size of the facet labels
-# #strip.text.x = element_blank()) to remove facet labels--may be useful if converting to ggplotly and wanting to add annotations? 
+ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
+     geom_bar(stat = "identity", fill = "blue") +
+     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
+     theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
+     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
+     scale_x_discrete(labels = scales::wrap_format(18)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+     #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
+     theme(axis.title.y = element_blank(), #removes nameOnly label
+     axis.title.x = element_blank(), #removes measure label
+     axis.text.y = element_text(size = 10), #increases size of disease condition labels
+     axis.text.x = element_text(size = 10, face="bold",angle = 90, hjust = 1), #controls size of measure labels
+     strip.text.x = element_text(size = 10)) #increases the size of the facet labels
 
-#Lollipop plot as alternative to bar plot--will probably save space, and may be able to add value labels inside? 
-
-g<- ggplot(plotData, aes(x = names, y = measure, label = paste0(comma(round(measure, 0))))) +
-    geom_segment(aes(x = names, xend = names, y = measure, yend = 0), color = "blue") +
-    geom_point(size = 2, color = "blue") +
-    geom_text(nudge_x = 0.3, size = 2) +
-    coord_flip() +
-    facet_wrap(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(50))) +
-    theme(axis.title.y = element_blank(),
-          axis.title.x = element_blank())
-
-ggplotly(g)
-
-#testing just one variable https://plot.ly/r/dumbbell-plots/#dot-and-dumbbell-plots
-plotData %>% filter(type == "Total Charges") %>% plot_ly(.) %>%
-  add_segments(y = ~names, yend = ~names, x = ~measure, xend = ~0, showlegend = FALSE, hoverinfo = "none") %>% #adding hoverinfo = "none"
-  #to the add_segments sections ensures that there isn't hover text for the "0 end" of the segment, but there will be for the marker!
-  add_markers(y = ~names, x = ~measure)
-  
   
 
 
