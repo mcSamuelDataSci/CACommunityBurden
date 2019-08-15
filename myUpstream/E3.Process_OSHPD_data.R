@@ -15,7 +15,7 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-secure.location  <- "g:/0.Secure.Data/"
+secure.location  <- "e:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -655,10 +655,14 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 
 calculated_metrics <- mutate(calculated_metrics, diagnosis_var = "icd10_cm")
 
-full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
+full_oshpd_summary <- bind_rows(calculated_metrics, total_mdc_drg_new) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
                                                                                           diagnosis_var == "mdc" ~ mdc_drg_codes,
                                                                                           diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
   
+
+# mdc_drg
+# total_mdc_drg_new
+
 
 saveRDS(full_oshpd_summary, file = path(myPlace, "myData/", whichData, "/full_oshpd_summary.rds"))
 

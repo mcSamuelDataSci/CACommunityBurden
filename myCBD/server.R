@@ -211,7 +211,7 @@ output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, inpu
 
 
 # output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
-output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+output$OSHPD1    <- renderPlotly(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
 
 output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
 
