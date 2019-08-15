@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -641,7 +641,8 @@ total_mdc_drg_new$medcharge_per_day[is.na(total_mdc_drg_new$medcharge_per_day)] 
 
 total_mdc_drg_new$avg_los[is.na(total_mdc_drg_new$avg_los)] <- 0
 
-mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge) %>% select(year, mdc_drg_codes, sex, county, diagnosis_var, type, measure)
+#
+mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge, avgcharge_per_day, medcharge_per_day, avg_los) %>% select(year, mdc_drg_codes, sex, county, diagnosis_var, type, measure)
 
 mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
 
