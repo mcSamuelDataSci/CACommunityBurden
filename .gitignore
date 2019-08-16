@@ -3,10 +3,7 @@
 .Rproj.user
 *.Rproj
 *.RData
-myCBD/myData/real/datComm.RDS
-myCBD/myData/real/datTract.RDS
-myCBD/myData/real/datCounty.RDS
-myCBD/myData/real/datCounty.RE.RDS
+myCBD/myData/real/*.RDS
 myCBD/rsconnect/*.*
 myUpstream/upstreamInfo/census.api.key.txt
 myUpstream/upData/cbdDat0SAMP.R
@@ -16,3 +13,4 @@ myUpstream/lifeTables/dataIn/*.do
 myUpstream/lifeTables/dataIn/*.txt
 myUpstream/tempOutput/*.*
 myAnalyses
+_old
