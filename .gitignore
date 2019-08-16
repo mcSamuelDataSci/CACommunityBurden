@@ -11,6 +11,7 @@ myUpstream/lifeTables/dataIn/*.csv
 myUpstream/lifeTables/dataIn/*.dta
 myUpstream/lifeTables/dataIn/*.do
 myUpstream/lifeTables/dataIn/*.txt
+myUpstream/lifeTables/dataOut/*.rds
 myUpstream/tempOutput/*.*
 myAnalyses
 _old
