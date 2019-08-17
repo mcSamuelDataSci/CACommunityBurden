@@ -654,7 +654,7 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 #-----------------------------------------------JOINING MDC/DRG SUMMARY DATA WITH ICD-10-CM SUMMARY DATA---------------------------------------------------------#
 
 calculated_metrics <- mutate(calculated_metrics, diagnosis_var = "icd10_cm")
-
+#CD note: if processing/creating using only the fake data RDS files instead of running whole program, need to change total_mdc_drg_new to mdc_drg
 full_oshpd_summary <- bind_rows(calculated_metrics, total_mdc_drg_new) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
                                                                                           diagnosis_var == "mdc" ~ mdc_drg_codes,
                                                                                           diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 

@@ -34,7 +34,7 @@ full_CAUSE_mdcdrg_list <- full_CAUSE_mdcdrg_list %>% mutate(names = as.character
   
 ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +
-     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
+     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(15))) +
      theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
      scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
      scale_x_discrete(labels = scales::wrap_format(18)) + #x-axis is condition label--wrapping text so it stacks on top of each other
