@@ -121,11 +121,11 @@ get_data <- function(cause) {
   return(big_data)
 }
 
-causeData <- get_data(cause = TRUE)
-riskData <- get_data(cause = FALSE)
+raw_cause_data <- get_data(cause = TRUE)
+raw_risk_data <- get_data(cause = FALSE)
 
 # Risk
-v2risk_data <- riskData %>%
+risk_data <- raw_risk_data %>%
   rename('id_num' = 'risk_id') %>% # Could change to id_name = risk_short_name
   merge_with_parent(value_data = ., meta_subset = risk_meta_subset) %>%
   mutate(display = 'risk') %>%
@@ -134,35 +134,19 @@ v2risk_data <- riskData %>%
 
 
 # Cause
-v2cause_data <- causeData %>%
+cause_data <- raw_cause_data %>%
   rename('id_num' = 'cause_id') %>%
   merge_with_parent(value_data = ., meta_subset = cause_meta_subset) %>%
   mutate(display = 'cause') %>%
   make_numeric()
 
-output <- bind_rows(v2cause_data, v2risk_data)
+output <- bind_rows(cause_data, risk_data)
 
 saveRDS(output, file = "../data/v2IHME.RDS")
 
 # myDrive <- getwd()  # Root location of CBD project
 # myPlace <- paste0(myDrive,"/myCBD")
 # saveRDS(output_data, file = path(myPlace,"/myData/v2IHME.rds"))
-
-# # visualize smoking data-----------------------------------------------------------------------
-# 
-# url2 <- make_risk_url(subset = risk_subset2017, risk_id = 99, age_id = 22, metric_id = 1, measure_id = 1, sex_id = 3)
-# smoking_2017_risk <- make_data_subset(url2)
-# 
-# url3 <- make_risk_url(subset = risk_subset2016, risk_id = 99, age_id = 22, metric_id = 1, measure_id = 1, sex_id = 3)
-# smoking_2016_risk <- make_data_subset(url3)
-# 
-# 
-# plot(smoking_2016_risk$year_id, smoking_2016_risk$val, type = "b", col = "blue",
-#      xlim = c(1990, 2018), ylim=c(30000, 60000),
-#      main = "Smoking Risk", xlab = "Number Deaths", ylab = "year")
-# lines(smoking_2017_risk$year_id, smoking_2017_risk$val, type = "p", col = "red")
-# legend("topright", legend=c("2016 Data", "2017 Data"),
-#        col = c("blue", "red"), lty = 1)
 
 
 
