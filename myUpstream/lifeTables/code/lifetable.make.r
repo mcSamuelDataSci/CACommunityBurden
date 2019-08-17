@@ -13,6 +13,7 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  options
 realData <- FALSE   # "real" or "fake" death data
+range <- 2010:2017 # years to run, starting with 2010
 
 ## 1.3  paths
 myDrive <- getwd()
