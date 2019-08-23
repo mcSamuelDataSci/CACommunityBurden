@@ -14,7 +14,28 @@ myVar = "drg"
 
 
 myPlace           <- "f:/0.CBD/myCBD"
-full_oshpd_summary <- readRDS(file = path(myPlace, "myData/real", "full_oshpd_summary.rds"))
+
+
+good_Yes <- readRDS(file = "D:/0.CBD/myCBD/myData/fake/goodOSHPD/full_oshpd_summary.rds")
+good_No <- readRDS(file = "D:/0.CBD/myCBD/myData/fake/badOSHPD/full_oshpd_summary.rds")
+
+table(good_Yes$diagnosis_var)
+table(good_No$diagnosis_var)
+
+
+names(good_Yes)
+
+
+
+names(good_No)
+
+
+
+goodX_Yes <- readRDS(file = "D:/0.CBD/myCBD/myData/fake/goodOSHPD/countyOSHPD.rds")
+goodX_No <- readRDS(file = "D:/0.CBD/myCBD/myData/fake/badOSHPD/countyOSHPD.rds")
+
+
+
 
 
 nrow(full_oshpd_summary)

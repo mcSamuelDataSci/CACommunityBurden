@@ -5,9 +5,10 @@ if(1==2){
   myMeasure = "aRate"
   mySex   = "Total"
   myLogTrans=FALSE
+  myMultiRace = FALSE
 }
 
-trendRace <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL",myLogTrans=FALSE) {
+trendRace <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL",myLogTrans=FALSE, myMultiRace = FALSE) {
 
 minYear <- 2000
 maxYear <- 2017
@@ -18,7 +19,7 @@ myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 dat.1 <- filter(datCounty_RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
          mutate(raceName = raceNameFull[match(raceCode,raceCodeFull)] )
 
-#,raceCode != "Multi-NH"
+if (!myMultiRace) dat.1 <- filter(dat.1,raceCode != "Multi-NH")
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 

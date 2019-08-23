@@ -117,9 +117,9 @@ death.datA$multiraceStatus    <- as.numeric(death.datA$multiraceStatus)
 death.datA$education          <- as.numeric(death.datA$education)
 
 
-temp <- ca17[vInfo$seqID1]
-temp <- OOSca17[vInfo$seqID1]
-names(temp) <- vInfo$varName
+# temp <- ca17[vInfo$seqID1]
+# temp <- OOSca17[vInfo$seqID1]
+# names(temp) <- vInfo$varName
 
 
 
@@ -316,7 +316,7 @@ load(paste0(.sl,"/myData/cbdDat0FULL.R"))
 
 #cbdDat0FULL$ageUnit  <- NULL
 work <- cbdDat0FULL
-work <- work[,c("year","state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","raceCode","ICD10")]
+work <- work[,c("year","state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","raceCode","education","ICD10")]
 
 sampN1 <- 400000  
 half1  <- sample_n(work,sampN1)  # sample function from dplyr
@@ -324,7 +324,7 @@ half1  <- sample_n(work,sampN1)  # sample function from dplyr
 sampN2       <- 600000
 p1           <- sample_n(work[,1:7],  sampN2)
 p2           <- sample_n(work[,8:10], sampN2)
-p3           <- sample_n(work[,10:11], sampN2)
+p3           <- sample_n(work[,10:12], sampN2)
 p3$raceCode  <- NULL
 half2        <- cbind(p1,p2,p3)
 

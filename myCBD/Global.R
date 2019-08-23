@@ -30,7 +30,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
+whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2013-2017"
@@ -302,8 +302,9 @@ raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH
 raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","**Multirace**","unknown","Hispanic")
 
 
-raceNote     <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'\n '**Multirace data are NOT RELIABLE due to changing data collection practices'"
-
+# move these...
+raceNote         <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
+multiRaceWarning <- "** Note: Multirace data are NOT RELIABLE due to changing data collection practices"
 
 
 
