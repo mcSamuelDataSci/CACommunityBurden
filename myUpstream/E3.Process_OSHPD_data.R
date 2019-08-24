@@ -403,12 +403,10 @@ total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
 
 spread_female_sum_pop <- total_sum_pop %>% filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
 
-<<<<<<< HEAD
-spread_male_sum_pop <- total_sum_pop %>% tibble::rowid_to_column() %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
-=======
-spread_male_sum_pop <- total_sum_pop %>%  tibble::rowid_to_column() %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
->>>>>>> a94a4fad0769ae3f10e08fd82180687cd33d24f9
 
+spread_male_sum_pop <- total_sum_pop %>% tibble::rowid_to_column() %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
+
+spread_male_sum_pop <- total_sum_pop %>%  tibble::rowid_to_column() %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
 
 female_only <- anti_join(spread_female_sum_pop, spread_male_sum_pop, by = c("Female" = "Male", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
 
@@ -561,6 +559,7 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
+calculated_metrics <- calculated_metrics %>% select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var)
 
 test <- calculated_metrics %>% filter(type == "charges") #for real data, all of the NA charges visits are male A08 values
 
@@ -658,11 +657,23 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 #-----------------------------------------------JOINING MDC/DRG SUMMARY DATA WITH ICD-10-CM SUMMARY DATA---------------------------------------------------------#
 
 calculated_metrics <- mutate(calculated_metrics, diagnosis_var = "icd10_cm")
-#CD note: if processing/creating using only the fake data RDS files instead of running whole program, need to change total_mdc_drg_new to mdc_drg
-full_oshpd_summary <- bind_rows(calculated_metrics, total_mdc_drg_new) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
+
+#-->CD 8/24/19:This is where the error arises:
+#total_mdc_drg_new formatting doesn't match calculated_metrics formatting--gather hasn't been implemented (12 columns vs 10 columns in calculated_metrics). I don't actually know why it runs at all,
+#but obviously a good portion of the data is lost during the process. 
+#full_oshpd_summary <- bind_rows(calculated_metrics, total_mdc_drg_new) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
+                                                                                                    #diagnosis_var == "mdc" ~ mdc_drg_codes,
+                                                                                                    #diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
+
+
+full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg_sums) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
                                                                                           diagnosis_var == "mdc" ~ mdc_drg_codes,
                                                                                           diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
-  
+#calculated_metrics = 22526
+#mdc_drg_sums = 341383
+#total = 363909
+
+#full_oshpd_summary = 363909 -->this means that all observations are in the dataset
 
 # mdc_drg
 # total_mdc_drg_new
