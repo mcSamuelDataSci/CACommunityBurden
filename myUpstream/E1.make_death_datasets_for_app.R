@@ -18,11 +18,11 @@
 
 # == Designate locations and load packages  =======================================================
 
-whichDat <- "fake"
+whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
-securePath     <- "e:/0.Secure.Data/"
+securePath     <- "g:/0.Secure.Data/"
 secureDataFile <- paste0(securePath,"myData/cbdDat0FULL.R") 
 
 STATE    <- "California"

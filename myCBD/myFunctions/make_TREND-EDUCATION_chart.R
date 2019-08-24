@@ -10,9 +10,6 @@ if(1==2){
 }
 
 
-eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
-datCounty_EDU <- readRDS(path(myPlace,"/myData/real","datCounty_EDU.RDS"))
-datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
 
 
 trendEducation <- function(myLHJ="CALIFORNIA",myCause="A",mySex,myMeasure = "cDeathRate",myLogTrans=FALSE) {

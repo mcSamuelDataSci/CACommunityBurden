@@ -119,7 +119,13 @@ datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
 datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
-#datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
+datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
+datCounty_EDU <- readRDS(path(myPlace,"/myData/real","datCounty_EDU.RDS"))
+
+eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
+datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
+
+
 
 #FIX THIS --- OSHPD
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
