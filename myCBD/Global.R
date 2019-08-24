@@ -169,7 +169,7 @@ source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
+#source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
 
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
@@ -225,7 +225,7 @@ hospMeasures_Revalue <- hospMeasuresNames #used in function to rename from short
 names(hospMeasures_Revalue) <- hospMeasures
 
 
-shorthospList <- c(-2, -6)
+shorthospList <- c(-2, -3, -6, -7, -8, -10)
 shortMDCList <- c(-2,-3,-4,-6,-8, -10)
 hM_short <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
