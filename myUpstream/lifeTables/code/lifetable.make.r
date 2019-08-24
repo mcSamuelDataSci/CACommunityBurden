@@ -13,13 +13,16 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  options
 realData <- FALSE   # "real" or "fake" death data
-range <- 2010:2017 # years to run, starting with 2010
+range <- 2015:2017 # years to run, starting with 2010    # ns perameter on line 396  # 10
 
 ## 1.3  paths
-myDrive <- getwd()
-myPlace <- paste0(myDrive,"/myCBD") 
-upPlace <- paste0(myDrive,"/myUpstream") 
-LTplace <- paste0(upPlace,"/lifeTables/dataOut")
+myDrive  <- getwd()
+myPlace  <- paste0(myDrive,"/myCBD") 
+mySecure <- "g:/0.Secure.Data/myData"
+upPlace  <- paste0(myDrive,"/myUpstream") 
+LTplace  <- paste0(upPlace,"/lifeTables/dataOut")
+
+
 
 ## 1.4  links
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
@@ -35,10 +38,10 @@ if (!realData) {
 	.dxstate	<- paste0(LTplace,"/dxState.rds") # input deaths by state
 }
 if (realData) {
-	.dxtract	<- paste0(LTplace,"/_MSreal_dxTract.rds") # input deaths by tract
-	.dxmssa		<- paste0(LTplace,"/_MSreal_dxMSSA.rds") # input deaths by mssa
-	.dxcounty	<- paste0(LTplace,"/_MSreal_dxCounty.rds") # input deaths by county
-	.dxstate	<- paste0(LTplace,"/_MSreal_dxState.rds") # input deaths by state
+	.dxtract	<- paste0(mySecure,"/dxTract.rds") # input deaths by tract
+	.dxmssa		<- paste0(mySecure,"/dxMSSA.rds") # input deaths by mssa
+	.dxcounty	<- paste0(mySecure,"/dxCounty.rds") # input deaths by county
+	.dxstate	<- paste0(mySecure,"/dxState.rds") # input deaths by state
 } 
 
 ## 1.5  setwd
@@ -390,7 +393,7 @@ doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
 ##   for any life table or healthy-life table quantity". MPIDR Technical Report 2010-005.
 doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 					which.x=0,  								# CI of ex at which age?
-					ns=1000, 									# N simulations
+					ns=10, 									# N simulations
 					level=0.95) { 								# desired CI
 	setDT(LT)													# (redundant if already DT)
 	m  <- LT[,.N]												# N age groups == n rows

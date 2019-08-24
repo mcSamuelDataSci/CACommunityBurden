@@ -403,7 +403,11 @@ total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
 
 spread_female_sum_pop <- total_sum_pop %>% filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
 
+<<<<<<< HEAD
 spread_male_sum_pop <- total_sum_pop %>% tibble::rowid_to_column() %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
+=======
+spread_male_sum_pop <- total_sum_pop %>%  tibble::rowid_to_column() %>% filter(sex == "Male") %>% spread(., sex, CAUSE) %>% select(year, Level, Male, county) #summarises all the CAUSES for male, by county and level
+>>>>>>> a94a4fad0769ae3f10e08fd82180687cd33d24f9
 
 
 female_only <- anti_join(spread_female_sum_pop, spread_male_sum_pop, by = c("Female" = "Male", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset

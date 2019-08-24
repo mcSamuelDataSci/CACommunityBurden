@@ -192,6 +192,13 @@ conditionalPanel(condition = fC(c(55)),
  conditionalPanel(condition = fC(c(56,57)),
   checkboxInput("myLogTrans",  "Log Transform of Y Axis", value=FALSE)),
 
+# myMultiRace
+conditionalPanel(condition = fC(c(56)),
+                 checkboxInput("myMultiRace",  "Include Multirace Line", value=FALSE)),
+conditionalPanel(condition = paste("(input.myMultiRace) & (",fC(c(56)),")"), 
+                 helpText(h6(multiRaceWarning,style="color:red"))) ,
+
+
 
  # myX
  conditionalPanel(condition = fC(c(66)),
@@ -381,18 +388,18 @@ mainPanel(
      plotlyOutput("scatter", height=700), value = 66),
  
  
-    tabPanel("HOSPITAL DISCHARGE (1)",
+    tabPanel("HOSPITAL DISCHARGE",
           br(),
           plotOutput("OSHPD1", height=700),  value = 68),
 
-   tabPanel("HOSPITAL DISCHARGE (2)",
-          br(),
-          plotlyOutput("OSHPD2", height=700),
-          value = 69),
-
-  tabPanel("MDC/DRG",
-           br(),
-           plotOutput("mdcdrg", height = 700), value = 70),
+  #  tabPanel("HOSPITAL DISCHARGE (2)",
+  #         br(),
+  #         plotlyOutput("OSHPD2", height=700),
+  #         value = 69),
+  # 
+  # tabPanel("MDC/DRG",
+  #          br(),
+  #          plotOutput("mdcdrg", height = 700), value = 70),
 
   tabPanel("IHME Risk", visNetworkOutput("network"),value = 90),
 

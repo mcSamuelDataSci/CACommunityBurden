@@ -203,7 +203,7 @@ output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, inp
 
 
 
-output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans))
+output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 
 
 output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
