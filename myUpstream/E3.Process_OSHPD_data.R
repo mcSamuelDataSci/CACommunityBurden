@@ -659,12 +659,13 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 calculated_metrics <- mutate(calculated_metrics, diagnosis_var = "icd10_cm")
 
 #-->CD 8/24/19:This is where the error arises:
-#total_mdc_drg_new formatting doesn't match calculated_metrics formatting--gather hasn't been implemented (12 columns vs 10 columns in calculated_metrics). I don't actually know why it runs at all,
-#but obviously a good portion of the data is lost during the process. 
+#total_mdc_drg_new formatting doesn't match calculated_metrics formatting--gather hasn't been implemented (12 columns vs 10 columns in calculated_metrics). 
+#The number of observations is: calculated_metrics 22526 + total_mdc_drg_new 48769 = 71295 obs
+#however, since there is only data in the "measure" and "type" columns (which are used in the function to generate the app viz) for icd10_cm data (calculated_metrics)
+#(since those cols weren't created in the total_mdc_drg_new), the facet error appears when mdc/drg are selected
 #full_oshpd_summary <- bind_rows(calculated_metrics, total_mdc_drg_new) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
                                                                                                     #diagnosis_var == "mdc" ~ mdc_drg_codes,
-                                                                                                    #diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
-
+#diagnosis_var == "drg" ~ mdc_drg_codes))  #puts cause/mdc_drg codes in the same column 
 
 full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg_sums) %>% mutate(CAUSE = case_when(diagnosis_var == "icd10_cm" ~ CAUSE,
                                                                                           diagnosis_var == "mdc" ~ mdc_drg_codes,
@@ -677,6 +678,25 @@ full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg_sums) %>% mutate(CAU
 
 # mdc_drg
 # total_mdc_drg_new
+
+#Good OSHPD file: 364,139 observations
+#Error OSHPD file: 71,295 observations
+
+#Calculated_sums = 15,750
+#Calculated_metrics = 22,526
+
+#County_OSHPD = 22,526 –this is what is currently saved
+
+#Mdc_drg_sums = 341,383 observations
+
+#Resolved OSHPD full_oshpd_summary = 363,909
+
+##full_oshpd_summary vs full_oshpd_summary_good
+
+full_oshpd_summary_good2 <- full_oshpd_summary_good %>% select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var, mdc_drg_codes)
+
+#what's the difference between full_oshpd_summary_good and full_oshpd_summary? 
+
 
 
 saveRDS(full_oshpd_summary, file = path(myPlace, "myData/", whichData, "/full_oshpd_summary.rds"))
