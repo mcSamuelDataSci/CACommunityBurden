@@ -72,6 +72,9 @@ E01b,Falls
 E01x,Other unintentional injuries
 E02,Suicide/Self-harm
 E03,Homicide/Interpersonal violence
+E03a,Homicide excluding legal intervention
+E03b,Legal intervention
+E03c,"Execution, War, Terroism"
 Z,Unknown/Missing Value
 Z01,"Symptoms, signs and ill-defined conditions, not elsewhere classified"
 Z02,Unknown/Missing Value
