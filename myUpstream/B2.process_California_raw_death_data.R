@@ -24,7 +24,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "E:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "g:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- getwd()
@@ -76,7 +76,7 @@ if (state.installation) {
  
 
  
-death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
+death.datA  <- bind_rows(ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
 # %>%
 # mutate(LRD=)
@@ -85,9 +85,6 @@ death.datA  <- bind_rows(ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,
 
 
 }
-
-
-
 
 
 

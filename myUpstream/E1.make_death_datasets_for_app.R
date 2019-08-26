@@ -18,7 +18,7 @@
 
 # == Designate locations and load packages  =======================================================
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
