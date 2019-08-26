@@ -559,7 +559,7 @@ calculated_metrics <- bind_rows(calculated_sums, calculated_crude_rates, calcula
 
 calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
 
-calculated_metrics <- calculated_metrics %>% select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var)
+calculated_metrics <- calculated_metrics %>% mutate(., diagnosis_var = "icd10_cm") %>% select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var)
 
 test <- calculated_metrics %>% filter(type == "charges") #for real data, all of the NA charges visits are male A08 values
 
@@ -656,7 +656,6 @@ saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 
 #-----------------------------------------------JOINING MDC/DRG SUMMARY DATA WITH ICD-10-CM SUMMARY DATA---------------------------------------------------------#
 
-calculated_metrics <- mutate(calculated_metrics, diagnosis_var = "icd10_cm")
 
 #-->CD 8/24/19:This is where the error arises:
 #total_mdc_drg_new formatting doesn't match calculated_metrics formatting--gather hasn't been implemented (12 columns vs 10 columns in calculated_metrics). 
@@ -690,14 +689,6 @@ full_oshpd_summary <- bind_rows(calculated_metrics, mdc_drg_sums) %>% mutate(CAU
 #Mdc_drg_sums = 341,383 observations
 
 #Resolved OSHPD full_oshpd_summary = 363,909
-
-##full_oshpd_summary vs full_oshpd_summary_good
-
-full_oshpd_summary_good2 <- full_oshpd_summary_good %>% select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var, mdc_drg_codes)
-
-#what's the difference between full_oshpd_summary_good and full_oshpd_summary? 
-
-
 
 saveRDS(full_oshpd_summary, file = path(myPlace, "myData/", whichData, "/full_oshpd_summary.rds"))
 
