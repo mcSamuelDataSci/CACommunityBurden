@@ -38,7 +38,7 @@ if (!realData) {
 if (realData) {
 	.dxtract	<- paste0(mySecure,"/dxTract.rds") # input deaths by tract
 	.dxmssa		<- paste0(mySecure,"/dxMSSA.rds") # input deaths by mssa
-	.dxcounty	<- paste0(mySecure,"dxCounty.rds") # input deaths by county
+	.dxcounty	<- paste0(mySecure,"/dxCounty.rds") # input deaths by county
 	.dxstate	<- paste0(mySecure,"/dxState.rds") # input deaths by state
 } 
 
