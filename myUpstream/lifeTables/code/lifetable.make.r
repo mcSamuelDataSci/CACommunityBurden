@@ -18,6 +18,7 @@ range <- 2015:2017  # years of life tables to generate
 ## 1.3  paths
 myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
+mySecure <- "g:/0.Secure.Data/myData"
 upPlace <- paste0(myDrive,"/myUpstream") 
 LTplace <- paste0(upPlace,"/lifeTables/dataOut")
 
@@ -35,10 +36,10 @@ if (!realData) {
 	.dxstate	<- paste0(LTplace,"/dxState.rds") # input deaths by state
 }
 if (realData) {
-	.dxtract	<- paste0(LTplace,"/_MSreal_dxTract.rds") # input deaths by tract
-	.dxmssa		<- paste0(LTplace,"/_MSreal_dxMSSA.rds") # input deaths by mssa
-	.dxcounty	<- paste0(LTplace,"/_MSreal_dxCounty.rds") # input deaths by county
-	.dxstate	<- paste0(LTplace,"/_MSreal_dxState.rds") # input deaths by state
+	.dxtract	<- paste0(mySecure,"/dxTract.rds") # input deaths by tract
+	.dxmssa		<- paste0(mySecure,"/dxMSSA.rds") # input deaths by mssa
+	.dxcounty	<- paste0(mySecure,"dxCounty.rds") # input deaths by county
+	.dxstate	<- paste0(mySecure,"/dxState.rds") # input deaths by state
 } 
 
 ## 1.5  setwd
