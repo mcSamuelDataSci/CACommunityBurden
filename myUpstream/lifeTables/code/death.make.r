@@ -1,11 +1,7 @@
 # title: death.make.r
-# purpose: calculate deaths for CCB project life tables (state, county, tract, mssa)
-# NOTES: erase fake months and years (lines 61-62) when using real dataset with months/years.
-# todo: also use births by tract to split Census population age 0-4 group into 0-1 and 1-4? TBD.
+# purpose: summarize deaths for CCB project life tables (state, county, tract, mssa)
 
 ## 1    SETUP		----------------------------------------------------------------------
-
-whichData     <- "fake"   # "real" or "fake"
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
@@ -13,17 +9,19 @@ whichData     <- "fake"   # "real" or "fake"
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
-## 1.2  path and globals
-myDrive <- "c:/users/fieshary/projects/CACommunityBurden"
-myDrive <- getwd()
+## 1.2  options
+whichData     <- "fake"   # "real" or "fake" or "dof"
 
+
+## 1.3 paths 
+myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 
+## 1.4 links
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
 if (whichData=="real") .deaths		<- "h:/0.Secure.Data/myData/cbdDat0FULL.R" 
 if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
-
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
 
@@ -46,7 +44,7 @@ county.link[, GEOID:=paste0("06",FIPSCounty,"000000")]
 ## 2.3	CDPH deaths microdata -- CCB datasets
 if (whichData=="fake" | whichData=="real") load(.deaths) # named cbdDat0SAMP
 if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL # rename cbdDat0SAMP to work with rest of code
-if (whichData=="dof") cbdDat0SAMP <- read_csv(.deaths)
+if (whichData=="dof")  cbdDat0SAMP <- read_csv(.deaths)
 
 ## 2.4 	inspect missingness
 setDT(cbdDat0SAMP)
@@ -77,7 +75,7 @@ ageCats <- function(dat,first=NULL) {
 	dat[sex=="M",sex:="MALE"]								# and to match with population files
 }
 
-# tract
+# 3.2 extract tract data
 dx.tract <- copy(setkey(cbdDat0SAMP, "GEOID"))
 ageCats(dx.tract,first="1-4") 
 dx.tract[, dx := 1]													# generate a count variable (1=person level file)
@@ -92,7 +90,8 @@ dx.tract<-dx.tract[as.numeric(GEOID)>=06000000000 &
 				   	as.numeric(GEOID)<=06999999999 &	            # nonmissing tract
 				   	sex %in% c("MALE","FEMALE","TOTAL") &			# nonmissing sex
 				   	!is.na(agell)]									# nonmissing age
-# county
+
+# 3.3 extract county data
 dx.county <- copy(setkey(cbdDat0SAMP, "countyName"))
 ageCats(dx.county, first="0")
 dx.county[, dx := 1]												# generate a count variable (1=person level file)
@@ -108,7 +107,8 @@ dx.county<-dx.county[as.numeric(GEOID)>=06000000000 &
 					 	as.numeric(GEOID)<=06115000000 &	        # nonmissing county
 					 	sex %in% c("MALE","FEMALE","TOTAL") &		# nonmissing sex
 					 	!is.na(agell)]								# nonmissing age
-# state
+
+# 3.4 extract state data
 dx.state<-copy(setkey(cbdDat0SAMP, "stateFIPS"))
 ageCats(dx.state, first="0")
 dx.state[, dx := 1]													# generate a count variable (1=person level file)
@@ -122,7 +122,8 @@ dx.state<-dx.state[,.(dx=sum(dx)),
 dx.state[, GEOID:="06000000000"]									# add GEOID
 dx.state<-dx.state[sex %in% c("MALE","FEMALE","TOTAL") & 
 				   	!is.na(agell)]									# nonmissing sex + age
-# mssa
+
+# 3.5 extract mssa data
 dx.mssa<-dx.tract[cbd.link,nomatch=0,on='GEOID'][	                # merge tracts data with cbd.link	
 					!is.na(as.numeric(GEOID))][,  					# drop if missing GEOID
 					.(dx=sum(dx)), 
@@ -141,7 +142,6 @@ if (whichData == "fake"  ) {
  saveRDS(dx.state,  file=paste0(upPlace,.midPath,"dxState.rds"))   # output deaths by state
 }
 
-
 if (whichData == "real"  ) {
  .midPath <- "h:/0.Secure.Data/myData/"
  saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
@@ -149,7 +149,6 @@ if (whichData == "real"  ) {
  saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county
  saveRDS(dx.state,  file=paste0(.midPath,"dxState.rds"))   # output deaths by state
 }
-
 
 
 # END
