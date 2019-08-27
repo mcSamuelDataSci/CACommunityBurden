@@ -128,7 +128,7 @@ sidebarPanel(width=3,
      |( (input.myLHJ == 'CALIFORNIA') && (", fC(c(44)),") ) 
      | (", fC(c(33,45)),")"
    ),
-sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
+sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,
             round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
 
 
@@ -163,7 +163,7 @@ sliderInput("myYear","Year:",value=2017,min=2001,max=2017,animate = TRUE,
 
 # myYearGrouping
 conditionalPanel(condition = fC(c(55)),
-                 radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three"))),
+                 radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three","Five"))),
 
 
  # myCutSystem

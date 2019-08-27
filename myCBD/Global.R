@@ -30,10 +30,11 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
+whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
-yearGrp           <- "2013-2017"
+yearGrp           <- "2014-2018"
+maxYear           <- 2018
 
 testPage <- TRUE
 
@@ -120,7 +121,10 @@ datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
 datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
 datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
-datCounty_EDU <- readRDS(path(myPlace,"/myData/real","datCounty_EDU.RDS"))
+datCounty_5year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_5year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
+
+
+datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS"))
 
 eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
 datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
@@ -169,7 +173,7 @@ source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
-#source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
+source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
 
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
@@ -185,6 +189,9 @@ source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
 # --- Shiny Stuff and Constants -----------------------------------------------
 
+
+
+chartYearMap    <-  read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx"))  
 
 deathMeasures <- c("Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate", "mean.age","SMR")
 

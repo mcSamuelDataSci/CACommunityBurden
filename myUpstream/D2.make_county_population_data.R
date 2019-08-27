@@ -35,10 +35,15 @@ aU      <- c(-1,ageMap$uAge)
 
 # === California DEPARTMENT OF FINANCE DATA ==========================================================================================
 
+
+temp <- read_csv("F:/0.CBD.Other/Resources/populationData/DOF/P3_complete.csv")
+# http://www.dof.ca.gov/Forecasting/Demographics/Projections/
+# http://www.dof.ca.gov/Forecasting/Demographics/Projections/P3_Dictionary.txt
+
 tDatDOF  <- read_csv("https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv",col_types="_ciiiii") 
 
 tDat     <- tDatDOF  %>% gather(key="sex",value="pop",-county,-year,-age) %>%
-                         filter(year %in% 2000:2017)
+                         filter(year %in% 2000:2018)
 
 aMark       <- findInterval(tDat$age,aU,left.open = TRUE)
 aLabs       <- paste(aL,"-",aU[-1])
@@ -68,7 +73,7 @@ tDat <- readRDS(file= paste0(upPlace,"/upData/tDat_2000_2020.rds"))
 
 names(tDat) <- c("county","year","sex","age","raceE","OrigPop","pop" )
 
-tDat        <- filter(tDat, year %in% 2000:2017 & !(county %in% c("Alameda HD","Berkeley","Pasadena","Long Beach","Los Angeles HD")))
+tDat        <- filter(tDat, year %in% 2000:2018 & !(county %in% c("Alameda HD","Berkeley","Pasadena","Long Beach","Los Angeles HD")))
 # NOTE: California totals already included with county = "California" 
 
 

@@ -30,8 +30,9 @@ mySize1 <- 18
 mySize2 <- 20
 myCex1  <- 1.5
 
-yRange     <- c("2000-2002","2003-2005","2006-2008","2009-2011","2012-2014","2015-2017")
-yMid       <- c(2001,2004,2007,2010,2013,2016)
+yRange     <- chartYearMap$yearGroup3
+yMid       <- chartYearMap$midYear3
+
 dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
 
 myTrans    <- ifelse(myLogTrans,'log2','identity')

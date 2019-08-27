@@ -10,9 +10,6 @@ if(1==2){
 
 trend <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL",myYearGrouping="One") {
 
-minYear <- 2000
-maxYear <- 2017
-
 myCex <- 1.6
 myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
@@ -21,24 +18,44 @@ myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
 if (myYearGrouping == "One") {
   inDat <- datCounty  
-  myBreaks <- 2000:2017
+  myBreaks <- 2000:maxYear
   myLabels <- myBreaks
 }
 
-
 if (myYearGrouping == "Three") {
   inDat <- datCounty_3year 
-  myLabels   <- c("2000-2002","2003-2005","2006-2008","2009-2011","2012-2014","2015-2017")
-  myBreaks   <- c(2001,2004,2007,2010,2013,2016)
+ 
+   chartYearMap    <-  chartYearMap  %>%
+    select(yearGroup3,midYear3) %>%
+    filter(!is.na(midYear3))    %>%
+    unique()
+  
+  myLabels   <- chartYearMap$yearGroup3
+  myBreaks   <- chartYearMap$midYear3
   inDat$year <- myBreaks[match(inDat$yearG3,myLabels)]
 }
   
+if (myYearGrouping == "Five") {
+  inDat <- datCounty_5year 
+  
+  chartYearMap    <-  chartYearMap  %>%
+    select(yearGroup5,midYear5) %>%
+    filter(!is.na(midYear5))    %>%
+    unique()
+  
+  
+  myLabels   <- chartYearMap$yearGroup5
+  myBreaks   <- chartYearMap$midYear5
+  inDat$year <- myBreaks[match(inDat$yearG5,myLabels)]
+}
+
+
 
 dat.1 <- filter(inDat,county == myLHJ,CAUSE == myCause)
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",minYear," to ",maxYear)
+myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", 2000 to ",maxYear)
 
 myTit <-  wrap.labels(myTit,80)
 

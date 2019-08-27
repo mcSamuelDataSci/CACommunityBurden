@@ -10,12 +10,9 @@ if(1==2){
 }
 
 
-
-
 trendEducation <- function(myLHJ="CALIFORNIA",myCause="A",mySex,myMeasure = "cDeathRate",myLogTrans=FALSE) {
 
 minYear <- 2012
-maxYear <- 2017
 
 myCex <- 1.6
 myCol <- "blue"
