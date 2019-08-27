@@ -6,23 +6,21 @@
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","tidyr","readr","readxl") 
+.pkg	<- c("data.table","readr","readxl") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  options
 realData <- FALSE   # "real" or "fake" death data
-range <- 2015:2017 # years to run, starting with 2010    # ns perameter on line 396  # 10
+range <- 2015:2017  # years of life tables to generate, starting with 2010
 
 ## 1.3  paths
-myDrive  <- getwd()
-myPlace  <- paste0(myDrive,"/myCBD") 
+myDrive <- getwd()
+myPlace <- paste0(myDrive,"/myCBD") 
+upPlace <- paste0(myDrive,"/myUpstream") 
+LTplace <- paste0(upPlace,"/lifeTables/dataOut")
 mySecure <- "g:/0.Secure.Data/myData"
-upPlace  <- paste0(myDrive,"/myUpstream") 
-LTplace  <- paste0(upPlace,"/lifeTables/dataOut")
-
-
 
 ## 1.4  links
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
@@ -393,7 +391,7 @@ doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
 ##   for any life table or healthy-life table quantity". MPIDR Technical Report 2010-005.
 doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 					which.x=0,  								# CI of ex at which age?
-					ns=10, 									# N simulations
+					ns=1000, 									# N simulations
 					level=0.95) { 								# desired CI
 	setDT(LT)													# (redundant if already DT)
 	m  <- LT[,.N]												# N age groups == n rows
@@ -431,7 +429,7 @@ system.time({
 	ltci.tract<-rbindlist(list(ltci.tract, 					  		# fast rbind result to ltci.tract (2 items)
 								cbind(data.table( 					# format results of exsim as DT
 									t(unlist(doLTCI(lt.tract[i==j], # run specific LT
-									which.x=0,ns=50,level=.95)[		# pass parameters for simulation
+									which.x=0,ns=10,level=.95)[		# pass parameters for simulation
 									c(1,2,3,5)])))					## save just desired fields from exsim
 								,j)									# attach ID to simulation results; 
 	)
@@ -454,7 +452,7 @@ system.time({
 		ltci.mssa<-rbindlist(list(ltci.mssa, 						# fast rbind result to ltci.mssa (2 items)
 				  				cbind(data.table( 					# format results of exsim as DT
 				  				t(unlist(doLTCI(lt.mssa[i==j],      # run specific LT
-				  				which.x=0,ns=50,level=.95)[		    # pass parameters for simulation
+				  				which.x=0,ns=10,level=.95)[		    # pass parameters for simulation
 				  				c(1,2,3,5)])))						# save just desired fields from exsim
 				  			  ,j)									# attach ID to simulation results; 
 				  )
@@ -477,7 +475,7 @@ system.time({
 		ltci.county<-rbindlist(list(ltci.county, 					# fast rbind result to ltci.county (2 items)
 				  				cbind(data.table( 					# format results of exsim as DT
 				  				t(unlist(doLTCI(lt.county[i==j],    # run specific LT
-				  				which.x=0,ns=50,level=.95)[		    # pass parameters for simulation
+				  				which.x=0,ns=10,level=.95)[		    # pass parameters for simulation
 				  				c(1,2,3,5)])))						# save just desired fields from exsim
 				  			  ,j)									# attach ID to simulation results; 
 				  )
@@ -506,7 +504,7 @@ for (j in 1:lt.state[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
 names(ltci.state)[names(ltci.state) == "j"] = "i"				# rename j column to i (ID of mx file)
 names(ltci.state)[names(ltci.state) == "which.x"] = "agell"		# rename to agell
 setkeyv(ltci.state,c("i","agell"))
-ltci.state<-ltci.state[mx.state[x==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
+ltci.state<-ltci.state[mx.state[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
 
 ## 5	DIAGNOSTICS	----------------------------------------------------------
 
