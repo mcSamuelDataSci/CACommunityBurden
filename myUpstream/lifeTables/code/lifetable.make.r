@@ -6,13 +6,13 @@
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","readr","readxl") 
+.pkg	<- c("data.table","readr","readxl","tidyr") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  options
-realData <- FALSE   # "real" or "fake" death data
+realData <- TRUE   # "real" or "fake" death data
 range <- 2015:2017  # years of life tables to generate, starting with 2010
 
 ## 1.3  paths

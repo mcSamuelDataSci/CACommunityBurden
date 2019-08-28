@@ -1,6 +1,6 @@
 # slickify HOME PAGE and all other pages
 # add google analytics
-
+# add total numbers (deaths, population, hospitlazations) to home page somehow
 
 
 

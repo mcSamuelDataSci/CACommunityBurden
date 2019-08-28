@@ -14,10 +14,13 @@
 # 1 Setting Paths, and Packages
 .packages	  <- c("tidycensus",    #load_variables, get_acs
                  "tidyr",         #spread
-                 "dplyr")         #select
+                 "dplyr",         #select
+                 "readxl",
+                 "readr")
 .inst       <- .packages %in% installed.packages() 
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst]) 
 lapply(.packages, require, character.only=TRUE) 
+
 
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -45,32 +48,22 @@ getPop <- function(ACSYear=2017,ACSSurvey="acs5",ACSLabels=LabelsUsed$name)
 ##		table B01001_002 through B01001_025 refer to males; B01001_026 through B01001_049 refer to females
 LabelsUsed  <- filter(Labels,grepl("B01001_",name)) %>%
   subset(!(name %in% c("B01001_001","B01001_002","B01001_026"))) #removes totals
-assign('a.pop5_2014-2018', getPop() )
-#assign('a.pop5_2008-2012', getPop(2012) ) #not working
 
-pop.tracts.raw <- getPop(ACSYear=2017)   ### MCS why not use this?
-              
-pop.tractsx    <- merge(pop.tracts.raw,Labels,by.x="variable",by.y="name") %>%
-                  separate(label,sep="!!",c(NA,NA,"sex","age")) %>%
-                  mutate(sex   = replace_na(sex,"Total"),
-                         age   = replace_na(age,"0 to 999 years"),
-                         age   = replace(age,age=="Under 5 years","0 to 4 years"),
-                         age   = replace(age,age=="20 years","20 to 20 years"),
-                         age   = replace(age,age=="21 years","21 to 21 years"),
-                         age   = replace(age,age=="85 years and over","85 to 999 years")
-                         ) %>% 
-                  separate(age,sep=" ",c("agell",NA,"ageul")) %>%
-                  mutate(yearG5 = "2014-2018")  %>%  # YEAR GROUP LABEL IF IN LAG OF YEAR OR TWO
-                  select(-variable,-concept)
+
+# `a.pop5_2008-2012` <- getPop(2012) 
+`a.pop5_2014-2018` <- getPop(2017) 
+
 
 # 5 Combining and cleaning
-acs.pop.tracts <- mget(ls(pattern='a.pop5+'))  ###  use  simplier approach...?
+acs.pop.tracts <- mget(ls(pattern='a.pop5+'))  
 acs.pop.tracts <- acs.pop.tracts %>% bind_rows(.id="interval") %>%
   merge(Labels,by.x="variable",by.y="name")
+
 acs.pop.tracts <- acs.pop.tracts %>%
   separate(label,sep="!!",c(NA,NA,"sex","age")) %>%
   separate(interval,sep="_",c("interval","yearG5")) %>%
   select(-variable,-concept)
+
 acs.pop.tracts <- acs.pop.tracts %>%
   arrange(interval, GEOID, yearG5) %>%
   mutate(sex   = replace_na(sex,"Total"),
@@ -85,38 +78,31 @@ acs.pop.tracts <- acs.pop.tracts %>%
 
 
 # ===========================================================================================================================
-# ----- Michael Work --------------------------------------------------------------------------------------------------------
-library(dplyr)
 
-popTractWork <- as.data.frame(acs.pop.tracts)
-
-library(readxl)
 ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 aL      <-      ageMap$lAge   # lower age ranges
 aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
 
-aMark                     <- findInterval(popTractWork$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+aMark                     <- findInterval(acs.pop.tracts$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 aLabs                     <- paste(aL,"-",aU[-1])                           # make label for ranges
-popTractWork$ageG  <- aLabs[aMark] 
+acs.pop.tracts$ageG  <- aLabs[aMark] 
 
-
-library(readr)
-cbd.link <- read_csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv")) # LINE ADDED
+cbd.link <- read_csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv")) 
 
 linker              <- as.data.frame(cbd.link)[,-1] # removes year
-popTractWork <- merge(popTractWork,linker,by=c("GEOID"),all=TRUE) %>%
+acs.pop.tracts <- merge(acs.pop.tracts,linker,by=c("GEOID"),all=TRUE) %>%
                             select(-c(agell,ageul,comName))
-# may need to add comName back?
+
 
 # NOT ALL NEEDED -- CHECK:
-popAgeSex            <- popTractWork %>% group_by(yearG5,county,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
-popAge               <- popTractWork %>% group_by(yearG5,county,GEOID,comID,ageG)     %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total")
-popSex               <- popTractWork %>% group_by(yearG5,county,GEOID,comID,sex)      %>% summarise(pop=sum(estimate)) %>% mutate(               ageG = "Total")
-pop                  <- popTractWork %>% group_by(yearG5,county,GEOID,comID)          %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total", ageG = "Total")
+popAgeSex            <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
+popAge               <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,ageG)     %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total")
+popSex               <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,sex)      %>% summarise(pop=sum(estimate)) %>% mutate(               ageG = "Total")
+pop                  <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID)          %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total", ageG = "Total")
 
 popTractSexAgeGTotal  <- bind_rows(pop,popSex,popAge,popAgeSex) %>%
                                     select(yearG5,county,GEOID,comID,sex,ageG,pop) %>%
                                     arrange(yearG5,county,GEOID,comID) %>%
-                                 ungroup()
+                                    ungroup()
 
 saveRDS(popTractSexAgeGTotal, file=paste0(upPlace,"/upData/popTract.RDS"))

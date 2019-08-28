@@ -636,6 +636,8 @@ countyAA.RE <- countyAA.RE[!(countyAA.RE$oDeaths==0),c("county","yearG3","sex","
 # ------------------------------------------------------------------------------
 
 
+# add level 3 back in when convinient sometime
+
 cbdDat0_SAVE <- cbdDat0
 cbdDat0 <- filter(cbdDat0, age >= 25, year > 2011)  # 2000-2002 education not processed
                                                     # pop data currenlty only  > 2006

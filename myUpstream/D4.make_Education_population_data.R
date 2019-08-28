@@ -6,7 +6,6 @@
 ##############
 
 
-
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
@@ -94,9 +93,6 @@ education.a <- education.a %>%
 
 
 
-
-
-
 #6b Aggregating
 EdGroups <- data.frame(label=c( "Less than 9th grade_1",
                       "9th to 12th grade, no diploma_2",
@@ -107,13 +103,6 @@ EdGroups <- data.frame(label=c( "Less than 9th grade_1",
                     "Graduate or professional degree_7",
                                          "All levels_9")) %>%
                separate(label,sep="_",c("level","eduCode"))
-
-# AgeGroups <- data.frame(label=c( "18 to 24 years_18_24",
-#                                  "25 to 34 years_25_34",
-#                                  "35 to 44 years_35_44",
-#                                  "45 to 64 years_45_65",
-#                               "65 years and over_65_999")) %>%
-#   separate(label,sep="_",c("age","llage","ulage"))
 
 
 AgeGroups <- data.frame(label=c( "18 to 24 years_18 - 24",
@@ -161,5 +150,43 @@ education.a <- bind_rows(education.a,ageTotal)
 
 
 saveRDS(education.a,  file = paste0(upPlace,"/upData/popCounty_Education.RDS"))
+
+
+
+
+
+# OTHER CODING etc. as needed ======================================================
+
+
+# ACS Table B15003 EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER (by grade level)
+# LabelsUsed  <- filter(Labels,grepl("B15002_",name))
+
+# EdGroups <- data.frame(label=c( "No schooling completed_0",
+#                                 "Nursery to 4th grade_1",
+#                                 "5th and 6th grade_1",
+#                                 "7th and 8th grade_1",
+#                                 "9th grade_2",
+#                                 "10th grade_2",
+#                                 "11th grade_2",
+#                                 "12th grade, no diploma_2",
+#                                 "High school graduate, GED, or alternative_3",
+#                                 "Some college, less than 1 year_4",
+#                                 "Some college, 1 or more years, no degree_4",
+#                                 "Associate's degree_5",
+#                                 "Bachelor's degree_6",
+#                                 "Master's degree_7",
+#                                 "Professional school degree_8",
+#                                 "Doctorate degree_8",
+#                                 "All levels_9"  ) ) %>%
+#   separate(label,sep="_",c("level","eduCode"))
+# 
+
+
+
+
+
+
+
+
 
 
