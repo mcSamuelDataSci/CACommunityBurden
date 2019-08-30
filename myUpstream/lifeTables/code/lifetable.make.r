@@ -58,9 +58,8 @@ setwd(myDrive)
 .nxstate	<- readRDS(.nxstate)	
 
 ## 2.2  check data completeness (against 'range')
-if  (FALSE %in% (range %in% c(unique(.dxtract$year),unique(.nxtract$year)))) {
-	stop("Data are missing for years specified in 'range' argument")
-}
+if  (FALSE %in% (range %in% unique(.dxtract$year))) { stop("Deaths are missing for years specified in 'range' argument") }
+if  (FALSE %in% (range %in% unique(.nxtract$year))) { stop("Population are missing for years specified in 'range' argument") }
 
 ## 3	DATA CLEANING	------------------------------------------------------------------
 
