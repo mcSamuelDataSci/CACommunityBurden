@@ -6,21 +6,21 @@
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","readr","readxl","tidyr") 
+.pkg	<- c("data.table","readr","readxl") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  options
-realData <- TRUE   # "real" or "fake" death data
-range <- 2015:2017  # years of life tables to generate, starting with 2010
+realData <- FALSE   # "real" or "fake" death data
+range <- 2010:2018  # years of life tables to generate
 
 ## 1.3  paths
 myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
+mySecure <- "g:/0.Secure.Data/myData"
 upPlace <- paste0(myDrive,"/myUpstream") 
 LTplace <- paste0(upPlace,"/lifeTables/dataOut")
-mySecure <- "g:/0.Secure.Data/myData"
 
 ## 1.4  links
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
@@ -57,6 +57,10 @@ setwd(myDrive)
 .nxcounty	<- readRDS(.nxcounty)
 .nxstate	<- readRDS(.nxstate)	
 
+## 2.2  check data completeness (against 'range')
+if  (FALSE %in% (range %in% unique(.dxtract$year))) { stop("Deaths are missing for years specified in 'range' argument") }
+if  (FALSE %in% (range %in% unique(.nxtract$year))) { stop("Population are missing for years specified in 'range' argument") }
+
 ## 3	DATA CLEANING	------------------------------------------------------------------
 
 ## 3.1	calculate what share of the deaths in the tract's parent county are not geocoded to the tract level
@@ -64,8 +68,8 @@ cbd.link <- setDT(read_csv(.cbdlink, col_types="icccc")) 			# tract-to-MSSA-to-c
 cbd.link[, countyFIPS:=substr(GEOID,1,5)] 							 
 
 .dxcounty[,countyFIPS:=substring(GEOID,1,5)]                        # create trimmed countyFIPS in dxcounty
-.csum <- .dxcounty[year %in% 2010:2017,.(dx=sum(dx)),by=countyFIPS] # county level sum 
-.tsum <- .dxtract[year %in% 2010:2017][
+.csum <- .dxcounty[year %in% range,.(dx=sum(dx)),by=countyFIPS]     # county level sum 
+.tsum <- .dxtract[year %in% range][
 					cbd.link,nomatch=0,on='GEOID'][                 
 					,.(dx=sum(dx)),by=c("countyFIPS")]              # county level sum from tracts
 .diff <- .csum[.tsum,on=c("countyFIPS")][,dpc:=(dx-i.dx)/dx]        # mismatch between tracts-county total
@@ -84,8 +88,9 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 #      (censors geographies, but should provide more accurate ex)
 if (!realData) {
 	.actual<-data.table(year=c(2010:2018),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
-	.sampled<-.dxstate[year>=2010 & year<=2017 & sex=="TOTAL",(dx=sum(dx))]         # sampled deaths statewide 2013-2017
-	.factor<-.sampled/.actual[year %in% 2010:2017,.(sum(dx))][[1]]     				# ratio of sampled to actual deaths
+	.actual<-.actual[year %in% range] 
+	.sampled<-.dxstate[year %in% range & sex=="TOTAL",(dx=sum(dx))]         # sampled deaths statewide 2013-2017
+	.factor<-.sampled/.actual[year %in% range,.(sum(dx))][[1]]     				# ratio of sampled to actual deaths
 	.nxtract[,nx:=round(nx*.factor)] # deflate population to compensate for sample size
 	.nxmssa[,nx:=round(nx*.factor)] # deflate population to compensate for sample size
 	.nxcounty[,nx:=round(nx*.factor)] # deflate population to compensate for sample size
@@ -540,3 +545,29 @@ if (!realData) {
 }
 
 # end
+
+## 7	NOTES	----------------------------------------------------------
+
+# Life tables for tracts, communities, counties and states are generated from age specific mortality rates, 
+# which are the quotient of deaths during a calendar year to the and exposure, approximated by the population 
+# of the same age at the midpoint of the year (July 1). Age structured population data for tracts and communities 
+# are estimated using data from the American Community Survey, 5-year sample (table B01001; multiple years). 
+# County and state age population by age are estimated by the Demographic Research Unit, CA Department of Finance. 
+# Deaths data are based on 100% extracts from the vital statistics reporting system, CA Department of Public Health. 
+# Life tables are estimated for tracts in counties where at least 95% of deaths could be accurately geocoded to 
+# the tract level. Mortality and exposure data were combined for small geographies: 4 years’ historical data 
+# were added to the population and mortality calculations for each annual tract and community life table, and 
+# 2 years’ historical data were added to each county life table. Then, life tables were calculated for geographies 
+# meeting a minimum of at least 10,000 person-years of exposure. Intra-age mortality (nax) was calculated for 
+# ages below 5 using factors provided by Preston et al. (2001) and by the midpoint of the age interval for other 
+# age groups. Standard errors were calculated for age specific probabilities of death (Chiang 1984) and simulated 
+# life tables were generated by bootstrapping life table deaths to produce confidence intervals for life expectancy 
+# (Andreev & Shkolnikov 2010).
+# 
+# [Would like to do a chart showing how many geographies were trimmed by each condition imposed—do you have any experience doing clinical trial style flowcharts?].
+# 
+# Preston, Samuel H. and P. Heuveline and M. Guillot. 2001. Demography. Blackwell, pp. 47-48.
+# 
+# Chiang, C.L. 1984. The Life Table and its Applications. Robert E Krieger Publ Co., pp. 153-168.
+# 
+# Andreev, E.M. and V. M. Shkolnikov. 2010. “Spreadsheet for calculation of confidence limits for any life table or healthy-life table quantity.” Max Planck Institute for Demographic Research: MPIDR Technical Report 2010-005; June 2010.
