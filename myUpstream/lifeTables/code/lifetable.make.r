@@ -13,7 +13,7 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  options
 realData <- FALSE   # "real" or "fake" death data
-range <- 2015:2017  # years of life tables to generate
+range <- 2010:2018  # years of life tables to generate
 
 ## 1.3  paths
 myDrive <- getwd()
@@ -57,6 +57,11 @@ setwd(myDrive)
 .nxcounty	<- readRDS(.nxcounty)
 .nxstate	<- readRDS(.nxstate)	
 
+## 2.2  check data completeness (against 'range')
+if  (FALSE %in% (range %in% c(unique(.dxtract$year),unique(.nxtract$year)))) {
+	stop("Data are missing for years specified in 'range' argument")
+}
+
 ## 3	DATA CLEANING	------------------------------------------------------------------
 
 ## 3.1	calculate what share of the deaths in the tract's parent county are not geocoded to the tract level
@@ -64,8 +69,8 @@ cbd.link <- setDT(read_csv(.cbdlink, col_types="icccc")) 			# tract-to-MSSA-to-c
 cbd.link[, countyFIPS:=substr(GEOID,1,5)] 							 
 
 .dxcounty[,countyFIPS:=substring(GEOID,1,5)]                        # create trimmed countyFIPS in dxcounty
-.csum <- .dxcounty[year %in% 2010:2017,.(dx=sum(dx)),by=countyFIPS] # county level sum 
-.tsum <- .dxtract[year %in% 2010:2017][
+.csum <- .dxcounty[year %in% range,.(dx=sum(dx)),by=countyFIPS]     # county level sum 
+.tsum <- .dxtract[year %in% range][
 					cbd.link,nomatch=0,on='GEOID'][                 
 					,.(dx=sum(dx)),by=c("countyFIPS")]              # county level sum from tracts
 .diff <- .csum[.tsum,on=c("countyFIPS")][,dpc:=(dx-i.dx)/dx]        # mismatch between tracts-county total
@@ -84,8 +89,9 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 #      (censors geographies, but should provide more accurate ex)
 if (!realData) {
 	.actual<-data.table(year=c(2010:2018),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
-	.sampled<-.dxstate[year>=2010 & year<=2017 & sex=="TOTAL",(dx=sum(dx))]         # sampled deaths statewide 2013-2017
-	.factor<-.sampled/.actual[year %in% 2010:2017,.(sum(dx))][[1]]     				# ratio of sampled to actual deaths
+	.actual<-.actual[year %in% range] 
+	.sampled<-.dxstate[year %in% range & sex=="TOTAL",(dx=sum(dx))]         # sampled deaths statewide 2013-2017
+	.factor<-.sampled/.actual[year %in% range,.(sum(dx))][[1]]     				# ratio of sampled to actual deaths
 	.nxtract[,nx:=round(nx*.factor)] # deflate population to compensate for sample size
 	.nxmssa[,nx:=round(nx*.factor)] # deflate population to compensate for sample size
 	.nxcounty[,nx:=round(nx*.factor)] # deflate population to compensate for sample size
