@@ -218,6 +218,8 @@ output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDt
 
 output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myLHJ, input$myOSHPDtype_mdcdrg, input$mySex, input$myN, input$myVar))
 
+output$any_primary <- renderPlot(anyprimary1(input$myLHJ, input$mySex, input$myprimetype))
+
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),

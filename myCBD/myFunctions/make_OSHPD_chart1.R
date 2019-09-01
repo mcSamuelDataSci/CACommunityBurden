@@ -1,9 +1,5 @@
 #OSHPD Chart 1 = ggplot version
 
-
-
-
-# #---------------------------------------Plotly subplots option----------------------------------------------------#
 oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myVar = "icd10_cm" ) {
 
   

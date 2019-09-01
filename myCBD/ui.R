@@ -109,7 +109,7 @@ sidebarPanel(width=3,
    selectInput("myCAUSE", HTML("Cause:"), choices=fullList, selected="0")),
  
  # myLHJ
- conditionalPanel(condition = fC(c(22,23,33,44,45,55,56,57,68,69,70)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,45,55,56,57,68,69,70, 71)), 
    selectInput("myLHJ","County/State:",choices=lList,selected=STATE)),
 
  # myGeo
@@ -133,7 +133,7 @@ sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,
 
 
  # mySex
- conditionalPanel(condition = fC(c(22,23,33,44,57,66, 68,69, 70)), 
+ conditionalPanel(condition = fC(c(22,23,33,44,57,66, 68,69, 70, 71)), 
    radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
  
  # myLev
@@ -217,6 +217,10 @@ conditionalPanel(condition = fC(c(70)),
 
   conditionalPanel(condition = fC(c(68,69,70)),
                    selectInput("myVar", "Variable:", choice = MDC_DRG_ICD_Dropdown)),
+
+#myPrimetype
+  conditionalPanel(condition = fC(c(71)),
+                   selectInput("myprimetype", "Variable", choice = c("any", "primary"))),
 
 
 
@@ -400,6 +404,10 @@ mainPanel(
   # tabPanel("MDC/DRG",
   #          br(),
   #          plotOutput("mdcdrg", height = 700), value = 70),
+ 
+  tabPanel("HOSPITAL DISCHARGE--PRIMARY AND ANY DIAGNOSES",
+           br(),
+           plotOutput("any_primary", height = 700), value = 71),
 
   tabPanel("IHME Risk", visNetworkOutput("network"),value = 90),
 
