@@ -10,7 +10,13 @@ filter(.,county == myCounty, sex == mySex) %>% group_by(diag_type) %>%
                                              pull(n_hosp))) %>%
     ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + 
     geom_bar(stat = "identity") + coord_flip() +
-    theme(axis.title.y = element_blank())
+    theme_bw() +
+    theme(plot.title = element_text(face = "bold", size = 15),
+      axis.title.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.text.y = element_text(size = 15),
+          axis.text.x = element_text(size = 15)) +
+    labs(title = "Any and Primary \nHospitalization Diagnoses")
   
   #this orders by "any" condition
 }
