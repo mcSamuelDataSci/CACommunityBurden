@@ -205,6 +205,9 @@ output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, inp
 
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 
+output$disparityRace    <- renderPlot(         disparity(input$myLHJ, input$myCAUSE))
+#output$disparityRace    <- renderPlotly(         disparity(input$myLHJ, input$myCAUSE))
+
 
 output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
 

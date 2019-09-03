@@ -47,8 +47,8 @@ myMin      <- ifelse(myLogTrans,NA,0)
    #,,limits = c(1, NA) trans=myTrans
     scale_colour_discrete(guide = 'none') +   # removed legend 
     labs(y = myMeasure)  + 
-    geom_dl(aes(label = raceName), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
-    geom_dl(aes(label = raceName), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
+    geom_dl(aes(label = raceName), method = list(dl.trans(x = x + 0.2), "last.bumpup", cex=myCex1, font="bold")) +
+    geom_dl(aes(label = raceName), method = list(dl.trans(x = x - 0.2), "first.bumpup",cex=myCex1, font="bold"))  +
     labs(title =myTit,size=mySize2) +
     labs(y = deathMeasuresNames[deathMeasures == myMeasure]) +
    labs(caption = raceNote) +

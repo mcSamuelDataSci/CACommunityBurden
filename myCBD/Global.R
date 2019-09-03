@@ -7,6 +7,7 @@
 # way to make tmap title size same as ggplot title size?
 # convert rank geography function to ggplot2
 # scale all titles so they fit with various size windows/monitors
+# make all trend charts with same function?
 
 
 # =============================================================================
@@ -173,6 +174,8 @@ source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
+source(paste0(myPlace,"/myFunctions/make_RACE-DISPARITY_chart.R"))
+
 source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
 
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))

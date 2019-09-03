@@ -13,7 +13,7 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  options
 realData <- TRUE   # "real" or "fake" death data
-range <- 2015:2017  # years of life tables to generate, starting with 2010
+range <- 2010:2018  # years of life tables to generate, starting with 2010
 
 ## 1.3  paths
 myDrive <- getwd()
