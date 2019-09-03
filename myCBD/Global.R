@@ -31,7 +31,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "real" #changed to fake so I (CD) can run app on my computer
+whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
@@ -117,7 +117,7 @@ shape_Tract$county <- as.character(shape_Tract$county)
 
 # Data: ----------------------------------------- 
 
-datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
+#datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
 datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
@@ -136,6 +136,8 @@ datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
 calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
 full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
+any_primary_diff <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
+
 
 
 load(path(myPlace,"/myData/","sdohTract.R"))
@@ -182,6 +184,7 @@ source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
 source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
+source(paste0(myPlace, "/myFunctions/make_any_primary_OSHPD_chart.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
