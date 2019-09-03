@@ -16,9 +16,9 @@ filter(.,county == myCounty, sex == mySex) %>% group_by(diag_type) %>%
           axis.title.x = element_blank(),
           axis.text.y = element_text(size = 15),
           axis.text.x = element_text(size = 15)) +
-    labs(title = "Any and Primary \nHospitalization Diagnoses")
+    labs(title = "Number of Any and Primary Hospitalization Diagnoses", fill = "Diagnosis type")
   
-  #this orders by "any" condition
+  
 }
 
 
