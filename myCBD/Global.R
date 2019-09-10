@@ -8,7 +8,13 @@
 # convert rank geography function to ggplot2
 # scale all titles so they fit with various size windows/monitors
 # make all trend charts with same function?
+# K760 = fatty liver disease
 
+
+# R LEARNING
+
+ # https://tidyr.tidyverse.org/dev/articles/rectangle.html
+# Rectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns. There are three functions from tidyr that are particularly useful for rectangling:
 
 # =============================================================================
 # "Global.R" file     
@@ -31,7 +37,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
+whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
@@ -58,7 +64,8 @@ pdf(NULL)
 
 
 # DISPLAY Constants
-myTitleSize <- 22
+myTitleSize <- 8
+myTextSize2 <- 8
 myTitleColor <- "darkblue"
 
 #-- Load Packages ------------------------------------------------------------
