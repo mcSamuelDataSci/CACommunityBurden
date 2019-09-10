@@ -233,6 +233,9 @@ conditionalPanel(condition = fC(c(70)),
 
 # Figure Download buttons ---------------------------------------------------
 
+conditionalPanel(condition = "input.ID == 55", downloadButton('trendPNG', 'Download Figure'),br(),br()),     
+conditionalPanel(condition = "input.ID == 55", downloadButton('trendData', 'Download Data'),br(),br()),     
+
 conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
 conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure'),br(),br()),       
 

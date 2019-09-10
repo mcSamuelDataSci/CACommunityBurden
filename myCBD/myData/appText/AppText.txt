@@ -74,24 +74,23 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 
 
 causeHelp <-
-'The list of CAUSES in the app is based on a hierarchal outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs. 
+'The <b>Cause</b> list contains about 70 conditions, organized based on the hierarchal structure of the Global Burden of Disease Project of the <a href=" https://www.who.int/healthinfo/global_burden_disease/about/en/""> World Health Organization (WHO)</a> and the <a href=" http://www.healthdata.org/gbd/about "">Institute for Health Metrics and Evaluation (IHME)</a>. We have made modifications to the WHO and IHME lists to enhance the usefulness and applicability for U.S., and specifically California, public health priorities and programs. These modifications are described on the Technical Tab of this website.
 <br><br>
-Depending on the geographic level selected, different levels of detail in the cause list will be available.  The more granular the geographic level, the less granular the cause list will become, for statistical stability. 
-<br><br>
-The "Top Level" of the outline includes a mutually exclusive and exhaustive set of five high-level conditions. 
-<br><br>
-The "Public Health Level" is a separate mutually exclusive and exhaustive list of about 60 conditions that roll up to the "Top Level" categories.  This level provides greater clinical detail and public health program specificity.
-<br><br>
-A small number of the Public Health Level conditions are further broken down into the "Detail Level", for yet further specificity.
-<br><br>
-A diagram showing this full cause list hierarchy is available by clicking the "Cause List Info" link below. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions can be found on the Technical Tab. 
-<br><br>
+Depending on the geographic level selected, different levels of detail in the cause list will be available.  The more granular the geographic level, the less granular the cause list will become, for statistical stability. [For our partners in Local Health Departments and in other California Department of Health Programs, fully granular data on all levels is available on request.]
 
-<a href="gbd.ICD.MapIMAGE.pdf"">Cause List Info</a>
-
+<br><br>
+<b>Top Level</b> conditions are a mutually exclusive and exhaustive set of five high-level conditions indicated by capital letters: A) Communicable, maternal, perinatal, and nutritional conditions; B) Cancer/Malignant neoplasms; C) Cardiovascular diseases; D) Other chronic; E) Injuries; and Z) Unknown/Missing value
+<br><br>
+<b>Public Health Levels</b> are a mutually exclusive and exhaustive list of about 60 conditions that are subcategories of the Top Level conditions; they are indicated by numbers associated with the capital letter of the Top Level condition under which they are subcategories. This level provides greater clinical detail and public health program specificity. 
+<br><br>
+<b>Detail Levels</b> are available for a small number of the Public Health Level conditions; these are indicated by a lowercase letter and allow for further specificity. 
+<br><br>
+Our full cause list hierarchy is available <a href="gbd.ICD.MapIMAGE.pdf"">here</a>. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions, can be found on the Technical Tab of this website. 
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
+
+
 
 stateCutHelp <- 
 "The <b>State-based cutpoints</b> button changes the way the Measure is broken down or grouped for display in the map and the legend. If the box is checked, the cut-points are based on the data for all 58 counties for the most recent five years. If the box is unchecked, the cut-points are based on just the county being displayed in the current map. 

@@ -66,7 +66,14 @@ myCex1  <- 1.8
 myBreaks <- 2010:2018
 myLabels <- myBreaks
 
-tplot<-  ggplot(data=dat.1, aes(x=year, y=ex, group=sex,color=sex)) +
+# USE meanex
+
+
+
+tplot<-
+ 
+  
+   ggplot(data=dat.1, aes(x=year, y=ex, group=sex,color=sex)) +
                geom_line(size=2) +
        geom_line(data=dat.1,aes(x=year, y=`ciex.97.5%`, group=sex,color=sex)) +
       geom_line(data=dat.1,aes(x=year, y=`ciex.2.5%`, group=sex,color=sex)) +
@@ -82,7 +89,9 @@ tplot<-  ggplot(data=dat.1, aes(x=year, y=ex, group=sex,color=sex)) +
           axis.title=element_text(size=mySize1,face="bold"),
           plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize)
        #   axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1) 
-    )
+  
+       
+         )
        
  tplot
  

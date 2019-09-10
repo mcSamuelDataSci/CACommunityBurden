@@ -68,7 +68,8 @@ myCex1  <- 1.8
 
 tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
     geom_line(size=2)  +
-    scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
+    geom_point(shape = 18,size=5 )  +
+      scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
     scale_y_continuous(limits = c(0, NA)) +
     scale_colour_discrete(guide = 'none') +   # removed legend
     labs(y = myMeasure)  + 
@@ -82,8 +83,10 @@ tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), g
           plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
           axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
   
- tplot
+ #tplot
  # ggplotly(tplot)
 
-
+ list(plot=tplot,data=dat.1)
+ 
+ 
 }

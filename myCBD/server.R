@@ -160,20 +160,30 @@ output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, inp
 # use dbounce() below to "delay" rendering of may to avoid temporary error
 # output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
 
+# make's sure inputs are Truthy (read ?isTruthy) 
+# mapJunk          <- reative({
+#   req(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
+#   cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)})
 
 
 
- #  mapJunk          <- cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
+   mapJunk          <- reactive(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
 
-#  output$cbdMapTL   <- renderLeaflet(mapJunk)
+  output$cbdMapTL   <- renderLeaflet(mapJunk())
 
-
-output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
+  
+  output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
   png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
-  print(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+  print(mapJunk())
   dev.off()
 })
 
+
+# output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
+#   png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+#   print(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+#   dev.off()
+# })
 
 
 
@@ -198,8 +208,58 @@ output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                inp
 output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
 output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))
 
-output$trend        <- renderPlot(         trend(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYearGrouping))
-#output$trend        <- renderPlotly(         trend(input$myLHJ, input$myCAUSE, input$myMeasure))
+
+# Trend ----------------------------------------------------------------------------------------------------
+
+trendStep     <- reactive(trend(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYearGrouping))
+output$trend  <- renderPlot(trendStep()$plot)
+
+#output$trend        <- renderPlotly(trendStep()$plot)
+
+
+output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},content = function(file) {
+  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+  print(trendStep()$plot)
+  dev.off()
+})
+
+
+
+
+output$trendData <- downloadHandler(
+  filename = function() {
+    paste("data-", Sys.Date(), ".csv", sep="")
+  },
+  content = function(file) {
+    write.csv(trendStep()$data, file)
+  }
+)
+
+
+
+
+
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
