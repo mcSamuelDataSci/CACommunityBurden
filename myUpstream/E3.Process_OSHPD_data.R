@@ -1,4 +1,9 @@
-# removed discharge date for now?
+######  CELL SUPRESSION
+
+
+# removed discharge date for now?  -MCS?
+
+# OSHPD sheet on coding of charges:
 # https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
 
 # ====================================================================================================
@@ -24,8 +29,6 @@ upPlace <- paste0(myDrive,"/myUpstream")
 whichData <- "real"   # "real" or "fake"
 newData  <- FALSE
 
-# fullOSHPD <- FALSE
-# sampleOSHPD <- TRUE
 
 #-------------------------------------------------LOAD PACKAGES -----------------------------------------------------------------------------------------------------------------------------------#
 
@@ -37,8 +40,6 @@ library(epitools)
 
 
 #-----------------------------LOADING/CREATING OSHPD DATASET FROM ORIGINAL DATA FILE----------------------------------------------------------------------------------------#
-
-
 
 if(newData) {
 
@@ -54,7 +55,6 @@ oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, 
 
 #Saving subset as RDS file
 saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
-
 
 
 #3% random sample, randomly permuted
@@ -75,10 +75,6 @@ half2        <- cbind(p1,p2,p3)
 oshpd_sample <- rbind(half1,half2)
 
 
-#Now, create RDS file of whole SAS file and random sample of SAS file 
-
-#saving rds file--only needs to be run once to initially create the file
-
 # Saving random sample as RDS file
 saveRDS(oshpd_sample, file = path(upPlace, "/oshpd16_sample.rds"))
 
@@ -86,7 +82,6 @@ saveRDS(oshpd_sample, file = path(upPlace, "/oshpd16_sample.rds"))
 
 
 #--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
-
 
 if (whichData == "real") {
   oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) 
@@ -96,8 +91,8 @@ if (whichData == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 
-
 ##------------------------------------Reading in data mapping/linkage files--------------------#
+
 #reading in gbd.ICD.excel file
 icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx")) 
 
@@ -105,29 +100,20 @@ icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
 
 #sex categories
-sex_num <- c("1", "2", "3", "4")
+sex_num <- c(   "1",      "2",     "3",       "4")
 sex_cat <- c("Male", "Female", "Other", "Unknown")
-OSHPD_sex <- cbind(sex_num, sex_cat) %>% as.data.frame() #Should I create an excel/csv file with this information? 
+# bind_cols keeps values as characters, wherese cbind converts to factor, which we don't want
+OSHPD_sex <- bind_cols(sex_num=sex_num, sexcat=sex_cat) %>% as.data.frame() 
 
-
-#DISCUSS***
 #race categories
-race_grp <- c("0", "1", "2", "3", "4", "5", "6")
-race_cat <- c("Unknown/Invalid/blank","White-NH", "Black-NH", "Hisp", "Asian-PI", "Native American/Alaskan Native", "Other")
-OSHPD_race_grp <- cbind(race_grp, race_cat) %>% as.data.frame() 
+race_grp <- c("0",          "1",        "2",        "3",    "4",        "5",       "6")
+race_cat <- c("Unk/missing","White-NH", "Black-NH", "Hisp", "Asian-NH", "AIAN-NH", "Other-NH")
+OSHPD_race_grp <- bind_cols(race_grp=race_grp, race_cat=race_cat) %>% as.data.frame() 
 
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
-STATE <- "California" #Defining California to be included later in county population labelling/estimates (California represents total)
-
 yF   <- 100000  # rate constant 
-pop5 <- 5       # 5 years
-pop1 <- 1       # 1 year
-
-yearGrp <- "2013-2017"
-
-criticalNum <- 11
 
 
 
@@ -148,29 +134,32 @@ aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "
 aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
 aMark         <- findInterval(oshpd16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 
-
-
 #----------------Map ICD-10-CM codes to GBD conditions-----------------------------------------------------------------------------------------#
 
-allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #This sorts all of the LABEL variables that aren't missing (i.e. coded as NA)
+allLabels <- sort(icd_map$LABEL[!is.na(icd_map$LABEL)]) #Sorts all non-missing LABEL variables 
 
-mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] #This creates a new object, mapICD, of all non-missing CODE variables, and the corresponding regEx10
-#associated with them. This object will be used to assign CODE/LABELS to diagnoses later
 
-#If as.data.frame() isn't included as the final step when reading in fullCauseList, fullCauseList is stored as a tbl.df(), which causes problems if match() is used to create a new variable in a dataset later on. 
+# This creates a new object, mapICD, of all non-missing CODE variables, and the corresponding regEx10
+# associated with them. This object will be used to assign CODE/LABELS to diagnoses later
+mapICD    <- icd_map[!is.na(icd_map$CODE),c("CODE","regExICD10_CM")] 
+
+# data.frame() as final step avoids problems later when using match() on tbl.df()
+# ######## REVIEW THIS ISSUE AT SOME POINT; in whole ccb use join() instead of match() -- may well be others issues -MCS
 fullCauseList     <- icd_map[!is.na(icd_map$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL) %>% as.data.frame()
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
 
-#Function for mapping icd code to disease group
-
+# Function for mapping icd code to disease group
+# What this says is: for the length of the input vector, match the ICD10 regEx codes to the corresponding CODE in mapICD
 icdToGroup <- function(inputVectorICD10) {
   Cause   <- rep(NA,length(inputVectorICD10))
   for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regExICD10_CM"],inputVectorICD10)] <- mapICD[i,"CODE"] } 
   Cause}
-#What this says is: for the length of the input vector, match the ICD10 regEx codes to the corresponding CODE in mapICD
 
-#-----------------------------ADDING VARIABLES TO OSHPD DATASET---------------------------------------------#
+#-----------------------------ADDING VARIABLES TO OSHPD DATASET AND CLEANING/RECODING----------------------------------#
+
+
+
 
 #Adding age groups
 oshpd16$ageG  <- aLabs[aMark] 
@@ -191,25 +180,41 @@ oshpd16   <- oshpd16  %>%
          lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
          lev3  = ifelse(nLast4 == 4,codeLast4,NA) 
          ) %>% 
-  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% mutate(race_grp = as.factor(race_grp)) %>%
+  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% 
   left_join(., OSHPD_race_grp, by = "race_grp") %>%
   left_join(., OSHPD_sex, by = c("sex" = "sex_num"))
 
+# -MCS  I removed mutate(race_grp = as.factor(race_grp)) %>%, and made the mapping dfs character above....
+# -MCS  move sex and race recoding above....
 
 #Adding Total in order to create total/statewide estimates (for grouping function later)
-oshpd16sex <- mutate(oshpd16, sex_cat = "Total") #Adding 'Total' in order to work calculate values statewide (in grouping function later)
+oshpd16sex <- mutate(oshpd16, sex_cat = "Total") 
 oshpd16 <- bind_rows(oshpd16, oshpd16sex) %>% select(-sex) %>% rename(., sex = sex_cat) #removing numerical coding of sex, renaming sex_cat as sex so it will map with population standards datasets
 
 #Calculating charge/day from los_adj and charges
 
 oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
+
 ###-------------------------------------------EXPLORATORY ANALYSIS OF LENGTH OF STAY AND CHARGES (REAL OSHPD DATA, NOT SAMPLE)----------------------------------------------#
 
 
 #------------------------CHARGES------------------------------#
+# https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/
+
+# -MCS exploring summary funtions
+library(summarytools)
+#summarize(oshpd16$charge)
+#dfSummary(oshpd16)
+#summarytools::descr(oshpd16)
+
 #histogram of charges
 min(oshpd16$charge, na.rm = TRUE) #0
 max(oshpd16$charge, na.rm = TRUE) #73,798,776
+
+tempCharges  <- table(oshpd16$charge[oshpd16$sexcharge)
+round(100* tempCharges[1:10] / sum(tempCharges) , 4)  # 12.2% are $0, 0.029% are $1, 0.0001% are %10
+
+
 
 #total histogram
 oshpd16 %>% ggplot(aes(x = charge)) + geom_histogram(bins = 100) + scale_x_continuous(labels = scales::comma)
@@ -232,27 +237,34 @@ min(oshpd16$los_adj, na.rm = TRUE)
 max(oshpd16$los_adj, na.rm = TRUE) #9373
 
 #total histogram
-oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100) + scale_x_continuous(labels = scales::comma)
+# oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100) + scale_x_continuous(labels = scales::comma)
+
+tempLOS <- table(oshpd16$los_adj)
+round(100* tempLOS[1:10] / sum(tempLOS) , 2)
+
+#     1     2     3     4     5     6     7     8     9    10 
+# 19.74 25.94 17.39  9.91  6.08  4.28  3.21  2.27  1.67  1.31
 
 #histogram, excluding max
-oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 5000, by = 100)) + scale_x_continuous(labels = scales::comma)
+# oshpd16 %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 5000, by = 100)) + scale_x_continuous(labels = scales::comma)
+
 
 #histogram, removing 0 and 1 los_adj
-oshpd16 %>% filter(los_adj != 1) %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 500, by = 100)) + scale_x_continuous(labels = scales::comma)
+#  oshpd16 %>% filter(los_adj != 1) %>% ggplot(aes(x = los_adj)) + geom_histogram(bins = 100, breaks = seq(0, 500, by = 100)) + scale_x_continuous(labels = scales::comma)
 
 oshpd16 %>% filter(los_adj > 100) %>% nrow() #11132 greater than 100 days
-
 oshpd16 %>% filter(los_adj > 200) %>% nrow() #4074 greater than 200 days
-
 oshpd16 %>% filter(los_adj > 365) %>% nrow() #2046 greater than 1 year
- 
+oshpd16 %>% filter(los_adj > 1000) %>% nrow() #680 greater than 1000 days
+oshpd16 %>% filter(los_adj > 3650) %>% nrow() #48 greater than 10 years 
+
 
 #What should the exclusion cut-off be for los_adj? 365 days? Less than that? 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------#
 #Some of these extreme los/charges may not even apply to the CAUSE/icdCodes that we're capturing though. Now only looking at values for our CAUSES of interest
 
-oshpd16test <- oshpd16 %>% filter(!is.na(icdCODE)) 
+#   oshpd16test <- oshpd16 %>% filter(!is.na(icdCODE)) 
 
 #min charge
 min(oshpd16test$charge) #0
@@ -459,36 +471,19 @@ total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
 
 #-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
 
-if (1==2) {
-# makes dataframe of all possible combinations of county, year, CAUSE, and ageG 
+if (1==2) { #NOT USED FOR NOW; #MAY WANT TO STUDY/ASSESS THE IMPACT OF NOT USING THIS AT SOME POINT
 
-year     <- data.frame(year     = 2000:2017) # these "vectors" need to be dataframes for the sq merge below to work
-yearG    <- data.frame(yearG    = yearGrp)
+year     <- data.frame(year     = 2016) # these "vectors" need to be dataframes for the sq merge below to work
 yearG3   <- data.frame(yearG3   = sort(unique(cbdDat0$yearG3)))
 CAUSE1   <- data.frame(CAUSE    = allLabels) 
-CAUSE2   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,])
-CAUSE3   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,])
 sex      <- data.frame(sex      = c("Male","Female","Total"))
 ageG     <- data.frame(ageG     = sort(unique(cbdDat0$ageG)))
 county   <- data.frame(county   = c(geoMap$countyName,"California"))         
-comID    <- data.frame(comID    = unique(cbdLinkCA[,"comID"]))
-GEOID    <- data.frame(GEOID    = cbdLinkCA[,"GEOID"])
 raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)))
 
-# other cool approach from Adam:
-# fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageG))
 fullMatCounty <- sqldf(" select * from  county cross join year  cross join CAUSE1 cross join sex cross join ageG")
-# fullMatComm   <- sqldf(" select * from  comID  cross join yearG cross join CAUSE2 cross join sex cross join ageG")
-# fullMatTract  <- sqldf(" select * from  GEOID  cross join yearG cross join CAUSE3 cross join sex cross join ageG")
 
-
-#######CAUSE CHARACTER##################
-
-fullMatCounty <- mutate(fullMatCounty, county = as.character(county),                             CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-#fullMatComm   <- mutate(fullMatComm,   comID  = as.character(comID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-#fullMatTract  <- mutate(fullMatTract,  GEOID  = as.character(GEOID), yearG = as.character(yearG), CAUSE = as.character(CAUSE), sex = as.character(sex), ageG   = as.character(ageG), tester = 0)
-
-#What's the purpose of all of the above code? --> creates a matrix of all possible combinations--needed at an intermediate stage
+fullMatCounty <- mutate(fullMatCounty, county = as.character(county),CAUSE = as.character(CAUSE), sex = as.character(sex), ageG = as.character(ageG), tester = 0)
 
 }
 

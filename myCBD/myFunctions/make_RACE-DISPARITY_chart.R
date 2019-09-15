@@ -24,18 +24,16 @@ raceTest2 <- raceTest %>% group_by(county,yearG3,sex,CAUSE) %>%
                mutate(bestRate = min(aRate),
                       bestSE   = aSE)  %>%
                filter(bestRate == aRate) %>%
+               mutate(lowRace = raceCode) %>%
                select(-(Ndeaths:aSE),-raceCode)
 
    
 raceTest <- left_join(raceTest,raceTest2,by=c("county","yearG3","sex","CAUSE")) %>%
-                mutate(Ztest = (aRate - bestRate) / sqrt(aSE^2 + bestSE^2),
+                mutate(rateRatio = round(aRate/bestRate,1),
+                       Ztest = (aRate - bestRate) / sqrt(aSE^2 + bestSE^2),
                        pValue = 1-pnorm(Ztest),
-                       pMark = as.factor(ifelse(aRate==bestRate,"Lowest",ifelse(pValue < .01,"Higher","Same")))
+                       pMark = as.factor(ifelse(aRate==bestRate,"Lowest",ifelse(pValue < .01,"Statistically Higher","Not Statitically Different")))
                        ) 
-
-
-
- 
 
 
 
@@ -61,7 +59,7 @@ myCex1  <- 1.5
 
 dPlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasure))),fill=pMark)) +
    geom_bar(stat="identity") +
-   scale_fill_manual("legend", values = c("Lowest" = "green", "Higher" = "red", "Same" = "blue")) +
+   scale_fill_manual("legend", values = c("Lowest" = "green", "Statistically Higher" = "red", "Not Statitically Different" = "blue")) +
    geom_errorbar(aes(ymin=aLCI, ymax=aUCI), width=.1, size=1, position=position_dodge(.9), color="blue") + 
    labs(y = deathMeasuresNames[deathMeasures == myMeasure], x="Race/Ethnicity") +
    labs(title =myTit,size=mySize2) +

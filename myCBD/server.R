@@ -237,15 +237,6 @@ output$trendData <- downloadHandler(
 
 
 
-
-
-
-
-
-
-
-
-
 # ---------------------------------------------------------------------------------------------------------
 
 
@@ -258,6 +249,10 @@ output$trendData <- downloadHandler(
 
 
 
+
+
+
+output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE))
 
 
 
@@ -287,6 +282,10 @@ output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, inp
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::
+
+
+output$lifeTable  <- renderPlot(         LEtrend(input$myLHJ))
+
 
 
 # Generate labels and titles for maps and charts --------------------------------

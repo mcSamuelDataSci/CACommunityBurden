@@ -1,7 +1,8 @@
 # slickify HOME PAGE and all other pages
 # add google analytics
 # add total numbers (deaths, population, hospitlazations) to home page somehow
-
+# add grouping measure of RURALITY
+# add grouping measure of POVERTY
 
 
 # way to make tmap title size same as ggplot title size?
@@ -10,10 +11,13 @@
 # make all trend charts with same function?
 # K760 = fatty liver disease
 
+# possible academic colaborators
+# https://healthpolicy.fsi.stanford.edu/people/joshua-salomon
+
 
 # R LEARNING
 
- # https://tidyr.tidyverse.org/dev/articles/rectangle.html
+# https://tidyr.tidyverse.org/dev/articles/rectangle.html
 # Rectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns. There are three functions from tidyr that are particularly useful for rectangling:
 
 # =============================================================================
@@ -64,8 +68,8 @@ pdf(NULL)
 
 
 # DISPLAY Constants
-myTitleSize <- 8
-myTextSize2 <- 8
+myTitleSize <- 12
+myTextSize2 <- 12
 myTitleColor <- "darkblue"
 
 #-- Load Packages ------------------------------------------------------------
@@ -124,11 +128,13 @@ shape_Tract$county <- as.character(shape_Tract$county)
 
 # Data: ----------------------------------------- 
 
-#datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
+datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
 datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
 datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
 datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
+datCounty_AGE_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_AGE_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, 
+
 datCounty_5year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_5year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
 
 
@@ -183,9 +189,14 @@ source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
 source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
+source(paste0(myPlace,"/myFunctions/make_TREND-AGE_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_RACE-DISPARITY_chart.R"))
 
 source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
+
+
+source(paste0(myPlace,"/myFunctions/make_LIFE-EXPECTANCY_chart.R"))
+
 
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))

@@ -10,20 +10,23 @@ if(1==2){
 }
 
 
-myDrive         <- getwd()
-myPlace <- paste0(myDrive,"/myCBD") 
-
-library(readxl)
-library(dplyr)
-library(stringr)
-library(ggplot2)
-library(directlabels) 
+# myDrive         <- getwd()
+# myPlace <- paste0(myDrive,"/myCBD") 
+# 
+# library(readxl)
+# library(dplyr)
+# library(stringr)
+# library(ggplot2)
+# library(directlabels) 
 
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) %>%
                select(FIPSCounty,county=countyName)
 
 
-LTplace         <- paste0(myDrive,"/myUpstream","/lifeTables/dataOut")
+# LTplace         <- paste0(myPlace,"/myUpstream","/lifeTables/dataOut")
+ LTplace         <- paste0(myPlace,"/myData")
+
+
 lifeTableCounty <- readRDS(paste0(LTplace,"/LTciCounty.rds")) %>%
                      mutate(FIPSCounty=substr(GEOID,3,5))  %>%
                      left_join(geoMap,by="FIPSCounty") %>%
@@ -31,14 +34,14 @@ lifeTableCounty <- readRDS(paste0(LTplace,"/LTciCounty.rds")) %>%
 
 
 lifeTableState <- readRDS(paste0(LTplace,"/LTciState.rds")) %>%        
-                     mutate(county = "CALIFORNIA")   %>% 
+                     mutate(county = "CALIFORNIA") %>% 
                      mutate(sex = str_to_title(sex))
 
 lifeTableSet <- bind_rows(lifeTableCounty, lifeTableState)
 
 
         
-LEtrend <- function(myLHJ="CALIFORNIA",mySex="Total",myCI=FALSE) {
+LEtrend <- function(myLHJ="CALIFORNIA",myCI=FALSE) {
 
 myCex <- 1.6
 myCol <- "blue"         
