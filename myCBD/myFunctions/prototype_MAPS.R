@@ -1,26 +1,67 @@
+# ==========================================================================================
 
-cbdMapX <- function(myLHJ,      # county or whole state = "CALIFORNIA"
+# All these first lines are just for ease of buliding the function and exploration
+# Change datComm and datCounty to the data set(s) you are working with...
+# once the function is working, these lines should be deleted or commented out, since 
+#   any needed data and shape file will be read in in "Global"
+
+library(sf)
+library(dplyr)
+library(tmap)
+library(classInt)
+library(RColorBrewer)
+
+myPlace       <- "d:/0.CBD/myCBD"
+whichData     <- "real/"
+datComm       <- readRDS(paste0(myPlace,"/myData/",whichData,"datComm.RDS"))
+datCounty     <- readRDS(paste0(myPlace,"/myData/",whichData,"datCounty.RDS"))
+shape_Comm    <- st_read(paste0(myPlace,"/myData/shape_Comm.shp"),stringsAsFactors=FALSE)
+shape_County  <- st_read(paste0(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
+STATE         <- "CALIFORNIA"
+yearGrp       <- "2014-2018"
+
+# Core wrapping function
+wrap.it <- function(x, len)
+{ sapply(x, function(y) paste(strwrap(y, len), collapse = "\n"), USE.NAMES = FALSE)}
+
+
+# Call this function with a list or vector
+wrap.labels <- function(x, len)
+{if (is.list(x))   { lapply(x, wrap.it, len)
+  } else {wrap.it(x, len)}
+}
+
+
+# ==========================================================================================
+
+
+# don't execute these lines when first building the function ------
+cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
                     myCause,    # not relevant for life expectancy 
                     myMeasure,  # not relvant for life expactancy -- for OSHPD use age adjusted rate
                     myYear,
                     mySex,
-                    myGeo       # county or community (or maybe zip code with OSHPD data)
+                    myGeo       # county or community (no "community" with OSHPD data--we should explore zip code at some point)
                     ) {
+# -----------------------------------------------------------------
 
+  
+
+# do execute these lines when buliding/exploring the function -----
   if (1==2){
-    myLHJ     = "Alameda"
+    myLHJ     = "CALIFORNIA"
     myCause     ="A"
     myMeasure = "YLLper"
     myYear = 2015
     mySex     = "Total"
-    myGeo     = "Community"
+    myGeo     = "County"
     myStateCut  = TRUE      # not used in this map "blank"
     myLabName = FALSE       # not used in this map "blank"
     myCutSystem ="fisher"   # not used i nthis map "blank"
   }
- 
+# ---------------------------------------------------------------  
   
-  # if myLHJ = "CALIFORNIA" then don't "zoom", otherwise do "zoom" -  see zoom a couple time below
+  # if myLHJ = "CALIFORNIA" then don't "zoom", otherwise do "zoom" -  see zoom's use a couple time below
   if (myLHJ != STATE) {        cZoom <- TRUE
                       } else { cZoom <-FALSE}
   
@@ -43,7 +84,7 @@ cbdMapX <- function(myLHJ,      # county or whole state = "CALIFORNIA"
     
 
   if (myGeo == "Community") {
-    dat.1      <- filter(datComm,yearG5=="2014-2018",sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% 
+    dat.1      <- filter(datComm,yearG5==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% 
                           mutate(geoLab = wrap.labels(comName,15))
     map.1      <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
     map.1$name <- map.1$comName        # as above
@@ -52,11 +93,14 @@ cbdMapX <- function(myLHJ,      # county or whole state = "CALIFORNIA"
     }  
   
  # map title  
- myTitle  <- paste0(deathMeasuresNames[deathMeasures == myMeasure],
-                    " from ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
+ myTitle  <- paste0("TEST", #deathMeasuresNames[deathMeasures == myMeasure]
+                    " from ",#fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
                     " in ",myTitleYear,myTitleGeo,sexLab,geoLab)
  myTitle  <- wrap.labels(myTitle,80)
   
+ 
+ 
+ 
  # if "zooming" to county, then just use data for that county
  if (cZoom) {map.1 <- map.1[map.1$county == myLHJ,]}
 
@@ -65,7 +109,7 @@ cbdMapX <- function(myLHJ,      # county or whole state = "CALIFORNIA"
  if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
 
  # more funky "no data/error" checking
-  temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
+ temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
  if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
 
  # long story here, but getting set to make "cut points" for the data/map/legend
@@ -88,7 +132,7 @@ tt.map <-  tm_shape(map.1) +
                                textNA = "0 deaths/or suppressed",
                                interval.closure="right",
                                legend.reverse=T,
-                             # popup.vars=c("Population: " = "pop",
+                             # popup.vars=c("Population: " = "pop",           # edit as appropiate for data set
                              #              "Measure Value: "= myMeasure),
                                title.col=NA,
                                id="name"
@@ -111,7 +155,8 @@ tt.map <-  tm_shape(map.1) +
  
  tt.map <- tt.map + tm_view(basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
  
- tmap_leaflet(tt.map)
-
+ #  tmap_leaflet(tt.map)
+ tt.map
+ 
  }
   

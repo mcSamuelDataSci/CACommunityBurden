@@ -223,9 +223,6 @@ output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},c
   dev.off()
 })
 
-
-
-
 output$trendData <- downloadHandler(
   filename = function() {
     paste("data-", Sys.Date(), ".csv", sep="")
@@ -236,32 +233,26 @@ output$trendData <- downloadHandler(
 )
 
 
-
 # ---------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE))
 
-
-
-
-
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 
-output$disparityRace    <- renderPlot(         disparity(input$myLHJ, input$myCAUSE))
-#output$disparityRace    <- renderPlotly(         disparity(input$myLHJ, input$myCAUSE))
+# ---------------------------------------------------------------------------------------------------------
+
+disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE))
+
+output$trend  <- renderPlot(trendStep()$plot)
+
+myPlotly <- TRUE
+if (!myPlotly)  output$disparityRace <- renderPlot(disparityStep())
+if ( myPlotly)  output$disparityRace <- renderPlotly(disparityStep())
+  
+
+# ---------------------------------------------------------------------------------------------------------
+
 
 
 output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))

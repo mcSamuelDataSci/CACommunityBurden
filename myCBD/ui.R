@@ -391,10 +391,12 @@ mainPanel(
           br(), 
           plotOutput("trendRace", width="100%",height = 700),  value = 56),
  
+# myPlotly <- TRUE,
+ 
  tabPanel("Race Dispartiy",
           br(), 
-          plotOutput("disparityRace", width="100%",height = 700),  value = 58),
-         #  plotlyOutput("disparityRace", width="100%",height = 700),  value = 58),
+          # plotOutput("disparityRace", width="100%",height = 700),  value = 58),
+            plotlyOutput("disparityRace", width="100%",height = 700),  value = 58),
  
  
  tabPanel("Education Trend",

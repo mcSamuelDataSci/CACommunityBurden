@@ -789,8 +789,8 @@ datState  <- datCounty  %>%
                stateAdjustedRate = aRate) %>%
                select(year,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite) save(datState, file = path(myPlace,"/myData/",whichDat,"datState.RDS"))
-if ( subSite) load(          file = path(myPlace,"/myData/",whichDat,"datState.RDS"))
+if (!subSite & whichDat == "real") save(datState, file = path(myPlace,"/myData/datState.RDS"))
+if ( subSite)                      load(          file = path(myPlace,"/myData/datState.RDS"))
 
 datCounty  <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
                 mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -817,8 +817,8 @@ datState_3year  <- datCounty_3year  %>%
                           stateAdjustedRate = aRate) %>%
                    select(yearG3,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite) save(datState_3year, file = path(myPlace,"/myData/",whichDat,"datState_3yr.RDS"))
-if ( subSite) load(                file = path(myPlace,"/myData/",whichDat,"datState_3yr.RDS"))
+if (!subSite & whichDat == "real") save(datState_3year, file = path(myPlace,"/myData/datState_3yr.RDS"))
+if ( subSite)                      load(                file = path(myPlace,"/myData/datState_3yr.RDS"))
 
 datCounty_3year  <- merge(datCounty_3year,datState_3year,by = c("yearG3","sex","Level","CAUSE")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -858,8 +858,8 @@ datState_5year  <- datCounty_5year  %>%
          stateAdjustedRate = aRate) %>%
   select(yearG5,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite) save(datState_5year, file = path(myPlace,"/myData/",whichDat,"datState_5yr.RDS"))
-if ( subSite) load(                file = path(myPlace,"/myData/",whichDat,"datState_5yr.RDS"))
+if (!subSite & whichDat == "real") save(datState_5year, file = path(myPlace,"/myData/datState_5yr.RDS"))
+if ( subSite)                      load(                file = path(myPlace,"/myData/datState_5yr.RDS"))
 
 datCounty_5year  <- merge(datCounty_5year,datState_5year,by = c("yearG5","sex","Level","CAUSE")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,

@@ -15,6 +15,14 @@
 # https://healthpolicy.fsi.stanford.edu/people/joshua-salomon
 
 
+# use DOF pop data!
+# temp <- read_csv("F:/0.CBD.Other/Resources/populationData/DOF/P3_complete.csv")
+# http://www.dof.ca.gov/Forecasting/Demographics/Projections/
+# http://www.dof.ca.gov/Forecasting/Demographics/Projections/P3_Dictionary.txt
+
+
+
+
 # R LEARNING
 
 # https://tidyr.tidyverse.org/dev/articles/rectangle.html

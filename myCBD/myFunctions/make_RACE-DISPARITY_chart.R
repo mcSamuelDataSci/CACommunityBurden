@@ -67,7 +67,7 @@ dPlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasure))
    theme_grey(base_size = 25)
  
 
-myPlotly <- FALSE 
+myPlotly <- TRUE 
 if (!myPlotly) dplot <- dPlot
 if (myPlotly) dplot <- ggplotly(dPlot)
  
