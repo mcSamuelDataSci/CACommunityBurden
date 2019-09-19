@@ -205,7 +205,7 @@ if (controlPop | doAppend[1]) {
 		if (!controlPop) { # if not controlling to DOF total, then carryforward last ACS pop
 			# update tracts
 			acs.pop.tracts<-rbind(acs.pop.tracts,
-								  tract.tmp[year %in% (max(acs.pop.tracts$year):lastYear),
+								  tract.tmp[year > max(acs.pop.tracts$year),
 								  		  c("GEOID","year","sex","agell","ageul","nx")])
 			# update MSSA
 			acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts data with cbd.link	
@@ -223,6 +223,11 @@ if (controlPop | doAppend[1]) {
 		#tract.tmp[fips=="06001"&year==2017&sex=="TOTAL",sum(total)] # new sum of age 0
 		#county.tmp[fips=="06001"&year==2017&sex=="TOTAL",sum(nx)] # county "correct" total age 0
 		# update tracts
+		if (doAppend[1]) {
+			acs.pop.tracts<-rbind(acs.pop.tracts,
+							  tract.tmp[year > max(acs.pop.tracts$year),
+							  		  c("GEOID","year","sex","agell","ageul","nx")])
+		}
 		setkey(tract.tmp,GEOID,year,sex,agell)
 		setkey(acs.pop.tracts,GEOID,year,sex,agell)
 		acs.pop.tracts[tract.tmp,adjnx:=i.total] # merge adjusted totals
