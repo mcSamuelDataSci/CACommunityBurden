@@ -10,7 +10,8 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, require, character.only=TRUE)           
 
 ## 1.2  options
-
+doAppend<-c(TRUE,2018) # whether to add missing years up to the year YYYY
+controlPop<-TRUE # whether to control ACS to DOF pop totals
 
 ## 1.3 paths 
 myDrive <- getwd()
@@ -24,7 +25,8 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
 .acsurl		<- paste0(upPlace,"/lifeTables/dataIn/acs5_B01001_tracts.csv.zip") # ACS-5yr population by tract, 2009-17
 .nchsurl	<- paste0(upPlace,"/lifeTables/dataIn/nchsPOP.csv.zip")
-.dofurl		<- "https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv"
+.dofurl		<- "https://data.ca.gov/dataset/7a8c03d3-ed86-498a-acdb-8ea09ccb4130/resource/2c217b79-4625-4ab2-86b3-6fc5d66f0409/download/population-estimates-and-projections-by-county-age-and-sex-california-1970-2050.csv"
+.afacturl   <- paste0(upPlace,"/lifeTables/dataIn/afact.csv") # ACS-5yr tract share of county population
 .nxtract	<- paste0(upPlace,"/lifeTables/dataOut/nxTract.rds") # output deaths by tract
 .nxmssa		<- paste0(upPlace,"/lifeTables/dataOut/nxMSSA.rds") # output deaths by mssa
 .nxcounty	<- paste0(upPlace,"/lifeTables/dataOut/nxCounty.rds") # output deaths by county
@@ -125,16 +127,12 @@ acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts 
 ## 2.3	DOF data: county & state population by sex/age
 
 ## 2.3.1	county data from data.ca.gov portal; SKIP county text label and pop_total
-dof.pop.county <- 	setDT(
-						read_csv(.dofurl,
-			 				col_types="i_iiii_"
-						)
-			 		)
-dof.pop.county[,pop_total:=pop_female+pop_male]					 # total pop by age
+dof.pop.county <- 	setDT(read_csv(.dofurl))                     # download 
 dof.pop.county[, GEOID
 			   :=sprintf("%05d000000",dof.pop.county$fips)]      # convert 4-digit FIPS into 11-character GEOID
 setkey(dof.pop.county,"GEOID")									 # key for later merging
-dof.pop.county[,fips:=NULL]                                      # drop fips variable, now that GEOID has been added
+dof.pop.county[,fips:=NULL]                                      # drop and use GEOID instead
+dof.pop.county[,county:=NULL]                                    # drop and use GEOID instead
 
 ## 2.3.2 	recode age to categories
 dof.pop.county[age==0, ':=' (agell=0,ageul=0)]
@@ -169,11 +167,82 @@ dof.pop.state[,GEOID:="06000000000"]                             # new GEOID for
 ##	3	ANALYSIS	----------------------------------------------------------------------
 
 ## 	3.1 	ACS tract estimates controlled to DOF total county population
-##			!! TBD
+##  3.2  	ACS tract estimates extrapolated to most current year
+if (controlPop | doAppend[1]) {
+	# acs tract pop
+	tract.tmp<-copy(acs.pop.tracts)
+	tract.tmp[,fips:=substr(GEOID,1,5)]
+	setkey(tract.tmp,fips,year,sex,agell)
+	# acs county pop
+	county.tmp<-copy(acs.pop.tracts)
+	county.tmp[,fips:=substr(GEOID,1,5)]
+	county.tmp<-county.tmp[,.(nx=sum(nx)),
+						   by=.(fips,year,sex,agell,ageul)]
+	setkey(county.tmp,fips,year,sex,agell)
+	# merge acs tract pop with acs county pop; calc shr
+	tract.tmp[county.tmp,shr:=nx/i.nx]
+	#tract.tmp[fips=="06001"&sex=="TOTAL"&year==2009&agell==0,sum(shr)] # confirm==1
+	# dof county pop formatted like acs tract pop
+	county.tmp<-copy(dof.pop.county)
+	county.tmp[agell==1,agell:=0]
+	county.tmp[ageul==0,ageul:=4]
+	county.tmp[,fips:=substr(GEOID,1,5)]
+	county.tmp<-county.tmp[,.(nx=sum(nx)),
+							by=.(year,fips,sex,agell,ageul)] # collapse first 2 age groups
+	setkey(county.tmp,fips,year,sex,agell)
+	# extend ACS tract estimates share of county pop to specified year
+	if (doAppend[1]) {
+		lastYear<-max(unique(tract.tmp$year))
+		targetYear<-as.numeric(doAppend[2])
+		if (lastYear<targetYear) {
+			tmp<-tract.tmp[year==lastYear] # last year in dataset
+			numCopies<-targetYear-lastYear # n years need to add
+			for (i in 1:numCopies) {
+				tract.tmp<-rbind(tract.tmp,tmp[,year:=year+1]) # append tmp to end and increment year
+			}
+			rm(numCopies)
+		}
+		if (!controlPop) { # if not controlling to DOF total, then carryforward last ACS pop
+			# update tracts
+			acs.pop.tracts<-rbind(acs.pop.tracts,
+								  tract.tmp[year %in% (max(acs.pop.tracts$year):lastYear),
+								  		  c("GEOID","year","sex","agell","ageul","nx")])
+			# update MSSA
+			acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts data with cbd.link	
+										   ][,.(nx=sum(nx)),     
+										     by=.(comID,year,sex,agell,ageul)] 	 # calculate the sum of estimates by MSSA id variables
+		}
+		rm(lastYear,targetYear) # drop
+	}
+	# control DOF and copy adjusted numbers into final data
+	if (controlPop) {
+		setkey(tract.tmp,fips,year,sex,agell)
+		# merge acs tract shr with dof county pop; calc pop; (note that this method is not exact).
+		tract.tmp[county.tmp,total:=round(shr*i.nx)] # merge county total pop into tract dataset
+		#tract.tmp[fips=="06001"&year==2017&sex=="TOTAL",sum(nx)] # old sum of age 0
+		#tract.tmp[fips=="06001"&year==2017&sex=="TOTAL",sum(total)] # new sum of age 0
+		#county.tmp[fips=="06001"&year==2017&sex=="TOTAL",sum(nx)] # county "correct" total age 0
+		# update tracts
+		setkey(tract.tmp,GEOID,year,sex,agell)
+		setkey(acs.pop.tracts,GEOID,year,sex,agell)
+		acs.pop.tracts[tract.tmp,adjnx:=i.total] # merge adjusted totals
+		acs.pop.tracts[,nx:=adjnx] # replace
+		acs.pop.tracts[,adjnx:=NULL] # drop
+		# update MSSA
+		acs.pop.mssa <- acs.pop.tracts[cbd.link,nomatch=0                # merge tracts data with cbd.link	
+									   ][,.(nx=sum(nx)),     
+									     by=.(comID,year,sex,agell,ageul)] 	 # calculate the sum of estimates by MSSA id variables
+	}
+	rm(tract.tmp,county.tmp)
+}
 
 ##	4	CLEANUP		----------------------------------------------------------------------
 
-##	4.1	export results for CCB calculations: county, tract, MSSA level datasets
+##  4.1 drop future years from county pop.
+dof.pop.county<-dof.pop.county[year<=(max(as.numeric(doAppend[2],acs.pop.tracts)))]
+dof.pop.state<-dof.pop.state[year<=(max(as.numeric(doAppend[2],acs.pop.tracts)))]
+
+##	4.2	export results for CCB calculations: county, tract, MSSA level datasets
 ##		ACS age17: 0,5,10,15,...85+
 ##		DOF age18: 0,1,5,10,15,...85+
 ##		variables: (GEOID or comID) year sex agell ageul estimate
