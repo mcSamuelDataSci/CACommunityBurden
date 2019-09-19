@@ -217,8 +217,6 @@ source(paste0(myPlace, "/myFunctions/make_any_primary_OSHPD_chart.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
-source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
-
 
 source(paste0(myPlace,"/myData/appText/AppText.txt"))
 source(paste0(myPlace,"/myData/appText/newsUseText.txt"))

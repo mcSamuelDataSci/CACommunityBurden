@@ -83,13 +83,22 @@ round(100* tempCharges[1:30] / sum(tempCharges) , 6)
 tempCharges[1:30] 
 
 chargesCUT <- charges[charges > 0 & charges <100000]
-hist(chargesCUT,breaks=1000,main="Charges >0 & <100,000")
+h1 <- hist(chargesCUT,breaks=1000,main="Charges >0 & <100,000")
+h1
 
 chargesCUT <- charges[charges >100000 & charges < 2000000 ]
-hist(chargesCUT,breaks=1000,main=">100,000 & charges < 2,000,000")
+h2 <- hist(chargesCUT,breaks=1000,main=">100,000 & charges < 2,000,000")
+h2
 
 chargesCUT <- charges[charges >2000000 ]
-hist(chargesCUT,breaks=1000,main=">2,000,000")
+h3 <- hist(chargesCUT,breaks=1000,main=">2,000,000")
+h3
+
+# library(cowplot)
+# 
+# print(plot_grid(h1,h2,h3, labels = "AUTO"))
+
+
 
 
 nMax <- length(tempCharges)

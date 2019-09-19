@@ -39,8 +39,6 @@ shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="4
 shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
 shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
   
-
-
 # -------------------------------------------------------------------------------  
 
 # function used below as "shortcut" for formating each Modal
