@@ -87,11 +87,18 @@ myAxisSize  <- 18
 myTextSize2 <- 12
 myWrapNumber <- 70
 myTitleColor <- "darkblue"
-myCex1       <- 1.8  #line labels
+
+myCex1           <- 1.5  #line labels
+myLineLabelSpace <- 0.3
+
 
 myLineSize  <- 2
 myPointSize <- 5 # line markers
 myPointShape <- 18
+
+
+
+
 #-- Load Packages ------------------------------------------------------------
 
 library(shiny)  

@@ -334,20 +334,20 @@ mainPanel(
         column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty))),value = 11
       ),          
 
-    tabPanel("HOME0",  br(),align='center',
-             h4(HTML(above1),align="left"),
-             fluidRow(
-               column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
-               column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
-               column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
-               column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))), 
-             br(),
-             fluidRow(
-               column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
-               column(width=4,img(id="ranktableI", src="table.png", width="100%", onmouseout="this.src='table.png'", onmouseover="this.src='table2.png'", style = myBoxSty)),
-               column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty))),value = 10
-    ),          
-    
+    # tabPanel("HOME0",  br(),align='center',
+    #          h4(HTML(above1),align="left"),
+    #          fluidRow(
+    #            column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
+    #            column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
+    #            column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
+    #            column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))), 
+    #          br(),
+    #          fluidRow(
+    #            column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
+    #            column(width=4,img(id="ranktableI", src="table.png", width="100%", onmouseout="this.src='table.png'", onmouseover="this.src='table2.png'", style = myBoxSty)),
+    #            column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty))),value = 10
+    # ),          
+    # 
     
     
     
@@ -356,6 +356,7 @@ mainPanel(
              includeMarkdown("About.md"), value = 99),
    
    tabPanel("LIFE EXPECTANCY",
+            br(),
             plotOutput("lifeTable", width="100%",height = 700), value = 15),
    
    
@@ -363,8 +364,8 @@ mainPanel(
      br(), htmlOutput("map_title")  ,
      leafletOutput("cbdMapTL", width=700, height=700), value = 22),
    
-   tabPanel("STATIC MAP",
-     plotOutput("cbdMapTS",  height=700,width="100%"), value = 23),
+   # tabPanel("STATIC MAP",
+   #   plotOutput("cbdMapTS",  height=700,width="100%"), value = 23),
    
    tabPanel("RANK BY CAUSE",
      br(), plotOutput("rankCause", width="100%",height=700), value = 33),

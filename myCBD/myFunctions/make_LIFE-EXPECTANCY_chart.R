@@ -1,3 +1,5 @@
+
+
 if(1==2){
   myLHJ="Siskiyou" 
   myLHJ="CALIFORNIA"
@@ -40,11 +42,14 @@ lifeTableState <- readRDS(paste0(LTplace,"/LTciState.rds")) %>%
 lifeTableSet <- bind_rows(lifeTableCounty, lifeTableState)
 
 
-        
-LEtrend <- function(myLHJ="CALIFORNIA",myCI=FALSE) {
 
-myCex <- 1.6
-myCol <- "blue"         
+# FIX MIN and MAX Year in global or other life tables function eventaully
+
+minYear <- min(lifeTableSet$year)
+maxYear <- max(lifeTableSet$year)
+
+
+LEtrend <- function(myLHJ="CALIFORNIA",myCI=FALSE) {
 
 
 dat.1 <- lifeTableSet %>% filter(county==myLHJ)
@@ -53,11 +58,10 @@ dat.1 <- lifeTableSet %>% filter(county==myLHJ)
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
 
+myTit <- paste0("Trend in Life Expectancy, ",myLHJ,", ",minYear,"-",maxYear)
+myTit <-  wrap.labels(myTit,myWrapNumber)
 
-myTit <- paste0("Trend in Life Expectancy, ",myLHJ,", 2000-2018")
-myTit <-  wrap.labels(myTit,80)
-
-myBreaks <- 2010:2018
+myBreaks <- minYear:maxYear
 myLabels <- myBreaks
 
 # USE meanex
@@ -76,8 +80,8 @@ tplot<-
   #  scale_y_continuous(limits = c(0, NA)) +
     scale_colour_discrete(guide = 'none') +   # removed legend
     labs(y = "life expectancy at birth")  + 
-    geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
-    geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
+    geom_dl(aes(label = sex), method = list(dl.trans(x = x + myLineLabelSpace), "last.points", cex=myCex1, font="bold")) +
+    geom_dl(aes(label = sex), method = list(dl.trans(x = x - myLineLabelSpace), "first.points",cex=myCex1, font="bold"))  +
     labs(title =myTit,size=myTitleSize) +
     theme_bw() +
     theme(axis.text=element_text(size=myAxisSize),

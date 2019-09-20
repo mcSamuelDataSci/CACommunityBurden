@@ -5,7 +5,7 @@
 
 ## 1    SETUP		----------------------------------------------------------------------
 
-whichData     <- "real"   # "real" or "fake"
+whichData     <- "fake"   # "real" or "fake"
 
 ## 1.1  packages
 .pkg	<- c("data.table","readr","readxl") 
