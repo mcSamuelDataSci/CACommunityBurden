@@ -9,15 +9,12 @@ if(1==2){
 }
 
 
-trendAge <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "cDeathRate",myLogTrans=FALSE) {
+trendAge <- function(myLHJ="CALIFORNIA",myCause="A",myLogTrans=FALSE,myMeasure = "cDeathRate") {
 
   
 
 minYear <- 2000
 maxYear <- 2017
-
-myCex <- 1.6
-myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
 dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,CAUSE == myCause, sex=="Total") 
 
@@ -39,18 +36,18 @@ myTrans    <- ifelse(myLogTrans,'log2','identity')
 myMin      <- ifelse(myLogTrans,NA,0)
 
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=ageG, color=ageG)) +
-    geom_line(size=2)  + geom_point(size=5) +
+    geom_line(size=2)  + geom_point(shape=myPointShape,size=myPointSize) +
     scale_x_continuous(minor_breaks=yMid,breaks=yMid,expand=c(0,3),labels=yRange) +
       scale_y_continuous(limits = c(myMin, NA),trans=myTrans) + 
     scale_colour_discrete(guide = 'none') +   # removed legend 
     labs(y = myMeasure)  + 
     geom_dl(aes(label = ageG), method = list(dl.trans(x = x + 0.2), "last.bumpup", cex=myCex1, font="bold")) +
     geom_dl(aes(label = ageG), method = list(dl.trans(x = x - 0.2), "first.bumpup",cex=myCex1, font="bold"))  +
-    labs(title =myTit,size=mySize2) +
+    labs(title =myTit) +
     labs(y = deathMeasuresNames[deathMeasures == myMeasure]) +
      theme_bw() +
-    theme(axis.text=element_text(size=mySize1),
-          axis.title=element_text(size=mySize1,face="bold"),
+    theme(axis.text=element_text(size=myAxisSize),
+          axis.title=element_text(size=myAxisSize,face="bold"),
           plot.title=element_text(family='', face='bold', colour='black', size=myTitleSize, color=myTitleColor),
           axis.text.x = element_text(angle = 0,vjust = 0.5, hjust=.5),
           plot.caption = element_text(hjust = 0, face = "italic",size=14)) 

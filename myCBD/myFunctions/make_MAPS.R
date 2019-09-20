@@ -152,8 +152,10 @@ cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A", myMeasure = "YLLper", myYe
  
  tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)
 
- tt.map <- tt.map + tm_view(basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
+ tt.map <- tt.map + tm_view(control.position = c("left","bottom"),basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
  
+ 
+
  tmap_leaflet(tt.map)
 }
   

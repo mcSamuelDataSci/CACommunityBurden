@@ -356,7 +356,7 @@ mainPanel(
              includeMarkdown("About.md"), value = 99),
    
    tabPanel("LIFE EXPECTANCY",
-            plotOutput("lifeTable", width=700, height=700), value = 15),
+            plotOutput("lifeTable", width="100%",height = 700), value = 15),
    
    
    tabPanel("INTERACTIVE MAP",
@@ -395,8 +395,8 @@ mainPanel(
  
  tabPanel("Race Dispartiy",
           br(), 
-          # plotOutput("disparityRace", width="100%",height = 700),  value = 58),
-            plotlyOutput("disparityRace", width="100%",height = 700),  value = 58),
+            plotOutput("disparityRace", width="100%",height = 700),  value = 58),
+           # plotlyOutput("disparityRace", width="100%",height = 700),  value = 58),
  
  
  tabPanel("Education Trend",

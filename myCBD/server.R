@@ -238,7 +238,7 @@ output$trendData <- downloadHandler(
 # ---------------------------------------------------------------------------------------------------------
 
 
-output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE))
+output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans))
 
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 
@@ -248,7 +248,7 @@ disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE))
 
 output$trend  <- renderPlot(trendStep()$plot)
 
-myPlotly <- TRUE
+myPlotly <- FALSE
 if (!myPlotly)  output$disparityRace <- renderPlot(disparityStep())
 if ( myPlotly)  output$disparityRace <- renderPlotly(disparityStep())
   

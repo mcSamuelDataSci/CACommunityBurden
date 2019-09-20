@@ -42,16 +42,16 @@ full_CAUSE_mdcdrg_list <- full_CAUSE_mdcdrg_list %>% mutate(names = as.character
   
 ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +
-     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(15))) +
-     theme_bw( base_size = 25) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
+     facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
+       theme_bw( ) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes   # base_size = 25
      scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
-     scale_x_discrete(labels = scales::wrap_format(18)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+     scale_x_discrete(labels = scales::wrap_format(50)) + #x-axis is condition label--wrapping text so it stacks on top of each other
      #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
      theme(axis.title.y = element_blank(), #removes nameOnly label
      axis.title.x = element_blank(), #removes measure label
-     axis.text.y = element_text(size = myTextSize2), #increases size of disease condition labels
-     axis.text.x = element_text(size = myTextSize2, face="bold",angle = 90, hjust = 1), #controls size of measure labels
-     strip.text.x = element_text(size = myTextSize2)) #increases the size of the facet labels
+     axis.text.y = element_text(size = myAxisSize), #increases size of disease condition labels
+     axis.text.x = element_text(size = myAxisSize, face="bold",angle = 90, hjust = 1), #controls size of measure labels
+     strip.text.x = element_text(size = myAxisSize)) #increases the size of the facet labels
 
   
 

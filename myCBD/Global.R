@@ -79,10 +79,19 @@ pdf(NULL)
 
 
 # DISPLAY Constants
-myTitleSize <- 12
-myTextSize2 <- 12
-myTitleColor <- "darkblue"
 
+myTitleSize <- 20
+myLegendSize <- 20
+myAxisSize  <- 18
+
+myTextSize2 <- 12
+myWrapNumber <- 70
+myTitleColor <- "darkblue"
+myCex1       <- 1.8  #line labels
+
+myLineSize  <- 2
+myPointSize <- 5 # line markers
+myPointShape <- 18
 #-- Load Packages ------------------------------------------------------------
 
 library(shiny)  

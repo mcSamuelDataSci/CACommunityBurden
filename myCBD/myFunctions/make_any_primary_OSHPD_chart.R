@@ -10,13 +10,19 @@ filter(.,county == myCounty, sex == mySex) %>% group_by(diag_type) %>%
                                              pull(n_hosp))) %>%
     ggplot(., aes(fill = diag_type, x = nameOnly, y = n_hosp)) + 
     geom_bar(stat = "identity") + coord_flip() +
+    scale_fill_hue(guide = guide_legend(reverse=TRUE)) +
+    #guides(colour = guide_colorbar(reverse=FALSE)) +
     theme_bw() +
-    theme(plot.title = element_text(face = "bold", size = 15),
-      axis.title.y = element_blank(),
+    theme(plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+          axis.title.y = element_blank(),
           axis.title.x = element_blank(),
-          axis.text.y = element_text(size = 15),
-          axis.text.x = element_text(size = 15)) +
-    labs(title = "Number of Any and Primary Hospitalization Diagnoses", fill = "Diagnosis type")
+          axis.text.y = element_text(size = myAxisSize),
+          axis.text.x = element_text(size = myAxisSize),
+          legend.position="top",
+          #legend.box.background = element_rect(colour = "black"),
+          legend.title = element_text(size = myAxisSize),
+          legend.text = element_text(size = myLegendSize)) +
+       labs(title = "Number of Any and Primary Hospitalization Diagnoses", fill = "Diagnosis type") 
   
   
 }

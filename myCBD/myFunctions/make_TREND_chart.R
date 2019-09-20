@@ -14,8 +14,6 @@ myCex <- 1.6
 myCol <- "blue"            #mycol <- rep("blue",nrow(dat.1))
 
 
-
-
 if (myYearGrouping == "One") {
   inDat <- datCounty  
   myBreaks <- 2000:maxYear
@@ -57,29 +55,23 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 
 myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", 2000 to ",maxYear)
 
-myTit <-  wrap.labels(myTit,80)
-
-
-
-mySize1 <- 18
-mySize2 <- 20
-myCex1  <- 1.8
+myTit <-  wrap.labels(myTit,myWrapNumber)
 
 
 tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=sex, color=sex)) +
-    geom_line(size=2)  +
-    geom_point(shape = 18,size=5 )  +
+    geom_line(size=myLineSize)  +
+    geom_point(shape = myPointShape,size=myPointSize)  +
       scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
     scale_y_continuous(limits = c(0, NA)) +
     scale_colour_discrete(guide = 'none') +   # removed legend
     labs(y = myMeasure)  + 
     geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
     geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
-    labs(title =myTit,size=mySize2) +
+    labs(title =myTit,size=myTitleSize) +
     labs(y = deathMeasuresNames[deathMeasures == myMeasure]) +
    theme_bw() +
-    theme(axis.text=element_text(size=mySize1),
-          axis.title=element_text(size=mySize1,face="bold"),
+    theme(axis.text=element_text(size=myAxisSize),
+          axis.title=element_text(size=myAxisSize,face="bold"),
           plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
           axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
   

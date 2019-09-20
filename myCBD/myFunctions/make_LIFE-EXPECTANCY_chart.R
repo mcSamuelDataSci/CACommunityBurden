@@ -57,15 +57,6 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 myTit <- paste0("Trend in Life Expectancy, ",myLHJ,", 2000-2018")
 myTit <-  wrap.labels(myTit,80)
 
-# DISPLAY Constants
-myTitleSize <- 22
-myTitleColor <- "darkblue"
-
-mySize1 <- 18
-mySize2 <- 20
-myCex1  <- 1.8
-
-
 myBreaks <- 2010:2018
 myLabels <- myBreaks
 
@@ -76,8 +67,9 @@ myLabels <- myBreaks
 tplot<-
  
   
-   ggplot(data=dat.1, aes(x=year, y=ex, group=sex,color=sex)) +
-               geom_line(size=2) +
+   ggplot(data=dat.1, aes(x=year, y=meanex, group=sex,color=sex)) +
+               geom_line(size=myLineSize) +
+  geom_point(shape = myPointShape,size=myPointSize)  +
        geom_line(data=dat.1,aes(x=year, y=`ciex.97.5%`, group=sex,color=sex)) +
       geom_line(data=dat.1,aes(x=year, y=`ciex.2.5%`, group=sex,color=sex)) +
         scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,1),labels=myLabels) +
@@ -86,10 +78,10 @@ tplot<-
     labs(y = "life expectancy at birth")  + 
     geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
     geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
-    labs(title =myTit,size=mySize2) +
+    labs(title =myTit,size=myTitleSize) +
     theme_bw() +
-    theme(axis.text=element_text(size=mySize1),
-          axis.title=element_text(size=mySize1,face="bold"),
+    theme(axis.text=element_text(size=myAxisSize),
+          axis.title=element_text(size=myAxisSize,face="bold"),
           plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize)
        #   axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1) 
   

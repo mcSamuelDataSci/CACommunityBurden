@@ -49,27 +49,36 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
 
 myTit <- paste0(deathMeasuresNames[deathMeasures == myMeasure]," by Race/Ethnicity in ",myLHJ,", ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],", ",myYearG3)
 
-myTit <-  wrap.labels(myTit,80)
-
-
-mySize1 <- 18
-mySize2 <- 20
-myCex1  <- 1.5
+myTit <-  wrap.labels(myTit,myWrapNumber)
 
 
 dPlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasure))),fill=pMark)) +
    geom_bar(stat="identity") +
-   scale_fill_manual("legend", values = c("Lowest" = "green", "Statistically Higher" = "red", "Not Statitically Different" = "blue")) +
+   theme_grey() +   #base_size = myBaseSize
+   facet_grid(rows = vars(sex)) +
+     scale_fill_manual("legend", values = c("Lowest" = "green", "Statistically Higher" = "red", "Not Statitically Different" = "blue")) +
    geom_errorbar(aes(ymin=aLCI, ymax=aUCI), width=.1, size=1, position=position_dodge(.9), color="blue") + 
    labs(y = deathMeasuresNames[deathMeasures == myMeasure], x="Race/Ethnicity") +
-   labs(title =myTit,size=mySize2) +
-   facet_grid(rows = vars(sex)) +
-   theme_grey(base_size = 25)
+      theme(plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+         axis.title.y = element_blank(),
+         axis.title.x = element_blank(),
+         axis.text.y = element_text(size = myAxisSize),
+         axis.text.x = element_text(size = myAxisSize),
+      legend.title = element_blank(),
+         legend.text = element_text(size = myLegendSize),
+         strip.text = element_text(size = myAxisSize)) +
+      labs(title =myTit)   # ,size=mySize1
+   #legend.text = element_text(size = myLegendSize) +
+      
+   
+ 
  
 
-myPlotly <- TRUE 
+myPlotly <- FALSE 
 if (!myPlotly) dplot <- dPlot
-if (myPlotly) dplot <- ggplotly(dPlot)
+if (myPlotly) dplot <- ggplotly(dPlot) 
+                      
+
  
 dPlot
  
