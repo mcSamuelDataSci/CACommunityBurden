@@ -21,7 +21,7 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "real"   # "real" or "fake"
+whichData <- "fake"   # "real" or "fake"
 newData  <- FALSE
 
 # fullOSHPD <- FALSE
@@ -567,6 +567,11 @@ test <- calculated_metrics %>% filter(type == "charges") #for real data, all of 
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSHPD.rds"))
 
+#-------------------------------------------------Filtering only age-adjusted hospitalization rates from countyOSHPD, saving as separate rds file for map---------------------------#
+
+age_adjusted_hosp_rates <- calculated_metrics %>% filter(type == "ahospRate")
+
+saveRDS(age_adjusted_hosp_rates, file = path(myPlace, "myData/", whichData, "/ageadj_hospratesOSHPD.rds"))
 
 #---------------------------------------------------------Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
 
