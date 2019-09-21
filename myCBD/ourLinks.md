@@ -1,4 +1,4 @@
-﻿
+
 ##  Featured Health Data Visualization Sites
 *  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
     *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
@@ -17,7 +17,7 @@
  *  **California-Specific**
       *  [Let's Get Healthy California](https://letsgethealthy.ca.gov/) 1,2,3 
       *  [California Asthma Data](https://www.cdph.ca.gov/Programs/CCDPHP/DEODC/EHIB/CPE/Pages/CaliforniaBreathingCountyAsthmaProfiles.aspx)
-[Healthy Communities Index - CDPH Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Meets-the-Basic-Needs-of-All-1-2.aspx) 1
+      *  [Healthy Communities Index - CDPH Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Meets-the-Basic-Needs-of-All-1-2.aspx) 1
       *  [California Cancer Data](https://www.cancer-rates.info/ca/) 1
  
  * **United States/International with California Specific (A) or California Sub-County Data (B)**

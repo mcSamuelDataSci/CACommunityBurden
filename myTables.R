@@ -1,3 +1,11 @@
+
+# https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html
+# https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html
+
+
+
+
+
 library(tidyr)
 library(dplyr)
 

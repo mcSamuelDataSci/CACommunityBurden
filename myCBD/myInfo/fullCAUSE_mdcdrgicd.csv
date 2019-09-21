@@ -69,6 +69,7 @@ E,Injuries
 E01,Unintentional injuries
 E01a,Road injury
 E01b,Falls
+E01c,Accidental Firearm
 E01x,Other unintentional injuries
 E02,Suicide/Self-harm
 E03,Homicide/Interpersonal violence

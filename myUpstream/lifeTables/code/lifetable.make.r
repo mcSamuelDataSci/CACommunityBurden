@@ -6,15 +6,15 @@
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","readr","readxl") 
+.pkg	<- c("data.table","readr","readxl","tidyr") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  options
 
-realData <- FALSE   # "real" or "fake" death data
-range <- 2010:2018  # years of life tables to generate
+realData <- TRUE   # "real" or "fake" death data
+range <- 2010:2017  # years of life tables to generate
 
 ## 1.3  paths
 myDrive <- getwd()
@@ -88,7 +88,7 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 ## 3.2  if fake data, weight exposure to accord to dx 
 #      (censors geographies, but should provide more accurate ex)
 if (!realData) {
-	.actual<-data.table(year=c(2010:2018),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
+	.actual<-data.table(year=c(2010:2017),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
 	.actual<-.actual[year %in% range] 
 	.sampled<-.dxstate[year %in% range & sex=="TOTAL",(dx=sum(dx))]         # sampled deaths statewide 2013-2017
 	.factor<-.sampled/.actual[year %in% range,.(sum(dx))][[1]]     				# ratio of sampled to actual deaths
