@@ -11,14 +11,14 @@ library(tmap)
 library(classInt)
 library(RColorBrewer)
 
-myPlace       <- "d:/0.CBD/myCBD"
-whichData     <- "fake/"
+#myPlace       <- "d:/0.CBD/myCBD"
+#whichData     <- "fake/"
 #datComm       <- readRDS(paste0(myPlace,"/myData/",whichData,"datComm.RDS")) No community level data for OSHPD at this time
-age_adjusted_hosp_rates  <- readRDS(paste0(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
+#age_adjusted_hosp_rates  <- readRDS(paste0(myPlace,"/myData/",whichData,"/ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
 #shape_Comm    <- st_read(paste0(myPlace,"/myData/shape_Comm.shp"),stringsAsFactors=FALSE) No community level data for OSHPD at this time
-shape_County  <- st_read(paste0(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
-STATE         <- "CALIFORNIA"
-yearGrp       <- "2014-2018"
+#shape_County  <- st_read(paste0(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
+#STATE         <- "CALIFORNIA"
+#yearGrp       <- "2014-2018"
 
 # Core wrapping function
 wrap.it <- function(x, len)
@@ -35,30 +35,12 @@ wrap.labels <- function(x, len)
 # ==========================================================================================
 
 # don't execute these lines when first building the function ------
-cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
-                    myCause,    # not relevant for life expectancy 
-                    myMeasure,  # not relvant for life expectancy -- for OSHPD use age adjusted rate
-                    myYear,
-                    mySex,
-                    myGeo       # county or community (no "community" with OSHPD data--we should explore zip code at some point)
+cbdOSHPDMap  <- function(myLHJ = "CALIFORNIA",      # county or whole state = "CALIFORNIA"
+                    myCause = "A",    # not relevant for life expectancy 
+                    mySex = "Total",
+                    myGeo = "County"       # county or community (no "community" with OSHPD data--we should explore zip code at some point)
                     ) {
 # -----------------------------------------------------------------
-
-  
-
-# do execute these lines when building/exploring the function -----
-  if (1==2){
-    myLHJ     = "CALIFORNIA"
-    myCause     ="A"
-    myMeasure = "ahospRate"
-    myYear = 2016
-    mySex     = "Total"
-    myGeo     = "County"
-    myStateCut  = TRUE      # not used in this map "blank"
-    myLabName = FALSE       # not used in this map "blank"
-    myCutSystem ="fisher"   # not used i nthis map "blank"
-  }
-# ---------------------------------------------------------------  
   
   # if myLHJ = "CALIFORNIA" then don't "zoom", otherwise do "zoom" -  see zoom's use a couple time below
   if (myLHJ != STATE) {        cZoom <- TRUE
@@ -74,27 +56,27 @@ cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
   # -------------------------------------------------------------
     
   if (myGeo == "County"){
-    dat.1        <- filter(age_adjusted_hosp_rates,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)
+    dat.1        <- filter(age_adjusted_hosp_rates,sex == mySex)  %>% mutate(geoLab = county)
     map.1        <- left_join(shape_County, dat.1, by=c("county")) # merge "shape file" with data 
     map.1$name   <- map.1$county     # this is used in "id" of tm_polygon below, but probably better way.... 
-    myTitleYear  <- myYear           # preparation for map title
+    #myTitleYear  <- myYear           # preparation for map title
     myTitleGeo   <- " by County"     # preparation for map title
     }
     
 
-  if (myGeo == "Community") {
-    dat.1      <- filter(datComm,yearG5==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% 
-                          mutate(geoLab = wrap.labels(comName,15))
-    map.1      <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
-    map.1$name <- map.1$comName        # as above
-    myTitleYear  <- yearGrp            # as above
-    myTitleGeo   <- " by Community"    # as above
-    }  
+  #if (myGeo == "Community") {
+   # dat.1      <- filter(age_adjusted_hosp_rates,yearG5==yearGrp,sex==mySex, CAUSE==myCause,  comID != "Unknown") %>% 
+                         # mutate(geoLab = wrap.labels(comName,15))
+   # map.1      <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
+    #map.1$name <- map.1$comName        # as above
+    #myTitleYear  <- yearGrp            # as above
+    #myTitleGeo   <- " by Community"    # as above
+    #}  
   
  # map title  
- myTitle  <- paste0("TEST", #deathMeasuresNames[deathMeasures == myMeasure]
-                    " from ",#fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
-                    " in ",myTitleYear,myTitleGeo,sexLab,geoLab)
+ myTitle  <- paste0("Age-adjusted hospitalization rates (per 100,000?)", 
+                    " from ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
+                    " in ",2016,myTitleGeo,sexLab,geoLab)
  myTitle  <- wrap.labels(myTitle,80)
   
  
@@ -107,12 +89,13 @@ cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
  # "no data/error" checking
  if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
 
+ 
  # more funky "no data/error" checking
- temp  <- unique((map.1 %>% st_set_geometry(NULL))[,myMeasure]) 
+ temp  <- unique((map.1 %>% st_set_geometry(NULL))[,"ahospRate"]) 
  if ( length(temp)==1) (if (is.na(temp)) stop("Sorry, either no values or only suppressed values to map") )
 
  # long story here, but getting set to make "cut points" for the data/map/legend
- myRange   <- (map.1 %>% st_set_geometry(NULL))[,myMeasure]
+ myRange   <- (map.1 %>% st_set_geometry(NULL))[,"ahospRate"]
  myBreaks  <- classIntervals(myRange,style="fisher",breaks=NULL,n=5)$brks
 
 
@@ -121,14 +104,14 @@ cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
  
 myPal <- brewer.pal(5,"Blues") # rev(brewer.pal(5,"RdYlBu"))
 
-if (myMeasure == "mean.age") myPal <- rev(myPal)
+#if (myMeasure == "mean.age") myPal <- rev(myPal)?
 
 tt.map <-  tm_shape(map.1) + 
-                   tm_polygons(col=myMeasure, palette = myPal, 
+                   tm_polygons(col="ahospRate", palette = myPal, 
                                style="fixed", breaks=myBreaks,
                                colorNA="white",
-                               title = "TEMP title" ,                  # deathMeasuresNames[deathMeasures == myMeasure]
-                               textNA = "0 deaths/or suppressed",
+                               title = "Age-adjusted hospitalization rate (per 100,000?)" ,
+                               textNA = "0 hospitalizations/or suppressed",
                                interval.closure="right",
                                legend.reverse=T,
                              # popup.vars=c("Population: " = "pop",           # edit as appropiate for data set
@@ -157,12 +140,6 @@ tt.map <-  tm_shape(map.1) +
  #  tmap_leaflet(tt.map)
  tt.map
  
- }
+}
   
-#Testing function--need to change legend title issues
-cbdMap(myLHJ     = "CALIFORNIA",
-       myCause     ="C",
-       myMeasure = "ahospRate",
-       myYear = 2016,
-       mySex     = "Total",
-       myGeo     = "County")
+
