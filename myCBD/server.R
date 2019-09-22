@@ -126,10 +126,6 @@ observeEvent(input$ID,{
 })
 
 
-
-
-
-
 # not used now, but saved as examples of other reactivity
 # observeEvent(input$ID,{
 #  if(input$ID %in% c(33,34,44,45,55)) 

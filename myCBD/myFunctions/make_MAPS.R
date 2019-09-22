@@ -115,6 +115,8 @@ if (myMeasure == "mean.age") myPal <- rev(myPal)
                     tm_layout(frame=F,
                               main.title= myTit,
                               main.title.size = 1.5,
+                              main.title.color = "green", #myTitleColor,
+                              title.color = "yellow",
                               fontface = 2,
                               inner.margins =c(0.1,0.02,0.02,0.02),  
                               legend.outside = TRUE,
