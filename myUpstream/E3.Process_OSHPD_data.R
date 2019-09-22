@@ -487,7 +487,7 @@ saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSH
 
 #-------------------------------------------------Filtering only age-adjusted hospitalization rates from countyOSHPD, saving as separate rds file for map---------------------------#
 
-age_adjusted_hosp_rates <- calculated_metrics %>% filter(type == "ahospRate")
+age_adjusted_hosp_rates <- calculated_metrics %>% filter(type == "ahospRate") %>% rename(ahospRate = measure) %>% select(-type)
 
 saveRDS(age_adjusted_hosp_rates, file = path(myPlace, "myData/", whichData, "/ageadj_hospratesOSHPD.rds"))
 

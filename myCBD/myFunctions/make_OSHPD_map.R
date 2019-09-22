@@ -14,7 +14,7 @@ library(RColorBrewer)
 myPlace       <- "d:/0.CBD/myCBD"
 whichData     <- "fake/"
 #datComm       <- readRDS(paste0(myPlace,"/myData/",whichData,"datComm.RDS")) No community level data for OSHPD at this time
-age_adjusted_hosp_rates  <- readRDS(paste0(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds"))
+age_adjusted_hosp_rates  <- readRDS(paste0(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
 #shape_Comm    <- st_read(paste0(myPlace,"/myData/shape_Comm.shp"),stringsAsFactors=FALSE) No community level data for OSHPD at this time
 shape_County  <- st_read(paste0(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
 STATE         <- "CALIFORNIA"
@@ -33,17 +33,11 @@ wrap.labels <- function(x, len)
 
 
 # ==========================================================================================
-cbdMap(myLHJ     = "CALIFORNIA",
-       myCause     ="A",
-       myMeasure = "ahospRate",
-       myYear = 2016,
-       mySex     = "Total",
-       myGeo     = "County")
 
 # don't execute these lines when first building the function ------
 cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
                     myCause,    # not relevant for life expectancy 
-                    myMeasure,  # not relvant for life expactancy -- for OSHPD use age adjusted rate
+                    myMeasure,  # not relvant for life expectancy -- for OSHPD use age adjusted rate
                     myYear,
                     mySex,
                     myGeo       # county or community (no "community" with OSHPD data--we should explore zip code at some point)
@@ -165,3 +159,10 @@ tt.map <-  tm_shape(map.1) +
  
  }
   
+#Testing function--need to change legend title issues
+cbdMap(myLHJ     = "CALIFORNIA",
+       myCause     ="C",
+       myMeasure = "ahospRate",
+       myYear = 2016,
+       mySex     = "Total",
+       myGeo     = "County")
