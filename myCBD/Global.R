@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "real" #changed to fake so I (CD) can run app on my computer
+whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
@@ -140,11 +140,11 @@ datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
 
 
 #FIX THIS --- OSHPD
-mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"/mdc_drg.rds"))
+mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
 calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
 full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
 any_primary_diff <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
-
+age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
 
 
 load(path(myPlace,"/myData/","sdohTract.R"))
@@ -197,6 +197,7 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
 source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_any_primary_OSHPD_chart.R"))
+source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
@@ -242,6 +243,7 @@ dMNames_short  <- deathMeasuresNames[shortdeathList]
 
 #dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
 dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
+
 
 
 #This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
