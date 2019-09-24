@@ -34,7 +34,7 @@ mTitle            <- "California Community Burden of Disease and Cost Engine"
 figureAttribution <- "California Department of Public Health"
 
 #SUBSITE Constants
-subSite     <- FALSE
+subSite     <- TRUE
 #subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
 #subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
 subsiteList <- c("Stanislaus")

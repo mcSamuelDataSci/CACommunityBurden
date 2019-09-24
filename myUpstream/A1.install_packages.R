@@ -48,6 +48,22 @@
     install.packages("shinyjs")
   # materials
  
+
+#- ONLY NEEDED for supplement R Markdown work --------------------------------------------------------- 
+    install.packages("DT")
+    install.packages("kableExtra")
+#   install.packages("tinytex")  # needed for PDF documents, if so need
+#     tinytex::install_tinytex()  # install TinyTeX
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
  # this part is required for publication of the app to shiny.io and will be documented seperately
  # install.packages("rsconnect")
  # library(rsconnect)

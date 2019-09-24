@@ -6,7 +6,7 @@
   a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-bogus', 'auto');
+ga('create', 'UA-73682345', 'auto');
 ga('send', 'pageview', {
   'page': '/CCB',
   'title': 'HomePage'

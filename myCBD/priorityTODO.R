@@ -1,3 +1,6 @@
+# note that SMR included in rank causes only
+
+
 # slickify HOME PAGE and all other pages
 # add google analytics
 # add total numbers (deaths, population, hospitlazations) to home page somehow
@@ -27,5 +30,17 @@
 # https://tidyr.tidyverse.org/dev/articles/rectangle.html
 # Rectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns. There are three functions from tidyr that are particularly useful for rectangling:
 
+https://rmarkdown.rstudio.com/formats
+
+
 
 # Would it be possible to create a nested dropdown? The 5 top levels would show, with little "+" signs that would allow someone to click into a top level to then select sublevels. That would streamline this quite 
+
+
+
+
+
+## San Mateo Shiny Server
+# installed with Umbuntu on Linix box
+# virtualized; no new or seperate hardward, etc.
+# views restricted to specific groups (IT network and PH network)
