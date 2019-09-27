@@ -74,6 +74,7 @@ tplot<-
    ggplot(data=dat.1, aes(x=year, y=meanex, group=sex,color=sex)) +
                geom_line(size=myLineSize) +
   geom_point(shape = myPointShape,size=myPointSize)  +
+       ylim(70, 90) +
        geom_line(data=dat.1,aes(x=year, y=`ciex.97.5%`, group=sex,color=sex)) +
       geom_line(data=dat.1,aes(x=year, y=`ciex.2.5%`, group=sex,color=sex)) +
         scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,1),labels=myLabels) +

@@ -432,9 +432,9 @@ mainPanel(
            br(),
            plotOutput("any_primary", height = 700), value = 71),
 
-  tabPanel("HOSPITALIZATION MAP",
-           br(),
-           plotOutput("oshpdmap", height = 700), value = 91),
+  # tabPanel("HOSPITALIZATION MAP",
+  #          br(),
+  #          plotOutput("oshpdmap", height = 700), value = 91),
 
   tabPanel("IHME Risk", visNetworkOutput("network"),value = 90),
 

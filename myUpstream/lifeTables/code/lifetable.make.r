@@ -13,8 +13,12 @@ lapply(.pkg, library, character.only=TRUE)
 
 ## 1.2  options
 
-realData <- TRUE   # "real" or "fake" death data
-range <- 2010:2017  # years of life tables to generate
+realData   <- TRUE   # mcs TRUE OR FALSE "real" or "fake" death data
+range      <- 2018  # years of life tables to generate
+doCounty   <- FALSE
+doTract    <- FALSE
+doMSSA     <- TRUE
+
 
 ## 1.3  paths
 myDrive <- getwd()
@@ -88,7 +92,7 @@ cbd.link[, countyFIPS:=substr(GEOID,1,5)]
 ## 3.2  if fake data, weight exposure to accord to dx 
 #      (censors geographies, but should provide more accurate ex)
 if (!realData) {
-	.actual<-data.table(year=c(2010:2017),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
+	.actual<-data.table(year=c(2009:2017),dx=c(233143,239006,242461,248118,245349,258694,261712,267556,268661)) # actual
 	.actual<-.actual[year %in% range] 
 	.sampled<-.dxstate[year %in% range & sex=="TOTAL",(dx=sum(dx))]         # sampled deaths statewide 2013-2017
 	.factor<-.sampled/.actual[year %in% range,.(sum(dx))][[1]]     				# ratio of sampled to actual deaths
@@ -274,6 +278,10 @@ doLT <- function(x, Nx, Dx, sex, ax=NULL) {
 }
 
 ## 4.2 call to LT function
+
+
+
+if(doTract){
 ## tract
 lt.tract<-data.table()										# init empty dt
 .pb <- txtProgressBar(min = 0, max = mx.tract[agell==0,.N], style = 3)		# show a text progress bar for loop
@@ -292,6 +300,11 @@ for (j in 1:mx.tract[agell==0,.N]) {
 }
 close(.pb)
 setkeyv(lt.tract,c("i","x"))
+}
+
+
+
+if(doMSSA){
 ##	mssa
 lt.mssa<-data.table()													# init empty dt
 .pb <- txtProgressBar(min = 0, max = mx.mssa[agell==0,.N], style = 3)	# show a text progress bar for loop
@@ -310,7 +323,15 @@ for (j in 1:mx.mssa[agell==0,.N]) {
 }
 close(.pb)
 setkeyv(lt.mssa,c("i","x"))
+}
+
+
+
+
+if(doCounty) {
+
 ##	county
+
 lt.county<-data.table()										# init empty dt
 .pb <- txtProgressBar(min = 0, max = mx.county[agell==0,.N], style = 3)		# show a text progress bar for loop
 for (j in 1:mx.county[agell==0,.N]) {						
@@ -347,6 +368,9 @@ for (j in 1:mx.state[agell==0,.N]) {
 }
 setkeyv(lt.state,c("i","x"))
 lt.state[x==0 & sex=="TOTAL",c("GEOID","sex","year","ex")] # CA state e0
+
+} # end if(doCunty)
+
 
 ## 4.3  function to produce a life table from qx values only (used in simulation for CI)
 doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
@@ -426,6 +450,10 @@ doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 
 ## 4.5   call to CI function
 ##
+
+
+
+if(doTract){
 ##	tract
 system.time({
 	ltci.tract<-data.table() 										# initialize an empty DT
@@ -448,7 +476,12 @@ names(ltci.tract)[names(ltci.tract) == "j"] = "i"				# rename j column to i (ID 
 names(ltci.tract)[names(ltci.tract) == "which.x"] = "agell"		# rename to agell
 setkeyv(ltci.tract,c("i","agell"))
 ltci.tract<-ltci.tract[mx.tract[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
-##
+#
+}
+
+
+
+if(doMSSA){
 ##	mssa
 system.time({
 	ltci.mssa<-data.table() 										# initialize an empty DT
@@ -472,6 +505,10 @@ names(ltci.mssa)[names(ltci.mssa) == "which.x"] = "agell"		# rename to agell
 setkeyv(ltci.mssa,c("i","agell"))
 ltci.mssa<-ltci.mssa[mx.mssa[agell==0,c("i","agell","sex","comID","year")],nomatch=0]	# merge sex and geo identifiers
 ##
+}
+
+
+if (doCounty) {
 ##	county
 system.time({
 	ltci.county<-data.table() 										# initialize an empty DT
@@ -512,6 +549,8 @@ names(ltci.state)[names(ltci.state) == "which.x"] = "agell"		# rename to agell
 setkeyv(ltci.state,c("i","agell"))
 ltci.state<-ltci.state[mx.state[agell==0,c("i","agell","sex","GEOID","year")],nomatch=0]	# merge sex and geo identifiers
 
+} # end if(doCounty)
+
 ## 5	DIAGNOSTICS	----------------------------------------------------------
 
 ## 5.1 	diagnostic plots
@@ -526,21 +565,22 @@ doExHist <- function(dat=NULL,idx=NULL,age=0,reps=500,ci=.95) {
 	abline(v=tmp$meanex,col=4)
 	abline(v=tmp$ciex,col=4)
 }
-doExHist(dat=lt.tract,idx=1,age=0,reps=500,ci=.9)
-doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
-doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
-doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
+if(doTract)  doExHist(dat=lt.tract,idx=1,age=0,reps=500,ci=.9)
+if(doMSSA)   doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
+if(doCounty) doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
+if(doCounty) doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
 
 ## 6	EXPORT DATA	----------------------------------------------------------
 
 ## 6.1  export datasets
-saveRDS(ltci.tract,  file=paste0(LTplace,"/LTciTract.rds"))      # GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
-saveRDS(ltci.mssa,   file=paste0(LTplace,"/LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
-saveRDS(ltci.county, file=paste0(LTplace,"/LTciCounty.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
-saveRDS(ltci.state,  file=paste0(LTplace,"/LTciState.rds"))		# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
+if(doTract)  saveRDS(ltci.tract,  file=paste0(LTplace,"/LTciTract.rds"))  # GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
+if(doMSSA)   saveRDS(ltci.mssa,   file=paste0(LTplace,"/LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
+if(doCounty) saveRDS(ltci.county, file=paste0(LTplace,"/LTciCounty.rds"))	# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
+if(doCounty) saveRDS(ltci.state,  file=paste0(LTplace,"/LTciState.rds"))	# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
+
 
 ## 6.2 compare with results from "real"
-if (!realData) {
+if (!realData & 1==2) {
 	ltci.tmp.c<-setDT(readRDS(LTplace,"/_MSreal_LTciCounty.rds"))
 	ltci.tmp.m<-setDT(readRDS(LTplace,"/_MSreal_LTciMSSAb.rds"))
 }
@@ -549,26 +589,26 @@ if (!realData) {
 
 ## 7	NOTES	----------------------------------------------------------
 
-# Life tables for tracts, communities, counties and states are generated from age specific mortality rates, 
-# which are the quotient of deaths during a calendar year to the and exposure, approximated by the population 
-# of the same age at the midpoint of the year (July 1). Age structured population data for tracts and communities 
-# are estimated using data from the American Community Survey, 5-year sample (table B01001; multiple years). 
-# County and state age population by age are estimated by the Demographic Research Unit, CA Department of Finance. 
-# Deaths data are based on 100% extracts from the vital statistics reporting system, CA Department of Public Health. 
-# Life tables are estimated for tracts in counties where at least 95% of deaths could be accurately geocoded to 
-# the tract level. Mortality and exposure data were combined for small geographies: 4 years’ historical data 
-# were added to the population and mortality calculations for each annual tract and community life table, and 
-# 2 years’ historical data were added to each county life table. Then, life tables were calculated for geographies 
-# meeting a minimum of at least 10,000 person-years of exposure. Intra-age mortality (nax) was calculated for 
-# ages below 5 using factors provided by Preston et al. (2001) and by the midpoint of the age interval for other 
-# age groups. Standard errors were calculated for age specific probabilities of death (Chiang 1984) and simulated 
-# life tables were generated by bootstrapping life table deaths to produce confidence intervals for life expectancy 
+# Life tables for tracts, communities, counties and states are generated from age specific mortality rates,
+# which are the quotient of deaths during a calendar year to the and exposure, approximated by the population
+# of the same age at the midpoint of the year (July 1). Age structured population data for tracts and communities
+# are estimated using data from the American Community Survey, 5-year sample (table B01001; multiple years).
+# County and state age population by age are estimated by the Demographic Research Unit, CA Department of Finance.
+# Deaths data are based on 100% extracts from the vital statistics reporting system, CA Department of Public Health.
+# Life tables are estimated for tracts in counties where at least 95% of deaths could be accurately geocoded to
+# the tract level. Mortality and exposure data were combined for small geographies: 4 years’ historical data
+# were added to the population and mortality calculations for each annual tract and community life table, and
+# 2 years’ historical data were added to each county life table. Then, life tables were calculated for geographies
+# meeting a minimum of at least 10,000 person-years of exposure. Intra-age mortality (nax) was calculated for
+# ages below 5 using factors provided by Preston et al. (2001) and by the midpoint of the age interval for other
+# age groups. Standard errors were calculated for age specific probabilities of death (Chiang 1984) and simulated
+# life tables were generated by bootstrapping life table deaths to produce confidence intervals for life expectancy
 # (Andreev & Shkolnikov 2010).
-# 
+#
 # [Would like to do a chart showing how many geographies were trimmed by each condition imposed—do you have any experience doing clinical trial style flowcharts?].
-# 
+#
 # Preston, Samuel H. and P. Heuveline and M. Guillot. 2001. Demography. Blackwell, pp. 47-48.
-# 
+#
 # Chiang, C.L. 1984. The Life Table and its Applications. Robert E Krieger Publ Co., pp. 153-168.
-# 
+#
 # Andreev, E.M. and V. M. Shkolnikov. 2010. “Spreadsheet for calculation of confidence limits for any life table or healthy-life table quantity.” Max Planck Institute for Demographic Research: MPIDR Technical Report 2010-005; June 2010.

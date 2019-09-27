@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
+whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
@@ -34,7 +34,7 @@ mTitle            <- "California Community Burden of Disease and Cost Engine"
 figureAttribution <- "California Department of Public Health"
 
 #SUBSITE Constants
-subSite     <- TRUE
+subSite     <- FALSE
 #subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
 #subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
 subsiteList <- c("Stanislaus")
@@ -56,6 +56,7 @@ myWrapNumber <- 70
 myTitleColor <- "darkblue"
 
 myCex1           <- 1.5  #line labels
+myCex2           <- 1.2  #currently used only in education trend
 myLineLabelSpace <- 0.3
 
 
@@ -144,7 +145,10 @@ mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
 calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
 full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
 any_primary_diff <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
-age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
+
+
+
+# age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
 
 
 load(path(myPlace,"/myData/","sdohTract.R"))

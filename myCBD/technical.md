@@ -1,8 +1,12 @@
+**TECHNICAL DOCUMENTATION**
+  
+<br>
+  
 * Note regarding data suppression
   * A number of steps have been taken to address data security issue, including 1) aggregation of year into 5-year groups for data displayed at the community and census tract level, 2) showing less granular cause of death data at more granular geographic levels, 3) suppressing all measures for "strata" or "cells" where the corresponding number of deaths is <11, 4) for gender and race/ethnicity stratified data, if one "cell" within a strata is suppressed per #3, *at least one* complementary "cell" is suppressed to avoid arithmetic backcalcuation of the suppressed cell, and 5) excluding disaggregated data by sex for neonatal conditions. These procedures assure compliance with the California Health and Human Services Agency [Data De-Identification Guidelines](https://www.dhcs.ca.gov/dataandstats/Documents/DHCS-DDG-V2.0-120116.pdf)(DDG).
-
+  
 <br>
-
+  
 * Note regarding YEAR or Year Group
   * At the County and State levels of geography, YEAR is the individual year of death, with current data from 2001 to 2017.  At the Community and Census Tract levels of geography, all data are displayed for the years 2013 to 2017 combined.  These years are combined for statistical stability, so that for these more granular levels of geography, the displayed data are still meaningful, and not just the result of random fluctuations.
 
@@ -19,9 +23,8 @@
   * Social Determinants of Health: The conditions in which people are born, grow, live, work, and age, including the health system. These circumstances are shaped by the distribution of money, power and resources at global, national and local levels.
 
 <br>
-<br>
-
-DATA AND OTHER KEY INPUTS:
+<hr>
+**Data and other Key Inputs:**
 
 <br>
 
@@ -73,9 +76,8 @@ DATA AND OTHER KEY INPUTS:
     * During detailed review of multiple data sources, we observed a number of instances where stated county of residence was not consistent with the census tract to which that death was geocoded. In these instances we will consider recoded the county based on the address and subsequent geocode.
 
 <br>
-<br>
-
-FORMULAS AND MEASURES
+<hr>
+**Formulas and Measures**
 
 <br>
 
