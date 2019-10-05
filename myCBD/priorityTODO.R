@@ -1,3 +1,10 @@
+# fix SDOH such that a specific county can be selected; examine scatter with communities or tracts within that county
+
+# table of contents to technical documentation page
+
+#...data application....for epidemiologic insights into mortality and morbidity in California, with granular person, place and time data and visualizations; including views into the interrelationships of communities, health  disparities, and social determinants of health. 
+
+
 # https://skylab.dev.cdph.ca.gov
 
 # note that SMR included in rank causes only

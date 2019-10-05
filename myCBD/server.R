@@ -25,21 +25,21 @@ shinyServer(function(input, output,session) {
   })
   
   
-  showModal(
-    modalDialog(
-      title = HTML("<h3><center>We are looking for feedback from users like you!</center></h3>"),
-      HTML("<ul>
-       <li>What you are using the information on the site to do?</li> 
-           <li>What do you like? What don't you like?</li>
-           <li>What is missing that you'd like to see?</li></ul> <h1> <center><a href='mailto:michael.samuel@cdph.ca.gov?subject=CCHVIz feedback'>Email us to share your ideas</a></h1>"),
-      footer = NULL,
-      easyClose = T
-      # ,
-      # footer = modalButton("Close")
-    )
-  )
-  
-  
+  # showModal(
+  #   modalDialog(
+  #     title = HTML("<h3><center>We are looking for feedback from users like you!</center></h3>"),
+  #     HTML("<ul>
+  #      <li>What you are using the information on the site to do?</li> 
+  #          <li>What do you like? What don't you like?</li>
+  #          <li>What is missing that you'd like to see?</li></ul> <h1> <center><a href='mailto:michael.samuel@cdph.ca.gov?subject=CCHVIz feedback'>Email us to share your ideas</a></h1>"),
+  #     footer = NULL,
+  #     easyClose = T
+  #     # ,
+  #     # footer = modalButton("Close")
+  #   )
+  # )
+  # 
+  # 
   
   
   
@@ -57,6 +57,14 @@ shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="4
 shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
 shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
   
+
+
+
+
+
+
+
+
 
 
 # -------------------------------------------------------------------------------  

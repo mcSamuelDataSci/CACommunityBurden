@@ -69,8 +69,8 @@
  * [Infectious Diseases Prototype](https://discovery.dev.cdph.ca.gov/fusion/cidVIS/)
 
 ## Resource for Program Action
-[The Community Guide - online guide to what works to promote healthy communities - Community Preventive Services Task Force](https://www.thecommunityguide.org/)
-
+ * [The Community Guide - online guide to what works to promote healthy communities - Community Preventive Services Task Force](https://www.thecommunityguide.org/)
+ * [What Works for Health - Policies and programs that can improve health - County Health Rankings](https://www.countyhealthrankings.org/take-action-to-improve-health/what-works-for-health/policies)
 
 
 [//]: # ( sites for consideration)

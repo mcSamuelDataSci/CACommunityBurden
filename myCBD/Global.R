@@ -28,7 +28,7 @@ maxYear           <- 2018
 testPage <- TRUE
 
 # TEXT Constants
-VERSION           <- "Version P1.4"
+VERSION           <- "Version P2.0a"
 criticalNumber    <- 11
 mTitle            <- "California Community Burden of Disease and Cost Engine"
 figureAttribution <- "California Department of Public Health"
