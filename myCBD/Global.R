@@ -25,7 +25,7 @@ STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
 maxYear           <- 2018
 
-testPage <- TRUE
+viewType <- "Present"
 
 # TEXT Constants
 VERSION           <- "Version P2.0a"
@@ -47,9 +47,9 @@ pdf(NULL)
 
 # DISPLAY Constants
 
-myTitleSize <- 20
-myLegendSize <- 20
-myAxisSize  <- 18
+myTitleSize <- 24
+myLegendSize <- 24
+myAxisSize  <- 22
 
 myTextSize2 <- 12
 myWrapNumber <- 70
@@ -97,6 +97,8 @@ library(stringr)
 # --- IHME work -----------------------
 
 source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
+source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
+source(paste0(myPlace,"/myFunctions/widgetsIHME.R"))
 
 
 

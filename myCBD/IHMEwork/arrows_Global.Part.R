@@ -18,9 +18,23 @@ risk_groups <- c('Environmental/ occupational risks',
                  'Metabolic risks')
 
 # Define constants -----------------------------------------------------------------------
+
+
+
+if (viewType == "Present") {
+  MAX_NODES <- 25
+}
+
+if (viewType == "Study") {
+  MAX_NODES <- 5
+}
+  
+  
+
+
+
 VALID_YEARS <- c(1990:2017)
 # Play with them at your own risk
-MAX_NODES <- 25
 LABEL_LENGTH <- 30
 FONT_SIZE <- 15
 TITLE_FONT_SIZE <- 15

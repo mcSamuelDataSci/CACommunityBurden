@@ -17,12 +17,32 @@ shinyServer(function(input, output,session) {
   #source(paste0(myPlace,"/IHMEwork/arrows_Server.Part.R"))
   
   output$network <- renderVisNetwork({
-    nodes_and_edges <- create_nodes(input$levelX, input$measureX, input$sexX, input$metricX,
-                                    input$yearX[1], input$yearX[2], input$displayX)
+    nodes_and_edges <- create_nodes(input$levelZ, input$measureZ, input$sexZ, input$metricZ,
+                                    input$yearZ[1], input$yearZ[2], input$displayZ)
                                     nodes <- nodes_and_edges$nodes
     edges <- nodes_and_edges$edges
-    vis_network(nodes, edges, input$displayX)
+    vis_network(nodes, edges, input$displayZ)
   })
+  
+  
+  
+   
+  # # RiskByCause -------------------
+   FilteredRiskByCause <- reactive({
+      print(input$levelX)
+      return(FilterRiskByCause(
+      input$levelX,
+       input$yearX,
+       input$sexX,
+       input$metricX,
+       input$measureX
+     ))
+   })
+   output$riskByCause <- renderPlotly({
+     RiskByCausePlot(FilteredRiskByCause())
+   })
+   
+   
   
   
   # showModal(

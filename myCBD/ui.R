@@ -436,9 +436,12 @@ mainPanel(
   #          br(),
   #          plotOutput("oshpdmap", height = 700), value = 91),
 
-  tabPanel("IHME Risk", visNetworkOutput("network"),value = 90),
+#  tabPanel("Arrows", visNetworkOutput("network"),value = 200),
 
- 
+  tabPanel("Risk by Cause", plotlyOutput("riskByCause"),value = 201),
+
+
+
    tabPanel("Technical Documentation",
      br(), 
      includeMarkdown("technical.md"), value = 77),
