@@ -158,7 +158,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
 }
 
 # Create vis network (and supplemental) functions -----------------------------------------------------------------------
-vis_network <- function(nodes, edges, display) {
+vis_network <- function(nodes_and_edges, display) {
   if (display == "cause") {
     groups <- cause_groups
   }
@@ -166,7 +166,7 @@ vis_network <- function(nodes, edges, display) {
     groups <- risk_groups
   }
 
-  visNetwork(nodes, edges) %>%
+  visNetwork(nodes_and_edges$nodes, nodes_and_edges$edges) %>%
     visOptions(height = HEIGHT, width = WIDTH, autoResize = F) %>%
     visNodes(fixed = TRUE, shape = 'box', font = list(size = FONT_SIZE, align = 'left')) %>%
     visEdges(width = 1, smooth = FALSE, hoverWidth = 0) %>%
