@@ -1,8 +1,11 @@
-# Widgets
+# =====================================================
+# Input Widgets for the 2 IHME plots
+# =====================================================
+
 
 displayButtonInput <- function() {
   radioGroupButtons(
-    "displayX",
+    "display",
     label = "Display:",
     choices = c("Cause" = "cause", "Risk" = "risk"),
     selected = "cause",
@@ -13,7 +16,7 @@ displayButtonInput <- function() {
 
 levelSliderInput <- function() {
   sliderInput(
-    "levelX",
+    "level",
     label = h4("Level:"),
     min = 0,
     max = 4,
@@ -23,7 +26,7 @@ levelSliderInput <- function() {
 
 yearSliderInput <- function() {
   sliderInput(
-    "yearX",
+    "year",
     label = h4("Year:"),
     min = min(VALID_YEARS),
     max = max(VALID_YEARS),
@@ -36,7 +39,7 @@ yearSliderInput <- function() {
 
 yearRangeSliderInput <- function() {
   sliderTextInput(
-    "yearX",
+    "yearRange",
     label = h4("Years:"),
     choices = as.character(VALID_YEARS),
     selected = range(VALID_YEARS),
@@ -46,7 +49,7 @@ yearRangeSliderInput <- function() {
 
 sexButtonInput <- function() {
   radioGroupButtons(
-    "sexX",
+    "sex",
     label = h4("Sex:"),
     choices = c(
       "Male" = 1,
@@ -61,7 +64,7 @@ sexButtonInput <- function() {
 
 metricButtonInput <- function() {
   radioGroupButtons(
-    "metricX",
+    "metric",
     label = h4("Metric:"),
     choices = c("#" = 1, "%" = 2, "Rate" = 3),
     selected = 1,
@@ -72,7 +75,7 @@ metricButtonInput <- function() {
 
 measureSelectInput <- function() {
   selectInput(
-    "measureX",
+    "measure",
     label = h4("Measure:"),
     choices = c("Deaths" = 1,
                 "Disability Adjusted Life Years (DALYs)" = 2,
@@ -83,7 +86,7 @@ measureSelectInput <- function() {
 
 showtopSliderInput <- function() {
   sliderInput(
-    "showtopX",
+    "showtop",
     label = h4("Show Top:"),
     min = 1,
     max = 10,
