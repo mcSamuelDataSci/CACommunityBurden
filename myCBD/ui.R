@@ -13,7 +13,6 @@
 #=============================================================================
 
 
-
 # STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
 
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
@@ -27,7 +26,6 @@ fC <- function(vec) {
   tRep <- length(vec)-1
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
 }
-
 
 # Styles for help buttons and boxes
 myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
@@ -85,8 +83,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
  
  
 # SIDEBARS -----------------------------------------------------------------------
-
-sidebarPanel(width=3, 
+sidebarPanel(width=3,
  
 # Tab help buttons on each tab ----------------------------           
              
@@ -222,14 +219,16 @@ conditionalPanel(condition = fC(c(70)),
   conditionalPanel(condition = fC(c(71)),
                    selectInput("myprimetype", "Variable", choice = c("any", "primary"))),
 
-
-
- source(paste0(myPlace,"/IHMEwork/arrows_UI.Part.R"),local=TRUE)$value,
-# not clear what this local=TRUE and then $value does, but it is need so that the word
-# "TRUE" does not show up on each page of the app...odd...
-#  https://community.rstudio.com/t/why-there-is-a-true-in-the-bottom/21552
-
-
+#IHME inputs
+  conditionalPanel(condition = "input.ID == 'arrows' | input.ID == 'riskByCause'",
+                   levelSliderInput(),
+                   yearSliderInput(),
+                   yearRangeSliderInput(),
+                   displayButtonInput(),
+                   sexButtonInput(),
+                   metricButtonInput(),
+                   measureSelectInput()
+  ),
 # Figure Download buttons ---------------------------------------------------
 
 conditionalPanel(condition = "input.ID == 55", downloadButton('trendPNG', 'Download Figure'),br(),br()),     
@@ -436,9 +435,9 @@ mainPanel(
   #          br(),
   #          plotOutput("oshpdmap", height = 700), value = 91),
 
-#  tabPanel("Arrows", visNetworkOutput("network"),value = 200),
+  tabPanel("Arrows", visNetworkOutput("network"),value = "arrows"),
 
-  tabPanel("Risk by Cause", plotlyOutput("riskByCause"),value = 201),
+  tabPanel("Risk by Cause", plotlyOutput("riskByCause", height = 600),value = "riskByCause"),
 
 
 
@@ -451,7 +450,6 @@ mainPanel(
           includeMarkdown("ourLinks.md"), value = 88)
  
   ) # END tabSetPanel
-
  ) # END mainPanel
 ) # END fluidPage
 ) # END ShinyUI
