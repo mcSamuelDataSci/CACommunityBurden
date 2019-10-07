@@ -14,33 +14,51 @@
 shinyServer(function(input, output,session) {
 
 # IHME WORK (TEMP) ########################  
-  #source(paste0(myPlace,"/IHMEwork/arrows_Server.Part.R"))
   
-  output$network <- renderVisNetwork({
-    nodes_and_edges <- create_nodes(input$levelZ, input$measureZ, input$sexZ, input$metricZ,
-                                    input$yearZ[1], input$yearZ[2], input$displayZ)
-                                    nodes <- nodes_and_edges$nodes
-    edges <- nodes_and_edges$edges
-    vis_network(nodes, edges, input$displayZ)
+  # Similar to conditional panels, we can use observe to hide or show
+  # input widgets (defined in ui.R) depending on which tab ID is active.
+  observe({
+    if (input$ID == "arrows") {
+        hide("year")
+        show("display")
+        show("level")
+        show("measure")
+        show("yearRange")
+        show("sex")
+        show("metric")
+      } else if (input$ID == "riskByCause") {
+        hide("display")
+        hide("yearRange")
+        show("level")
+        show("year")
+        show("sex")
+        show("metric")
+        show("measure")
+      }
   })
   
+  # IHME Arrows Data and plot ------------------------
+  output$network <- renderVisNetwork({
+    nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
+                                    input$yearRange[1], input$yearRange[2], input$display)
+    vis_network(nodes_and_edges, input$display)
+    })
   
-  
+  # IHME RiskByCause Data and plot -------------------
+  FilteredRiskByCause <- reactive({
+    return(
+      FilterRiskByCause(
+        input$level,
+        input$year,
+        input$sex,
+        input$metric,
+        input$measure)
+      )
+    })
    
-  # # RiskByCause -------------------
-   FilteredRiskByCause <- reactive({
-      print(input$levelX)
-      return(FilterRiskByCause(
-      input$levelX,
-       input$yearX,
-       input$sexX,
-       input$metricX,
-       input$measureX
-     ))
-   })
-   output$riskByCause <- renderPlotly({
-     RiskByCausePlot(FilteredRiskByCause())
-   })
+  output$riskByCause <- renderPlotly({
+    RiskByCausePlot(FilteredRiskByCause())
+    })
    
    
   
