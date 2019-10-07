@@ -27,6 +27,11 @@ fC <- function(vec) {
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
 }
 
+char_fC <- function(vec) {   # Same as fC() but for a character vector
+  tRep <- length(vec)-1
+  paste0("input.ID == '", vec, c(rep("'|",tRep),"'"), collapse="")
+}
+
 # Styles for help buttons and boxes
 myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
                      color: #fff; background-color: #337ab7; 
@@ -220,7 +225,7 @@ conditionalPanel(condition = fC(c(70)),
                    selectInput("myprimetype", "Variable", choice = c("any", "primary"))),
 
 #IHME inputs
-  conditionalPanel(condition = "input.ID == 'arrows' | input.ID == 'riskByCause'",
+  conditionalPanel(condition = char_fC(c("arrows", "riskByCause")),
                    levelSliderInput(),
                    yearSliderInput(),
                    yearRangeSliderInput(),
