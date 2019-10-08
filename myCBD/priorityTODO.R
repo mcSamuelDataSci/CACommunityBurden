@@ -1,3 +1,9 @@
+# IHME
+#  “Percent” not meaningful / useful  ---  
+#   Show just rate
+
+
+
 # fix SDOH such that a specific county can be selected; examine scatter with communities or tracts within that county
 
 # table of contents to technical documentation page

@@ -1,8 +1,9 @@
 if(1==2){
-  myLHJ="Amador" 
-  myCause="A01"
-  myMeasure = "YLL"
+  myLHJ="CALIFORNIA" 
+  myCause="D05"
+  myMeasure = "aRate"
   mySex   = "Total"
+  myYearGrouping ="One"
 }
 
 # https://stackoverflow.com/questions/29357612/plot-labels-at-ends-of-lines
@@ -65,8 +66,10 @@ tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), g
     scale_y_continuous(limits = c(0, NA)) +
     scale_colour_discrete(guide = 'none') +   # removed legend
     labs(y = myMeasure)  + 
-    geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, font="bold")) +
-    geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1, font="bold"))  +
+    geom_dl(aes(label = sex), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
+    geom_dl(aes(label = sex), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1,'first.bumpup' ,font="bold"))  +
+  
+ 
     labs(title =myTit,size=myTitleSize) +
     labs(y = deathMeasuresNames[deathMeasures == myMeasure]) +
    theme_bw() +

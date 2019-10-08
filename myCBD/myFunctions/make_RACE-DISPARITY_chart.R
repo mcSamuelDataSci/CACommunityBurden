@@ -57,7 +57,7 @@ dPlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasure))
    theme_grey() +   #base_size = myBaseSize
    facet_grid(rows = vars(sex)) +
      scale_fill_manual("legend", values = c("Lowest" = "green", "Statistically Higher" = "red", "Not Statitically Different" = "blue")) +
-   geom_errorbar(aes(ymin=aLCI, ymax=aUCI), width=.1, size=1, position=position_dodge(.9), color="blue") + 
+   geom_errorbar(aes(ymin=aLCI, ymax=aUCI), width=.1, size=1, position=position_dodge(.9), color="gray") + 
    labs(y = deathMeasuresNames[deathMeasures == myMeasure], x="Race/Ethnicity") +
       theme(plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
          axis.title.y = element_blank(),

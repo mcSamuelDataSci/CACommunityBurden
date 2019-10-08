@@ -234,6 +234,8 @@ conditionalPanel(condition = fC(c(70)),
                    metricButtonInput(),
                    measureSelectInput()
   ),
+
+
 # Figure Download buttons ---------------------------------------------------
 
 conditionalPanel(condition = "input.ID == 55", downloadButton('trendPNG', 'Download Figure'),br(),br()),     

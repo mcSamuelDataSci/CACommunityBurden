@@ -20,7 +20,7 @@ levelSliderInput <- function() {
     label = h4("Level:"),
     min = 0,
     max = 4,
-    value = 1
+    value = 2
   )
 }
 

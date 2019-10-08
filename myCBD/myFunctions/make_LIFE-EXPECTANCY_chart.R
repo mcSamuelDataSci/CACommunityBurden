@@ -77,7 +77,7 @@ tplot<-
        ylim(70, 90) +
        geom_line(data=dat.1,aes(x=year, y=`ciex.97.5%`, group=sex,color=sex)) +
       geom_line(data=dat.1,aes(x=year, y=`ciex.2.5%`, group=sex,color=sex)) +
-        scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,1),labels=myLabels) +
+        scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,2),labels=myLabels) +
   #  scale_y_continuous(limits = c(0, NA)) +
     scale_colour_discrete(guide = 'none') +   # removed legend
     labs(y = "life expectancy at birth")  + 

@@ -44,7 +44,7 @@ ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +
      facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
        theme_bw( ) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes   # base_size = 25
-     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
+     scale_y_continuous(labels = comma) + #numbers shown with commas rather than scientific notation
      scale_x_discrete(labels = scales::wrap_format(50)) + #x-axis is condition label--wrapping text so it stacks on top of each other
      #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis
      theme(axis.title.y = element_blank(), #removes nameOnly label

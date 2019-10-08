@@ -26,13 +26,17 @@ myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream")
 
-whichData <- "fake"   # "real" or "fake"
+whichData <- "real"   # "real" or "fake"
 newData  <- FALSE
 
 
 #-------------------------------------------------LOAD PACKAGES -----------------------------------------------------------------------------------------------------------------------------------#
 
-library(tidyverse)
+#library(tidyverse)
+library(dplyr)
+library(readr)
+library(stringr)
+library(tidyr)
 library(haven)
 library(fs)
 library(readxl)
@@ -699,13 +703,21 @@ oshpd16any_primary <- any_diag_code(oshpd16any_primary)
 
 # mcs summarize_at below....NICEEEEEEE! and with gather!!!!!!!!!!!!
 
+# AND NEED TO ADD ANY NEW CONDITIONS HERE!!!!!!!!
+# A07:D10 how to genralize this?
+
 # summary_any dataframe contains the number of hospitalizations for which each CAUSE was one of any diagnosis codes 
 #    (diag_p through odiag24), by sex (statewide numbers) 
 
+
+
+
+
+
 summary_any_CA <-  oshpd16any_primary %>% 
   group_by(sex) %>% 
-  summarise_at(vars(A07:C05), sum) %>% 
-  gather(key = LABEL, value = n_hosp, A07: C05) %>% 
+  summarise_at(vars(A07:D10), sum) %>% 
+  gather(key = LABEL, value = n_hosp, A07: D10) %>% 
   mutate(county = STATE) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% 
   left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
@@ -714,8 +726,8 @@ summary_any_CA <-  oshpd16any_primary %>%
 
 summary_any_county <- oshpd16any_primary %>% 
   group_by(sex, county) %>% 
-  summarise_at(vars(A07:C05), sum) %>% 
-  gather(key = LABEL, value = n_hosp, A07:C05) %>% 
+  summarise_at(vars(A07:D10), sum) %>% 
+  gather(key = LABEL, value = n_hosp, A07:D10) %>% 
   filter(sex == "Female" | sex == "Male" | sex == "Total") %>% 
   left_join(., select(icd_map, nameOnly, LABEL), by = c("LABEL"))
 

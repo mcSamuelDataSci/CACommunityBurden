@@ -11,6 +11,8 @@ A06,Hepatitis
 A06a,Acute hepatitis B
 A06b,Acute hepatitis C
 A07,Respiratory infections
+A07a,Lower respiratory infections
+A07b,Upper respiratory infections
 A08,Maternal conditions
 A09,Neonatal conditions
 A99,Other Infectious Diseases

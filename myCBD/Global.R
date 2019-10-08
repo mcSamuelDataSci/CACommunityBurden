@@ -55,7 +55,7 @@ myTextSize2 <- 12
 myWrapNumber <- 70
 myTitleColor <- "darkblue"
 
-myCex1           <- 1.5  #line labels
+myCex1           <- 2  # 1.5  #line labels
 myCex2           <- 1.2  #currently used only in education trend
 myLineLabelSpace <- 0.3
 

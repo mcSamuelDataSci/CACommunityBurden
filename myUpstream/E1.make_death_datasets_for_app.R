@@ -47,6 +47,10 @@ pop1 <- 1       # 1 year
   yearGrp <- c("2004-2008","2009-2013","2014-2018")
 
 
+myDigits= 6
+  
+  
+  
 
 criticalNum <- 11
 
@@ -800,7 +804,7 @@ datCounty  <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
 datCounty <-  datCounty %>% 
                filter(!(is.na(CAUSE)))                                       %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
                select(-stateCrudeRate,-stateAdjustedRate)                    %>%
-               mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
+               mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
                mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
                
 
@@ -828,7 +832,7 @@ datCounty_3year  <- merge(datCounty_3year,datState_3year,by = c("yearG3","sex","
 datCounty_3year <-  datCounty_3year %>% 
   filter(!(is.na(CAUSE)))                                       %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
   select(-stateCrudeRate,-stateAdjustedRate)                    %>%
-  mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
 
 # -- COUNTY 3-YEAR AGE SPECIFIC ------------------------------------------------------------
@@ -837,7 +841,7 @@ datCounty_3year <-  datCounty_3year %>%
 
 datCounty_AGE_3year <-  datCounty_AGE_3year %>% 
   filter(!(is.na(CAUSE)))                                       %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
-  mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
 
 
@@ -869,7 +873,7 @@ datCounty_5year  <- merge(datCounty_5year,datState_5year,by = c("yearG5","sex","
 datCounty_5year <-  datCounty_5year %>% 
   filter(!(is.na(CAUSE)))                                       %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
   select(-stateCrudeRate,-stateAdjustedRate)                    %>%
-  mutate_if(is.numeric, signif,digits=4)                        %>%  # much smaller file and easier to read
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
 
 
@@ -882,7 +886,7 @@ datCounty_RE <- merge(datCounty_RE,countyAA.RE, by = c("county","yearG3","sex","
 datCounty_RE <- datCounty_RE                                    %>% 
   filter(!(is.na(CAUSE)))                                       %>%  
   select(-ageG)                                                 %>%
-  mutate_if(is.numeric, signif,digits=4)                        %>%  
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      
   
 
@@ -893,21 +897,21 @@ datCounty_EDU <- merge(datCounty_EDU,countyAA.EDU, by = c("county","year","sex",
 
 datCounty_EDU <- datCounty_EDU                                  %>% 
   filter(!(is.na(CAUSE)))                                       %>%  
-  mutate_if(is.numeric, signif,digits=4)                        %>%  
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      
 
 
 # -- COMMUNITY ----------------------------------------------------------------
 
 datComm   <- merge(datComm,    commAA ,by = c("comID","yearG5","sex","CAUSE"),all=TRUE) %>%
-  mutate_if(is.numeric, signif,digits=4) %>%
+  mutate_if(is.numeric, signif,digits = myDigits) %>%
   filter(!is.na(county)) #  as above
 
 
 # -- TRACT --------------------------------------------------------------------
 
 datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG5","sex","CAUSE"),all=TRUE) %>% 
-  mutate_if(is.numeric, signif,digits=4) %>%
+  mutate_if(is.numeric, signif,digits = myDigits) %>%
   filter(!is.na(county))  %>%  # REMOVE ALL out-of-state GEOID and missing GEOID
   filter(!is.na(CAUSE)) # removes about 130 records with bad/no GEOID and/or wrong County based on GEOID
 
