@@ -49,7 +49,6 @@ LEGEND_NODE_WIDTH_CONSTRAINT <- 196
 LEFT_X <- -(WIDTH/2 - 115)
 RIGHT_X <- LEFT_X+350
 
-
 # Create nodes function -----------------------------------------------------------------------
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                           year_from, year_to, display_in) {
@@ -95,35 +94,13 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                           " (", selected_data$lower, "-", selected_data$upper, ")",
                                           sep =""),
                             x = c(rep(LEFT_X, NUM_NODES), rep(RIGHT_X, NUM_NODES)),
-                            y = selected_data$rank2*Y_SPACE_FACTOR - (327))
+                            y = selected_data$rank2*Y_SPACE_FACTOR - (388))  #327
 
   
   edge_nodes <- data.frame(id = 1:nrow(selected_data), hidden = TRUE, group = selected_data$first_parent,
                            x = c(rep(LEFT_X+EDGE_NODE_ADJUSTMENT, NUM_NODES),
                                  rep(RIGHT_X-EDGE_NODE_ADJUSTMENT, NUM_NODES)),
                            y = label_nodes$y)
-  
-
-  title_nodes <- data.frame(label = c("<b>California</b>",  # California Title is now off the chart. Can delete it here, or move it's y-coordinate down to show it.
-                                      paste(switch(metric_id_in,
-                                                   '1' = 'Number of total',
-                                                   '2' = 'Percent of total',
-                                                   '3' = 'Rate, per 100,000, of'),
-                                            switch(measure_id_in,
-                                                   '1' = 'Deaths',
-                                                   '2' = 'Disability Adjusted Life Years',
-                                                   '3' = 'Years Lived with Disability',
-                                                   '4' = 'Years of Life Lost'),
-                                            'for',
-                                            switch(sex_id_in,
-                                                   '1' = 'males',
-                                                   '2' = 'females',
-                                                   '3' = 'both sexes'),
-                                            "in California",
-                                            sep = " "),
-                                      paste(year_from, "Rank"), paste(year_to, "Rank")), rank = c(-2,-1,0,0),
-                            x = c(rep((LEFT_X+RIGHT_X)/2, 2), LEFT_X, RIGHT_X), y = c(-400, -365, 1-(650/2), 1-(650/2)), id = 0:-3, shape = 'text',
-                            font = list(face = 'Bold', size = TITLE_FONT_SIZE))
 
   if (display_in == "cause") {
     groups <- data.frame(label = cause_groups,
@@ -144,7 +121,7 @@ create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                                            x = RIGHT_X + NODE_WIDTH_CONSTRAINT/2 + 20))
 
   # suppressWarnings on this row bind because we want to ignore the coercing to character warnings.
-  nodes <- suppressWarnings(bind_rows(title_nodes, label_nodes, edge_nodes, legend_nodes))
+  nodes <- suppressWarnings(bind_rows(label_nodes, edge_nodes, legend_nodes))
   
   edges <- data.frame(from = c(1:NUM_NODES, 1:(2*NUM_NODES)),
                       to = c((NUM_NODES+1):(2*NUM_NODES), (2*NUM_NODES+1):(4*NUM_NODES)),
