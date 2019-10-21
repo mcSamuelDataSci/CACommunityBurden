@@ -10,12 +10,11 @@
 # 2018
 #
 # =============================================================================
-source(paste0(myPlace,"/myFunctions/input_functions.R"))
+# Load functions that determine what to show based on current tab selection
+source(paste0(myPlace,"/myFunctions/inputFunctions/input_functions.R"))
 
 shinyServer(function(input, output,session) {
 
-  # IHME WORK (TEMP) ########################
-  
   # Store current navID (big tabs) and tabID (subtabs) for use throughout Server
   current <- reactiveValues()
   
@@ -33,7 +32,6 @@ shinyServer(function(input, output,session) {
   })
   
   # Update sidebar inputs and text based on current tab selection
-  # observeEvent( c(current$nav, current$tab), {    # could also just use observe here
   observe({
     if (current$nav %in% c("home", "abouts")) {
       hideAllInputs()
@@ -76,13 +74,14 @@ updatePanels <- function(navsID, tabID="") {
   updateTabsetPanel(session, inputId="navsID", selected = navsID)
   updateTabsetPanel(session, inputId=paste0(navsID, "sID"),   selected=tabID)
 }
-  onclick("map1I",      updatePanels(navsID = "maps",          tabID = "interactiveMapTab"))
-  onclick("map2I",      updatePanels(navsID = "maps",          tabID = "staticMapTab"))  # static map currently not implemented, so just goes to interactive
-  onclick("rankcauseI", updatePanels(navsID = "ranks",         tabID = "rankByCauseTab"))
-  onclick("ranktableI", updatePanels(navsID = "dataTableTab"))
-  onclick("rankgeoI",   updatePanels(navsID = "ranks",         tabID = "rankByGeographyTab"))
-  onclick("trendI",     updatePanels(navsID = "trends",        tabID = "trendTab"))
-  onclick("scatterI",   updatePanels(navsID = "sdohHospitals", tabID = "socialDeterminantsTab"))
+
+onclick("map1I",      updatePanels(navsID = "maps",          tabID = "interactiveMapTab"))
+onclick("map2I",      updatePanels(navsID = "maps",          tabID = "staticMapTab"))  # static map currently not implemented, so just goes to interactive
+onclick("rankcauseI", updatePanels(navsID = "ranks",         tabID = "rankByCauseTab"))
+onclick("ranktableI", updatePanels(navsID = "dataTableTab"))
+onclick("rankgeoI",   updatePanels(navsID = "ranks",         tabID = "rankByGeographyTab"))
+onclick("trendI",     updatePanels(navsID = "trends",        tabID = "trendTab"))
+onclick("scatterI",   updatePanels(navsID = "sdohHospitals", tabID = "socialDeterminantsTab"))
 
   
 # shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
@@ -112,7 +111,6 @@ observeEvent(input$measureHelp,   {myModal(measureHelp)})
 observeEvent(input$levelHelp,     {myModal(levelHelp)})
 
 # generates help "objects" used for tab help buttons, as above
-
 tabHelpList <- list("dataTableTab" = conditionTableTab,
                     "interactiveMapTab" = mapTab,
                     "socialDeterminantsTab" = sdohTab,
@@ -155,7 +153,7 @@ observeEvent(input$tabHelp, {myModal(whoNeedsHelp())})
 observeEvent(input$newsUse,           {myModal(newsUse)})
 
 # -------------------------------------------------------------------------------
-# TODO figure out what's up these observeEvents should achieve & simplify
+# TODO figure out what these observeEvents should achieve & simplify
 
 # create "empty" reactive value
 #  then fill it with current "myCause" selection for use elsewhere
@@ -189,7 +187,7 @@ observeEvent(current$tab,{
   {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()  )}
 })
 
-# TODO These tabs don't even have myGeo input?
+# TODO These tabs don't have myGeo input?
 observeEvent(current$tab,{
   if(current$tab %in% c("rankByGeographyTab","raceTrendTab","educationTrendTab") &  input$myGeo=="Community")
   {updateSelectInput(session, "myCAUSE", choices = phCode,selected=current_Cause()  )}

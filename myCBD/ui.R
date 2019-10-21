@@ -128,7 +128,7 @@ shinyUI(
                        ),
 
                        # Input selections on each tab  --------------------------------------------
-                       source(paste0(myPlace,"/myFunctions/input_widgets.R"),local = TRUE)$value,
+                       source(paste0(myPlace,"/myFunctions/inputFunctions/input_widgets.R"),local = TRUE)$value,
                        
                        # Figure Download buttons ---------------------------------------------------
                        hidden(
@@ -173,15 +173,6 @@ shinyUI(
                                   helpText(h2("which CONDITIONS result in the largest (by what MEASURE) BURDEN of MORTALITY (death) and MORBIDITY (cases, disabiltity, hospitalization) in which POPULATIONS (sex, race/ethnicity, age) in which COMMUNITIES in California at what TIME (years)?",
                                               style="color:red"),h1("WHY?",style="color:blue")),h2("WHAT TO DO ABOUT IT?")
                        )),
-                       
-                       # Text on other pages  -----------------------------------------
-                       
-                       # conditionalPanel(condition = fC(c("rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
-                       #                  paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;"
-                       # ),
-                       # conditionalPanel(condition = fC(c("interactiveMapTab","staticMapTab","rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
-                       #                  helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
-                       # ),
                        
                        # Text on all side bars ------------------------------------------------------
                        div(id = "textAllTabs", style = mySidebarTextSty,
@@ -248,31 +239,6 @@ shinyUI(
                    
                    tabPanel(title = "RANKS", value = "ranks",
                             tabsetPanel(type = "tab", id = "ranksID",
-                                        tabPanel(title = "Arrows", value = "arrowsTab",
-                                                 htmlOutput("arrowsTitles"),
-                                                 # div(style="float:left;",
-                                                 #     visNetworkOutput("network")
-                                                 # ),
-                                                 # div(style="position:relative; left:-200px; font-weight:bold;",
-                                                 #     htmlOutput("arrowsLegend")
-                                                 #     #HTML("Legend goes here?")
-                                                 # )
-                                                 fluidRow(
-                                                   column(10, visNetworkOutput("network")),
-                                                   column(2, 
-                                                          htmlOutput("arrowsLegend")
-                                                          # tags$style(type = "text/css", ".boxed {float:left; margin-right:5px; border: 1px solid black; height: 20px; width:15px;}"),
-                                                          # div(style= "overflow:hidden;",
-                                                          #     div(class="boxed", style="background-color: #C6E2FF"), div("Legend box text")
-                                                          #     ),
-                                                          # div(style= "overflow:hidden;",
-                                                          #     div(class="boxed", style="background-color: #E9A291;"), div("Legend box text number 2")
-                                                          #     )
-                                                          ) 
-                                                 )
-
-
-                                        ),
                                         tabPanel(title = "RANK BY CAUSE", value = "rankByCauseTab",
                                                  br(),
                                                  plotOutput("rankCause", width="100%",height=700)
@@ -283,6 +249,16 @@ shinyUI(
                                         
                                         tabPanel(title = "Attributable Risks", value = "riskByCauseTab",
                                                  plotlyOutput("riskByCause", height = 600)
+                                        ),
+                                        tabPanel(title = "Arrows", value = "arrowsTab",
+                                                 htmlOutput("arrowsTitles"),
+                                                 visNetworkOutput("network")
+                                                 # fluidRow(
+                                                 #   column(10, visNetworkOutput("network")),
+                                                 #   column(2, 
+                                                 #          htmlOutput("arrowsLegend")
+                                                 #) 
+                                                 #)
                                         )
                             )
                    ),
