@@ -39,11 +39,17 @@ fC <- function(vec) {   # Same as int_fC() but for a character vector
   paste0("input.ID == '", vec, c(rep("'|",tRep),"'"), collapse="")
 }
 
+# Colors from CDPH logo
+BLUE <- "#0079C2"
+GREEN <- "#5C8727"
+ORANGE <- "#EB6E1F"
+BEIGE <- "#F9F5F1"
+
 # # Styles for help buttons and boxes
 myTabHelpButtonSty <- "background-color:#694D75; font-size:14px;"
 myDownloadButtonSty <- "padding-left: 8px; padding-right: 8px; margin: 5px;"
 myBoxSty        <- "cursor:pointer; border: 3px solid blue; padding-right:0px;padding-left:0px;"
-mySidebarTextSty <- "float:left; margin: 20px;"
+mySidebarTextSty <- "float:left; margin: 20px; color:#000000;"
 
 
 # START OF UI --------------------------------------------------------------------
@@ -58,7 +64,20 @@ shinyUI(
       tags$style(HTML("
                       @import url('//fonts.googleapis.com/css?family=Open+Sans');
                       * {font-family: 'Open Sans';line-height: 1.5;}
-                      a {text-decoration: none; color: #0000EE;}
+                      #textHomeTab a { color: #0079C2; }
+                      .fa-envelope-o {color:black;}
+                      #inputs {color:black;}
+                      ",
+                      
+                      "
+                      /* main sidebar */
+                      .skin-blue .main-sidebar { background-color: #F9F5F1; }
+                      /* active selected tab in the sidebarmenu */
+                      .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{ background-color: #222D32; color:white; }
+                      /* other links in the sidebarmenu */
+                      .skin-blue .main-sidebar .sidebar .sidebar-menu a{ background-color: #D6D2CE; color: #000000; }
+                      /* other links in the sidebarmenu when hovered */
+                      .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{ background-color: #222D32; color:white; }
                       ",
                       
                       "
@@ -69,19 +88,19 @@ shinyUI(
                       "
                       .tabbable {font-family: Arial;}
                       ",
-                      
+
                       "
-                      .navbar-default .navbar-nav > .active > a, 
-                      .navbar-default .navbar-nav > .active > a:focus, 
+                      .navbar-default .navbar-nav > .active > a,
+                      .navbar-default .navbar-nav > .active > a:focus,
                       .navbar-default .navbar-nav > .active > a:hover
                       {color: white; background-color: #1E282D;}
                       ",
-                      
+
                       "
                       .tabbable > .nav > .active > a,
                       .tabbable > .nav > .active > a:focus,
                       .tabbable > .nav > .active > a:hover
-                      {color: black; }
+                      {color: black;}
                       "
                       )
                  ),
@@ -112,6 +131,7 @@ shinyUI(
     dashboardPage(
       dashboardHeader(title = "California Community Burden of Disease and Cost Engine", titleWidth = 550),
       dashboardSidebar(width=300,
+                       
                        
                        # Menu Items & tabHelp ---------------------------------------------------
                        hidden(
@@ -147,15 +167,16 @@ shinyUI(
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
                            br(),br(),
                            
-                           helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"), br(),
+                           helpText(h4("Welcome to the Preview Version of the CCB!"),style=paste0("color:", GREEN),align="left"), br(),
                            
                            h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
                            
                            actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
                            h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
                            h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
-                           helpText(textIntroA,style="color:grey"), br(),
-                           helpText(textIntroC,style="color:grey"), br(),
+                           textIntroA, br(), br(), textIntroC, br(), br(),
+                           #helpText(textIntroA,style="color:black"), br(),
+                           #helpText(textIntroC,style="color:black"), br(),
                            if (whichData == "real") { helpText(textNote.real,style="color:black")},
                            if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
                            br(),br(),
@@ -176,7 +197,7 @@ shinyUI(
                        
                        # Text on all side bars ------------------------------------------------------
                        div(id = "textAllTabs", style = mySidebarTextSty,
-                           helpText(br(),h4(VERSION),style="color:green")
+                           helpText(br(),h4(VERSION),style=paste0("color:", GREEN))
                        )
                        
                        
@@ -184,13 +205,6 @@ shinyUI(
       
       # MAIN PANNELS-------------------------------------------------------------------------
       dashboardBody(
-        ### Dashboard Styles
-        # tags$head(tags$style(HTML('
-        #                           /* main sidebar */
-        #                           .skin-blue .main-sidebar {
-        #                           background-color: #ffffff;
-        #                           }
-        #                           '))),
         useShinyjs(),
         navbarPage(title="", id = "navsID", # collapsible = TRUE,
                    
