@@ -32,6 +32,11 @@ shinyServer(function(input, output,session) {
   })
   
   # Update sidebar inputs and text based on current tab selection
+  
+  observeEvent(input$myGeo, {  # This is here so it happens before map loads. There may be a better way
+    updateMyGeoHelpText(current$tab, input$myGeo)
+  })
+  
   observe({
     if (current$nav %in% c("home", "abouts")) {
       hideAllInputs()

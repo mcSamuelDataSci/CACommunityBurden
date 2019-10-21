@@ -44,6 +44,7 @@ hideAllInputs <- function() {
 
 # Main function for updating input widgets ------------------------------------------
 updateInputsOnTabId <- function(tabID, myGeo="", myLHJ="", myMeasure="", myMultiRace="") {
+  updateMyGeoHelpText(tabID, myGeo)
   # 1. Build list of desired inputs
   curr_tab_inputs = get(tabID, TAB_INPUTS)
   curr_tab_inputs = c(curr_tab_inputs,
@@ -80,7 +81,7 @@ updateMyCiInput <- function(tabID, myMeasure) {
 updateMyGeoHelpText <- function(tabID, myGeo) {
   if ( (tabID %in% c("interactiveMapTab","staticMapTab","hospitalMapTab")) &&
        (myGeo=="Census Tract")
-  ) { return("myGeoHelpText") }
+  ) { show("myGeoHelpText") }
 }
 
 updateMyMultiRaceHelpText <- function(tabID, myMultiRace) {
