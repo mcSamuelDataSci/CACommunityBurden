@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "real" #changed to fake so I (CD) can run app on my computer
+whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
@@ -93,13 +93,12 @@ library(scales)
 
 library(visNetwork)
 library(stringr)
+library(shinydashboard)
 
 # --- IHME work -----------------------
 
 source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
 source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
-source(paste0(myPlace,"/myFunctions/widgetsIHME.R"))
-
 
 
 # --- CBD Key Inputs ---------------------------------------------------------
@@ -351,11 +350,6 @@ raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw.
 # move these...
 raceNote         <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
 multiRaceWarning <- "** Note: Multirace data are NOT RELIABLE due to changing data collection practices"
-
-
-
-
-
 
 
 # --- END ---------------------------------------------------------------------
