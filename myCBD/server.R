@@ -10,64 +10,48 @@
 # 2018
 #
 # =============================================================================
+source(paste0(myPlace,"/myFunctions/input_functions.R"))
 
 shinyServer(function(input, output,session) {
 
-# IHME WORK (TEMP) ########################  
+  # IHME WORK (TEMP) ########################
   
-  # Similar to conditional panels, we can use observe to hide or show
-  # input widgets (defined in ui.R) depending on which tab ID is active.
+  # Store current navID (big tabs) and tabID (subtabs) for use throughout Server
+  current <- reactiveValues()
+  
+  # Update current nav and tab values any time tab selection changes
   observe({
-    if (input$ID == "arrows") {
-        hide("year")
-        show("display")
-        show("level")
-        show("measure")
-        show("yearRange")
-        show("sex")
-        show("metric")
-      } else if (input$ID == "riskByCause") {
-        hide("display")
-        hide("yearRange")
-        show("level")
-        show("year")
-        show("sex")
-        show("metric")
-        show("measure")
-      }
+    current$nav = input$navsID
+    current$tab <- switch(current$nav,
+                          "maps" = input$mapsID,
+                          "ranks" = input$ranksID,
+                          "trends" = input$trendsID,
+                          "sdohHospitals" = input$sdohHospitalsID,
+                          current$nav)
+    print(current$tab)
+    updateTabItems(session, "plotsMenuItems", "tabInputs")  # Always set menu to tabInputs, not tabInfo
   })
   
-  # IHME Arrows Data and plot ------------------------
-  output$network <- renderVisNetwork({
-    nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
-                                    input$yearRange[1], input$yearRange[2], input$display)
-    vis_network(nodes_and_edges, input$display)
-    })
-  
-  # IHME RiskByCause Data and plot -------------------
-  FilteredRiskByCause <- reactive({
-    return(
-      FilterRiskByCause(
-        input$level,
-        input$year,
-        input$sex,
-        input$metric,
-        input$measure)
-      )
-    })
-   
-  output$riskByCause <- renderPlotly({
-    RiskByCausePlot(FilteredRiskByCause())
-    })
-   
-   
-  
-  
+  # Update sidebar inputs and text based on current tab selection
+  # observeEvent( c(current$nav, current$tab), {    # could also just use observe here
+  observe({
+    if (current$nav %in% c("home", "abouts")) {
+      hideAllInputs()
+      hide("plotsMenu")
+      show("textHomeTab")
+    } else {
+      show("plotsMenu")
+      show("textNotHomeTab")
+      updateInputsOnTabId(current$tab, input$myGeo, input$myLHJ, input$myMeasure, input$myMultiRace)
+      hide("textHomeTab")
+    }
+  })
+
   # showModal(
   #   modalDialog(
   #     title = HTML("<h3><center>We are looking for feedback from users like you!</center></h3>"),
   #     HTML("<ul>
-  #      <li>What you are using the information on the site to do?</li> 
+  #      <li>What you are using the information on the site to do?</li>
   #          <li>What do you like? What don't you like?</li>
   #          <li>What is missing that you'd like to see?</li></ul> <h1> <center><a href='mailto:michael.samuel@cdph.ca.gov?subject=CCHVIz feedback'>Email us to share your ideas</a></h1>"),
   #     footer = NULL,
@@ -76,36 +60,40 @@ shinyServer(function(input, output,session) {
   #     # footer = modalButton("Close")
   #   )
   # )
-  # 
-  # 
-  
-  
-  
-# -------------------------------------------------------------------------------  
+  #
+  #
+
+
+# -------------------------------------------------------------------------------
 
 # "onclick" is a function from shinyjs package
 # used here to move to specified tab when specified image in clicked
 # first perameter is id associated with images from home page main pannel
 #  see ui.R  "tabPanel("Home Page"..."
-shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
-shinyjs::onclick("map2I",     updateTabsetPanel(session,inputId="ID",selected="23"))  
-shinyjs::onclick("rankcauseI",updateTabsetPanel(session,inputId="ID",selected="33"))  
-shinyjs::onclick("ranktableI",updateTabsetPanel(session,inputId="ID",selected="45"))  
-shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="44"))  
-shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
-shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
+
+  # Function to update panel selection (or do anything else..) on img click
+updatePanels <- function(navsID, tabID="") {
+  updateTabsetPanel(session, inputId="navsID", selected = navsID)
+  updateTabsetPanel(session, inputId=paste0(navsID, "sID"),   selected=tabID)
+}
+  onclick("map1I",      updatePanels(navsID = "maps",          tabID = "interactiveMapTab"))
+  onclick("map2I",      updatePanels(navsID = "maps",          tabID = "staticMapTab"))  # static map currently not implemented, so just goes to interactive
+  onclick("rankcauseI", updatePanels(navsID = "ranks",         tabID = "rankByCauseTab"))
+  onclick("ranktableI", updatePanels(navsID = "dataTableTab"))
+  onclick("rankgeoI",   updatePanels(navsID = "ranks",         tabID = "rankByGeographyTab"))
+  onclick("trendI",     updatePanels(navsID = "trends",        tabID = "trendTab"))
+  onclick("scatterI",   updatePanels(navsID = "sdohHospitals", tabID = "socialDeterminantsTab"))
+
   
+# shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
+# shinyjs::onclick("map2I",     updateTabsetPanel(session,inputId="ID",selected="23"))  
+# shinyjs::onclick("rankcauseI",updateTabsetPanel(session,inputId="ID",selected="33"))  
+# shinyjs::onclick("ranktableI",updateTabsetPanel(session,inputId="ID",selected="45"))  
+# shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="44"))  
+# shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
+# shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
 
-
-
-
-
-
-
-
-
-
-# -------------------------------------------------------------------------------  
+# -------------------------------------------------------------------------------
 
 # function used below as "shortcut" for formating each Modal
 myModal <- function(whatInfo) {
@@ -115,29 +103,59 @@ myModal <- function(whatInfo) {
 ))}
 
 # generates help "objects" used for "drop down" help buttons
-# single argument to each HTML function is a text object (vector of length 1) 
+# single argument to each HTML function is a text object (vector of length 1)
 #   generated by source("...AppText.txt) in Global.R
 observeEvent(input$causeHelp,     {myModal(causeHelp)})
 observeEvent(input$cutmethodHelp, {myModal(cutmethodHelp)})
-observeEvent(input$statecutHelp,  {myModal(stateCutHelp)})
+observeEvent(input$stateCutHelp,  {myModal(stateCutHelp)})
 observeEvent(input$measureHelp,   {myModal(measureHelp)})
 observeEvent(input$levelHelp,     {myModal(levelHelp)})
 
-
-
 # generates help "objects" used for tab help buttons, as above
-observeEvent(input$mapTab,            {myModal(mapTab)})
-observeEvent(input$conditionTab,      {myModal(conditionTab)})
-observeEvent(input$conditionTableTab, {myModal(conditionTableTab)})
-observeEvent(input$conditionSexTab,   {myModal(conditionSexTab)})
-observeEvent(input$rankGeoTab,        {myModal(rankGeoTab)})
-observeEvent(input$trendTab,          {myModal(trendTab)})
-observeEvent(input$sdohTab,           {myModal(sdohTab) })
+
+tabHelpList <- list("dataTableTab" = conditionTableTab,
+                    "interactiveMapTab" = mapTab,
+                    "socialDeterminantsTab" = sdohTab,
+                    "trendTab" = trendTab,
+                    "rankByCauseTab" = conditionTab,
+                    "rankByGeographyTab" = rankGeoTab,
+                    "rankByCauseAndSexTab" = conditionSexTab)
+
+whoNeedsHelp <- reactive({
+  if (current$tab %in% names(tabHelpList)) {
+    return(tabHelpList[[current$tab]])
+  } else { return("Help Info is not yet available for this tab.") }
+})
+
+# tabHelp as a Menu Item and output variable
+observeEvent(input$plotsMenuItems, {
+  if (input$plotsMenuItems == "tabInputs") {
+    hide("tabHelpInfo")
+    show("inputs")
+  } else {
+    show("tabHelpInfo")
+    hide("inputs")
+  }
+})
+
+output$currTabInfo <- renderText(whoNeedsHelp())
+
+# tabHelp as a button
+observeEvent(input$tabHelp, {myModal(whoNeedsHelp())})
+
+# observeEvent(input$mapTab,            {myModal(mapTab)})
+# observeEvent(input$conditionTab,      {myModal(conditionTab)})
+# observeEvent(input$conditionTableTab, {myModal(conditionTableTab)})
+# observeEvent(input$conditionSexTab,   {myModal(conditionSexTab)})
+# observeEvent(input$rankGeoTab,        {myModal(rankGeoTab)})
+# observeEvent(input$trendTab,          {myModal(trendTab)})
+# observeEvent(input$sdohTab,           {myModal(sdohTab) })
 
 # generates text "object" used for news you can use buttons, from "...newsUseText.txt" as above
 observeEvent(input$newsUse,           {myModal(newsUse)})
 
-# -------------------------------------------------------------------------------  
+# -------------------------------------------------------------------------------
+# TODO figure out what's up these observeEvents should achieve & simplify
 
 # create "empty" reactive value
 #  then fill it with current "myCause" selection for use elsewhere
@@ -148,57 +166,50 @@ observeEvent(input$myCAUSE, { current_Cause(input$myCAUSE) })
 #   selection if Community or County level
 observeEvent(input$myGeo, {
     if(input$myGeo=="Census Tract"){updateSelectInput(session, "myCAUSE", choices = bigCode ) }
-    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_Cause()) } 
-    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()  ) }
+    if(input$myGeo=="Community")   {updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_Cause()) }
+    if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()) }
 })
-
 
 
 # if myLHJ is not STATE (e.g. "CALIFORNIA"), then myGeo is "Community" so
 #  that county map will not show just overall county data
 
+# Can combine these 2 into 1:
 observeEvent(input$myLHJ, {
-  if(input$myLHJ != STATE & input$ID %in% c(22,23)){updateSelectInput(session, "myGeo", selected = "Community") }
+  if(input$myLHJ != STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){updateSelectInput(session, "myGeo", selected = "Community") }
 })
 
-observeEvent(input$ID, {
-  if(input$myLHJ != STATE & input$ID %in% c(22,23)){updateSelectInput(session, "myGeo", selected = "Community") }
+observeEvent(current$tab, {
+  if(input$myLHJ != STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){updateSelectInput(session, "myGeo", selected = "Community") }
 })
-
-
-
-
-
 
 # Hard wire... Trend only COUNTY for now
-observeEvent(input$ID,{
-  if(input$ID %in% c(55) ) 
+observeEvent(current$tab,{
+  if(current$tab %in% c("trendTab") )
   {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()  )}
 })
-    
 
-observeEvent(input$ID,{
-  if(input$ID %in% c(44,56,57) &  input$myGeo=="Community") 
+# TODO These tabs don't even have myGeo input?
+observeEvent(current$tab,{
+  if(current$tab %in% c("rankByGeographyTab","raceTrendTab","educationTrendTab") &  input$myGeo=="Community")
   {updateSelectInput(session, "myCAUSE", choices = phCode,selected=current_Cause()  )}
 })
 
-
-
-observeEvent(input$ID,{
-  if(input$ID %in% c(22,23)  & input$myGeo=="Census Tract" ) 
+observeEvent(current$tab,{
+  if(current$tab %in% c("interactiveMapTab","staticMapTab")  & input$myGeo=="Census Tract" )
   {updateSelectInput(session, "myCAUSE", choices = bigCode )}
 })
 
 
 # not used now, but saved as examples of other reactivity
 # observeEvent(input$ID,{
-#  if(input$ID %in% c(33,34,44,45,55)) 
+#  if(input$ID %in% c(33,34,44,45,55))
 #   {updateSelectInput(session, "myLHJ", choices = lList, selected=current_LHJ())}
-#  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA") 
+#  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA")
 #   {updateSelectInput(session, "myLHJ", choices = lListNoState, selected=current_LHJ())}
-#  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA") 
+#  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA")
 #   {updateSelectInput(session, "cZoom", selected=FALSE) }
-#   
+#
 # )
 #for two input use:
 # observeEvent(input$test1 | input$test2, {
@@ -222,7 +233,7 @@ output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, inp
 # use dbounce() below to "delay" rendering of may to avoid temporary error
 # output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
 
-# make's sure inputs are Truthy (read ?isTruthy) 
+# make's sure inputs are Truthy (read ?isTruthy)
 # mapJunk          <- reative({
 #   req(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)
 #   cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)})
@@ -233,7 +244,7 @@ output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, inp
 
   output$cbdMapTL   <- renderLeaflet(mapJunk())
 
-  
+
   output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
   png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
   print(mapJunk())
@@ -294,6 +305,42 @@ output$trendData <- downloadHandler(
   }
 )
 
+# IHME ----------------------------------------------------------------------------------------------------
+# Arrows Data and plot
+output$arrowsTitles <- renderText({
+  paste0('<div style="margin-bottom:-1em;">',
+         '<h4 style="white-space:nowrap;">', paste(METRICS[[input$metric]]$name, "of", MEASURES[[input$measure]]$short_name, "for", SEXES[[input$sex]], "in all of California"), '</h4>',
+         '<div style="float:left; margin-left: 70px; font-weight: bold;">', input$yearRange[1], " Rankings", '</div>',
+         '<div style="position:relative; left: 250px; font-weight: bold;">', input$yearRange[2], " Rankings", '</div>',
+         '</div>')
+})
+
+output$arrowsLegend <- renderText({   # TODO: lineheight styling, legend text reactive
+  paste0('<div style="overflow:hidden;">',
+         '<div style="background-color: #C6E2FF; float:left; margin-right:5px; border: 1px solid black; height: 15px; width:15px;"> </div>',
+         '<div style="line-height:1; display: block;">', "Legend box text", '</div>',
+         '<div style="background-color: #E9A291; float:left; margin-right:5px; border: 1px solid black; height: 20px; width:15px;"> </div>',
+         '<div style="line-height:1; display: block;">', "Legend box text numero dos", '</div>',
+         '</div>'
+  )
+  
+})
+
+output$network <- renderVisNetwork({
+  nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
+                                  input$yearRange[1], input$yearRange[2], input$display)
+  vis_network(nodes_and_edges, input$display)
+})
+
+# RiskByCause Data and plot
+FilteredRiskByCause <- reactive({
+  return(FilterRiskByCause( input$level, input$year, input$sex, input$metric, input$measure))
+})
+
+output$riskByCause <- renderPlotly({
+  RiskByCausePlot(FilteredRiskByCause())
+})
+
 
 # ---------------------------------------------------------------------------------------------------------
 
@@ -311,7 +358,7 @@ output$trend  <- renderPlot(trendStep()$plot)
 myPlotly <- FALSE
 if (!myPlotly)  output$disparityRace <- renderPlot(disparityStep())
 if ( myPlotly)  output$disparityRace <- renderPlotly(disparityStep())
-  
+
 
 # ---------------------------------------------------------------------------------------------------------
 

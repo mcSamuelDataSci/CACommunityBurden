@@ -12,484 +12,371 @@
 #
 #=============================================================================
 
+# "homeTab" = 11
+# "interactiveMapTab" = 22
+# "staticMapTab" = 23
+# "rankByCauseTab" = 33
+# "dataTableTab" = 45
+# "rankByGeographyTab" = 44
+# "trendTab" = 55
+# "socialDeterminantsTab" = 66
+# "raceTrendTab" = 56
+# "educationTrendTab" = 57
+# "hospitalMapTab" = 91
 
 # STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
 
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
-
-#names(lMeasures) <- lMeasuresC
-
-
 # function used as "short-cut" when making criteria for conditionals below
-fC <- function(vec) {
+int_fC <- function(vec) {
   tRep <- length(vec)-1
   paste("input.ID == ",vec,    c(rep("|",tRep),""), collapse="")
 }
 
-char_fC <- function(vec) {   # Same as fC() but for a character vector
+fC <- function(vec) {   # Same as int_fC() but for a character vector
   tRep <- length(vec)-1
   paste0("input.ID == '", vec, c(rep("'|",tRep),"'"), collapse="")
 }
 
-# Styles for help buttons and boxes
-myButtonSty     <- "height:22px; padding-top:0px; margin-top:-5px; float:right;
-                     color: #fff; background-color: #337ab7; 
-                     border-color: #2e6da4"
-myHelpButtonSty <- "background-color: #694D75;font-size:14px;"
-myBoxSty        <- "cursor:pointer; border: 3px solid blue;
-                    padding-right:0px;padding-left:0px;"
+# # Styles for help buttons and boxes
+myTabHelpButtonSty <- "background-color:#694D75; font-size:14px;"
+myDownloadButtonSty <- "padding-left: 8px; padding-right: 8px; margin: 5px;"
+myBoxSty        <- "cursor:pointer; border: 3px solid blue; padding-right:0px;padding-left:0px;"
+mySidebarTextSty <- "float:left; margin: 20px;"
+
 
 # START OF UI --------------------------------------------------------------------
 
-shinyUI(fluidPage(theme = "bootstrap.css",
-  
-                  
- # current approach to setting style for main fonts and hyperlink font
- # TODO needs cleaning, improvement, and documentation from someone knowledgeable
- tags$head(
-   tags$style(HTML("
-     @import url('//fonts.googleapis.com/css?family=Open+Sans');
-     * {font-family: 'Open Sans';line-height: 1.5;}
-     a {text-decoration: none; color: #0000EE;}
-                   ")   ),
-   includeScript("googleAnalytics.js")
-   
-   ),
-                  
- # from prior attempts to set fonts etc - maybe something useful here  
-  # tags$head(tags$style(HTML('
-  #   .skin-blue .main-header .logo:hover {background-color: #3c8dbc; }
-  #   .main-header .logo {
-  #   font-family: Tahoma, Geneva, sans-serif; font-weight: bold; font-size: 20px;}')),
-  # tags$style(type='text/css', "* {font-family: 'Open Sans', Georgia; }"),                
-                  
-
- tags$h3(mTitle), # app main title supplied from Global     
- 
- # supprisingly enough, this removes the tick marks between the years on the year slider
- # TODO how does this work?
- tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),   
-  
- 
-# code from here https://community.rstudio.com/t/shiny-slider-new-design/24765/4
-#  so that slider bar does not fill with color
+shinyUI(
+  fluidPage(
+    theme = "bootstrap.css",
+    
+    # current approach to setting style for main fonts and hyperlink font
+    # TODO needs cleaning, improvement, and documentation from someone knowledgeable
+    tags$head(
+      tags$style(HTML("
+                      @import url('//fonts.googleapis.com/css?family=Open+Sans');
+                      * {font-family: 'Open Sans';line-height: 1.5;}
+                      a {text-decoration: none; color: #0000EE;}
+                      ",
+                      
+                      "
+                      .navbar-brand {display:none;}
+                      .navbar-default {background-color: #222D32 !important;}
+                      .navbar-default .navbar-nav > li > a {font-size: 13px;}
+                      ",
+                      "
+                      .tabbable {font-family: Arial;}
+                      ",
+                      
+                      "
+                      .navbar-default .navbar-nav > .active > a, 
+                      .navbar-default .navbar-nav > .active > a:focus, 
+                      .navbar-default .navbar-nav > .active > a:hover
+                      {color: white; background-color: #1E282D;}
+                      ",
+                      
+                      "
+                      .tabbable > .nav > .active > a,
+                      .tabbable > .nav > .active > a:focus,
+                      .tabbable > .nav > .active > a:hover
+                      {color: black; }
+                      "
+                      )
+                 ),
+      includeScript("googleAnalytics.js")
+      
+      ),
+    
+    #tags$h3(mTitle), # app main title supplied from Global
+    
+    # supprisingly enough, this removes the tick marks between the years on the year slider
+    # TODO how does this work?
+    tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),
+    
+    
+    # code from here https://community.rstudio.com/t/shiny-slider-new-design/24765/4
+    #  so that slider bar does not fill with color
     tags$style(
-     ".irs-bar {",
-     "  border-color: transparent;",
-     "  background-color: transparent;",
-     "}",
-     ".irs-bar-edge {",
-     "  border-color: transparent;",
-     "  background-color: transparent;",
-     "}"
-   ),
- 
- 
- 
-# SIDEBARS -----------------------------------------------------------------------
-sidebarPanel(width=3,
- 
-# Tab help buttons on each tab ----------------------------           
-             
-  conditionalPanel(condition = fC(c(22,23)), actionButton("mapTab",           "Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(33)),    actionButton("conditionTab",     "Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(45)),    actionButton("conditionTableTab","Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(34)),    actionButton("conditionSexTab",  "Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(44)),    actionButton("rankGeoTab",       "Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(55)),    actionButton("trendTab",         "Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(66)),    actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
-  conditionalPanel(condition = fC(c(1)),     actionButton("sdohTab",          "Tab Help",style=myHelpButtonSty),br(),br()),
+      ".irs-bar {",
+      "  border-color: transparent;",
+      "  background-color: transparent;",
+      "}",
+      ".irs-bar-edge {",
+      "  border-color: transparent;",
+      "  background-color: transparent;",
+      "}"
+    ),
+    
+    dashboardPage(
+      dashboardHeader(title = "California Community Burden of Disease and Cost Engine", titleWidth = 550),
+      dashboardSidebar(width=300,
+                       
+                       # Menu Items & tabHelp ---------------------------------------------------
+                       hidden(
+                         div(id = "plotsMenu",
+                             sidebarMenu(id = "plotsMenuItems",
+                                         menuItem("Show Inputs", tabName = "tabInputs"),
+                                         menuItem("Show Tab Info", tabName = "tabInfo")
+                             )
+                         ),
+                         div(id = "tabHelpInfo", style = mySidebarTextSty,
+                             htmlOutput("currTabInfo", inline=TRUE)
+                         ),
+                         actionButton("tabHelp", "Tab Help", style=myTabHelpButtonSty)
+                       ),
+
+                       # Input selections on each tab  --------------------------------------------
+                       source(paste0(myPlace,"/myFunctions/input_widgets.R"),local = TRUE)$value,
+                       
+                       # Figure Download buttons ---------------------------------------------------
+                       hidden(
+                         div(id = "trendDownloads", style = "margin: 10px;",
+                             downloadButton('trendPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty)),
+                             downloadButton('trendData', 'Download Data', style = paste0("float: right;", myDownloadButtonSty))
+                         ),
+                         div(id = "rankCauseDownloads", style = "margin: 10px;",
+                             downloadButton('rankCauseFigure', 'Download Figure', style = myDownloadButtonSty)
+                         )
+                       ),
+
+                       # Side bar text -------------------------------------------------------------
+                       
+                       div(id = "textHomeTab", style = mySidebarTextSty,
+                           HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
+                           br(),br(),
+                           
+                           helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"), br(),
+                           
+                           h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
+                           
+                           actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
+                           h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
+                           h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
+                           helpText(textIntroA,style="color:grey"), br(),
+                           helpText(textIntroC,style="color:grey"), br(),
+                           if (whichData == "real") { helpText(textNote.real,style="color:black")},
+                           if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
+                           br(),br(),
+                           icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"), br(),
+                           tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"), br(),
+                           tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
+                       ),
+                       
+                       div(id = "textNotHomeTab", style = mySidebarTextSty,
+                           br(),HTML('<left><img src="CDPH.gif" height="125" width="150"></left>')
+                       ),
+                       
+                       # Home page 0 side bar text. condition = fC(c(10)),  Not sure when this comes up?
+                       hidden(div(id = "homeTab0",
+                                  helpText(h2("which CONDITIONS result in the largest (by what MEASURE) BURDEN of MORTALITY (death) and MORBIDITY (cases, disabiltity, hospitalization) in which POPULATIONS (sex, race/ethnicity, age) in which COMMUNITIES in California at what TIME (years)?",
+                                              style="color:red"),h1("WHY?",style="color:blue")),h2("WHAT TO DO ABOUT IT?")
+                       )),
+                       
+                       # Text on other pages  -----------------------------------------
+                       
+                       # conditionalPanel(condition = fC(c("rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
+                       #                  paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;"
+                       # ),
+                       # conditionalPanel(condition = fC(c("interactiveMapTab","staticMapTab","rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
+                       #                  helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
+                       # ),
+                       
+                       # Text on all side bars ------------------------------------------------------
+                       div(id = "textAllTabs", style = mySidebarTextSty,
+                           helpText(br(),h4(VERSION),style="color:green")
+                       )
+                       
+                       
+      ), # -- END of dashboard Sidebar-------------------------------------------------------
+      
+      # MAIN PANNELS-------------------------------------------------------------------------
+      dashboardBody(
+        ### Dashboard Styles
+        # tags$head(tags$style(HTML('
+        #                           /* main sidebar */
+        #                           .skin-blue .main-sidebar {
+        #                           background-color: #ffffff;
+        #                           }
+        #                           '))),
+        useShinyjs(),
+        navbarPage(title="", id = "navsID", # collapsible = TRUE,
+                   
+                   tabPanel(title = "HOME", value = "home",
+                            br(),align='center',
+                            h4(HTML(above1),align="left"),
+                            fluidRow(
+                              column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
+                              column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
+                              column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
+                              column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))),
+                            br(),
+                            fluidRow(
+                              column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
+                              column(width=4,img(id="ranktableI", src="table.png", width="100%", onmouseout="this.src='table.png'", onmouseover="this.src='table2.png'", style = myBoxSty)),
+                              column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty)))
+                   ),
+                   
+                   tabPanel(title = "ABOUT", value = "abouts",
+                            tabsetPanel(type="tab", id="aboutsID",
+                                        
+                                        tabPanel(title = "OVERVIEW", value = "overviewTab",
+                                                 br(), 
+                                                 includeMarkdown("About.md")
+                                        ),
+                                        tabPanel(title = "Technical Documentation", value = "techDocTab",
+                                                 br(), 
+                                                 includeMarkdown("technical.md")
+                                        ),
+                                        tabPanel(title = "Links to Other Data", value = "otherLinksTab",
+                                                 br(), 
+                                                 includeMarkdown("ourLinks.md")
+                                        )
+                            )
+                   ),
+                   
+                   
+                   tabPanel(title = "MAPS", value = "maps",
+                            tabsetPanel(type = "tab", id = "mapsID",
+                                        tabPanel(title = "INTERACTIVE MAP", value = "interactiveMapTab",
+                                                 br(), htmlOutput("map_title")  ,
+                                                 leafletOutput("cbdMapTL", width=700, height=700)
+                                        )
+                            )
+                   ),
+                   
+                   tabPanel(title = "RANKS", value = "ranks",
+                            tabsetPanel(type = "tab", id = "ranksID",
+                                        tabPanel(title = "Arrows", value = "arrowsTab",
+                                                 htmlOutput("arrowsTitles"),
+                                                 # div(style="float:left;",
+                                                 #     visNetworkOutput("network")
+                                                 # ),
+                                                 # div(style="position:relative; left:-200px; font-weight:bold;",
+                                                 #     htmlOutput("arrowsLegend")
+                                                 #     #HTML("Legend goes here?")
+                                                 # )
+                                                 fluidRow(
+                                                   column(10, visNetworkOutput("network")),
+                                                   column(2, 
+                                                          htmlOutput("arrowsLegend")
+                                                          # tags$style(type = "text/css", ".boxed {float:left; margin-right:5px; border: 1px solid black; height: 20px; width:15px;}"),
+                                                          # div(style= "overflow:hidden;",
+                                                          #     div(class="boxed", style="background-color: #C6E2FF"), div("Legend box text")
+                                                          #     ),
+                                                          # div(style= "overflow:hidden;",
+                                                          #     div(class="boxed", style="background-color: #E9A291;"), div("Legend box text number 2")
+                                                          #     )
+                                                          ) 
+                                                 )
+
+
+                                        ),
+                                        tabPanel(title = "RANK BY CAUSE", value = "rankByCauseTab",
+                                                 br(),
+                                                 plotOutput("rankCause", width="100%",height=700)
+                                        ),
+                                        tabPanel(title = "RANK BY GEOGRAPHY", value = "rankByGeographyTab",
+                                                 plotOutput("rankGeo", width="100%", height=1700)
+                                        ),
+                                        
+                                        tabPanel(title = "Attributable Risks", value = "riskByCauseTab",
+                                                 plotlyOutput("riskByCause", height = 600)
+                                        )
+                            )
+                   ),
+                   
+                   tabPanel(title = "TRENDS", value = "trends",
+                            tabsetPanel(type = "tab", id = "trendsID",
+                                        tabPanel(title = "Trend", value = "trendTab",
+                                                 br(),
+                                                 plotOutput("trend", width="100%",height=700)  # plotlyOutput("trend", width="100%",height=700),  value = "trendTab"),
+                                        ),
+                                        tabPanel(title = "LIFE EXPECTANCY", value = "lifeExpectancyTab",
+                                                 br(),
+                                                 plotOutput("lifeTable", width="100%",height = 700)
+                                        ),
+                                        tabPanel(title = "Age Trend", value = "ageTrendTab",
+                                                 br(),
+                                                 plotOutput("trendAge", width="100%",height=700)
+                                        ),
+                                        tabPanel(title = "Race Trend", value = "raceTrendTab",
+                                                 br(),
+                                                 plotOutput("trendRace", width="100%",height = 700)
+                                        ),
+                                        tabPanel(title = "Race Dispartiy", value = "raceDisparityTab",
+                                                 br(),
+                                                 plotOutput("disparityRace", width="100%",height = 700) # plotlyOutput("disparityRace", width="100%",height = 700)
+                                        ),
+                                        tabPanel(title = "Education Trend", value = "educationTrendTab",
+                                                 br(),
+                                                 plotOutput("trendEducation", width="100%",height=700)
+                                        )
+                            )
+                   ),
+                   
+                   tabPanel(title = "DATA TABLE", value = "dataTableTab",
+                            dataTableOutput("rankCauseT")   #DT::
+                   ),
+                   
+                   tabPanel(title = "SDOH AND HOSPITALS", value = "sdohHospitals",
+                            tabsetPanel(type = "tab", id = "sdohHospitalsID",
+                                        
+                                        tabPanel(title = "SOCIAL DETERMINANTS", value = "socialDeterminantsTab",
+                                                 br(),
+                                                 plotlyOutput("scatter", height=700)
+                                        ),
+                                        tabPanel(title = "HOSPITAL DISCHARGE", value = "hospitalDischargeTab",
+                                                 br(),
+                                                 plotOutput("OSHPD1", height=700)
+                                        ),
+                                        tabPanel(title = "HOSPITAL DISCHARGE--PRIMARY AND ANY DIAGNOSES", value = "hospitalDischargePandDTab",
+                                                 br(),
+                                                 plotOutput("any_primary", height = 700)
+                                        )
+                            )
+                   )
+                   
+                  
+
+        ) # END navbarPage
+      ) # END dashboardBody
+    ) # END dashboardPage
+  ) # END fluidPage
+  )# END ShinyUI
   
-# Input selections on each tab  ----------------------------           
-
- # myCAUSE
- conditionalPanel(condition = fC(c(22,23,44,54,55,56,57,58,66, 91)), 
-   # first parameter of actionButton (inputId) generated by server.R
-   actionButton(inputId="causeHelp", label="?",style=myButtonSty) , 
-   dottedSelectInput("myCAUSE", HTML("Cause of Death:"), choices=fullList)),    # , selected="0"
- 
- # myLHJ
-
- conditionalPanel(condition = fC(c(15,22,23,33,44,45,54,55,56,57,58,68,69,70, 71, 91)), 
-   selectInput("myLHJ","County/State:",choices=lList,selected=STATE)),
-
- # myGeo
- conditionalPanel(condition = fC(c(22,23,66,91)),
-   selectInput("myGeo","Geographic Level:",
-               choices=c("County","Community","Census Tract"))),
- conditionalPanel(condition = paste("(input.myGeo == 'Census Tract') & (",fC(c(22,23,91)),")"), 
-                 helpText(h6(tractWarning,style="color:red"))) ,
-
-
- 
- # myYear
- conditionalPanel(condition = 
-   paste(
-     "( (input.myGeo == 'County') && (", fC(c(22,23)),") ) 
-     |( (input.myLHJ == 'CALIFORNIA') && (", fC(c(44)),") ) 
-     | (", fC(c(33,45)),")"
-   ),
-sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,
-            round=TRUE,sep="",step=1)  ),  #can use value=c(2017,2017)
-
-
- # mySex
- conditionalPanel(condition = fC(c(22,23,33,44,57,66, 68,69, 70, 71,91)), 
-   radioButtons( "mySex",      "Sex:", choices=c("Total","Female","Male"))),
- 
- # myLev
- conditionalPanel(condition = fC(c(33,34)),
-    actionButton( "levelHelp", label="?",style=myButtonSty) ,
-    radioButtons("myLev", "Levels to show:", choices=c("Top Level" = "lev1","Public Health" = "lev2","Detail" = "lev3"))),
-
- # myStateCut
- conditionalPanel(condition = fC(c(22,23)),
-    actionButton("statecutHelp", label="?", style=myButtonSty),br(),     #add br(), here to fix spacing, but does not yet....
-    checkboxInput("myStateCut", "State-based cutpoints", value=TRUE)),
- 
- # myN
- conditionalPanel(condition = fC(c(33,34,68,69,70)),
-   numericInput( "myN",        "How Many:", value=10,min=1,max= 50)),
- 
- # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?) 
- conditionalPanel(condition = fC(c(22,23,34,44,55,56,57,66)), 
-   actionButton( "measureHelp", label="?",style=myButtonSty) ,
-   radioButtons(  "myMeasure",  "Measure:", choices=deathMeasures_Dropdown, selected="YLLper")),
- 
- # myMeasureShort
- conditionalPanel(condition = fC(c(33)),
-   #actionButton( "measureHelp", label="?",style=myButtonSty) ,              
-   selectInput(  "myMeasureShort",  "Measure Sort Order:", choices=dMNames_short, selected="YLL Rate per 100,000 population")),
- 
-
-# myYearGrouping
-conditionalPanel(condition = fC(c(55)),
-                 radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three","Five"))),
-
-
- # myCutSystem
- conditionalPanel(condition = fC(c(22,23)),
-   actionButton("cutmethodHelp", label="?",style=myButtonSty) ,
-   radioButtons( "myCutSystem","Cut-point method:", choices=c("quantile","fisher"))),   # pretty
- 
- # myLabName 
- conditionalPanel(condition = fC(c(23)),
-   checkboxInput("myLabName",  "Place Names", value=FALSE)),
- 
- # myCI
- conditionalPanel(condition = 
-   paste(
-     "(",fC(c(44)),") &&",
-     "( (input.myMeasure == 'cDeathRate') | (input.myMeasure == 'aRate'))"
-     ),
-   checkboxInput("myCI",       "95% CIs", value=FALSE)),
- 
- # myRefLine
- conditionalPanel(condition = fC(c(44)),
-   checkboxInput("myRefLine",  "Reference Line", value=FALSE)),
- 
-
- # myLogTrans
- conditionalPanel(condition = fC(c(54,56,57)),
-  checkboxInput("myLogTrans",  "Log Transform of Y Axis", value=FALSE)),
-
-# myMultiRace
-conditionalPanel(condition = fC(c(56)),
-                 checkboxInput("myMultiRace",  "Include Multirace Line", value=FALSE)),
-conditionalPanel(condition = paste("(input.myMultiRace) & (",fC(c(56)),")"), 
-                 helpText(h6(multiRaceWarning,style="color:red"))) ,
-
-
-
- # myX
- conditionalPanel(condition = fC(c(66)),
-   selectInput(  "myX",        "Social Determinant of Health Variable:", choices=sdohVec)),
-
- # myOSHPDtype
- conditionalPanel(condition = fC(c(68,69)),
-                  selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hMNames_short)),
-                  
-# myOSHPDtype-mdcdrg
-conditionalPanel(condition = fC(c(70)),
-                 selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down)),
-
-
-#myVar(ICD/MDC/DRG)
-
-  conditionalPanel(condition = fC(c(68,69,70)),
-                   selectInput("myVar", "Variable:", choice = MDC_DRG_ICD_Dropdown)),
-
-#myPrimetype
-  conditionalPanel(condition = fC(c(71)),
-                   selectInput("myprimetype", "Variable", choice = c("any", "primary"))),
-
-#IHME inputs
-  conditionalPanel(condition = char_fC(c("arrows", "riskByCause")),
-                   levelSliderInput(),
-                   yearSliderInput(),
-                   yearRangeSliderInput(),
-                   displayButtonInput(),
-                   sexButtonInput(),
-                   metricButtonInput(),
-                   measureSelectInput()
-  ),
-
-
-# Figure Download buttons ---------------------------------------------------
-
-conditionalPanel(condition = "input.ID == 55", downloadButton('trendPNG', 'Download Figure'),br(),br()),     
-conditionalPanel(condition = "input.ID == 55", downloadButton('trendData', 'Download Data'),br(),br()),     
-
-conditionalPanel(condition = "input.ID == 23", downloadButton('mapFigure', 'Download Map')),       
-conditionalPanel(condition = "input.ID == 33", downloadButton('rankCauseFigure', 'Download Figure'),br(),br()),       
-
-
-
-# Home page side bar text ---------------------------------------------------
-
-
- conditionalPanel(condition = fC(c(11)), 
-                  
-   HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
-   br(),br(),               
- 
-   helpText(h4("Welcome to the Preview Version of the CCB!"),style="color:green",align="left"), br(), 
-
-   h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
-   
-   actionButton("newsUse","News and Updates",style=myHelpButtonSty), br(),
- 
-   h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
-   h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
-   helpText(textIntroA,style="color:black"), br(),
-   helpText(textIntroC,style="color:black"), br(),
- 
-   if (whichData == "real") { helpText(textNote.real,style="color:black")},
-   if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
- 
- 
-   br(),br(),
-   icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"), br(), 
-   tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"), br(),
-   tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
- 
-   ),
- 
-# Home page 0 side bar text ---------------------------------------------------
-
-
-conditionalPanel(condition = fC(c(10)), 
-                 
-                 helpText(h2("which CONDITIONS result in the largest (by what MEASURE) BURDEN of MORTALITY (death) and MORBIDITY (cases, disabiltity, hospitalization) in which POPULATIONS (sex, race/ethnicity, age) in which COMMUNITIES in California at what TIME (years)?",style="color:red"),h1("WHY?",style="color:blue")),h2("WHAT TO DO ABOUT IT?")
-                 
-                 
-                 
-),
-
-
-
-# Text on other pages  -----------------------------------------
-
- conditionalPanel(condition = fC(c(33,45,44,55,56,57,58,66)),
-                 paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;")
- ,
- 
- conditionalPanel(condition = fC(c(22,23,33,45,44,55,56,57,58,66)),
-                  helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
- ),
-
- 
-
- conditionalPanel(condition = "input.ID != 11",
-                 br(),HTML('<left><img src="CDPH.gif" height="125" width="150"></left>') 
- ),
-
-
-# Text on all side bars -------------- ----------------------------------------
-
- helpText(br(),h4(VERSION),style="color:green")
-
-# -- END of sidebarPanel-------------------------------------------------------
-
-), 
-
-# ------------------------------------------------------------------------------------
-# MAIN PANNELS-------------------------------------------------------------------------
-
-useShinyjs(),
-
-mainPanel(
-   
-  tabsetPanel(type = "tab",id="ID",
- 
-         
-              
-              
-    tabPanel("HOME",  br(),align='center',
-      h4(HTML(above1),align="left"),
-      fluidRow(
-        column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
-        column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
-        column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
-        column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))), 
-        br(),
-      fluidRow(
-        column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
-        column(width=4,img(id="ranktableI", src="table.png", width="100%", onmouseout="this.src='table.png'", onmouseover="this.src='table2.png'", style = myBoxSty)),
-        column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty))),value = 11
-      ),          
-
-    # tabPanel("HOME0",  br(),align='center',
-    #          h4(HTML(above1),align="left"),
-    #          fluidRow(
-    #            column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
-    #            column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
-    #            column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
-    #            column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))), 
-    #          br(),
-    #          fluidRow(
-    #            column(width=4,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
-    #            column(width=4,img(id="ranktableI", src="table.png", width="100%", onmouseout="this.src='table.png'", onmouseover="this.src='table2.png'", style = myBoxSty)),
-    #            column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty))),value = 10
-    # ),          
-    # 
-    
-    
-    
-   tabPanel("ABOUT",
-             br(), 
-             includeMarkdown("About.md"), value = 99),
-   
-   tabPanel("LIFE EXPECTANCY",
-            br(),
-            plotOutput("lifeTable", width="100%",height = 700), value = 15),
-   
-   
-   tabPanel("INTERACTIVE MAP",
-     br(), htmlOutput("map_title")  ,
-     leafletOutput("cbdMapTL", width=700, height=700), value = 22),
-   
-   # tabPanel("STATIC MAP",
-   #   plotOutput("cbdMapTS",  height=700,width="100%"), value = 23),
-   
-   tabPanel("RANK BY CAUSE",
-     br(), plotOutput("rankCause", width="100%",height=700), value = 33),
-   
- # tabPanel("RANK BY CAUSE AND SEX",    
- #  plotOutput("rankCauseSex", width="100%",height=700), value = 34),
- 
-   tabPanel("RANK BY GEOGRAPHY", 
-     plotOutput("rankGeo", width="100%", height=1700), value = 44),
- 
-   tabPanel("Trend",
-     br(), 
-     plotOutput("trend", width="100%",height=700),  value = 55),
-  # plotlyOutput("trend", width="100%",height=700),  value = 55),
   
- 
- tabPanel("Age Trend",
-          br(), 
-          plotOutput("trendAge", width="100%",height=700),  value = 54),
- 
- 
- 
-   tabPanel("Race Trend",
-          br(), 
-          plotOutput("trendRace", width="100%",height = 700),  value = 56),
- 
-# myPlotly <- TRUE,
- 
- tabPanel("Race Dispartiy",
-          br(), 
-            plotOutput("disparityRace", width="100%",height = 700),  value = 58),
-           # plotlyOutput("disparityRace", width="100%",height = 700),  value = 58),
- 
- 
- tabPanel("Education Trend",
-          br(), 
-          plotOutput("trendEducation", width="100%",height=700),  value = 57),
- 
- 
- 
- 
-   tabPanel("DATA TABLE",
-     dataTableOutput("rankCauseT"), value = 45),   #DT::
- 
-   tabPanel("SOCIAL DETERMINANTS",
-     br(), 
-     plotlyOutput("scatter", height=700), value = 66),
- 
- 
-    tabPanel("HOSPITAL DISCHARGE",
-          br(),
-          plotOutput("OSHPD1", height=700),  value = 68),
-
-  #  tabPanel("HOSPITAL DISCHARGE (2)",
-  #         br(),
-  #         plotlyOutput("OSHPD2", height=700),
-  #         value = 69),
-  # 
-  # tabPanel("MDC/DRG",
-  #          br(),
-  #          plotOutput("mdcdrg", height = 700), value = 70),
- 
-  tabPanel("HOSPITAL DISCHARGE--PRIMARY AND ANY DIAGNOSES",
-           br(),
-           plotOutput("any_primary", height = 700), value = 71),
-
-  # tabPanel("HOSPITALIZATION MAP",
-  #          br(),
-  #          plotOutput("oshpdmap", height = 700), value = 91),
-
-  tabPanel("Arrows", visNetworkOutput("network"),value = "arrows"),
-
-  tabPanel("Risk by Cause", plotlyOutput("riskByCause", height = 600),value = "riskByCause"),
-
-
-
-   tabPanel("Technical Documentation",
-     br(), 
-     includeMarkdown("technical.md"), value = 77),
-
-   tabPanel("Links to Other Data",
-          br(), 
-          includeMarkdown("ourLinks.md"), value = 88)
- 
-  ) # END tabSetPanel
- ) # END mainPanel
-) # END fluidPage
-) # END ShinyUI
-
-
-
-# END =============================================================================================
-
-# NOTES etc. :
-
-# convert Markdown doc to Word if needed forediting
-# https://cloudconvert.com/md-to-docx
-
-# tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"), # removes ticks between years
-# https://stackoverflow.com/questions/44474099/removing-hiding-minor-ticks-of-a-sliderinput-in-shiny
-
-# "BETTER" drop down list look
-# https://stackoverflow.com/questions/40513153/shiny-extra-white-space-in-selectinput-choice-display-label
-
-#library(shinythemes)
-# shinyUI(fluidPage(theme = "bootstrap.css",
-#                  #shinythemes::themeSelector(),
-
-# wellPanel
-# navBarPanel 
-                  
-# work on customizing help button
-# actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; 
-#      float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") 
-# selectizeInput("myCAUSE", "Cause:", choices=fullList, selected="A",
-#    options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
-#width:100px;
+  
+  
+  # END =============================================================================================
+  
+  # NOTES etc. :
+  
+  # convert Markdown doc to Word if needed forediting
+  # https://cloudconvert.com/md-to-docx
+  
+  # tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"), # removes ticks between years
+  # https://stackoverflow.com/questions/44474099/removing-hiding-minor-ticks-of-a-sliderinput-in-shiny
+  
+  # "BETTER" drop down list look
+  # https://stackoverflow.com/questions/40513153/shiny-extra-white-space-in-selectinput-choice-display-label
+  
+  #library(shinythemes)
+  # shinyUI(fluidPage(theme = "bootstrap.css",
+  #                  #shinythemes::themeSelector(),
+  
+  # wellPanel
+  # navBarPanel 
+  
+  # work on customizing help button
+  # actionButton("causeHelp", "?",style=" height:22px; padding-top:0px; margin-top:-5px; 
+  #      float:right; color: #fff; background-color: #337ab7; border-color: #2e6da4") 
+  # selectizeInput("myCAUSE", "Cause:", choices=fullList, selected="A",
+  #    options = list(maxOptions = 10000),width='50%')),# size=30 selectize = F, size=3,
+  #width:100px;
   # https://shiny.rstudio.com/reference/shiny/latest/selectInput.html
   # https://shiny.rstudio.com/articles/selectize.html
   # https://www.w3schools.com/html/html_form_elements.asp
   #  https://www.w3schools.com/css/css3_buttons.asp
+  
