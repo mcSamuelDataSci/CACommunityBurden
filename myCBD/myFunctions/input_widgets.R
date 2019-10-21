@@ -12,8 +12,8 @@ myInputHelpButtonSty <- paste0("width:20px;  color:#fff; background-color:#337ab
                                )   #2e6da4
 helpIcon <- "?"
 helpIcon <- icon("question-circle-o") # or: HTML('<i class="fa fa-question-circle-o"></i>')
-helpIcon <- icon("question-circle")   # or: HTML('<i class="fa fa-question-circle"></i>')  
-helpIcon <- icon("question") 
+#helpIcon <- icon("question-circle")   # or: HTML('<i class="fa fa-question-circle"></i>')  
+#helpIcon <- icon("question") 
 #helpIcon <- icon("info")
 
 # Input Widgets ================================================
@@ -39,7 +39,7 @@ hidden(
       radioButtons("mySex", "Sex:", choices=c("Total","Female","Male"), inline=TRUE),
       
       # myLev ======================
-      radioButtons("myLev", label=list("Levels to show:",actionButton( "levelHelp", label=helpIcon,style=myInputHelpButtonSty)),
+      radioButtons("myLev", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    choices=c("Top" = "lev1","Public Health" = "lev2","Detail" = "lev3"), inline=TRUE),
       
       # myStateCut ======================
@@ -114,7 +114,14 @@ hidden(
       selectInput( "measure", label = "Measure:", choices = c("Deaths" = 1,
                                                               "Disability Adjusted Life Years (DALYs)" = 2,
                                                               "Years Lived with Disability (YLDs)" = 3,
-                                                              "Years of Life Lost (YLLs)" = 4), selected = 1)
+                                                              "Years of Life Lost (YLLs)" = 4), selected = 1),
+      div(id="suppressionNote",
+          paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;"
+      ),
+      
+      div(id="yllNote",
+          helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
+      )
   )
 )
 

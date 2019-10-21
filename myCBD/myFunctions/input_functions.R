@@ -7,7 +7,7 @@
 # Constants =========================================================================
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
-INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear","mySex","myLev","myStateCut","myN","myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine","myLogTrans","myMultiRace","myX","myOSHPDtype","myOSHPDtype_mdcdrg","myVar","myprimetype","myGeoHelpText","myMultiRaceHelpText", "trendDownloads", "rankCauseDownloads")
+INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear","mySex","myLev","myStateCut","myN","myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine","myLogTrans","myMultiRace","myX","myOSHPDtype","myOSHPDtype_mdcdrg","myVar","myprimetype","myGeoHelpText","myMultiRaceHelpText", "trendDownloads", "rankCauseDownloads", "suppressionNote", "yllNote")
 
 # Tab to inputs mapping: Associates each tab with it's input widgets
 TAB_INPUTS <- list("homeTab"=c(),
@@ -15,18 +15,18 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "techDocTab"=c(),
                    "otherLinksTab"=c(),
                    "lifeExpectancyTab"=c("myLHJ"),
-                   "interactiveMapTab"=c("tabHelp", "myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem"),
-                   "staticMapTab"=c("tabHelp", "myCAUSE", "myLHJ", "myGeo", "myMeasure", "myCutSystem", "myLabName", "mySex", "myStateCut"),
-                   "rankByCauseTab"=c("rankCauseDownloads", "tabHelp", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort"),
+                   "interactiveMapTab"=c("tabHelp", "myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem", "yllNote"),
+                   "staticMapTab"=c("tabHelp", "myCAUSE", "myLHJ", "myGeo", "myMeasure", "myCutSystem", "myLabName", "mySex", "myStateCut", "yllNote"),
+                   "rankByCauseTab"=c("rankCauseDownloads", "tabHelp", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote", "yllNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
-                   "rankByGeographyTab"=c("tabHelp", "myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine"),
-                   "trendTab"=c("trendDownloads", "tabHelp", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping"),
+                   "rankByGeographyTab"=c("tabHelp", "myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "yllNote"),
+                   "trendTab"=c("trendDownloads", "tabHelp", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote", "yllNote"),
                    "ageTrendTab"=c("myCAUSE", "myLHJ", "myMeasure", "myLogTrans"),
-                   "raceTrendTab"=c("myCAUSE", "myLHJ", "myLogTrans", "myMultiRace"),
-                   "raceDisparityTab"=c("myCAUSE", "myLHJ"),
-                   "educationTrendTab"=c("myCAUSE", "myLHJ", "mySex", "myMeasure", "myLogTrans"),
-                   "dataTableTab"=c("tabHelp", "myLHJ"),
-                   "socialDeterminantsTab"=c("tabHelp", "myCAUSE", "myGeo", "mySex", "myMeasure", "myX"),
+                   "raceTrendTab"=c("myCAUSE", "myLHJ", "myLogTrans", "myMultiRace", "suppressionNote", "yllNote"),
+                   "raceDisparityTab"=c("myCAUSE", "myLHJ", "suppressionNote", "yllNote"),
+                   "educationTrendTab"=c("myCAUSE", "myLHJ", "mySex", "myMeasure", "myLogTrans", "suppressionNote", "yllNote"),
+                   "dataTableTab"=c("tabHelp", "myLHJ", "suppressionNote", "yllNote"),
+                   "socialDeterminantsTab"=c("tabHelp", "myCAUSE", "myGeo", "mySex", "myMeasure", "myX", "suppressionNote", "yllNote"),
                    "hospitalDischargeTab"=c("myLHJ", "myGeo", "mySex", "myN", "myOSHPDtype"),
                    "MDC/DRGTab"=c("myLHJ", "mySex", "myN", "myOSHPDtype_mdcdrg", "myVar"),
                    "hospitalDischargePandDTab"=c("myLHJ", "mySex", "myVar", "myprimetype"),
@@ -49,7 +49,6 @@ updateInputsOnTabId <- function(tabID, myGeo="", myLHJ="", myMeasure="", myMulti
   curr_tab_inputs = c(curr_tab_inputs,
                       updateMyYearInput(tabID, myGeo, myLHJ),
                       updateMyCiInput(tabID, myMeasure),
-                      updateMyGeoHelpText(tabID, myGeo),
                       updateMyMultiRaceHelpText(tabID, myMultiRace))
   
   # 2. Show desired inputs, hide rest. (smoother transition in the UI if you show THEN hide):

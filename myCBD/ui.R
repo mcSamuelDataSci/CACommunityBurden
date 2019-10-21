@@ -175,12 +175,13 @@ shinyUI(
                        )),
                        
                        # Text on other pages  -----------------------------------------
-                       conditionalPanel(condition = fC(c("rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
-                                        paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;"
-                       ),
-                       conditionalPanel(condition = fC(c("interactiveMapTab","staticMapTab","rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
-                                        helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
-                       ),
+                       
+                       # conditionalPanel(condition = fC(c("rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
+                       #                  paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;"
+                       # ),
+                       # conditionalPanel(condition = fC(c("interactiveMapTab","staticMapTab","rankByCauseTab","dataTableTab","rankByGeographyTab","trendTab","raceTrendTab","educationTrendTab","raceDisparityTab","socialDeterminantsTab")),
+                       #                  helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
+                       # ),
                        
                        # Text on all side bars ------------------------------------------------------
                        div(id = "textAllTabs", style = mySidebarTextSty,
@@ -192,6 +193,13 @@ shinyUI(
       
       # MAIN PANNELS-------------------------------------------------------------------------
       dashboardBody(
+        ### Dashboard Styles
+        # tags$head(tags$style(HTML('
+        #                           /* main sidebar */
+        #                           .skin-blue .main-sidebar {
+        #                           background-color: #ffffff;
+        #                           }
+        #                           '))),
         useShinyjs(),
         navbarPage(title="", id = "navsID", # collapsible = TRUE,
                    

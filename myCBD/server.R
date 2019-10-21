@@ -16,11 +16,6 @@ shinyServer(function(input, output,session) {
 
   # IHME WORK (TEMP) ########################
   
-  # #store old current tab as last tab reactive value
-  # rv$last_tab = rv$current_tab
-  # #store new current tab as cur tab reactive value
-  # rv$current_tab = input$selected_tab
-  
   # Store current navID (big tabs) and tabID (subtabs) for use throughout Server
   current <- reactiveValues()
   
@@ -38,7 +33,8 @@ shinyServer(function(input, output,session) {
   })
   
   # Update sidebar inputs and text based on current tab selection
-  observeEvent( c(current$nav, current$tab), {    # could also just use observe here
+  # observeEvent( c(current$nav, current$tab), {    # could also just use observe here
+  observe({
     if (current$nav %in% c("home", "abouts")) {
       hideAllInputs()
       hide("plotsMenu")
