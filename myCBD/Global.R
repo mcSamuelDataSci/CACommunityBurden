@@ -19,7 +19,7 @@
 #-- Key Constants -----------------------------------------------------------
 
 # DATA Constants
-whichData         <- "fake" #changed to fake so I (CD) can run app on my computer
+whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
@@ -46,6 +46,7 @@ pdf(NULL)
 
 
 # DISPLAY Constants
+
 
 myTitleSize <- 24
 myLegendSize <- 24
