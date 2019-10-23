@@ -295,13 +295,19 @@ shinyUI(
                                                  br(),
                                                  plotOutput("trendRace", width="100%",height = 700)
                                         ),
-                                        tabPanel(title = "Race Dispartiy", value = "raceDisparityTab",
-                                                 br(),
-                                                 plotOutput("disparityRace", width="100%",height = 700) # plotlyOutput("disparityRace", width="100%",height = 700)
-                                        ),
+                                        
                                         tabPanel(title = "Education Trend", value = "educationTrendTab",
                                                  br(),
                                                  plotOutput("trendEducation", width="100%",height=700)
+                                        )
+                            )
+                   ),
+                   
+                   tabPanel(title = "DISPARITIES", value = "disparities",
+                            tabsetPanel(type = "tab", id = "disparitiesID",
+                                        tabPanel(title = "Race Dispartiy", value = "raceDisparityTab",
+                                                 br(),
+                                                 plotOutput("disparityRace", width="100%",height = 700) # plotlyOutput("disparityRace", width="100%",height = 700)
                                         )
                             )
                    ),

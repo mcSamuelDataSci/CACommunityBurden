@@ -10,6 +10,7 @@
 # 2018
 #
 # =============================================================================
+
 # Load functions that determine what to show based on current tab selection
 source(paste0(myPlace,"/myFunctions/inputFunctions/input_functions.R"))
 
@@ -25,9 +26,10 @@ shinyServer(function(input, output,session) {
                           "maps" = input$mapsID,
                           "ranks" = input$ranksID,
                           "trends" = input$trendsID,
+                          "disparities" = input$disparitiesID,
                           "sdohHospitals" = input$sdohHospitalsID,
                           current$nav)
-    print(current$tab)
+    print(current$tab) #MCS?
     updateTabItems(session, "plotsMenuItems", "tabInputs")  # Always set menu to tabInputs, not tabInfo
   })
   
@@ -45,7 +47,7 @@ shinyServer(function(input, output,session) {
     } else {
       show("plotsMenu")
       show("textNotHomeTab")
-      updateInputsOnTabId(current$tab, input$myGeo, input$myLHJ, input$myMeasure, input$myMultiRace)
+      updateInputsOnTabId(current$tab, input$myGeo, input$myLHJ, input$myMeasure, input$myMultiRace)  #MCS?
       hide("textHomeTab")
     }
   })
@@ -89,13 +91,7 @@ onclick("trendI",     updatePanels(navsID = "trends",        tabID = "trendTab")
 onclick("scatterI",   updatePanels(navsID = "sdohHospitals", tabID = "socialDeterminantsTab"))
 
   
-# shinyjs::onclick("map1I",     updateTabsetPanel(session,inputId="ID",selected="22"))  
-# shinyjs::onclick("map2I",     updateTabsetPanel(session,inputId="ID",selected="23"))  
-# shinyjs::onclick("rankcauseI",updateTabsetPanel(session,inputId="ID",selected="33"))  
-# shinyjs::onclick("ranktableI",updateTabsetPanel(session,inputId="ID",selected="45"))  
-# shinyjs::onclick("rankgeoI",  updateTabsetPanel(session,inputId="ID",selected="44"))  
-# shinyjs::onclick("trendI",    updateTabsetPanel(session,inputId="ID",selected="55"))  
-# shinyjs::onclick("scatterI",  updateTabsetPanel(session,inputId="ID",selected="66"))  
+  
 
 # -------------------------------------------------------------------------------
 

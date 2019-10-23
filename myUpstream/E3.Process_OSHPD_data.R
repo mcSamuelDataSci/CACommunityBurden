@@ -53,7 +53,7 @@ if(newData) {
   
   
   #Subset with only variables of interest
-  oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, oshpd_id, los_adj, los, ccs_diagp) %>% mutate(year = 2016)
+  oshpd_subset  <- select(oshpd16,diag_p, odiag1, odiag2, odiag3, odiag4, odiag5, odiag6, odiag7, odiag8, odiag9, odiag10, odiag11, odiag12, odiag13, odiag14, odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21, odiag22, odiag23, odiag24, mdc, msdrg, charge, pay_cat, pay_type, admtyr,  patcnty, patzip, sex, agyrdsch, race_grp, oshpd_id, los_adj, los, ccs_diagP) %>% mutate(year = 2016)
   # dschdate,
   
   
@@ -72,7 +72,7 @@ if(newData) {
   
   p1           <- sample_n(oshpd_subset[,1:29],  sampN2)
   p2           <- sample_n(oshpd_subset[,30:31], sampN2)
-  p3           <- sample_n(oshpd_subset[,32:40], sampN2)
+  p3           <- sample_n(oshpd_subset[,32:41], sampN2)
   p3$race_grp  <- NA
   half2        <- cbind(p1,p2,p3)
   
