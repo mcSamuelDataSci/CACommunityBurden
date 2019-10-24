@@ -27,7 +27,8 @@ shinyServer(function(input, output,session) {
                           "ranks" = input$ranksID,
                           "trends" = input$trendsID,
                           "disparities" = input$disparitiesID,
-                          "sdohHospitals" = input$sdohHospitalsID,
+                          "hospitalizations" = input$hospitalizationsID,
+                          "sdoh" = input$sdohID,
                           current$nav)
     print(current$tab) #MCS?
     updateTabItems(session, "plotsMenuItems", "tabInputs")  # Always set menu to tabInputs, not tabInfo
