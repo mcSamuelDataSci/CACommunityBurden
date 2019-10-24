@@ -223,23 +223,7 @@ shinyUI(
                               column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty)))
                    ),
                    
-                   tabPanel(title = "ABOUT", value = "abouts",
-                            tabsetPanel(type="tab", id="aboutsID",
-                                        
-                                        tabPanel(title = "OVERVIEW", value = "overviewTab",
-                                                 br(), 
-                                                 includeMarkdown("About.md")
-                                        ),
-                                        tabPanel(title = "Technical Documentation", value = "techDocTab",
-                                                 br(), 
-                                                 includeMarkdown("technical.md")
-                                        ),
-                                        tabPanel(title = "Links to Other Data", value = "otherLinksTab",
-                                                 br(), 
-                                                 includeMarkdown("ourLinks.md")
-                                        )
-                            )
-                   ),
+                  
                    
                    
                    tabPanel(title = "MAPS", value = "maps",
@@ -330,6 +314,24 @@ shinyUI(
                                         tabPanel(title = "HOSPITAL DISCHARGE--PRIMARY AND ANY DIAGNOSES", value = "hospitalDischargePandDTab",
                                                  br(),
                                                  plotOutput("any_primary", height = 700)
+                                        )
+                            )
+                   ),
+                   
+                   tabPanel(title = "ABOUT", value = "abouts",
+                            tabsetPanel(type="tab", id="aboutsID",
+                                        
+                                        tabPanel(title = "OVERVIEW", value = "overviewTab",
+                                                 br(), 
+                                                 includeMarkdown("About.md")
+                                        ),
+                                        tabPanel(title = "Technical Documentation", value = "techDocTab",
+                                                 br(), 
+                                                 includeMarkdown("technical.md")
+                                        ),
+                                        tabPanel(title = "Links to Other Data", value = "otherLinksTab",
+                                                 br(), 
+                                                 includeMarkdown("ourLinks.md")
                                         )
                             )
                    )
