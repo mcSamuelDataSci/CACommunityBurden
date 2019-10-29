@@ -212,8 +212,9 @@ shinyUI(
                             br(),align='center',
                             h4(HTML(above1),align="left"),
                             fluidRow(
-                              column(width=3,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
-                              column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
+                             # column(width=2),
+                              column(width=3,offset = 2,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
+                            # column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
                               column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
                               column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))),
                             br(),

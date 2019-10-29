@@ -12,15 +12,6 @@ if(1==2){
 }
 
 
-# myDrive         <- getwd()
-# myPlace <- paste0(myDrive,"/myCBD") 
-# 
-# library(readxl)
-# library(dplyr)
-# library(stringr)
-# library(ggplot2)
-# library(directlabels) 
-
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) %>%
                select(FIPSCounty,county=countyName)
 
@@ -39,7 +30,8 @@ lifeTableState <- readRDS(paste0(LTplace,"/LTciState.rds")) %>%
                      mutate(county = "CALIFORNIA") %>% 
                      mutate(sex = str_to_title(sex))
 
-lifeTableSet <- bind_rows(lifeTableCounty, lifeTableState)
+lifeTableSet <- bind_rows(lifeTableCounty, lifeTableState) %>%
+                   filter(county != "Mono")      # Something seems to be wrong with Mono data
 
 
 

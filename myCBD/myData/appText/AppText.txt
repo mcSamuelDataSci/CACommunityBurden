@@ -163,6 +163,12 @@ In the current version, the size of the dots is proportional to the size of the 
 Note: Currently this tab only displays one variable, but the display and analysis in this tab will be expanded to include multiple variables simultaneously.
 "
 
+lifeExpectancyTab <- 
+" This chart shows the estimated Life Expectancy for California overall and for most California counties, for males and females, from 2005 to 2018, and includes confidence intervals.  Life Expectancy is a familiar and widely used measure, which summarizes in one number the 'force of mortality' in a population, and provides an extraordinarily valuable single measure to compare the overall health status between populations.
+<br><br>
+'Life Expectancy', or technically 'Life Expectancy at Birth', is calculated based on the number of people in each age group that die in a given year and the total size of each age group population in that same year.  The method used here is complex and was programed by our colleagues in the California Department of Finance.  There is more information about the specific methodology used on the technical tab. 
+"
+
 
 # ==== OLD NOT USED ==============================================
 

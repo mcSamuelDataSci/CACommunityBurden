@@ -119,7 +119,9 @@ tabHelpList <- list("dataTableTab" = conditionTableTab,
                     "trendTab" = trendTab,
                     "rankByCauseTab" = conditionTab,
                     "rankByGeographyTab" = rankGeoTab,
-                    "rankByCauseAndSexTab" = conditionSexTab)
+                    "rankByCauseAndSexTab" = conditionSexTab,
+                    "lifeExpectancyTab" = lifeExpectancyTab
+                    )
 
 whoNeedsHelp <- reactive({
   if (current$tab %in% names(tabHelpList)) {
