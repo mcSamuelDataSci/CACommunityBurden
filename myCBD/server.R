@@ -30,7 +30,7 @@ shinyServer(function(input, output,session) {
                           "hospitalizations" = input$hospitalizationsID,
                           "sdoh" = input$sdohID,
                           current$nav)
-    print(current$tab) #MCS?
+    print(current$tab) # For debugging only
     updateTabItems(session, "plotsMenuItems", "tabInputs")  # Always set menu to tabInputs, not tabInfo
   })
   
@@ -70,7 +70,7 @@ shinyServer(function(input, output,session) {
   #
 
 
-# -------------------------------------------------------------------------------
+# Navigation from home tab Images -------------------------------------------------------------------------------
 
 # "onclick" is a function from shinyjs package
 # used here to move to specified tab when specified image in clicked
@@ -92,7 +92,7 @@ onclick("trendI",     updatePanels(navsID = "trends",        tabID = "trendTab")
 onclick("scatterI",   updatePanels(navsID = "sdoh",          tabID = "socialDeterminantsTab"))
 
   
-# -------------------------------------------------------------------------------
+# Tab help display -------------------------------------------------------------------------------
 
 # function used below as "shortcut" for formating each Modal
 myModal <- function(whatInfo) {
@@ -100,6 +100,21 @@ myModal <- function(whatInfo) {
             easyClose = TRUE,
             footer = modalButton("Close")
 ))}
+
+# Modal pop-up whenever tab is navigated to OR first time tab is navigated to:
+
+# Option 1 ---
+observeEvent(req(current$tab == "hospitalDischargeTab"), {
+  myModal("YOU BETTER READ THIS!")
+}, once = TRUE)  # Set once to TRUE to make it only happen once
+
+# Option 2 ---
+observe({
+  if (current$tab == "hospitalDischargeTab") {
+    myModal("YOU BETTER READ THIS!")
+  }
+})  # Set once to TRUE to make it only happen once
+
 
 # generates help "objects" used for "drop down" help buttons
 # single argument to each HTML function is a text object (vector of length 1)
