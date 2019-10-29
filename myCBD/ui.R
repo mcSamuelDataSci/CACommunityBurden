@@ -66,6 +66,7 @@ shinyUI(
                       * {font-family: 'Open Sans';line-height: 1.5;}
                       #textHomeTab a { color: #0079C2; }
                       .fa-envelope-o {color:black;}
+                      a {text-decoration: none; color: #0000EE;}
                       #inputs {color:black;}
                       ",
                       
@@ -134,6 +135,8 @@ shinyUI(
                        
                        
                        # Menu Items & tabHelp ---------------------------------------------------
+                       
+                     br(),
                        hidden(
                          div(id = "plotsMenu",
                              sidebarMenu(id = "plotsMenuItems",

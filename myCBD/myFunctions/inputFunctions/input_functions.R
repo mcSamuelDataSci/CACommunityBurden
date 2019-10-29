@@ -15,18 +15,18 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "techDocTab"=c(),
                    "otherLinksTab"=c(),
                    "lifeExpectancyTab"=c("myLHJ"),
-                   "interactiveMapTab"=c("tabHelp", "myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem", "yllNote"),
+                   "interactiveMapTab"=c("myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem", "yllNote"),   # "tabHelp", -- REMOVED FROM ALL
                    "staticMapTab"=c("tabHelp", "myCAUSE", "myLHJ", "myGeo", "myMeasure", "myCutSystem", "myLabName", "mySex", "myStateCut", "yllNote"),
-                   "rankByCauseTab"=c("rankCauseDownloads", "tabHelp", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote", "yllNote"),
+                   "rankByCauseTab"=c("rankCauseDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote", "yllNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
-                   "rankByGeographyTab"=c("tabHelp", "myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "yllNote"),
-                   "trendTab"=c("trendDownloads", "tabHelp", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote", "yllNote"),
+                   "rankByGeographyTab"=c("myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "yllNote"),
+                   "trendTab"=c("trendDownloads", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote", "yllNote"),
                    "ageTrendTab"=c("myCAUSE", "myLHJ", "myLogTrans"),
                    "raceTrendTab"=c("myCAUSE", "myLHJ", "myMeasure","myLogTrans", "myMultiRace", "suppressionNote", "yllNote"),
                    "raceDisparityTab"=c("myCAUSE", "myLHJ", "suppressionNote", "yllNote"),
                    "educationTrendTab"=c("myCAUSE", "myLHJ", "mySex", "myMeasure", "myLogTrans", "suppressionNote", "yllNote"),
                    "dataTableTab"=c("tabHelp", "myLHJ", "suppressionNote", "yllNote"),
-                   "socialDeterminantsTab"=c("tabHelp", "myCAUSE", "myGeo", "mySex", "myMeasure", "myX", "suppressionNote", "yllNote"),
+                   "socialDeterminantsTab"=c("myCAUSE", "myGeo", "mySex", "myMeasure", "myX", "suppressionNote", "yllNote"),
                    "hospitalDischargeTab"=c("myLHJ", "myGeo", "mySex", "myN", "myVar","myOSHPDtype"),
                    "MDC/DRGTab"=c("myLHJ", "mySex", "myN", "myOSHPDtype_mdcdrg", "myVar"),
                    "hospitalDischargePandDTab"=c("myLHJ", "mySex", "myVar", "myprimetype"),
@@ -42,6 +42,7 @@ hideAllInputs <- function() {
   for (input in INPUTS) { hide(input) }
 }
 
+# GOLD MCS LEARN
 # Main function for updating input widgets ------------------------------------------
 updateInputsOnTabId <- function(tabID, myGeo="", myLHJ="", myMeasure="", myMultiRace="") {
   updateMyGeoHelpText(tabID, myGeo)

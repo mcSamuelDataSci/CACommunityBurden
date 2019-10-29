@@ -141,7 +141,7 @@ observeEvent(input$plotsMenuItems, {
 output$currTabInfo <- renderText(whoNeedsHelp())
 
 # tabHelp as a button
-observeEvent(input$tabHelp, {myModal(whoNeedsHelp())})
+# observeEvent(input$tabHelp, {myModal(whoNeedsHelp())})
 
 # observeEvent(input$mapTab,            {myModal(mapTab)})
 # observeEvent(input$conditionTab,      {myModal(conditionTab)})

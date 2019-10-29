@@ -99,7 +99,7 @@ hidden(
       selectInput("myprimetype", "Variable", choice = c("any", "primary")),
       
       # IHME inputs ======================
-      sliderInput( "level", label = "Level:", min = 0, max = 4, value = 1),
+      sliderInput( "level", label = "Level:", min = 0, max = 4, value = 2),
       
       sliderInput( "year", label = "Year:", min = min(VALID_YEARS), max = max(VALID_YEARS), value = max(VALID_YEARS), sep = "", step = 1), # animate = animationOptiointerval = 3000)
       
