@@ -224,7 +224,7 @@ shinyUI(
                               column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty)))
                    ),
                    
-                  
+            
                    
                    
                    tabPanel(title = strong("MAPS"), value = "maps",
@@ -236,9 +236,9 @@ shinyUI(
                             )
                    ),
                    
-                   tabPanel(title = strong("RANKS"), value = "ranks",
+                   tabPanel(title = strong("RANKS"), value = "ranks",    # value of navsID is 'ranks' here
                             tabsetPanel(type = "tab", id = "ranksID",
-                                        tabPanel(title = "RANK BY CAUSE - Deaths", value = "rankByCauseTab",
+                                        tabPanel(title = "RANK BY CAUSE - Deaths", value = "rankByCauseTab",   # value of ranksID is 'rankByCauseTab' here
                                                  br(),
                                                  plotOutput("rankCause", width="100%",height=700)
                                         ),
