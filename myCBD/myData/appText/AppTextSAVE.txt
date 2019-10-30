@@ -41,7 +41,7 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 
 tractWarning <- "NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"
 
-oshpdModal <- "<b> The presentation of these hospitalization data should be considered preliminary. There are a number of nuances and considerations relevant to interpreting these charts noted in the technical documentation. Of particular note, the summaries of 'charges' shown, are specifically, <u>charges</u> based on hospital administrative systems, and do not indicate the actual costs, reimbursements, or payments for those charges. However these charge data provide one lens of valuable information regarding the patterns of monetary burden. We are also in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input. </b>"
+oshpdModal <- "<b> There are a number of nuances and sources of possible error in these charts noted in the technical documentation.  Of particular note, the summaries of 'charges' shown, are for just that, <u>charges</u>, and may well not reflects the actual costs, reimbursements, or payments for those charges. The presentation of these data should be considered preliminary; we are in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input. </b>"
 
 
 # DROP DOWN HELPS --------------------------------------------------
@@ -54,10 +54,6 @@ levelHelp  <- paste0('<li style="margin-left: 40px">The <b>Top Level</b> include
 
 dxGroupsHelp <- paste0(
 '<li style="margin-left: 40px">
-
-<b>Global Burden of Disease (GBD)</b> groups the ICD-10-CM codes into conditions based on our modified version of the Global Burden of Disease system (describe in detail in the technical document), but currently includes ONLY "high volume" conditions and a sample of other conditions of clear programmatic public health interest in California. For these hospitalization data this system is <b>not currently exhaustive</b>.
-</li>
-<li style="margin-left: 40px">
 <b>Major Diagnostic Categories (MDC)</b> group principal diagnoses into 25 mutually exclusive diagnosis categories. The categories correspond to a single organ system or etiology and, in general, are associated with a particular medical specialty.
 </li>
 <li style="margin-left: 40px">
@@ -176,17 +172,17 @@ Note: Currently this tab only displays one variable, but the display and analysi
 
 
 lifeExpectancyTab <- 
-" This chart shows the estimated Life Expectancy for California overall and for most California counties, for males and females, from 2005 to 2018, and includes confidence intervals.  Life Expectancy is a familiar and widely used measure, which summarizes in one number the 'force of mortality' in a population, and provides a valuable single measure to compare the overall health status between populations.
+" This chart shows the estimated Life Expectancy for California overall and for most California counties, for males and females, from 2005 to 2018, and includes confidence intervals.  Life Expectancy is a familiar and widely used measure, which summarizes in one number the 'force of mortality' in a population, and provides an extraordinarily valuable single measure to compare the overall health status between populations.
 <br><br>
 'Life Expectancy', or technically 'Life Expectancy at Birth', is calculated based on the number of people in each age group that die in a given year and the total size of each age group population in that same year.  The method used here is complex and was programed by our colleagues in the California Department of Finance.  There is more information about the specific methodology used on the technical tab. 
 "
 
 ihmeTab <- paste0('
-This (complex) chart shows (with its initial setting) estimates of which <b>factors</b> were associated with the most <b>Disability Adjusted Life Years</b> in California for two different years.  Understanding which factors have the largest impact on health outcomes is essential for effective public health planning.  Decreasing the level of detrimental risk factors (e.g. smoking) and increasing the level of healthy/protective factors (e.g. exercise) is the focus of most public health programs. By comparing the ranking of specific risk factors for each year observations can be made about changes in relative burden.  
+This (complex) chart shows (with its initial setting) estimates of which <b>factors</b> were associated with the most <b>Disability Adjusted Life Years</b> in California for two different years.  Understanding which factors have the largest impact on health outcomes is essential for effective public health planning.  Decreasing the level of detrimental risk factors (e.g. smoking) and increasing the level of healthy/protective factors (e.g. exercise) is the focus of most public health programs.  
 <br><br>
-Constructing these estimates requires complicated procedures with many data inputs and many assumptions. The estimates here are based on sophisticated modeling by the Institute for Health Metrics and Evaluation (IHME) in Seattle. IHME generates such estimates for all US States, and for most nations of the world, but not yet for US counties.  Information and resources related to these estimates can be found here.
+Constructing these estimates requires complicated procedures with many data inputs and many assumptions.   The estimates here are based on sophisticated modeling by the Institute for Health Metrics and Evaluation (IHME) in Seattle.  IHME generates such estimates for all US States, and for most nations of the world, but not yet for US counties.  Information and resources related to these estimates can be found here.
 <br><br>
-In the initial setting for this chart, the health outcome being measured is Disability Adjusted Life Years (DALY).  DALY is a powerful measure that sums (1) the number of years a person lives with a condition which decreases their functionality during life (Years Lived with Disability=YLD) and (2) the difference between the age at which they might have lived to without the condition age and the age at which they actually died due to the condition (Years of Life Lost=YLL); DALY = YLD + YLL. While DALYs is the initial health outcome setting, it can be changed to a different setting for the particular situation you are exploring.  
+In the initial setting for this chart, the health outcome being measured is Disability Adjusted Life Years (DALY).  DALY is a powerful measure that sums (1) the number of years a person lives with a condition which decreases their functionality during life (Years Lived with Disability=YLD) and (2) the difference between the age at which they might have lived to without the condition age and the age at which they actually died due to the condition (Years of Life Lost=YLL); DALY = YLD + YLL.   While DALYs is the initial health outcome setting, like almost everything in the chart, it can be changed to a different value which might be more insightful for the particular situation you are exploring.  
 The settings for all the modifiable settings (i.e. parameters), with their default values, options, and some explanations are: 
 <li style="margin-left: 20px">
 Level of the risk factors</li>
@@ -195,7 +191,7 @@ Default: 2</li>
 <li style="margin-left: 40px">
 Options: 1, 2, 3</li>
 <li style="margin-left: 40px">
-These options are in increasing order of "granularity"; 1 is three very broad categories of risk factors (behavioral, metabolic, and behavioral); 2 breaks these down into 19 more detailed categories, and 3 into 25. </li>
+These options are in increasing order of "granularity"; 1 is three very course categories of risk factors (behavioral, metabolic, and behavioral); 2 breaks these down into 19 more detailed categories, and 3 into 25. </li>
 <li style="margin-left: 20px">
 Year:  1990 to 2017</li>
 <li style="margin-left: 20px">
@@ -217,25 +213,15 @@ Options:  Deaths, DALYS, Years Lived with Disability, Years of Life Lost</li>
 hospA <-
 "These charts show <b>rankings</b> for California and for each County of the <b>number of persons hospitalized</b> for specific reasons, the <b>total charges</b> for those hospitalizations, and the associated <b>median charges</b>.   These rankings provide a valuable view into the burden of disease/injury in California, and provide an important view of the economic impact of these conditions.  
 <br><br>
-The presentation of these hospitalization data should be considered preliminary. There are a number of nuances and considerations relevant to interpreting these charts noted in the technical documentation. Of particular note, the summaries of 'charges' shown, are specifically, <i>charges</i> based on hospital administrative systems, and do not indicate the actual costs, reimbursements, or payments for those charges. However, these charge data provide one lens of valuable information regarding the patterns of monetary burden. We are also in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input."
+There are a number of nuances and sources of possible error in these charts noted in the technical documentation.  Of particular note, the summaries of 'charges' shown, are for just that, <i>charges</i>, and may well not reflects the actual costs, reimbursements, or payments for those charges. The presentation of these data should be considered preliminary - we are in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input."
 
 hospB <- 
-"This chart shows the <b>primary</b> reason for hospitalization (i.e. the first code listed), and includes rankings based on the number of <b>hospitalizations</b>, the average <b>length of stay</b>, and associated <b>total charges</b> and <b>median charges</b>.  This chart is particularly valuable for comparing the different rankings for the same condition based on numbers of hospitalizations, versus total charges or median charges.  Some conditions have high (or low) total charges because of high (or low) median charges, some because of large (or small) numbers of hospitalizations, and all sorts of things in between."
+"This chart shows the <b>primary</b> reason for hospitalization (i.e. the first code listed), and includes rankings based on the number of <b>hospitalizations</b>, the average <b>length of stay</b>, and associated <b>total charges</b> and <b>median charges</b>.  This chart is particularly valuable for comparing the different rankings for the same condition based on numbers of hospitalizations, versus total, versus median costs.  Some conditions have high (or low) total charges because of high (or low) median charges, some because of large (or small) numbers of hospitalizations, and all sorts of things in between."
 
 hospC <- 
-"This chart shows hospitalization for a condition based on it being the primary reason (principal or primary diagnosis) for hospitalization OR it being listed in ANY of the other diagnostic positions (other or secondary diagnoses) for the hospitalization.  This chart provides important insights for understanding burden since some conditions are overwhelmingly listed as 'primary' (e.g. birth-related), with few conditions listed in other positions; whereas  other conditions are frequently listed in non-primary positions."
+"The chart shows hospitalization for a condition based it being the primary reason for hospitalization OR it being listed in ANY of the other positions for the hospitalization.  This chart provides important insights for understanding burden since for some conditions it is overwhelmingly listed as 'primary' (e.g. birth-related), with few listed in other positions; whereas for other conditions it is often listed in non-primary positions."
 
 
 HospitalizationsTab <- paste(hospA,"<br><br>",hospB)
 HospitalPrimaryAnyTab <- paste(hospA,"<br><br>",hospC)
 
-disparitiesTab <- paste0('
-This visualization is a new presentation of disparities data, and should be considered preliminary. We are exploring other approaches and methods and welcome your input.
-<br><br>
-This tab shows differences, or <b>disparities</b>, in death rates between <b>racial/ethnic groups</b>, <b>age groups</b>, and <b>sex</b>, for a selected cause of death in a selected county or the State overall. Reducing disparities in health outcomes is a key goal of Public Health, and clear data is essential for progress towards this goal.
-<br><br>
-<b>Within each demographic category</b> (race/ethnic, age, sex), for each cause of death in each geographic group, the <b>rate in the group with the <i>lowest rate</i> is statistically compared to each other group</b> in that category (e.g. for a condition where Hispanics have the lowest rate, that rate among Hispanics is compared to the rate among Blacks, Whites, and Asians, etc.). 
-<br><br>
-In each chart, the group with the lowest rate is shown in green, any group that is statistically significantly higher (based on a statistical cut point of p < 0.01) is shown in red, and any group that is not statistically different from the "lowest" group is shown in blue. In addition, 95% confidence intervals are also shown for all rates, to provide visual guidance about the stability of each rate.
-<br><br>
-In many instances, not all groups within a demographic category will be shown because all rates based on fewer than 20 deaths are excluded, to avoid misleading observations from very unstable rates. ')

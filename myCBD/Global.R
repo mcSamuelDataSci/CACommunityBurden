@@ -271,7 +271,7 @@ hM_short <- hospMeasures[shorthospList]
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
 
 MDC_DRG_ICD <- c("icd10_cm", "mdc", "drg")
-MDC_DRG_ICD_names <- c("ICD-10-CM", "Major Diagnostic Code", "Diagnostic Related Groups")
+MDC_DRG_ICD_names <- c("Global Burden", "Major Diagnostic Code", "Diagnostic Related Groups")
 
 MDC_DRG_ICD_Dropdown <- MDC_DRG_ICD
 names(MDC_DRG_ICD_Dropdown) <- MDC_DRG_ICD_names

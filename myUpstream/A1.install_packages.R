@@ -40,6 +40,7 @@
     install.packages("ggplot2")      # installed with tidyverse
   # install.packages("scatterD3")  # not used? 
     install.packages("visNetwork")
+    install.packages("cowplot") # multiple ggplots on one figure  
 
 #-For SHINY----------------------------------------------------------------------------------------- 
     install.packages("shiny")

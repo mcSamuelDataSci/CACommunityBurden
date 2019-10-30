@@ -141,7 +141,8 @@ tabHelpList <- list("dataTableTab" = conditionTableTab,
                     "lifeExpectancyTab" = lifeExpectancyTab,
                     "hospitalDischargeTab" = HospitalizationsTab,
                     "hospitalPrimaryAnyTab" = HospitalPrimaryAnyTab,
-                    "riskByCauseTab"        = ihmeTab
+                    "riskByCauseTab"        = ihmeTab,
+                    "disparitiesTab"        = disparitiesTab
                     )
 
 whoNeedsHelp <- reactive({

@@ -1,20 +1,29 @@
 
 if(1==2){
-  myLHJ="Alameda" 
-  myCause="B"
+  myLHJ="CALIFORNIA" 
+  myCause="E"
   myMeasure = "aRate"
   mySex   = "Total"
   myLogTrans=FALSE
   myMultiRace = FALSE
-  
-   
-}
+  }
 
 nCut      <- 20
 myYearG3  <- "2016-2018"
 
-myJunk <- FALSE
-if (whichData == "fake") myJunk <- TRUE
+# myJunk <- FALSE
+# if (whichData == "fake") myJunk <- TRUE
+# myJunk <- TRUE
+
+
+
+lowColor  <- "palegreen"
+midColor  <- "paleturquoise"
+highColor <- "tomato"
+
+
+
+
 
 
 # RACE --------------------------------------------------------------------------------------------------------------------------
@@ -40,23 +49,21 @@ raceTest <- left_join(raceTest,raceTest2,by=c("county","yearG3","sex","CAUSE")) 
                 mutate(rateRatio = round(aRate/bestRate,1),
                        Ztest = (aRate - bestRate) / sqrt(aSE^2 + bestSE^2),
                        pValue = 1-pnorm(Ztest),
-                       pMark = as.factor(ifelse(aRate==bestRate,"Lowest",ifelse(pValue < .01,"Statistically Higher","Not Statitically Different")))
+                       pMark = as.factor(ifelse(aRate==bestRate,"Lowest",ifelse(pValue < .01,"Sig. Higher (p<.01)","No Difference")))
                        ) 
 
 # AGe ----------------------------------------------------------------------------------------------------------------------------
 
 
-if(myJunk) {
-
 
  ageTest <- datCounty_AGE_3year %>%
-    filter(Ndeaths > nCut ) %>%
+    filter(Ndeaths > nCut,!is.na(cDeathRate) ) %>%    # need !is.na becuase of tiny number missing age --> NA fix 
     select(-YLL,-mean.age,-YLLper,cDeathRate,LCI=rateLCI,UCI=rateUCI)
 
 
  ageTest2 <- ageTest %>% group_by(county,yearG3,sex,CAUSE) %>%
     mutate(bestRate = min(cDeathRate),
-           bestSE   = rateSE)  %>%
+           bestSE   = rateSE) %>%
     filter(bestRate == cDeathRate)  %>%
     mutate(lowAge = ageG) %>%
     select(-(Ndeaths:UCI),-ageG)
@@ -65,15 +72,34 @@ ageTest <- left_join(ageTest,ageTest2,by=c("county","yearG3","sex","CAUSE")) %>%
     mutate(rateRatio = round(cDeathRate/bestRate,1),
            Ztest = (cDeathRate - bestRate) / sqrt(rateSE^2 + bestSE^2),
            pValue = 1-pnorm(Ztest),
-           pMark = as.factor(ifelse(cDeathRate==bestRate,"Lowest",ifelse(pValue < .01,"Statistically Higher","Not Statitically Different")))
+           pMark = as.factor(ifelse(cDeathRate==bestRate,"Lowest",ifelse(pValue < .01,"Sig. Higher (p<.01)","No Difference")))
     )
 
-}
 
 # Sex -------------------------------------------------------------------------------------------------------------------------------
 
 
+sexTest <- datCounty_3year %>%  
+   filter(Ndeaths > nCut, !is.na(aRate),sex != "Total" ) %>%
+   select(-YLL,-mean.age,-YLLper,-cDeathRate,-rateLCI,-rateUCI,-YLL.adj.rate,LCI=aLCI,UCI=aUCI)
 
+sexTest2 <- sexTest %>% group_by(county,yearG3,CAUSE) %>%
+   mutate(bestRate = min(aRate),
+          bestSE   = aSE)  %>%
+   filter(bestRate == aRate) %>%
+   mutate(lowRace = sex) %>%
+   select(-(Ndeaths:aSE),-sex)
+
+
+sexTest <- left_join(sexTest,sexTest2,by=c("county","yearG3","CAUSE")) %>%
+   mutate(rateRatio = round(aRate/bestRate,1),
+          Ztest = (aRate - bestRate) / sqrt(aSE^2 + bestSE^2),
+          pValue = 1-pnorm(Ztest),
+          pMark = as.factor(ifelse(aRate==bestRate,"Lowest",ifelse(pValue < .01,"Sig. Higher (p<.01)","No Difference")))
+   ) 
+
+
+# ------------------------------------------------------------------------------------
 
 disparity <- function(myLHJ="CALIFORNIA",myCause="A") {
 
@@ -92,18 +118,18 @@ myMeasureRace <- "aRate"
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-myTit <- paste0(deathMeasuresNames[deathMeasures == myMeasureRace]," by Race/Ethnicity in ",myLHJ,", ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],", ",myYearG3)
+myTit <- "Race/Ethnicity (age-adjusted rate)"
 
-myTit <-  wrap.labels(myTit,myWrapNumber)
-
-dPlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasureRace))),fill=pMark)) +
+racePlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasureRace))),fill=pMark)) +
    geom_bar(stat="identity") +
    theme_grey() +   #base_size = myBaseSize
-   facet_grid(rows = vars(sex)) +
-     scale_fill_manual("legend", values = c("Lowest" = "green", "Statistically Higher" = "red", "Not Statitically Different" = "blue")) +
+  # facet_grid(rows = vars(sex)) +
+     scale_fill_manual("legend", values = c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Difference" = midColor)) +
+  # guides(fill = guide_legend(reverse=TRUE)) +
    geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") + 
    labs(y = deathMeasuresNames[deathMeasures == myMeasureRace], x="Race/Ethnicity") +
-      theme(plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+      theme(legend.position="bottom",
+            plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
          axis.title.y = element_blank(),
          axis.title.x = element_blank(),
          axis.text.y = element_text(size = myAxisSize),
@@ -118,32 +144,39 @@ dPlot <- ggplot(data=dat.1, aes(x=raceName, y=eval(parse(text=paste0(myMeasureRa
  
 #--AGE ------------------------------------------------------------------------------------------------------------------------
 
+ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
 
 
+ageMap$ageG          <- paste(ageMap$lAge,"-",ageMap$uAge)
 
-if(myJunk) {
+ageMap$ageOrder      <- paste(ageMap$lAge,"-",ageMap$uAge)
+ageMap$ageOrder[1:2] <- paste("",ageMap$ageOrder [1:2])
+ageMap$ageOrder[10]  <- "85+"
 
 myMeasure <- "cDeathRate"
 
-
 # dat.1 <- filter(raceTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3) %>%
-dat.1 <- filter(ageTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex == "Total")
+dat.1 <- filter(ageTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex == "Total") %>%
+           left_join(ageMap,by="ageG")  
+
+
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-myTit <- paste0(deathMeasuresNames[deathMeasures == myMeasure]," by Age Group in ",myLHJ,", ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],", ",myYearG3)
 
-myTit <-  wrap.labels(myTit,myWrapNumber)
+myTit <-  "Age Groups (age-specific rate)"
 
-xPlot <- ggplot(data=dat.1, aes(x=ageG, y=eval(parse(text=paste0(myMeasure))),fill=pMark)) +
+agePlot <- ggplot(data=dat.1, aes(x=ageOrder, y=eval(parse(text=paste0(myMeasure))),fill=pMark)) +
    geom_bar(stat="identity") +
    theme_grey() +   #base_size = myBaseSize
-   facet_grid(rows = vars(sex)) +
-   scale_fill_manual("legend", values = c("Lowest" = "green", "Statistically Higher" = "red", "Not Statitically Different" = "blue")) +
+ #  facet_grid(rows = vars(sex)) +
+   scale_fill_manual("legend", values = c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Difference" = midColor)) +
+  # guides(fill = guide_legend(reverse=TRUE)) +
    geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") +
    labs(y = deathMeasuresNames[deathMeasures == myMeasure], x="Race/Ethnicity") +
-   theme(plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+   theme(legend.position="bottom",
+         plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
          axis.title.y = element_blank(),
          axis.title.x = element_blank(),
          axis.text.y = element_text(size = myAxisSize),
@@ -154,17 +187,61 @@ xPlot <- ggplot(data=dat.1, aes(x=ageG, y=eval(parse(text=paste0(myMeasure))),fi
    labs(title =myTit)   # ,size=mySize1
 #legend.text = element_text(size = myLegendSize) +
 
-}
 
 
 
 
-if(myJunk) {
+#--SEX ------------------------------------------------------------------------------------------------------------------------
+
+myMeasureRace <- "aRate"  # works...
+
+
+dat.1 <- filter(sexTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3) 
+
+if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+
+
+myTit <-  "Sex (age-adjusted rate)"
+
+sexPlot <- ggplot(data=dat.1, aes(x=sex, y=eval(parse(text=paste0(myMeasureRace))),fill=pMark)) +
+   geom_bar(stat="identity") +
+   theme_grey() +   #base_size = myBaseSize
+   scale_fill_manual("legend", values = c("Sig. Higher (p<.01)" = highColor, "No Difference" = midColor,"Lowest" = lowColor)) +
+  # guides(fill = guide_legend(reverse=TRUE)) +
+   geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") + 
+   labs(y = deathMeasuresNames[deathMeasures == myMeasureRace], x="Sex") +
+   theme(legend.position="bottom",
+         plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+         axis.title.y = element_blank(),
+         axis.title.x = element_blank(),
+         axis.text.y = element_text(size = myAxisSize),
+         axis.text.x = element_text(size = myAxisSize),
+         legend.title = element_blank(),
+         legend.text = element_text(size = myLegendSize),
+         strip.text = element_text(size = myAxisSize)) +
+   labs(title =myTit)   # ,size=mySize1
+#legend.text = element_text(size = myLegendSize) +
+
+
+#------------------------------------------------------------------------------------
 library(cowplot)
-dPlot <- cowplot::plot_grid(dPlot, xPlot, labels = c("A", "B"), nrow=2,align = "h")
-}
+# https://wilkelab.org/cowplot/articles/plot_grid.html
+mainTitle <- ggdraw() + 
+   draw_label(paste0("Disparities in Deaths Rates, ", fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",myYearG3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
 
 
+
+
+
+# if(myJunk) {
+
+dPlot <- cowplot::plot_grid(racePlot, agePlot, sexPlot,labels = c("A", "B","c"), nrow=3,
+                            rel_widths = c(2, 2,1))
+#}
+
+
+topRow <- plot_grid(racePlot,sexPlot,rel_widths = c(5,2))
+dPlot   <- plot_grid(mainTitle,topRow,agePlot,ncol=1,rel_heights = c(1,5,5))
 
 
 

@@ -294,7 +294,7 @@ shinyUI(
                    
                    tabPanel(title = strong("DISPARITIES"), value = "disparities",
                             tabsetPanel(type = "tab", id = "disparitiesID",
-                                        tabPanel(title = "Race Dispartiy", value = "raceDisparityTab",
+                                        tabPanel(title = "Disparties", value = "disparitiesTab",
                                                  br(),
                                                  plotOutput("disparityRace", width="100%",height = 700) # plotlyOutput("disparityRace", width="100%",height = 700)
                                         )
