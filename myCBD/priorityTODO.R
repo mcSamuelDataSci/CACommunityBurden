@@ -1,3 +1,8 @@
+add "table of contents" and associated navigation to technical documentation.  Maybe in sidebar?
+  
+
+
+
 # IHME
 #  “Percent” not meaningful / useful  ---  
 #   Show just rate

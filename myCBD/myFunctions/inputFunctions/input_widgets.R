@@ -93,7 +93,9 @@ hidden(
       selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down),
       
       # myVar(ICD/MDC/DRG) ======================
-      selectInput("myVar", "Variable:", choice = MDC_DRG_ICD_Dropdown),
+      selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),
+                  choice = MDC_DRG_ICD_Dropdown),
+      
       
       # myPrimetype ======================
       selectInput("myprimetype", "Variable", choice = c("any", "primary")),
@@ -116,12 +118,10 @@ hidden(
                                                               "Years Lived with Disability (YLDs)" = 3,
                                                               "Years of Life Lost (YLLs)" = 4), selected = 1),
       div(id="suppressionNote",
-          paste('Note: All values <',criticalNumber,'including zeros are excluded '),style="color:green;font-weight: bold;"
-      ),
-      
-      div(id="yllNote",
-          helpText(helpText('Note: YLL is "Years of Life Lost"',style="color:green;font-weight: bold;"))
+          paste('Note: All measures associated with counts <',criticalNumber,', as well as necessary complementrary counts/measures are excluded for data de-identification purposes'),style="color:blue;font-size:10px;"
       )
+      
+      
   )
 )
 

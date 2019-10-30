@@ -323,7 +323,7 @@ shinyUI(
                                                  br(),
                                                  plotOutput("OSHPD1", height=700)
                                         ),
-                                        tabPanel(title = "HOSPITAL DISCHARGE--PRIMARY AND ANY DIAGNOSES", value = "hospitalDischargePandDTab",
+                                        tabPanel(title = "HOSPITAL DISCHARGE--PRIMARY AND ANY DIAGNOSES", value = "hospitalPrimaryAnyTab",
                                                  br(),
                                                  plotOutput("any_primary", height = 700)
                                         )

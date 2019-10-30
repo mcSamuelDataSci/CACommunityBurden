@@ -1,0 +1,20 @@
+ihmeTab <- paste0("
+This (complex) chart shows (with its initial setting) estimates of which <b>factors</b> were associated with the most <b>Disability Adjusted Life Years</b> in California for two different years.  Understanding which factors have the largest impact on health outcomes is essential for effective public health planning.  Decreasing the level of detrimental risk factors (e.g. smoking) and increasing the level of healthy/protective factors (e.g. exercise) is the focus of most public health programs.  
+<br><br>
+Constructing these estimates requires complicated procedures with many data inputs and many assumptions.   The estimates here are based on sophisticated modeling by the Institute for Health Metrics and Evaluation (IHME) in Seattle.  IHME generates such estimates for all US States, and for most nations of the world, but not yet for US counties.  Information and resources related to these estimates can be found here.
+<br><br>
+In the initial setting for this chart, the health outcome being measured is Disability Adjusted Life Years (DALY).  DALY is a powerful measure that sums (1) the number of years a person lives with a condition which decreases their functionality during life (Years Lived with Disability=YLD) and (2) the difference between the age at which they might have lived to without the condition age and the age at which they actually died due to the condition (Years of Life Lost=YLL); DALY = YLD + YLL.   While DALYs is the initial health outcome setting, like almost everything in the chart, it can be changed to a different value which might be more insightful for the particular situation you are exploring.  
+The settings for all the modifiable settings (i.e. parameters), with their default values, options, and some explanations are:
+<ui style="list-style-type:circle">
+* Level of the risk factors
+o Default: 2
+o Options: 1, 2, 3
+o These options are in increasing order of “granularity”; “1” is three very course categories of risk factors (behavioral, metabolic, and behavioral); “2” breaks these down into 19 more detailed categories, and “3” into 25. 
+* Year:  1990 to 2017
+* Sex: Female, Male, Total
+* Metric for the Health Outcome:
+o Default:  Rate
+o Options:  Number,  Percent, Rate
+* Health Outcome
+o Default:  Disability Adjusted Life Years (DALYs)
+o Options:  Deaths, DALYS, Years Lived with Disability, Years of Life Lost

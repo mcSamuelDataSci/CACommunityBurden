@@ -96,22 +96,23 @@ onclick("scatterI",   updatePanels(navsID = "sdoh",          tabID = "socialDete
 
 # function used below as "shortcut" for formating each Modal
 myModal <- function(whatInfo) {
-  showModal(modalDialog(HTML(whatInfo),
+  showModal(modalDialog(HTML(whatInfo),  
             easyClose = TRUE,
-            footer = modalButton("Close")
+            #footer = modalButton("Close")
+            footer = NULL
 ))}
 
 # Modal pop-up whenever tab is navigated to OR first time tab is navigated to:
 
 # Option 1 ---
-observeEvent(req(current$tab == "hospitalDischargeTab"), {
-  myModal("YOU BETTER READ THIS!")
-}, once = TRUE)  # Set once to TRUE to make it only happen once
+#observeEvent(req(current$tab == "hospitalDischargeTab"), {
+#  myModal("YOU BETTER READ THIS!")
+#}, once = TRUE)  # Set once to TRUE to make it only happen once
 
 # Option 2 ---
 observe({
   if (current$tab == "hospitalDischargeTab") {
-    myModal("YOU BETTER READ THIS!")
+    myModal(oshpdModal)
   }
 })  # Set once to TRUE to make it only happen once
 
@@ -124,6 +125,10 @@ observeEvent(input$cutmethodHelp, {myModal(cutmethodHelp)})
 observeEvent(input$stateCutHelp,  {myModal(stateCutHelp)})
 observeEvent(input$measureHelp,   {myModal(measureHelp)})
 observeEvent(input$levelHelp,     {myModal(levelHelp)})
+observeEvent(input$dxGroupsHelp,  {myModal(dxGroupsHelp)})
+
+
+
 
 # generates help "objects" used for tab help buttons, as above
 tabHelpList <- list("dataTableTab" = conditionTableTab,
@@ -133,7 +138,10 @@ tabHelpList <- list("dataTableTab" = conditionTableTab,
                     "rankByCauseTab" = conditionTab,
                     "rankByGeographyTab" = rankGeoTab,
                     "rankByCauseAndSexTab" = conditionSexTab,
-                    "lifeExpectancyTab" = lifeExpectancyTab
+                    "lifeExpectancyTab" = lifeExpectancyTab,
+                    "hospitalDischargeTab" = HospitalizationsTab,
+                    "hospitalPrimaryAnyTab" = HospitalPrimaryAnyTab,
+                    "riskByCauseTab"        = ihmeTab
                     )
 
 whoNeedsHelp <- reactive({

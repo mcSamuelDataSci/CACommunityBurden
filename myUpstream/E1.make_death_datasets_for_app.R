@@ -18,7 +18,7 @@
 
 # == Designate locations and load packages  =======================================================
 
-whichDat <- "real"
+whichDat <- "fake"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
@@ -246,10 +246,23 @@ calculateYLLmeasures <- function(group_vars,levLab){
 
 }
 
+
+pois.approx <- function (x, pt = 1, conf.level = 0.95) 
+{
+  Z <- qnorm(0.5 * (1 + conf.level))
+  SE.R <- sqrt(x/pt^2)
+  lower <- x/pt - Z * SE.R
+  upper <- x/pt + Z * SE.R
+  data.frame(x = x, pt = pt, rate = x/pt, se = SE.R, lower = lower, upper = upper, 
+             conf.level = conf.level)
+}
+
+
 calculateRates <- function(inData,yearN){
   transform(inData, 
             YLLper      = yF*YLL/(yearN*pop),
             cDeathRate  = yF*Ndeaths/(yearN*pop),
+            rateSE      = yF*pois.approx(Ndeaths,yearN*pop, conf.level = 0.95)$se,
             rateLCI     = yF*pois.approx(Ndeaths,yearN*pop, conf.level = 0.95)$lower,
             rateUCI     = yF*pois.approx(Ndeaths,yearN*pop, conf.level = 0.95)$upper
   )

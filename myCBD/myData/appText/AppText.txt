@@ -1,5 +1,4 @@
-# DO NOT ADD  any punctuation except commas and periods, hash mark for R comments, and single and double quote using the same exact character set as below 
-
+# DO NOT ADD any punctuation except commas and periods, hash mark for R comments, and single and double quote using the same exact character set as below 
 
 # textIntroA                # measureHelp
 # textIntroB                # causeHelp
@@ -42,15 +41,25 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 
 tractWarning <- "NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"
 
+oshpdModal <- "<b> There are a number of nuances and sources of possible error in these charts noted in the technical documentation.  Of particular note, the summaries of 'charges' shown, are for just that, <u>charges</u>, and may well not reflects the actual costs, reimbursements, or payments for those charges. The presentation of these data should be considered preliminary—we are in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input. </b>"
+
 
 # DROP DOWN HELPS --------------------------------------------------
-
-
 
 levelHelp  <- paste0('<li style="margin-left: 40px">The <b>Top Level</b> includes only the five most aggregated conditions (e.g. Cardiovascular diseases, Injuries) and All Causes combined.</li>
 <li style="margin-left: 40px">The <b>Public Health Level</b> includes a list of about 60 conditions. This Level provides greater clinical detail and public health program specificity than the Top Level. </li>
 <li style="margin-left: 40px">The <b>Detail Level</b> includes a small number further detailed conditions (e.g. Non-Hodgkin lymphoma, Opiod Use Disorders, Falls) <b>AND</b> includes all conditions in the Public Health Level. </li>
 ')
+
+
+dxGroupsHelp <- paste0(
+'<li style="margin-left: 40px">
+<b>Major Diagnostic Categories (MDC)</b> group principal diagnoses into 25 mutually exclusive diagnosis categories. The categories correspond to a single organ system or etiology and, in general, are associated with a particular medical specialty.
+</li>
+<li style="margin-left: 40px">
+<b>Medicare Severity Diagnosis Related Group (DRG)</b> categorizes patients according to clinical coherence and expected resource intensity. The assignment of a DRG is based on:  principal diagnosis and any secondary diagnoses, procedures performed, comorbidities and complications, age of patient and sex, and discharge status. 
+</li>
+') 
 
 measureHelp <- paste0('<p>The current MEASURES of deaths are:</p> 
 <ui style="list-style-type:circle">
@@ -89,8 +98,6 @@ Our full cause list hierarchy is available <a href="gbd.ICD.MapIMAGE.pdf"">here<
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
-
-
 
 stateCutHelp <- 
 "The <b>State-based cutpoints</b> button changes the way the Measure is broken down or grouped for display in the map and the legend. If the box is checked, the cut-points are based on the data for all 58 counties for the most recent five years. If the box is unchecked, the cut-points are based on just the county being displayed in the current map. 
@@ -163,42 +170,58 @@ In the current version, the size of the dots is proportional to the size of the 
 Note: Currently this tab only displays one variable, but the display and analysis in this tab will be expanded to include multiple variables simultaneously.
 "
 
+
 lifeExpectancyTab <- 
 " This chart shows the estimated Life Expectancy for California overall and for most California counties, for males and females, from 2005 to 2018, and includes confidence intervals.  Life Expectancy is a familiar and widely used measure, which summarizes in one number the 'force of mortality' in a population, and provides an extraordinarily valuable single measure to compare the overall health status between populations.
 <br><br>
 'Life Expectancy', or technically 'Life Expectancy at Birth', is calculated based on the number of people in each age group that die in a given year and the total size of each age group population in that same year.  The method used here is complex and was programed by our colleagues in the California Department of Finance.  There is more information about the specific methodology used on the technical tab. 
 "
 
-
-# ==== OLD NOT USED ==============================================
-
-
-# textIntroA <-   "The Community Burden of Disease (CBD) is an evolving platform to view and explore detailed disease/condition burden and Social Determinants of Health data on multiple levels of geographic granularity in order to answer and generate questions, both simple and complex."
-
-# textIntroB <- "The code and system are written/structured to useable by States and Counties throughout the United States—with any State or County using their own structured input file of events (e.g. deaths), and the CBD system supplying underlying population data, Social Determinates of Health data, and all the processing, calculations, and tools to generate a range of interactive displays of multiple rate and count measures.  The list of disease conditions is based on the Global Burden of Disease system, modified for local public health priorities."
-
-# textIntroC <- "This California State implementation of the CBD, The California Community Burden of Disease and Cost Engine (CCB), currently includes detailed death data and multiple associated measures (e.g. age-adjusted cause-specific Years of Life Lost rates) for 2001 to 2015 at the census tract, community (California Medical Service Study Areas), county, and statewide levels.  The CCB also includes a small set of Social Determinates of Health, and describes their correlations with death outcomes, as a pilot for more robust functionality in this area.  Other short-term road map plans include the addition of burden of disease and costs (charges) based on California Hospital Discharge data, automated report generation, and more."
-
-
-textIntroOld <- "The goal of the California Community Burden of Disease and Cost Engine is to provide systematic scientific insight for allocation of Public Health resources, evaluation of Public Health interventions, and other Public Health actions. This initial version of the application displays multiple death-related measures (e.g. Years of Life Lost per 100,000 population, crude and age-adjusted death rate, standard mortality ratios) in interactive rankings charts, maps, and trend lines, for California counties, communities (Medical Service Study Areas), and census tracts for recent years.    At the county level, data are displayed separately for each year,  and at the community or census-tract level are displayed only for the most recent five-year period (combined).  Data for some conditions with very few deaths and/or with other sensitivity considerations are suppressed in this release." 
-
-causeHelpOLD <- 'The list of CAUSES in the app are based on a hierarchal  outline arrangement of about 70 conditions. The basis for this outline is the Global Burden of Disease (GBD) Study condition structure, with modifications made to enhance the usefulness and applicability for U.S. public health priorities and programs.  
+ihmeTab <- paste0('
+This (complex) chart shows (with its initial setting) estimates of which <b>factors</b> were associated with the most <b>Disability Adjusted Life Years</b> in California for two different years.  Understanding which factors have the largest impact on health outcomes is essential for effective public health planning.  Decreasing the level of detrimental risk factors (e.g. smoking) and increasing the level of healthy/protective factors (e.g. exercise) is the focus of most public health programs.  
 <br><br>
-Above the "Top Level" of the outline is "All Causes", including all deaths from any cause (including those with missing cause information). 
+Constructing these estimates requires complicated procedures with many data inputs and many assumptions.   The estimates here are based on sophisticated modeling by the Institute for Health Metrics and Evaluation (IHME) in Seattle.  IHME generates such estimates for all US States, and for most nations of the world, but not yet for US counties.  Information and resources related to these estimates can be found here.
 <br><br>
-The "Top Level" of the outline includes a mutually exclusive and exhaustive set of five high-level conditions:
-<li style="margin-left: 30px"> Communicable, Maternal, and Perinatal Conditions</li>
-<li style="margin-left: 30px">Coronary Heart Disease</li>
-<li style="margin-left: 30px"> Cancer/Malignant Neoplasms</li>
-<li style="margin-left: 30px">Other Chronic Conditions</li>
-<li style="margin-left: 30px">Injury</li>
-At the census-tract geographic level, only this "Top Level" set of conditions is available in the app.  Because of the large numbers of deaths in these broad categories, this Top Level will be particularly useful for looking at differences within and between small geographic areas.  
+In the initial setting for this chart, the health outcome being measured is Disability Adjusted Life Years (DALY).  DALY is a powerful measure that sums (1) the number of years a person lives with a condition which decreases their functionality during life (Years Lived with Disability=YLD) and (2) the difference between the age at which they might have lived to without the condition age and the age at which they actually died due to the condition (Years of Life Lost=YLL); DALY = YLD + YLL.   While DALYs is the initial health outcome setting, like almost everything in the chart, it can be changed to a different value which might be more insightful for the particular situation you are exploring.  
+The settings for all the modifiable settings (i.e. parameters), with their default values, options, and some explanations are: 
+<li style="margin-left: 20px">
+Level of the risk factors</li>
+<li style="margin-left: 40px">
+Default: 2</li>
+<li style="margin-left: 40px">
+Options: 1, 2, 3</li>
+<li style="margin-left: 40px">
+These options are in increasing order of "granularity"; 1 is three very course categories of risk factors (behavioral, metabolic, and behavioral); 2 breaks these down into 19 more detailed categories, and 3 into 25. </li>
+<li style="margin-left: 20px">
+Year:  1990 to 2017</li>
+<li style="margin-left: 20px">
+Sex: Female, Male, Total</li>
+<li style="margin-left: 20px">
+Metric for the Health Outcome: </li>
+<li style="margin-left: 40px">
+Default:  Rate</li>
+<li style="margin-left: 40px">
+Options:  Number, Percent, Rate</li>
+<li style="margin-left: 20px">
+Health Outcome</li>
+<li style="margin-left: 40px">
+Default:  Disability Adjusted Life Years (DALYs) </li>
+<li style="margin-left: 40px">
+Options:  Deaths, DALYS, Years Lived with Disability, Years of Life Lost</li>
+')
+
+hospA <-
+"These charts show <b>rankings</b> for California and for each County of the <b>number of persons hospitalized</b> for specific reasons, the <b>total charges</b> for those hospitalizations, and the associated <b>median charges</b>.   These rankings provide a valuable view into the burden of disease/injury in California, and provide an important view of the economic impact of these conditions.  
 <br><br>
-The next level, the "Public Health Level", is a separate mutually exclusive and exhaustive list of about 60 conditions (e.g. "Respiratory infections", "Trachea, bronchus and lung cancers", "Alzheimer disease and other dementias", "Suicide/Self-harm", etc.) "under" the "Top Level" categories.  Because of the greater clinical detail and public health program specificity of this level, we believe this level will provide the greatest insights and the most meaningful rankings of conditions at the county and community levels.  
-<br><br>
-Below this, the "Detail Level" includes a few "Public Health Level" conditions broken down into more detail (e.g.  Lymphomas and multiple myeloma, is broken down into Hodgkin lymphoma, Non-Hodgkin lymphoma and Multiple myeloma). These detailed conditions are only available in the app at the county level of geography. 
-<br><br>
-Not shown in the app is the underlying "Base Level". Each and every condition in the "Base Level" rolls up to one and only one "Public Health Level" condition (regardless of whether the "Base Level" condition is shown in the "Detail Level"). A diagram showing this hierarchy, and the list of "Base Level" conditions is available by clicking the "Cause List Info" link. Additional information, including a link to the list of detailed ICD-10 codes that make up each "Base level" condition can be found on the Technical Tab.
-<br><br>
-We welcome comments and suggested changes to any aspect of our hierarchal list. 
-'
+There are a number of nuances and sources of possible error in these charts noted in the technical documentation.  Of particular note, the summaries of 'charges' shown, are for just that, <i>charges</i>, and may well not reflects the actual costs, reimbursements, or payments for those charges. The presentation of these data should be considered preliminary - we are in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input."
+
+hospB <- 
+"This chart shows the <b>primary</b> reason for hospitalization (i.e. the first code listed), and includes rankings based on the number of <b>hospitalizations</b>, the average <b>length of stay</b>, and associated <b>total charges</b> and <b>median charges</b>.  This chart is particularly valuable for comparing the different rankings for the same condition based on numbers of hospitalizations, versus total, versus median costs.  Some conditions have high (or low) total charges because of high (or low) median charges, some because of large (or small) numbers of hospitalizations, and all sorts of things in between."
+
+hospC <- 
+"The chart shows hospitalization for a condition based it being the primary reason for hospitalization OR it being listed in ANY of the other positions for the hospitalization.  This chart provides important insights for understanding burden since for some conditions it is overwhelmingly listed as 'primary' (e.g. birth-related), with few listed in other positions; whereas for other conditions it is often listed in non-primary positions."
+
+
+HospitalizationsTab <- paste(hospA,"<br><br>",hospB)
+HospitalPrimaryAnyTab <- paste(hospA,"<br><br>",hospC)
+
