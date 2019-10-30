@@ -1,6 +1,14 @@
 newsUse <- paste0('
 <li>Welcome to the CCB!</li>
 <br>
+<li> 10-2019 -- Disparities Assessment tab!</li>
+<li> 10-2019 -- Trends by age group</li>
+<li> 10-2019 -- Hospitalization data rankings with charges</li>
+<li> 10-2019 -- Risk and DALY estimates added from IHME</li>
+<li> 10-2019 -- 2018 Death data added</li>
+<li> 10-2019 -- Life Expectancy estimates added</li>
+<li> 10-2019 -- Shiny App format changed to Dashboard</li>
+<li> 10-2019 -- Major help system changes</li>
 <li> 5/14/2019 -- Race/Ethnicity Trend Tab added</li>
 <li> 2/15/2019 -- Soft launch of public site !</li>
 <li> 1/2019 -- "Cirrhosis of the liver" has been separated out from "Digestive diseases"</li>
