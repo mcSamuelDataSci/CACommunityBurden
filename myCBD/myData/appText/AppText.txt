@@ -41,7 +41,7 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 
 tractWarning <- "NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"
 
-oshpdModal <- "<b> There are a number of nuances and sources of possible error in these charts noted in the technical documentation.  Of particular note, the summaries of 'charges' shown, are for just that, <u>charges</u>, and may well not reflects the actual costs, reimbursements, or payments for those charges. The presentation of these data should be considered preliminary—we are in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input. </b>"
+oshpdModal <- "<b> There are a number of nuances and sources of possible error in these charts noted in the technical documentation.  Of particular note, the summaries of 'charges' shown, are for just that, <u>charges</u>, and may well not reflects the actual costs, reimbursements, or payments for those charges. The presentation of these data should be considered preliminary; we are in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input. </b>"
 
 
 # DROP DOWN HELPS --------------------------------------------------
