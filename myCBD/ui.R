@@ -214,21 +214,25 @@ shinyUI(
                    tabPanel(title = strong("HOME"), value = "home",
                             br(),align='center',
                             h4(HTML(above1),align="left"),
-                            fluidRow(
-                             # column(width=2),
-                              column(width=3,offset = 1,img(id="map1I",      src="mapInt.png",    width="100%", onmouseout="this.src='mapInt.png'",    onmouseover="this.src='mapInt2.png'",    style = myBoxSty)),
-                            # column(width=3,img(id="map2I",      src="mapStat.png",   width="100%", onmouseout="this.src='mapStat.png'",   onmouseover="this.src='mapStat2.png'",   style = myBoxSty)),
-                              column(width=3,img(id="trendI",     src="trends.png",    width="100%", onmouseout="this.src='trends.png'",    onmouseover="this.src='trends2.png'",    style = myBoxSty)),
-                              column(width=3,img(id="scatterI",   src="SDOH.png",      width="100%", onmouseout="this.src='SDOH.png'",      onmouseover="this.src='SDOH2.png'",      style = myBoxSty))),
-                            br(),
-                            fluidRow(
-                              column(width=4,offset = 2,img(id="rankgeoI",   src="rankGeo.png",   width="100%", onmouseout="this.src='rankGeo.png'",   onmouseover="this.src='rankGeo2.png'",   style = myBoxSty)),
-                             # column(width=4,img(id="ranktableI", src="table.png", width="100%", onmouseout="this.src='table.png'", onmouseover="this.src='table2.png'", style = myBoxSty)),
-                              column(width=4,img(id="rankcauseI", src="rankCause.png",  width="100%", onmouseout="this.src='rankCause.png'",  onmouseover="this.src='rankCause2.png'",  style = myBoxSty)))
-                   ),
-                   
-            
-                   
+ fluidRow(
+  column(width=3,img(id="mapI",       src="map.png",              width="100%", onmouseout="this.src='map.png'",               onmouseover="this.src='map2.png'",       style = myBoxSty)),
+  column(width=3,img(id="trendI",     src="trends.png",           width="100%", onmouseout="this.src='trends.png'",            onmouseover="this.src='trends2.png'",    style = myBoxSty)),
+  column(width=3,img(id="rankgeoI",   src="rank_by_geography.png",width="100%", onmouseout="this.src='rank_by_geography.png'", onmouseover="this.src='rank_by_geography2.png'",      style = myBoxSty)),
+  column(width=3,img(id="rankcauseI", src="rank_by_cause.png",    width="100%", onmouseout="this.src='rank_by_cause.png'",     onmouseover="this.src='rank_by_cause2.png'",      style = myBoxSty))
+  
+  ),
+  
+ br(),
+ fluidRow(
+  column(width=3,img(id="dispI",       src="disparities.png",              width="100%", onmouseout="this.src='disparities.png'",               onmouseover="this.src='disparities2.png'",    style = myBoxSty)),
+  column(width=3,img(id="sdohI",       src="SDOH.png",           width="100%", onmouseout="this.src='SDOH.png'",            onmouseover="this.src='SDOH2.png'",    style = myBoxSty)),
+  column(width=3,img(id="hospI",   src="hospitalizations.png",width="100%",     onmouseout="this.src='hospitalizations.png'",     onmouseover="this.src='hospitalizations2.png'",      style = myBoxSty)),
+  column(width=3,img(id="riskI",   src="risk.png",width="100%", onmouseout="this.src='risk.png'", onmouseover="this.src='risk2.png'",      style = myBoxSty))
+  
+                   )
+ ),
+  
+  
                    
                    tabPanel(title = strong("MAPS"), value = "maps",
                             tabsetPanel(type = "tab", id = "mapsID",
@@ -306,7 +310,7 @@ shinyUI(
                    tabPanel(title = strong("SDOH"), value = "sdoh",
                             tabsetPanel(type = "tab", id = "sdohID",
                                         
-                                        tabPanel(title = "SOCIAL DETERMINANTS", value = "socialDeterminantsTab",
+                                        tabPanel(title = "SOCIAL DETERMINANTS", value = "sdohTab",
                                                  br(),
                                                  plotlyOutput("scatter", height=700)
                                         )

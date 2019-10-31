@@ -83,13 +83,15 @@ updatePanels <- function(navsID, tabID="") {
   updateTabsetPanel(session, inputId=paste0(navsID, "ID"),   selected=tabID)     #  then to sub-tab if there is one
 }
 
-onclick("map1I",      updatePanels(navsID = "maps",          tabID = "interactiveMapTab"))
-onclick("map2I",      updatePanels(navsID = "maps",          tabID = "staticMapTab"))  # static map currently not implemented, so just goes to interactive
-onclick("rankcauseI", updatePanels(navsID = "ranks",         tabID = "rankByCauseTab"))
-onclick("ranktableI", updatePanels(navsID = "dataTableTab"))
-onclick("rankgeoI",   updatePanels(navsID = "ranks",         tabID = "rankByGeographyTab"))
-onclick("trendI",     updatePanels(navsID = "trends",        tabID = "trendTab"))
-onclick("scatterI",   updatePanels(navsID = "sdoh",          tabID = "socialDeterminantsTab"))
+onclick("mapI",       updatePanels(navsID = "maps",             tabID = "interactiveMapTab"))
+onclick("rankcauseI", updatePanels(navsID = "ranks",            tabID = "rankByCauseTab"))
+onclick("rankgeoI",   updatePanels(navsID = "ranks",            tabID = "rankByGeographyTab"))
+onclick("trendI",     updatePanels(navsID = "trends",           tabID = "trendTab"))
+onclick("sdohI",      updatePanels(navsID = "sdoh",             tabID = "socialDeterminantsTab"))
+onclick("dispI",      updatePanels(navsID = "disparities",      tabID = "disparitiesTab"))
+onclick("sdohI",      updatePanels(navsID = "sdoh",             tabID = "sdohTab"))
+onclick("hospI",      updatePanels(navsID = "hospitalizations", tabID = "hospitalizations"))
+onclick("riskI",      updatePanels(navsID = "ranks",            tabID = "riskByCauseTab"))
 
   
 # Tab help display -------------------------------------------------------------------------------
