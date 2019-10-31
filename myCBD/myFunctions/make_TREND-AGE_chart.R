@@ -32,6 +32,9 @@ dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
 myTrans    <- ifelse(myLogTrans,'log2','identity')
 myMin      <- ifelse(myLogTrans,NA,0)
 
+
+dat.1 <- mutate(dat.1,ageG = ifelse(ageG == "85 - 999","85+",ageG))
+
  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=ageG, color=ageG)) +
     geom_line(size=myLineSize)  + geom_point(shape=myPointShape,size=myPointSize) +
     scale_x_continuous(minor_breaks=yMid,breaks=yMid,expand=c(0,3),labels=yRange) +

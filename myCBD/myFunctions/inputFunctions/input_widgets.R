@@ -52,11 +52,10 @@ hidden(
       
       # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?)
       selectInput("myMeasure",  label=list("Measure:", actionButton( "measureHelp", label=helpIcon,style=myInputHelpButtonSty)),
-                  choices=deathMeasures_Dropdown),
+                  choices=deathMeasures_Dropdown,selected = "YLL.adj.rate"),
       
       # myMeasureShort ======================
-      selectInput("myMeasureShort",  label=list("Measure Sort Order:", actionButton( "measureHelp", label=helpIcon,style=myInputHelpButtonSty)),
-                  choices=dMNames_short, selected="YLL Rate per 100,000 population"),
+      selectInput("myMeasureShort",  label="Measure Sort Order:", choices=dMNames_short, selected="YLL Rate per 100,000 population"),
       
       # myYearGrouping ======================
       radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three","Five"), inline = TRUE),

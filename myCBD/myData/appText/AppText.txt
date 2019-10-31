@@ -41,7 +41,17 @@ An emerging toolset for epidemiologic analysis and scientific insight, exploring
 
 tractWarning <- "NOTE:  AT THE CENSUS TRACT LEVEL, ONLY THE 'TOP LEVEL' CONDITIONS CAN/WILL BE DISPLAYED; ALSO, RENDERING STATE-WIDE TRACT-LEVEL MAPS CAN TAKE MANY SECONDS--PLEASE WAIT"
 
-oshpdModal <- "<b> The presentation of these hospitalization data should be considered preliminary. There are a number of nuances and considerations relevant to interpreting these charts noted in the technical documentation. Of particular note, the summaries of 'charges' shown, are specifically, <u>charges</u> based on hospital administrative systems, and do not indicate the actual costs, reimbursements, or payments for those charges. However these charge data provide one lens of valuable information regarding the patterns of monetary burden. We are also in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input. </b>"
+oshpdModal <- "The presentation of these hospitalization data should be considered preliminary. There are a number of nuances and considerations relevant to interpreting these charts noted in the technical documentation. Of particular note, the summaries of 'charges' shown, are specifically, <u>charges</u> based on hospital administrative systems, and do not indicate the actual costs, reimbursements, or payments for those charges. However these charge data provide one lens of valuable information regarding the patterns of monetary burden. We are also in the midst of assessing optimal ways of grouping conditions/diseases and other aspects of the sharing of these data. We welcome your input."
+
+
+educationModal <- "This figure shows trends in deaths grouped by educational attainment of the decedent, with denominators for rates from the American Community Survey. A number of interesting and potentially important patterns can be observed, but it is essential to interpret any observations with great caution, until these data can be investigated further.  
+<br><br>
+In particular, for many causes of death, persons with <b>less</b> than a high school education have <b>lower</b> death rates than those with a high school education or equivalent - it has been hypothesized, with some supporting evidence, that this could be because many immigrant have and/or are reported to have little education, and immigrants, overall, are well documented to be healthier that non-immigrants on average.  
+<br><br>
+We look forward to any suggestions you have related to these data.
+"
+
+
 
 
 # DROP DOWN HELPS --------------------------------------------------

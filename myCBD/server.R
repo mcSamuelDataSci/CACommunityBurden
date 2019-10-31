@@ -116,6 +116,13 @@ observe({
   }
 })  # Set once to TRUE to make it only happen once
 
+observe({
+  if (current$tab == "educationTrendTab") {
+    myModal(educationModal)
+  }
+})
+
+
 
 # generates help "objects" used for "drop down" help buttons
 # single argument to each HTML function is a text object (vector of length 1)

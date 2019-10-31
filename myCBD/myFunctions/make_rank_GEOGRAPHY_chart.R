@@ -54,7 +54,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   
 
    
-    t.plot <- barplot(dat.1$plotter,col="gray",cex.names=.8,horiz=TRUE,
+    t.plot <- barplot(dat.1$plotter,col="gray",cex.names=5,horiz=TRUE,
                       border="black",
                       offset=0,
                       xlab=names(deathMeasuresNames[deathMeasures == myMeasure]))
@@ -66,19 +66,19 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     #                   xlab=names(deathMeasuresNames[deathMeasures == myMeasure]))
     # 
     
-    axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1)
+    axis(side=2,at=t.plot,labels=dat.1$lab,las=2,cex.axis=1.6)
    
    
    
-    if (myRefLine)  segments(x0=sMeasure,y0=t.plot[1],y1=t.plot[length(t.plot)],lwd=1.5,lty=2)
+    if (myRefLine)  segments(x0=sMeasure,y0=t.plot[1],y1=t.plot[length(t.plot)],lwd=3,lty=2)
    
    
-    if (myCI & myMeasure=="cDeathRate") {arrows(y0=t.plot,x0=dat.1$rateLCI,x1=dat.1$rateUCI,col="blue",length=.05,angle=90,code=3)}
-    if (myCI & myMeasure=="aRate")      {arrows(y0=t.plot,x0=dat.1$aLCI,x1=dat.1$aUCI,col="blue",length=.05,angle=90,code=3)}
+    if (myCI & myMeasure=="cDeathRate") {arrows(y0=t.plot,x0=dat.1$rateLCI,x1=dat.1$rateUCI,col="blue",length=.05,angle=90,code=3,lwd=2)}
+    if (myCI & myMeasure=="aRate")      {arrows(y0=t.plot,x0=dat.1$aLCI,x1=dat.1$aUCI,col="blue",length=.05,angle=90,code=3,lwd=2)}
    
     axis(side=3)
    
-   mtext(tit,cex=1.6,line=3,font=2,col = myTitleColor)
+   mtext(tit,cex=2,line=3,font=2,col = myTitleColor,at=0,adj=0)
    
     
   }
