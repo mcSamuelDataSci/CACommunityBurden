@@ -46,7 +46,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     tit <-  wrap.labels(tit,80)
     
     
-  par(mar=par()$mar+c(2,12,4,0))
+  par(mar=par()$mar+c(2,16,4,0))
   #  par(mar=c(2,12,2,0),oma=c(0,0,0,0))
     
     

@@ -46,10 +46,11 @@ oshpdModal <- "The presentation of these hospitalization data should be consider
 
 educationModal <- "This figure shows trends in deaths grouped by educational attainment of the decedent, with denominators for rates from the American Community Survey. A number of interesting and potentially important patterns can be observed, but it is essential to interpret any observations with great caution, until these data can be investigated further.  
 <br><br>
-In particular, for many causes of death, persons with <b>less</b> than a high school education have <b>lower</b> death rates than those with a high school education or equivalent - it has been hypothesized, with some supporting evidence, that this could be because many immigrant have and/or are reported to have little education, and immigrants, overall, are well documented to be healthier that non-immigrants on average.  
+In particular, for many causes of death, persons with <b>less</b> than a high school education have <b>lower</b> death rates than those with a high school education or equivalent. We have a hypothesis regarding this observation, and some supporting evidence, that will be provided after further review. 
 <br><br>
 We look forward to any suggestions you have related to these data.
 "
+
 
 
 
