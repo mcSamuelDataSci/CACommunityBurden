@@ -1,5 +1,6 @@
 # title: pop.make.r
 # purpose: datasets of population denominators for CBD project (state, county, tract, mssa)
+# note! ACS weighted to same vintage PEP. E.g. 2013-17 5-yr ACS pop = avg of 2017 vintage PEP population for 2013-2017.
 
 ## 1    SETUP		----------------------------------------------------------------------
 
@@ -23,7 +24,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
 .ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
 .clabels    <- paste0(myPlace,"/myInfo/B01001_labels.csv") # labels for fields in B01001 table.
-.acsurl		<- paste0(upPlace,"/lifeTables/dataIn/acs5_B01001_tracts.csv.zip") # ACS-5yr population by tract, 2009-17
+.acsurl		<- paste0(upPlace,"/lifeTables/dataIn/acs5_B01001_tracts.csv.zip") # ACS-5yr pop by tract, pooled 2009-17
 .nchsurl	<- paste0(upPlace,"/lifeTables/dataIn/nchsPOP.csv.zip")
 .dofurl		<- "https://data.ca.gov/dataset/7a8c03d3-ed86-498a-acdb-8ea09ccb4130/resource/2c217b79-4625-4ab2-86b3-6fc5d66f0409/download/population-estimates-and-projections-by-county-age-and-sex-california-1970-2050.csv"
 .afacturl   <- paste0(upPlace,"/lifeTables/dataIn/afact.csv") # ACS-5yr tract share of county population
@@ -42,6 +43,7 @@ cbd.link <- setDT(read_csv(.cbdlink), key="GEOID")
 # therefore, it is preferable to download all B01001 tables from AFF or FTP. 
 # as of right now, this is done in acs5_B01001_tracts.do // containing GEOID year sex agell ageul nx for 2009-17
 acs.pop.tracts <- setDT(read_csv(.acsurl,col_types="ciciii"))
+acs.pop.tracts[,year:=year-2] # population data refer to midpoint of 5-year span
 
 # ## 2.2  ACS data: vector of variable names which contain tract-level population by age/sex
 # ##		table S0101	contains sex by ages: 5 year age groups, expressed as % of tract total population
@@ -167,7 +169,7 @@ dof.pop.state[,GEOID:="06000000000"]                             # new GEOID for
 ##	3	ANALYSIS	----------------------------------------------------------------------
 
 ## 	3.1 	ACS tract estimates controlled to DOF total county population
-##  3.2  	ACS tract estimates extrapolated to most current year
+##  3.2  	ACS tract estimates extrapolated (carry forward last share OR last pop) to most current year
 if (controlPop | doAppend[1]) {
 	# acs tract pop
 	tract.tmp<-copy(acs.pop.tracts)
