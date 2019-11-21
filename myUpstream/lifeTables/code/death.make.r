@@ -4,14 +4,13 @@
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
-.pkg	<- c("data.table","readr","readxl") 
+.pkg	<- c("data.table","readr","readxl","readstata13") 
 .inst   <- .pkg %in% installed.packages() 
 if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst]) 
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  options
-whichData     <- "fake"   # "real" or "fake" or "dof"
-
+whichData     <- "dof"   # "real" or "fake" or "dof"
 
 ## 1.3 paths 
 myDrive <- getwd()
@@ -21,7 +20,7 @@ upPlace <- paste0(myDrive,"/myUpstream")
 ## 1.4 links
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
 if (whichData=="real") .deaths		<- "h:/0.Secure.Data/myData/cbdDat0FULL.R" 
-if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.csv"
+if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.dta"
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
 
@@ -44,7 +43,7 @@ county.link[, GEOID:=paste0("06",FIPSCounty,"000000")]
 ## 2.3	CDPH deaths microdata -- CCB datasets
 if (whichData=="fake" | whichData=="real") load(.deaths) # named cbdDat0SAMP
 if (whichData=="real") cbdDat0SAMP <- cbdDat0FULL # rename cbdDat0SAMP to work with rest of code
-if (whichData=="dof")  cbdDat0SAMP <- read_csv(.deaths)
+if (whichData=="dof")  cbdDat0SAMP <- read.dta13(.deaths)
 
 ## 2.4 	inspect missingness
 setDT(cbdDat0SAMP)
@@ -141,13 +140,17 @@ if (whichData == "fake"  ) {
  saveRDS(dx.county, file=paste0(upPlace,.midPath,"dxCounty.rds"))  # output deaths by county
  saveRDS(dx.state,  file=paste0(upPlace,.midPath,"dxState.rds"))   # output deaths by state
 }
-
 if (whichData == "real"  ) {
  .midPath <- "h:/0.Secure.Data/myData/"
  saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
  saveRDS(dx.mssa,   file=paste0(.midPath,"dxMSSA.rds"))    # output deaths by mssa
  saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county
  saveRDS(dx.state,  file=paste0(.midPath,"dxState.rds"))   # output deaths by state
+}
+if (whichData == "dof"  ) {
+	.midPath <- "c:/users/fieshary/desktop/"
+	saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county
+	saveRDS(dx.state,  file=paste0(.midPath,"dxState.rds"))   # output deaths by state
 }
 
 
