@@ -4,6 +4,7 @@
 #	criteria: meets critical threshold for PY of exposure history AND >=95% deaths geocoded.
 #	method: empirical LT with estimated PY exposure; pool PY and Dx to calculate mx.
 # [maybe add chart showing number of geographies trimmed by each condition imposed— e.g. clinical trial style flowchart]
+# [other consideration: should threshold be based on PY of exposure>15000 or on sum of nDx>700?]
 
 ## 1    SETUP		----------------------------------------------------------------------
 
@@ -49,8 +50,8 @@ if (whichData=="real") {
 if (whichData=="dof") {
 	.dxtract<-NULL
 	.dxmssa<-NULL
-	.dxcounty	<- "c:/users/fieshary/desktop/dxCounty_dof.rds"
-	.dxstate	<- "c:/users/fieshary/desktop/dxState_dof.rds"
+	.dxcounty	<- "c:/users/fieshary/desktop/dxCounty.rds"
+	.dxstate	<- "c:/users/fieshary/desktop/dxState.rds"
 }
 ## 1.5  setwd
 setwd(myDrive)
@@ -107,7 +108,7 @@ if (whichData=="fake") {
 }
 
 ## 3.3	function: calculate how many years of exposure data required for stable LT
-doCheckPY <- function(d=NULL,t=10000) { 							# d=population dataset, t=critical PY exposure
+doCheckPY <- function(d=NULL,t=15000) { 							# d=population dataset, t=critical PY exposure
 	return(d[,.(nx=sum(nx)),by=.(GEOID,year,sex)][					# sum nx by geo/sex
 		nx<t,.(GEOID,sex, 							    # filter out those with <minimum PY, 
 			   flag=ceiling((t/nx)/2))][				# calculate N years needed, rounded, by sex
@@ -115,9 +116,9 @@ doCheckPY <- function(d=NULL,t=10000) { 							# d=population dataset, t=critica
 }
 
 ## 3.5  list of areas that will not be processed due to too few PY (to plug in to map as blanks)
-.zeroTract <-doCheckPY(.nxtract,t=10000)[flag>5] 		# tracts that require>N years data. (5/10/15k PY: 281/874/2543 of 9170)
-.zeroMSSA  <-doCheckPY(.nxmssa,t=10000)[flag>5]		  	# MSSAs that require>5 years data. (5/10/15k PY: 71/127/146 of 542)
-.zeroCounty<-doCheckPY(.nxcounty,t=10000)[flag>3]		# counties that require>N years data. (5/10/15k PY: 5/11/17 of 58)
+.zeroTract <-doCheckPY(.nxtract,t=15000)[flag>5] 		# tracts that require>N years data. (5/10/15k PY: 281/874/2543 of 9170)
+.zeroMSSA  <-doCheckPY(.nxmssa,t=15000)[flag>5]		  	# MSSAs that require>5 years data. (5/10/15k PY: 71/127/146 of 542)
+.zeroCounty<-doCheckPY(.nxcounty,t=15000)[flag>3]		# counties that require>N years data. (5/10/15k PY: 5/11/17 of 58)
 
 ## 3.6	add to list of areas to skip due to too few geocoded deaths
 .zeroTract <- merge(.zeroTract,.missTract,all=TRUE,by="GEOID")  # tract: 1264 censored
@@ -172,56 +173,47 @@ ltnx.county[,nx:=dx]; ltnx.county[,dx:=NULL]; .nxcounty[,dx:=NULL]
 ltnx.state<-data.table(do.call(rbind,lapply(range,doExtract,d=.nxstate,nyrs=1,level="state"))) 
 ltnx.state[,nx:=dx]; ltnx.state[,dx:=NULL]; .nxstate[,dx:=NULL]
 
-## 3.10 	merge deaths and exposures
+## 3.10 	merge deaths and exposures and rectangularize (fill in dx=0)
 ##  tract
 setkeyv(ltnx.tract,c("GEOID","year","sex","agell","ageul"))	
 setkeyv(ltdx.tract,c("GEOID","year","sex","agell","ageul"))	
 mx.tract <-merge(ltnx.tract, ltdx.tract, 
 				 by=c("GEOID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
-##	mssa
-setkeyv(ltnx.mssa,c("comID","year","sex","agell","ageul"))	
-setkeyv(ltdx.mssa,c("comID","year","sex","agell","ageul"))	
-mx.mssa <-merge(ltnx.mssa, ltdx.mssa, 
-				by=c("comID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
-##	county
-setkeyv(ltnx.county,c("GEOID","year","sex","agell","ageul"))	
-setkeyv(ltdx.county,c("GEOID","year","sex","agell","ageul"))	
-mx.county <-merge(ltnx.county, ltdx.county, 
-				  by=c("GEOID","year","sex","agell","ageul"), all=TRUE)  # merge pop, death data
-##	state
-setkeyv(ltnx.state,c("GEOID","year","sex","agell","ageul"))	
-setkeyv(ltdx.state,c("GEOID","year","sex","agell","ageul"))	
-mx.state <-merge(ltnx.state, ltdx.state, 
-				 by=c("GEOID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
-mx.state[sex=="TOTAL" & year==max(year)][,.(nx=sum(nx),dx=sum(dx),year=mean(year))]	 # check state PY and Dx (1 year)
-
-## 3.11 	rectangularize and collapse by new age groups
-## 		i=id for each life table. ageul missing after 'complete' step
-##	tract
 mx.tract<-setDT(complete(mx.tract,GEOID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.tract[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.tract[is.na(dx), dx:=0]
 mx.tract[, i:=.GRP, by=c("GEOID","sex","year")]					 # create an ID variable for each LT
 setkeyv(mx.tract,c("i","agell"))	
 ##	mssa
+setkeyv(ltnx.mssa,c("comID","year","sex","agell","ageul"))	
+setkeyv(ltdx.mssa,c("comID","year","sex","agell","ageul"))	
+mx.mssa <-merge(ltnx.mssa, ltdx.mssa, 
+				by=c("comID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
 mx.mssa<-setDT(complete(mx.mssa,comID,sex,agell))				 # (tidyr) rectangularize and key as DT
 mx.mssa[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.mssa[is.na(dx), dx:=0]
 mx.mssa[, i:=.GRP, by=c("comID","sex","year")] 					 # create an ID variable for each LT
 setkeyv(mx.mssa,c("i","agell"))	
 ##	county
+setkeyv(ltnx.county,c("GEOID","year","sex","agell","ageul"))	
+setkeyv(ltdx.county,c("GEOID","year","sex","agell","ageul"))	
+mx.county <-merge(ltnx.county, ltdx.county, 
+				  by=c("GEOID","year","sex","agell","ageul"), all=TRUE)  # merge pop, death data
 mx.county[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.county[is.na(dx), dx:=0]
 mx.county[, i:=.GRP, by=c("GEOID","sex","year")]				 # create an ID variable for each LT
 setkeyv(mx.county,c("i","agell"))	
 ##	state
+setkeyv(ltnx.state,c("GEOID","year","sex","agell","ageul"))	
+setkeyv(ltdx.state,c("GEOID","year","sex","agell","ageul"))	
+mx.state <-merge(ltnx.state, ltdx.state, 
+				 by=c("GEOID","year","sex","agell","ageul"), all=TRUE)	 # merge pop, death data
+mx.state[sex=="TOTAL" & year==max(year)][,.(nx=sum(nx),dx=sum(dx),year=mean(year))]	 # check state PY and Dx (1 year)
 mx.state[is.na(nx), nx:=0]										 # fill in new missing values with 0
 mx.state[is.na(dx), dx:=0]
 mx.state[, i:=.GRP, by=c("GEOID","sex","year")]					 # create an ID variable for each LT
 setkeyv(mx.state,c("i","agell"))	
 
-## 3.12	figure for CONSORT style flowchart to explain which geographies get life tables and which did not
-# TBD
 
 ## 4	ANALYSIS (LIFE TABLE)	----------------------------------------------------------
 ## - there are 9 years of exposure (population) data, so that is a limit of ACS.
