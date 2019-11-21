@@ -99,7 +99,7 @@ dx.county<-dx.county[,.(dx=sum(dx)),
 dx.county<-rbind(dx.county,dx.county[,.(dx=sum(dx)),                # both sexes combined totals
 					by=.(year,countyName,agell,ageul)],fill=TRUE) 
 dx.county[is.na(sex),sex:="TOTAL"]								
-dx.county <- dx.county[county.link,nomatch=0,on='countyName'][,	    # merge to get 'GEOID' for county	
+dx.county <- dx.county[county.link,nomatch=0,on='countyName'][,	    # merge using countyName to get 'GEOID' for county	
 						.(dx=sum(dx)),     
 						by=c("GEOID","year","sex","agell","ageul")] # collapse
 dx.county<-dx.county[as.numeric(GEOID)>=06000000000 & 
