@@ -130,8 +130,23 @@ shinyUI(
     ),
     
     dashboardPage(
-      dashboardHeader(title = "California Community Burden of Disease and Cost Engine", titleWidth = 550),
+      # https://stackoverflow.com/questions/31440564/adding-a-company-logo-to-shinydashboard-header
+      dashboardHeader(title = mTitle, titleWidth = 550,
+                      tags$li(a(href = 'http://www.company.com',
+                                img(src = 'Fusion Center Knot.png',
+                                    title = "Company Home", height = "30px"),
+                                style = "padding-top:10px; padding-bottom:10px;"),
+                              class = "dropdown")),
       dashboardSidebar(width=300,
+                       
+                       
+                    
+                                                 
+                       
+                       
+                       
+                       
+                       
                        
                        
                        # Menu Items & tabHelp ---------------------------------------------------
@@ -161,6 +176,9 @@ shinyUI(
                          ),
                          div(id = "rankCauseDownloads", style = "margin: 10px;",
                              downloadButton('rankCauseFigure', 'Download Figure', style = myDownloadButtonSty)
+                         ),
+                         div(id = "disparityDownloads", style = "margin: 10px;",
+                             downloadButton('disparityPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty))
                          )
                        ),
 
@@ -184,12 +202,14 @@ shinyUI(
                            if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
                            br(),br(),
                            icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"), br(),
-                           tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"), br(),
+                                                      tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"), br(),
                            tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
                        ),
                        
                        div(id = "textNotHomeTab", style = mySidebarTextSty,
-                           br(),HTML('<left><img src="CDPH.gif" height="125" width="150"></left>')
+                           br(),HTML('<center><img src="CDPH.gif" height="125" width="150"></center>'),
+                           br(),
+                           br(),HTML('<center><img src="Fusion Center Knot.png" height="125" width="150"></center>')
                        ),
                        
                        # Home page 0 side bar text. condition = fC(c(10)),  Not sure when this comes up?
@@ -253,10 +273,10 @@ shinyUI(
                                                  plotOutput("rankGeo", width="100%", height=1700)
                                         ),
                                         
-                                        tabPanel(title = "Attributable Risks", value = "riskByCauseTab",
+                                        tabPanel(title = "Attributable Risks - IHME", value = "riskByCauseTab",
                                                  plotlyOutput("riskByCause", height = 600)
                                         ),
-                                        tabPanel(title = "Arrows", value = "arrowsTab",
+                                        tabPanel(title = "Two-Year IHME Rankings", value = "arrowsTab",
                                                  htmlOutput("arrowsTitles"),
                                                  visNetworkOutput("network")
                                                  # fluidRow(

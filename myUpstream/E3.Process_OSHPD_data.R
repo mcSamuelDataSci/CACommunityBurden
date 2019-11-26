@@ -17,10 +17,12 @@
 
 
 #---SET LOCATIONS-----------------------------------------------------------------------
-
+  
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
-secure.location  <- "g:/0.Secure.Data/"
+secure.location  <- "h:/0.Secure.Data/"
+secure.location  <- "G:/CCB/0.Secure.Data/"
+
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -45,11 +47,15 @@ library(epitools)
 
 #-----------------------------LOADING/CREATING OSHPD DATASET FROM ORIGINAL DATA FILE----------------------------------------------------------------------------------------#
 
+
+
+# PDD - Patient Discharge Data ---------------------------------
+
 if(newData) {
   
   #Reading in oshpd 2016 PDD file
   # oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
-  oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_pdd_rln2016.sas7bdat") )
+  oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_rln2016.sas7bdat") )
   
   
   #Subset with only variables of interest
@@ -85,6 +91,17 @@ if(newData) {
 } # END if(newData)
 
 
+
+# ED - Emergency Department Data ---------------------------------
+
+
+oshpd.ED.16  <- read_sas(paste0(secure.location,"rawOSHPD/cdph_ed_rln2016.sas7bdat") )
+
+oshpd_ED_subset  <- oshpd.ED.16 %>%
+                    select(dx_prin, odx1 : odx24,  ccs_dx_prin, patco, race_grp,  agyrserv, dispn, payer) 
+
+saveRDS(oshpd_ED_subset, file=path(secure.location, "myData/oshpd_ED_subset.rds"))
+ 
 #--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
 
 if (whichData == "real") {

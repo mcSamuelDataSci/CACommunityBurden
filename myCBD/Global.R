@@ -31,14 +31,22 @@ viewType <- "Present"
 VERSION           <- "Version P2.5"
 criticalNumber    <- 11
 mTitle            <- "California Community Burden of Disease and Cost Engine"
+
+
+
+
+
+
+
+
 figureAttribution <- "California Department of Public Health"
 
 #SUBSITE Constants
 subSite     <- FALSE
 #subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
 #subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
-subsiteList <- c("Stanislaus")
-subsiteName <- "Stanislaus County CBD"
+subsiteList <- c("Butte")
+subsiteName <- "Butte County CBD"
 
 
 # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
@@ -53,6 +61,11 @@ myLegendSize <- 24
 myAxisSize  <- 22
 
 myTextSize2 <- 12
+myTextSize3 <- 16
+
+
+
+
 myWrapNumber <- 70
 myTitleColor <- "darkblue"
 

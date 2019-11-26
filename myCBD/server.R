@@ -324,7 +324,7 @@ output$trend  <- renderPlot(trendStep()$plot)
 
 
 output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},content = function(file) {
-  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+  png(file, width = 2000, height = 1800, units = "px", pointsize = 3)
   print(trendStep()$plot)
   dev.off()
 })
@@ -337,6 +337,28 @@ output$trendData <- downloadHandler(
     write.csv(trendStep()$data, file)
   }
 )
+
+
+# ---------------------------------------------------------------------------------------------------------
+
+disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare))
+output$disparityRace  <- renderPlot(disparityStep()$plot)
+
+
+output$disparityPNG <- downloadHandler(filename=function(){paste0("new_disparity.png")},content = function(file) {
+  png(file, width = 2000, height = 1400, units = "px")  # , pointsize = 20
+  print(disparityStep()$plot)
+  dev.off()
+})
+
+
+
+# myPlotly <- FALSE
+# if (!myPlotly)  output$disparityRace <- renderPlot(disparityStep())
+# if ( myPlotly)  output$disparityRace <- renderPlotly(disparityStep())
+
+
+
 
 # IHME ----------------------------------------------------------------------------------------------------
 # Arrows Data and plot
@@ -382,15 +404,6 @@ output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, in
 
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 
-# ---------------------------------------------------------------------------------------------------------
-
-disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE))
-
-output$trend  <- renderPlot(trendStep()$plot)
-
-myPlotly <- FALSE
-if (!myPlotly)  output$disparityRace <- renderPlot(disparityStep())
-if ( myPlotly)  output$disparityRace <- renderPlotly(disparityStep())
 
 
 # ---------------------------------------------------------------------------------------------------------

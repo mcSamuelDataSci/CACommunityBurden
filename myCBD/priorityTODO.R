@@ -1,6 +1,38 @@
-add "table of contents" and associated navigation to technical documentation.  Maybe in sidebar?
-  
+# planning tools/software
+#   trello
+#   microsoft 365 "planner"
+#   fancy excel file
+#   mantiss
 
+
+home page sizing, especially icons, on different monitors/sizes
+
+
+
+ICD-9-CM
+https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp
+Single Level CCS (ZIP file, 201 KB).
+C:\Users\SamFam\Downloads\Single_Level_CCS_2015.zip\
+
+
+
+ICD-10-CM
+https://www.hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp
+CCSR Version 2020.1 Fiscal Year 2020, Updated October 2019 - valid for ICD 10-CM diagnosis codes through September 2020
+CCSR for ICD-10-CM Diagnoses Tool, v2020.1 (ZIP file,3.4 MB)
+
+
+
+
+
+
+# add "table of contents" and associated navigation to technical documentation.  Maybe in sidebar?
+# table of contents to technical documentation page
+
+# nice table for links
+  
+# county / state comparisons
+# regional groupings
 
 
 # IHME
@@ -11,7 +43,6 @@ add "table of contents" and associated navigation to technical documentation.  M
 
 # fix SDOH such that a specific county can be selected; examine scatter with communities or tracts within that county
 
-# table of contents to technical documentation page
 
 #...data application....for epidemiologic insights into mortality and morbidity in California, with granular person, place and time data and visualizations; including views into the interrelationships of communities, health  disparities, and social determinants of health. 
 

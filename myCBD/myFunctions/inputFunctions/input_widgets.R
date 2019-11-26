@@ -82,6 +82,9 @@ hidden(
       # helpText
       div(id = "myMultiRaceHelpText", helpText(h6(multiRaceWarning,style="color:red; float:left; margin: 20px;"))),
       
+      # myCompare ======================
+      radioButtons("myCompare", "Compare to group with:", choices=c("lowest rate","highest rate")),
+      
       # myX ======================
       selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec),
       
@@ -94,6 +97,7 @@ hidden(
       # myVar(ICD/MDC/DRG) ======================
       selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),
                   choice = MDC_DRG_ICD_Dropdown),
+      
       
       
       # myPrimetype ======================

@@ -23,6 +23,19 @@ library(tidyr)        # spread etc.
 library(tidycensus)   # load_variables, get_acs
 
 
+
+# https://www.census.gov/data/developers/data-sets/acs-1year.html
+# https://www.census.gov/data/developers/data-sets/acs-5year.html
+# https://api.census.gov/data/2017/acs/acs5/variables.html
+# https://api.census.gov/data/2017/acs/acs5.html
+# https://api.census.gov/data/2017/acs/acs5/examples.html
+
+
+
+
+
+
+
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 

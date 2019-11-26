@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE)
 # PROVIDE PATH FOR SECURE DATA HERE
 # secure.location  <- "S:/CDCB/Demonstration Folder/Data/OSHPD/PDD/2016/"  # secure location of data
 secure.location  <- "e:/0.Secure.Data/"
+secure.location  <- "g:/CCB/0.Secure.Data/rawOSHPD/PDD"
 
 myDrive <- getwd()  #Root location of CBD project
 upPlace <- paste0("d:/0.CBD/myUpstream")
@@ -43,6 +44,30 @@ if (whichData == "fake") {
   oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
 }
 ```
+
+
+
+
+```{r}
+oshpd16 <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
+                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
+                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
+                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
+                                                  odiag22, odiag23, odiag24,sep = "|"))  %>%
+                       mutate(homeless = ifelse(grepl("Z590|Z591", all_diag), 1, 0))
+
+
+```
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r}
