@@ -143,7 +143,7 @@ sexTest_HIGH <- left_join(sexTest,sexTest2,by=c("county","yearG3","CAUSE")) %>%
 
 # ------------------------------------------------------------------------------------
 
-disparity <- function(myLHJ="CALIFORNIA",myCause="A",myCompare="lowest rate") {
+disparity <- function(myLHJ="CALIFORNIA",myCause="A",myCompare="lowest rate",myAddN,myAddRR,myAddRate) {
 
 
 #--RACE ------------------------------------------------------------------------------------------------------------------------
@@ -165,16 +165,14 @@ dat.1 <- filter(raceTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-placeLabels  <- max(dat.1$aRate)/18
-placeLabels2 <- max(dat.1$aRate)/8
 
+tMax <- max(dat.1$aRate)
+placeLabels  <- tMax/5 
+placeLabels2 <- tMax/8 
+placeLabels3 <- tMax/20
 
 racePlot <- ggplot(data=dat.1, aes(x=raceName, y=aRate,fill=pMark)) +
    geom_bar(stat="identity") +
-   
-   geom_text(aes(y=placeLabels,label=paste("N =",comma(Ndeaths)))) +
-   geom_text(aes(y=placeLabels2,label=paste("RR",number(rateRatio,accuracy = 0.1)))) +
-   
    
    
    theme_grey() +   #base_size = myBaseSize
@@ -184,14 +182,19 @@ racePlot <- ggplot(data=dat.1, aes(x=raceName, y=aRate,fill=pMark)) +
       theme(legend.position="bottom",
             legend.spacing.x = unit(10.0, 'points'),  ### EXPLORE THIS for optimal look  - unit(10.0, 'px')
             plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-            axis.title.y = element_text(size = myTextSize3),
+            axis.title.y = element_text(size = myTextSize3, margin = margin(t=0, r=10, b=0, l= 0), face="bold"),
             axis.title.x = element_blank(),
          axis.text.y = element_text(size = myAxisSize),
          axis.text.x = element_text(size = myAxisSize),
       legend.title = element_blank(),
          legend.text = element_text(size = myLegendSize),
          strip.text = element_text(size = myAxisSize)) 
-      
+  
+
+if (myAddN)  racePlot   <- racePlot + geom_text(aes(y=placeLabels,label=paste("N =",comma(Ndeaths)))) 
+if (myAddRate) racePlot <- racePlot + geom_text(aes(y=placeLabels2,label=paste("Rate =",number(aRate,accuracy = 0.1))))
+if (myAddRR) racePlot   <- racePlot + geom_text(aes(y=placeLabels3,label=paste("RR =",number(rateRatio,accuracy = 0.1))))
+
 
  
 #--AGE ------------------------------------------------------------------------------------------------------------------------
@@ -219,13 +222,17 @@ if(myCompare == "lowest rate") {
 dat.1 <- filter(ageTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex == "Total") %>%
            left_join(ageMap,by="ageG")  
 
-AGEplaceLabels <- max(dat.1$cDeathRate)/15 # Note, 10 not 15...  # TRIAL AND ERROR CRAP....
+
+tMax <- max(dat.1$cDeathRate)
+AGEplaceLabels  <- tMax/5
+AGEplaceLabels2 <- tMax/8
+AGEplaceLabels3 <- tMax/20
+
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
 agePlot <- ggplot(data=dat.1, aes(x=ageOrder, y= cDeathRate, fill=pMark)) +
    geom_bar(stat="identity") +
-   geom_text(aes(y=AGEplaceLabels, label=comma(Ndeaths))) +
    theme_grey() +   #base_size = myBaseSize
    scale_fill_manual("legend", values = fillColor) +
    geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") +
@@ -234,11 +241,22 @@ agePlot <- ggplot(data=dat.1, aes(x=ageOrder, y= cDeathRate, fill=pMark)) +
    
    theme(legend.position="bottom",
          plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-         axis.title.y = element_text(size = myTextSize3), axis.text.y = element_text(size = myAxisSize),
+         axis.title.y = element_text(size = myTextSize3, margin = margin(t=0, r=10, b=0, l= 0), face="bold"),
+         axis.text.y = element_text(size = myAxisSize),
          axis.title.x = element_blank(),                  axis.text.x = element_text(size = myAxisSize),
          legend.title = element_blank(),                  legend.text = element_text(size = myLegendSize)
-   )
-  
+   ) + 
+   scale_y_continuous(labels = comma)
+
+
+
+
+if (myAddN)  agePlot   <- agePlot + geom_text(aes(y=AGEplaceLabels, label=paste("N =",comma(Ndeaths)))) 
+if (myAddRate) agePlot <- agePlot + geom_text(aes(y=AGEplaceLabels2,label=paste("Rate =",number(cDeathRate,accuracy = 0.1))))
+if (myAddRR) agePlot   <- agePlot + geom_text(aes(y=AGEplaceLabels3,label=paste("RR =",number(rateRatio,accuracy = 0.1))))
+
+
+
 
 #--SEX ------------------------------------------------------------------------------------------------------------------------
 
@@ -255,7 +273,13 @@ if(myCompare == "lowest rate") {
 }
 
 dat.1 <- filter(sexTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3) 
-placeLabels <- max(dat.1$aRate)/15
+
+
+tMax <- max(dat.1$aRate)
+placeLabels  <- tMax/5 
+placeLabels2 <- tMax/8 
+placeLabels3 <- tMax/20
+
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
@@ -263,7 +287,6 @@ myTit <-  "Sex (age-adjusted rate)"
 
 sexPlot <- ggplot(data=dat.1, aes(x=sex, y=eval(parse(text=paste0(myMeasureRace))),fill=pMark)) +
    geom_bar(stat="identity") +
-   geom_text(aes(y=placeLabels,label=comma(Ndeaths))) +
    theme_grey() +   #base_size = myBaseSize
    scale_fill_manual("legend", values =fillColor) +
   # guides(fill = guide_legend(reverse=TRUE)) +
@@ -274,11 +297,24 @@ labs(title = "Sex", y = "rate per 100,000 (age-adjusted)") +
    
    theme(legend.position="bottom",
          plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-         axis.title.y = element_text(size = myTextSize3), axis.text.y = element_text(size = myAxisSize),
+         axis.title.y = element_text(size = myTextSize3,margin = margin(t=0, r=10, b=0, l= 10), face="bold"), axis.text.y = element_text(size = myAxisSize),
          axis.title.x = element_blank(),                  axis.text.x = element_text(size = myAxisSize),
          legend.title = element_blank(),                  legend.text = element_text(size = myLegendSize)
 
 )
+
+if (myAddN)  sexPlot <- sexPlot + geom_text(aes(y=placeLabels,label=paste("N =",comma(Ndeaths)))) 
+if (myAddRate) sexPlot <- sexPlot + geom_text(aes(y=placeLabels2,label=paste("Rate =",number(aRate,accuracy = 0.1))))
+if (myAddRR) sexPlot <- sexPlot + geom_text(aes(y=placeLabels3,label=paste("RR =",number(rateRatio,accuracy = 0.1))))
+
+
+
+#------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 #------------------------------------------------------------------------------------
@@ -289,8 +325,9 @@ mainTitle <- ggdraw() +
    draw_label(paste0("Disparities in Deaths Rates, ", fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", ",myYearG3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
 
 
-topRow <- cowplot::plot_grid(racePlot,sexPlot,rel_widths = c(5,2))
+topRow <- cowplot::plot_grid(racePlot,sexPlot,rel_widths = c(6,3))
 dPlot   <- plot_grid(mainTitle,topRow,agePlot,ncol=1,rel_heights = c(1,5,5))
 
 list(plot=dPlot)
- }
+ 
+}

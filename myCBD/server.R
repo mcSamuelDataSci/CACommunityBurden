@@ -341,12 +341,12 @@ output$trendData <- downloadHandler(
 
 # ---------------------------------------------------------------------------------------------------------
 
-disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare))
+disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
 output$disparityRace  <- renderPlot(disparityStep()$plot)
 
 
-output$disparityPNG <- downloadHandler(filename=function(){paste0("new_disparity.png")},content = function(file) {
-  png(file, width = 2000, height = 1400, units = "px")  # , pointsize = 20
+output$disparityPNG <- downloadHandler(filename=function(){paste0("new_disparity.jpg")},content = function(file) {
+  jpeg(file, width = 2000, height = 1400, units = "px", pointsize = 80)  # , pointsize = 20
   print(disparityStep()$plot)
   dev.off()
 })
@@ -400,7 +400,7 @@ output$riskByCause <- renderPlotly({
 # ---------------------------------------------------------------------------------------------------------
 
 
-output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans))
+output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans,input$myMeasure))
 
 output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 

@@ -11,7 +11,9 @@ if(1==2){
 
 trendAge <- function(myLHJ="CALIFORNIA",myCause="A",myLogTrans=FALSE,myMeasure = "cDeathRate") {
 
-  
+
+if(myMeasure == "YLL.adj.rate")  myMeasure <- "YLLper"   ## ADD MESSAGE ABOUT THIS
+if(myMeasure == "aRate")  myMeasure <- "cDeathRate"
 
 minYear <- 2000
 maxYear <- 2017

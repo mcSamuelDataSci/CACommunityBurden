@@ -85,6 +85,16 @@ hidden(
       # myCompare ======================
       radioButtons("myCompare", "Compare to group with:", choices=c("lowest rate","highest rate")),
       
+      
+      # myAddN ======================
+      checkboxInput("myAddN",  "Show NUMBER of Deaths?", value=FALSE),
+  
+      # myAddRate ======================
+      checkboxInput("myAddRate",  "Show Rate?", value=FALSE),      
+      
+      # myAddRR ======================
+      checkboxInput("myAddRR",  "Show Rate Ratio?", value=FALSE),
+    
       # myX ======================
       selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec),
       
