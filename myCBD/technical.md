@@ -125,7 +125,7 @@ output:
 <br>
 
 *  Data source
-     * Hospitalization data are based on 2016 nonpublic Patient Discharge Data received from the [California Office of Statewide Health Planning and Development (OSHPD)](https://oshpd.ca.gov).  OSHPD provides such files from inpatient data they collect from California-licensed hospitals in California. The data set consists of a record for each inpatient discharged from a California-licensed hospital. Licensed hospitals include general acute care, acute psychiatric, chemical dependency recovery, and psychiatric health facilities. Data are not collected from Veteran's Administration, Military or other Federal Hospitals or from Tribal Hospitals. 
+     * Hospitalization data are based on 2016 nonpublic Patient Discharge Data received from the [California Office of Statewide Health Planning and Development (OSHPD)](https://oshpd.ca.gov).  OSHPD provides such files from inpatient data they collect from California-licensed hospitals. The data set consists of a record for each inpatient discharged from a California-licensed hospital. Licensed hospitals include general acute care, acute psychiatric, chemical dependency recovery, and psychiatric health facilities. Data are not collected from Veteran's Administration, Military or other Federal Hospitals or from Tribal Hospitals. 
      * Detailed information for the current OSHPD Patient Discharge Data and data system can be found [here](https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Request/Data-Documentation/DataDictionary_PDD_2018_Nonpublic.pdf) and a link to the 2016-specific data can be found [here]( https://oshpd.ca.gov/data-and-reports/request-data/tools-resources/data-documentation/).
 
 <br>
@@ -134,10 +134,12 @@ output:
     * For each hospitalization one total charge is listed, reflecting the charges associated with the primary condition as well as any other charge associated with the hospitalization.  
       * Total charge is all charges for services rendered during the length of stay for patient care at the facility, based on the hospital?s full established rates. Charges include, but are not be limited to daily hospital services, ancillary services, and patient care services. 
       * Hospital-based physician fees are excluded, as are items like take-home drugs, television, follow-up home health visits, ambulance services, etc.
-      * If a patient's length of stay is more than 1 year (365 days), only Total Charges for the last year (365 days) are reported.
-    * The noted <b>charges</b> are based on hospitals' administrative systems and <b>do not indicate actual costs/payments for those charges </b>.  
+      * Hospitals report 'Total Charges' to OSHPD for the last 365 days of stay. However, starting in 2015, in the files released by OSHPD, 'Total Charges' are adjusted to reflect the entire length of stay.  
+      * A hospitalization can have multiple discharges if the patient moves between type of care (e.g. psychiatric to acute would be two discharges during the same overall hospital stay) and each discharge has a related total charge. 
+      * Charges of $1 specify 'no charge' or charity care.
+    * The noted <b>charges</b> are based on hospitals' administrative systems and <b>do not indicate actual costs/payments for those charges</b>.  
     * Nevertheless, because the CCB describes <b>summary data</b>, the charts and tables shown provide <b>valuable information regarding the patterns of the monetary burden</b> of disease/conditions in California from the hospitalization perspective. 
-    * For some hospitalizations, no charges are included, and for some hospitalizations implausibly high charges (likely errors)have been excluded, so total charges may be slight underestimates from this perspective.   ?Average? charges in these charts are based on the median rather than the mean, so are largely not impacted by these issues.
+    * For some hospitalizations, no charges are included, and for some hospitalizations implausibly high charges (likely errors) have been excluded, so total charges may be slight underestimates from this perspective.   ?Average? charges in these charts are based on the median rather than the mean, so are largely not impacted by these issues.
 
 <br>
 
