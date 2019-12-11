@@ -324,7 +324,8 @@ output$trend  <- renderPlot(trendStep()$plot)
 
 
 output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},content = function(file) {
-  png(file, width = 2000, height = 1800, units = "px", pointsize = 3)
+  #png(file, width = 2000, height = 1800, units = "px", pointsize = 3)
+  png(file,width=1000, height=600)
   print(trendStep()$plot)
   dev.off()
 })
@@ -346,7 +347,7 @@ output$disparityRace  <- renderPlot(disparityStep()$plot)
 
 
 output$disparityPNG <- downloadHandler(filename=function(){paste0("new_disparity.jpg")},content = function(file) {
-  jpeg(file, width = 2000, height = 1400, units = "px", pointsize = 80)  # , pointsize = 20
+  jpeg(file, width = 1200, height = 680)  # , pointsize = 20
   print(disparityStep()$plot)
   dev.off()
 })
