@@ -105,6 +105,6 @@ RiskByCausePlot <- function(data_in) {
     #theme(legend.position = "right",legend.text = element_text(margin = margin(r = 10, unit = "pt")), legend.key.size = unit(4.0, 'cm')) +
     coord_flip(ylim = c(0, max(data$total))) # keep as last ;)
   
-  dev.off()
+ # dev.off()
   ggplotly(p, tooltip="text") # %>% layout(legend = list(orientation = "v", x = 100000, size = 0.1))
 }
