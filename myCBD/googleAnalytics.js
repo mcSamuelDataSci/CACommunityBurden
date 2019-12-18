@@ -6,8 +6,9 @@
   a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-109056085-1', 'auto');
+ga('create', 'UA-154687382-1', 'auto');
 ga('send', 'pageview', {
   'page': '/CCB',
   'title': 'HomePage'
 });
+

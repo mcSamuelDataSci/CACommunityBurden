@@ -105,7 +105,24 @@ shinyUI(
                       "
                       )
                  ),
-      includeScript("googleAnalytics.js")
+      
+      
+      
+      ######## Google Analytics Script Start ###############
+      HTML(
+        "<script async src='https://www.googletagmanager.com/gtag/js?id=UA-154687382-1'></script>"
+      ),
+      includeScript("googleAnalytics.js"),
+      ######## Google Analytics Script End ###############
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       ),
     

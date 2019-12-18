@@ -489,16 +489,9 @@ temp <- calculated_aa_rates
 
 
 calculated_metrics     <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) %>%
-  mutate(county        = ifelse(county== "California","CALIFORNIA",county),
-         diagnosis_var = "icd10_cm") %>% 
-  select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var)
-
-
-
-# calculated_metrics$county[calculated_metrics$county == "California"] <- "CALIFORNIA"
-
-# calculated_metrics <- calculated_metrics %>% mutate(., diagnosis_var = "icd10_cm") %>% 
-
+                            mutate(county  = ifelse(county== "California","CALIFORNIA",county),
+                            diagnosis_var = "icd10_cm") %>% 
+                            select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var)
 
 test <- calculated_metrics %>% filter(type == "charges") %>% filter(is.na(measure)) #for real data, all of the NA charges visits are male A08 values
 
@@ -514,6 +507,19 @@ saveRDS(age_adjusted_hosp_rates, file = path(myPlace, "myData/", whichData, "/ag
 
 #---------------------------------------------------------Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 library(DT)
 
 # rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
@@ -524,6 +530,10 @@ drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
 
 hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
+
+
+
+
 ##------------------------------------------------------------------------MDC dataset---------------------------------------------------------------------##
 mdc_state  <- sum_num_costs(oshpd16, c("year",           "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
 mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% select(-Level)
@@ -531,6 +541,11 @@ mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% 
 total_mdc  <- bind_rows(mdc_state, mdc_county) %>% 
   filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% 
   mutate(diagnosis_var = "mdc")
+
+
+
+
+
 
 ##------------------------------------------------------DRG dataset-------------------------------------------------------------------------------------------##
 
@@ -541,9 +556,30 @@ total_drg  <- bind_rows(drg_state, drg_county) %>%
   filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% 
   mutate(diagnosis_var = "drg")
 
+
+
+
+
 # Joining both together ----------------------------------------------------------------------------------------------------------------
 
+
+## PLANS????
+## ---have "Total" sex.... for whenever total is needed; remember to exclude when needed
+
+
+
+
+
+
+
 total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_codes = mdc)
+
+
+
+
+
+
+
 
 
 #-------------------------------------------------Creating 0 level values for discordant gender pairs---------------------------------------------------------------#
