@@ -104,7 +104,7 @@ shinyUI(
                       {color: black;}
                       "
                       )
-                 ),
+                 )),
       
       
       
@@ -118,13 +118,6 @@ shinyUI(
       
       
       
-      
-      
-      
-      
-      
-      
-      ),
     
     #tags$h3(mTitle), # app main title supplied from Global
     
