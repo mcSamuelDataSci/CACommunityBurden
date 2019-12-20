@@ -32,13 +32,6 @@ VERSION           <- "Version P2.5"
 criticalNumber    <- 11
 mTitle            <- "California Community Burden of Disease and Cost Engine"
 
-
-
-
-
-
-
-
 figureAttribution <- "California Department of Public Health"
 
 #SUBSITE Constants
@@ -48,13 +41,10 @@ subSite     <- FALSE
 subsiteList <- c("Butte")
 subsiteName <- "Butte County CBD"
 
-
 # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 pdf(NULL) 
 
-
-# DISPLAY Constants
-
+#-- DISPLAY Constants ----------------------------------------------------
 
 myTitleSize <- 24
 myLegendSize <- 24
@@ -63,9 +53,6 @@ myAxisSize  <- 22
 myTextSize2 <- 12
 myTextSize3 <- 16
 
-
-
-
 myWrapNumber <- 70
 myTitleColor <- "darkblue"
 
@@ -73,13 +60,9 @@ myCex1           <- 2  # 1.5  #line labels
 myCex2           <- 1.2  #currently used only in education trend
 myLineLabelSpace <- 0.3
 
-
 myLineSize  <- 2
 myPointSize <- 5 # line markers
 myPointShape <- 18
-
-
-
 
 #-- Load Packages ------------------------------------------------------------
 
@@ -128,11 +111,6 @@ shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"),stringsAsF
 shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"),stringsAsFactors=FALSE)
 shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
 
-# Prior Approaches to reading "shape" files, kept for refereance
-# shape_County   <- readOGR(paste0(myPlace,"/myData/shape_County.shp"),p4s=proj1) 
-# shape_County   <- st_read(paste0(myPlace,"/myData/shape_County.rds")) # --> very large!
-# shape_County   <- readShapePoly(paste0(myPlace,"/myData/shape_County"),proj4string=CRS(proj1)) 
-
 shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
 shape_Tract$county <- as.character(shape_Tract$county)   
 
@@ -152,8 +130,6 @@ datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS"))
 
 eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
 datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
-
-
 
 #FIX THIS --- OSHPD
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
@@ -203,14 +179,9 @@ source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-RACE_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-AGE_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_RACE-DISPARITY_chart.R"))
-
+source(paste0(myPlace,"/myFunctions/make_DISPARITY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
-
-
 source(paste0(myPlace,"/myFunctions/make_LIFE-EXPECTANCY_chart.R"))
-
-
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
@@ -222,14 +193,10 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
 
-
 source(paste0(myPlace,"/myData/appText/AppText.txt"))
 source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
-
 # --- Shiny Stuff and Constants -----------------------------------------------
-
-
 
 chartYearMap    <-  read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx"))  
 
@@ -245,11 +212,6 @@ deathMeasuresNames <- c(
   "Mean Age at Death",
   "Standard Mortality Ratio")
 
-
-
-
-
-
 deathMeasures_Dropdown         <- deathMeasures[-8]  # drops SMR
 names(deathMeasures_Dropdown)  <- deathMeasuresNames[-8]
 
@@ -262,8 +224,6 @@ dMNames_short  <- deathMeasuresNames[shortdeathList]
 
 #dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
 dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
-
-
 
 #This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
 #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
@@ -318,10 +278,6 @@ bigCode           <- bigList[,"LABEL"]
 names(bigCode)    <- bigList[,"causeList"]
 
 
-
-
-
-
 #-- Social Determinants of Health Measures and Names
 
 
@@ -355,8 +311,6 @@ lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
 
 
-
-
 raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
 raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","**Multirace**","unknown","Hispanic")
 
@@ -375,16 +329,3 @@ CBD     <- dir_info(recursive = TRUE,type="file")
 CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path)))
 
 
-# NOTES:
-# myYear <- 2013
-# myLHJ  <- "Colusa"
-# myLev <- 1
-# myCause <- 104
-# myCause  <- "Diabetes mellitus"
-
-# library(shinythemes)
-# library(shinymaterial) 
-
-# library(maptools)   
-# library(rgdal)      
-# library(maps)

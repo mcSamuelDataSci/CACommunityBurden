@@ -4,6 +4,9 @@
 #   fancy excel file
 #   mantiss
 
+https://www.dataquest.io/blog/jupyter-notebook-tutorial/
+
+
 
 home page sizing, especially icons, on different monitors/sizes
 
