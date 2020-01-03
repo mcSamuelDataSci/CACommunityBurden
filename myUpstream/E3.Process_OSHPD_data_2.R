@@ -1,6 +1,5 @@
 ######  CELL SUPRESSION
 
-
 # removed discharge date for now?  -MCS?
 
 # OSHPD sheet on coding of charges:
@@ -49,9 +48,7 @@ library(epitools)
 if(newData) {
   
   #Reading in oshpd 2016 PDD file
-  # oshpd16  <- read_sas("S:\\CDCB\\Demonstration Folder\\Data\\OSHPD\\PDD\\2016\\cdph_pdd_ssn2016.sas7bdat") 
   oshpd16  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_rln2016.sas7bdat") )
-  
   
   #Subset with only variables of interest
   oshpd_subset  <- select(oshpd16,
@@ -64,11 +61,10 @@ if(newData) {
                           los_adj, los) %>% mutate(year = 2016)
   
   
-  
   #Saving subset as RDS file
   saveRDS(oshpd_subset, file=path(secure.location, "myData/oshpd_subset.rds"))
   
-  #3% random sample, randomly permuted
+  #3% random sample, randomly permuted------------------------------------------------
   set.seed(4)
   #oshpd_sample <- sample_n(oshpd_subset, size = 0.01*nrow(oshpd_subset), replace = F)
   
@@ -77,17 +73,16 @@ if(newData) {
   
   half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
   
-  p1           <- sample_n(oshpd_subset[,1:56],  sampN2)
-  p2           <- sample_n(oshpd_subset[,57:58], sampN2)
-  p3           <- sample_n(oshpd_subset[,59:65], sampN2)
+  p1           <- sample_n(oshpd_subset[,1:32],  sampN2)
+  p2           <- sample_n(oshpd_subset[,33:34], sampN2)
+  p3           <- sample_n(oshpd_subset[,35:41], sampN2)
   p3$race_grp  <- NA
   half2        <- cbind(p1,p2,p3)
   
   oshpd_sample <- rbind(half1,half2)
   
-  
   # Saving random sample as RDS file
-  saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds"))
+  saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds")) #----------
   
 } # END if(newData)
 
@@ -101,7 +96,6 @@ oshpd_ED_subset  <- oshpd.ED.16 %>%
 
 saveRDS(oshpd_ED_subset, file=path(secure.location, "myData/oshpd_ED_subset.rds"))
  
-
 
 #-------------------------------------LOAD AND PROCESS OSHPD DATA-------------------------
 
@@ -123,8 +117,8 @@ icd_map <- read_excel(path(myPlace, "myInfo/gbd.ICD.Map.xlsx"))
 geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
 
 #sex categories
-sex_num <- c(   "1",      "2",     "3",       "4")
-sex_cat <- c("Male", "Female", "Other", "Unknown")
+sex_num <- c(   "1",      "2",     "3",       "4",    "5")
+sex_cat <- c("Male", "Female", "Other", "Unknown","Total")
 # bind_cols keeps values as characters, wherese cbind converts to factor, which we don't want
 OSHPD_sex <- bind_cols(sex_num=sex_num, sex_cat=sex_cat) %>% as.data.frame() 
 
@@ -132,7 +126,6 @@ OSHPD_sex <- bind_cols(sex_num=sex_num, sex_cat=sex_cat) %>% as.data.frame()
 race_grp <- c("0",          "1",        "2",        "3",    "4",        "5",       "6")
 race_cat <- c("Unk/missing","White-NH", "Black-NH", "Hisp", "Asian-NH", "AIAN-NH", "Other-NH")
 OSHPD_race_grp <- bind_cols(race_grp=race_grp, race_cat=race_cat) %>% as.data.frame() 
-
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
@@ -145,7 +138,6 @@ popCountySex     <- filter(popCounty,ageG == "Total")
 popCountySexAgeG <- filter(popCounty,ageG != "Total")
 
 popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
-
 
 #----------------------------------------------ADD AGE-GROUp VARIABLE---------------------------------------------------------#
 
@@ -178,10 +170,8 @@ aMark         <- findInterval(oshpd16$agyrdsch,aU,left.open = TRUE)  # vector in
 
 #-----------------------------ADDING VARIABLES TO OSHPD DATASET AND CLEANING/RECODING----------------------------------#
 
-
 #Adding age groups
 oshpd16$ageG  <- aLabs[aMark] 
-
 
 # #Using icdToGroup Function to map icd codes from diag_p variable to disease group
 # oshpd16$icdCODE  <- icdToGroup(inputVectorICD10=oshpd16$diag_p) %>% as.character()
@@ -194,23 +184,116 @@ oshpd16$ageG  <- aLabs[aMark]
 # nLast4    <- nchar(codeLast4) #counts number of characters 
 
 
-
-oshpd16[,c(2,27:50)]  <-  apply(oshpd16[,c(2,27:50)],2, function(x) str_pad(x, 3,"left",pad="Z"))
-ccsMap           <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/CCS Code and Names Linkage.xlsx"),sheet = "names"))
-ccsMap$ccsCode   <- str_pad(ccsMap$ccsCode, 3,"left",pad="Z")
+# CCS CODING ---------------------------------------------------------------------
 
 
+# WARNING - need to change these column numbers if osdpd16 changes
 
-# oshpd16  <- oshpd16  %>% 
-#   mutate(lev0  = "0"
-#          #,
-#          #lev1  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
-#          #lev2  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
-#          #lev3  = ifelse(nLast4 == 4,codeLast4,NA) 
-#   ) %>% 
-#   left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% 
-#   left_join(., OSHPD_race_grp, by = "race_grp") %>%
-#   left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% select(-sex) %>% mutate(sex=sex_cat)  %>% select(-sex_cat)
+
+# Adding "o" pads before numeric CCS codes for consistant matching/linking/coding
+
+oshpd16[,2:26]  <-  apply(oshpd16[,2:26],2, function(x) str_pad(x, 5,"left",pad="o"))
+
+ccsMap           <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/CCS Code and Names Linkage.xlsx"),sheet = "names")) %>%
+                       mutate(ccsCodePaded = str_pad(ccsCode, 5,"left",pad="o"))
+
+# Create one variable with all 25 CCS codes concatenated for efficient string searching
+oshpd16Any <- oshpd16 %>% 
+               mutate(all_CCS_One_String = 
+                       paste(ccs_diagP,    ccs_odiag1,  ccs_odiag2, ccs_odiag3, ccs_odiag4,
+                             ccs_odiag5,   ccs_odiag6,  ccs_odiag7, ccs_odiag8, ccs_odiag9,
+                             ccs_odiag10, ccs_odiag11, ccs_odiag12, ccs_odiag13, ccs_odiag14,
+                             ccs_odiag15, ccs_odiag16, ccs_odiag17, ccs_odiag18, ccs_odiag19, 
+                             ccs_odiag20, ccs_odiag21, ccs_odiag22, ccs_odiag23, ccs_odiag24))  
+
+# no ccs code "above" 670 appears in the data set 
+
+start_time <- Sys.time()
+
+
+# Create (283) new indicator varibles, one for each CCS code, indicting if that code occurrs in the
+#  primary CCS code of any of the 24 secondary CCS codes
+
+for (i in 1:nrow(ccsMap)) {
+oshpd16Any <- oshpd16Any %>% mutate(
+   !!ccsMap$ccsCodePaded[i] := ifelse(grepl(ccsMap$ccsCodePaded[i], all_CCS_One_String), 1, 0)) 
+ # !!ccsMap$ccsCodePaded[i] := ifelse(apply(oshpd16_new[,2:26], 1, function(r) any(r == ccsMap$ccsCodePaded[i])), 1, 0)) #SLOWER 
+}
+
+end_time <- Sys.time()
+end_time - start_time
+
+# discard bunch of variable for efficient processing
+oshpd16Any <- select(oshpd16Any,-(ccs_odiag1:msdrg),-all_CCS_One_String)
+
+# save/read this file
+saveRDS(oshpd16Any, file=path(secure.location, "myData/oshpd16Any.rds"))
+oshpd16Any <- readRDS(file=path(secure.location, "myData/oshpd16Any.rds")) 
+
+
+# Sum each CCS indicator variable, by county and sex, and "flip" it (i.e. wide to long) such that there is one
+#  varible ("ccsANY") with the count for that CCS code, and one varible ("ccsMeasure") that indictes the CCS code
+
+## NOT ENOUGH MEMORY(?) TO DO THIS
+# temp <- pivot_longer(oshpd16Any,ooo1:o237,names_to = "ccsANY")
+
+
+i <- 1
+## get function!
+ccs.t0 <- oshpd16Any %>% 
+            group_by(patcnty, sex) %>% 
+            summarize(n_hosp_any = sum(get(ccsMap$ccsCodePaded[i]))) %>% 
+            mutate(ccsCode=ccsMap$ccsCodePaded[i])
+
+for (i in 2:nrow(ccsMap)) {
+ccs.t1 <- oshpd16Any %>% 
+           group_by(patcnty, sex) %>% 
+           summarize(n_hosp_any = sum(get(ccsMap$ccsCodePaded[i]))) %>% 
+           mutate(ccsCode=ccsMap$ccsCodePaded[i])
+
+ccs.t0 <- bind_rows(ccs.t0,ccs.t1)
+}
+
+# make "Total Sex" copy and join
+ccs.t2      <- ccs.t0 %>% 
+                    group_by(patcnty, ccsCode) %>% 
+                    summarise(n_hosp_any=sum(n_hosp_any)) %>%   
+                    mutate(sex = "5") %>%  
+                    bind_rows(ccs.t0)
+
+# make "CA State" copy and join
+ccs.t3     <- ccs.t2 %>% 
+                   group_by(ccsCode,sex) %>% 
+                   summarise(n_hosp_any=sum(n_hosp_any)) %>%   
+                   mutate(patcnty = "CA")  %>%   
+                   bind_rows(ccs.t2)
+
+
+## TODO -- why any missing sex data?
+
+ccsAnyWork <- ccs.t3 %>%
+                left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% 
+                left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% 
+                mutate(county  = ifelse(patcnty == "CA","CALIFORNIA",county)) %>%
+                select(-sex) %>% 
+                mutate(sex=sex_cat)  %>% select(-sex_cat) %>%
+                filter(sex %in% c("Male","Female","Total")) %>%
+                filter(n_hosp_any > 0)
+
+
+saveRDS(ccsAnyWork, file = path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds"))
+
+
+
+# =====================================================================================================================
+# ---------------------------------------------------------------------------------------------------------------------
+
+
+oshpd16Primary <- oshpd16 %>% 
+                     select(-(ccs_odiag1:msdrg)) %>% 
+   left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% 
+   left_join(., OSHPD_race_grp, by = "race_grp") %>%
+   left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% select(-sex) %>% mutate(sex=sex_cat)  %>% select(-sex_cat)
 
 
 
@@ -221,12 +304,12 @@ ccsMap$ccsCode   <- str_pad(ccsMap$ccsCode, 3,"left",pad="Z")
 # -MCS  move sex and race recoding above....
 
 #Adding Total in order to create total/statewide estimates (for grouping function later)
-oshpd16sex <- mutate(oshpd16, sex = "Total") 
-oshpd16 <- bind_rows(oshpd16, oshpd16sex) 
+oshpd16Primary <- mutate(oshpd16Primary, sex = "Total") %>% 
+            bind_rows(oshpd16Primary) 
 
 #Calculating charge/day from los_adj and charges
 
-oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
+oshpd16Primary <- oshpd16Primary %>% mutate(charge_per_day = charge/los_adj)
 
 ###-------------------------------------------EXPLORATORY ANALYSIS OF LENGTH OF STAY AND CHARGES (REAL OSHPD DATA, NOT SAMPLE)----------------------------------------------#
 
@@ -254,13 +337,13 @@ oshpd16 <- oshpd16 %>% mutate(charge_per_day = charge/los_adj)
 
 #-----------------------------*_*_*_*_*_*_*_*_*_*_
 
-oshpd16$charge[oshpd16$charge == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
+oshpd16Primary$charge[oshpd16Primary$charge == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
 
-oshpd16$charge[oshpd16$charge == 1] <- NA
+oshpd16Primary$charge[oshpd16Primary$charge == 1] <- NA
 
-oshpd16$charge_per_day[oshpd16$charge_per_day == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
+oshpd16Primary$charge_per_day[oshpd16Primary$charge_per_day == 0] <- NA #changing 0 and 1 charges (kaiser or pro-bono cases) to NA
 
-oshpd16$charge_per_day[oshpd16$charge_per_day == 1] <- NA
+oshpd16Primary$charge_per_day[oshpd16Primary$charge_per_day == 1] <- NA
 
 
 #-------------OSHPD CALCULATIONS FOR TOTAL VISITS/CHARGES AND CRUDE RATES------------------------------------------------------------------#
@@ -331,85 +414,99 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
 #-----------------------COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA FILES AND CRUDE RATES------------------------------------------------------#
 
 #Statewide
-s.lev0 <- sum_num_costs(oshpd16, c("sex", "ccs_diagP", "year"), "ccs0")
-s.lev1 <- sum_num_costs(oshpd16, c("sex", "lev1", "year"), "ccs0") #top level
+s.lev0 <- sum_num_costs(oshpd16Primary, c("sex", "ccs_diagP", "year"), "ccs0")
+# s.lev1 <- sum_num_costs(oshpd16Primary, c("sex", "lev1", "year"), "ccs0") #top level
 
-state_sum <- bind_rows(s.lev0, s.lev1)
+state_sum <- bind_rows(s.lev0)
 state_sum$county <- STATE #California as "county" variable
 
-#County
-c.lev0 <- sum_num_costs(oshpd16, c("sex", "lev0", "county", "year"), "lev0")
-c.lev1 <- sum_num_costs(oshpd16, c("sex", "lev1", "county", "year"), "lev1") #top level
+#ADD AGE!!!!!!!!!!!
+cXXXXasge <- sum_num_costs(oshpd16Primary, c("sex", "ageG","ccs_diagP", "county", "year"), "ccs0")
 
-county_sum <- bind_rows(c.lev0, c.lev1, c.lev2, c.lev3)
+
+
+#County
+c.lev0 <- sum_num_costs(oshpd16Primary, c("sex", "ccs_diagP", "county", "year"), "ccs0")
+#c.lev1 <- sum_num_costs(oshpd16Primary, c("sex", "lev1", "county", "year"), "lev1") #top level
+
+county_sum <- bind_rows(c.lev0)
 
 #merging county and state
 total_sum <- bind_rows(state_sum, county_sum) %>% as.data.frame()
 
 # removing unknown and other gender variables, NA county, and NA CAUSES
 # total_sum_pop doesn't have any lev3 data because CAUSE = NA for all lev3 in this situation (and information is identical to lev0)
-total_sum_pop <- total_sum %>% filter(!is.na(CAUSE)) %>% left_join(., popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other", !is.na(county)) 
+total_sum_pop <- total_sum %>% left_join(., popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other", !is.na(county)) 
 
 
 #checking NA charges
 total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
+
+
+
+
+
+total_sum_pop_AGE <- total_sum %>% left_join(., popCountySex, by = c("year", "sex", "county")) %>% filter(sex != "Unknown" & sex != "Other", !is.na(county)) 
+
+
 
 ##All of the NA cases that are present in the dataset at this point are cases in which there was only one hospitalization for a given CAUSE-gender-county, and the charge happened to be 0/NA. All the others (ie where there were multiple
 #cases for a given CAUSE-gender-county combination) in which some of the charges happened to be 0/NA are grouped where total charges is calculated by removing NA values. 
 
 
 
-#----------------------------------------------------------------------------------------------------------------------------------------#
-#The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
-#To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
-
-
-# -MCS add commnet on rowid thing....
-spread_female_sum_pop <- total_sum_pop %>%                               filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
-spread_male_sum_pop   <- total_sum_pop %>% tibble::rowid_to_column() %>% filter(sex == "Male")   %>% spread(., sex, CAUSE) %>% select(year, Level, Male,   county) #summarises all the CAUSES for male, by county and level
-
-female_only <- anti_join(spread_female_sum_pop, spread_male_sum_pop,   by = c("Female" = "Male", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
-male_only   <- anti_join(spread_male_sum_pop,   spread_female_sum_pop, by = c("Male" = "Female", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the male dataset but not the female dataset
-
-# Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
-
-add_males   <- gather(female_only, key = "sex", value = "CAUSE", Female) %>% mutate(sex = "Male")
-add_females <- gather(male_only,   key = "sex", value = "CAUSE", Male)   %>% mutate(sex = "Female")
-
-# Now joining original total_sum_pop with these datasets, replacing NA with zeros
-total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level", "county", "sex", "CAUSE")) %>% 
-  full_join(.,             add_males,   by = c("year", "Level", "county", "sex", "CAUSE"))
-
-## The issue now is distinguishing between NA that really should be changed to 0s--i.e 0 n_hosp, so 0 charges, and the 0 charges that we defined as NA earlier--need to keep these as NA
-# Example of replacing NA data in selected column
-# dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
-
-#replacing year with 2016
-# mcs NOTE: this will not generize when other years are added -- deal with that then
-total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
-
-#replacing NA for n_hosp, charges, avgcharge with 0
-total_sum_pop_new$charges[          is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes NA -> 0 for cases where n_hosp was NA, not a number of hospitalizations
-total_sum_pop_new$avgcharge[        is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA, not a real number of hospitalizations
-total_sum_pop_new$avgcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
-total_sum_pop_new$medcharge[        is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
-total_sum_pop_new$medcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
-total_sum_pop_new$avg_los[          is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
-total_sum_pop_new$n_hosp[           is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
-
-#replacing NA in ageG with "Total"
-total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
-
-
-#Now we will  re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
-
-total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
+# #----------------------------------------------------------------------------------------------------------------------------------------#
+# #The problem that now arises in total_sum_pop is that CAUSES may appear among females in a given county that don't appear among males, and vice versa, which will cause issues when trying to make visualizations and summarizations later, since the data isn't the same length. 
+# #To address this problem, we need to add in observations for the non-congruent CAUSES, and give them values of 0 for n_hosp and charges:
+# 
+# 
+# # -MCS add commnet on rowid thing....
+# spread_female_sum_pop <- total_sum_pop %>%                               filter(sex == "Female") %>% spread(., sex, CAUSE) %>% select(year, Level, Female, county)  #summarises all the CAUSES for females, by county and level
+# spread_male_sum_pop   <- total_sum_pop %>% tibble::rowid_to_column() %>% filter(sex == "Male")   %>% spread(., sex, CAUSE) %>% select(year, Level, Male,   county) #summarises all the CAUSES for male, by county and level
+# 
+# female_only <- anti_join(spread_female_sum_pop, spread_male_sum_pop,   by = c("Female" = "Male", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the female dataset but not the male dataset
+# male_only   <- anti_join(spread_male_sum_pop,   spread_female_sum_pop, by = c("Male" = "Female", "year", "county", "Level")) #These are the CAUSE-county-level pairs that are in the male dataset but not the female dataset
+# 
+# # Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
+# 
+# add_males   <- gather(female_only, key = "sex", value = "CAUSE", Female) %>% mutate(sex = "Male")
+# add_females <- gather(male_only,   key = "sex", value = "CAUSE", Male)   %>% mutate(sex = "Female")
+# 
+# # Now joining original total_sum_pop with these datasets, replacing NA with zeros
+# total_sum_pop_new <- full_join(total_sum_pop, add_females, by = c("year", "Level", "county", "sex", "CAUSE")) %>% 
+#   full_join(.,             add_males,   by = c("year", "Level", "county", "sex", "CAUSE"))
+# 
+# ## The issue now is distinguishing between NA that really should be changed to 0s--i.e 0 n_hosp, so 0 charges, and the 0 charges that we defined as NA earlier--need to keep these as NA
+# # Example of replacing NA data in selected column
+# # dat$four[is.na(dat$four)] <- 0  https://stackoverflow.com/questions/13172711/replace-na-values-from-a-column-with-0-in-data-frame-r
+# 
+# #replacing year with 2016
+# # mcs NOTE: this will not generize when other years are added -- deal with that then
+# total_sum_pop_new$year[is.na(total_sum_pop_new$year)] <- 2016
+# 
+# #replacing NA for n_hosp, charges, avgcharge with 0
+# total_sum_pop_new$charges[          is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes NA -> 0 for cases where n_hosp was NA, not a number of hospitalizations
+# total_sum_pop_new$avgcharge[        is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA, not a real number of hospitalizations
+# total_sum_pop_new$avgcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+# total_sum_pop_new$medcharge[        is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+# total_sum_pop_new$medcharge_per_day[is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+# total_sum_pop_new$avg_los[          is.na(total_sum_pop_new$n_hosp)] <- 0 #only codes 0 for cases where n_hosp was NA
+# total_sum_pop_new$n_hosp[           is.na(total_sum_pop_new$n_hosp)] <- 0 #changing NA n_hosp to 0
+# 
+# #replacing NA in ageG with "Total"
+# total_sum_pop_new$ageG[is.na(total_sum_pop_new$ageG)] <- "Total"
+# 
+# 
+# #Now we will  re-join the population dataset to make sure that the new 0-value female/male variables have associated populations
+# 
+# total_sum_pop_new <- total_sum_pop_new %>% left_join(., popCountySex, by = c("year", "county", "sex", "ageG")) %>% select(-pop.x) %>% rename(pop = pop.y)
 
 
 
 ## MAIN RATE CALCULATION ---------------------------------------------------------------
-total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
+#total_crude_rates <- calculate_crude_rates(total_sum_pop_new, yearN = 1)
 
+total_crude_rates <- calculate_crude_rates(total_sum_pop, yearN = 1)
 
 
 #-----------------------------------------------AGE ADJUSTED ("AA") RATES-----------------------------------------------------------------------------------------------------------------#
@@ -434,16 +531,16 @@ if (1==2) { #NOT USED FOR NOW; #MAY WANT TO STUDY/ASSESS THE IMPACT OF NOT USING
 #---------------------Age-adjusted hospitalizations (county and statewide)-----------------------------------------------------#
 #Using summary function that was already created 
 
-sA0 <- sum_num_costs(oshpd16, c(          "year", "sex", "ageG", "lev0"), "lev0") %>% mutate(county = STATE)
-sA1 <- sum_num_costs(oshpd16, c(          "year", "sex", "ageG", "lev1"), "lev1") %>% mutate(county = STATE)
-sA2 <- sum_num_costs(oshpd16, c(          "year", "sex", "ageG", "lev2"), "lev2") %>% mutate(county = STATE)
-sA3 <- sum_num_costs(oshpd16, c(          "year", "sex", "ageG", "lev3"), "lev3") %>% mutate(county = STATE)
-cA0 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev0"), "lev0") 
-cA1 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev1"), "lev1")
-cA2 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev2"), "lev2") 
-cA3 <- sum_num_costs(oshpd16, c("county", "year", "sex", "ageG", "lev3"), "lev3") 
+sA0 <- sum_num_costs(oshpd16Primary, c(          "year", "sex", "ageG", "ccs_diagP"), "ccs0") %>% mutate(county = STATE)
+# sA1 <- sum_num_costs(oshpd16Primary, c(          "year", "sex", "ageG", "lev1"), "lev1") %>% mutate(county = STATE)
+# sA2 <- sum_num_costs(oshpd16Primary, c(          "year", "sex", "ageG", "lev2"), "lev2") %>% mutate(county = STATE)
+# sA3 <- sum_num_costs(oshpd16Primary, c(          "year", "sex", "ageG", "lev3"), "lev3") %>% mutate(county = STATE)
+cA0 <- sum_num_costs(oshpd16Primary, c("county", "year", "sex", "ageG", "ccs_diagP"), "ccs0") 
+# cA1 <- sum_num_costs(oshpd16Primary, c("county", "year", "sex", "ageG", "lev1"), "lev1")
+# cA2 <- sum_num_costs(oshpd16Primary, c("county", "year", "sex", "ageG", "lev2"), "lev2") 
+# cA3 <- sum_num_costs(oshpd16Primary, c("county", "year", "sex", "ageG", "lev3"), "lev3") 
 
-total_sum_age <- bind_rows(sA0, sA1, sA2, sA3, cA0, cA1, cA2, cA3)
+total_sum_age <- bind_rows(sA0, cA0)
 
 #data cleaning
 total_sum_age <- filter(total_sum_age, !is.na(ageG)) #nothing removed
@@ -459,8 +556,8 @@ ageCounty <- full_join(total_sum_age, popCountySexAgeG, by = c("county", "year",
 
 #Calculating age-adjusted rates--why are we using ageadjust.direct.SAM instead of ageadjust.direct?
 
-countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>% 
-  group_by(county, year, sex, CAUSE, Level) %>% 
+countyAA <- ageCounty %>% 
+  group_by(county, year, sex, ccs_diagP, Level) %>% 
   summarize(ahospRate = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[2]*yF,
             aLCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[3]*yF,
             aUCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[4]*yF,
@@ -471,8 +568,12 @@ countyAA <- ageCounty %>% filter(!is.na(CAUSE)) %>%
 # Now, need to address the fact that CAUSES may appear among females in a given county that don't appear among males, and vice versa as was dealt with above.
 # Since the dataset total_sum_pop_new contains 0-value nhosp/charges placeholders, we can join the countyAA dataset with this dataset to "add in" this values, then convert the NA ahospRate into 0. 
 
-countyAA_new <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
-countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) 
+# countyAA_new <- countyAA %>% full_join(total_sum_pop_new, by = c("year", "county", "sex", "CAUSE", "Level")) %>% filter(!is.na(CAUSE), !is.na(county))
+# 
+# countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahospRate, n_hosp == 0 ~ 0))  %>% select(-n_hosp, -charges, -ageG, -pop) 
+
+
+countyAA_new <- countyAA
 
 
 ####------------------------------------------Creating new dataset to plot all metrics on same plot/facets---------------------------------------------------------#
@@ -482,20 +583,18 @@ countyAA_new <- countyAA_new %>% mutate(ahospRate = case_when(n_hosp != 0 ~ ahos
 # countyAA_new = contains age-adjusted hospitalization rates
 # Will have to do a series of spread/gather/join to create dataset 
 
-calculated_sums        <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day, medcharge, medcharge_per_day)
+#calculated_sums       <- total_sum_pop_new %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day, medcharge, medcharge_per_day)
+calculated_sums        <- total_sum_pop     %>% gather(key = "type", value = "measure", n_hosp, avg_los, charges, avgcharge, avgcharge_per_day, medcharge, medcharge_per_day)
 
 calculated_crude_rates <- total_crude_rates %>% gather(key = "type", value = "measure", cHospRate, cChargeRate)
 
 calculated_aa_rates    <- countyAA_new %>%      gather(key = "type", value = "measure", ahospRate) 
 
 
-temp <- calculated_aa_rates
-
-
 calculated_metrics     <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) %>%
                             mutate(county  = ifelse(county== "California","CALIFORNIA",county),
-                            diagnosis_var = "icd10_cm") %>% 
-                            select(sex, CAUSE, year, Level, county, ageG, pop, type, measure, diagnosis_var)
+                            diagnosis_var = "CCS-Beta") %>% 
+                            select(sex, ccs_diagP, year, Level, county, ageG, pop, type, measure, diagnosis_var)
 
 test <- calculated_metrics %>% filter(type == "charges") %>% filter(is.na(measure)) #for real data, all of the NA charges visits are male A08 values
 
@@ -505,9 +604,9 @@ saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/countyOSH
 
 #-------------------------------------------------Filtering only age-adjusted hospitalization rates from countyOSHPD, saving as separate rds file for map---------------------------#
 
-age_adjusted_hosp_rates <- calculated_metrics %>% filter(type == "ahospRate") %>% rename(ahospRate = measure) %>% select(-type)
-
-saveRDS(age_adjusted_hosp_rates, file = path(myPlace, "myData/", whichData, "/ageadj_hospratesOSHPD.rds"))
+# age_adjusted_hosp_rates <- calculated_metrics %>% filter(type == "ahospRate") %>% rename(ahospRate = measure) %>% select(-type)
+# 
+# saveRDS(age_adjusted_hosp_rates, file = path(myPlace, "myData/", whichData, "/ageadj_hospratesOSHPD.rds"))
 
 #---------------------------------------------------------Exploring MDC and DRG Frequencies ---------------------------------------------------------------------------------------------------------
 
@@ -524,27 +623,27 @@ saveRDS(age_adjusted_hosp_rates, file = path(myPlace, "myData/", whichData, "/ag
 
 
 
-library(DT)
-
-# rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
-
-hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=") 
-mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
-drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
-
-hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
+# library(DT)
+# 
+# # rows 1:26 are MDC codes/names and rows 27:781 are DRG codes/names
+# 
+# hdCodes   <- read.delim(paste0(upPlace,"/OSHPD/MDC_DRG.txt"), header = FALSE, sep = "=") 
+# mdcNames  <- hdCodes[ 1:26,]   %>%  select(mdc=V1,  mdcNames=V2)
+# drgNames  <- hdCodes[27:781,]  %>%  select(msdrg=V1,drgNames=V2)
+# 
+# hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
 
 
 
 
 
 ##------------------------------------------------------------------------MDC dataset---------------------------------------------------------------------##
-mdc_state  <- sum_num_costs(oshpd16, c("year",           "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
-mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% select(-Level)
-
-total_mdc  <- bind_rows(mdc_state, mdc_county) %>% 
-  filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% 
-  mutate(diagnosis_var = "mdc")
+# mdc_state  <- sum_num_costs(oshpd16, c("year",           "mdc", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
+# mdc_county <- sum_num_costs(oshpd16, c("year", "county", "mdc", "sex"), "") %>% select(-Level)
+# 
+# total_mdc  <- bind_rows(mdc_state, mdc_county) %>% 
+#   filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% 
+#   mutate(diagnosis_var = "mdc")
 
 
 
@@ -553,12 +652,12 @@ total_mdc  <- bind_rows(mdc_state, mdc_county) %>%
 
 ##------------------------------------------------------DRG dataset-------------------------------------------------------------------------------------------##
 
-drg_state  <- sum_num_costs(oshpd16, c("year",           "msdrg", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
-drg_county <- sum_num_costs(oshpd16, c("year", "county", "msdrg", "sex"), "") %>% select(-Level)
-
-total_drg  <- bind_rows(drg_state, drg_county) %>% 
-  filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% 
-  mutate(diagnosis_var = "drg")
+# drg_state  <- sum_num_costs(oshpd16, c("year",           "msdrg", "sex"), "") %>% select(-Level) %>% mutate(county = STATE)
+# drg_county <- sum_num_costs(oshpd16, c("year", "county", "msdrg", "sex"), "") %>% select(-Level)
+# 
+# total_drg  <- bind_rows(drg_state, drg_county) %>% 
+#   filter(sex == "Male" | sex == "Female" | sex == "Total", !is.na(county)) %>% 
+#   mutate(diagnosis_var = "drg")
 
 
 
@@ -571,12 +670,7 @@ total_drg  <- bind_rows(drg_state, drg_county) %>%
 ## ---have "Total" sex.... for whenever total is needed; remember to exclude when needed
 
 
-
-
-
-
-
-total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_codes = mdc)
+# total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp", "charges", "avgcharge", "county", "diagnosis_var", "medcharge", "avg_los", "avgcharge_per_day", "medcharge_per_day", "mdc" = "msdrg")) %>% rename(mdc_drg_codes = mdc)
 
 
 
@@ -588,46 +682,46 @@ total_mdc_drg <- full_join(total_mdc, total_drg, by = c("year", "sex", "n_hosp",
 
 #-------------------------------------------------Creating 0 level values for discordant gender pairs---------------------------------------------------------------#
 
-mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
-
-mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
-
-
-mdc_drg_female_only <- anti_join(mdc_drg_female_sum, mdc_drg_male_sum, by = c("Female" = "Male", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the female dataset but not the male dataset
-
-mdc_drg_male_only <- anti_join(mdc_drg_male_sum, mdc_drg_female_sum, by = c("Male" = "Female", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the male dataset but not the female dataset
-
-#Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
-
-mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc_drg_codes", Female) %>% mutate(sex = "Male")
-
-mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc_drg_codes", Male) %>% mutate(sex = "Female")
-
-
-#Now joining original total_sum_pop with these datasets, replacing NA with zeros
-total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var"))
-
-
-#replacing year with 2016
-total_mdc_drg_new$year[is.na(total_mdc_drg_new$year)] <- 2016
-
-#replacing NA for n_hosp, charges, avgcharge, medcharge, avg_los, avgcharge_per_day, medcharge_per_day  with 0
-total_mdc_drg_new$n_hosp[is.na(total_mdc_drg_new$n_hosp)] <- 0
-total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
-total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
-total_mdc_drg_new$medcharge[is.na(total_mdc_drg_new$medcharge)] <- 0
-total_mdc_drg_new$avgcharge_per_day[is.na(total_mdc_drg_new$avgcharge_per_day)] <- 0
-total_mdc_drg_new$medcharge_per_day[is.na(total_mdc_drg_new$medcharge_per_day)] <- 0
-total_mdc_drg_new$avg_los[is.na(total_mdc_drg_new$avg_los)] <- 0
-
-#
-mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge, avgcharge_per_day, medcharge_per_day, avg_los) %>% select(year, mdc_drg_codes, sex, county, diagnosis_var, type, measure)
-
-mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
-
-
-#Saving RDS file of this dataframe
-saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
+# mdc_drg_female_sum <-total_mdc_drg %>% filter(sex == "Female") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Female, county, diagnosis_var)  #summarises all the CAUSES for females, by county and level
+# 
+# mdc_drg_male_sum <- total_mdc_drg %>% filter(sex == "Male") %>% tibble::rowid_to_column() %>% spread(., sex, mdc_drg_codes) %>% select(year, Male, county, diagnosis_var) #summarises all the CAUSES for male, by county and level
+# 
+# 
+# mdc_drg_female_only <- anti_join(mdc_drg_female_sum, mdc_drg_male_sum, by = c("Female" = "Male", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the female dataset but not the male dataset
+# 
+# mdc_drg_male_only <- anti_join(mdc_drg_male_sum, mdc_drg_female_sum, by = c("Male" = "Female", "year", "county", "diagnosis_var")) #These are the mdc-county pairs that are in the male dataset but not the female dataset
+# 
+# #Now that we have these datasets, we need to add them back to their respective county_level spread dataset, convert NA to zero for n_hosp and charges. Gather, switch sex to opposite then join back with original total_sum_pop
+# 
+# mdc_drg_add_males <- gather(mdc_drg_female_only, key = "sex", value = "mdc_drg_codes", Female) %>% mutate(sex = "Male")
+# 
+# mdc_drg_add_females <- gather(mdc_drg_male_only, key = "sex", value = "mdc_drg_codes", Male) %>% mutate(sex = "Female")
+# 
+# 
+# #Now joining original total_sum_pop with these datasets, replacing NA with zeros
+# total_mdc_drg_new <- full_join(total_mdc_drg, mdc_drg_add_females, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var")) %>% full_join(., mdc_drg_add_males, by = c("year", "county", "sex", "mdc_drg_codes", "diagnosis_var"))
+# 
+# 
+# #replacing year with 2016
+# total_mdc_drg_new$year[is.na(total_mdc_drg_new$year)] <- 2016
+# 
+# #replacing NA for n_hosp, charges, avgcharge, medcharge, avg_los, avgcharge_per_day, medcharge_per_day  with 0
+# total_mdc_drg_new$n_hosp[is.na(total_mdc_drg_new$n_hosp)] <- 0
+# total_mdc_drg_new$charges[is.na(total_mdc_drg_new$charges)] <- 0
+# total_mdc_drg_new$avgcharge[is.na(total_mdc_drg_new$avgcharge)] <- 0
+# total_mdc_drg_new$medcharge[is.na(total_mdc_drg_new$medcharge)] <- 0
+# total_mdc_drg_new$avgcharge_per_day[is.na(total_mdc_drg_new$avgcharge_per_day)] <- 0
+# total_mdc_drg_new$medcharge_per_day[is.na(total_mdc_drg_new$medcharge_per_day)] <- 0
+# total_mdc_drg_new$avg_los[is.na(total_mdc_drg_new$avg_los)] <- 0
+# 
+# #
+# mdc_drg_sums <- total_mdc_drg_new %>% gather(key = "type", value = "measure", n_hosp, charges, avgcharge, medcharge, avgcharge_per_day, medcharge_per_day, avg_los) %>% select(year, mdc_drg_codes, sex, county, diagnosis_var, type, measure)
+# 
+# mdc_drg_sums$county[mdc_drg_sums$county == "California"] <- "CALIFORNIA"
+# 
+# 
+# #Saving RDS file of this dataframe
+# saveRDS(mdc_drg_sums, file = path(myPlace, "myData/",whichData,"/mdc_drg.rds"))
 
 
 #-----------------------------------------------JOINING MDC/DRG SUMMARY DATA WITH ICD-10-CM SUMMARY DATA---------------------------------------------------------#
@@ -675,11 +769,11 @@ saveRDS(full_oshpd_summary, file = path(myPlace, "myData/", whichData, "/full_os
 # --------------------------------------------------------------------------------------------------------------
 # Joining fullCauseList and hdCodes into one reference dataset--maybe this can eventually be moved to global file/outside of function?:
 
-fullCauseList_ed       <- select(fullCauseList, LABEL, nameOnly) %>% rename(names = nameOnly)
-hdCodes_ed             <- hdCodes %>% rename(LABEL = mdc_drg_codes)
-full_CAUSE_mdcdrg_list <- bind_rows(fullCauseList_ed, hdCodes_ed)
-
-write_csv(full_CAUSE_mdcdrg_list, path = paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"))
+# fullCauseList_ed       <- select(fullCauseList, LABEL, nameOnly) %>% rename(names = nameOnly)
+# hdCodes_ed             <- hdCodes %>% rename(LABEL = mdc_drg_codes)
+# full_CAUSE_mdcdrg_list <- bind_rows(fullCauseList_ed, hdCodes_ed)
+# 
+# write_csv(full_CAUSE_mdcdrg_list, path = paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"))
 
 
 
@@ -703,31 +797,31 @@ write_csv(full_CAUSE_mdcdrg_list, path = paste0(myPlace, "/myInfo/fullCAUSE_mdcd
 
 ##--------------CREATING DATASET WITH ICD CODES AND CORRESPONDING LABEL TO BE INPUT INTO FUNCTION FOR CREATING ANY DIAGNOSIS INDICATOR COLUMN----------#
 
-# defining paste function to include sep = "|"
-pastex <- function(...) { paste(..., sep = "|") }
-
-# function for pasting all icd codes for a given label together in one variable
-p <- function(v) { Reduce(x = v, f=pastex) }
-
-# Note that Reduce is a base R function, but there is also a purrr::reduce() function that apparently performs the same general
-#   purpose, but the input variables are set up somewhat differently. I haven't been able to successfully use purrr::reduce() instead of Reduce()
-
-#creating input data
-test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% 
-  filter(!is.na(regExICD10_CM)) %>% 
-  group_by(LABEL) %>% 
-  mutate(newICDcode = p(regExICD10_CM)) %>% 
-  select(LABEL, newICDcode) %>% unique()
+# # defining paste function to include sep = "|"
+# pastex <- function(...) { paste(..., sep = "|") }
+# 
+# # function for pasting all icd codes for a given label together in one variable
+# p <- function(v) { Reduce(x = v, f=pastex) }
+# 
+# # Note that Reduce is a base R function, but there is also a purrr::reduce() function that apparently performs the same general
+# #   purpose, but the input variables are set up somewhat differently. I haven't been able to successfully use purrr::reduce() instead of Reduce()
+# 
+# #creating input data
+# test_map <- icd_map %>% mutate(LABEL = paste0(BG, PH)) %>% 
+#   filter(!is.na(regExICD10_CM)) %>% 
+#   group_by(LABEL) %>% 
+#   mutate(newICDcode = p(regExICD10_CM)) %>% 
+#   select(LABEL, newICDcode) %>% unique()
 
 
 
 #--------------------------------------FUNCTION FOR CALCULATING ANY VS PRIMARY-------------------------------------------------------#
 
-oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
-                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
-                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
-                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
-                                                  odiag22, odiag23, odiag24,sep = "|")) 
+# oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
+#                                                   odiag5, odiag6, odiag7, odiag8, odiag9,
+#                                                   odiag10, odiag11, odiag12, odiag13, odiag14,
+#                                                   odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
+#                                                   odiag22, odiag23, odiag24,sep = "|")) 
 
 # This pastes all the ||| separators together at the end of the variable once the odiag columns contain NA--this doesn't seem to create a problem with the grepl statement below though. 
 
@@ -740,19 +834,19 @@ oshpd16new <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3
 
 # mcs why using dt here (i.e. := )
 
-any_diag_code <- function(df){
-  for (i in 1: nrow(test_map)){
-    label = test_map$LABEL[i]
-    code_def <- filter(test_map, LABEL == label) %>% pull(newICDcode)
-    df <- df %>% mutate(!!label := ifelse(grepl(code_def, all_diag), 1, 0))
-  }
-  return(df) #need to include return df in order to have the df return with multiple  new columns appended to it (otherwise it returns a null value)
-  
-}
-
-#Need to define oshpd16an_primary as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
-oshpd16any_primary <- oshpd16new
-oshpd16any_primary <- any_diag_code(oshpd16any_primary)
+# any_diag_code <- function(df){
+#   for (i in 1: nrow(test_map)){
+#     label = test_map$LABEL[i]
+#     code_def <- filter(test_map, LABEL == label) %>% pull(newICDcode)
+#     df <- df %>% mutate(!!label := ifelse(grepl(code_def, all_diag), 1, 0))
+#   }
+#   return(df) #need to include return df in order to have the df return with multiple  new columns appended to it (otherwise it returns a null value)
+#   
+# }
+# 
+# #Need to define oshpd16an_primary as oshpd16new, and then use it as input variable so that the new columns all append onto the dataframe
+# oshpd16any_primary <- oshpd16new
+# oshpd16any_primary <- any_diag_code(oshpd16any_primary)
 
 
 #-----Summarizing oshpd any vs primary data-------#
@@ -829,25 +923,25 @@ saveRDS(any_primary_diff, file = path(myPlace, "myData/",whichData,"/any_primary
 
 # mcs -- pretty sure this is not needed... can just do line 773?
 
-codeLast4 <- str_sub(oshpd16any_primary$icdCODE,2,5) #puts characters 2-5 from the CODE string
-nLast4    <- nchar(codeLast4) #counts number of characters 
-
-oshpd_test   <- oshpd16any_primary  %>% 
-  mutate(lev0X  = "0",
-         lev1X  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
-         lev2X  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
-         lev3X  = ifelse(nLast4 == 4,codeLast4,NA)   ) %>% 
-  select(-lev0, -lev1, -lev3)
-
-
-oshpd_test   <- oshpd16any_primary  %>%  select(-lev0, -lev1, -lev3)
-
-
-# and, per thinking above....
-
-
-oshpd_test <- bind_rows(       oshpd_test,
-                               mutate(oshpd_test,county=STATE))
+# codeLast4 <- str_sub(oshpd16any_primary$icdCODE,2,5) #puts characters 2-5 from the CODE string
+# nLast4    <- nchar(codeLast4) #counts number of characters 
+# 
+# oshpd_test   <- oshpd16any_primary  %>% 
+#   mutate(lev0X  = "0",
+#          lev1X  = str_sub(icdCODE,2,2), #pulls out 2nd character in string--this is the capital letter (ie BG in full xlsx dataset)
+#          lev2X  = str_sub(icdCODE,2,4), #pulls out 2nd, 3rd, 4th characters--this is the BG + PH in full xlsx dataset (equivalent to label if there is a label)
+#          lev3X  = ifelse(nLast4 == 4,codeLast4,NA)   ) %>% 
+#   select(-lev0, -lev1, -lev3)
+# 
+# 
+# oshpd_test   <- oshpd16any_primary  %>%  select(-lev0, -lev1, -lev3)
+# 
+# 
+# # and, per thinking above....
+# 
+# 
+# oshpd_test <- bind_rows(       oshpd_test,
+#                                mutate(oshpd_test,county=STATE))
 
 
 #what any are associated with primaries?

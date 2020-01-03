@@ -1,7 +1,6 @@
 #make MDC/DRG plot
 
 
-
 mdc_drg_plot <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myVar = "drg" ) {
   
   #sorts that based on the ordering variable (eg n_hosp), it pulls the top N rows for n_hosp, and those variables are what are the corresponding conditions for all the other values

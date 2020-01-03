@@ -131,9 +131,11 @@ datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS"))
 eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
 datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
 
-#FIX THIS --- OSHPD
+#FIX THIS --- OSHPD !!!!
 mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
 calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+mdc_drg <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+
 full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
 any_primary_diff <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
 
@@ -163,7 +165,12 @@ if (subSite){
 
 #-- Load Info Files and Functions ---------------------------------------------
 
-gbdMap0    <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sheet="main"))
+gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sheet="main"))
+
+
+ccsMap  <- as.data.frame(read_excel( path(myPlace,"myInfo/CCS Code and Names Linkage.xlsx"))) %>%
+                 mutate(ccsCode = str_pad(ccsCode, 5,"left",pad="o"))
+
 
 #Saved OSHPD MDC_DRG file in myCBD/myInfo
 
