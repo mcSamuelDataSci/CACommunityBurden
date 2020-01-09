@@ -79,6 +79,7 @@ temp_N_cause <- temp %>%
 if(1==2) {
   myCounty = "Alameda"
   myMeasure = "Age-Adjusted Death Rate"
+  myMeasure = "YLL Rate per 100,000 population"
   mySex = "Total"
   myLev = "lev2"
   myN = 10
