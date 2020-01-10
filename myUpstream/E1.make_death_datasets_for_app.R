@@ -22,6 +22,7 @@ whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
+securePath     <- "g:/CCB/0.Secure.Data/"
 securePath     <- "g:/0.Secure.Data/"
 secureDataFile <- paste0(securePath,"myData/cbdDat0FULL.R") 
 
