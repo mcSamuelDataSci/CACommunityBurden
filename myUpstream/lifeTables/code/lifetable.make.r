@@ -4,7 +4,7 @@
 #	criteria: meets critical threshold for PY of exposure history AND >=95% deaths geocoded.
 #	method: empirical LT with estimated PY exposure; pool PY and Dx to calculate mx.
 # [maybe add chart showing number of geographies trimmed by each condition imposed— e.g. clinical trial style flowchart]
-# [other consideration: should threshold be based on PY of exposure>15000 or on sum of nDx>700?]
+# [other consideration: should threshold be based on PY of exposure>10k/15k or on sum of nDx>700?]
 
 ## 1    SETUP		----------------------------------------------------------------------
 
@@ -15,8 +15,8 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, library, character.only=TRUE)           
 
 ## 1.2  options
-whichData  <- "dof" # mcs "real" or "fake" or "dof" 
-range      <- 2010:2017  # years of life tables to generate
+whichData  <- "fake" # mcs "real" or "fake" or "dof" 
+range      <- 2000:2018  # years of life tables to generate
 doCounty   <- TRUE # includes state and county
 doTract    <- FALSE
 doMSSA     <- FALSE
@@ -48,10 +48,10 @@ if (whichData=="real") {
 	.dxstate	<- paste0(mySecure,"/dxState.rds") # input deaths by state
 } 
 if (whichData=="dof") {
-	.dxtract<-NULL
+	.dxtract<-NULL 
 	.dxmssa<-NULL
-	.dxcounty	<- "c:/users/fieshary/desktop/dxCounty.rds"
-	.dxstate	<- "c:/users/fieshary/desktop/dxState.rds"
+	.dxcounty	<- paste0(LTplace,"/_dof_dxCounty.rds")
+	.dxstate	<- paste0(LTplace,"/_dof_dxState.rds")
 }
 ## 1.5  setwd
 setwd(myDrive)
@@ -108,7 +108,7 @@ if (whichData=="fake") {
 }
 
 ## 3.3	function: calculate how many years of exposure data required for stable LT
-doCheckPY <- function(d=NULL,t=15000) { 							# d=population dataset, t=critical PY exposure
+doCheckPY <- function(d=NULL,t=10000) { 							# d=population dataset, t=critical PY exposure
 	return(d[,.(nx=sum(nx)),by=.(GEOID,year,sex)][					# sum nx by geo/sex
 		nx<t,.(GEOID,sex, 							    # filter out those with <minimum PY, 
 			   flag=ceiling((t/nx)/2))][				# calculate N years needed, rounded, by sex
@@ -116,9 +116,9 @@ doCheckPY <- function(d=NULL,t=15000) { 							# d=population dataset, t=critica
 }
 
 ## 3.5  list of areas that will not be processed due to too few PY (to plug in to map as blanks)
-.zeroTract <-doCheckPY(.nxtract,t=15000)[flag>5] 		# tracts that require>N years data. (5/10/15k PY: 281/874/2543 of 9170)
-.zeroMSSA  <-doCheckPY(.nxmssa,t=15000)[flag>5]		  	# MSSAs that require>5 years data. (5/10/15k PY: 71/127/146 of 542)
-.zeroCounty<-doCheckPY(.nxcounty,t=15000)[flag>3]		# counties that require>N years data. (5/10/15k PY: 5/11/17 of 58)
+.zeroTract <-doCheckPY(.nxtract,t=10000)[flag>5] 		# tracts that require>N years data. (5/10/15k PY: 281/874/2543 of 9170)
+.zeroMSSA  <-doCheckPY(.nxmssa,t=10000)[flag>5]		  	# MSSAs that require>5 years data. (5/10/15k PY: 71/127/146 of 542)
+.zeroCounty<-doCheckPY(.nxcounty,t=10000)[flag>3]		# counties that require>N years data. (5/10/15k PY: 5/11/17 of 58)
 
 ## 3.6	add to list of areas to skip due to too few geocoded deaths
 .zeroTract <- merge(.zeroTract,.missTract,all=TRUE,by="GEOID")  # tract: 1264 censored
@@ -358,7 +358,6 @@ if(doCounty) {
 	lt.state[x==0 & sex=="TOTAL",c("GEOID","sex","year","ex")] # CA state e0
 } # end if(doCounty)
 
-
 ## 4.3 		function to produce a life table from qx values only (used in simulation for CI)
 doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
 	m <- length(x)
@@ -403,10 +402,14 @@ doQxLT<- function(x, qx, sex, ax=NULL, last.ax=5) {
 	return(data.table(x, n, ax, qx, px, lx, dx, Lx, Tx, ex))
 }
 
-## 4.4  	function to calculate confidence interval around life expectancy
+end
+
+## 4.4  	functions to calculate confidence interval around life expectancy
+
+## 4.4.1	Bernoulli trials method: cases for small areas/with many zeros
 ## - E. Andreev and V. Shkolnikov. 2010. "Spreadsheet for calculation of confidence limits 
 ##   for any life table or healthy-life table quantity". MPIDR Technical Report 2010-005.
-doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
+doLTCI.Bern <- function(LT=NULL, 								# LT matrix created by doLT
 				   which.x=0,	  								# CI of ex at which age?
 				   ns=1000, 									# N simulations
 				   level=0.95) { 								# desired CI
@@ -417,8 +420,7 @@ doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 	Dx <- LT[,Dx] 												# Dx
 	.trials <- round(Dx/qx) 									# trials for binomial, rounded
 	.lastax <- LT$ax[m] 										# ax in open-ended age group
-	Y <- suppressWarnings(matrix(rbinom(m*ns,.trials,qx),       # simulated death counts (binomial)
-								 m,ns))
+	Y <- suppressWarnings(matrix(rbinom(m*ns,.trials,qx),m,ns)) # simulated death counts (binomial)
 	QX <- Y/.trials												# simulated qx
 	wh <- which(x==which.x) 									# row number which contains age group of interest
 	fun.ex <- function(qx) {									# subroutine to compute ex for simulated qx
@@ -435,6 +437,28 @@ doLTCI <- function(LT=NULL, 									# LT matrix created by doLT
 				which.x=which.x)) 							    # the age
 }
 
+## 4.4.2	Chiang's method w/final age group adj: cases for large areas/few zeros (>=5000 PY)
+## - D. Eayres and E.S. Williams. 2004. "Evaluation of methodologies for small area life 
+##   expectancy estimation". J Epi Com Health 58(3). http://dx.doi.org/10.1136/jech.2003.009654.
+doLTCI.Chiang <- function(LT=NULL, 								# LT matrix created by doLT
+				   which.x=0,	  								# CI of ex at which age?
+				   level=0.95) { 								# desired CI
+	setDT(LT)													# (redundant if already DT)
+	zcrit=1-((1-level)/2) 										# CI from normal distribution
+	LT[,sp2:=((qx^2)*(1-qx))/Dx] 								# variance of survival probability
+	LT[x==85,sp2:=4/Dx/mx^2] 									# adjustment final age interval
+	LT[,wsp2:=lx^2*((1-(ax/n))*n+ex[seq_len(.N)+1])^2*sp2] 		# weighted SP2 
+	LT[x==85,wsp2:=(lx/2)^2*sp2] 								# adjustment final age interval
+	LT[,Twsp2:=rev(cumsum(rev(wsp2)))] 							# sum of weighted sp2 rows below (like Tx)
+	LT[,se2:=Twsp2/lx^2] 										# sample variance of e0
+	LT[,ciexl:=ex-qnorm(zcrit)*sqrt(se2)] 						# CI low
+	LT[,ciexh:=ex+qnorm(zcrit)*sqrt(se2)] 						# CI high
+	return(list(ex=LT[x==which.x,ex],
+				ciex_2.5=LT[x==which.x,ciexl],
+				ciex_97.5=LT[x==which.x,ciexh],
+				which.x=which.x))
+}
+
 ## 4.5   	simulated lifetables
 
 ## 4.5.1	tract
@@ -444,12 +468,16 @@ if(doTract){
 		.counter<-lt.tract[x==0,.N]
 		.pb <- txtProgressBar(min = 0, max = .counter, style = 3)		# show a text progress bar for loop
 		for (j in 1:lt.tract[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
-			ltci.tract<-rbindlist(list(ltci.tract, 					  		# fast rbind result to ltci.tract (2 items)
-									   cbind(data.table( 					# format results of exsim as DT
-									   	t(unlist(doLTCI(lt.tract[i==j], # run specific LT
-									   					which.x=0,ns=10,level=.95)[		# pass parameters for simulation
-									   						c(1,2,3,5)])))					## save just desired fields from exsim
-									   	,j)									# attach ID to simulation results; 
+			ltci.tract<-rbindlist(list(ltci.tract, 					  	# fast rbind result to ltci.tract (2 items)
+									   cbind(data.table( 				# format results of exsim as DT
+									   	t(unlist(
+									   		#doLTCI.Bern(lt.tract[i==j],                    # run specific LT
+									   		#			which.x=0,ns=10,level=.95)[		    # pass parameters for simulation
+									   		#				c(1,2,3,5)]					    # save just desired fields from exsim
+									   		doLTCI.Chiang(lt.tract[i==j],
+									   					  which.x=0,level=.95)
+									   		)))
+									   	,j)								# attach ID to simulation results; 
 			)
 			)
 			setTxtProgressBar(.pb,j)												
@@ -471,10 +499,14 @@ if(doMSSA){
 		.pb <- txtProgressBar(min = 0, max = .counter, style = 3)		# show a text progress bar for loop
 		for (j in 1:lt.mssa[x==0,.N]) {									# or "for (j in 1:2) {" for a quick test
 			ltci.mssa<-rbindlist(list(ltci.mssa, 						# fast rbind result to ltci.mssa (2 items)
-									  cbind(data.table( 					# format results of exsim as DT
-									  	t(unlist(doLTCI(lt.mssa[i==j],      # run specific LT
-									  					which.x=0,ns=10,level=.95)[		    # pass parameters for simulation
-									  						c(1,2,3,5)])))						# save just desired fields from exsim
+									  cbind(data.table( 				# format results of exsim as DT
+									  	t(unlist(
+									  		#doLTCI.Bern(lt.mssa[i==j],                     # run specific LT
+									  		#			which.x=0,ns=10,level=.95)[		    # pass parameters for simulation
+									  		#				c(1,2,3,5)]					    # save just desired fields from exsim
+									  		doLTCI.Chiang(lt.mssa[i==j],
+									  					  which.x=0,level=.95)
+									  		)))
 									  	,j)									# attach ID to simulation results; 
 			)
 			)
@@ -500,9 +532,13 @@ if (doCounty) {
 		for (j in 1:lt.county[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
 			ltci.county<-rbindlist(list(ltci.county, 					# fast rbind result to ltci.county (2 items)
 										cbind(data.table( 					# format results of exsim as DT
-											t(unlist(doLTCI(lt.county[i==j],    # run specific LT
-															which.x=0,ns=10,level=.95)[		    # pass parameters for simulation
-																c(1,2,3,5)])))						# save just desired fields from exsim
+											t(unlist(
+												#doLTCI.Bern(lt.county[i==j],                   # run specific LT
+												#			which.x=0,ns=100,level=.95)[	    # pass parameters for simulation
+												#				c(1,2,3,5)]					    # save just desired fields from exsim
+												doLTCI.Chiang(lt.county[i==j],
+															  which.x=0,level=.95)
+												)))
 											,j)									# attach ID to simulation results; 
 			)
 			)
@@ -519,9 +555,13 @@ if (doCounty) {
 	for (j in 1:lt.state[x==0,.N]) {								# or "for (j in 1:2) {" for a quick test
 		ltci.state<-rbindlist(list(ltci.state, 						# fast rbind result to ltci.state (2 items)
 								   cbind(data.table( 					# format results of exsim as DT
-								   	t(unlist(doLTCI(lt.state[i==j],     # run specific LT
-								   					which.x=0,ns=500,level=.95)[		# pass parameters for simulation
-								   						c(1,2,3,5)])))						# save just desired fields from exsim
+								   	t(unlist(
+								   		#doLTCI.Bern(lt.state[i==j],                    # run specific LT
+								   		#			which.x=0,ns=100,level=.95)[		# pass parameters for simulation
+								   		#				c(1,2,3,5)]					    # save just desired fields from exsim
+								   		doLTCI.Chiang(lt.state[i==j],
+								   					  which.x=0,level=.95)
+									   	)))
 								   	,j)									# attach ID to simulation results; 
 		)
 		)
@@ -538,19 +578,19 @@ if (doCounty) {
 ## 5.1 	diagnostic plots
 ## - these are of a de novo simulation, not the output dataset
 ## - use to check any single LT for typical results, by its idx value
-doExHist <- function(dat=NULL,idx=NULL,age=0,reps=500,ci=.95) {
-	while (!is.null(dev.list())) dev.off()
-	par(mfrow=c(1,1))
-	tmp<-doLTCI(LT=dat[i==idx],age,reps,ci)
-	hist(tmp$exsim)
-	abline(v=tmp$ex,col=2)
-	abline(v=tmp$meanex,col=4)
-	abline(v=tmp$ciex,col=4)
-}
-if(doTract)  doExHist(dat=lt.tract,idx=1,age=0,reps=500,ci=.9)
-if(doMSSA)   doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
-if(doCounty) doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
-if(doCounty) doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
+# doExHist <- function(dat=NULL,idx=NULL,age=0,reps=500,ci=.95) {
+# 	while (!is.null(dev.list())) dev.off()
+# 	par(mfrow=c(1,1))
+# 	tmp<-doLTCI.Chiang(LT=dat[i==idx],age,reps,ci)
+# 	hist(tmp$exsim)
+# 	abline(v=tmp$ex,col=2)
+# 	abline(v=tmp$meanex,col=4)
+# 	abline(v=tmp$ciex,col=4)
+# }
+# if(doTract)  doExHist(dat=lt.tract,idx=1,age=0,reps=500,ci=.9)
+# if(doMSSA)   doExHist(dat=lt.mssa,idx=1,age=0,reps=500,ci=.9)
+# if(doCounty) doExHist(dat=lt.county,idx=1,age=0,reps=500,ci=.9)
+# if(doCounty) doExHist(dat=lt.state,idx=1,age=0,reps=500,ci=.9)
 
 ## 6	EXPORT DATA	----------------------------------------------------------
 
@@ -583,12 +623,12 @@ if (whichData=="fake" & 1==2) {
 # 2 years’ historical data were added to each county life table. Then, life tables were calculated for geographies
 # meeting a minimum of at least 10,000 person-years of exposure. Intra-age mortality (nax) was calculated for
 # ages below 5 using factors provided by Preston et al. (2001) and by the midpoint of the age interval for other
-# age groups. Standard errors were calculated for age specific probabilities of death (Chiang 1984) and simulated
-# life tables were generated by bootstrapping life table deaths to produce confidence intervals for life expectancy
-# (Andreev & Shkolnikov 2010).
+# age groups. Standard errors were calculated for age specific probabilities of death and used to calculate 
+# 95% confidence intervals for life expectancy (Chiang 1984; Eayres and Williams 2004).
 #
 # Preston, Samuel H. and P. Heuveline and M. Guillot. 2001. Demography. Blackwell, pp. 47-48.
 #
 # Chiang, C.L. 1984. The Life Table and its Applications. Robert E Krieger Publ Co., pp. 153-168.
 #
-# Andreev, E.M. and V. M. Shkolnikov. 2010. “Spreadsheet for calculation of confidence limits for any life table or healthy-life table quantity.” Max Planck Institute for Demographic Research: MPIDR Technical Report 2010-005; June 2010.
+# Eayres D, and E.S.E. Williams. Evaluation of methodologies for small area life expectancy estimation.
+# 	Journal of Epidemiology & Community Health 2004;58:243-249.
