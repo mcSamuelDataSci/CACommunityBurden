@@ -302,9 +302,9 @@ shinyUI(
                    tabPanel(title = strong("TRENDS"), value = "trends",
                             tabsetPanel(type = "tab", id = "trendsID",
                                         
-                                        tabPanel(title = "Sex Trend", value = "trendTab",
+                                        tabPanel(title = "Sex Trend", value = "sexTrendTab",
                                                  br(),
-                                                 plotOutput("trend", width="100%",height=700)  # plotlyOutput("trend", width="100%",height=700),  value = "trendTab"),
+                                                 plotOutput("trend", width="100%",height=700)  ,
                                         ),
                                         
                                         tabPanel(title = "Age Trend", value = "ageTrendTab",

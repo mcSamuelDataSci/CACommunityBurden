@@ -23,7 +23,7 @@ subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
 securePath     <- "g:/CCB/0.Secure.Data/"
-securePath     <- "g:/0.Secure.Data/"
+securePath     <- "h:/0.Secure.Data/"
 secureDataFile <- paste0(securePath,"myData/cbdDat0FULL.R") 
 
 STATE    <- "California"
@@ -47,12 +47,8 @@ pop1 <- 1       # 1 year
 # yearGrp <- "2013-2017"
   yearGrp <- c("2004-2008","2009-2013","2014-2018")
 
-
 myDigits= 6
   
-  
-  
-
 criticalNum <- 11
 
 

@@ -19,6 +19,7 @@ shinyServer(function(input, output,session) {
   # Store current navID (big tabs) and tabID (subtabs) for use throughout Server
   current <- reactiveValues()
   
+
   # Update current nav and tab values any time tab selection changes
   observe({
     current$nav = input$navsID
@@ -317,7 +318,16 @@ output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, inp
 
 # Trend ----------------------------------------------------------------------------------------------------
 
-trendStep     <- reactive(trend(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYearGrouping))
+trendStep     <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure,current$tab, input$myYearGrouping))
+#trendStep     <- reactive(trend(input$myLHJ, input$myCAUSE, input$myMeasure,input$myYearGrouping))
+
+
+
+# if (input$trendsID  current$nav == "trend") {
+#   }
+
+
+
 output$trend  <- renderPlot(trendStep()$plot)
 
 #output$trend        <- renderPlotly(trendStep()$plot)
@@ -338,6 +348,15 @@ output$trendData <- downloadHandler(
     write.csv(trendStep()$data, file)
   }
 )
+
+# ---------------------------------------------------------------------------------------------------------
+
+
+output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans,input$myMeasure))
+
+output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
+
+
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -396,15 +415,6 @@ FilteredRiskByCause <- reactive({
 output$riskByCause <- renderPlotly({
   RiskByCausePlot(FilteredRiskByCause())
 })
-
-
-# ---------------------------------------------------------------------------------------------------------
-
-
-output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans,input$myMeasure))
-
-output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
-
 
 
 # ---------------------------------------------------------------------------------------------------------
