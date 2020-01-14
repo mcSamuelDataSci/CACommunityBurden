@@ -16,64 +16,84 @@ myCol <- "blue"
 # https://stackoverflow.com/questions/29357612/plot-labels-at-ends-of-lines
 
 
-trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL",myTab,myYearGrouping="One") {
+trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One") {
 
-
-  if (myTab =="sexTrendTab")  {
+  # ----- sexTrendTab -----
+  
+  # if (myTab == "sexTrendTab" )  {
+  
+  # This is temporary.  Right now we only have the conditional for sexTrendTab below.
+  # As we add trend tabs to the if statements below, we can remove them here.
+  # For now, the variables (like 'dat.1') need to be defined for it not to break.
+  if (myTab %in% c("sexTrendTab", "ageTrendTab", "raceTrendTab", "educationTrendTab", "lifeExpectancyTab") )  {
+    
     myVARIABLE <- "sex"
-# if (current$tab == "trendTab") {
-# if (tabID == "trendTab") {
-
-if (myYearGrouping == "One") {
-  inDat <- datCounty  
-  myBreaks <- 2000:maxYear
-  myLabels <- myBreaks
-}
-
-
-if (myYearGrouping == "Three") {
-  inDat <- datCounty_3year 
- 
-  chartYearMap    <-  chartYearMap  %>%
-   select(yearGroup3,midYear3) %>%
-   filter(!is.na(midYear3))    %>%
-   unique()
+    
+    if (myYearGrouping == "One") {
+      inDat <- datCounty  
+      myBreaks <- 2000:maxYear
+      myLabels <- myBreaks
+    }
+    
+    if (myYearGrouping == "Three") {
+      inDat <- datCounty_3year 
+     
+      chartYearMap    <-  chartYearMap  %>%
+       select(yearGroup3,midYear3) %>%
+       filter(!is.na(midYear3))    %>%
+       unique()
+      
+      myLabels   <- chartYearMap$yearGroup3
+      myBreaks   <- chartYearMap$midYear3
+      inDat$year <- myBreaks[match(inDat$yearG3,myLabels)]
+    }
+    
+    if (myYearGrouping == "Five") {
+      inDat <- datCounty_5year 
+      
+      chartYearMap    <-  chartYearMap  %>%
+       select(yearGroup5,midYear5) %>%
+       filter(!is.na(midYear5))    %>%
+       unique()
+    
+      myLabels   <- chartYearMap$yearGroup5
+      myBreaks   <- chartYearMap$midYear5
+      inDat$year <- myBreaks[match(inDat$yearG5,myLabels)]
+    }
+    
+    dat.1 <- filter(inDat,county == myLHJ,CAUSE == myCause)
+    
+    if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+    
+    myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", 2000 to ",maxYear)
+  }
   
-  myLabels   <- chartYearMap$yearGroup3
-  myBreaks   <- chartYearMap$midYear3
-  inDat$year <- myBreaks[match(inDat$yearG3,myLabels)]
-}
-
+  # ----- ageTrendTab -----
+  else if (myTab == "ageTrendTab") {
+    
+  }
   
-if (myYearGrouping == "Five") {
-  inDat <- datCounty_5year 
+  # ----- raceTrendTab -----
+  else if (myTab == "raceTrendTab") {
+    
+  }
   
-  chartYearMap    <-  chartYearMap  %>%
-   select(yearGroup5,midYear5) %>%
-   filter(!is.na(midYear5))    %>%
-   unique()
-
-  myLabels   <- chartYearMap$yearGroup5
-  myBreaks   <- chartYearMap$midYear5
-  inDat$year <- myBreaks[match(inDat$yearG5,myLabels)]
-}
-
-
-dat.1 <- filter(inDat,county == myLHJ,CAUSE == myCause)
-
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
-
-myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ,", 2000 to ",maxYear)
-
-
-}
+  # ----- educationTrendTab -----
+  else if (myTab == "educationTrendTab") {
+    
+  }
+  
+  # ----- lifeExpectancyTab -----
+  else if (myTab == "lifeExpectancyTab") {
+    
+  }
 
 
 #### Generic Part Here
 
 myTitle <-  wrap.labels(myTitle,myWrapNumber)
 
-tplot<-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=get(myVARIABLE), color=get(myVARIABLE))) +
+tplot <-  ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=get(myVARIABLE), color=get(myVARIABLE))) +
           
           geom_line(size=myLineSize)  +
           geom_point(shape = myPointShape,size=myPointSize)  +

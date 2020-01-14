@@ -318,19 +318,9 @@ output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, inp
 
 # Trend ----------------------------------------------------------------------------------------------------
 
-trendStep     <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure,current$tab, input$myYearGrouping))
-#trendStep     <- reactive(trend(input$myLHJ, input$myCAUSE, input$myMeasure,input$myYearGrouping))
-
-
-
-# if (input$trendsID  current$nav == "trend") {
-#   }
-
-
+trendStep     <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping))
 
 output$trend  <- renderPlot(trendStep()$plot)
-
-#output$trend        <- renderPlotly(trendStep()$plot)
 
 
 output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},content = function(file) {

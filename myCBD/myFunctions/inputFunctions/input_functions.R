@@ -23,7 +23,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "rankByCauseTab"=c("rankCauseDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
                    "rankByGeographyTab"=c("myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote"),
-                   "trendTab"=c("trendDownloads", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote"),
+                   "sexTrendTab"=c("trendDownloads", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote"),
                    "ageTrendTab"=c("myCAUSE", "myLHJ", "myLogTrans", "myMeasure"),
                    "raceTrendTab"=c("myCAUSE", "myLHJ", "myMeasure","myLogTrans", "myMultiRace", "suppressionNote"),
                    "disparitiesTab"=c("disparityDownloads","myCAUSE", "myLHJ", "myCompare","myAddN","myAddRate","myAddRR","suppressionNote"),
@@ -161,7 +161,7 @@ updateMyMultiRaceHelpText <- function(tabID, myMultiRace) {
 #     show("myMeasure")
 #     if ((myMeasure == 'cDeathRate') | (myMeasure == 'aRate')) {show("myCI")}
 #     show("myRefLine")
-#   } else if (tabID == "trendTab") {
+#   } else if (tabID == "sexTrendTab") {
 #     show("causeHelp")
 #     show("myCAUSE")
 #     show("myLHJ")
