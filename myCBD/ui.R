@@ -304,7 +304,7 @@ shinyUI(
                                         
                                         tabPanel(title = "Sex Trend", value = "sexTrendTab",
                                                  br(),
-                                                 plotOutput("trend", width="100%",height=700)
+                                                 plotOutput("trendSex", width="100%",height=700)
                                         ),
                                         
                                         tabPanel(title = "Age Trend", value = "ageTrendTab",

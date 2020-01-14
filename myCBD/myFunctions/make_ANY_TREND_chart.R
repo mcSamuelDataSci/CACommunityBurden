@@ -16,7 +16,7 @@ myCol <- "blue"
 # https://stackoverflow.com/questions/29357612/plot-labels-at-ends-of-lines
 
 
-trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One") {
+trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE) {
 
   # ----- sexTrendTab -----
   
@@ -25,7 +25,8 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   # This is temporary.  Right now we only have the conditional for sexTrendTab below.
   # As we add trend tabs to the if statements below, we can remove them here.
   # For now, the variables (like 'dat.1') need to be defined for it not to break.
-  if (myTab %in% c("sexTrendTab", "ageTrendTab", "raceTrendTab", "educationTrendTab", "lifeExpectancyTab") )  {
+  
+  if (myTab %in% c("sexTrendTab", "raceTrendTab", "educationTrendTab", "lifeExpectancyTab") )  {
     
     myVARIABLE <- "sex"
     
@@ -69,8 +70,36 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   }
   
   # ----- ageTrendTab -----
+  
   else if (myTab == "ageTrendTab") {
+    myVARIABLE <- "ageG"
     
+    # trendAge <- function(myLHJ="CALIFORNIA",myCause="A",myLogTrans=FALSE,myMeasure = "cDeathRate") {
+      
+      if(myMeasure == "YLL.adj.rate")  myMeasure <- "YLLper"   ## ADD MESSAGE ABOUT THIS
+      if(myMeasure == "aRate")  myMeasure <- "cDeathRate"
+      
+      minYear <- 2000
+      maxYear <- 2017
+      myBreaks <- myLabels <- 2000:2017
+      
+      dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,CAUSE == myCause, sex=="Total") 
+      
+      if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+      
+      myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"]," in ",myLHJ," by AGE GROUP, ",minYear," to ",maxYear)
+      myTitle <-  wrap.labels(myTitle,myWrapNumber)
+      
+      
+      yRange     <- chartYearMap$yearGroup3
+      yMid       <- chartYearMap$midYear3
+      
+      dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
+      
+      myTrans    <- ifelse(myLogTrans,'log2','identity')
+      myMin      <- ifelse(myLogTrans,NA,0)
+      
+      dat.1 <- mutate(dat.1,ageG = ifelse(ageG == "85 - 999","85+",ageG))
   }
   
   # ----- raceTrendTab -----
