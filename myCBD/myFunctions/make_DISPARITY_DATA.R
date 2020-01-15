@@ -25,11 +25,11 @@ raceTest_LOW <- left_join(raceTest,raceTest2,by=c("county","yearG3","sex","CAUSE
                        ) 
 
 
-measures <- FALSE
-if (measures) {
+
+# Execute these lines to update RACE data for LGHC MEASURES Shiny
+if (1==2) {
    measuresRace <- raceTest_LOW %>%
                       filter(yearG3==myYearG3, sex=="Total", Level == "lev2")
-   
    write_csv(measuresRace, path("G:","/BurdenView/Data/CCB/raceDisparityX.csv")) 
 }
 
