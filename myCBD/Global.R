@@ -141,6 +141,12 @@ any_primary_diff <-   readRDS(file = path(myPlace, "myData/", whichData, "any_pr
 
 
 
+source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
+
+
+
+
+
 # age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
 
 
