@@ -318,10 +318,11 @@ output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, inp
 
 # Trend ----------------------------------------------------------------------------------------------------
 
-trendStep     <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping, input$myLogTrans))
+trendStep     <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping, input$myLogTrans,input$myMultiRace))
 
 output$trendSex  <- renderPlot(trendStep()$plot)
 output$trendAge  <- renderPlot(trendStep()$plot)
+output$trendRace <- renderPlot(trendStep()$plot)
 
 
 output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},content = function(file) {
@@ -345,7 +346,7 @@ output$trendData <- downloadHandler(
 
 # output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans,input$myMeasure))
 
-output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
+# output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
 
 
 

@@ -150,14 +150,6 @@ shinyUI(
       dashboardSidebar(width=300,
                        
                        
-                    
-                                                 
-                       
-                       
-                       
-                       
-                       
-                       
                        
                        # Menu Items & tabHelp ---------------------------------------------------
                        
