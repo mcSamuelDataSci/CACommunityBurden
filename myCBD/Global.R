@@ -200,6 +200,10 @@ source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_any_primary_OSHPD_chart.R"))
 #source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
+source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
+
+
+
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
