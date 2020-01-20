@@ -131,14 +131,21 @@ datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS"))
 eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
 datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
 
+
+
 #FIX THIS --- OSHPD !!!!
-mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
-calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
-mdc_drg <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+# mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
+# calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+# full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
+# any_primary_diff   <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
 
-full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
-any_primary_diff <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
+oshpd_PDD      <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD.rds"))
+oshpd_PDD_AGE  <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_AGE.rds"))
+oshpd_ED_AGE   <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_ED_AGE.rds"))
 
+oshpd_PDD_any.t <- readRDS(file=path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds")) %>%
+  mutate(year=2016) %>% ## TODO fix year
+  select(year, county, sex, ccsCode, Nany = n_hosp_any)
 
 
 source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
@@ -177,6 +184,12 @@ gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sh
 ccsMap  <- as.data.frame(read_excel( path(myPlace,"myInfo/CCS Code and Names Linkage.xlsx"))) %>%
                  mutate(ccsCode = str_pad(ccsCode, 5,"left",pad="o"))
 
+source(paste0(myPlace,"/myFunctions/helperFunctions/ccsLinker.R"))
+
+
+
+
+
 
 #Saved OSHPD MDC_DRG file in myCBD/myInfo
 
@@ -195,15 +208,12 @@ source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_LIFE-EXPECTANCY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
-source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
-source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
-source(paste0(myPlace, "/myFunctions/make_any_primary_OSHPD_chart.R"))
+#source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
+#source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
+source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
-
-
-
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))

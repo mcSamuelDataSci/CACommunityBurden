@@ -418,16 +418,14 @@ output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, inpu
 
 
 # output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
-output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+# output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+# output$oshpdmap <- renderPlot(cbdOSHPDMap(input$myLHJ, input$mySex, input$myCause,input$myGeo))
+# output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myLHJ, input$myOSHPDtype_mdcdrg, input$mySex, input$myN, input$myVar))
 
-output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
 
+output$OSHPD1      <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+output$any_primary <- renderPlot(anyprimary1(input$myLHJ))
 
-output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myLHJ, input$myOSHPDtype_mdcdrg, input$mySex, input$myN, input$myVar))
-
-output$any_primary <- renderPlot(anyprimary1(input$myLHJ, input$mySex, input$myprimetype))
-
-output$oshpdmap <- renderPlot(cbdOSHPDMap(input$myLHJ, input$mySex, input$myCause,input$myGeo))
 
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
 
