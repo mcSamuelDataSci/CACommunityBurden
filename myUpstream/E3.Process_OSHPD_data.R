@@ -16,7 +16,7 @@
   
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "G:/CCB/0.Secure.Data/"
-secure.location  <- "H:/0.Secure.Data/"
+secure.location  <- "E:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -140,13 +140,14 @@ race_grp       <- c("0",          "1",        "2",        "3",    "4",        "5
 race_cat       <- c("Unk/missing","White-NH", "Black-NH", "Hisp", "Asian-NH", "AIAN-NH", "Other-NH")
 OSHPD_race_grp <- bind_cols(race_grp=race_grp, race_cat=race_cat) %>% as.data.frame() 
 
-ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),trim_ws = FALSE,sheet = "data"))
 
 #----------------------------------------------ADD AGE-GROUp VARIABLE---------------------------------------------------------#
 
 aL            <-      ageMap$lAge     # lower age ranges
 aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
 aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
+aLabs         <- ageMap$ageLabel
 aMark         <- findInterval(oshpd.PDD.16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 oshpd.PDD.16$ageG  <- aLabs[aMark] 
 
@@ -161,6 +162,8 @@ popCountySexAgeG <- filter(popCounty,ageG != "Total")
 popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
 
 
+
+# work on ANY HERE
 # CCS CODING ---------------------------------------------------------------------
 
 # WARNING - need to change these column numbers if osdpd16 changes
@@ -267,15 +270,20 @@ ccsAnyWork <- ccs.t3 %>%
 saveRDS(ccsAnyWork, file = path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds"))
 
 
+
+
 # =====================================================================================================================
 # ---------------------------------------------------------------------------------------------------------------------
+# start OSHPD PRIMARY work here
+
 
 
 oshpd_PDD_Prim <- oshpd.PDD.16 %>% 
-                     select(-(ccs_odiag1:msdrg)) %>% 
-   left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% 
-   left_join(., OSHPD_race_grp, by = "race_grp") %>%
-   left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% select(-sex) %>% mutate(sex=sex_cat)  %>% select(-sex_cat)
+                  mutate( ccsCode = str_pad(ccs_diagP, 5,"left",pad="o")) %>%
+                  select(-(ccs_odiag1:msdrg)) %>% 
+                  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patcnty"= "cdphcaCountyTxt")) %>% 
+                  left_join(., OSHPD_race_grp, by = "race_grp") %>%
+                  left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% select(-sex) %>% mutate(sex=sex_cat)  %>% select(-sex_cat)
 
 #Adding Total in order to create total/statewide estimates (for grouping function later)
 oshpd_PDD_Prim <- mutate(oshpd_PDD_Prim, sex = "Total") %>% 
@@ -365,14 +373,14 @@ ageadjust.direct.SAM <- function (count, pop, rate = NULL, stdpop, conf.level = 
 #-----------------------COUNTY (AND STATE SUMMARY) LEVEL SUMMARY DATA FILES AND CRUDE RATES------------------------------------------------------#
 
 #Statewide
-s.lev0 <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ccs_diagP", "year"), "ccs0")
+s.lev0 <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ccsCode", "year"), "ccs0")
 # s.lev1 <- sum_num_costs(oshpd_PDD_Prim, c("sex", "lev1", "year"), "ccs0") #top level
 
 state_sum <- bind_rows(s.lev0)
 state_sum$county <- STATE #CALIFORNIA as "county" variable
 
 #County
-c.lev0 <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ccs_diagP", "county", "year"), "ccs0")
+c.lev0 <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ccsCode", "county", "year"), "ccs0")
 #c.lev1 <- sum_num_costs(oshpd_PDD_Prim, c("sex", "lev1", "county", "year"), "lev1") #top level
 
 county_sum <- bind_rows(c.lev0)
@@ -396,8 +404,8 @@ total_sum_pop_NA <- total_sum_pop %>% filter(is.na(charges))
 # ----------- by AGE GROUP ------------------------------------------------------------------------------------
 
 
-t.PD.age.state  <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ageG","ccs_diagP",           "year"), "ccs0") %>% mutate(county=STATE)
-t.PD.age.county <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ageG","ccs_diagP", "county", "year"), "ccs0") 
+t.PD.age.state  <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ageG","ccsCode",           "year"), "ccs0") %>% mutate(county=STATE)
+t.PD.age.county <- sum_num_costs(oshpd_PDD_Prim, c("sex", "ageG","ccsCode", "county", "year"), "ccs0") 
 
 t.PD.age        <- bind_rows(t.PD.age.state ,t.PD.age.county) %>% 
                      left_join(., popCountySexAgeG, by = c("year", "sex", "ageG","county")) %>% 
@@ -436,8 +444,8 @@ if (1==2) { #NOT USED FOR NOW; #MAY WANT TO STUDY/ASSESS THE IMPACT OF NOT USING
 #---------------------Age-adjusted hospitalizations (county and statewide)-----------------------------------------------------#
 #Using summary function that was already created 
 
-sA0 <- sum_num_costs(oshpd_PDD_Prim, c(          "year", "sex", "ageG", "ccs_diagP"), "ccs0") %>% mutate(county = STATE)
-cA0 <- sum_num_costs(oshpd_PDD_Prim, c("county", "year", "sex", "ageG", "ccs_diagP"), "ccs0") 
+sA0 <- sum_num_costs(oshpd_PDD_Prim, c(          "year", "sex", "ageG", "ccsCode"), "ccs0") %>% mutate(county = STATE)
+cA0 <- sum_num_costs(oshpd_PDD_Prim, c("county", "year", "sex", "ageG", "ccsCode"), "ccs0") 
 total_sum_age <- bind_rows(sA0, cA0)
 
 #data cleaning
@@ -453,7 +461,7 @@ ageCounty <- full_join(total_sum_age, popCountySexAgeG, by = c("county", "year",
 #Calculating age-adjusted rates--why are we using ageadjust.direct.SAM instead of ageadjust.direct?
 
 countyAA <- ageCounty %>% 
-  group_by(county, year, sex, ccs_diagP, Level) %>% 
+  group_by(county, year, sex, ccsCode, Level) %>% 
   summarize(ahospRate = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[2]*yF,
             aLCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[3]*yF,
             aUCI = ageadjust.direct.SAM(count = n_hosp, pop = pop, rate = NULL, stdpop = US2000POP, conf.level = 0.95)[4]*yF,
@@ -476,7 +484,7 @@ calculated_aa_rates    <- countyAA_new %>%      gather(key = "type", value = "me
 
 calculated_metrics     <- bind_rows(calculated_sums, calculated_crude_rates, calculated_aa_rates) %>%
                             mutate(diagnosis_var = "CCS-Beta") %>% 
-                            select(sex, ccs_diagP, year, Level, county, ageG, pop, type, measure, diagnosis_var)
+                            select(sex, ccsCode, year, Level, county, ageG, pop, type, measure, diagnosis_var)
 
 #Saving RDS file of this dataframe
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/oshpd_PDD.rds"))
