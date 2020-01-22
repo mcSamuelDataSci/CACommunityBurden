@@ -4,10 +4,7 @@ anyprimary1 <- function(myCounty = "CALIFORNIA",  myMeasure = "Nother", mySex = 
 
 countyOSHPD.t   <- oshpd_PDD  %>%
                     filter(type == "n_hosp") %>%
-                    select(year, county, sex, ccsCode=ccs_diagP,Nprimary=measure)  %>% 
-                    mutate(ccsCode = str_pad(ccsCode, 5,"left",pad="o"))   ### FIX THIS
-
-
+                    select(year, county, sex, ccsCode,Nprimary=measure)  
 
 primary_any <- left_join(oshpd_PDD_any.t,countyOSHPD.t,by=c("year","county","sex","ccsCode")) %>%
                        mutate(Nprimary = ifelse(is.na(Nprimary),0,Nprimary)) %>%

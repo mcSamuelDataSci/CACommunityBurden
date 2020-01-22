@@ -20,19 +20,18 @@ ccsMap <- ccsMap %>% select(ccsCode,ccsName)
 
 #Ordering dataset, converting "type" values from short names to full names, joining with names
   oshpd_PD_work <- oshpd_PDD %>% 
-                          mutate(ccs_diagP = str_pad(ccs_diagP, 5,"left",pad="o")) %>%
-                          mutate(type = factor(type, levels = c("n_hosp", 
-                                                                "cHospRate", 
-                                                                "ahospRate", 
-                                                                "avg_los", 
-                                                                "charges", 
-                                                                "cChargeRate", 
-                                                                "avgcharge", 
-                                                                "avgcharge_per_day", 
-                                                                "medcharge", 
-                                                                "medcharge_per_day"))) %>%
+                      mutate(type = factor(type, levels = c("n_hosp", 
+                                                            "cHospRate", 
+                                                            "ahospRate", 
+                                                            "avg_los", 
+                                                            "charges", 
+                                                            "cChargeRate", 
+                                                            "avgcharge", 
+                                                            "avgcharge_per_day", 
+                                                            "medcharge", 
+                                                            "medcharge_per_day"))) %>%
                           mutate(type = plyr::revalue(type, hospMeasures_Revalue)) %>%   
-                          left_join(ccsMap, by = c("ccs_diagP" = "ccsCode"))   
+                          left_join(ccsMap, by =  "ccsCode")   
     
   
   # %>%
@@ -43,14 +42,14 @@ ccsMap <- ccsMap %>% select(ccsCode,ccsName)
 # Selecting specified county, sex, level, selecting the top N rows for the given myOSHPDtype 
   myOSHPDtype_N_cause <- oshpd_PD_work %>%
     #filter(diagnosis_var == "drg" | diagnosis_var == "mdc" | Level == "lev2")  %>%
-    filter(!is.na(ccs_diagP), county == myCounty, sex == mySex, diagnosis_var == myVar) %>%
+    filter(!is.na(ccsCode), county == myCounty, sex == mySex, diagnosis_var == myVar) %>%
     group_by(type) %>% arrange(desc(measure)) %>% dplyr::slice(1:myN)   %>% #this selects the top N rows for myOSHPDtype
-    filter(type == myOSHPDtype) %>% ungroup() %>% pull(ccs_diagP) 
+    filter(type == myOSHPDtype) %>% ungroup() %>% pull(ccsCode) 
   
 
 # creates dataframe with data only for CAUSEs from myOSHPDtype_N_cause, i.e. the top N CAUSES for the specified myOSHPDtype
   plotData <- oshpd_PD_work %>%
-    filter(!is.na(ccs_diagP), county == myCounty, (type %in% c("Number of Hospitalizations","Average Length of Stay (Days)", "Total Charges", "Median Charges"))) %>% filter(ccs_diagP %in% myOSHPDtype_N_cause, sex == mySex) %>%
+    filter(!is.na(ccsCode), county == myCounty, (type %in% c("Number of Hospitalizations","Average Length of Stay (Days)", "Total Charges", "Median Charges"))) %>% filter(ccsCode %in% myOSHPDtype_N_cause, sex == mySex) %>%
     group_by(type)   %>%
     mutate(names = forcats::fct_reorder(ccsName, filter(.,type == myOSHPDtype)  %>%
                                              pull(measure)))

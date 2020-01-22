@@ -7,9 +7,16 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "Y
 
   if (1==2){
     myLHJ     = "Aamador";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
-    mySex     = "Total";myStateCut  = TRUE; myGeo     = "Community";
+    mySex     = "Total";myStateCut  = TRUE; myGeo     = "County";
     myLabName = FALSE;  myCutSystem ="fisher" 
   }
+  
+  # "blank" map to use below
+  countyPop <- datCounty %>% filter(year == 2017,sex=="Total", CAUSE=="0") %>%
+                  select(county,pop)
+  
+  
+  
   
   if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
@@ -24,7 +31,8 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "Y
     
   if (myGeo == "County"){
     dat.State  <- filter(datCounty,(myYear>= 2012 & myYear <= 2017),sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)  
-    dat.1      <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)
+    dat.1      <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county) %>% select(-pop)
+    dat.1      <- left_join(countyPop,dat.1,by="county")
     map.1      <- left_join(shape_County, dat.1, by=c("county")) 
     map.1$name <- map.1$county
     myTitYear  <- myYear
@@ -98,6 +106,8 @@ myPal <- add.alpha(myPal,.7)
 
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
+
+map.1 <- mutate(map.1,myMeasure=ifelse(is.na(myMeasure),0,myMeasure))
 
  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal, 
                                style="fixed", breaks=myBreaks,

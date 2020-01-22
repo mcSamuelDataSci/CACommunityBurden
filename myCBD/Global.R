@@ -213,7 +213,7 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
-source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
+#source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
