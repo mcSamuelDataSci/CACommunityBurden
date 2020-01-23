@@ -15,7 +15,7 @@ if (1==2) {
   
 myVar = "CCS-Beta"  
 
-ccsMap <- ccsMap %>% select(ccsCode,ccsName)
+# ccsMap <- ccsMap %>% select(ccsCode,ccsName, preg)
 
 
 #Ordering dataset, converting "type" values from short names to full names, joining with names

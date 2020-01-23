@@ -1,6 +1,6 @@
-rankStrataAge <- function(myData = "Deaths",
-                         myAgeG = "75 - 84",
+rankStrataAge <- function(myAgeG = "75 - 84",
                          myCounty = "Los Angeles",
+                         myData = "Deaths",
                          myMeasure = "n_hosp",
                          mySex = "Total",
                          myN = 10,

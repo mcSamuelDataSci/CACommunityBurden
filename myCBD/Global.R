@@ -92,6 +92,11 @@ library(visNetwork)
 library(stringr)
 library(shinydashboard)
 
+
+
+# !!!!!!!!!!!!!!! THIS LINE ELIMIANTES DROPDOWNS
+#library(sqldf) # needed for "fullmat" for strata ranking
+
 # --- IHME work -----------------------
 
 source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
@@ -214,6 +219,7 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 #source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
+source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
