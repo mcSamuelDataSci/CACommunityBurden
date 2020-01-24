@@ -360,7 +360,8 @@ shinyUI(
                    
                    
                    tabPanel(title = strong("DATA TABLE"), value = "dataTableTab",
-                            dataTableOutput("rankCauseT")   #DT::
+                            DT::dataTableOutput("rankCauseT")   
+                          
                    ),
                    
                    
