@@ -9,8 +9,8 @@ ui <- fluidPage(
     
     
     fluidRow(column(3,selectInput( "myData", label = "Data Source:", choices = c("Hospital Discharge"="PDD","Emergency Department"="ED","Deaths"="Deaths"))),
-             column(3,selectInput( "myAgeG", label = "Age Group:", choices = ageList, selected = "35 - 44")),
-             column(3,selectInput( "myRace", label = "RaCE/Ethnic Group:", choices = raceList, selected = "Black-NH")),
+             column(3,selectInput( "myAgeG", label = "Age Group (only for age tab):", choices = ageList, selected = "35 - 44")),
+             column(3,selectInput( "myRace", label = "RaCE/Ethnic Group (only for race tab):", choices = raceList, selected = "Black-NH")),
              column(3,selectInput( "myCounty", label = "County:", choices = countyList, selected = "CALIFORNIA"))
              ),
       

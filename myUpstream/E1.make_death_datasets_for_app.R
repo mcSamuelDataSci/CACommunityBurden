@@ -661,6 +661,12 @@ ageCounty.RE   <- full_join(fullMatCounty_RE,datAA1 ,by = c("county","yearG3","s
 ageCounty.RE$Ndeaths[is.na(ageCounty.RE$Ndeaths)] <- 0  
 ageCounty.RE$YLL[is.na(ageCounty.RE$YLL)]         <- 0  
 
+
+# TEMPORARY - for State of Health Report
+saveRDS(ageCounty.RE, file= path(myPlace,"/myData/",whichDat,"datCounty_RACE_AGE_TEMP.RDS"))
+
+
+
 countyAA.RE <- ageCounty.RE %>% group_by(county,yearG3,sex,raceCode,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
             aRate   = ageadjust.direct.SAM(count=Ndeaths, pop=pop, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,

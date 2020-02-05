@@ -24,7 +24,7 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "g:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "h:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- getwd()
@@ -59,7 +59,7 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
 
- ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
+ ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_UPDATE_2018.csv"), colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
  ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
