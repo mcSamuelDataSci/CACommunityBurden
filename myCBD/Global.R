@@ -23,12 +23,12 @@ whichData         <- "real" #changed to fake so I (CD) can run app on my compute
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2014-2018"
-maxYear           <- 2018
 
 myCex <- 1.6
 myCol <- "blue"  
 
 minYear <- 2000
+maxYear <- 2018
 
 
 viewType <- "Present"

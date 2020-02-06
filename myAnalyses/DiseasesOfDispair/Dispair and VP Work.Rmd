@@ -1,0 +1,210 @@
+---
+title: Pre/Exploratory Analyses of California Deaths from causes associated with 'Despair'
+  and Homicide
+author: "Fusion Center"
+date: "May/June, 2019"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(out.width = "100%", echo = FALSE, warning= FALSE, message=FALSE)
+```
+
+<br><br><br> 
+
+
+```{r}
+
+ library(dplyr)
+ library(ggplot2)
+ library(tidyr)
+ library(readxl)
+ library(readr) 
+ library(fs)
+ library(markdown)
+ library(kableExtra)
+ library(DT)
+
+ myPlace      <- "d:/0.CBD/myCBD"
+ myCounty     <- "CALIFORNIA" 
+ mySex        <- "Total"
+ myLineWidth  <- 1
+
+ 
+  dispairCauses  <- c("A06","A06a","A06b","D04","D04a","D04b","D04c","D04d","E01b","E02","E03")
+  dispairCauses2 <- c("A06b","D04","D04a","D04b","D04d","E01b","E02","E03")
+
+ 
+ gbdMap0        <- as.data.frame(read_excel( path(myPlace,"myInfo//gbd.ICD.Map.xlsx/"), sheet="main"))   
+ fullCauseList  <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","nameOnly")] %>% arrange(LABEL)
+ 
+ names(fullCauseList)[2] <- "Cause_Name"
+ 
+ 
+ datCounty    <- readRDS(path(myPlace,"/myData/","real","datCounty.RDS")) %>%
+   filter(CAUSE %in% dispairCauses) %>%
+   mutate(dType = ifelse(CAUSE %in% c("E02","E03"),"Violence","Dispair"))
+ 
+ 
+ datCounty.RE <- readRDS(path(myPlace,"/myData/","real","datCounty_RE.RDS")) %>%
+                  filter(CAUSE %in% dispairCauses2)
+ 
+ causeReference <- semi_join(fullCauseList, datCounty,    by = c("LABEL" = "CAUSE")) 
+ 
+ 
+```
+
+Dispair Cause List
+```{r}
+datatable(causeReference)
+```
+
+
+
+
+```{r}
+# --- WORK ---------------------------------------------------------
+
+datCounty    <-  left_join(datCounty,   fullCauseList, by = c("CAUSE" = "LABEL"))
+datCounty.RE <-  left_join(datCounty.RE,fullCauseList, by = c("CAUSE" = "LABEL"))
+
+datCounty <- datCounty %>% filter(county==myCounty) 
+
+
+yrG3  <-  c("2000-2002","2003-2005","2006-2008","2009-2011","2012-2014","2015-2017")
+yrG   <-  c(2001,2004,2007,2010,2013,2016) 
+
+
+datCounty.RE <- datCounty.RE %>% filter(county==myCounty)  %>%
+                 mutate(yearC     = yrG[match(yearG3,yrG3)])
+
+```
+
+ <br><br><br> 
+
+ 
+```{r }
+ggplot(filter(datCounty,year > 2014),
+       aes(Cause_Name,Ndeaths)) +
+       geom_bar(stat="identity",color="blue") +
+         theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+       facet_grid(year ~ sex) +
+       ggtitle("Looking at NUMBER of deaths for each 'despair' cause \n 3 most recent years only \n Causes with < 1000 total removed for all subsequent charts/tables")
+
+```
+ 
+ 
+
+```{r }
+ggplot(filter(datCounty,year == 2017, sex !="Total", !(Cause_Name %in% c("Substance use","Hepatitis"))),
+    aes(fill=Cause_Name, y=Ndeaths, x=dType)) + 
+    geom_bar( stat="identity",show.legend = FALSE) +
+    geom_text(aes(label=Cause_Name),
+              size=3,
+              position = position_stack(vjust = 0.5)) +
+   facet_grid(~sex)
+       
+
+```
+ 
+
+```{r }
+ggplot(filter(datCounty,year > 2012, sex != "Total",!(Cause_Name %in% c("Substance use","Hepatitis"))),
+    aes(fill=Cause_Name, y=Ndeaths, x=dType)) + 
+    geom_bar( stat="identity") +
+    facet_grid(sex~year)
+       
+
+```
+ 
+ 
+ 
+      
+<br><br><br> 
+ 
+ 
+```{r}
+datCounty <- filter(datCounty,CAUSE %in% dispairCauses2)
+```
+ 
+<br>
+<br>
+<br> 
+ 
+```{r}
+
+tPlot <-   ggplot(datCounty,aes(year,aRate)) +
+           geom_line(size=myLineWidth,color="blue") +
+           theme(axis.text.x = element_text(angle = 90, hjust = 1),strip.text.y = element_text(angle = 0))
+
+tPlot + facet_grid(Cause_Name ~ sex) +
+   labs(title    = "Trends in RATE of deaths for each 'despair' cause by sex ", 
+        subtitle = "Constant y-axis scale")
+
+
+tPlot + facet_grid(Cause_Name ~ sex,scales = "free") +
+   labs(title    = "Trends in RATE of deaths for each 'despair' cause by sex ", 
+        subtitle = "Free y-axis scale")
+
+
+
+```
+ <br><br><br> 
+
+ 
+```{r}
+ggplot(filter(datCounty.RE, yearG3 == "2015-2017"),aes(Cause_Name,aRate)) +
+       geom_bar(stat="identity",color="blue") +
+ #  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+      # theme(strip.text.x = element_text(angle = 90)) + 
+       facet_grid(raceCode ~ sex) +
+       theme(axis.text.x = element_text(angle = 40, hjust = 1),strip.text.y = element_text(angle = 0)) +
+ ggtitle("Despair Causes Death Rate by RACE/ETHNICITY for 2015-2017")
+
+```
+ 
+ 
+ <br><br><br> 
+
+```{r echo = TRUE}
+
+
+ggplot(filter(datCounty.RE,raceCode != "Multi-NH"),aes(yearC,aRate)) +
+  geom_line(aes(color=sex),size=.5) +
+  facet_grid(Cause_Name ~ raceCode, scales = "free") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),strip.text.y = element_text(angle = 0)) +
+   labs(title    = "Trends in RATE of deaths for each 'despair' cause by RACE/ETHNICITY and sex ", 
+        subtitle = "Free y-axis scale")
+
+```
+ 
+<br><br><br> 
+
+ 
+```{r}
+
+
+taRate <- datCounty.RE %>%
+  select(yearG3,sex,raceCode,Cause_Name,aRate ) %>%
+  mutate(aRate = signif(aRate,2)) %>%
+  filter(!(raceCode %in% c("AIAN-NH"))) %>%
+  spread(key=yearG3,value=aRate) 
+
+  names(taRate)[4:9] <- paste0( names(taRate)[4:9],"- RATE")
+
+
+
+ tN <- datCounty.RE %>%
+  select(yearG3,sex,raceCode,Cause_Name,Ndeaths ) %>%
+   filter(!(raceCode %in% c("AIAN-NH"))) %>%
+   spread(key=Cause_Name,value=Ndeaths) 
+ 
+ names(tN)[4:9] <- paste0( names(tN)[4:9],"- NUMBER")
+
+#despairTable <- full_join(taRate,tN,by=c("yearG3","sex","raceCode"))
+
+  datatable(taRate)
+```
+

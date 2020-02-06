@@ -165,6 +165,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
   }
   
+  
 
 #### Generic Part Here =====================================================================================
 

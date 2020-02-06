@@ -1,0 +1,665 @@
+"","causeName","sex","county","Ndeaths","cDeathRate","aRate","aLCI","aUCI"
+"1","ALL Firearm","Female","Santa Clara",34,0.7099,0.8115,0.5585,1.147
+"2","ALL Firearm","Female","Los Angeles",375,1.448,1.41,1.27,1.563
+"3","ALL Firearm","Female","Calaveras",6,5.335,9.739,3.123,25.86
+"4","ALL Firearm","Female","Orange",80,0.9984,1.004,0.7921,1.261
+"5","ALL Firearm","Female","Glenn",2,2.784,10.17,1.188,38.86
+"6","ALL Firearm","Female","Sacramento",86,2.242,2.521,2.009,3.134
+"7","ALL Firearm","Female","San Diego",133,1.62,1.617,1.35,1.925
+"8","ALL Firearm","Female","Tulare",36,3.079,3.405,2.374,4.755
+"9","ALL Firearm","Female","Trinity",5,15.15,26.57,6.717,78.75
+"10","ALL Firearm","Female","Madera",6,1.489,2.949,1.064,6.672
+"11","ALL Firearm","Female","San Bernardino",124,2.294,2.324,1.928,2.783
+"12","ALL Firearm","Female","CALIFORNIA",1715,1.734,1.683,1.603,1.767
+"13","ALL Firearm","Female","San Francisco",20,0.9303,1.038,0.6217,1.673
+"14","ALL Firearm","Female","Placer",14,1.461,2.084,1.121,3.582
+"15","ALL Firearm","Female","Inyo",1,2.164,13.03,0.3299,72.6
+"16","ALL Firearm","Female","Yuba",9,4.758,9.415,4.267,18.36
+"17","ALL Firearm","Female","Santa Barbara",26,2.341,2.523,1.628,3.79
+"18","ALL Firearm","Female","Merced",9,1.33,1.909,0.8594,3.757
+"19","ALL Firearm","Female","Yolo",6,1.081,2.629,0.9058,6.183
+"20","ALL Firearm","Female","Mono",1,3.069,116.7,2.954,650.1
+"21","ALL Firearm","Female","Plumas",3,6.142,32.58,6.718,95.2
+"22","ALL Firearm","Female","Contra Costa",49,1.697,2.297,1.687,3.067
+"23","ALL Firearm","Female","San Luis Obispo",20,2.931,3.39,1.953,5.689
+"24","ALL Firearm","Female","San Mateo",24,1.231,1.608,1.01,2.468
+"25","ALL Firearm","Female","San Joaquin",41,2.216,2.225,1.59,3.053
+"26","ALL Firearm","Female","Monterey",24,2.24,2.782,1.768,4.208
+"27","ALL Firearm","Female","Shasta",21,4.62,5.683,3.42,9.102
+"28","ALL Firearm","Female","Sonoma",27,2.109,2.818,1.809,4.263
+"29","ALL Firearm","Female","Ventura",27,1.257,1.664,1.088,2.461
+"30","ALL Firearm","Female","Sutter",5,2.026,3.728,1.187,9.014
+"31","ALL Firearm","Female","Marin",13,1.949,2.499,1.218,4.76
+"32","ALL Firearm","Female","Kern",51,2.351,2.735,2.024,3.635
+"33","ALL Firearm","Female","Stanislaus",33,2.401,3.366,2.302,4.792
+"34","ALL Firearm","Female","Humboldt",21,6.197,8.788,5.315,13.83
+"35","ALL Firearm","Female","Riverside",103,1.734,1.837,1.494,2.243
+"36","ALL Firearm","Female","Santa Cruz",11,1.594,1.881,0.897,3.642
+"37","ALL Firearm","Female","Kings",3,0.8827,2.676,0.525,8.247
+"38","ALL Firearm","Female","Lassen",1,1.721,12.28,0.311,68.44
+"39","ALL Firearm","Female","Colusa",2,3.656,21.31,2.529,80.17
+"40","ALL Firearm","Female","Imperial",4,0.8668,2.302,0.614,6.225
+"41","ALL Firearm","Female","Del Norte",4,6.438,17.46,3.885,53.25
+"42","ALL Firearm","Female","Siskiyou",5,4.485,9.02,2.525,24.55
+"43","ALL Firearm","Female","Solano",29,2.658,3.299,2.176,4.857
+"44","ALL Firearm","Female","Tuolumne",6,4.595,8.811,2.955,21.01
+"45","ALL Firearm","Female","Alameda",62,1.489,1.777,1.357,2.292
+"46","ALL Firearm","Female","Butte",13,2.293,2.747,1.389,5.098
+"47","ALL Firearm","Female","Lake",11,6.746,8.917,4.096,18.05
+"48","ALL Firearm","Female","Sierra",1,12.83,75.47,1.911,420.5
+"49","ALL Firearm","Female","Modoc",2,8.415,33.45,4.051,121.1
+"50","ALL Firearm","Female","Fresno",56,2.263,2.528,1.897,3.317
+"51","ALL Firearm","Female","Napa",9,2.527,3.154,1.402,6.368
+"52","ALL Firearm","Female","Amador",5,5.759,14.05,4.091,36.94
+"53","ALL Firearm","Female","Mariposa",3,6.702,26.59,4.851,84.49
+"54","ALL Firearm","Female","Tehama",8,4.952,7.078,2.824,15.83
+"55","ALL Firearm","Female","El Dorado",18,3.925,4.667,2.672,7.952
+"56","ALL Firearm","Female","Nevada",13,5.219,7.569,3.636,15.2
+"57","ALL Firearm","Female","San Benito",3,2.063,5.338,1.07,16.47
+"58","ALL Firearm","Female","Mendocino",10,4.505,6.382,2.911,12.5
+"59","Firearm-Accident","Female","Contra Costa",2,0.06926,0.05389,0.006158,0.2444
+"60","Firearm-Accident","Female","Sonoma",1,0.07811,0.08045,0.002037,0.5372
+"61","Firearm-Accident","Female","CALIFORNIA",13,0.01315,0.01194,0.006263,0.02117
+"62","Firearm-Accident","Female","Siskiyou",1,0.897,1.639,0.04149,9.131
+"63","Firearm-Accident","Female","Humboldt",1,0.2951,0.3717,0.009412,2.187
+"64","Firearm-Accident","Female","Los Angeles",2,0.007724,0.006567,0.0007647,0.02743
+"65","Firearm-Accident","Female","Sutter",1,0.4053,0.4284,0.01085,2.735
+"66","Firearm-Accident","Female","Sacramento",2,0.05215,0.03645,0.004415,0.1706
+"67","Firearm-Accident","Female","Riverside",1,0.01683,0.01279,0.0003239,0.1007
+"68","Firearm-Accident","Female","San Diego",1,0.01218,0.01278,0.0003237,0.07866
+"69","Firearm-Accident","Female","El Dorado",1,0.218,0.1187,0.003006,1.461
+"70","Firearm-Suicide","Female","Glenn",1,1.392,0.9735,0.02465,8.527
+"71","Firearm-Suicide","Female","San Bernardino",62,1.147,1.154,0.8813,1.491
+"72","Firearm-Suicide","Female","Madera",5,1.24,1.231,0.3932,3.028
+"73","Firearm-Suicide","Female","CALIFORNIA",838,0.8474,0.7903,0.7367,0.8471
+"74","Firearm-Suicide","Female","San Diego",80,0.9746,0.9579,0.7565,1.2
+"75","Firearm-Suicide","Female","San Mateo",15,0.7695,0.6602,0.3593,1.15
+"76","Firearm-Suicide","Female","Ventura",15,0.6985,0.6818,0.3774,1.158
+"77","Firearm-Suicide","Female","San Joaquin",18,0.9727,0.9325,0.547,1.513
+"78","Firearm-Suicide","Female","Sacramento",39,1.017,0.9164,0.6472,1.271
+"79","Firearm-Suicide","Female","Kings",2,0.5884,0.8892,0.1076,3.23
+"80","Firearm-Suicide","Female","Santa Barbara",18,1.62,1.509,0.8827,2.474
+"81","Firearm-Suicide","Female","Calaveras",5,4.446,2.39,0.6509,9.319
+"82","Firearm-Suicide","Female","Kern",29,1.337,1.34,0.8889,1.959
+"83","Firearm-Suicide","Female","Trinity",4,12.12,9.708,1.757,34.46
+"84","Firearm-Suicide","Female","Sutter",3,1.216,1.029,0.2043,3.533
+"85","Firearm-Suicide","Female","San Luis Obispo",17,2.492,2.111,1.164,3.697
+"86","Firearm-Suicide","Female","Lassen",1,1.721,1.656,0.04193,13.96
+"87","Firearm-Suicide","Female","Contra Costa",13,0.4502,0.4071,0.2133,0.725
+"88","Firearm-Suicide","Female","Colusa",2,3.656,4.421,0.5247,16.63
+"89","Firearm-Suicide","Female","Placer",8,0.8347,0.8035,0.3366,1.703
+"90","Firearm-Suicide","Female","Yuba",4,2.115,2.164,0.577,5.888
+"91","Firearm-Suicide","Female","El Dorado",11,2.398,1.769,0.861,3.6
+"92","Firearm-Suicide","Female","Shasta",18,3.96,3.534,2.031,5.92
+"93","Firearm-Suicide","Female","Sonoma",21,1.64,1.426,0.8559,2.287
+"94","Firearm-Suicide","Female","Tuolumne",5,3.829,4.187,1.267,11.32
+"95","Firearm-Suicide","Female","Plumas",2,4.094,1.895,0.2295,16.3
+"96","Firearm-Suicide","Female","Alameda",18,0.4323,0.3803,0.2228,0.6209
+"97","Firearm-Suicide","Female","Marin",5,0.7497,0.7315,0.2118,2.012
+"98","Firearm-Suicide","Female","Solano",18,1.65,1.386,0.8101,2.288
+"99","Firearm-Suicide","Female","Santa Clara",16,0.3341,0.3003,0.1701,0.4979
+"100","Firearm-Suicide","Female","Merced",5,0.7391,0.7364,0.2356,1.824
+"101","Firearm-Suicide","Female","Tehama",3,1.857,1.418,0.2731,5.499
+"102","Firearm-Suicide","Female","Santa Cruz",10,1.449,1.223,0.5582,2.466
+"103","Firearm-Suicide","Female","Tulare",20,1.711,1.817,1.104,2.849
+"104","Firearm-Suicide","Female","San Francisco",7,0.3256,0.2732,0.1086,0.6829
+"105","Firearm-Suicide","Female","Orange",50,0.624,0.564,0.4157,0.7534
+"106","Firearm-Suicide","Female","Yolo",4,0.7206,0.6625,0.1621,1.962
+"107","Firearm-Suicide","Female","Siskiyou",1,0.897,0.557,0.0141,6.654
+"108","Firearm-Suicide","Female","Del Norte",3,4.829,3.984,0.6409,15.82
+"109","Firearm-Suicide","Female","Monterey",10,0.9334,0.9342,0.4408,1.776
+"110","Firearm-Suicide","Female","Napa",4,1.123,0.8514,0.2235,2.639
+"111","Firearm-Suicide","Female","Sierra",1,12.83,4.984,0.1262,96.76
+"112","Firearm-Suicide","Female","Imperial",1,0.2167,0.2467,0.006245,1.562
+"113","Firearm-Suicide","Female","Butte",12,2.117,1.983,0.969,3.771
+"114","Firearm-Suicide","Female","Mariposa",3,6.702,5.905,1.077,23.6
+"115","Firearm-Suicide","Female","Lake",5,3.066,1.946,0.585,6.276
+"116","Firearm-Suicide","Female","Los Angeles",128,0.4943,0.4568,0.38,0.5456
+"117","Firearm-Suicide","Female","Nevada",11,4.416,3.411,1.532,7.168
+"118","Firearm-Suicide","Female","Mendocino",5,2.253,2.326,0.6737,6.023
+"119","Firearm-Suicide","Female","Stanislaus",18,1.31,1.309,0.7671,2.119
+"120","Firearm-Suicide","Female","Fresno",18,0.7273,0.8027,0.4688,1.295
+"121","Firearm-Suicide","Female","Humboldt",10,2.951,3.02,1.376,5.88
+"122","Firearm-Suicide","Female","Riverside",52,0.8752,0.8358,0.6206,1.109
+"123","Firearm-Suicide","Female","Amador",1,1.152,1.296,0.03281,10.03
+"124","Firearm-Homicide","Female","Santa Clara",16,0.3341,0.3066,0.1736,0.5077
+"125","Firearm-Homicide","Female","Kern",21,0.9681,0.9874,0.6057,1.54
+"126","Firearm-Homicide","Female","Glenn",1,1.392,1.324,0.03352,9.29
+"127","Firearm-Homicide","Female","Santa Barbara",8,0.7202,0.8004,0.3373,1.645
+"128","Firearm-Homicide","Female","Marin",8,1.199,1.066,0.3949,2.477
+"129","Firearm-Homicide","Female","Sonoma",4,0.3124,0.2808,0.06944,0.8285
+"130","Firearm-Homicide","Female","Plumas",1,2.047,0.9474,0.02399,15.35
+"131","Firearm-Homicide","Female","Mono",1,3.069,5.232,0.1325,90.15
+"132","Firearm-Homicide","Female","Placer",6,0.626,0.7848,0.2872,1.752
+"133","Firearm-Homicide","Female","Calaveras",1,0.8892,0.4159,0.01053,6.968
+"134","Firearm-Homicide","Female","San Joaquin",23,1.243,1.258,0.794,1.917
+"135","Firearm-Homicide","Female","Contra Costa",33,1.143,1.199,0.8191,1.705
+"136","Firearm-Homicide","Female","Shasta",3,0.6601,0.8407,0.1692,2.604
+"137","Firearm-Homicide","Female","Trinity",1,3.03,3.561,0.09014,25.41
+"138","Firearm-Homicide","Female","San Bernardino",60,1.11,1.132,0.8609,1.468
+"139","Firearm-Homicide","Female","Sutter",1,0.4053,0.3923,0.009932,2.646
+"140","Firearm-Homicide","Female","Lake",6,3.68,3.927,1.313,9.63
+"141","Firearm-Homicide","Female","San Luis Obispo",3,0.4397,0.3994,0.05506,1.541
+"142","Firearm-Homicide","Female","San Diego",52,0.6335,0.6465,0.4807,0.8545
+"143","Firearm-Homicide","Female","Inyo",1,2.164,1.137,0.02878,14.28
+"144","Firearm-Homicide","Female","El Dorado",6,1.308,1.019,0.329,2.735
+"145","Firearm-Homicide","Female","Merced",3,0.4435,0.4407,0.08584,1.413
+"146","Firearm-Homicide","Female","Del Norte",1,1.61,2.747,0.06954,15.3
+"147","Firearm-Homicide","Female","Santa Cruz",1,0.1449,0.1832,0.004637,1.1
+"148","Firearm-Homicide","Female","Madera",1,0.2481,0.315,0.007976,1.755
+"149","Firearm-Homicide","Female","Ventura",12,0.5588,0.599,0.3056,1.073
+"150","Firearm-Homicide","Female","Tuolumne",1,0.7658,0.394,0.009975,5.718
+"151","Firearm-Homicide","Female","Butte",1,0.1764,0.1317,0.003334,1.214
+"152","Firearm-Homicide","Female","Siskiyou",3,2.691,2.744,0.476,10.09
+"153","Firearm-Homicide","Female","Tulare",16,1.369,1.534,0.8699,2.529
+"154","Firearm-Homicide","Female","Sacramento",45,1.173,1.202,0.8731,1.62
+"155","Firearm-Homicide","Female","Alameda",44,1.057,1.015,0.7352,1.376
+"156","Firearm-Homicide","Female","Yolo",2,0.3603,0.477,0.05686,1.786
+"157","Firearm-Homicide","Female","CALIFORNIA",850,0.8595,0.8687,0.8105,0.9301
+"158","Firearm-Homicide","Female","Kings",1,0.2942,0.2696,0.006826,2.058
+"159","Firearm-Homicide","Female","Orange",30,0.3744,0.371,0.2481,0.5375
+"160","Firearm-Homicide","Female","Amador",3,3.456,5.445,1.069,16.99
+"161","Firearm-Homicide","Female","Mendocino",5,2.253,2.264,0.6995,5.801
+"162","Firearm-Homicide","Female","Solano",11,1.008,1.153,0.566,2.115
+"163","Firearm-Homicide","Female","San Mateo",8,0.4104,0.4352,0.1835,0.8956
+"164","Firearm-Homicide","Female","Nevada",2,0.803,0.34,0.04118,2.925
+"165","Firearm-Homicide","Female","Yuba",5,2.643,2.88,0.9269,6.966
+"166","Firearm-Homicide","Female","Monterey",14,1.307,1.318,0.7132,2.266
+"167","Firearm-Homicide","Female","Imperial",3,0.6501,0.7573,0.1507,2.365
+"168","Firearm-Homicide","Female","Fresno",37,1.495,1.518,1.061,2.121
+"169","Firearm-Homicide","Female","Stanislaus",15,1.091,1.132,0.6284,1.909
+"170","Firearm-Homicide","Female","Tehama",5,3.095,2.868,0.8179,7.824
+"171","Firearm-Homicide","Female","Modoc",2,8.415,9.149,1.108,40.66
+"172","Firearm-Homicide","Female","Humboldt",10,2.951,3.115,1.452,5.982
+"173","Firearm-Homicide","Female","San Francisco",13,0.6047,0.5417,0.2789,1.036
+"174","Firearm-Homicide","Female","Riverside",48,0.8079,0.8306,0.6097,1.112
+"175","Firearm-Homicide","Female","San Benito",3,2.063,2.332,0.4675,7.197
+"176","Firearm-Homicide","Female","Los Angeles",244,0.9423,0.9432,0.8276,1.071
+"177","Firearm-Homicide","Female","Napa",5,1.404,1.577,0.5053,3.862
+"178","Firearm-Undermined","Female","Amador",1,1.152,0.5683,0.01439,8.715
+"179","Firearm-Undermined","Female","Contra Costa",1,0.03463,0.04076,0.001032,0.2388
+"180","Firearm-Undermined","Female","Riverside",2,0.03366,0.03123,0.003634,0.131
+"181","Firearm-Undermined","Female","Merced",1,0.1478,0.1856,0.004698,1.058
+"182","Firearm-Undermined","Female","CALIFORNIA",14,0.01416,0.01246,0.006726,0.02167
+"183","Firearm-Undermined","Female","San Mateo",1,0.0513,0.07041,0.001783,0.3923
+"184","Firearm-Undermined","Female","Fresno",1,0.04041,0.03315,0.0008394,0.2501
+"185","Firearm-Undermined","Female","Los Angeles",1,0.003862,0.003723,9.426e-05,0.02346
+"186","Firearm-Undermined","Female","San Bernardino",2,0.037,0.03739,0.004091,0.1489
+"187","Firearm-Undermined","Female","Kern",1,0.0461,0.05359,0.001357,0.3226
+"188","Firearm-Undermined","Female","Santa Clara",2,0.04176,0.03032,0.003671,0.1322
+"189","Firearm-Undermined","Female","Sonoma",1,0.07811,0.0436,0.001104,0.4591
+"190","ALL Firearm","Male","Lake",68,41.76,51.29,39.2,66.33
+"191","ALL Firearm","Male","Santa Barbara",123,10.89,11.39,9.427,13.67
+"192","ALL Firearm","Male","Mariposa",17,37.26,48.11,25.13,87.39
+"193","ALL Firearm","Male","San Bernardino",829,15.52,16.4,15.27,17.61
+"194","ALL Firearm","Male","Lassen",23,23.79,29.69,18.55,45.82
+"195","ALL Firearm","Male","Mono",5,13.64,55.14,15.08,148.5
+"196","ALL Firearm","Male","Tuolumne",35,24.78,25.1,17.01,36.42
+"197","ALL Firearm","Male","Tehama",38,23.87,22.77,15.93,32.09
+"198","ALL Firearm","Male","Sutter",53,21.64,29.11,21.73,38.37
+"199","ALL Firearm","Male","Merced",103,14.96,19.45,15.78,23.87
+"200","ALL Firearm","Male","Nevada",57,23.36,25.14,18.47,33.85
+"201","ALL Firearm","Male","Shasta",125,28.48,33.95,28.07,40.88
+"202","ALL Firearm","Male","Kern",508,22.23,23.07,21.05,25.27
+"203","ALL Firearm","Male","Yuba",49,25.5,35.91,26.41,48.17
+"204","ALL Firearm","Male","Plumas",15,30.77,36.64,18.6,69.95
+"205","ALL Firearm","Male","Alameda",557,13.85,14.51,13.32,15.79
+"206","ALL Firearm","Male","Kings",54,13.15,14.82,10.98,19.93
+"207","ALL Firearm","Male","Placer",105,11.37,12.76,10.38,15.59
+"208","ALL Firearm","Male","El Dorado",87,18.81,22.17,17.45,27.95
+"209","ALL Firearm","Male","Siskiyou",34,30.74,33.2,21.92,49.38
+"210","ALL Firearm","Male","Santa Cruz",91,13.17,17.03,13.59,21.14
+"211","ALL Firearm","Male","Sacramento",653,17.64,18.89,17.45,20.43
+"212","ALL Firearm","Male","CALIFORNIA",12970,13.24,13.14,12.92,13.38
+"213","ALL Firearm","Male","Calaveras",41,36.62,34.43,23.73,49.62
+"214","ALL Firearm","Male","Santa Clara",337,6.915,8.656,7.746,9.651
+"215","ALL Firearm","Male","Orange",629,7.972,7.721,7.12,8.361
+"216","ALL Firearm","Male","Contra Costa",426,15.42,16.96,15.37,18.68
+"217","ALL Firearm","Male","Monterey",239,21.14,22.61,19.81,25.74
+"218","ALL Firearm","Male","Fresno",381,15.4,15.8,14.22,17.53
+"219","ALL Firearm","Male","Yolo",48,9.093,10.34,7.555,13.9
+"220","ALL Firearm","Male","Tulare",203,17.29,19.5,16.87,22.49
+"221","ALL Firearm","Male","Madera",59,15.61,17.23,13.04,22.43
+"222","ALL Firearm","Male","San Diego",840,10.12,11.02,10.27,11.8
+"223","ALL Firearm","Male","San Mateo",137,7.225,8.958,7.494,10.65
+"224","ALL Firearm","Male","Imperial",33,6.941,7.327,5.003,10.44
+"225","ALL Firearm","Male","Del Norte",18,24.51,22.99,13.43,37.7
+"226","ALL Firearm","Male","Napa",36,10.15,11.99,8.314,16.93
+"227","ALL Firearm","Male","Colusa",9,15.65,28.01,12.64,54.59
+"228","ALL Firearm","Male","Glenn",23,31.25,38.81,24.35,59.77
+"229","ALL Firearm","Male","Los Angeles",3237,12.81,12.62,12.18,13.06
+"230","ALL Firearm","Male","San Luis Obispo",106,14.86,17.18,13.94,21.06
+"231","ALL Firearm","Male","Sonoma",129,10.39,11.87,9.848,14.22
+"232","ALL Firearm","Male","Solano",229,21.17,22.48,19.62,25.68
+"233","ALL Firearm","Male","Inyo",9,19.1,33.7,14.22,71.29
+"234","ALL Firearm","Male","Riverside",709,12.05,12.19,11.3,13.14
+"235","ALL Firearm","Male","Butte",129,23,28.11,23.32,33.72
+"236","ALL Firearm","Male","Stanislaus",164,12.14,12.87,10.94,15.08
+"237","ALL Firearm","Male","Amador",30,30.06,32.05,20.9,47.79
+"238","ALL Firearm","Male","San Joaquin",397,21.53,23.19,20.92,25.66
+"239","ALL Firearm","Male","Alpine",1,33.86,374.5,9.482,2087
+"240","ALL Firearm","Male","Sierra",5,63.06,241.8,61.48,680.4
+"241","ALL Firearm","Male","Mendocino",54,24.22,28.84,21.39,38.3
+"242","ALL Firearm","Male","Ventura",270,12.69,15.97,14.09,18.05
+"243","ALL Firearm","Male","Trinity",20,57.94,66.7,38.85,109.1
+"244","ALL Firearm","Male","Modoc",6,25.42,61.94,21.61,142.3
+"245","ALL Firearm","Male","San Francisco",194,8.796,11.02,9.453,12.79
+"246","ALL Firearm","Male","Humboldt",98,28.71,35.85,28.94,44.01
+"247","ALL Firearm","Male","Marin",68,10.48,10.8,8.25,14.02
+"248","ALL Firearm","Male","San Benito",17,11.73,16.39,9.417,26.91
+"249","Firearm-Accident","Male","Kern",3,0.1313,0.1083,0.0223,0.4384
+"250","Firearm-Accident","Male","Trinity",1,2.897,4.132,0.1046,25.35
+"251","Firearm-Accident","Male","Orange",7,0.08872,0.07899,0.03143,0.172
+"252","Firearm-Accident","Male","San Bernardino",8,0.1498,0.159,0.06756,0.3428
+"253","Firearm-Accident","Male","El Dorado",1,0.2162,0.3452,0.008739,1.923
+"254","Firearm-Accident","Male","Nevada",1,0.4098,0.534,0.01352,3.343
+"255","Firearm-Accident","Male","Santa Clara",3,0.06156,0.06567,0.01354,0.2016
+"256","Firearm-Accident","Male","Shasta",1,0.2279,0.2441,0.006181,1.653
+"257","Firearm-Accident","Male","Placer",1,0.1083,0.06993,0.00177,0.6245
+"258","Firearm-Accident","Male","Merced",3,0.4356,0.4215,0.08387,1.504
+"259","Firearm-Accident","Male","Kings",1,0.2434,0.2053,0.005197,2.127
+"260","Firearm-Accident","Male","San Mateo",1,0.05274,0.0667,0.001689,0.3716
+"261","Firearm-Accident","Male","Madera",2,0.529,0.6125,0.06825,2.415
+"262","Firearm-Accident","Male","Alameda",7,0.174,0.1698,0.06807,0.3689
+"263","Firearm-Accident","Male","San Joaquin",9,0.488,0.4581,0.2071,0.9332
+"264","Firearm-Accident","Male","San Diego",2,0.02411,0.02188,0.002641,0.0914
+"265","Firearm-Accident","Male","CALIFORNIA",145,0.148,0.1448,0.122,0.1709
+"266","Firearm-Accident","Male","Santa Barbara",1,0.08854,0.06522,0.001651,0.5173
+"267","Firearm-Accident","Male","Contra Costa",10,0.362,0.3905,0.1852,0.731
+"268","Firearm-Accident","Male","Fresno",4,0.1617,0.1401,0.03773,0.4237
+"269","Firearm-Accident","Male","Solano",3,0.2773,0.2883,0.05665,0.9119
+"270","Firearm-Accident","Male","Tulare",2,0.1704,0.1478,0.0179,0.7103
+"271","Firearm-Accident","Male","Colusa",1,1.738,1.983,0.05022,12.41
+"272","Firearm-Accident","Male","San Luis Obispo",1,0.1402,0.2051,0.005193,1.146
+"273","Firearm-Accident","Male","Butte",4,0.7133,0.6743,0.1795,1.949
+"274","Firearm-Accident","Male","Mendocino",1,0.4485,0.4288,0.01086,2.92
+"275","Firearm-Accident","Male","Sacramento",16,0.4322,0.4197,0.2383,0.7021
+"276","Firearm-Accident","Male","Riverside",15,0.255,0.2497,0.1395,0.422
+"277","Firearm-Accident","Male","Monterey",1,0.08844,0.07297,0.001847,0.5743
+"278","Firearm-Accident","Male","Humboldt",4,1.172,1.208,0.3252,3.251
+"279","Firearm-Accident","Male","Mariposa",1,2.192,0.9309,0.02357,15.6
+"280","Firearm-Accident","Male","Stanislaus",2,0.1481,0.1562,0.01728,0.6473
+"281","Firearm-Accident","Male","San Francisco",5,0.2267,0.2147,0.06541,0.614
+"282","Firearm-Accident","Male","Los Angeles",22,0.08703,0.0833,0.05203,0.1288
+"283","Firearm-Accident","Male","San Benito",1,0.6901,0.7354,0.01862,4.992
+"284","Firearm-Suicide","Male","San Bernardino",431,8.068,9.097,8.23,10.04
+"285","Firearm-Suicide","Male","Trinity",11,31.87,29.91,13.73,59.73
+"286","Firearm-Suicide","Male","El Dorado",76,16.43,14.65,11.34,18.8
+"287","Firearm-Suicide","Male","Lassen",18,18.62,18.42,10.7,30.96
+"288","Firearm-Suicide","Male","Plumas",14,28.72,22.75,11.24,44.3
+"289","Firearm-Suicide","Male","Santa Barbara",87,7.703,7.566,6.033,9.401
+"290","Firearm-Suicide","Male","Solano",107,9.89,9.729,7.936,11.84
+"291","Firearm-Suicide","Male","Kern",209,9.147,10.36,8.959,11.96
+"292","Firearm-Suicide","Male","Orange",463,5.868,5.646,5.135,6.197
+"293","Firearm-Suicide","Male","Madera",33,8.729,9.467,6.475,13.48
+"294","Firearm-Suicide","Male","Butte",100,17.83,16.94,13.68,20.84
+"295","Firearm-Suicide","Male","Santa Clara",223,4.576,4.473,3.898,5.116
+"296","Firearm-Suicide","Male","Colusa",8,13.91,14.2,6.035,29.44
+"297","Firearm-Suicide","Male","Shasta",102,23.24,21.06,17.04,25.9
+"298","Firearm-Suicide","Male","Merced",29,4.211,4.976,3.296,7.306
+"299","Firearm-Suicide","Male","Inyo",8,16.98,11.97,4.796,28.04
+"300","Firearm-Suicide","Male","Yuba",35,18.22,20.19,13.94,28.65
+"301","Firearm-Suicide","Male","Siskiyou",30,27.12,22.04,14.22,33.66
+"302","Firearm-Suicide","Male","Contra Costa",180,6.516,6.34,5.429,7.368
+"303","Firearm-Suicide","Male","Sacramento",357,9.643,9.649,8.655,10.73
+"304","Firearm-Suicide","Male","Sutter",35,14.29,15.21,10.54,21.37
+"305","Firearm-Suicide","Male","Mono",2,5.457,6.553,0.4962,50.51
+"306","Firearm-Suicide","Male","Nevada",52,21.31,17.51,12.68,23.93
+"307","Firearm-Suicide","Male","San Mateo",95,5.01,4.574,3.683,5.636
+"308","Firearm-Suicide","Male","San Joaquin",132,7.158,7.4,6.162,8.842
+"309","Firearm-Suicide","Male","Santa Cruz",67,9.694,9.938,7.618,12.8
+"310","Firearm-Suicide","Male","Alameda",194,4.823,4.785,4.124,5.532
+"311","Firearm-Suicide","Male","Ventura",185,8.692,8.485,7.284,9.843
+"312","Firearm-Suicide","Male","Marin",57,8.781,6.675,4.975,8.909
+"313","Firearm-Suicide","Male","Tulare",83,7.071,7.973,6.322,9.972
+"314","Firearm-Suicide","Male","San Luis Obispo",100,14.02,12.55,10.12,15.48
+"315","Firearm-Suicide","Male","Sonoma",108,8.703,7.507,6.115,9.163
+"316","Firearm-Suicide","Male","Tuolumne",30,21.24,15.9,10.37,24.34
+"317","Firearm-Suicide","Male","Mariposa",15,32.88,27.97,13.83,52.89
+"318","Firearm-Suicide","Male","San Diego",665,8.015,8.149,7.533,8.806
+"319","Firearm-Suicide","Male","Kings",29,7.06,8.28,5.428,12.4
+"320","Firearm-Suicide","Male","Yolo",40,7.578,7.983,5.646,11.05
+"321","Firearm-Suicide","Male","Sierra",5,63.06,59.6,15.15,181.7
+"322","Firearm-Suicide","Male","Monterey",71,6.28,6.568,5.108,8.357
+"323","Firearm-Suicide","Male","Napa",34,9.584,8.757,6.001,12.49
+"324","Firearm-Suicide","Male","Los Angeles",1306,5.167,5.156,4.876,5.45
+"325","Firearm-Suicide","Male","Alpine",1,33.86,60.9,1.542,473.5
+"326","Firearm-Suicide","Male","Tehama",32,20.1,17.13,11.59,24.96
+"327","Firearm-Suicide","Male","Riverside",431,7.328,7.374,6.685,8.12
+"328","Firearm-Suicide","Male","Lake",46,28.25,27.52,19.68,37.86
+"329","Firearm-Suicide","Male","Modoc",3,12.71,13.11,2.334,46.6
+"330","Firearm-Suicide","Male","San Benito",11,7.591,8.277,4.043,15.46
+"331","Firearm-Suicide","Male","CALIFORNIA",6998,7.142,7.108,6.94,7.28
+"332","Firearm-Suicide","Male","Mendocino",43,19.28,17.59,12.52,24.24
+"333","Firearm-Suicide","Male","Fresno",163,6.589,7.286,6.186,8.542
+"334","Firearm-Suicide","Male","Amador",28,28.05,23.22,14.91,35.97
+"335","Firearm-Suicide","Male","Stanislaus",95,7.032,7.513,6.045,9.259
+"336","Firearm-Suicide","Male","Glenn",18,24.46,23.83,13.99,38.82
+"337","Firearm-Suicide","Male","Del Norte",12,16.34,12.88,6.571,23.91
+"338","Firearm-Suicide","Male","Humboldt",66,19.33,18.84,14.46,24.23
+"339","Firearm-Suicide","Male","Calaveras",35,31.26,24.76,16.46,37.2
+"340","Firearm-Suicide","Male","Placer",93,10.07,8.784,7.048,10.87
+"341","Firearm-Suicide","Male","Imperial",24,5.048,5.485,3.483,8.296
+"342","Firearm-Suicide","Male","San Francisco",69,3.128,2.793,2.158,3.619
+"343","Firearm-Homicide","Male","Siskiyou",4,3.616,4.033,0.8585,12.18
+"344","Firearm-Homicide","Male","Merced",70,10.16,9.771,7.565,12.55
+"345","Firearm-Homicide","Male","Lake",22,13.51,16.31,10.06,25.3
+"346","Firearm-Homicide","Male","Plumas",1,2.051,1.052,0.02664,15.28
+"347","Firearm-Homicide","Male","Trinity",8,23.18,27.01,10.89,57.65
+"348","Firearm-Homicide","Male","Mendocino",8,3.588,3.861,1.641,7.888
+"349","Firearm-Homicide","Male","Mono",2,5.457,4.625,0.4573,47.32
+"350","Firearm-Homicide","Male","Yuba",14,7.287,8.007,4.346,13.97
+"351","Firearm-Homicide","Male","Madera",24,6.349,7.151,4.526,10.84
+"352","Firearm-Homicide","Male","El Dorado",10,2.162,2.41,1.099,4.719
+"353","Firearm-Homicide","Male","Nevada",3,1.229,1.053,0.1471,4.073
+"354","Firearm-Homicide","Male","Ventura",85,3.994,4.057,3.233,5.042
+"355","Firearm-Homicide","Male","San Mateo",40,2.11,2.335,1.664,3.197
+"356","Firearm-Homicide","Male","Sutter",17,6.94,7.252,4.191,11.85
+"357","Firearm-Homicide","Male","Alameda",356,8.851,8.551,7.681,9.502
+"358","Firearm-Homicide","Male","Lassen",5,5.173,4.891,1.572,13.61
+"359","Firearm-Homicide","Male","CALIFORNIA",5771,5.89,5.834,5.683,5.988
+"360","Firearm-Homicide","Male","Humboldt",27,7.909,7.8,5.083,11.55
+"361","Firearm-Homicide","Male","Kern",293,12.82,12.45,11.04,14.03
+"362","Firearm-Homicide","Male","Stanislaus",67,4.96,5.206,4.02,6.669
+"363","Firearm-Homicide","Male","Glenn",5,6.794,6.646,2.044,17.01
+"364","Firearm-Homicide","Male","Santa Cruz",24,3.473,3.435,2.171,5.245
+"365","Firearm-Homicide","Male","Butte",24,4.28,4.332,2.735,6.627
+"366","Firearm-Homicide","Male","Napa",2,0.5637,0.6621,0.07803,2.509
+"367","Firearm-Homicide","Male","Santa Clara",106,2.175,2.158,1.763,2.621
+"368","Firearm-Homicide","Male","Contra Costa",233,8.435,8.958,7.839,10.2
+"369","Firearm-Homicide","Male","Shasta",21,4.785,5.114,3.126,8.03
+"370","Firearm-Homicide","Male","Mariposa",1,2.192,2.36,0.05974,18.14
+"371","Firearm-Homicide","Male","Solano",118,10.91,10.83,8.943,13.03
+"372","Firearm-Homicide","Male","San Bernardino",384,7.188,7.024,6.33,7.79
+"373","Firearm-Homicide","Male","Inyo",1,2.122,2.826,0.07155,17.05
+"374","Firearm-Homicide","Male","Fresno",214,8.65,8.371,7.269,9.62
+"375","Firearm-Homicide","Male","Los Angeles",1902,7.524,7.346,7.018,7.688
+"376","Firearm-Homicide","Male","San Francisco",120,5.441,5.644,4.631,6.857
+"377","Firearm-Homicide","Male","Yolo",8,1.516,1.643,0.6898,3.396
+"378","Firearm-Homicide","Male","San Luis Obispo",5,0.7011,0.7406,0.2291,1.876
+"379","Firearm-Homicide","Male","Del Norte",5,6.809,7.218,2.31,17.6
+"380","Firearm-Homicide","Male","Sonoma",19,1.531,1.646,0.985,2.611
+"381","Firearm-Homicide","Male","San Diego",172,2.073,2.071,1.77,2.413
+"382","Firearm-Homicide","Male","Orange",154,1.952,1.936,1.64,2.274
+"383","Firearm-Homicide","Male","Calaveras",6,5.359,7.29,2.637,17.09
+"384","Firearm-Homicide","Male","Sacramento",278,7.509,7.462,6.603,8.413
+"385","Firearm-Homicide","Male","Kings",24,5.843,5.311,3.369,8.441
+"386","Firearm-Homicide","Male","San Joaquin",256,13.88,13.73,12.07,15.57
+"387","Firearm-Homicide","Male","Amador",2,2.004,1.947,0.1804,9.705
+"388","Firearm-Homicide","Male","Modoc",3,12.71,17.64,3.572,55.01
+"389","Firearm-Homicide","Male","Monterey",166,14.68,14.3,12.2,16.71
+"390","Firearm-Homicide","Male","Marin",10,1.541,1.613,0.7388,3.153
+"391","Firearm-Homicide","Male","Tuolumne",5,3.54,3.812,1.237,9.951
+"392","Firearm-Homicide","Male","Tulare",116,9.882,9.884,8.146,11.95
+"393","Firearm-Homicide","Male","San Benito",4,2.76,2.995,0.7958,8.358
+"394","Firearm-Homicide","Male","Riverside",258,4.387,4.487,3.948,5.084
+"395","Firearm-Homicide","Male","Tehama",6,3.769,4.066,1.448,9.455
+"396","Firearm-Homicide","Male","Santa Barbara",35,3.099,2.971,2.047,4.206
+"397","Firearm-Homicide","Male","Placer",11,1.191,1.169,0.5705,2.182
+"398","Firearm-Homicide","Male","Imperial",9,1.893,1.842,0.8257,3.68
+"399","Firearm-Undermined","Male","CALIFORNIA",56,0.05715,0.057,0.04291,0.07458
+"400","Firearm-Undermined","Male","Tulare",2,0.1704,0.1478,0.0179,0.7103
+"401","Firearm-Undermined","Male","Contra Costa",3,0.1086,0.1011,0.01984,0.3235
+"402","Firearm-Undermined","Male","San Mateo",1,0.05274,0.05868,0.001486,0.3498
+"403","Firearm-Undermined","Male","San Diego",1,0.01205,0.01147,0.0002904,0.07623
+"404","Firearm-Undermined","Male","Riverside",5,0.08501,0.08006,0.02579,0.2014
+"405","Firearm-Undermined","Male","Santa Clara",5,0.1026,0.1006,0.03225,0.2481
+"406","Firearm-Undermined","Male","Kern",3,0.1313,0.151,0.03029,0.5209
+"407","Firearm-Undermined","Male","Los Angeles",7,0.02769,0.0303,0.01206,0.06459
+"408","Firearm-Undermined","Male","Orange",5,0.06337,0.05946,0.01926,0.1468
+"409","Firearm-Undermined","Male","Marin",1,0.1541,0.1959,0.004959,1.19
+"410","Firearm-Undermined","Male","Monterey",1,0.08844,0.1027,0.0026,0.6445
+"411","Firearm-Undermined","Male","Mendocino",2,0.8969,0.7682,0.08303,3.41
+"412","Firearm-Undermined","Male","Solano",1,0.09243,0.08401,0.002127,0.5824
+"413","Firearm-Undermined","Male","San Bernardino",6,0.1123,0.1232,0.04234,0.3016
+"414","Firearm-Undermined","Male","Butte",1,0.1783,0.1302,0.003295,1.137
+"415","Firearm-Undermined","Male","Merced",1,0.1452,0.1091,0.002761,1.042
+"416","Firearm-Undermined","Male","Mono",1,2.729,5.073,0.1284,49.26
+"417","Firearm-Undermined","Male","Nevada",1,0.4098,0.6494,0.01644,3.651
+"418","Firearm-Undermined","Male","Shasta",1,0.2279,0.2441,0.006181,1.653
+"419","Firearm-Undermined","Male","Del Norte",1,1.362,0.9431,0.02388,7.835
+"420","Firearm-Undermined","Male","Sonoma",2,0.1612,0.1668,0.0202,0.6631
+"421","Firearm-Undermined","Male","Sutter",1,0.4082,0.4041,0.01023,2.663
+"422","Firearm-Undermined","Male","San Benito",1,0.6901,0.6082,0.0154,4.7
+"423","Firearm-Undermined","Male","Humboldt",1,0.2929,0.3019,0.007642,1.882
+"424","Firearm-Undermined","Male","Sacramento",2,0.05402,0.05483,0.006639,0.2233
+"425","ALL Firearm","Total","Madera",65,8.321,8.88,6.825,11.4
+"426","ALL Firearm","Total","Colusa",11,9.801,12.58,6.189,23.39
+"427","ALL Firearm","Total","Mono",6,8.667,37.28,12.13,89.52
+"428","ALL Firearm","Total","Tulare",239,10.2,10.71,9.381,12.19
+"429","ALL Firearm","Total","Monterey",263,11.94,11.95,10.53,13.51
+"430","ALL Firearm","Total","Sacramento",739,9.805,9.62,8.93,10.35
+"431","ALL Firearm","Total","Mariposa",20,22.13,28.45,15.77,49.34
+"432","ALL Firearm","Total","San Mateo",161,4.187,5.107,4.327,5.998
+"433","ALL Firearm","Total","Sierra",6,38.16,137.4,37.4,377
+"434","ALL Firearm","Total","Riverside",812,6.868,6.819,6.351,7.315
+"435","ALL Firearm","Total","Lassen",24,15.51,19.48,12.37,29.47
+"436","ALL Firearm","Total","Orange",709,4.458,4.219,3.909,4.548
+"437","ALL Firearm","Total","San Francisco",214,4.913,6.027,5.213,6.945
+"438","ALL Firearm","Total","San Joaquin",438,11.85,11.83,10.74,13.02
+"439","ALL Firearm","Total","Yolo",54,4.986,5.541,4.126,7.327
+"440","ALL Firearm","Total","San Bernardino",953,8.867,9.129,8.549,9.742
+"441","ALL Firearm","Total","Merced",112,8.204,8.969,7.353,10.87
+"442","ALL Firearm","Total","Tuolumne",41,15.08,15.71,10.88,22.39
+"443","ALL Firearm","Total","Del Norte",22,16.23,15.48,9.47,24.39
+"444","ALL Firearm","Total","Amador",35,18.75,21.66,14.43,31.72
+"445","ALL Firearm","Total","Marin",81,6.155,6.328,4.916,8.093
+"446","ALL Firearm","Total","San Luis Obispo",126,9.029,10.13,8.328,12.27
+"447","ALL Firearm","Total","El Dorado",105,11.4,12.8,10.29,15.83
+"448","ALL Firearm","Total","Yuba",58,15.21,20.97,15.85,27.29
+"449","ALL Firearm","Total","Siskiyou",39,17.56,19.35,13.08,28.13
+"450","ALL Firearm","Total","Trinity",25,37.03,41.78,25.68,65.39
+"451","ALL Firearm","Total","San Diego",973,5.895,5.785,5.423,6.167
+"452","ALL Firearm","Total","Kern",559,12.55,12.92,11.85,14.07
+"453","ALL Firearm","Total","Humboldt",119,17.49,22.1,18.18,26.65
+"454","ALL Firearm","Total","Ventura",297,6.946,8.577,7.614,9.639
+"455","ALL Firearm","Total","Inyo",10,10.71,17.87,7.885,37.03
+"456","ALL Firearm","Total","Imperial",37,3.949,4.165,2.911,5.82
+"457","ALL Firearm","Total","Butte",142,12.59,14.94,12.47,17.82
+"458","ALL Firearm","Total","Sonoma",156,6.187,6.835,5.76,8.075
+"459","ALL Firearm","Total","Mendocino",64,14.38,17.32,13.15,22.53
+"460","ALL Firearm","Total","Alameda",619,7.562,7.823,7.214,8.473
+"461","ALL Firearm","Total","Napa",45,6.329,7.16,5.153,9.793
+"462","ALL Firearm","Total","Lake",79,24.24,29.19,22.69,37.18
+"463","ALL Firearm","Total","Santa Barbara",149,6.651,6.836,5.758,8.079
+"464","ALL Firearm","Total","Santa Clara",371,3.839,4.706,4.234,5.217
+"465","ALL Firearm","Total","Solano",258,11.87,12.56,11.04,14.23
+"466","ALL Firearm","Total","Glenn",25,17.19,20.26,12.96,30.77
+"467","ALL Firearm","Total","Sutter",58,11.8,15.24,11.52,19.88
+"468","ALL Firearm","Total","Plumas",18,18.44,20.18,10.89,36.96
+"469","ALL Firearm","Total","Santa Cruz",102,7.384,7.762,6.277,9.528
+"470","ALL Firearm","Total","Tehama",46,14.34,13.38,9.65,18.35
+"471","ALL Firearm","Total","San Benito",20,6.889,9.595,5.805,15.1
+"472","ALL Firearm","Total","CALIFORNIA",14680,7.459,7.303,7.184,7.424
+"473","ALL Firearm","Total","Modoc",8,16.89,40.23,16.76,83.17
+"474","ALL Firearm","Total","Placer",119,6.323,6.009,4.94,7.264
+"475","ALL Firearm","Total","Nevada",70,14.2,14.74,11.1,19.41
+"476","ALL Firearm","Total","Alpine",1,17.39,201.6,5.104,1123
+"477","ALL Firearm","Total","Shasta",146,16.34,18.95,15.87,22.55
+"478","ALL Firearm","Total","Kings",57,7.593,8.509,6.398,11.17
+"479","ALL Firearm","Total","Calaveras",47,20.94,18.84,13.23,26.67
+"480","ALL Firearm","Total","Fresno",437,8.831,8.997,8.159,9.905
+"481","ALL Firearm","Total","Stanislaus",197,7.229,7.441,6.423,8.585
+"482","ALL Firearm","Total","Contra Costa",475,8.407,9.272,8.445,10.16
+"483","ALL Firearm","Total","Los Angeles",3612,7.058,6.911,6.686,7.143
+"484","Firearm-Accident","Total","San Mateo",1,0.026,0.03425,0.0008672,0.1908
+"485","Firearm-Accident","Total","Riverside",16,0.1353,0.1325,0.07548,0.2203
+"486","Firearm-Accident","Total","Placer",1,0.05313,0.03242,0.0008207,0.314
+"487","Firearm-Accident","Total","Monterey",1,0.04541,0.03593,0.0009097,0.2619
+"488","Firearm-Accident","Total","Merced",3,0.2197,0.2167,0.04333,0.7128
+"489","Firearm-Accident","Total","Tulare",2,0.08536,0.07591,0.009193,0.3287
+"490","Firearm-Accident","Total","Stanislaus",2,0.07339,0.07912,0.008858,0.3111
+"491","Firearm-Accident","Total","San Diego",3,0.01818,0.01781,0.003667,0.05585
+"492","Firearm-Accident","Total","Sutter",1,0.2034,0.208,0.005265,1.349
+"493","Firearm-Accident","Total","San Joaquin",9,0.2436,0.2349,0.1064,0.465
+"494","Firearm-Accident","Total","Shasta",1,0.1119,0.125,0.003164,0.8306
+"495","Firearm-Accident","Total","Sacramento",18,0.2388,0.2296,0.1349,0.3701
+"496","Firearm-Accident","Total","CALIFORNIA",158,0.08025,0.07932,0.06733,0.09297
+"497","Firearm-Accident","Total","Colusa",1,0.891,1.014,0.02567,6.267
+"498","Firearm-Accident","Total","Contra Costa",12,0.2124,0.2223,0.1132,0.3971
+"499","Firearm-Accident","Total","Orange",7,0.04402,0.03962,0.0157,0.08635
+"500","Firearm-Accident","Total","San Luis Obispo",1,0.07166,0.1123,0.002844,0.626
+"501","Firearm-Accident","Total","Mendocino",1,0.2247,0.199,0.005039,1.463
+"502","Firearm-Accident","Total","Los Angeles",24,0.0469,0.0452,0.02885,0.06803
+"503","Firearm-Accident","Total","San Benito",1,0.3444,0.3795,0.009608,2.369
+"504","Firearm-Accident","Total","Solano",3,0.1381,0.1247,0.02517,0.4152
+"505","Firearm-Accident","Total","San Bernardino",8,0.07443,0.07976,0.03399,0.1643
+"506","Firearm-Accident","Total","Santa Clara",3,0.03105,0.03383,0.006977,0.09943
+"507","Firearm-Accident","Total","El Dorado",2,0.2171,0.2348,0.01954,1.04
+"508","Firearm-Accident","Total","Mariposa",1,1.106,0.4766,0.01207,8.03
+"509","Firearm-Accident","Total","Butte",4,0.3547,0.3555,0.09454,1.023
+"510","Firearm-Accident","Total","Sonoma",1,0.03966,0.04069,0.00103,0.267
+"511","Firearm-Accident","Total","Trinity",1,1.481,2.278,0.05767,13.57
+"512","Firearm-Accident","Total","Nevada",1,0.2028,0.2835,0.007178,1.745
+"513","Firearm-Accident","Total","Kings",1,0.1332,0.112,0.002834,0.8829
+"514","Firearm-Accident","Total","San Francisco",5,0.1148,0.1098,0.03364,0.3136
+"515","Firearm-Accident","Total","Madera",2,0.256,0.2924,0.03378,1.127
+"516","Firearm-Accident","Total","Fresno",4,0.08083,0.07009,0.019,0.2012
+"517","Firearm-Accident","Total","Siskiyou",1,0.4503,0.7977,0.0202,4.445
+"518","Firearm-Accident","Total","Alameda",7,0.08551,0.08555,0.03431,0.1819
+"519","Firearm-Accident","Total","Kern",3,0.06735,0.05602,0.01155,0.1985
+"520","Firearm-Accident","Total","Santa Barbara",1,0.04464,0.0335,0.0008481,0.2706
+"521","Firearm-Accident","Total","Humboldt",5,0.735,0.8045,0.2584,1.946
+"522","Firearm-Suicide","Total","Sutter",38,7.728,7.674,5.396,10.68
+"523","Firearm-Suicide","Total","San Bernardino",493,4.587,4.863,4.435,5.324
+"524","Firearm-Suicide","Total","Sierra",6,38.16,33.87,9.216,95.98
+"525","Firearm-Suicide","Total","Amador",29,15.54,13.45,8.558,20.75
+"526","Firearm-Suicide","Total","Lassen",19,12.28,12.01,7.167,19.45
+"527","Firearm-Suicide","Total","Imperial",25,2.668,2.816,1.806,4.234
+"528","Firearm-Suicide","Total","Glenn",19,13.07,11.92,7.093,19.29
+"529","Firearm-Suicide","Total","Kern",238,5.343,5.728,5.01,6.529
+"530","Firearm-Suicide","Total","Mendocino",48,10.79,9.905,7.164,13.47
+"531","Firearm-Suicide","Total","Butte",112,9.932,9.019,7.346,11.02
+"532","Firearm-Suicide","Total","CALIFORNIA",7836,3.98,3.784,3.7,3.87
+"533","Firearm-Suicide","Total","Del Norte",15,11.06,8.432,4.61,14.85
+"534","Firearm-Suicide","Total","San Diego",745,4.514,4.372,4.059,4.703
+"535","Firearm-Suicide","Total","Santa Clara",239,2.473,2.324,2.036,2.644
+"536","Firearm-Suicide","Total","Riverside",483,4.085,3.951,3.602,4.329
+"537","Firearm-Suicide","Total","Yolo",44,4.063,4.108,2.956,5.605
+"538","Firearm-Suicide","Total","Contra Costa",193,3.416,3.227,2.779,3.733
+"539","Firearm-Suicide","Total","Solano",125,5.753,5.385,4.462,6.463
+"540","Firearm-Suicide","Total","Colusa",10,8.91,8.862,4.18,17.03
+"541","Firearm-Suicide","Total","San Benito",11,3.789,4.036,1.981,7.452
+"542","Firearm-Suicide","Total","San Joaquin",150,4.06,3.981,3.361,4.692
+"543","Firearm-Suicide","Total","Kings",31,4.13,4.662,3.141,6.719
+"544","Firearm-Suicide","Total","Tulare",103,4.396,4.762,3.877,5.801
+"545","Firearm-Suicide","Total","Napa",38,5.345,4.517,3.148,6.371
+"546","Firearm-Suicide","Total","Placer",101,5.367,4.599,3.716,5.661
+"547","Firearm-Suicide","Total","Mono",2,2.889,3.343,0.2561,31.99
+"548","Firearm-Suicide","Total","Shasta",120,13.43,11.67,9.585,14.16
+"549","Firearm-Suicide","Total","Trinity",15,22.22,20.25,10.35,37.16
+"550","Firearm-Suicide","Total","Ventura",200,4.678,4.365,3.77,5.036
+"551","Firearm-Suicide","Total","Tuolumne",35,12.88,9.957,6.638,14.75
+"552","Firearm-Suicide","Total","Lake",51,15.65,14.72,10.66,20.05
+"553","Firearm-Suicide","Total","Madera",38,4.865,5.029,3.541,6.981
+"554","Firearm-Suicide","Total","Marin",62,4.711,3.497,2.621,4.644
+"555","Firearm-Suicide","Total","San Mateo",110,2.861,2.499,2.041,3.041
+"556","Firearm-Suicide","Total","Santa Barbara",105,4.687,4.393,3.577,5.362
+"557","Firearm-Suicide","Total","Plumas",16,16.39,12.12,6.256,22.93
+"558","Firearm-Suicide","Total","Orange",513,3.226,2.978,2.722,3.254
+"559","Firearm-Suicide","Total","Fresno",181,3.658,3.896,3.34,4.524
+"560","Firearm-Suicide","Total","Inyo",8,8.571,5.816,2.32,13.9
+"561","Firearm-Suicide","Total","Tehama",35,10.91,8.941,6.14,12.88
+"562","Firearm-Suicide","Total","Sonoma",129,5.116,4.232,3.503,5.091
+"563","Firearm-Suicide","Total","Los Angeles",1434,2.802,2.667,2.529,2.811
+"564","Firearm-Suicide","Total","San Luis Obispo",117,8.384,7.244,5.912,8.84
+"565","Firearm-Suicide","Total","El Dorado",87,9.445,8.095,6.366,10.24
+"566","Firearm-Suicide","Total","San Francisco",76,1.745,1.507,1.18,1.929
+"567","Firearm-Suicide","Total","Nevada",63,12.78,10.25,7.612,13.7
+"568","Firearm-Suicide","Total","Stanislaus",113,4.146,4.182,3.435,5.056
+"569","Firearm-Suicide","Total","Calaveras",40,17.82,13.51,9.182,19.89
+"570","Firearm-Suicide","Total","Alpine",1,17.39,32.78,0.83,252.8
+"571","Firearm-Suicide","Total","Santa Cruz",77,5.574,5.365,4.19,6.802
+"572","Firearm-Suicide","Total","Monterey",81,3.678,3.612,2.858,4.517
+"573","Firearm-Suicide","Total","Yuba",39,10.23,10.93,7.722,15.09
+"574","Firearm-Suicide","Total","Merced",34,2.49,2.736,1.884,3.871
+"575","Firearm-Suicide","Total","Alameda",212,2.59,2.407,2.091,2.763
+"576","Firearm-Suicide","Total","Siskiyou",31,13.96,11.04,7.121,16.9
+"577","Firearm-Suicide","Total","Sacramento",396,5.254,5.023,4.533,5.555
+"578","Firearm-Suicide","Total","Modoc",3,6.334,6.626,1.172,23.06
+"579","Firearm-Suicide","Total","Mariposa",18,19.91,16.81,8.943,30.09
+"580","Firearm-Suicide","Total","Humboldt",76,11.17,10.86,8.479,13.76
+"581","Firearm-Homicide","Total","Contra Costa",266,4.708,5.11,4.51,5.77
+"582","Firearm-Homicide","Total","Sutter",18,3.661,3.881,2.285,6.246
+"583","Firearm-Homicide","Total","CALIFORNIA",6621,3.363,3.405,3.323,3.489
+"584","Firearm-Homicide","Total","Lake",28,8.592,10.22,6.658,15.16
+"585","Firearm-Homicide","Total","Yolo",10,0.9234,1.049,0.493,1.993
+"586","Firearm-Homicide","Total","San Bernardino",444,4.131,4.111,3.733,4.521
+"587","Firearm-Homicide","Total","Kern",314,7.05,7.031,6.263,7.878
+"588","Firearm-Homicide","Total","Santa Barbara",43,1.919,1.937,1.388,2.649
+"589","Firearm-Homicide","Total","Shasta",24,2.687,2.958,1.873,4.505
+"590","Firearm-Homicide","Total","Kings",25,3.33,3.147,2.014,4.787
+"591","Firearm-Homicide","Total","Amador",5,2.679,3.273,0.9827,8.485
+"592","Firearm-Homicide","Total","Placer",17,0.9033,0.962,0.5517,1.582
+"593","Firearm-Homicide","Total","Trinity",9,13.33,15.71,6.751,32.18
+"594","Firearm-Homicide","Total","Fresno",251,5.072,5.014,4.403,5.694
+"595","Firearm-Homicide","Total","Marin",18,1.368,1.371,0.775,2.291
+"596","Firearm-Homicide","Total","Tuolumne",6,2.207,2.377,0.8483,5.663
+"597","Firearm-Homicide","Total","Santa Clara",122,1.263,1.272,1.054,1.522
+"598","Firearm-Homicide","Total","Riverside",306,2.588,2.679,2.383,3.004
+"599","Firearm-Homicide","Total","Mariposa",1,1.106,1.199,0.03035,9.307
+"600","Firearm-Homicide","Total","Modoc",5,10.56,13.34,4.238,33.05
+"601","Firearm-Homicide","Total","Merced",73,5.347,5.235,4.079,6.654
+"602","Firearm-Homicide","Total","Glenn",6,4.126,3.992,1.407,9.43
+"603","Firearm-Homicide","Total","Lassen",5,3.231,3.287,1.028,8.504
+"604","Firearm-Homicide","Total","Tehama",11,3.429,3.513,1.69,6.675
+"605","Firearm-Homicide","Total","Inyo",2,2.143,2.032,0.1809,9.457
+"606","Firearm-Homicide","Total","Ventura",97,2.269,2.37,1.918,2.904
+"607","Firearm-Homicide","Total","Los Angeles",2146,4.194,4.182,4.006,4.365
+"608","Firearm-Homicide","Total","Del Norte",6,4.426,5.268,1.918,11.74
+"609","Firearm-Homicide","Total","Mendocino",13,2.922,3.106,1.628,5.485
+"610","Firearm-Homicide","Total","Siskiyou",7,3.152,3.352,1.167,7.91
+"611","Firearm-Homicide","Total","San Francisco",133,3.054,3.116,2.585,3.747
+"612","Firearm-Homicide","Total","San Mateo",48,1.248,1.414,1.039,1.885
+"613","Firearm-Homicide","Total","Plumas",2,2.049,0.997,0.1207,8.162
+"614","Firearm-Homicide","Total","Nevada",5,1.014,0.704,0.1629,2.267
+"615","Firearm-Homicide","Total","Calaveras",7,3.119,4.024,1.538,9.074
+"616","Firearm-Homicide","Total","San Diego",224,1.357,1.389,1.212,1.587
+"617","Firearm-Homicide","Total","Solano",129,5.937,6.134,5.11,7.319
+"618","Firearm-Homicide","Total","Yuba",19,4.983,5.538,3.318,8.753
+"619","Firearm-Homicide","Total","San Joaquin",279,7.551,7.618,6.739,8.588
+"620","Firearm-Homicide","Total","Imperial",12,1.281,1.349,0.6863,2.435
+"621","Firearm-Homicide","Total","Humboldt",37,5.439,5.526,3.847,7.736
+"622","Firearm-Homicide","Total","San Benito",7,2.411,2.674,1.059,5.702
+"623","Firearm-Homicide","Total","Napa",7,0.9846,1.106,0.4398,2.353
+"624","Firearm-Homicide","Total","Orange",184,1.157,1.171,1.006,1.357
+"625","Firearm-Homicide","Total","Monterey",180,8.174,8.243,7.075,9.561
+"626","Firearm-Homicide","Total","Stanislaus",82,3.009,3.179,2.521,3.968
+"627","Firearm-Homicide","Total","Butte",25,2.217,2.293,1.461,3.485
+"628","Firearm-Homicide","Total","Madera",25,3.201,3.559,2.285,5.322
+"629","Firearm-Homicide","Total","Mono",3,4.333,5.067,0.8502,33.71
+"630","Firearm-Homicide","Total","San Luis Obispo",8,0.5733,0.5987,0.2412,1.284
+"631","Firearm-Homicide","Total","Sacramento",323,4.285,4.34,3.876,4.848
+"632","Firearm-Homicide","Total","Santa Cruz",25,1.81,1.86,1.187,2.813
+"633","Firearm-Homicide","Total","El Dorado",16,1.737,1.719,0.9335,2.983
+"634","Firearm-Homicide","Total","Alameda",400,4.886,4.789,4.329,5.289
+"635","Firearm-Homicide","Total","Tulare",132,5.634,5.798,4.84,6.907
+"636","Firearm-Homicide","Total","Sonoma",23,0.9122,0.9848,0.6187,1.503
+"637","Firearm-Undermined","Total","Los Angeles",8,0.01563,0.01664,0.007145,0.03324
+"638","Firearm-Undermined","Total","Fresno",1,0.02021,0.01705,0.0004317,0.1249
+"639","Firearm-Undermined","Total","Sutter",1,0.2034,0.208,0.005265,1.349
+"640","Firearm-Undermined","Total","CALIFORNIA",70,0.03555,0.03476,0.027,0.0442
+"641","Firearm-Undermined","Total","Contra Costa",4,0.0708,0.07092,0.01861,0.1926
+"642","Firearm-Undermined","Total","San Diego",1,0.006059,0.00596,0.0001509,0.03787
+"643","Firearm-Undermined","Total","Amador",1,0.5358,0.2848,0.007211,3.861
+"644","Firearm-Undermined","Total","Shasta",1,0.1119,0.125,0.003164,0.8306
+"645","Firearm-Undermined","Total","Kern",4,0.0898,0.1063,0.02859,0.286
+"646","Firearm-Undermined","Total","San Bernardino",8,0.07443,0.07586,0.03207,0.158
+"647","Firearm-Undermined","Total","Mono",1,1.444,2.576,0.06521,31.38
+"648","Firearm-Undermined","Total","San Benito",1,0.3444,0.2973,0.007528,2.17
+"649","Firearm-Undermined","Total","Mendocino",2,0.4495,0.3918,0.04054,1.764
+"650","Firearm-Undermined","Total","Santa Clara",7,0.07244,0.06575,0.02594,0.1405
+"651","Firearm-Undermined","Total","Monterey",1,0.04541,0.05521,0.001398,0.3109
+"652","Firearm-Undermined","Total","Sonoma",3,0.119,0.1097,0.02105,0.3681
+"653","Firearm-Undermined","Total","Solano",1,0.04602,0.04385,0.00111,0.298
+"654","Firearm-Undermined","Total","Sacramento",2,0.02653,0.02732,0.003309,0.1053
+"655","Firearm-Undermined","Total","Riverside",7,0.05921,0.05638,0.0225,0.1227
+"656","Firearm-Undermined","Total","Humboldt",1,0.147,0.1573,0.003981,0.976
+"657","Firearm-Undermined","Total","San Mateo",2,0.05201,0.06375,0.007654,0.2364
+"658","Firearm-Undermined","Total","Merced",2,0.1465,0.1605,0.01696,0.6503
+"659","Firearm-Undermined","Total","Butte",1,0.08868,0.06205,0.001571,0.5803
+"660","Firearm-Undermined","Total","Orange",5,0.03144,0.0296,0.009557,0.07323
+"661","Firearm-Undermined","Total","Marin",1,0.07598,0.1006,0.002547,0.6075
+"662","Firearm-Undermined","Total","Tulare",2,0.08536,0.07591,0.009193,0.3287
+"663","Firearm-Undermined","Total","Del Norte",1,0.7377,0.4688,0.01187,4.298
+"664","Firearm-Undermined","Total","Nevada",1,0.2028,0.3378,0.008552,1.891

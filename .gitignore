@@ -6,7 +6,6 @@
 
 myCBD/myData/real
 myCBD/myData/nosupression
-myAnalyses
 
 myCBD/rsconnect/*.*
 myUpstream/upstreamInfo/census.api.key.txt
