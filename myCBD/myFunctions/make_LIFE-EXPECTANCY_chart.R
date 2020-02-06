@@ -37,8 +37,8 @@ lifeTableSet <- bind_rows(lifeTableCounty, lifeTableState) %>%
 
 # FIX MIN and MAX Year in global or other life tables function eventaully
 
-minYear <- min(lifeTableSet$year)
-maxYear <- max(lifeTableSet$year)
+minYear_LT <- min(lifeTableSet$year)
+maxYear_LT <- max(lifeTableSet$year)
 
 
 LEtrend <- function(myLHJ="CALIFORNIA",myCI=FALSE) {
@@ -50,10 +50,10 @@ dat.1 <- lifeTableSet %>% filter(county==myLHJ)
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
 
-myTit <- paste0("Trend in Life Expectancy, ",myLHJ,", ",minYear,"-",maxYear)
+myTit <- paste0("Trend in Life Expectancy, ",myLHJ,", ",minYear_LT,"-",maxYear_LT)
 myTit <-  wrap.labels(myTit,myWrapNumber)
 
-myBreaks <- minYear:maxYear
+myBreaks <- minYear_LT:maxYear_LT
 myLabels <- myBreaks
 
 # USE meanex
@@ -63,12 +63,12 @@ myLabels <- myBreaks
 tplot<-
  
   
-   ggplot(data=dat.1, aes(x=year, y=meanex, group=sex,color=sex)) +
+   ggplot(data=dat.1, aes(x=year, y=ex, group=sex,color=sex)) +
                geom_line(size=myLineSize) +
   geom_point(shape = myPointShape,size=myPointSize)  +
        ylim(70, 90) +
-       geom_line(data=dat.1,aes(x=year, y=`ciex.97.5%`, group=sex,color=sex)) +
-      geom_line(data=dat.1,aes(x=year, y=`ciex.2.5%`, group=sex,color=sex)) +
+       geom_line(data=dat.1,aes(x=year, y=`ciex_97.5`, group=sex,color=sex)) +
+      geom_line(data=dat.1,aes(x=year, y=`ciex_2.5`, group=sex,color=sex)) +
         scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,2),labels=myLabels) +
   #  scale_y_continuous(limits = c(0, NA)) +
     scale_colour_discrete(guide = 'none') +   # removed legend

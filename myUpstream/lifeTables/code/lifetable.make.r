@@ -24,29 +24,33 @@ doMSSA     <- FALSE
 ## 1.3  paths
 myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
-mySecure <- "e:/0.Secure.Data/myData"
+mySecure <- "H:/0.Secure.Data/myData"
 upPlace <- paste0(myDrive,"/myUpstream") 
 LTplace <- paste0(upPlace,"/lifeTables/dataOut")
 
 ## 1.4  links
+
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
 .nxtract	<- paste0(LTplace,"/nxTract.rds") # input deaths by tract
 .nxmssa		<- paste0(LTplace,"/nxMSSA.rds") # input deaths by mssa
 .nxcounty	<- paste0(LTplace,"/nxCounty.rds") # input deaths by county
 .nxstate	<- paste0(LTplace,"/nxState.rds") # input deaths by state
+
 if (whichData=="fake") {
   .dxtract	<- paste0(LTplace,"/dxTract.rds") # input deaths by tract
   .dxmssa		<- paste0(LTplace,"/dxMSSA.rds") # input deaths by mssa
   .dxcounty	<- paste0(LTplace,"/dxCounty.rds") # input deaths by county
   .dxstate	<- paste0(LTplace,"/dxState.rds") # input deaths by state
 }
+
 if (whichData=="real") {
   .dxtract	<- paste0(mySecure,"/dxTract.rds") # input deaths by tract
   .dxmssa		<- paste0(mySecure,"/dxMSSA.rds") # input deaths by mssa
   .dxcounty	<- paste0(mySecure,"/dxCounty.rds") # input deaths by county
   .dxstate	<- paste0(mySecure,"/dxState.rds") # input deaths by state
 } 
+
 if (whichData=="dof") {
   .dxtract<-NULL 
   .dxmssa<-NULL
@@ -69,6 +73,10 @@ setwd(myDrive)
 .nxstate	<- readRDS(.nxstate)	
 
 ## 2.2  check data completeness (against 'range')
+
+if  (FALSE %in% (range %in% unique(.dxcounty$year))) { stop("Deaths are missing for years specified in 'range' argument") }
+if  (FALSE %in% (range %in% unique(.nxcounty$year))) { stop("Deaths are missing for years specified in 'range' argument") }
+
 if  (FALSE %in% (range %in% unique(.dxtract$year))) { stop("Deaths are missing for years specified in 'range' argument") }
 if  (FALSE %in% (range %in% unique(.nxtract$year))) { stop("Population are missing for years specified in 'range' argument") }
 
@@ -595,11 +603,13 @@ if (doCounty) {
 ## 6	EXPORT DATA	----------------------------------------------------------
 
 ## 6.1  export datasets
+
+LTplace <- paste0("myPlace/Data") # this changes "Ltplace above"
+
 if(doTract)  saveRDS(ltci.tract,  file=paste0(LTplace,"/LTciTract.rds"))  # GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 if(doMSSA)   saveRDS(ltci.mssa,   file=paste0(LTplace,"/LTciMSSA.rds"))		# comID sex (char) x (age0) ex meanex ciex.low ciex.high
 if(doCounty) saveRDS(ltci.county, file=paste0(LTplace,"/LTciCounty.rds"))	# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
 if(doCounty) saveRDS(ltci.state,  file=paste0(LTplace,"/LTciState.rds"))	# GEOID sex (char) x (age0) ex meanex ciex.low ciex.high
-
 
 ## 6.2 compare with results from "real"
 if (whichData=="fake" & 1==2) {

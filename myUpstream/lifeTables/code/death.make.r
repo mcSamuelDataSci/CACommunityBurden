@@ -13,13 +13,14 @@ lapply(.pkg, library, character.only=TRUE)
 whichData     <- "real"   # "real" or "fake" or "dof"
 
 ## 1.3 paths 
-myDrive <- getwd()
-myPlace <- paste0(myDrive,"/myCBD") 
-upPlace <- paste0(myDrive,"/myUpstream") 
+myDrive    <- getwd()
+myPlace    <- paste0(myDrive,"/myCBD") 
+upPlace    <- paste0(myDrive,"/myUpstream") 
+securePath <- "h:/0.Secure.Data/myData/"
 
 ## 1.4 links
 if (whichData=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") # raw file with deaths
-if (whichData=="real") .deaths		<- "e:/0.Secure.Data/myData/cbdDat0FULL.R" 
+if (whichData=="real") .deaths		<- paste0(securePath,"cbdDat0FULL.R")
 if (whichData=="dof")  .deaths 		<- "c:/users/fieshary/desktop/dofDat0FULL.dta"
 .cbdlink	<- paste0(myPlace,"/myInfo/Tract to Community Linkage.csv") # map tract level GEOID to comID
 .countylink <- paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx") # map county names to codes
@@ -141,7 +142,7 @@ if (whichData == "fake"  ) {
   saveRDS(dx.state,  file=paste0(upPlace,.midPath,"dxState.rds"))   # output deaths by state
 }
 if (whichData == "real"  ) {
-  .midPath <- "e:/0.Secure.Data/myData/"
+  .midPath <- securePath 
   saveRDS(dx.tract,  file=paste0(.midPath,"dxTract.rds"))   # output deaths by tract
   saveRDS(dx.mssa,   file=paste0(.midPath,"dxMSSA.rds"))    # output deaths by mssa
   saveRDS(dx.county, file=paste0(.midPath,"dxCounty.rds"))  # output deaths by county

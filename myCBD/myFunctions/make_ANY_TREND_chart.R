@@ -6,8 +6,8 @@ if(1==2){
   myYearGrouping ="One"
 }
 
-myCex <- 1.6
-myCol <- "blue"  
+
+
 
 
 trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE, myMultiRace=FALSE) {
@@ -15,16 +15,14 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   # ----- sexTrendTab ---------------------------------------------------------
   
   
-  if (myTab %in% c("sexTrendTab", "educationTrendTab", "lifeExpectancyTab") )  {
-    
-    
-    
+    if (myTab == "sexTrendTab") {
+      
     myVARIABLE <- "sex"
     
     if (myYearGrouping == "One") {
       
       inDat    <- datCounty  
-      myBreaks <- 2000:maxYear
+      myBreaks <- minYear:maxYear
       myLabels <- myBreaks
     }
     
@@ -60,7 +58,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
                       " of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
-                      " in ",myLHJ,", 2000 to ",maxYear)
+                      " in ",myLHJ,", ",myLabels[1]," to ",myLabels[length(myLabels)])
     
     myLineLabel <- myVARIABLE
     
@@ -74,15 +72,12 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     tabDat <- dat.1 %>% select(-varsOut)
     
      
-    
-    
-    
   }
   
   
   # ----- ageTrendTab -----
   
-  else if (myTab == "ageTrendTab") {
+  if (myTab == "ageTrendTab") {
     
      myVARIABLE <- "ageG"
     
@@ -90,24 +85,29 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
       if(myMeasure == "YLL.adj.rate")  myMeasure <- "YLLper"   ## ADD MESSAGE ABOUT THIS
       if(myMeasure == "aRate")         myMeasure <- "cDeathRate"
       
-      minYear <- 2000
-      maxYear <- 2017
-      
-      
+     
       dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,CAUSE == myCause, sex=="Total") 
       
       if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
       
-      myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
-                        " of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
-                        " in ",myLHJ," by AGE GROUP, ",minYear," to ",maxYear)
-      myTitle <-  wrap.labels(myTitle,myWrapNumber)
+      
       
       yRange     <- chartYearMap$yearGroup3
       yMid       <- chartYearMap$midYear3
       myLabels   <- yRange
       myBreaks   <- yMid
       dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
+   
+      
+      yearBit <- dat.1 %>% filter(!is.na(year)) %>% pull(yearG3)  
+      yearBit <- paste(min(yearBit),"to",max(yearBit))
+      
+      
+      
+         myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
+                        " of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
+                        " in ",myLHJ," by AGE GROUP, ",yearBit)
+      myTitle <-  wrap.labels(myTitle,myWrapNumber)
       
       myLineLabel <- myVARIABLE
       
@@ -122,26 +122,17 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   
   # ----- raceTrendTab -----
   
-  else if (myTab == "raceTrendTab") {
+  if (myTab == "raceTrendTab") {
     
     myVARIABLE <- "raceCode"
     
-    
-    minYear <- 2000
-    maxYear <- 2017
-    
+   
     dat.1 <- filter(datCounty_RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
       mutate(raceName = raceNameFull[match(raceCode,raceCodeFull)] )
     
     if (!myMultiRace) dat.1 <- filter(dat.1,raceCode != "Multi-NH")
     
     if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
-    
-    myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
-                      " of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
-                      " in ",myLHJ," by RACE/ETHNIC Group*, ",minYear," to ",maxYear)
-    myTitle <-  wrap.labels(myTitle,myWrapNumber)
-    
     
     yRange     <- chartYearMap$yearGroup3
     yMid       <- chartYearMap$midYear3
@@ -157,11 +148,20 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     tabDat <- dat.1
     
     
+    yearBit <- dat.1 %>% filter(!is.na(year)) %>% pull(yearG3)  
+    yearBit <- paste(min(yearBit),"to",max(yearBit))
+    
+    
+    myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
+                      " of ",fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
+                      " in ",myLHJ," by RACE/ETHNIC Group*, ",yearBit)
+    myTitle <-  wrap.labels(myTitle,myWrapNumber)
+    
     
   }
   
   # ----- educationTrendTab -----
-  else if (myTab == "educationTrendTab") {
+  if (myTab == "educationTrendTab") {
     
   }
   
@@ -177,11 +177,12 @@ tplot <-  ggplot(data=dat.1,
           
           geom_line(size=myLineSize)  +
           geom_point(shape = myPointShape,size=myPointSize)  +
-  
+          #geom_dl(method = list(box.color = NA, "angled.boxes")) +
           scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
           scale_y_continuous(limits = c(0, NA)) +
             
           scale_colour_discrete(guide = 'none') +   # removed legend
+           
           geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
           geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x - 0.2), "first.points",cex=myCex1,'first.bumpup' ,font="bold"))  +
   
