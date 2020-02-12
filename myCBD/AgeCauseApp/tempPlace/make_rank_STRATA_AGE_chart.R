@@ -1,6 +1,7 @@
 rankStrataAge <- function(myAgeG = "75 - 84",
                          myCounty = "Los Angeles",
                          myData = "Deaths",
+                         myScale  = "fixed",
                          myMeasure = "n_hosp",
                          mySex = "Total",
                          myN = 10,
@@ -13,10 +14,29 @@ rankStrataAge <- function(myAgeG = "75 - 84",
       myMeasure = "Ndeaths"
     
       tLab  <- "Deaths"
+      
+      
+      temp <- 
+      datCounty_AGE_3year  %>%  mutate(t.cause = str_sub(CAUSE,1,1),
+                         topLev = ifelse(t.cause== "A","Communicable",
+                                  ifelse(t.cause== "B","Cancer",
+                                  ifelse(t.cause== "C","Cardiovascular", 
+                                  ifelse(t.cause== "D","Other Chronic",  
+                                  ifelse(t.cause== "E","Injury","JUNK"
+                                                    )))))
+        )     %>%
+        left_join(fullCauseList,by=c("CAUSE" = "LABEL")) 
+      
+      
+      topLevColors        <- brewer.pal(n = 6, name = "Dark2")
+      names(topLevColors) <- unique(temp$topLev) 
+      
+      
+      
      
-      t.dataSet  <- datCounty_AGE_3year %>% 
+      t.dataSet  <- temp %>% 
         filter(yearG3 == myYearG3, Level == "lev2") %>%
-        select(sex,ageG,CAUSE,county,measure=myMeasure) %>%
+        select(sex,ageG,CAUSE,county,measure=myMeasure,topLev) %>%
         mutate(ageG = ifelse(ageG == "5 - 14"," 5 - 14",ageG),
                ageG = ifelse(ageG == "0 - 4"," 0 - 4",ageG),
                ageG = ifelse(ageG == "85 - 999","85+",ageG),) %>%
@@ -86,8 +106,29 @@ rankStrataAge <- function(myAgeG = "75 - 84",
   
   
   
-  ageCausePlot  <-   ggplot(plot_data.2, aes(x = ccsName, y = measure)) +
-                     geom_bar(stat = "identity", fill = "blue") +
+  
+  if(myData == "Deaths") {
+  ageCausePlot  <-   ggplot(plot_data.2, aes(x = ccsName, y = measure, fill=topLev)) +
+    geom_bar(stat = "identity") +
+    coord_flip() + 
+    facet_grid(. ~ ageG, scales = myScale, labeller=labeller(type = label_wrap_gen(5))) +
+    #  facet_grid(. ~ ageG, scales = "free_x"
+    theme_bw() + 
+    scale_y_continuous(labels = scales::comma) + # numbers shown with commas
+    scale_x_discrete(labels = scales::wrap_format(50)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+    labs(title = myTitle,x ="condition",y = paste("Number of",tLab)) +
+    theme(plot.title = element_text(size=22, color="blue"),
+          axis.text.x = element_text(angle = 90, hjust = 1,size = myTextSize-6),
+          axis.text.y = element_text(size = myTextSize), #increases size of disease condition labels
+          strip.text.x = element_text(size = myTextSize),
+          axis.title=element_text(size=myTextSize,face="bold"),
+          legend.text = element_text(size=myTextSize,face="bold"),
+          legend.title = element_blank() ) +  scale_fill_manual(values = topLevColors) 
+            } else {
+             
+            
+             ageCausePlot  <-   ggplot(plot_data.2, aes(x = ccsName, y = measure)) +
+                     geom_bar(stat = "identity") +
                      coord_flip() + 
                      facet_grid(. ~ ageG, labeller=labeller(type = label_wrap_gen(5))) +
                   #  facet_grid(. ~ ageG, scales = "free_x"
@@ -99,7 +140,20 @@ rankStrataAge <- function(myAgeG = "75 - 84",
                      axis.text.x = element_text(angle = 90, hjust = 1,size = myTextSize-6),
                      axis.text.y = element_text(size = myTextSize), #increases size of disease condition labels
                      strip.text.x = element_text(size = myTextSize),
-                     axis.title=element_text(size=myTextSize,face="bold"))
+                     axis.title=element_text(size=myTextSize,face="bold")) 
+  
+  
+  
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
   
   ageCausePlot
   

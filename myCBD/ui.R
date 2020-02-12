@@ -192,7 +192,11 @@ shinyUI(
                            
                            helpText(h4("Welcome to the Preview Version of the CCB!"),style=paste0("color:", GREEN),align="left"), br(),
                            
+                           h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/","SEE MULTIPLE MEASURE OF HEALTH IN YOUR COUNTY'")), br(),
+                           
                            h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
+                           
+                           
                            
                            actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
                            h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),

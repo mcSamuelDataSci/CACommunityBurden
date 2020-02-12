@@ -7,11 +7,14 @@ library(fs)
 library(stringr)
 library(ggplot2)
 library(sqldf)
+library(RColorBrewer)
 
 myMeasure = "n_hosp"
 mySex     = "Total"
 myN       = 10
 myYearG3 = "2016-2018"
+
+
 
 myTextSize = 18
 
@@ -38,6 +41,9 @@ fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),] %>% arrange(LABEL)  %>%
 ageList    <- unique(oshpd_PDD_AGE$ageG) 
 raceList   <- unique(datCounty_RE$raceCode)
 countyList <- unique(datCounty_AGE_3year$county)
+
+
+
 
 
 source(path(tempPlace, "make_rank_STRATA_AGE_chart.R"))

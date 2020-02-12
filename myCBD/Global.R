@@ -304,7 +304,7 @@ names(MDCDRG_Dropdown) <- MDC_DRGNames
 
 
 
-fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly")] %>% arrange(LABEL)
+fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("LABEL","causeList","nameOnly","shortName")] %>% arrange(LABEL)
 fullList          <- fullCauseList[,"LABEL"]
 names(fullList)   <- fullCauseList[,"causeList" ]
 

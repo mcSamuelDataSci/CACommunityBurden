@@ -194,8 +194,9 @@ tplot <-  ggplot(data=dat.1,
             base_size   = myAxisSize) +
           theme(
             plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-            axis.title  = element_text(face="bold"),
-            axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)
+            axis.title  = element_text(face="bold",size=myTextSize3),
+            axis.text   = element_text(size=myTextSize2),
+            axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1,)
             ) 
 
  list(plot=tplot,data= tabDat)

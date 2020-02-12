@@ -34,17 +34,17 @@
 
 #### ====================================================================================================
 
-p1 <- ggplot(data=dat.1, aes(x=year, y=aRate, group=raceCode, color=raceCode)) +
-          geom_line(size=myLineSize)  +
-          scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
-          scale_y_continuous(limits = c(0, NA)) +
-          scale_colour_discrete(guide = 'none') +   # removed legend
-          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
-          labs(title = "(age adjusted) All-Cause Mortailiy Rate by Race/Ethnicity and Year Group", y = "Rate") +
-          theme_bw(base_size   = myAxisSize) +
-          theme( plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-                 axis.title  = element_text(face="bold"),
-                 axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
+# p1 <- ggplot(data=dat.1, aes(x=year, y=aRate, group=raceCode, color=raceCode)) +
+#           geom_line(size=myLineSize)  +
+#           scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
+#           scale_y_continuous(limits = c(0, NA)) +
+#           scale_colour_discrete(guide = 'none') +   # removed legend
+#           geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
+#           labs(title = "(age adjusted) All-Cause Mortailiy Rate by Race/Ethnicity and Year Group", y = "Rate") +
+#           theme_bw(base_size   = myAxisSize) +
+#           theme( plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+#                  axis.title  = element_text(face="bold"),
+#                  axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) 
 
 
 dat.2 <- filter(dat.1, raceCode %in% c("Black-NH","White-NH")) 
@@ -80,18 +80,18 @@ p3 <- ggplot(data=dat.3, aes(x=year, y=bwRR)) +
          axis.title  = element_text(face="bold"),
          axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)  ) 
 
-p4 <- ggplot(data=dat.3, aes(x=year, y=bwRDif)) +
-  geom_line(size=myLineSize,color="blue")  +
-  scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
-  scale_y_continuous(limits = c(NA, NA)) +
-    scale_colour_discrete(guide = 'none') +   # removed legend
-  geom_dl(aes(label = "Rate Difference"), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
-  labs(title = "Black: White Rate DIFFERENCE") +
-  theme_bw( base_size   = myAxisSize) +
-  theme(
-    plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-    axis.title  = element_text(face="bold"),
-    axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)  ) 
+# p4 <- ggplot(data=dat.3, aes(x=year, y=bwRDif)) +
+#   geom_line(size=myLineSize,color="blue")  +
+#   scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
+#   scale_y_continuous(limits = c(NA, NA)) +
+#     scale_colour_discrete(guide = 'none') +   # removed legend
+#   geom_dl(aes(label = "Rate Difference"), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
+#   labs(title = "Black: White Rate DIFFERENCE") +
+#   theme_bw( base_size   = myAxisSize) +
+#   theme(
+#     plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+#     axis.title  = element_text(face="bold"),
+#     axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)  ) 
 
 
 
@@ -107,18 +107,18 @@ p5 <- ggplot(data=dat.3, aes(x=year, y=bwRR)) +
          axis.title  = element_text(face="bold"),
          axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)  ) 
 
-p6 <- ggplot(data=dat.3, aes(x=year, y=bwRDif)) +
-  geom_line(size=myLineSize,color="blue")  +
-  scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
-  scale_y_continuous(limits = c(0, 300)) +
-  scale_colour_discrete(guide = 'none') +   # removed legend
-  geom_dl(aes(label = "Rate Difference"), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
-  labs(title = "Black: White Rate DIFFERENCE") +
-  theme_bw( base_size   = myAxisSize) +
-  theme(
-    plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
-    axis.title  = element_text(face="bold"),
-    axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)  ) 
+# p6 <- ggplot(data=dat.3, aes(x=year, y=bwRDif)) +
+#   geom_line(size=myLineSize,color="blue")  +
+#   scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,expand=c(0,3),labels=myLabels) +
+#   scale_y_continuous(limits = c(0, 300)) +
+#   scale_colour_discrete(guide = 'none') +   # removed legend
+#   geom_dl(aes(label = "Rate Difference"), method = list(dl.trans(x = x + 0.2), "last.points", cex=myCex1, 'last.bumpup',font="bold")) +
+#   labs(title = "Black: White Rate DIFFERENCE") +
+#   theme_bw( base_size   = myAxisSize) +
+#   theme(
+#     plot.title  = element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
+#     axis.title  = element_text(face="bold"),
+#     axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)  ) 
 
 
 
@@ -126,7 +126,7 @@ p6 <- ggplot(data=dat.3, aes(x=year, y=bwRDif)) +
 
 
 
-junk <- plot_grid(p1,p2,p3,p4,p5,p6,ncol=2)
+junk <- plot_grid(p2,p3,p5,ncol=2)
 
 
 

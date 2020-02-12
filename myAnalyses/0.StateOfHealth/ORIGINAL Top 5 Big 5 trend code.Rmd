@@ -1,0 +1,83 @@
+
+
+
+## TRENDS IN TOP FIVE FOR THE BIG FIVE
+
+These next five charts show, within each of the five top level groupings (Communicable..., cancer, cardiovascular, other chronic, and injury) the trend (number of deaths and age-adjusted rate) for the highest ranking five conditions 
+
+
+
+
+
+```{r}
+juliePlot <- function(two=TRUE) {
+
+tempCause <- t.dat.0  %>% filter(Level=="lev2",topLev == topTEMP) %>%  filter(CAUSE != "Z") %>%
+                        arrange(-Ndeaths) %>%
+                        slice(1:topFive) %>% pull(nameOnly)
+plotDat <- filter(t.dat.00, nameOnly %in% tempCause)
+
+pA <- ggplot(plotDat,aes(x=year, y = Ndeaths, color=nameOnly) )  + 
+                 geom_line(size=2) +
+                 labs(y="Number of Deaths", color = "Cause") +
+                 scale_y_continuous(label=comma)
+
+if(two){
+pB <- ggplot(plotDat,aes(x=year, y = aRate, color=nameOnly) )  + 
+                 geom_line(size=2) +
+                 labs(y="adjusted Rate", color = "Cause")+
+                 scale_y_continuous(label=comma)
+
+pA <- cowplot::plot_grid(pA,pB,ncol=1,rel_heights = c(1,1))
+
+}
+
+pA
+
+}
+
+topTEMP <- "Communicable"
+
+
+```
+
+
+## Top `r topTEMP` by Year, 2001-2018
+```{r}
+
+
+juliePlot()
+topTEMP <- "Cancer"
+
+```
+
+
+
+## Top `r topTEMP` by Year, 2001-2018
+
+```{r}
+juliePlot()
+topTEMP <- "Cardiovascular"
+```
+
+
+## Top `r topTEMP` by Year, 2001-2018
+```{r}
+juliePlot()
+topTEMP <- "Other Chronic"
+```
+
+
+## Top `r topTEMP` by Year, 2001-2018
+```{r}
+juliePlot()
+topTEMP <- "Injury"
+```
+
+
+## Top `r topTEMP` by Year, 2001-2018
+```{r}
+juliePlot()
+```
+
+
