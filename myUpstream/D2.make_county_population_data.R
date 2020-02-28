@@ -36,11 +36,20 @@ aU      <- c(-1,ageMap$uAge)
 # === California DEPARTMENT OF FINANCE DATA ==========================================================================================
 
 
-temp <- read_csv("F:/0.CBD.Other/Resources/populationData/DOF/P3_complete.csv")
+# temp <- read_csv("F:/0.CBD.Other/Resources/populationData/DOF/P3_complete.csv")
 # http://www.dof.ca.gov/Forecasting/Demographics/Projections/
 # http://www.dof.ca.gov/Forecasting/Demographics/Projections/P3_Dictionary.txt
 
-tDatDOF  <- read_csv("https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv",col_types="_ciiiii") 
+# tDatDOF  <- read_csv("https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv",col_types="_ciiiii") 
+
+
+# http://www.dof.ca.gov/Forecasting/Demographics/Projections/
+
+
+tDatDOF <- read_csv("F:/0.CBD.Other/Resources/populationData/DOF/2c217b79-4625-4ab2-86b3-6fc5d66f0409.csv") %>%
+              select(-fips)
+
+
 
 tDat     <- tDatDOF  %>% gather(key="sex",value="pop",-county,-year,-age) %>%
                          filter(year %in% 2000:2018)
@@ -62,6 +71,13 @@ popCountytemp  <- tDat %>% group_by(year, county,sex     ) %>%  summarize(pop  =
 popCounty      <- bind_rows(popCounty,popCountytemp) %>% ungroup()
                             
                     
+tDat65           <- filter(tDat, age < 65)
+popCounty65      <- tDat65 %>% group_by(year, county,sex,ageG) %>%  summarize(pop  = sum(pop)) 
+popCountytemp65  <- tDat65 %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageG = "Total")
+popCounty65      <- bind_rows(popCounty65,popCountytemp65) %>% ungroup()
+
+
+
 # == CDPH DIVISION OF COMMINIABLE DISEASE CONTROL DATA ================================================================================
 
 
@@ -102,17 +118,27 @@ tDat     <-  tDat %>%  mutate( raceCode   = vLab[match(raceE,rCode)])
 
 yearMap   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx")))
 tDat      <- tDat %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
-                               
+                     
+
+
 popCounty_RE_3year <- tDat %>% group_by(yearG3, county, sex, ageG, raceCode) %>% 
                          summarize(pop  = sum(pop)) %>%
                          ungroup()
 
 
-
+tDat65 <- filter(tDat, age < 65)
+popCounty65_RE_3year <- tDat65 %>% group_by(yearG3, county, sex, ageG, raceCode) %>% 
+                        summarize(pop  = sum(pop)) %>%
+                        ungroup()
 
 # ======================================================================================================================================
 
 saveRDS(popCounty,    file = paste0(upPlace,"/upData/popCounty.RDS"))
 saveRDS(popCounty_RE_3year, file = paste0(upPlace,"/upData/popCounty_RE_3year.RDS"))
+
+
+saveRDS(popCounty65,    file = paste0(upPlace,"/upData/popCounty65.RDS"))
+saveRDS(popCounty65_RE_3year, file = paste0(upPlace,"/upData/popCounty65_RE_3year.RDS"))
+
 
 

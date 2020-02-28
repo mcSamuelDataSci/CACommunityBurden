@@ -11,6 +11,9 @@ output:
     logo: ourImages/CDPH.gif
     toc: true
 ---
+```{r}
+start_time <- Sys.time()
+```
 
 
 ```{r setup, include=FALSE}
@@ -543,7 +546,7 @@ hosp <- oshpd_PDD %>% left_join(ccsMap, by="ccsCode") %>%
       filter(sex=="Total",
              year == 2016,
              county == "CALIFORNIA",
-             type == "n_hosp",
+             type == "charges",
              !birth) %>%
              arrange(-measure) %>%
              slice(1:topSlice)
@@ -556,11 +559,17 @@ ggplot(hosp,aes(x=reorder(ccsName,measure),y=measure)) +
 
 ```
 
+
+
+
 ## Ranking of Hospitalization COSTS by Condition, 2016 
 
 ```{r, out.width = "60%"}
 include_graphics("ourImages/hosp_charges.PNG")
 ```
+
+
+
 
 
 ## SELECTED AND DETAILED TREND ASSESSMENT
@@ -1155,6 +1164,10 @@ Hypertensive heart disease refers to heart conditions caused by high blood press
 
 
 
+```{r}
+end_time <- Sys.time()
+end_time - start_time
+```
 
 
 

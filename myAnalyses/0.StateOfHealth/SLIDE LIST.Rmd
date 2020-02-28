@@ -1,0 +1,118 @@
+
+
+## **BIG PATTERNS AND TRENDS**
+
+
+## #1 "Largest Broadest Grouping Categories" Ranking of Number of Deaths in `r mainYear`
+
+## #2 "Top Level" Rankings of Number of Deaths and Years of Life Lost in `r mainYear`
+
+## #3  "Number of Deaths, Public Health Level, by Tot Level in `r mainYear`
+
+
+## #4 Life Expectancy by Year, 2001 to 2018
+
+## #5 All-Cause Mortality by Sex and by Race/Ethnicity by Year,2001 to 2018
+
+
+## #6 Selected Black:White Disparities
+
+
+## #7 Trends in "Top Level" conditions  - number of deaths, age-adjusted death rate, and years of life lost rate, 2000-2018
+
+## #8 TRENDS IN TOP FIVE FOR THE BIG FIVE
+
+
+
+## "PUBLIC HEALTH LEVEL" AND SIMILAR RANKING OF TOP 5 CONDITIONS IN MULTIPLE AREAS
+
+
+
+## #9 Top 5 Deaths based on: numbers, premature deaths, increase, disparity
+
+## #10 Top 5 based on numbers of reported cases, hosptilizaztions, years lived with disability, and risk factors
+
+## "PUBLIC HEALTH LEVEL" RANKINGS - Top 15
+
+
+## #11 "Public Health Level" Ranking of Number of Deaths in `r mainYear`
+
+
+
+## #12 "Public Health Level" Ranking of Years of Life Lost in `r mainYear`
+
+## #13 Ranking of Race/Ethnic Disparities in Death Rate, 2016-2018 (combined)
+
+## #14 "Public Health Level" Ranking of Decreases in Deaths 2008 to 2018
+
+
+
+
+## #15 "Public Health Level" Ranking of Increases in Deaths 2008 to 2018
+
+## #16 Ranking of Years Lived with Disability 2017 
+## #17 Ranking of Number of Hospitalizations by Condition, 2016 
+
+## #18 Ranking of Hospitalization COSTS by Condition, 2016 
+
+
+
+
+## SELECTED AND DETAILED TREND ASSESSMENT
+
+
+
+## #19 TRENDS IN AGE-ADJUSTED RATES FOR OVERALL TOP 15 PUBLIC HEALTH LEVEL CONDTIONS BASED ON NUMBER OF DEATHS
+
+
+## #20 TRENDS IN AGE-ADJUSTED RATES FOR OVERALL TOP 15 PUBLIC HEALTH LEVEL CONDTIONS BASED ON NUMBER OF DEATHS
+
+
+
+## #21 TRENDS IN AGE-ADJUSTED RATES FOR OVERALL TOP 15 PUBLIC HEALTH LEVEL CONDTIONS BASED ON NUMBER OF DEATHS
+
+
+
+
+## SELECTED TRENDS FOR SELECTED TOP RANKING CONDITONS BASED ON SELECTED MEASURES
+
+
+## #22 Selected trends for top ranking conditions based on Number of Deaths
+
+
+## #23 Selected trends for top ranking conditions based on Years of Life Lost
+## #24 Selected trends for top ranking conditions based on Decrease in Deaths 2008 to 2018
+## #25 Selected trends for top ranking conditions based on Increase in Deaths 2008 to 2018
+
+
+## #26 Selected trends for top ranking conditions based on Racial/Ethnic Disparities
+
+
+
+## #27 CHANGE IN BLACK:WHITE ALL-CAUSE MORTALITY RATE DISPARITY 2001-2018
+
+
+
+## #28 Age/Life Course 
+
+
+
+## #29 Cause of Death by Age Group, 2016-2018
+
+## #30 Cause of Hospitalization by Age Group 
+
+
+
+
+
+## LEADING RISK FACTORS - IHME
+
+
+
+
+## #31 Risk Factors Associated with the Largest Number of YEARS LIVED WITH DISABILITY 1990 and 2017
+
+## #32 Risk Factors Associated with the Largest Number of DEATHS 1990 and 2017
+
+
+## #33 Risk Factors Associated with the Largest Number of YEARS LIVED WITH DISABILITY by Disease Condition

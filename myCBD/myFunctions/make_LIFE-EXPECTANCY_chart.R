@@ -33,6 +33,36 @@ lifeTableState <- readRDS(paste0(LTplace,"/LTciState.rds")) %>%
 lifeTableSet <- bind_rows(lifeTableCounty, lifeTableState) %>%
                    filter(county != "Mono")      # Something seems to be wrong with Mono data
 
+#### --- NEW ---------------------------------------------------------------------
+#### -----------------------------------------------------------------------------
+
+
+
+
+
+lifeTable0 <- readRDS(paste0(LTplace,"/lt_e0_all.rds")) %>%
+mutate(FIPSCounty=substr(GEOID,3,5))  %>%
+  left_join(geoMap,by="FIPSCounty") %>%
+   mutate(sex = str_to_title(sex)) %>%
+   mutate(county = ifelse(FIPSCounty=="000","CALIFORNIA",county) )
+
+myLHJ="CALIFORNIA"; mySrc = "st1"
+myLHJ="Alameda"   ; mySrc = "co5"
+myLHJ="Butte"
+myLHJ="Marin"
+
+temp <- filter(lifeTable0,county==myLHJ,sex != "Total",src==mySrc)
+
+
+,race != "tot"
+
+ggplot(data=temp, aes(x=year, y=ex, color=race7,linetype=sex)) +
+  geom_line(size=1.2)  +
+  labs(title=myLHJ) +
+  scale_x_continuous(minor_breaks=2000:2018,breaks=2000:2018,labels=2000:2018)
+  
+#### -----------------------------------------------------------------------------
+#### -----------------------------------------------------------------------------
 
 
 # FIX MIN and MAX Year in global or other life tables function eventaully

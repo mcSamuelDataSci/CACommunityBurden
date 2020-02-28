@@ -102,7 +102,7 @@ add.alpha <- function(col, alpha=1){
 #tmaptools::palette_explorer()
 
 myPal <- brewer.pal(5,"Blues") # rev(brewer.pal(5,"RdYlBu"))
-myPal <- add.alpha(myPal,.7)
+myPal <- add.alpha(myPal,.8)
 
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
