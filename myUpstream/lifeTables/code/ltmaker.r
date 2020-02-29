@@ -46,7 +46,7 @@ lapply(.pkg, require, character.only=TRUE)
 
 ## 1.2  options
 controlPop<-TRUE # whether to control ACS to DOF pop totals
-whichDeaths<-"dof" # source of deaths data (real,fake,dof)
+whichDeaths<-"real" # source of deaths data (real,fake,dof)
 whichPop<-"pep" # source of population data (dof,pep)
 critNx<-10000
 critDx<-700
@@ -56,8 +56,8 @@ critDx<-700
 myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
-mySecure <- "H:/0.Secure.Data/myData"
 dofSecure <- "d:/users/fieshary/projects/vry-lt/dx"
+mySecure <- "H:/0.Secure.Data/myData"
 
 ## 1.4 	links
 #.ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
@@ -70,8 +70,8 @@ dofSecure <- "d:/users/fieshary/projects/vry-lt/dx"
 .mssacfips	<- paste0(upPlace,"/lifeTables/dataIn/mssa13cfips.dta") # 2013 MSSA to county
 .countycfips <- paste0(upPlace,"/lifeTables/dataIn/countycfips.dta") # county name to county FIPS in GEOID format
 if (whichDeaths=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") 
-if (whichDeaths=="real") .deaths		<- paste0(mySecure,"/cbdDat0FULL.R" 
-if (whichDeaths=="dof")  .deaths 		<- paste0(dofSecure,"/dof_deaths_mi.dta" 
+if (whichDeaths=="real") .deaths		<- paste0(mySecure,"/cbdDat0FULL.R") 
+if (whichDeaths=="dof")  .deaths 		<- paste0(dofSecure,"/dof_deaths_mi.dta") 
 if (whichPop=="dof") .pop 				<- paste0(upPlace,"/lifeTables/dataIn/dof_ic10pc19.dta")  
 if (whichPop=="pep") .pop				<- paste0(upPlace,"/lifeTables/dataIn/pep_ic10pc18_special.dta") 
 
