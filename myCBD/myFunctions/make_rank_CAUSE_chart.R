@@ -1,5 +1,5 @@
 
-rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", mySex = "Total", myLev = "lev2", myN = 10, myYear = 2017){ 
+rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", myYear = 2018, mySex = "Total", myLev = "lev2", myN = 10){ 
   
 
   if(myLev=="lev3") myLev <- c("lev2","lev3")
@@ -69,44 +69,65 @@ temp_N_cause <- temp %>%
    }
    
    
-   xtemp
- 
+    
+    # varsIn  <- c("county","year","sex",myMeasure) 
+    # tabDat  <- dat.1 %>% select(varsIn)
+    # tabDat  <- 1:10
+    #  rankCauseStep      <- reactive(rankCause(input$myLHJ,input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
+    
+    
+    
+    
+    
+    
+    list(plotL = xtemp, dataL = plotData)
+    
+    
+    
+    
 }
   
 
 
-#(for testing code outside of the app) 
-if(1==2) {
-  myCounty = "Alameda"
-  myMeasure = "Age-Adjusted Death Rate"
-  myMeasure = "YLL Rate per 100,000 population"
-  mySex = "Total"
-  myLev = "lev2"
-  myN = 10
-  myYear = 2017
-}
 
 
 
 
 
- #ggplotly and/or plotly version?
 
-if(1==2) {
-  
-  ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
-
-  if (myCounty != "CALIFORNIA") {
-  #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
-  SMR <- 1
-  
-  xtemp <- plotData %>% filter(type == "Standard Mortality Ratio") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, type = "bar", name = "Standard Mortality Ratio")  
-  
-   xtemp <- layout(xtemp, shapes = list(type = "line", fillcolor = "red", opacity = 1, x0 = 0, x1 = 0, xref = 'measure', y0 = 0, y1 = 1, yref = 'y'))
-
-  xtemp 
-  #this doesn't really do what we want either
-}
-
-}
+# 
+# #(for testing code outside of the app) 
+# if(1==2) {
+#   myCounty = "Alameda"
+#   myMeasure = "Age-Adjusted Death Rate"
+#   myMeasure = "YLL Rate per 100,000 population"
+#   mySex = "Total"
+#   myLev = "lev2"
+#   myN = 10
+#   myYear = 2017
+# }
+# 
+# 
+# 
+# 
+# 
+#  #ggplotly and/or plotly version?
+# 
+# if(1==2) {
+#   
+#   ggplotly(xtemp) #SMR ratio gets cut off/only shows at the bottom of the plot when it is put in plotly
+# 
+#   if (myCounty != "CALIFORNIA") {
+#   #Notes about adding line to single facet area: https://stackoverflow.com/questions/34686217/how-can-i-add-a-line-to-one-of-the-facets
+#   SMR <- 1
+#   
+#   xtemp <- plotData %>% filter(type == "Standard Mortality Ratio") %>% plotly::plot_ly(., y = ~nameOnly, x = ~measure, type = "bar", name = "Standard Mortality Ratio")  
+#   
+#    xtemp <- layout(xtemp, shapes = list(type = "line", fillcolor = "red", opacity = 1, x0 = 0, x1 = 0, xref = 'measure', y0 = 0, y1 = 1, yref = 'y'))
+# 
+#   xtemp 
+#   #this doesn't really do what we want either
+# }
+# 
+# }
 

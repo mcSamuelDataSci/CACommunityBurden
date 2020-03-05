@@ -95,6 +95,11 @@ hidden(
       # myAddRR ======================
       checkboxInput("myAddRR",  "Show Rate Ratio?", value=FALSE),
     
+     
+      # myLifeRace ===================
+      checkboxInput("myLifeRace",  "Show Race/Ethnicity Detail?", value=FALSE),
+      
+      
       # myX ======================
       selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec),
       
@@ -103,6 +108,12 @@ hidden(
       
       # myOSHPDtype-mdcdrg ======================
       selectInput( "myOSHPDtype_mdcdrg", "Measure Sort Order:", choices = hMDCDrop_down),
+      
+      # myPosition ======================
+      selectInput( "myPosition", "Sort Order:", choices = listPosition),
+      
+      
+      
       
       # myVar(ICD/MDC/DRG) ======================
       selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),

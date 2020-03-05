@@ -1,6 +1,6 @@
 
 ##  Featured Health Data Visualization Sites
-*  [Global Burden of Disease/IHME Visualization](http://vizhub.healthdata.org/gbd-compare/)
+*  [Global Burden of Disease/IHME Visualization],(http://vizhub.healthdata.org/gbd-compare/)
     *  [California-specific IHME Visualization](http://ihmeuw.org/4ood)
 
 * [FiveThirtyEight - 35 Years Of American Death](https://projects.fivethirtyeight.com/mortality-rates-united-states/)
@@ -52,7 +52,7 @@
    * [Data tables, etc.](https://www.cdph.ca.gov/Programs/CHSI/Pages/County-Health-Status-Profiles.aspx)
 
 
- * [PORTRAIT OF PROMISE: The California Statewide Plan to Promote Health and Mental Health Equity; Office of Health Equity,California Department of Public Health, August 2015](https://www.cdph.ca.gov/Programs/OHE/CDPH%20Document%20Library/Accessible-CDPH_OHE_Disparity_Report_Final%20(2).pdf)
+ * [An Update on the Portrait of Promise: Demographic Report on Health and Mental Health Equity in California. A Report to the Legislature and the People of California by the Office of Health Equity. Sacramento, CA: California Department of Public Health, Office of Health Equity; February 2020](https://www.cdph.ca.gov/Programs/OHE/CDPH%20Document%20Library/OHE%20Demographic%20Report%20Approved%20by%20CHHS%20Feb%202020%20Final%202.26.20.pdf)
 
  * [The Landscape of Opportunity: Cultivating Health Equity in California; California Pan-Ethnic Health Network; 2012](https://cpehn.org/sites/default/files/resource_files/landscapeofopportunity2012.pdf)
 

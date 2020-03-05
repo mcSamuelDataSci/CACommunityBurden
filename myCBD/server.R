@@ -70,6 +70,26 @@ shinyServer(function(input, output,session) {
   #
   #
 
+  
+## TEMP FIX...... -------------------------------------------------------  
+  
+  
+  observeEvent(current$tab,{
+    if(current$tab %in% c("ageTrendTab") )
+    {updateSelectInput(session, "myMeasure", choices = deathMeasures_Dropdown_noADJ )}
+  })
+  
+  
+  observeEvent(current$tab,{
+    if(!(current$tab %in% c("ageTrendTab")) )
+    {updateSelectInput(session, "myMeasure", choices = deathMeasures_Dropdown,selected = "aRate" )}
+  })
+  
+  
+  
+## TEMP FIX...... -------------------------------------------------------  
+  
+  
 
 # Navigation from home tab Images -------------------------------------------------------------------------------
 
@@ -223,6 +243,7 @@ observeEvent(current$tab,{
   {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()  )}
 })
 
+
 # TODO These tabs don't have myGeo input?
 observeEvent(current$tab,{
   if(current$tab %in% c("rankByGeographyTab","raceTrendTab","educationTrendTab") &  input$myGeo=="Community")
@@ -235,24 +256,6 @@ observeEvent(current$tab,{
 })
 
 
-# not used now, but saved as examples of other reactivity
-# observeEvent(input$ID,{
-#  if(input$ID %in% c(33,34,44,45,55))
-#   {updateSelectInput(session, "myLHJ", choices = lList, selected=current_LHJ())}
-#  if(input$ID %in% c(22,23)  & current_LHJ() != "CALIFORNIA")
-#   {updateSelectInput(session, "myLHJ", choices = lListNoState, selected=current_LHJ())}
-#  if(input$ID %in% c(22,23)  & current_LHJ() == "CALIFORNIA")
-#   {updateSelectInput(session, "cZoom", selected=FALSE) }
-#
-# )
-#for two input use:
-# observeEvent(input$test1 | input$test2, {
-#    if(input$test1==0 && input$test2==0){
-
-
-
-
-
 
 
 #--------------------------------------------------------------------------------
@@ -260,7 +263,31 @@ observeEvent(current$tab,{
 
 
 
-output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+
+# Trend ----------------------------------------------------------------------------------------------------
+
+trendStep        <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping, input$myLogTrans,input$myMultiRace))
+output$trendSex  <- renderPlot(trendStep()$plotL)
+output$trendAge  <- renderPlot(trendStep()$plotL)
+output$trendRace <- renderPlot(trendStep()$plotL)
+
+observeEvent(current$tab,{
+   if(current$tab %in% c("sexTrendTab") ) {
+
+   output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(),".png")},
+                                     content = function(file) {
+                                       png(file,width=1000, height=600)
+                                       print(trendStep()$plotL)
+                                       dev.off()  }  )
+
+   output$ourData <- downloadHandler(filename = function() {paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(), ".csv")},
+                                       content = function(file) {
+                                         write.csv(trendStep()$dataL, file,row.names = FALSE) } )
+
+ } } )
+
+
+# MAPS --------------------------------------------------
 
 
 # ALL HELL BREAKS LOOSE WITH dbounce
@@ -273,84 +300,72 @@ output$cbdMapTL     <- renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, inp
 #   cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)})
 
 
+  mapStep          <- reactive(cbdMap(input$myLHJ, input$myCAUSE, input$myMeasure,input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+  output$cbdMapTL  <- renderLeaflet(mapStep()$leafPlot)
 
-   mapJunk          <- reactive(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
+  observeEvent(current$tab,{
+    if(current$tab %in% c("interactiveMapTab") ) {
 
-  output$cbdMapTL   <- renderLeaflet(mapJunk())
+      output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                         content = function(file) {
+                                           png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+                                           print(mapStep()$plotL)
+                                           dev.off() } )
 
+      output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
+                                          content = function(file) {
+                                            write.csv(mapStep()$dataL, file,row.names = FALSE) } )
 
-  output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
-  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
-  print(mapJunk())
-  dev.off()
-})
+  } } )
 
+  
+  
+  # ---------------------------------------------------------------------------------------------------------
+  
+  # CAUSE
+  rankCauseStep      <- reactive(rankCause(input$myLHJ,input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
+  output$rankCause   <- renderPlot(rankCauseStep()$plotL)
+  
+  observeEvent(current$tab,{
+    if(current$tab %in% c("rankByCauseTab") ) {
+      
+      output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                       content = function(file) {
+                                         png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+                                         print(rankCauseStep()$plotL)
+                                         dev.off() } )
+      
+      output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
+                                        content = function(file) {
+                                          write.csv(rankCauseStep()$dataL, file,row.names = FALSE) } )
+      
+    } } )
+  
+  
+  # GEO
+  rankGeoStep      <- reactive(rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex, input$myCI, input$myRefLine))
+  output$rankGeo   <- renderPlot(rankGeoStep()$plotL)
+  
+  observeEvent(current$tab,{
+    if(current$tab %in% c("rankByGeographyTab") ) {
+      
+      output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".png")},
+                                       content = function(file) {
+                                         png(file)
+                                         rankGeoStep()$plotL
+                                         #print(rankGeoStep()$plotL)
+                                         #file.copy("junk.png",file,overwrite = TRUE)
+                                         dev.off() }, contentType = "png" )
+      
+      
+       output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".csv")  },
+                                         content = function(file) {
+                                           write.csv(rankGeoStep()$dataL, file,row.names = FALSE) } )
 
-# output$mapFigureI <- downloadHandler(filename=function(){paste0("MAP2",".png")},content = function(file) {
-#   png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
-#   print(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
-#   dev.off()
-# })
+    } } )
+  
 
-
-
-output$mapFigure <- downloadHandler(filename=function(){paste0("MAP",".png")},content = function(file) {
-  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
-  print(cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
-  dev.off()
-})
-
-
-output$rankCauseFigure <- downloadHandler(filename=function(){paste0("CAUSE",".png")},content = function(file) {
-  png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
-  print(rankCause(input$myLHJ,                input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
-  dev.off()
-})
-
-
-output$cbdMapTS     <- renderPlot(   cbdMapXStat(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem))
-
-
-output$rankCause    <- renderPlot(     rankCause(input$myLHJ,                input$myMeasureShort,  input$mySex, input$myLev, input$myN,input$myYear))
-output$rankCauseSex <- renderPlot(  rankCauseSex(input$myLHJ,                input$myMeasure     , input$myYear,              input$myLev, input$myN))
-output$rankGeo      <- renderPlot(       rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex, input$myCI,input$myRefLine))
-
-
-# Trend ----------------------------------------------------------------------------------------------------
-
-trendStep     <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping, input$myLogTrans,input$myMultiRace))
-
-output$trendSex  <- renderPlot(trendStep()$plot)
-output$trendAge  <- renderPlot(trendStep()$plot)
-output$trendRace <- renderPlot(trendStep()$plot)
-
-
-output$trendPNG <- downloadHandler(filename=function(){paste0("trend",".png")},content = function(file) {
-  #png(file, width = 2000, height = 1800, units = "px", pointsize = 3)
-  png(file,width=1000, height=600)
-  print(trendStep()$plot)
-  dev.off()
-})
-
-output$trendData <- downloadHandler(
-  filename = function() {
-    paste("data-", Sys.Date(), ".csv", sep="")
-  },
-  content = function(file) {
-    write.csv(trendStep()$data, file)
-  }
-)
-
-# ---------------------------------------------------------------------------------------------------------
-
-
-# output$trendAge   <- renderPlot(         trendAge(input$myLHJ, input$myCAUSE, input$myLogTrans,input$myMeasure))
-
-# output$trendRace    <- renderPlot(         trendRace(input$myLHJ, input$myCAUSE, input$myMeasure,input$myLogTrans,input$myMultiRace))
-
-
-
-
+  
 # ---------------------------------------------------------------------------------------------------------
 
 disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
@@ -415,16 +430,8 @@ output$riskByCause <- renderPlotly({
 
 output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
 
-
-
-# output$OSHPD1    <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN))
-# output$OSHPD2    <- renderPlotly(         oshpdPlot2(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
-# output$oshpdmap <- renderPlot(cbdOSHPDMap(input$myLHJ, input$mySex, input$myCause,input$myGeo))
-# output$mdcdrg   <- renderPlot(mdc_drg_plot(input$myLHJ, input$myOSHPDtype_mdcdrg, input$mySex, input$myN, input$myVar))
-
-
 output$OSHPD1      <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
-output$any_primary <- renderPlot(anyprimary1(input$myLHJ))
+output$any_primary <- renderPlot(anyprimary1(input$myLHJ,input$myPosition))
 
 
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
@@ -433,7 +440,7 @@ output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, i
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::
 
 
-output$lifeTable  <- renderPlot(         LEtrend(input$myLHJ))
+output$lifeTable  <- renderPlot(         LEtrend(input$myLHJ, input$myLifeRace))
 
 
 
@@ -458,6 +465,3 @@ output$map_title <- renderUI({h4(strong(
 
 # -- END ----------------------------------------------------------------------
 
-
-# previously needed - keeping just in case....
-#yearGrp <- "2013-2017"   # why doesn't it find this from global?

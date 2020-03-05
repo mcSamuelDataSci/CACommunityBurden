@@ -1,22 +1,19 @@
 
-# MAIN mapping function used by both Interactive and Static mapping functions
-
-cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YLLper",       myYear = 2015,
+cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YLLper",       myYear = 2015,
                     mySex     = "Total",   myStateCut  = TRUE,  myGeo     = "Community", 
                     myLabName = FALSE,     myCutSystem ="fisher") {
 
+  
   if (1==2){
     myLHJ     = "Aamador";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
     mySex     = "Total";myStateCut  = TRUE; myGeo     = "County";
     myLabName = FALSE;  myCutSystem ="fisher" 
   }
   
+  
   # "blank" map to use below
   countyPop <- datCounty %>% filter(year == 2017,sex=="Total", CAUSE=="0") %>%
                   select(county,pop)
-  
-  
-  
   
   if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
@@ -76,10 +73,7 @@ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of tho
  if (!myStateCut)                    {myRange <- (map.1 %>% st_set_geometry(NULL))[,myMeasure]}
 
 # fix NAs ?
-
 ## WORKING ON FIX
-
- 
 # HELP
 # with these two lines below in
 # app CRASHES when using trend fuction with TB and Amador
@@ -106,10 +100,9 @@ myPal <- add.alpha(myPal,.8)
 
 if (myMeasure == "mean.age") myPal <- rev(myPal)
 
-
 map.1 <- mutate(map.1,myMeasure=ifelse(is.na(myMeasure),0,myMeasure))
 
- tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal, 
+mapX <-  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal, 
                                style="fixed", breaks=myBreaks,
                                colorNA="white",
                                title = deathMeasuresNames[deathMeasures == myMeasure],
@@ -135,50 +128,29 @@ map.1 <- mutate(map.1,myMeasure=ifelse(is.na(myMeasure),0,myMeasure))
                               legend.text.size = 1,
                               legend.hist.height = .3 
                      ) 
- }
+ 
 
-
-# Funtion used for Static Map ------------------------------------------------------------------------
-cbdMapXStat <- function(myLHJ= "Amador", myCause="A", myMeasure = "YLLper", myYear=2015, mySex="Total",
-                        myStateCut=TRUE,myGeo="Census Tract", myLabName=FALSE,myCutSystem="fisher") {
-
- tmap_mode("plot")
-  
- tt.map <- cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)   
-    
- if (myLabName) tt.map <- tt.map + tm_text("geoLab") 
-  
- tt.map <- tt.map + 
-           tm_credits(figureAttribution,position=c("center","BOTTOM")) +
-           tm_compass(type="arrow")
-           tt.map 
-  }
-
-
-# Funtion used for Interactive Map --------------------------------------------------------------------
-
-cbdMapXLeaf <- function(myLHJ= "Amador", myCause="A", myMeasure = "YLLper", myYear=2015, mySex="Total",
-                        myStateCut=TRUE,myGeo="Census Tract", myLabName=FALSE,myCutSystem="fisher") {
-
+ # Interative Map to Display -------------------------------
  tmap_mode("view")
+ tt.map <-  mapX + 
+             tm_view(control.position = c("left","bottom"),
+                     basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
+ tplot <- tmap_leaflet(tt.map)
  
- tt.map <-  cbdMapX(myLHJ, myCause,myMeasure, myYear, mySex, myStateCut,myGeo,myLabName,myCutSystem)
-
- tt.map <- tt.map + tm_view(control.position = c("left","bottom"),basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
+ # Static Map to Download ----------------------------------
+ tmap_mode("plot")
+ if (myLabName) mapX <- mapX + tm_text("geoLab") 
+ tt.map.STAT <- mapX + 
+                 tm_credits(figureAttribution,position=c("center","BOTTOM")) +
+                 tm_compass(type="arrow")
+ 
+ # --------------------------------------------------------
  
  
-
- tmap_leaflet(tt.map)
+ varsIn  <- c("county","year","sex",myMeasure) 
+ tabDat  <- dat.1 %>% select(varsIn)
+ 
+ list(leafPlot = tplot, plotL = tt.map.STAT, dataL = tabDat)
+ 
 }
   
-
-# NOTES etc --------------------------------------------------------------------------------------------
-
-
-# basemaps
-# # tm_basemap("Stamen.Watercolor")  
-
-
-# restore current mode
-#tmap_mode("plot")
-

@@ -180,13 +180,13 @@ shinyUI(
                        
                        # Figure Download buttons ---------------------------------------------------
                        hidden(
-                         div(id = "trendDownloads", style = "margin: 10px;",
-                             downloadButton('trendPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty)),
-                             downloadButton('trendData', 'Download Data', style = paste0("float: right;", myDownloadButtonSty))
+                         div(id = "ourDownloads", style = "margin: 10px;",
+                             downloadButton('ourPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty)),
+                             downloadButton('ourData', 'Download Data', style = paste0("float: right;", myDownloadButtonSty))
                          ),
-                         div(id = "rankCauseDownloads", style = "margin: 10px;",
-                             downloadButton('rankCauseFigure', 'Download Figure', style = myDownloadButtonSty)
-                         ),
+                         # div(id = "rankCauseDownloads", style = "margin: 10px;",
+                         #     downloadButton('rankCauseFigure', 'Download Figure', style = myDownloadButtonSty)
+                         # ),
                          div(id = "disparityDownloads", style = "margin: 10px;",
                              downloadButton('disparityPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty))
                          )
@@ -200,15 +200,15 @@ shinyUI(
                            
                            helpText(h4("Welcome to the Preview Version of the CCB!"),style=paste0("color:", GREEN),align="left"), br(),
                            
-                           h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/","SEE MULTIPLE MEASURE OF HEALTH IN YOUR COUNTY'")), br(),
+                           h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/",target="_blank", "SEE MULTIPLE MEASURE OF HEALTH IN YOUR COUNTY'")), br(),
                            
-                           h5(tags$a(href="CA_Health_Views.pdf","SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
+                           h5(tags$a(href="CA_Health_Views.pdf",target="_blank", "SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
                            
                            
                            
                            actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
-                           h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV","Report 'bugs' HERE!")),
-                           h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8","Share your feedback HERE!")),
+                           h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV",target="_blank","Report 'bugs' HERE!")),
+                           h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8",target="_blank","Share your feedback HERE!")),
                            textIntroA, br(), br(), textIntroC, br(), br(),
                            #helpText(textIntroA,style="color:black"), br(),
                            #helpText(textIntroC,style="color:black"), br(),
@@ -216,8 +216,8 @@ shinyUI(
                            if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
                            br(),br(),
                            icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"), br(),
-                                                      tags$a(href="https://shiny.rstudio.com/","Developed in R-Shiny"), br(),
-                           tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden","GitHub Site")
+                                                      tags$a(href="https://shiny.rstudio.com/",target="_blank","Developed in R-Shiny"), br(),
+                           tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden",target="_blank","GitHub Site")
                        ),
                        
                        div(id = "textNotHomeTab", style = mySidebarTextSty,

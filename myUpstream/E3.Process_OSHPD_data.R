@@ -16,7 +16,7 @@
   
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "G:/CCB/0.Secure.Data/"
-secure.location  <- "E:/0.Secure.Data/"
+secure.location  <- "H:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -45,18 +45,26 @@ library(epitools)
 
 if(newData) {
   
-  #Reading in oshpd 2016 PDD file
-  oshpd.PDD.16  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_rln2016.sas7bdat") )
   
-  #Subset with only variables of interest
-  oshpd_subset  <- select(oshpd.PDD.16,
-                          diag_p, 
-                          # contains("odiag"),
-                          ccs_diagP,
-                          contains("ccs_odiag"),
-                          mdc, msdrg, charge, 
-                          pay_cat, pay_type, admtyr,patcnty, patzip, sex, agyrdsch, race_grp, oshpd_id, # dschdate,
-                          los_adj, los) %>% mutate(year = 2016)
+  # variables to use
+  ourVars  <- c("diag_p", 
+                "ccs_diagP",
+                "mdc", "msdrg", "charge", 
+                "pay_cat", "pay_type", "admtyr","patcnty", "patzip", "sex", "agyrdsch", "race_grp", "oshpd_id", 
+                "los_adj", "los") 
+  
+  # contains("odiag"),# dschdate,
+  
+  
+  #Reading in oshpd 2016 PDD file
+  oshpd.PDD.16.0  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_rln2016.sas7bdat") ) 
+  oshpd.PDD.16    <- oshpd.PDD.16.0 %>% select(ourVars,contains("ccs_odiag")) %>% mutate(year=2016)
+  
+  oshpd.PDD.18.0  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_ssn2018.sas7bdat") )        ## SSN!
+  oshpd.PDD.18    <- oshpd.PDD.18.0 %>% select(ourVars,contains("ccs_odiag")) %>% mutate(year=2018)
+  
+ 
+  oshpd_subset <- bind_rows(oshpd.PDD.16, oshpd.PDD.18)
   
   
   #Saving subset as RDS file
@@ -71,16 +79,17 @@ if(newData) {
   
   half1  <- sample_n(oshpd_subset,sampN1)  # sample function from dplyr
   
-  p1           <- sample_n(oshpd_subset[,1:32],  sampN2)
-  p2           <- sample_n(oshpd_subset[,33:34], sampN2)
-  p3           <- sample_n(oshpd_subset[,35:41], sampN2)
-  p3$race_grp  <- NA
-  half2        <- cbind(p1,p2,p3)
+  p1           <- sample_n(oshpd_subset[,1:8],  sampN2)
+  p2           <- sample_n(oshpd_subset[,9:10], sampN2)
+  p3           <- sample_n(oshpd_subset[,11:16], sampN2); p3$race_grp  <- NA
+  p4           <- sample_n(oshpd_subset[,17:41], sampN2)
+  
+  half2        <- cbind(p1,p2,p3,p4)
   
   oshpd_sample <- rbind(half1,half2)
   
   # Saving random sample as RDS file
-  saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd16_sample.rds")) #----------
+  saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd_subset_SAMPLE.rds")) #----------
   
 } # END if(newData)
 
@@ -94,13 +103,29 @@ if(newData) {
 
 if(newData) {
 
-oshpd.ED.16  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_rln2016.sas7bdat") )
+oshpd.ED.16.0  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_rln2016.sas7bdat") )
+
+ourVars <- c("dx_prin", "ccs_dx_prin", "patco", "sex", "race_grp",  "agyrserv", "dispn", "payer") # odx1 : odx24, 
+oshpd.ED.16  <- oshpd.ED.16.0  %>% mutate(year=2016) %>% select(ourVars)
+
+saveRDS(oshpd.ED.16, file=path(secure.location, "myData/oshpd.ED.16.rds"))
+
+
+
+
+oshpd.ED.18.0  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_ssn2018.sas7bdat") )  %>% mutate(year=2018)  ## SSN!
+
+
+
+
+
+oshpd_ED_subset <- bind_rows(oshpd.ED.16, oshpd.ED.18)
+
 
 
 ## TODO could/should standardize all OSHPD names in this step,  eg  countyCode = patco
 
-oshpd_ED_subset  <- oshpd.ED.16 %>%
-                    select(dx_prin,  ccs_dx_prin, patco, sex, race_grp,  agyrserv, dispn, payer) # odx1 : odx24, 
+
 
 saveRDS(oshpd_ED_subset, file=path(secure.location, "myData/oshpd_ED_subset.rds"))
 }

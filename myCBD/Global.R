@@ -200,10 +200,6 @@ ccsMap  <- as.data.frame(read_excel( path(myPlace,"myInfo/CCS Code and Names Lin
 source(paste0(myPlace,"/myFunctions/helperFunctions/ccsLinker.R"))
 
 
-
-
-
-
 #Saved OSHPD MDC_DRG file in myCBD/myInfo
 
 hdCodes   <- read.delim(paste0(myPlace, "/myInfo/MDC_DRG.txt"), header = FALSE, sep = "=") 
@@ -220,7 +216,7 @@ source(paste0(myPlace,"/myFunctions/make_DISPARITY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_LIFE-EXPECTANCY_chart.R"))
 source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
-source(paste0(myPlace, "/myFunctions/make_OSHPD_chart1.R"))
+source(paste0(myPlace, "/myFunctions/make_OSHPD_chart.R"))
 #source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
 #source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
 source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
@@ -266,7 +262,7 @@ dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
 
 #This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
 #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
-
+deathMeasures_Dropdown_noADJ         <- deathMeasures_Dropdown[-c(3,6)]  # drops SMR
 
 hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day")
 
