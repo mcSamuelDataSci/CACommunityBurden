@@ -1,6 +1,3 @@
-# different test
-
-
 # =============================================================================
 # "ui.R" file     
 #
@@ -28,7 +25,7 @@
 # "hospitalMapTab" = 91
 
 # STYLES, CONSTANTS AND FUNCTIONS FOR UI --------------------------------------
-
+#####tuhdtjyj
 STATE <- "CALIFORNIA"   # needed this here with CDPH Shiny Server but not otherwise?
 
 # function used as "short-cut" when making criteria for conditionals below
