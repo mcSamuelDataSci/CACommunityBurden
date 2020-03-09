@@ -100,6 +100,18 @@ hidden(
       checkboxInput("myLifeRace",  "Show Race/Ethnicity Detail?", value=FALSE),
       
       
+      # myRace ==========================
+      checkboxGroupButtons( "myRace", "Which Race/Ethnic Groups?",
+            choices = c("AIAN_NH", "ASIAN_NH", "BLACK_NH", "HISPANIC", "MR_NH", "NHPI_NH", "TOTAL", "WHITE_NH"),
+            selected = "TOTAL",individual=TRUE,size="sm"),
+      
+      # mySexMult ==========================
+      checkboxGroupButtons( "mySexMult", "Which Sex Groups?",
+                         choices = c("Total", "Male", "Female"),
+                         selected = "Total",individual=TRUE,size="sm"),
+      
+      
+      
       # myX ======================
       selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec),
       

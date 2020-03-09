@@ -8,6 +8,7 @@
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
 INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear","mySex",
+            "myRace", "mySexMult",
             "myLev","myStateCut","myN","myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myVar","myprimetype","myGeoHelpText",
             "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote","myCompare","disparityDownloads")
@@ -17,7 +18,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "aboutTab"=c(),
                    "techDocTab"=c(),
                    "otherLinksTab"=c(),
-                   "lifeExpectancyTab"=c("myLHJ","myLifeRace"),
+                   "lifeExpectancyTab"=c("myLHJ","mySexMult","myRace","myCI"),
                    "interactiveMapTab"=c("ourDownloads","myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem"),   # "tabHelp", -- REMOVED FROM ALL
                    "staticMapTab"=c("tabHelp", "myCAUSE", "myLHJ", "myGeo", "myMeasure", "myCutSystem", "myLabName", "mySex", "myStateCut"),
                    "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote"),
