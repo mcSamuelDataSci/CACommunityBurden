@@ -478,8 +478,9 @@ datComm  <- merge(datComm, comName, by = "comID",all=TRUE) %>%
 
 c.t1      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev0"),"lev0")
 c.t2      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev1"),"lev1")
+# c.t3      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev2"),"lev2") -- include for SPECIAL RUNS only
 
-datTract  <- bind_rows(c.t1,c.t2) %>% 
+datTract  <- bind_rows(c.t1,c.t2,c.t3) %>% 
                 filter(yearG5  %in%  yearGrp)  %>%    # 2013-2017 ONLY!!!
                 arrange(GEOID,yearG5,CAUSE)
 # NOTE -- includes many with NA GEOID

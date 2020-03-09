@@ -146,8 +146,8 @@ mapX <-  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal,
  
  # --------------------------------------------------------
  
- 
- varsIn  <- c("county","year","sex",myMeasure) 
+ # FIX: "year",
+ varsIn  <- c("county","sex",myMeasure) 
  tabDat  <- dat.1 %>% select(varsIn)
  
  list(leafPlot = tplot, plotL = tt.map.STAT, dataL = tabDat)

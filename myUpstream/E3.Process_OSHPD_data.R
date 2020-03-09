@@ -16,7 +16,7 @@
   
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "G:/CCB/0.Secure.Data/"
-secure.location  <- "H:/0.Secure.Data/"
+secure.location  <- "F:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -53,15 +53,15 @@ if(newData) {
                 "pay_cat", "pay_type", "admtyr","patcnty", "patzip", "sex", "agyrdsch", "race_grp", "oshpd_id", 
                 "los_adj", "los") 
   
-  # contains("odiag"),# dschdate,
+  # # dschdate,
   
   
   #Reading in oshpd 2016 PDD file
   oshpd.PDD.16.0  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_rln2016.sas7bdat") ) 
-  oshpd.PDD.16    <- oshpd.PDD.16.0 %>% select(ourVars,contains("ccs_odiag")) %>% mutate(year=2016)
+  oshpd.PDD.16    <- oshpd.PDD.16.0 %>% select(ourVars,contains("ccs_odiag"),contains("odiag")) %>% mutate(year=2016)
   
   oshpd.PDD.18.0  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/cdph_pdd_ssn2018.sas7bdat") )        ## SSN!
-  oshpd.PDD.18    <- oshpd.PDD.18.0 %>% select(ourVars,contains("ccs_odiag")) %>% mutate(year=2018)
+  oshpd.PDD.18    <- oshpd.PDD.18.0 %>% select(ourVars,contains("ccs_odiag"),contains("odiag")) %>% mutate(year=2018)
   
  
   oshpd_subset <- bind_rows(oshpd.PDD.16, oshpd.PDD.18)
@@ -83,13 +83,18 @@ if(newData) {
   p2           <- sample_n(oshpd_subset[,9:10], sampN2)
   p3           <- sample_n(oshpd_subset[,11:16], sampN2); p3$race_grp  <- NA
   p4           <- sample_n(oshpd_subset[,17:41], sampN2)
+  p5           <- sample_n(oshpd_subset[,42:65], sampN2)
   
-  half2        <- cbind(p1,p2,p3,p4)
+  half2        <- cbind(p1,p2,p3,p4,p5)
   
   oshpd_sample <- rbind(half1,half2)
   
   # Saving random sample as RDS file
-  saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd_subset_SAMPLE.rds")) #----------
+  saveRDS(oshpd_sample, file = path(upPlace, "upData/oshpd_subset_SAMPLE.rds")) 
+  
+  
+  
+  #----------
   
 } # END if(newData)
 

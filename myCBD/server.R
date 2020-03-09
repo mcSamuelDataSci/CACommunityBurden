@@ -440,7 +440,7 @@ output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, i
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::
 
 
-output$lifeTable  <- renderPlot(         LEtrend(input$myLHJ, input$myLifeRace))
+output$lifeTable  <- renderPlot(         LEtrend(input$myLHJ, input$mySexMult, input$myRace,input$myCI))
 
 
 
