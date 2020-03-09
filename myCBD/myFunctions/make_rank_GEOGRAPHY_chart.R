@@ -187,7 +187,8 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   if(myCI && myMeasure=="aRate") { rank_geo_plot = rank_geo_plot +
     geom_errorbar(aes(ymin = dat.1$aLCI, ymax = dat.1$aUCI), width = 0.5, color = "blue")}
   
-  rank_geo_plot
+  list(plotL = rank_geo_plot, dataL = dat.1)
+
 
 }
 

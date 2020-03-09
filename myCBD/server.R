@@ -344,18 +344,15 @@ observeEvent(current$tab,{
   
   # GEO
   rankGeoStep      <- reactive(rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex, input$myCI, input$myRefLine))
-  #output$rankGeo   <- renderPlot(rankGeoStep()$plotL)
-  output$rankGeo   <- renderPlot(rankGeoStep())
+  output$rankGeo   <- renderPlot(rankGeoStep()$plotL)
   
   observeEvent(current$tab,{
     if(current$tab %in% c("rankByGeographyTab") ) {
       
       output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".png")},
                                        content = function(file) {
-                                         png(file)
-                                         rankGeoStep()$plotL
-                                         #print(rankGeoStep()$plotL)
-                                         #file.copy("junk.png",file,overwrite = TRUE)
+                                         png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+                                         print(rankGeoStep()$plotL)
                                          dev.off() }, contentType = "png" )
       
       
