@@ -344,7 +344,8 @@ observeEvent(current$tab,{
   
   # GEO
   rankGeoStep      <- reactive(rankGeo(input$myLHJ, input$myCAUSE, input$myMeasure, input$myYear, input$mySex, input$myCI, input$myRefLine))
-  output$rankGeo   <- renderPlot(rankGeoStep()$plotL)
+  #output$rankGeo   <- renderPlot(rankGeoStep()$plotL)
+  output$rankGeo   <- renderPlot(rankGeoStep())
   
   observeEvent(current$tab,{
     if(current$tab %in% c("rankByGeographyTab") ) {
