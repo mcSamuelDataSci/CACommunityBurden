@@ -160,25 +160,28 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
 
   # tit <-  wrap.labels(tit,80)
 
-  roundUpNice <- function(x, nice=c(1:10)) {
-    if(length(x) != 1) stop("'x' must be of length 1")
-    10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
-  }
+  # -- roundUpNice function rounds up numbers to multiples of ten
   
-  axis_numbers <- seq(0, roundUpNice(max(dat.1$plotter)),
-                      by=roundUpNice(max(dat.1$plotter)/4))
+  # roundUpNice <- function(x, nice=c(1:10)) {
+  #   if(length(x) != 1) stop("'x' must be of length 1")
+  #   10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
+  # }
+  # 
+  # axis_numbers <- seq(0, roundUpNice(max(dat.1$plotter)),
+  #                     by=roundUpNice(max(dat.1$plotter)/4))
       
   rank_geo_plot <- ggplot(dat.1, aes(x=reorder(lab, plotter), y=plotter)) +
-    geom_bar(stat='identity') +
+    geom_bar(stat='identity', fill = 'gray', color = 'black') +
     coord_flip() +
     ggtitle(stringr::str_wrap(tit, 62)) +
-    scale_y_continuous(breaks=axis_numbers, 
+    scale_y_continuous(# breaks=axis_numbers, 
                        sec.axis = dup_axis()) +
-    geom_hline(yintercept=c(axis_numbers[-1]), linetype="dotted") +
+   # geom_hline(yintercept = c(axis_numbers[-1]), linetype=3) + # c(axis_numbers[-1])
+    theme_bw() +
     theme(plot.title = element_text(colour = "blue"), axis.title=element_blank())
   
   # Reference line
-  if(myRefLine == TRUE) { rank_geo_plot = rank_geo_plot + geom_hline(yintercept=sMeasure, linetype="dotted", size = 2)}
+  if(myRefLine == TRUE) { rank_geo_plot = rank_geo_plot + geom_hline(yintercept=sMeasure, linetype=2, size = 2)}
   
   # Confidence Interval
   if(myCI && myMeasure=="cDeathRate") { rank_geo_plot = rank_geo_plot +

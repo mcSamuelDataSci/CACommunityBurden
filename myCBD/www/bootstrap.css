@@ -6908,3 +6908,10 @@ input:focus,
 .panel-default .panel-footer {
   color: #98978b;
 }
+
+.sidebar {
+  height: 95vh;
+  width: 300px;
+  position: fixed;
+  overflow-y: scroll;
+}
