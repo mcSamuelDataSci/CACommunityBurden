@@ -1,4 +1,4 @@
-# 
+# hi
 # rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", myYear = 2018, mySex = "Total", myLev = "lev2", myN = 10){ 
 #   
 # 
@@ -140,6 +140,8 @@ rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", 
       theme(legend.position = "bottom", legend.text=element_text(size=20), legend.key.width = unit(4,"cm"))
     
   }
+  
+  
 
 
 
