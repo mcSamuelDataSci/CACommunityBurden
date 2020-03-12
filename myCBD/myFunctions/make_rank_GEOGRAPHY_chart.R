@@ -177,11 +177,20 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     scale_y_continuous(# breaks=axis_numbers, 
                        sec.axis = dup_axis()) +
    # geom_hline(yintercept = c(axis_numbers[-1]), linetype=3) + # c(axis_numbers[-1])
-    theme_bw() +
-    theme(plot.title = element_text(colour = "blue"), axis.title=element_blank())
+    theme_bw() + # element_text(size = rel(#)) below fixes the text scaling issue when specifying width and height of plot
+    theme(plot.title = element_text(size = rel(2.5), colour = "blue"), axis.title=element_blank(), axis.text = element_text(size = rel(1.5)))
   
   # Reference line
-  if(myRefLine == TRUE) { rank_geo_plot = rank_geo_plot + geom_hline(yintercept=sMeasure, linetype=2, size = 2)}
+  if(!cZoom && myRefLine == TRUE) { 
+    rank_geo_plot = rank_geo_plot + 
+      geom_hline(yintercept=sMeasure, linetype=2, size = 2) + # geom_text below aligns text vertically while using hjust and vjust
+      geom_text(aes(x= length(lab), label="State Reference Line\n", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 0, size=6)}
+  
+  if(cZoom && myRefLine == TRUE) { 
+    rank_geo_plot = rank_geo_plot + 
+      geom_hline(yintercept=sMeasure, linetype=2, size = 2) +
+      geom_text(aes(x= length(lab), label="County Reference Line\n", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 0, size=6)}
+  
   
   # Confidence Interval
   if(myCI && myMeasure=="cDeathRate") { rank_geo_plot = rank_geo_plot +
@@ -195,6 +204,8 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
 
 }
 
+# df707 <- data.frame(x = c("Smallest", "Largest", "Middle"), y = c(1, 10, 5))
+# sort(df707$y, decreasing = TRUE)[1]
 # rankGeo(myLHJ = STATE,
 #         myCause=0,
 #         myMeasure = "aRate",

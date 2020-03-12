@@ -6909,9 +6909,24 @@ input:focus,
   color: #98978b;
 }
 
+/* Having autoscroll in the sidebar - Struggling with clipping of menu dropdown issues
 .sidebar {
   height: 95vh;
   width: 300px;
   position: fixed;
   overflow-y: scroll;
 }
+.selectize-dropdown {
+  width: auto;
+  min-width: 100%;
+  position: inherit;
+  overflow-x: visible;
+}
+
+.selectize-dropdown-content {
+  width: auto;
+  min-width: 100%;
+  position: inherit;
+  overflow-x: visible;
+}
+*/
