@@ -137,7 +137,8 @@ rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", 
       geom_hline(data = data.frame(yint = 0.8, type = "Standard Mortality Ratio"), aes(yintercept = yint, color="80% of State Average"), linetype="dashed", size=1) +
       geom_hline(data = data.frame(yint = 1.2, type = "Standard Mortality Ratio"), aes(yintercept = yint, color="120% of State Average"), linetype="dashed", size = 1) +
       scale_colour_manual(name="", values = c("State Average" = "grey", "80% of State Average" = "green", "120% of State Average" = "red")) +
-      theme(legend.position = "bottom", legend.text=element_text(size=20), legend.key.width = unit(4,"cm"))
+      theme(legend.position = "bottom", legend.justification = "right", legend.text=element_text(size=20), legend.key.width = unit(2,"cm"), 
+            legend.direction='vertical')
     
   }
   
