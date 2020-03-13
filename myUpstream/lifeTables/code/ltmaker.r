@@ -57,7 +57,7 @@ myDrive <- getwd()
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
 dofSecure <- "d:/users/fieshary/projects/vry-lt/dx"
-mySecure <- "H:/0.Secure.Data/myData"
+mySecure <- "d:/0.Secure.Data/myData"
 
 ## 1.4 	links
 #.ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
