@@ -12,6 +12,9 @@
 #
 #=============================================================================
 
+
+options(shiny.sanitize.errors = FALSE)
+
 # "homeTab" = 11
 # "interactiveMapTab" = 22
 # "staticMapTab" = 23
