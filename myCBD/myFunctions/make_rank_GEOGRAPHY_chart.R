@@ -183,13 +183,13 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   # Reference line
   if(!cZoom && myRefLine == TRUE) { 
     rank_geo_plot = rank_geo_plot + 
-      geom_hline(yintercept=sMeasure, linetype=2, size = 2) + # geom_text below aligns text vertically while using hjust and vjust
-      geom_text(aes(x= length(lab), label="State Reference Line\n", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 0, size=6)}
+      geom_hline(yintercept=sMeasure, linetype="dotted", size = 1) + # geom_text below aligns text vertically while using hjust and vjust
+      geom_text(aes(x= length(lab), label="\nState Reference Line", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 1, size=6)}
   
   if(cZoom && myRefLine == TRUE) { 
     rank_geo_plot = rank_geo_plot + 
-      geom_hline(yintercept=sMeasure, linetype=2, size = 2) +
-      geom_text(aes(x= length(lab), label="County Reference Line\n", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 0, size=6)}
+      geom_hline(yintercept=sMeasure, linetype="dotted", size = 1) +
+      geom_text(aes(x= length(lab), label="\nCounty Reference Line", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 1, size=6)}
   
   
   # Confidence Interval
