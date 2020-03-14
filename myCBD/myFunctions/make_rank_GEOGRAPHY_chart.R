@@ -160,25 +160,37 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
 
   # tit <-  wrap.labels(tit,80)
 
-  roundUpNice <- function(x, nice=c(1:10)) {
-    if(length(x) != 1) stop("'x' must be of length 1")
-    10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
-  }
+  # -- roundUpNice function rounds up numbers to multiples of ten
   
-  axis_numbers <- seq(0, roundUpNice(max(dat.1$plotter)),
-                      by=roundUpNice(max(dat.1$plotter)/4))
+  # roundUpNice <- function(x, nice=c(1:10)) {
+  #   if(length(x) != 1) stop("'x' must be of length 1")
+  #   10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
+  # }
+  # 
+  # axis_numbers <- seq(0, roundUpNice(max(dat.1$plotter)),
+  #                     by=roundUpNice(max(dat.1$plotter)/4))
       
   rank_geo_plot <- ggplot(dat.1, aes(x=reorder(lab, plotter), y=plotter)) +
-    geom_bar(stat='identity') +
+    geom_bar(stat='identity', fill = 'gray', color = 'black') +
     coord_flip() +
     ggtitle(stringr::str_wrap(tit, 62)) +
-    scale_y_continuous(breaks=axis_numbers, 
+    scale_y_continuous(# breaks=axis_numbers, 
                        sec.axis = dup_axis()) +
-    geom_hline(yintercept=c(axis_numbers[-1]), linetype="dotted") +
-    theme(plot.title = element_text(colour = "blue"), axis.title=element_blank())
+   # geom_hline(yintercept = c(axis_numbers[-1]), linetype=3) + # c(axis_numbers[-1])
+    theme_bw() + # element_text(size = rel(#)) below fixes the text scaling issue when specifying width and height of plot
+    theme(plot.title = element_text(size = rel(2.5), colour = "blue"), axis.title=element_blank(), axis.text = element_text(size = rel(1.5)))
   
   # Reference line
-  if(myRefLine == TRUE) { rank_geo_plot = rank_geo_plot + geom_hline(yintercept=sMeasure, linetype="dotted", size = 2)}
+  if(!cZoom && myRefLine == TRUE) { 
+    rank_geo_plot = rank_geo_plot + 
+      geom_hline(yintercept=sMeasure, linetype="dotted", size = 1) + # geom_text below aligns text vertically while using hjust and vjust
+      geom_text(aes(x= length(lab), label="\nState Reference Line", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 1, size=6)}
+  
+  if(cZoom && myRefLine == TRUE) { 
+    rank_geo_plot = rank_geo_plot + 
+      geom_hline(yintercept=sMeasure, linetype="dotted", size = 1) +
+      geom_text(aes(x= length(lab), label="\nCounty Reference Line", y=sMeasure), colour="black", angle=270, hjust = 0, vjust = 1, size=6)}
+  
   
   # Confidence Interval
   if(myCI && myMeasure=="cDeathRate") { rank_geo_plot = rank_geo_plot +
@@ -192,6 +204,8 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
 
 }
 
+# df707 <- data.frame(x = c("Smallest", "Largest", "Middle"), y = c(1, 10, 5))
+# sort(df707$y, decreasing = TRUE)[1]
 # rankGeo(myLHJ = STATE,
 #         myCause=0,
 #         myMeasure = "aRate",
