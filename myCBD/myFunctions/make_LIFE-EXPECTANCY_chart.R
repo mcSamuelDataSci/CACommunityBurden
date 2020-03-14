@@ -129,7 +129,7 @@ if (myCI) {
  
  
  if(1==2){
-   myLHJ="Siskiyou" 
+   myLHJ="Alameda" 
    myLHJ="CALIFORNIA"
    myLHJ="Alameda" 
    myLHJ="Butte"
