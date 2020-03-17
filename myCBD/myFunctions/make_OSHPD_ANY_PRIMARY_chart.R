@@ -51,7 +51,10 @@ ggplot(plot_data.1, aes(x = reorder(ccsName,get(myPosition)), y = value, fill=Me
   coord_flip() + geom_bar(stat = "identity") + 
     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
   scale_x_discrete(labels = scales::wrap_format(50)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  # theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        axis.title=element_blank(), axis.text = element_text(size = rel(1.5)), 
+        legend.text = element_text(size = rel(1.2)), legend.title = element_text(size = rel(1.2)))
 
 
 }
