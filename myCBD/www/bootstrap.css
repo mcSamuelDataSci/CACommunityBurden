@@ -6909,6 +6909,17 @@ input:focus,
   color: #98978b;
 }
 
+.btn-group.btn-group-toggle.btn-group-sm {
+  margin-left: 0px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+button.btn.checkbtn.btn-default.active {
+  background-color: #051DA5;
+}
+
 /* Having autoscroll in the sidebar - Struggling with clipping of menu dropdown issues
 .sidebar {
   height: 95vh;

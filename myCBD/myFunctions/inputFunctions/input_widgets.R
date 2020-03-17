@@ -108,7 +108,7 @@ hidden(
       # mySexMult ==========================
       checkboxGroupButtons( "mySexMult", "Which Sex Groups?",
                          choices = c("Total", "Male", "Female"),
-                         selected = "Total",individual=TRUE,size="sm"),
+                         selected = "Total", individual=TRUE,size="sm"),
       
       
       
