@@ -4,10 +4,20 @@ dottedSelectInput <- function(inputId, label, choices, height = "500px") {
       sep = "\n",
       ".selectize-dropdown {",
       "  width: auto !important;",
-      "  min-width: 100% !important;",
+      "  min-width: 100% !important;", 
       "  white-space: nowrap;",
-      paste0("  height: ", height, " !important;"),   # height of the dropdown
+      " overflow: auto;", # Jaspreet: provides a scrollbar to dropdown menus if needed
+      " height: auto;", # Jaspreet
+      "max-height: 350px;", # Jaspreet: setting max-height + height as auto gives each drop-down their proper height  
+     # paste0("  height: ", height, " !important;"),   # height of the dropdown
       "}",
+     # Jaspreet: this only changes the myCAUSE dropdown 
+     ".selectize-dropdown.single.form-control.shinyjs-resettable.shiny-bound-input { ",
+     "width: auto !important;",
+     "min-width: 25% !important;", # set to 25% because this is now a child of the body
+     "white-space: nowrap;",
+     "height: 350px; ",
+     "}",
       ".selectize-dropdown > ul {",
       "  margin: 0 !important;",
       "}",
@@ -55,6 +65,7 @@ dottedSelectInput <- function(inputId, label, choices, height = "500px") {
       choices = choices,
       options = list(
         maxOptions = length(choices),
+        dropdownParent = 'body', # Jaspreet - Avoid the clipping issue?
         render = I(
           paste(
             collapse = " ", sep = " ",
@@ -74,7 +85,8 @@ dottedSelectInput <- function(inputId, label, choices, height = "500px") {
             "}"
           )
         )
-      )
+      ), 
+      tags$head(tags$style(".selectize-control.single { width: 400px; z-index: 1; }"))
     )
   )
 }

@@ -62,6 +62,43 @@ shinyUI(
   fluidPage(
     theme = "bootstrap.css",
     
+    # Jaspreet's addition ---------------------------------------
+    
+    # This gets rid of the unwanted bacl space by making it the same color as the main panel background.
+    # Additionally, this hides the scrollbar so that there is only one
+    # tags$head(tags$style(HTML('.wrapper {
+    #                             background-color: #ecf0f5 !important;
+    #                           height: auto !important; 
+    #                           position:relative; 
+    #                           overflow-x:hidden; 
+    #                           overflow-y:hidden
+    #                           }'))),
+    
+    # Gets rid of the unwanted black space on the bottom by making it the same color as the main panel
+    tags$head(tags$style(HTML('.wrapper {
+                                background-color: #ecf0f5 !important;
+                              height: auto !important;
+                              }'))),
+    
+    
+    # This gets rid of the white space on the side so that the entire page gets filled up
+    tags$head(tags$style(HTML('.container-fluid {
+                              padding-right: 0px !important;
+                              padding-left: 0px !important;
+                              }'))),
+    
+    tags$head(tags$style(HTML('.sidebar {
+                              height: 95vh;
+                              width: 300px;
+                              position: fixed;
+                              overflow-y: scroll;
+                              z-index: 1000;
+                              }'))),
+    
+    # ------------------------------------------------------------------------------
+    
+    
+    
     # current approach to setting style for main fonts and hyperlink font
     # TODO needs cleaning, improvement, and documentation from someone knowledgeable
     tags$head(
@@ -122,7 +159,7 @@ shinyUI(
     tags$head(includeScript("www/googleAnalytics.js")),
     tags$noscript(tags$iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-5Q2H73S",
                               height="0", width="0", style="display:none;visibility:hidden")),
-    
+    tags$head(includeScript("www/scrollbar.js")),
     
     
       ######## Google Analytics Script End ###############

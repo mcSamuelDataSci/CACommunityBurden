@@ -4,7 +4,7 @@ fileNames <- list.files(".", recursive = TRUE, pattern = "\\.R$")
 
 
 for (fileName in fileNames) {
-  if (length(grep("checkboxGroupButtons", readLines(fileName))) > 0) { print(fileName)}
+  if (length(grep("renderVisNetwork", readLines(fileName))) > 0) { print(fileName)}
 }
 
 

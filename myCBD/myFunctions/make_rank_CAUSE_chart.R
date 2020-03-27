@@ -118,7 +118,7 @@ rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", 
     
     theme_bw() + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes
     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
-    scale_x_discrete(labels = scales::wrap_format(50)) + #x-axis is condition label--wrapping text so it stacks on top of each other
+    scale_x_discrete(labels = scales::wrap_format(40)) + #x-axis is condition label--wrapping text so it stacks on top of each other
     labs(title = tit) +
     #within theme--x and y axis refer to the way it looks, with coord_flip(), so y refers to vertical label (which technically is really x axis) and vice versa with x axis  
     theme(plot.title = element_text(size=myTitleSize, color=myTitleColor),

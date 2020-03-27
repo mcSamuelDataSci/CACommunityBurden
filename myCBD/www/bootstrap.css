@@ -6920,19 +6920,21 @@ button.btn.checkbtn.btn-default.active {
   background-color: #051DA5;
 }
 
-/* Having autoscroll in the sidebar - Struggling with clipping of menu dropdown issues
+/* Having autoscroll in the sidebar - Struggling with clipping of menu dropdown issues */
+
 .sidebar {
   height: 95vh;
   width: 300px;
   position: fixed;
   overflow-y: scroll;
 }
+
+/*
 .selectize-dropdown {
-  width: auto;
-  min-width: 100%;
-  position: inherit;
+  z-index: 10000;
+  position: absolute;
   overflow-x: visible;
-}
+
 
 .selectize-dropdown-content {
   width: auto;
