@@ -6921,13 +6921,14 @@ button.btn.checkbtn.btn-default.active {
 }
 
 /* Having autoscroll in the sidebar - Struggling with clipping of menu dropdown issues */
-
+/*
 .sidebar {
   height: 95vh;
   width: 300px;
   position: fixed;
   overflow-y: scroll;
 }
+*/
 
 /*
 .selectize-dropdown {

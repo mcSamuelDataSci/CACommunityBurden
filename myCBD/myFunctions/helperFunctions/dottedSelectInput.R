@@ -5,7 +5,7 @@ dottedSelectInput <- function(inputId, label, choices, height = "500px") {
       ".selectize-dropdown {",
       "  width: auto !important;",
       "  min-width: 100% !important;", 
-      "  white-space: nowrap;",
+     # "  white-space: nowrap;", # Jaspreet: comment this out to keep all other dropdowns (beside myCAUSE) as a child to sidebar?
       " overflow: auto;", # Jaspreet: provides a scrollbar to dropdown menus if needed
       " height: auto;", # Jaspreet
       "max-height: 350px;", # Jaspreet: setting max-height + height as auto gives each drop-down their proper height  
@@ -16,7 +16,7 @@ dottedSelectInput <- function(inputId, label, choices, height = "500px") {
      "width: auto !important;",
      "min-width: 25% !important;", # set to 25% because this is now a child of the body
      "white-space: nowrap;",
-     "height: 350px; ",
+     "height: 350px;",
      "}",
       ".selectize-dropdown > ul {",
       "  margin: 0 !important;",
@@ -65,7 +65,7 @@ dottedSelectInput <- function(inputId, label, choices, height = "500px") {
       choices = choices,
       options = list(
         maxOptions = length(choices),
-        dropdownParent = 'body', # Jaspreet - Avoid the clipping issue?
+        dropdownParent = 'body', # Jaspreet - Avoid the clipping issue
         render = I(
           paste(
             collapse = " ", sep = " ",
