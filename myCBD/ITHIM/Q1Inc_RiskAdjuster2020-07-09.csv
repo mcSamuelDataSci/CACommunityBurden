@@ -1,0 +1,2033 @@
+"Region","Cause","Sex","Age","RRadj"
+"California","Acute resp infections",1,"0",1.3941634656961
+"California","Acute resp infections",2,"0",1.28613115953768
+"California","All Causes",1,"0",1.24302637101613
+"California","All Causes",1,"15",1.13644827867867
+"California","All Causes",1,"30",1.32497758361624
+"California","All Causes",1,"45",1.47080250252879
+"California","All Causes",1,"5",1.20030688313584
+"California","All Causes",1,"60",1.42868658686286
+"California","All Causes",1,"70",1.25572829123458
+"California","All Causes",1,"80",0.990749461438227
+"California","All Causes",1,"NA",1
+"California","All Causes",2,"0",1.19848945917308
+"California","All Causes",2,"15",1.07390820779711
+"California","All Causes",2,"30",1.32668394785456
+"California","All Causes",2,"45",1.45956597390458
+"California","All Causes",2,"5",1.1162362686651
+"California","All Causes",2,"60",1.41054963376465
+"California","All Causes",2,"70",1.18839985063329
+"California","All Causes",2,"80",0.958576487591774
+"California","All Causes",2,"NA",1
+"California","Breast Cancer",1,"0",1
+"California","Breast Cancer",1,"15",1
+"California","Breast Cancer",1,"30",1
+"California","Breast Cancer",1,"45",1
+"California","Breast Cancer",1,"5",1
+"California","Breast Cancer",1,"60",1.43740168346976
+"California","Breast Cancer",1,"70",1.08833880181359
+"California","Breast Cancer",1,"80",1
+"California","Breast Cancer",1,"NA",1
+"California","Breast Cancer",2,"0",1
+"California","Breast Cancer",2,"15",0.823872093199642
+"California","Breast Cancer",2,"30",0.987436083442548
+"California","Breast Cancer",2,"45",1.04001288913717
+"California","Breast Cancer",2,"5",1
+"California","Breast Cancer",2,"60",1.02765920846845
+"California","Breast Cancer",2,"70",0.964437812269136
+"California","Breast Cancer",2,"80",0.857405698310381
+"California","Breast Cancer",2,"NA",1
+"California","Colon Cancer",1,"0",1
+"California","Colon Cancer",1,"15",1.16775208606292
+"California","Colon Cancer",1,"30",1.04545238559512
+"California","Colon Cancer",1,"45",1.16793716006817
+"California","Colon Cancer",1,"5",1
+"California","Colon Cancer",1,"60",1.20072689252957
+"California","Colon Cancer",1,"70",1.36366517860281
+"California","Colon Cancer",1,"80",1.02120684848106
+"California","Colon Cancer",1,"NA",1
+"California","Colon Cancer",2,"0",1
+"California","Colon Cancer",2,"15",1
+"California","Colon Cancer",2,"30",1.13908358425355
+"California","Colon Cancer",2,"45",1.04615555566982
+"California","Colon Cancer",2,"5",1
+"California","Colon Cancer",2,"60",1.18674604329969
+"California","Colon Cancer",2,"70",1.09853034435193
+"California","Colon Cancer",2,"80",0.976330362676325
+"California","Colon Cancer",2,"NA",1
+"California","Dementia",1,"0",1
+"California","Dementia",1,"15",1
+"California","Dementia",1,"30",1
+"California","Dementia",1,"45",1.21917621608094
+"California","Dementia",1,"5",1
+"California","Dementia",1,"60",1.08740463207914
+"California","Dementia",1,"70",1.0329332117894
+"California","Dementia",1,"80",0.849203647596617
+"California","Dementia",1,"NA",1
+"California","Dementia",2,"0",1
+"California","Dementia",2,"15",1
+"California","Dementia",2,"30",1
+"California","Dementia",2,"45",1.22997495796322
+"California","Dementia",2,"5",1
+"California","Dementia",2,"60",0.950665465988331
+"California","Dementia",2,"70",0.96268303127116
+"California","Dementia",2,"80",0.828941136533294
+"California","Dementia",2,"NA",1
+"California","Depression",1,"0",1
+"California","Depression",1,"15",1
+"California","Depression",1,"30",1
+"California","Depression",1,"45",1
+"California","Depression",1,"5",1
+"California","Depression",1,"60",1
+"California","Depression",1,"70",1
+"California","Depression",1,"80",1
+"California","Depression",1,"NA",1
+"California","Depression",2,"0",1
+"California","Depression",2,"15",1
+"California","Depression",2,"30",1
+"California","Depression",2,"45",1
+"California","Depression",2,"5",1
+"California","Depression",2,"60",1
+"California","Depression",2,"70",1
+"California","Depression",2,"80",0.905218456325905
+"California","Depression",2,"NA",1
+"California","Diabetes",1,"0",1
+"California","Diabetes",1,"15",1.23475425493539
+"California","Diabetes",1,"30",1.57952542725636
+"California","Diabetes",1,"45",1.71825252982707
+"California","Diabetes",1,"5",1
+"California","Diabetes",1,"60",1.63819866926207
+"California","Diabetes",1,"70",1.48835265194736
+"California","Diabetes",1,"80",1.19805699881046
+"California","Diabetes",1,"NA",1
+"California","Diabetes",2,"0",1
+"California","Diabetes",2,"15",1.44504549680255
+"California","Diabetes",2,"30",1.68984927334317
+"California","Diabetes",2,"45",1.94423895051232
+"California","Diabetes",2,"5",1
+"California","Diabetes",2,"60",1.80018036615981
+"California","Diabetes",2,"70",1.50247683384597
+"California","Diabetes",2,"80",1.29845816156107
+"California","Diabetes",2,"NA",1
+"California","Hypertensive Heart Disease",1,"0",1
+"California","Hypertensive Heart Disease",1,"15",1.1446809962167
+"California","Hypertensive Heart Disease",1,"30",1.42756001588616
+"California","Hypertensive Heart Disease",1,"45",1.6747092948832
+"California","Hypertensive Heart Disease",1,"5",1
+"California","Hypertensive Heart Disease",1,"60",1.69006502715153
+"California","Hypertensive Heart Disease",1,"70",1.53029180059566
+"California","Hypertensive Heart Disease",1,"80",1.11794944834309
+"California","Hypertensive Heart Disease",1,"NA",1
+"California","Hypertensive Heart Disease",2,"0",1
+"California","Hypertensive Heart Disease",2,"15",1.73405459616306
+"California","Hypertensive Heart Disease",2,"30",1.89379659943632
+"California","Hypertensive Heart Disease",2,"45",1.89032914407671
+"California","Hypertensive Heart Disease",2,"5",1
+"California","Hypertensive Heart Disease",2,"60",1.71145575950868
+"California","Hypertensive Heart Disease",2,"70",1.46357414329658
+"California","Hypertensive Heart Disease",2,"80",1.05710564139411
+"California","Hypertensive Heart Disease",2,"NA",1
+"California","Inflammatory Heart Disease",1,"0",1.20233089580381
+"California","Inflammatory Heart Disease",1,"15",1.19093966195827
+"California","Inflammatory Heart Disease",1,"30",1.43589945625442
+"California","Inflammatory Heart Disease",1,"45",1.38863274823825
+"California","Inflammatory Heart Disease",1,"5",1
+"California","Inflammatory Heart Disease",1,"60",1.38639288851496
+"California","Inflammatory Heart Disease",1,"70",1.39816745950721
+"California","Inflammatory Heart Disease",1,"80",0.937641639178897
+"California","Inflammatory Heart Disease",1,"NA",1
+"California","Inflammatory Heart Disease",2,"0",1.16609225131417
+"California","Inflammatory Heart Disease",2,"15",1.23411292973115
+"California","Inflammatory Heart Disease",2,"30",1.50637992366591
+"California","Inflammatory Heart Disease",2,"45",1.64334890410055
+"California","Inflammatory Heart Disease",2,"5",1
+"California","Inflammatory Heart Disease",2,"60",1.41482718307012
+"California","Inflammatory Heart Disease",2,"70",1.21763094728213
+"California","Inflammatory Heart Disease",2,"80",1.0057636260097
+"California","Inflammatory Heart Disease",2,"NA",1
+"California","Ischemic Heart Disease",1,"0",1
+"California","Ischemic Heart Disease",1,"15",0.969369492291617
+"California","Ischemic Heart Disease",1,"30",1.21794327333569
+"California","Ischemic Heart Disease",1,"45",1.46399496777875
+"California","Ischemic Heart Disease",1,"5",1
+"California","Ischemic Heart Disease",1,"60",1.54189543235987
+"California","Ischemic Heart Disease",1,"70",1.39648987295275
+"California","Ischemic Heart Disease",1,"80",1.05151381508098
+"California","Ischemic Heart Disease",1,"NA",1
+"California","Ischemic Heart Disease",2,"0",1
+"California","Ischemic Heart Disease",2,"15",1.83330096414695
+"California","Ischemic Heart Disease",2,"30",1.63352096423173
+"California","Ischemic Heart Disease",2,"45",1.81392985149692
+"California","Ischemic Heart Disease",2,"5",1
+"California","Ischemic Heart Disease",2,"60",1.7549267900182
+"California","Ischemic Heart Disease",2,"70",1.42231345924319
+"California","Ischemic Heart Disease",2,"80",1.06967068042841
+"California","Ischemic Heart Disease",2,"NA",1
+"California","Lung Cancer",1,"0",1
+"California","Lung Cancer",1,"15",1.19555570715966
+"California","Lung Cancer",1,"30",1.33928051791294
+"California","Lung Cancer",1,"45",1.37898696061781
+"California","Lung Cancer",1,"5",1
+"California","Lung Cancer",1,"60",1.32153879785347
+"California","Lung Cancer",1,"70",1.20107342546643
+"California","Lung Cancer",1,"80",1.07599030955524
+"California","Lung Cancer",1,"NA",1
+"California","Lung Cancer",2,"0",1
+"California","Lung Cancer",2,"15",1
+"California","Lung Cancer",2,"30",1.34761929445603
+"California","Lung Cancer",2,"45",1.25658741923497
+"California","Lung Cancer",2,"5",1
+"California","Lung Cancer",2,"60",1.25948736016484
+"California","Lung Cancer",2,"70",1.01738443404786
+"California","Lung Cancer",2,"80",0.908822852909682
+"California","Lung Cancer",2,"NA",1
+"California","Other",1,"0",1.23848584485783
+"California","Other",1,"15",1.16858232026953
+"California","Other",1,"30",1.31744367231504
+"California","Other",1,"45",1.45427448775336
+"California","Other",1,"5",1.149580766527
+"California","Other",1,"60",1.37399959896836
+"California","Other",1,"70",1.18113508361735
+"California","Other",1,"80",0.958542119844921
+"California","Other",1,"NA",1
+"California","Other",2,"0",1.18961600756431
+"California","Other",2,"15",1.04827667554719
+"California","Other",2,"30",1.30251486354915
+"California","Other",2,"45",1.44733692443132
+"California","Other",2,"5",1.08140751297265
+"California","Other",2,"60",1.36009282970644
+"California","Other",2,"70",1.14347214380604
+"California","Other",2,"80",0.938528647357179
+"California","Other",2,"NA",1
+"California","Respiratory diseases",1,"0",1.09482836864959
+"California","Respiratory diseases",1,"15",1.05151285087536
+"California","Respiratory diseases",1,"30",1.47210094167665
+"California","Respiratory diseases",1,"45",1.54746095350984
+"California","Respiratory diseases",1,"5",1.498969966263
+"California","Respiratory diseases",1,"60",1.46527452133755
+"California","Respiratory diseases",1,"70",1.22755741210806
+"California","Respiratory diseases",1,"80",1.01761016391367
+"California","Respiratory diseases",1,"NA",1
+"California","Respiratory diseases",2,"0",1.38140013431825
+"California","Respiratory diseases",2,"15",1.11242632874058
+"California","Respiratory diseases",2,"30",1.39982397945311
+"California","Respiratory diseases",2,"45",1.77790007372213
+"California","Respiratory diseases",2,"5",1.25313316953912
+"California","Respiratory diseases",2,"60",1.58334998319612
+"California","Respiratory diseases",2,"70",1.24412578429626
+"California","Respiratory diseases",2,"80",0.992526676901479
+"California","Respiratory diseases",2,"NA",1
+"California","Road Traffic Injuries",1,"0",1.52059495645776
+"California","Road Traffic Injuries",1,"15",1.03702057775519
+"California","Road Traffic Injuries",1,"30",1.27848556878623
+"California","Road Traffic Injuries",1,"45",1.44416347044128
+"California","Road Traffic Injuries",1,"5",1.3245208753617
+"California","Road Traffic Injuries",1,"60",1.49673637517951
+"California","Road Traffic Injuries",1,"70",1.58331774840113
+"California","Road Traffic Injuries",1,"80",1.33779072844629
+"California","Road Traffic Injuries",1,"NA",1
+"California","Road Traffic Injuries",2,"0",1.5499529358531
+"California","Road Traffic Injuries",2,"15",1.09872030714869
+"California","Road Traffic Injuries",2,"30",1.53067637404762
+"California","Road Traffic Injuries",2,"45",1.42388651160867
+"California","Road Traffic Injuries",2,"5",1.22807050614833
+"California","Road Traffic Injuries",2,"60",1.38171126713775
+"California","Road Traffic Injuries",2,"70",1.54159102719844
+"California","Road Traffic Injuries",2,"80",1.25691481021853
+"California","Road Traffic Injuries",2,"NA",1
+"California","Stroke",1,"0",1.14889396710142
+"California","Stroke",1,"15",0.85553527668306
+"California","Stroke",1,"30",1.52174322057533
+"California","Stroke",1,"45",1.62094430957251
+"California","Stroke",1,"5",1
+"California","Stroke",1,"60",1.55131940682962
+"California","Stroke",1,"70",1.28480767642392
+"California","Stroke",1,"80",1.01192703292372
+"California","Stroke",1,"NA",1
+"California","Stroke",2,"0",1
+"California","Stroke",2,"15",1.09537539664043
+"California","Stroke",2,"30",1.48503954141398
+"California","Stroke",2,"45",1.58418802756481
+"California","Stroke",2,"5",1
+"California","Stroke",2,"60",1.5863143300798
+"California","Stroke",2,"70",1.23889135538896
+"California","Stroke",2,"80",0.952202528730746
+"California","Stroke",2,"NA",1
+"Central Coast","Acute resp infections",1,"0",1
+"Central Coast","Acute resp infections",2,"0",1
+"Central Coast","All Causes",1,"0",1.13193772813777
+"Central Coast","All Causes",1,"15",0.856789571838925
+"Central Coast","All Causes",1,"30",1.2187666732162
+"Central Coast","All Causes",1,"45",1.55905387275095
+"Central Coast","All Causes",1,"5",1.37691209163317
+"Central Coast","All Causes",1,"60",1.55095952932871
+"Central Coast","All Causes",1,"70",1.20102716733762
+"Central Coast","All Causes",1,"80",1.07751433219093
+"Central Coast","All Causes",1,"NA",1
+"Central Coast","All Causes",2,"0",1.01347982686778
+"Central Coast","All Causes",2,"15",0.585523611093259
+"Central Coast","All Causes",2,"30",1.09225176652762
+"Central Coast","All Causes",2,"45",1.52047657913966
+"Central Coast","All Causes",2,"5",1
+"Central Coast","All Causes",2,"60",1.37783105124753
+"Central Coast","All Causes",2,"70",1.57113411098683
+"Central Coast","All Causes",2,"80",1.06393823791901
+"Central Coast","All Causes",2,"NA",1
+"Central Coast","Breast Cancer",1,"0",1
+"Central Coast","Breast Cancer",1,"15",1
+"Central Coast","Breast Cancer",1,"30",1
+"Central Coast","Breast Cancer",1,"45",1
+"Central Coast","Breast Cancer",1,"5",1
+"Central Coast","Breast Cancer",1,"60",1
+"Central Coast","Breast Cancer",1,"70",1
+"Central Coast","Breast Cancer",1,"80",1
+"Central Coast","Breast Cancer",1,"NA",1
+"Central Coast","Breast Cancer",2,"0",1
+"Central Coast","Breast Cancer",2,"15",1
+"Central Coast","Breast Cancer",2,"30",1
+"Central Coast","Breast Cancer",2,"45",0.773065276575921
+"Central Coast","Breast Cancer",2,"5",1
+"Central Coast","Breast Cancer",2,"60",0.695233331480761
+"Central Coast","Breast Cancer",2,"70",0.846829358647835
+"Central Coast","Breast Cancer",2,"80",0.587287252518235
+"Central Coast","Breast Cancer",2,"NA",1
+"Central Coast","Colon Cancer",1,"0",1
+"Central Coast","Colon Cancer",1,"15",1
+"Central Coast","Colon Cancer",1,"30",1
+"Central Coast","Colon Cancer",1,"45",1
+"Central Coast","Colon Cancer",1,"5",1
+"Central Coast","Colon Cancer",1,"60",1
+"Central Coast","Colon Cancer",1,"70",1
+"Central Coast","Colon Cancer",1,"80",1
+"Central Coast","Colon Cancer",1,"NA",1
+"Central Coast","Colon Cancer",2,"0",1
+"Central Coast","Colon Cancer",2,"15",1
+"Central Coast","Colon Cancer",2,"30",1
+"Central Coast","Colon Cancer",2,"45",1
+"Central Coast","Colon Cancer",2,"5",1
+"Central Coast","Colon Cancer",2,"60",1
+"Central Coast","Colon Cancer",2,"70",1
+"Central Coast","Colon Cancer",2,"80",1.36078753632274
+"Central Coast","Colon Cancer",2,"NA",1
+"Central Coast","Dementia",1,"0",1
+"Central Coast","Dementia",1,"15",1
+"Central Coast","Dementia",1,"30",1
+"Central Coast","Dementia",1,"45",1
+"Central Coast","Dementia",1,"5",1
+"Central Coast","Dementia",1,"60",1
+"Central Coast","Dementia",1,"70",0.930002782114097
+"Central Coast","Dementia",1,"80",1.05893038284874
+"Central Coast","Dementia",1,"NA",1
+"Central Coast","Dementia",2,"0",1
+"Central Coast","Dementia",2,"15",1
+"Central Coast","Dementia",2,"30",1
+"Central Coast","Dementia",2,"45",1
+"Central Coast","Dementia",2,"5",1
+"Central Coast","Dementia",2,"60",1
+"Central Coast","Dementia",2,"70",1.95565431066032
+"Central Coast","Dementia",2,"80",1.05165907704437
+"Central Coast","Dementia",2,"NA",1
+"Central Coast","Depression",1,"0",1
+"Central Coast","Depression",1,"15",1
+"Central Coast","Depression",1,"30",1
+"Central Coast","Depression",1,"45",1
+"Central Coast","Depression",1,"5",1
+"Central Coast","Depression",1,"60",1
+"Central Coast","Depression",1,"70",1
+"Central Coast","Depression",1,"80",1
+"Central Coast","Depression",1,"NA",1
+"Central Coast","Depression",2,"0",1
+"Central Coast","Depression",2,"15",1
+"Central Coast","Depression",2,"30",1
+"Central Coast","Depression",2,"45",1
+"Central Coast","Depression",2,"5",1
+"Central Coast","Depression",2,"60",1
+"Central Coast","Depression",2,"70",1
+"Central Coast","Depression",2,"80",1
+"Central Coast","Depression",2,"NA",1
+"Central Coast","Diabetes",1,"0",1
+"Central Coast","Diabetes",1,"15",1
+"Central Coast","Diabetes",1,"30",1
+"Central Coast","Diabetes",1,"45",2.40251043822511
+"Central Coast","Diabetes",1,"5",1
+"Central Coast","Diabetes",1,"60",1.69203763458562
+"Central Coast","Diabetes",1,"70",1.42126671020759
+"Central Coast","Diabetes",1,"80",1.4865465416936
+"Central Coast","Diabetes",1,"NA",1
+"Central Coast","Diabetes",2,"0",1
+"Central Coast","Diabetes",2,"15",1
+"Central Coast","Diabetes",2,"30",1
+"Central Coast","Diabetes",2,"45",2.26289415692391
+"Central Coast","Diabetes",2,"5",1
+"Central Coast","Diabetes",2,"60",2.9510436091577
+"Central Coast","Diabetes",2,"70",1.89084705280218
+"Central Coast","Diabetes",2,"80",1.78318241688705
+"Central Coast","Diabetes",2,"NA",1
+"Central Coast","Hypertensive Heart Disease",1,"0",1
+"Central Coast","Hypertensive Heart Disease",1,"15",1
+"Central Coast","Hypertensive Heart Disease",1,"30",1
+"Central Coast","Hypertensive Heart Disease",1,"45",2.19806400322623
+"Central Coast","Hypertensive Heart Disease",1,"5",1
+"Central Coast","Hypertensive Heart Disease",1,"60",1.90553677033711
+"Central Coast","Hypertensive Heart Disease",1,"70",2.05517681812319
+"Central Coast","Hypertensive Heart Disease",1,"80",1.66291647036911
+"Central Coast","Hypertensive Heart Disease",1,"NA",1
+"Central Coast","Hypertensive Heart Disease",2,"0",1
+"Central Coast","Hypertensive Heart Disease",2,"15",1
+"Central Coast","Hypertensive Heart Disease",2,"30",1
+"Central Coast","Hypertensive Heart Disease",2,"45",1
+"Central Coast","Hypertensive Heart Disease",2,"5",1
+"Central Coast","Hypertensive Heart Disease",2,"60",2.01810786499276
+"Central Coast","Hypertensive Heart Disease",2,"70",1.88322266952476
+"Central Coast","Hypertensive Heart Disease",2,"80",1.17894095301058
+"Central Coast","Hypertensive Heart Disease",2,"NA",1
+"Central Coast","Inflammatory Heart Disease",1,"0",1
+"Central Coast","Inflammatory Heart Disease",1,"15",1
+"Central Coast","Inflammatory Heart Disease",1,"30",1
+"Central Coast","Inflammatory Heart Disease",1,"45",1
+"Central Coast","Inflammatory Heart Disease",1,"5",1
+"Central Coast","Inflammatory Heart Disease",1,"60",1
+"Central Coast","Inflammatory Heart Disease",1,"70",1
+"Central Coast","Inflammatory Heart Disease",1,"80",1.06272263406181
+"Central Coast","Inflammatory Heart Disease",1,"NA",1
+"Central Coast","Inflammatory Heart Disease",2,"0",1
+"Central Coast","Inflammatory Heart Disease",2,"15",1
+"Central Coast","Inflammatory Heart Disease",2,"30",1
+"Central Coast","Inflammatory Heart Disease",2,"45",1
+"Central Coast","Inflammatory Heart Disease",2,"5",1
+"Central Coast","Inflammatory Heart Disease",2,"60",1
+"Central Coast","Inflammatory Heart Disease",2,"70",1
+"Central Coast","Inflammatory Heart Disease",2,"80",1.6330982422967
+"Central Coast","Inflammatory Heart Disease",2,"NA",1
+"Central Coast","Ischemic Heart Disease",1,"0",1
+"Central Coast","Ischemic Heart Disease",1,"15",1
+"Central Coast","Ischemic Heart Disease",1,"30",1
+"Central Coast","Ischemic Heart Disease",1,"45",1.64241387031765
+"Central Coast","Ischemic Heart Disease",1,"5",1
+"Central Coast","Ischemic Heart Disease",1,"60",1.78699309345689
+"Central Coast","Ischemic Heart Disease",1,"70",1.22228937077853
+"Central Coast","Ischemic Heart Disease",1,"80",1.01245872569402
+"Central Coast","Ischemic Heart Disease",1,"NA",1
+"Central Coast","Ischemic Heart Disease",2,"0",1
+"Central Coast","Ischemic Heart Disease",2,"15",1
+"Central Coast","Ischemic Heart Disease",2,"30",1
+"Central Coast","Ischemic Heart Disease",2,"45",2.47302004292399
+"Central Coast","Ischemic Heart Disease",2,"5",1
+"Central Coast","Ischemic Heart Disease",2,"60",1.53152849833443
+"Central Coast","Ischemic Heart Disease",2,"70",1.81357686074056
+"Central Coast","Ischemic Heart Disease",2,"80",1.02728855551135
+"Central Coast","Ischemic Heart Disease",2,"NA",1
+"Central Coast","Lung Cancer",1,"0",1
+"Central Coast","Lung Cancer",1,"15",1
+"Central Coast","Lung Cancer",1,"30",1
+"Central Coast","Lung Cancer",1,"45",1
+"Central Coast","Lung Cancer",1,"5",1
+"Central Coast","Lung Cancer",1,"60",1.07984996502161
+"Central Coast","Lung Cancer",1,"70",0.948327960086789
+"Central Coast","Lung Cancer",1,"80",1.08268707660921
+"Central Coast","Lung Cancer",1,"NA",1
+"Central Coast","Lung Cancer",2,"0",1
+"Central Coast","Lung Cancer",2,"15",1
+"Central Coast","Lung Cancer",2,"30",1
+"Central Coast","Lung Cancer",2,"45",1.53195931862548
+"Central Coast","Lung Cancer",2,"5",1
+"Central Coast","Lung Cancer",2,"60",1.00699715725689
+"Central Coast","Lung Cancer",2,"70",1.12644525511836
+"Central Coast","Lung Cancer",2,"80",1.29504368504021
+"Central Coast","Lung Cancer",2,"NA",1
+"Central Coast","Other",1,"0",1.10118332627096
+"Central Coast","Other",1,"15",0.976637776223602
+"Central Coast","Other",1,"30",1.27946129996274
+"Central Coast","Other",1,"45",1.56295126262191
+"Central Coast","Other",1,"5",1
+"Central Coast","Other",1,"60",1.50978084931296
+"Central Coast","Other",1,"70",1.17797507050707
+"Central Coast","Other",1,"80",0.994564035521179
+"Central Coast","Other",1,"NA",1
+"Central Coast","Other",2,"0",0.967687473224141
+"Central Coast","Other",2,"15",0.437327492037541
+"Central Coast","Other",2,"30",1.15742728346034
+"Central Coast","Other",2,"45",1.442595025039
+"Central Coast","Other",2,"5",1
+"Central Coast","Other",2,"60",1.37416815262644
+"Central Coast","Other",2,"70",1.49436611148295
+"Central Coast","Other",2,"80",0.979765909482771
+"Central Coast","Other",2,"NA",1
+"Central Coast","Respiratory diseases",1,"0",1
+"Central Coast","Respiratory diseases",1,"15",1
+"Central Coast","Respiratory diseases",1,"30",1
+"Central Coast","Respiratory diseases",1,"45",1.92022871321844
+"Central Coast","Respiratory diseases",1,"5",1
+"Central Coast","Respiratory diseases",1,"60",1.86027250611392
+"Central Coast","Respiratory diseases",1,"70",1.21649653015872
+"Central Coast","Respiratory diseases",1,"80",1.35290970763798
+"Central Coast","Respiratory diseases",1,"NA",1
+"Central Coast","Respiratory diseases",2,"0",1
+"Central Coast","Respiratory diseases",2,"15",1
+"Central Coast","Respiratory diseases",2,"30",1
+"Central Coast","Respiratory diseases",2,"45",3.11417338738577
+"Central Coast","Respiratory diseases",2,"5",1
+"Central Coast","Respiratory diseases",2,"60",1
+"Central Coast","Respiratory diseases",2,"70",2.16394219060975
+"Central Coast","Respiratory diseases",2,"80",1.10465935592716
+"Central Coast","Respiratory diseases",2,"NA",1
+"Central Coast","Road Traffic Injuries",1,"0",1
+"Central Coast","Road Traffic Injuries",1,"15",0.516245885679848
+"Central Coast","Road Traffic Injuries",1,"30",0.958580529495891
+"Central Coast","Road Traffic Injuries",1,"45",1
+"Central Coast","Road Traffic Injuries",1,"5",1
+"Central Coast","Road Traffic Injuries",1,"60",1
+"Central Coast","Road Traffic Injuries",1,"70",1
+"Central Coast","Road Traffic Injuries",1,"80",1
+"Central Coast","Road Traffic Injuries",1,"NA",1
+"Central Coast","Road Traffic Injuries",2,"0",1
+"Central Coast","Road Traffic Injuries",2,"15",0.885330486826839
+"Central Coast","Road Traffic Injuries",2,"30",1
+"Central Coast","Road Traffic Injuries",2,"45",1
+"Central Coast","Road Traffic Injuries",2,"5",1
+"Central Coast","Road Traffic Injuries",2,"60",1
+"Central Coast","Road Traffic Injuries",2,"70",1
+"Central Coast","Road Traffic Injuries",2,"80",1
+"Central Coast","Road Traffic Injuries",2,"NA",1
+"Central Coast","Stroke",1,"0",1
+"Central Coast","Stroke",1,"15",1
+"Central Coast","Stroke",1,"30",1
+"Central Coast","Stroke",1,"45",1.58260608232289
+"Central Coast","Stroke",1,"5",1
+"Central Coast","Stroke",1,"60",2.18969576240493
+"Central Coast","Stroke",1,"70",1.38372381597569
+"Central Coast","Stroke",1,"80",1.04493648119048
+"Central Coast","Stroke",1,"NA",1
+"Central Coast","Stroke",2,"0",1
+"Central Coast","Stroke",2,"15",1
+"Central Coast","Stroke",2,"30",1
+"Central Coast","Stroke",2,"45",2.05520387128843
+"Central Coast","Stroke",2,"5",1
+"Central Coast","Stroke",2,"60",1.68355522427204
+"Central Coast","Stroke",2,"70",1.71986620228284
+"Central Coast","Stroke",2,"80",1.09316835122206
+"Central Coast","Stroke",2,"NA",1
+"Other","Acute resp infections",1,"0",1
+"Other","Acute resp infections",2,"0",1
+"Other","All Causes",1,"0",1.17011128775835
+"Other","All Causes",1,"15",1.07273279622238
+"Other","All Causes",1,"30",1.26758078709862
+"Other","All Causes",1,"45",1.33826716488695
+"Other","All Causes",1,"5",1.0129571946951
+"Other","All Causes",1,"60",1.30673283444646
+"Other","All Causes",1,"70",1.10572849805319
+"Other","All Causes",1,"80",1.07230602665321
+"Other","All Causes",1,"NA",1
+"Other","All Causes",2,"0",1.23708939985532
+"Other","All Causes",2,"15",1.02924624687914
+"Other","All Causes",2,"30",1.18623066155485
+"Other","All Causes",2,"45",1.28173081322606
+"Other","All Causes",2,"5",1.00690670448854
+"Other","All Causes",2,"60",1.26550841456128
+"Other","All Causes",2,"70",1.18026028347822
+"Other","All Causes",2,"80",1.06627363993512
+"Other","All Causes",2,"NA",1
+"Other","Breast Cancer",1,"0",1
+"Other","Breast Cancer",1,"15",1
+"Other","Breast Cancer",1,"30",1
+"Other","Breast Cancer",1,"45",1
+"Other","Breast Cancer",1,"5",1
+"Other","Breast Cancer",1,"60",1
+"Other","Breast Cancer",1,"70",1
+"Other","Breast Cancer",1,"80",1
+"Other","Breast Cancer",1,"NA",1
+"Other","Breast Cancer",2,"0",1
+"Other","Breast Cancer",2,"15",1
+"Other","Breast Cancer",2,"30",1
+"Other","Breast Cancer",2,"45",1.04531377697098
+"Other","Breast Cancer",2,"5",1
+"Other","Breast Cancer",2,"60",1.10785764660626
+"Other","Breast Cancer",2,"70",1.01428155306535
+"Other","Breast Cancer",2,"80",0.976624209264215
+"Other","Breast Cancer",2,"NA",1
+"Other","Colon Cancer",1,"0",1
+"Other","Colon Cancer",1,"15",1
+"Other","Colon Cancer",1,"30",1
+"Other","Colon Cancer",1,"45",1.07906369800577
+"Other","Colon Cancer",1,"5",1
+"Other","Colon Cancer",1,"60",1.28474283880286
+"Other","Colon Cancer",1,"70",1.10083583096297
+"Other","Colon Cancer",1,"80",1.0891149870801
+"Other","Colon Cancer",1,"NA",1
+"Other","Colon Cancer",2,"0",1
+"Other","Colon Cancer",2,"15",1
+"Other","Colon Cancer",2,"30",1
+"Other","Colon Cancer",2,"45",1.00691449536797
+"Other","Colon Cancer",2,"5",1
+"Other","Colon Cancer",2,"60",1.40785452143792
+"Other","Colon Cancer",2,"70",1.3051786293279
+"Other","Colon Cancer",2,"80",1.16041082960129
+"Other","Colon Cancer",2,"NA",1
+"Other","Dementia",1,"0",1
+"Other","Dementia",1,"15",1
+"Other","Dementia",1,"30",1
+"Other","Dementia",1,"45",1
+"Other","Dementia",1,"5",1
+"Other","Dementia",1,"60",0.991731314163608
+"Other","Dementia",1,"70",1.08570477924761
+"Other","Dementia",1,"80",1.05226523187814
+"Other","Dementia",1,"NA",1
+"Other","Dementia",2,"0",1
+"Other","Dementia",2,"15",1
+"Other","Dementia",2,"30",1
+"Other","Dementia",2,"45",1
+"Other","Dementia",2,"5",1
+"Other","Dementia",2,"60",0.970323021856507
+"Other","Dementia",2,"70",1.14132894438845
+"Other","Dementia",2,"80",1.08625282351589
+"Other","Dementia",2,"NA",1
+"Other","Depression",1,"0",1
+"Other","Depression",1,"15",1
+"Other","Depression",1,"30",1
+"Other","Depression",1,"45",1
+"Other","Depression",1,"5",1
+"Other","Depression",1,"60",1
+"Other","Depression",1,"70",1
+"Other","Depression",1,"80",1
+"Other","Depression",1,"NA",1
+"Other","Depression",2,"0",1
+"Other","Depression",2,"15",1
+"Other","Depression",2,"30",1
+"Other","Depression",2,"45",1
+"Other","Depression",2,"5",1
+"Other","Depression",2,"60",1
+"Other","Depression",2,"70",1
+"Other","Depression",2,"80",1
+"Other","Depression",2,"NA",1
+"Other","Diabetes",1,"0",1
+"Other","Diabetes",1,"15",1
+"Other","Diabetes",1,"30",1.11923033958892
+"Other","Diabetes",1,"45",1.43734519304255
+"Other","Diabetes",1,"5",1
+"Other","Diabetes",1,"60",1.50090591961731
+"Other","Diabetes",1,"70",1.24471407026816
+"Other","Diabetes",1,"80",1.16317208850975
+"Other","Diabetes",1,"NA",1
+"Other","Diabetes",2,"0",1
+"Other","Diabetes",2,"15",1
+"Other","Diabetes",2,"30",1
+"Other","Diabetes",2,"45",1.3313647216532
+"Other","Diabetes",2,"5",1
+"Other","Diabetes",2,"60",1.47829127047797
+"Other","Diabetes",2,"70",1.33236985077224
+"Other","Diabetes",2,"80",1.11150462605487
+"Other","Diabetes",2,"NA",1
+"Other","Hypertensive Heart Disease",1,"0",1
+"Other","Hypertensive Heart Disease",1,"15",1
+"Other","Hypertensive Heart Disease",1,"30",1.3430764075067
+"Other","Hypertensive Heart Disease",1,"45",1.60995984885914
+"Other","Hypertensive Heart Disease",1,"5",1
+"Other","Hypertensive Heart Disease",1,"60",1.52147599129448
+"Other","Hypertensive Heart Disease",1,"70",1.24697615853762
+"Other","Hypertensive Heart Disease",1,"80",1.09625204466254
+"Other","Hypertensive Heart Disease",1,"NA",1
+"Other","Hypertensive Heart Disease",2,"0",1
+"Other","Hypertensive Heart Disease",2,"15",1
+"Other","Hypertensive Heart Disease",2,"30",1
+"Other","Hypertensive Heart Disease",2,"45",1.49634096729683
+"Other","Hypertensive Heart Disease",2,"5",1
+"Other","Hypertensive Heart Disease",2,"60",1.19219566404931
+"Other","Hypertensive Heart Disease",2,"70",1.49766385481541
+"Other","Hypertensive Heart Disease",2,"80",1.15477124908251
+"Other","Hypertensive Heart Disease",2,"NA",1
+"Other","Inflammatory Heart Disease",1,"0",1
+"Other","Inflammatory Heart Disease",1,"15",1
+"Other","Inflammatory Heart Disease",1,"30",1.09467042618101
+"Other","Inflammatory Heart Disease",1,"45",1.19913348970123
+"Other","Inflammatory Heart Disease",1,"5",1
+"Other","Inflammatory Heart Disease",1,"60",1.02834418772021
+"Other","Inflammatory Heart Disease",1,"70",1.16531223033804
+"Other","Inflammatory Heart Disease",1,"80",1.20348751647073
+"Other","Inflammatory Heart Disease",1,"NA",1
+"Other","Inflammatory Heart Disease",2,"0",1
+"Other","Inflammatory Heart Disease",2,"15",1
+"Other","Inflammatory Heart Disease",2,"30",1
+"Other","Inflammatory Heart Disease",2,"45",0.881050183446973
+"Other","Inflammatory Heart Disease",2,"5",1
+"Other","Inflammatory Heart Disease",2,"60",1.34974420347988
+"Other","Inflammatory Heart Disease",2,"70",1.15823032620322
+"Other","Inflammatory Heart Disease",2,"80",1.07160746000385
+"Other","Inflammatory Heart Disease",2,"NA",1
+"Other","Ischemic Heart Disease",1,"0",1
+"Other","Ischemic Heart Disease",1,"15",1
+"Other","Ischemic Heart Disease",1,"30",1.11324515060716
+"Other","Ischemic Heart Disease",1,"45",1.28280574587585
+"Other","Ischemic Heart Disease",1,"5",1
+"Other","Ischemic Heart Disease",1,"60",1.25238215321433
+"Other","Ischemic Heart Disease",1,"70",1.12726390700498
+"Other","Ischemic Heart Disease",1,"80",1.04855317266411
+"Other","Ischemic Heart Disease",1,"NA",1
+"Other","Ischemic Heart Disease",2,"0",1
+"Other","Ischemic Heart Disease",2,"15",1
+"Other","Ischemic Heart Disease",2,"30",0.882469166237665
+"Other","Ischemic Heart Disease",2,"45",1.54329927868247
+"Other","Ischemic Heart Disease",2,"5",1
+"Other","Ischemic Heart Disease",2,"60",1.30610585705159
+"Other","Ischemic Heart Disease",2,"70",1.27293200028652
+"Other","Ischemic Heart Disease",2,"80",1.11749210083133
+"Other","Ischemic Heart Disease",2,"NA",1
+"Other","Lung Cancer",1,"0",1
+"Other","Lung Cancer",1,"15",1
+"Other","Lung Cancer",1,"30",1
+"Other","Lung Cancer",1,"45",1.29204455912118
+"Other","Lung Cancer",1,"5",1
+"Other","Lung Cancer",1,"60",1.29727331973209
+"Other","Lung Cancer",1,"70",1.12515727621557
+"Other","Lung Cancer",1,"80",1.09374345874798
+"Other","Lung Cancer",1,"NA",1
+"Other","Lung Cancer",2,"0",1
+"Other","Lung Cancer",2,"15",1
+"Other","Lung Cancer",2,"30",1
+"Other","Lung Cancer",2,"45",1.30927010501059
+"Other","Lung Cancer",2,"5",1
+"Other","Lung Cancer",2,"60",1.2504789285087
+"Other","Lung Cancer",2,"70",1.06597008668021
+"Other","Lung Cancer",2,"80",1.04831816439888
+"Other","Lung Cancer",2,"NA",1
+"Other","Other",1,"0",1.15007300217384
+"Other","Other",1,"15",1.11045766250574
+"Other","Other",1,"30",1.27530780870341
+"Other","Other",1,"45",1.35266925321356
+"Other","Other",1,"5",1.14508204617707
+"Other","Other",1,"60",1.32139030854363
+"Other","Other",1,"70",1.09241917514686
+"Other","Other",1,"80",1.06079996614958
+"Other","Other",1,"NA",1
+"Other","Other",2,"0",1.20177745946443
+"Other","Other",2,"15",1.07677290821117
+"Other","Other",2,"30",1.21469285235067
+"Other","Other",2,"45",1.2812262955303
+"Other","Other",2,"5",1.01172443991671
+"Other","Other",2,"60",1.26266103925537
+"Other","Other",2,"70",1.1714600285203
+"Other","Other",2,"80",1.03156568916743
+"Other","Other",2,"NA",1
+"Other","Respiratory diseases",1,"0",1
+"Other","Respiratory diseases",1,"15",1
+"Other","Respiratory diseases",1,"30",1.16283671645602
+"Other","Respiratory diseases",1,"45",1.4293242935278
+"Other","Respiratory diseases",1,"5",1
+"Other","Respiratory diseases",1,"60",1.27044885973295
+"Other","Respiratory diseases",1,"70",1.04555981902526
+"Other","Respiratory diseases",1,"80",1.10075761570778
+"Other","Respiratory diseases",1,"NA",1
+"Other","Respiratory diseases",2,"0",1
+"Other","Respiratory diseases",2,"15",1
+"Other","Respiratory diseases",2,"30",1.20758938537786
+"Other","Respiratory diseases",2,"45",1.49439665730813
+"Other","Respiratory diseases",2,"5",1
+"Other","Respiratory diseases",2,"60",1.33688949678008
+"Other","Respiratory diseases",2,"70",1.20750776189987
+"Other","Respiratory diseases",2,"80",1.07021454775905
+"Other","Respiratory diseases",2,"NA",1
+"Other","Road Traffic Injuries",1,"0",1
+"Other","Road Traffic Injuries",1,"15",0.98269046982557
+"Other","Road Traffic Injuries",1,"30",1.29850100004255
+"Other","Road Traffic Injuries",1,"45",1.18824721444358
+"Other","Road Traffic Injuries",1,"5",1
+"Other","Road Traffic Injuries",1,"60",1.22598750859829
+"Other","Road Traffic Injuries",1,"70",1.29897361997471
+"Other","Road Traffic Injuries",1,"80",1.2723629055412
+"Other","Road Traffic Injuries",1,"NA",1
+"Other","Road Traffic Injuries",2,"0",1
+"Other","Road Traffic Injuries",2,"15",0.873344061828418
+"Other","Road Traffic Injuries",2,"30",1.31807096744434
+"Other","Road Traffic Injuries",2,"45",0.925102692619321
+"Other","Road Traffic Injuries",2,"5",1
+"Other","Road Traffic Injuries",2,"60",1.34974420347988
+"Other","Road Traffic Injuries",2,"70",2.03774212471048
+"Other","Road Traffic Injuries",2,"80",1
+"Other","Road Traffic Injuries",2,"NA",1
+"Other","Stroke",1,"0",1
+"Other","Stroke",1,"15",1
+"Other","Stroke",1,"30",1.43644535562214
+"Other","Stroke",1,"45",1.30613227238262
+"Other","Stroke",1,"5",1
+"Other","Stroke",1,"60",1.35398047682217
+"Other","Stroke",1,"70",0.999662281242971
+"Other","Stroke",1,"80",1.13745690556669
+"Other","Stroke",1,"NA",1
+"Other","Stroke",2,"0",1
+"Other","Stroke",2,"15",1
+"Other","Stroke",2,"30",1
+"Other","Stroke",2,"45",1.28558871838178
+"Other","Stroke",2,"5",1
+"Other","Stroke",2,"60",1.2925005877073
+"Other","Stroke",2,"70",1.14555608862692
+"Other","Stroke",2,"80",1.07363985919112
+"Other","Stroke",2,"NA",1
+"Sacramento Area","Acute resp infections",1,"0",1
+"Sacramento Area","Acute resp infections",2,"0",1
+"Sacramento Area","All Causes",1,"0",1.41601042853207
+"Sacramento Area","All Causes",1,"15",1.07314433348284
+"Sacramento Area","All Causes",1,"30",1.39830383785493
+"Sacramento Area","All Causes",1,"45",1.71246528951724
+"Sacramento Area","All Causes",1,"5",1.11719989966743
+"Sacramento Area","All Causes",1,"60",1.57124673493369
+"Sacramento Area","All Causes",1,"70",1.30841464255122
+"Sacramento Area","All Causes",1,"80",1.05394418047206
+"Sacramento Area","All Causes",1,"NA",1
+"Sacramento Area","All Causes",2,"0",1.16995320124166
+"Sacramento Area","All Causes",2,"15",1.09346261890034
+"Sacramento Area","All Causes",2,"30",1.61697386294236
+"Sacramento Area","All Causes",2,"45",1.63823611423218
+"Sacramento Area","All Causes",2,"5",1.47249720714188
+"Sacramento Area","All Causes",2,"60",1.59000986846879
+"Sacramento Area","All Causes",2,"70",1.23817698928673
+"Sacramento Area","All Causes",2,"80",0.999695802375883
+"Sacramento Area","All Causes",2,"NA",1
+"Sacramento Area","Breast Cancer",1,"0",1
+"Sacramento Area","Breast Cancer",1,"15",1
+"Sacramento Area","Breast Cancer",1,"30",1
+"Sacramento Area","Breast Cancer",1,"45",1
+"Sacramento Area","Breast Cancer",1,"5",1
+"Sacramento Area","Breast Cancer",1,"60",1
+"Sacramento Area","Breast Cancer",1,"70",1
+"Sacramento Area","Breast Cancer",1,"80",1
+"Sacramento Area","Breast Cancer",1,"NA",1
+"Sacramento Area","Breast Cancer",2,"0",1
+"Sacramento Area","Breast Cancer",2,"15",1
+"Sacramento Area","Breast Cancer",2,"30",1.29062953905304
+"Sacramento Area","Breast Cancer",2,"45",1.03327048481033
+"Sacramento Area","Breast Cancer",2,"5",1
+"Sacramento Area","Breast Cancer",2,"60",1.12376788553259
+"Sacramento Area","Breast Cancer",2,"70",1.06769776630993
+"Sacramento Area","Breast Cancer",2,"80",0.951858847559132
+"Sacramento Area","Breast Cancer",2,"NA",1
+"Sacramento Area","Colon Cancer",1,"0",1
+"Sacramento Area","Colon Cancer",1,"15",1
+"Sacramento Area","Colon Cancer",1,"30",1
+"Sacramento Area","Colon Cancer",1,"45",1.5194535816799
+"Sacramento Area","Colon Cancer",1,"5",1
+"Sacramento Area","Colon Cancer",1,"60",1.45728138271788
+"Sacramento Area","Colon Cancer",1,"70",1.30612486752806
+"Sacramento Area","Colon Cancer",1,"80",1.23436199984873
+"Sacramento Area","Colon Cancer",1,"NA",1
+"Sacramento Area","Colon Cancer",2,"0",1
+"Sacramento Area","Colon Cancer",2,"15",1
+"Sacramento Area","Colon Cancer",2,"30",1
+"Sacramento Area","Colon Cancer",2,"45",1.13974600291267
+"Sacramento Area","Colon Cancer",2,"5",1
+"Sacramento Area","Colon Cancer",2,"60",1.68661975929418
+"Sacramento Area","Colon Cancer",2,"70",1.07151097261818
+"Sacramento Area","Colon Cancer",2,"80",1.04747810794069
+"Sacramento Area","Colon Cancer",2,"NA",1
+"Sacramento Area","Dementia",1,"0",1
+"Sacramento Area","Dementia",1,"15",1
+"Sacramento Area","Dementia",1,"30",1
+"Sacramento Area","Dementia",1,"45",1
+"Sacramento Area","Dementia",1,"5",1
+"Sacramento Area","Dementia",1,"60",0.881308264786526
+"Sacramento Area","Dementia",1,"70",0.937911703210377
+"Sacramento Area","Dementia",1,"80",0.997976827321151
+"Sacramento Area","Dementia",1,"NA",1
+"Sacramento Area","Dementia",2,"0",1
+"Sacramento Area","Dementia",2,"15",1
+"Sacramento Area","Dementia",2,"30",1
+"Sacramento Area","Dementia",2,"45",1
+"Sacramento Area","Dementia",2,"5",1
+"Sacramento Area","Dementia",2,"60",1.22891575786313
+"Sacramento Area","Dementia",2,"70",0.962060924575557
+"Sacramento Area","Dementia",2,"80",0.864163251207803
+"Sacramento Area","Dementia",2,"NA",1
+"Sacramento Area","Depression",1,"0",1
+"Sacramento Area","Depression",1,"15",1
+"Sacramento Area","Depression",1,"30",1
+"Sacramento Area","Depression",1,"45",1
+"Sacramento Area","Depression",1,"5",1
+"Sacramento Area","Depression",1,"60",1
+"Sacramento Area","Depression",1,"70",1
+"Sacramento Area","Depression",1,"80",1
+"Sacramento Area","Depression",1,"NA",1
+"Sacramento Area","Depression",2,"0",1
+"Sacramento Area","Depression",2,"15",1
+"Sacramento Area","Depression",2,"30",1
+"Sacramento Area","Depression",2,"45",1
+"Sacramento Area","Depression",2,"5",1
+"Sacramento Area","Depression",2,"60",1
+"Sacramento Area","Depression",2,"70",1
+"Sacramento Area","Depression",2,"80",1
+"Sacramento Area","Depression",2,"NA",1
+"Sacramento Area","Diabetes",1,"0",1
+"Sacramento Area","Diabetes",1,"15",1
+"Sacramento Area","Diabetes",1,"30",1.70031586408901
+"Sacramento Area","Diabetes",1,"45",2.11260925795066
+"Sacramento Area","Diabetes",1,"5",1
+"Sacramento Area","Diabetes",1,"60",1.88012429821125
+"Sacramento Area","Diabetes",1,"70",1.43399723218115
+"Sacramento Area","Diabetes",1,"80",1.35460921128701
+"Sacramento Area","Diabetes",1,"NA",1
+"Sacramento Area","Diabetes",2,"0",1
+"Sacramento Area","Diabetes",2,"15",1
+"Sacramento Area","Diabetes",2,"30",1
+"Sacramento Area","Diabetes",2,"45",2.34968164236834
+"Sacramento Area","Diabetes",2,"5",1
+"Sacramento Area","Diabetes",2,"60",2.02833166499833
+"Sacramento Area","Diabetes",2,"70",1.30486838804662
+"Sacramento Area","Diabetes",2,"80",1.24280037884149
+"Sacramento Area","Diabetes",2,"NA",1
+"Sacramento Area","Hypertensive Heart Disease",1,"0",1
+"Sacramento Area","Hypertensive Heart Disease",1,"15",1
+"Sacramento Area","Hypertensive Heart Disease",1,"30",1.42705081450328
+"Sacramento Area","Hypertensive Heart Disease",1,"45",1.95347166100897
+"Sacramento Area","Hypertensive Heart Disease",1,"5",1
+"Sacramento Area","Hypertensive Heart Disease",1,"60",1.90518110181793
+"Sacramento Area","Hypertensive Heart Disease",1,"70",1.35600790902744
+"Sacramento Area","Hypertensive Heart Disease",1,"80",1.31709175962522
+"Sacramento Area","Hypertensive Heart Disease",1,"NA",1
+"Sacramento Area","Hypertensive Heart Disease",2,"0",1
+"Sacramento Area","Hypertensive Heart Disease",2,"15",1
+"Sacramento Area","Hypertensive Heart Disease",2,"30",1
+"Sacramento Area","Hypertensive Heart Disease",2,"45",1.97610920270843
+"Sacramento Area","Hypertensive Heart Disease",2,"5",1
+"Sacramento Area","Hypertensive Heart Disease",2,"60",2.38324027620435
+"Sacramento Area","Hypertensive Heart Disease",2,"70",1.6726638422326
+"Sacramento Area","Hypertensive Heart Disease",2,"80",1.15259313279539
+"Sacramento Area","Hypertensive Heart Disease",2,"NA",1
+"Sacramento Area","Inflammatory Heart Disease",1,"0",1
+"Sacramento Area","Inflammatory Heart Disease",1,"15",1
+"Sacramento Area","Inflammatory Heart Disease",1,"30",1
+"Sacramento Area","Inflammatory Heart Disease",1,"45",2.00025430935143
+"Sacramento Area","Inflammatory Heart Disease",1,"5",1
+"Sacramento Area","Inflammatory Heart Disease",1,"60",1.74687888198758
+"Sacramento Area","Inflammatory Heart Disease",1,"70",1.23717408266609
+"Sacramento Area","Inflammatory Heart Disease",1,"80",0.734340782960852
+"Sacramento Area","Inflammatory Heart Disease",1,"NA",1
+"Sacramento Area","Inflammatory Heart Disease",2,"0",1
+"Sacramento Area","Inflammatory Heart Disease",2,"15",1
+"Sacramento Area","Inflammatory Heart Disease",2,"30",1
+"Sacramento Area","Inflammatory Heart Disease",2,"45",2.23710475778313
+"Sacramento Area","Inflammatory Heart Disease",2,"5",1
+"Sacramento Area","Inflammatory Heart Disease",2,"60",1.70214318091677
+"Sacramento Area","Inflammatory Heart Disease",2,"70",1.11615726314394
+"Sacramento Area","Inflammatory Heart Disease",2,"80",1.20431205542082
+"Sacramento Area","Inflammatory Heart Disease",2,"NA",1
+"Sacramento Area","Ischemic Heart Disease",1,"0",1
+"Sacramento Area","Ischemic Heart Disease",1,"15",1
+"Sacramento Area","Ischemic Heart Disease",1,"30",1.21580973998799
+"Sacramento Area","Ischemic Heart Disease",1,"45",1.59766075132519
+"Sacramento Area","Ischemic Heart Disease",1,"5",1
+"Sacramento Area","Ischemic Heart Disease",1,"60",1.61881024085788
+"Sacramento Area","Ischemic Heart Disease",1,"70",1.42726485080941
+"Sacramento Area","Ischemic Heart Disease",1,"80",1.06541328994638
+"Sacramento Area","Ischemic Heart Disease",1,"NA",1
+"Sacramento Area","Ischemic Heart Disease",2,"0",1
+"Sacramento Area","Ischemic Heart Disease",2,"15",1
+"Sacramento Area","Ischemic Heart Disease",2,"30",1.82263010797818
+"Sacramento Area","Ischemic Heart Disease",2,"45",1.84130930063688
+"Sacramento Area","Ischemic Heart Disease",2,"5",1
+"Sacramento Area","Ischemic Heart Disease",2,"60",1.94883310034172
+"Sacramento Area","Ischemic Heart Disease",2,"70",1.39638398027369
+"Sacramento Area","Ischemic Heart Disease",2,"80",1.08511202391309
+"Sacramento Area","Ischemic Heart Disease",2,"NA",1
+"Sacramento Area","Lung Cancer",1,"0",1
+"Sacramento Area","Lung Cancer",1,"15",1
+"Sacramento Area","Lung Cancer",1,"30",1
+"Sacramento Area","Lung Cancer",1,"45",1.81378992458138
+"Sacramento Area","Lung Cancer",1,"5",1
+"Sacramento Area","Lung Cancer",1,"60",1.72024593991985
+"Sacramento Area","Lung Cancer",1,"70",1.20363623102756
+"Sacramento Area","Lung Cancer",1,"80",1.18924538124808
+"Sacramento Area","Lung Cancer",1,"NA",1
+"Sacramento Area","Lung Cancer",2,"0",1
+"Sacramento Area","Lung Cancer",2,"15",1
+"Sacramento Area","Lung Cancer",2,"30",1
+"Sacramento Area","Lung Cancer",2,"45",1.39291428314798
+"Sacramento Area","Lung Cancer",2,"5",1
+"Sacramento Area","Lung Cancer",2,"60",1.37992246172874
+"Sacramento Area","Lung Cancer",2,"70",1.22453348288984
+"Sacramento Area","Lung Cancer",2,"80",1.02250671789351
+"Sacramento Area","Lung Cancer",2,"NA",1
+"Sacramento Area","Other",1,"0",1.41893606991333
+"Sacramento Area","Other",1,"15",1.10928600692569
+"Sacramento Area","Other",1,"30",1.397779140935
+"Sacramento Area","Other",1,"45",1.67695208533836
+"Sacramento Area","Other",1,"5",1.0318258177824
+"Sacramento Area","Other",1,"60",1.48812817197667
+"Sacramento Area","Other",1,"70",1.29302876885272
+"Sacramento Area","Other",1,"80",1.0051242585981
+"Sacramento Area","Other",1,"NA",1
+"Sacramento Area","Other",2,"0",1.16142413064438
+"Sacramento Area","Other",2,"15",1.11423631333003
+"Sacramento Area","Other",2,"30",1.63753261345122
+"Sacramento Area","Other",2,"45",1.65151486563958
+"Sacramento Area","Other",2,"5",1.75666333483592
+"Sacramento Area","Other",2,"60",1.51593602988654
+"Sacramento Area","Other",2,"70",1.20647227832963
+"Sacramento Area","Other",2,"80",0.99438205581316
+"Sacramento Area","Other",2,"NA",1
+"Sacramento Area","Respiratory diseases",1,"0",1
+"Sacramento Area","Respiratory diseases",1,"15",1
+"Sacramento Area","Respiratory diseases",1,"30",1.44207240202437
+"Sacramento Area","Respiratory diseases",1,"45",1.76091196472122
+"Sacramento Area","Respiratory diseases",1,"5",1
+"Sacramento Area","Respiratory diseases",1,"60",1.49004696314423
+"Sacramento Area","Respiratory diseases",1,"70",1.29479407473887
+"Sacramento Area","Respiratory diseases",1,"80",1.0487549776891
+"Sacramento Area","Respiratory diseases",1,"NA",1
+"Sacramento Area","Respiratory diseases",2,"0",1
+"Sacramento Area","Respiratory diseases",2,"15",1
+"Sacramento Area","Respiratory diseases",2,"30",1.75081916563757
+"Sacramento Area","Respiratory diseases",2,"45",1.79573003530159
+"Sacramento Area","Respiratory diseases",2,"5",1
+"Sacramento Area","Respiratory diseases",2,"60",1.8858455563001
+"Sacramento Area","Respiratory diseases",2,"70",1.31111665844771
+"Sacramento Area","Respiratory diseases",2,"80",0.972463399689729
+"Sacramento Area","Respiratory diseases",2,"NA",1
+"Sacramento Area","Road Traffic Injuries",1,"0",1
+"Sacramento Area","Road Traffic Injuries",1,"15",0.885657824039924
+"Sacramento Area","Road Traffic Injuries",1,"30",1.40201483530147
+"Sacramento Area","Road Traffic Injuries",1,"45",1.47731085814047
+"Sacramento Area","Road Traffic Injuries",1,"5",1
+"Sacramento Area","Road Traffic Injuries",1,"60",1.62300333911182
+"Sacramento Area","Road Traffic Injuries",1,"70",1.89287634647912
+"Sacramento Area","Road Traffic Injuries",1,"80",1.39874434849686
+"Sacramento Area","Road Traffic Injuries",1,"NA",1
+"Sacramento Area","Road Traffic Injuries",2,"0",1
+"Sacramento Area","Road Traffic Injuries",2,"15",0.991326000651403
+"Sacramento Area","Road Traffic Injuries",2,"30",1.86361232342384
+"Sacramento Area","Road Traffic Injuries",2,"45",1.52501225741836
+"Sacramento Area","Road Traffic Injuries",2,"5",1
+"Sacramento Area","Road Traffic Injuries",2,"60",1
+"Sacramento Area","Road Traffic Injuries",2,"70",1
+"Sacramento Area","Road Traffic Injuries",2,"80",1
+"Sacramento Area","Road Traffic Injuries",2,"NA",1
+"Sacramento Area","Stroke",1,"0",1
+"Sacramento Area","Stroke",1,"15",1
+"Sacramento Area","Stroke",1,"30",1.84014447133318
+"Sacramento Area","Stroke",1,"45",2.14224095096532
+"Sacramento Area","Stroke",1,"5",1
+"Sacramento Area","Stroke",1,"60",1.83383335905075
+"Sacramento Area","Stroke",1,"70",1.39951471167265
+"Sacramento Area","Stroke",1,"80",1.11045352857766
+"Sacramento Area","Stroke",1,"NA",1
+"Sacramento Area","Stroke",2,"0",1
+"Sacramento Area","Stroke",2,"15",1
+"Sacramento Area","Stroke",2,"30",1
+"Sacramento Area","Stroke",2,"45",2.00146305662997
+"Sacramento Area","Stroke",2,"5",1
+"Sacramento Area","Stroke",2,"60",1.68848962598963
+"Sacramento Area","Stroke",2,"70",1.36335987847112
+"Sacramento Area","Stroke",2,"80",1.0441653438206
+"Sacramento Area","Stroke",2,"NA",1
+"San Diego County","Acute resp infections",1,"0",1
+"San Diego County","Acute resp infections",2,"0",1
+"San Diego County","All Causes",1,"0",1.14619318968414
+"San Diego County","All Causes",1,"15",0.822167187850846
+"San Diego County","All Causes",1,"30",1.22002222586843
+"San Diego County","All Causes",1,"45",1.5952345702038
+"San Diego County","All Causes",1,"5",1.05655596612426
+"San Diego County","All Causes",1,"60",1.49923413351124
+"San Diego County","All Causes",1,"70",1.407584741235
+"San Diego County","All Causes",1,"80",1.03818381619393
+"San Diego County","All Causes",1,"NA",1
+"San Diego County","All Causes",2,"0",0.950295091447167
+"San Diego County","All Causes",2,"15",1.03213807591864
+"San Diego County","All Causes",2,"30",1.22452225043473
+"San Diego County","All Causes",2,"45",1.48475058202632
+"San Diego County","All Causes",2,"5",0.947314964512734
+"San Diego County","All Causes",2,"60",1.50873875301037
+"San Diego County","All Causes",2,"70",1.22660850467742
+"San Diego County","All Causes",2,"80",1.00725442934959
+"San Diego County","All Causes",2,"NA",1
+"San Diego County","Breast Cancer",1,"0",1
+"San Diego County","Breast Cancer",1,"15",1
+"San Diego County","Breast Cancer",1,"30",1
+"San Diego County","Breast Cancer",1,"45",1
+"San Diego County","Breast Cancer",1,"5",1
+"San Diego County","Breast Cancer",1,"60",1
+"San Diego County","Breast Cancer",1,"70",1
+"San Diego County","Breast Cancer",1,"80",1
+"San Diego County","Breast Cancer",1,"NA",1
+"San Diego County","Breast Cancer",2,"0",1
+"San Diego County","Breast Cancer",2,"15",1
+"San Diego County","Breast Cancer",2,"30",0.688513605001317
+"San Diego County","Breast Cancer",2,"45",1.0465742725711
+"San Diego County","Breast Cancer",2,"5",1
+"San Diego County","Breast Cancer",2,"60",1.17417202044375
+"San Diego County","Breast Cancer",2,"70",0.95388719233107
+"San Diego County","Breast Cancer",2,"80",0.822448859973038
+"San Diego County","Breast Cancer",2,"NA",1
+"San Diego County","Colon Cancer",1,"0",1
+"San Diego County","Colon Cancer",1,"15",1
+"San Diego County","Colon Cancer",1,"30",1
+"San Diego County","Colon Cancer",1,"45",1.60408641511565
+"San Diego County","Colon Cancer",1,"5",1
+"San Diego County","Colon Cancer",1,"60",1.41101136008714
+"San Diego County","Colon Cancer",1,"70",1.57079407704504
+"San Diego County","Colon Cancer",1,"80",0.903364641236982
+"San Diego County","Colon Cancer",1,"NA",1
+"San Diego County","Colon Cancer",2,"0",1
+"San Diego County","Colon Cancer",2,"15",1
+"San Diego County","Colon Cancer",2,"30",1
+"San Diego County","Colon Cancer",2,"45",1.00986607047346
+"San Diego County","Colon Cancer",2,"5",1
+"San Diego County","Colon Cancer",2,"60",1.04037102276528
+"San Diego County","Colon Cancer",2,"70",1.43277749705238
+"San Diego County","Colon Cancer",2,"80",1.19727873742973
+"San Diego County","Colon Cancer",2,"NA",1
+"San Diego County","Dementia",1,"0",1
+"San Diego County","Dementia",1,"15",1
+"San Diego County","Dementia",1,"30",1
+"San Diego County","Dementia",1,"45",1
+"San Diego County","Dementia",1,"5",1
+"San Diego County","Dementia",1,"60",1.3631200909229
+"San Diego County","Dementia",1,"70",1.18086253922031
+"San Diego County","Dementia",1,"80",0.990364290671039
+"San Diego County","Dementia",1,"NA",1
+"San Diego County","Dementia",2,"0",1
+"San Diego County","Dementia",2,"15",1
+"San Diego County","Dementia",2,"30",1
+"San Diego County","Dementia",2,"45",1
+"San Diego County","Dementia",2,"5",1
+"San Diego County","Dementia",2,"60",1.20716066292289
+"San Diego County","Dementia",2,"70",0.946399851731925
+"San Diego County","Dementia",2,"80",0.902019227421902
+"San Diego County","Dementia",2,"NA",1
+"San Diego County","Depression",1,"0",1
+"San Diego County","Depression",1,"15",1
+"San Diego County","Depression",1,"30",1
+"San Diego County","Depression",1,"45",1
+"San Diego County","Depression",1,"5",1
+"San Diego County","Depression",1,"60",1
+"San Diego County","Depression",1,"70",1
+"San Diego County","Depression",1,"80",1
+"San Diego County","Depression",1,"NA",1
+"San Diego County","Depression",2,"0",1
+"San Diego County","Depression",2,"15",1
+"San Diego County","Depression",2,"30",1
+"San Diego County","Depression",2,"45",1
+"San Diego County","Depression",2,"5",1
+"San Diego County","Depression",2,"60",1
+"San Diego County","Depression",2,"70",1
+"San Diego County","Depression",2,"80",1
+"San Diego County","Depression",2,"NA",1
+"San Diego County","Diabetes",1,"0",1
+"San Diego County","Diabetes",1,"15",1
+"San Diego County","Diabetes",1,"30",2.0885577319364
+"San Diego County","Diabetes",1,"45",1.61756613288973
+"San Diego County","Diabetes",1,"5",1
+"San Diego County","Diabetes",1,"60",1.72102926823532
+"San Diego County","Diabetes",1,"70",2.1082297041464
+"San Diego County","Diabetes",1,"80",1.33796653796654
+"San Diego County","Diabetes",1,"NA",1
+"San Diego County","Diabetes",2,"0",1
+"San Diego County","Diabetes",2,"15",1
+"San Diego County","Diabetes",2,"30",1
+"San Diego County","Diabetes",2,"45",1.45702069869305
+"San Diego County","Diabetes",2,"5",1
+"San Diego County","Diabetes",2,"60",2.67228043679312
+"San Diego County","Diabetes",2,"70",1.42451941349589
+"San Diego County","Diabetes",2,"80",1.38496326543608
+"San Diego County","Diabetes",2,"NA",1
+"San Diego County","Hypertensive Heart Disease",1,"0",1
+"San Diego County","Hypertensive Heart Disease",1,"15",1
+"San Diego County","Hypertensive Heart Disease",1,"30",1.46099427989192
+"San Diego County","Hypertensive Heart Disease",1,"45",1.67334427540317
+"San Diego County","Hypertensive Heart Disease",1,"5",1
+"San Diego County","Hypertensive Heart Disease",1,"60",1.66381984706739
+"San Diego County","Hypertensive Heart Disease",1,"70",1.67315015268795
+"San Diego County","Hypertensive Heart Disease",1,"80",1.04861329071006
+"San Diego County","Hypertensive Heart Disease",1,"NA",1
+"San Diego County","Hypertensive Heart Disease",2,"0",1
+"San Diego County","Hypertensive Heart Disease",2,"15",1
+"San Diego County","Hypertensive Heart Disease",2,"30",1
+"San Diego County","Hypertensive Heart Disease",2,"45",1.51809932162677
+"San Diego County","Hypertensive Heart Disease",2,"5",1
+"San Diego County","Hypertensive Heart Disease",2,"60",1.81361975590164
+"San Diego County","Hypertensive Heart Disease",2,"70",1.21180186317863
+"San Diego County","Hypertensive Heart Disease",2,"80",1.06985217557468
+"San Diego County","Hypertensive Heart Disease",2,"NA",1
+"San Diego County","Inflammatory Heart Disease",1,"0",1
+"San Diego County","Inflammatory Heart Disease",1,"15",1
+"San Diego County","Inflammatory Heart Disease",1,"30",2.13974787242504
+"San Diego County","Inflammatory Heart Disease",1,"45",1.62459902911968
+"San Diego County","Inflammatory Heart Disease",1,"5",1
+"San Diego County","Inflammatory Heart Disease",1,"60",1.50548677508891
+"San Diego County","Inflammatory Heart Disease",1,"70",1.72055936598725
+"San Diego County","Inflammatory Heart Disease",1,"80",0.854043008525767
+"San Diego County","Inflammatory Heart Disease",1,"NA",1
+"San Diego County","Inflammatory Heart Disease",2,"0",1
+"San Diego County","Inflammatory Heart Disease",2,"15",1
+"San Diego County","Inflammatory Heart Disease",2,"30",1
+"San Diego County","Inflammatory Heart Disease",2,"45",2.2988821116469
+"San Diego County","Inflammatory Heart Disease",2,"5",1
+"San Diego County","Inflammatory Heart Disease",2,"60",1
+"San Diego County","Inflammatory Heart Disease",2,"70",1.41259753230517
+"San Diego County","Inflammatory Heart Disease",2,"80",0.837679394416983
+"San Diego County","Inflammatory Heart Disease",2,"NA",1
+"San Diego County","Ischemic Heart Disease",1,"0",1
+"San Diego County","Ischemic Heart Disease",1,"15",1
+"San Diego County","Ischemic Heart Disease",1,"30",1.3091878429969
+"San Diego County","Ischemic Heart Disease",1,"45",1.68419840043281
+"San Diego County","Ischemic Heart Disease",1,"5",1
+"San Diego County","Ischemic Heart Disease",1,"60",1.75521448001075
+"San Diego County","Ischemic Heart Disease",1,"70",1.70397517510027
+"San Diego County","Ischemic Heart Disease",1,"80",1.15264009182928
+"San Diego County","Ischemic Heart Disease",1,"NA",1
+"San Diego County","Ischemic Heart Disease",2,"0",1
+"San Diego County","Ischemic Heart Disease",2,"15",1
+"San Diego County","Ischemic Heart Disease",2,"30",1
+"San Diego County","Ischemic Heart Disease",2,"45",1.80507461872068
+"San Diego County","Ischemic Heart Disease",2,"5",1
+"San Diego County","Ischemic Heart Disease",2,"60",1.98639945747492
+"San Diego County","Ischemic Heart Disease",2,"70",1.6488312466079
+"San Diego County","Ischemic Heart Disease",2,"80",1.14298709203012
+"San Diego County","Ischemic Heart Disease",2,"NA",1
+"San Diego County","Lung Cancer",1,"0",1
+"San Diego County","Lung Cancer",1,"15",1
+"San Diego County","Lung Cancer",1,"30",1
+"San Diego County","Lung Cancer",1,"45",1.56435672062362
+"San Diego County","Lung Cancer",1,"5",1
+"San Diego County","Lung Cancer",1,"60",1.58036552797903
+"San Diego County","Lung Cancer",1,"70",1.35027388922702
+"San Diego County","Lung Cancer",1,"80",1.2430012133707
+"San Diego County","Lung Cancer",1,"NA",1
+"San Diego County","Lung Cancer",2,"0",1
+"San Diego County","Lung Cancer",2,"15",1
+"San Diego County","Lung Cancer",2,"30",1
+"San Diego County","Lung Cancer",2,"45",1.29567722249425
+"San Diego County","Lung Cancer",2,"5",1
+"San Diego County","Lung Cancer",2,"60",1.27699316146051
+"San Diego County","Lung Cancer",2,"70",1.13515660552086
+"San Diego County","Lung Cancer",2,"80",1.00025532951765
+"San Diego County","Lung Cancer",2,"NA",1
+"San Diego County","Other",1,"0",1.13449320873107
+"San Diego County","Other",1,"15",0.853592999783161
+"San Diego County","Other",1,"30",1.15862331356889
+"San Diego County","Other",1,"45",1.5955776834386
+"San Diego County","Other",1,"5",1.00949672050665
+"San Diego County","Other",1,"60",1.36491661511152
+"San Diego County","Other",1,"70",1.27495891205569
+"San Diego County","Other",1,"80",0.974679981423101
+"San Diego County","Other",1,"NA",1
+"San Diego County","Other",2,"0",0.919160067083513
+"San Diego County","Other",2,"15",1.10933561362716
+"San Diego County","Other",2,"30",1.2697934715824
+"San Diego County","Other",2,"45",1.51296679298512
+"San Diego County","Other",2,"5",0.927134069278753
+"San Diego County","Other",2,"60",1.40486323446379
+"San Diego County","Other",2,"70",1.17960346288737
+"San Diego County","Other",2,"80",0.971926489927881
+"San Diego County","Other",2,"NA",1
+"San Diego County","Respiratory diseases",1,"0",1
+"San Diego County","Respiratory diseases",1,"15",1
+"San Diego County","Respiratory diseases",1,"30",1.93059958414289
+"San Diego County","Respiratory diseases",1,"45",1.13229629302281
+"San Diego County","Respiratory diseases",1,"5",1
+"San Diego County","Respiratory diseases",1,"60",1.58902141669347
+"San Diego County","Respiratory diseases",1,"70",1.04880444979576
+"San Diego County","Respiratory diseases",1,"80",0.956409010566314
+"San Diego County","Respiratory diseases",1,"NA",1
+"San Diego County","Respiratory diseases",2,"0",1
+"San Diego County","Respiratory diseases",2,"15",1
+"San Diego County","Respiratory diseases",2,"30",2.22246699278203
+"San Diego County","Respiratory diseases",2,"45",2.04613386827956
+"San Diego County","Respiratory diseases",2,"5",1
+"San Diego County","Respiratory diseases",2,"60",1.84040317001833
+"San Diego County","Respiratory diseases",2,"70",1.14892535140993
+"San Diego County","Respiratory diseases",2,"80",1.04232848449057
+"San Diego County","Respiratory diseases",2,"NA",1
+"San Diego County","Road Traffic Injuries",1,"0",1
+"San Diego County","Road Traffic Injuries",1,"15",0.715829035042038
+"San Diego County","Road Traffic Injuries",1,"30",0.857452504957256
+"San Diego County","Road Traffic Injuries",1,"45",1.0707584510107
+"San Diego County","Road Traffic Injuries",1,"5",1
+"San Diego County","Road Traffic Injuries",1,"60",1.79440030284035
+"San Diego County","Road Traffic Injuries",1,"70",2.00180464696594
+"San Diego County","Road Traffic Injuries",1,"80",1
+"San Diego County","Road Traffic Injuries",1,"NA",1
+"San Diego County","Road Traffic Injuries",2,"0",1
+"San Diego County","Road Traffic Injuries",2,"15",0.670014638248591
+"San Diego County","Road Traffic Injuries",2,"30",1.39875545000268
+"San Diego County","Road Traffic Injuries",2,"45",1.28236961329963
+"San Diego County","Road Traffic Injuries",2,"5",1
+"San Diego County","Road Traffic Injuries",2,"60",2.04674299249901
+"San Diego County","Road Traffic Injuries",2,"70",1
+"San Diego County","Road Traffic Injuries",2,"80",1
+"San Diego County","Road Traffic Injuries",2,"NA",1
+"San Diego County","Stroke",1,"0",1
+"San Diego County","Stroke",1,"15",1
+"San Diego County","Stroke",1,"30",2.43255547602004
+"San Diego County","Stroke",1,"45",1.83371877542632
+"San Diego County","Stroke",1,"5",1
+"San Diego County","Stroke",1,"60",1.62045203149027
+"San Diego County","Stroke",1,"70",1.45585792506614
+"San Diego County","Stroke",1,"80",1.09479282338366
+"San Diego County","Stroke",1,"NA",1
+"San Diego County","Stroke",2,"0",1
+"San Diego County","Stroke",2,"15",1
+"San Diego County","Stroke",2,"30",1
+"San Diego County","Stroke",2,"45",1.91746722241796
+"San Diego County","Stroke",2,"5",1
+"San Diego County","Stroke",2,"60",1.66778775798557
+"San Diego County","Stroke",2,"70",1.20483562252132
+"San Diego County","Stroke",2,"80",1.04321081081903
+"San Diego County","Stroke",2,"NA",1
+"San Joaquin Valley","Acute resp infections",1,"0",1.1910188815974
+"San Joaquin Valley","Acute resp infections",2,"0",1
+"San Joaquin Valley","All Causes",1,"0",1.14795251629587
+"San Joaquin Valley","All Causes",1,"15",1.13503050505633
+"San Joaquin Valley","All Causes",1,"30",1.21857907725205
+"San Joaquin Valley","All Causes",1,"45",1.29744888318996
+"San Joaquin Valley","All Causes",1,"5",1.12744120085302
+"San Joaquin Valley","All Causes",1,"60",1.27370844238675
+"San Joaquin Valley","All Causes",1,"70",1.14695008672522
+"San Joaquin Valley","All Causes",1,"80",0.981131122312155
+"San Joaquin Valley","All Causes",1,"NA",1
+"San Joaquin Valley","All Causes",2,"0",1.14876822258365
+"San Joaquin Valley","All Causes",2,"15",1.05213555268528
+"San Joaquin Valley","All Causes",2,"30",1.22448497974336
+"San Joaquin Valley","All Causes",2,"45",1.30779011496275
+"San Joaquin Valley","All Causes",2,"5",1.00492423416426
+"San Joaquin Valley","All Causes",2,"60",1.27105076969427
+"San Joaquin Valley","All Causes",2,"70",1.10263108181208
+"San Joaquin Valley","All Causes",2,"80",0.987625502501387
+"San Joaquin Valley","All Causes",2,"NA",1
+"San Joaquin Valley","Breast Cancer",1,"0",1
+"San Joaquin Valley","Breast Cancer",1,"15",1
+"San Joaquin Valley","Breast Cancer",1,"30",1
+"San Joaquin Valley","Breast Cancer",1,"45",1
+"San Joaquin Valley","Breast Cancer",1,"5",1
+"San Joaquin Valley","Breast Cancer",1,"60",1
+"San Joaquin Valley","Breast Cancer",1,"70",1
+"San Joaquin Valley","Breast Cancer",1,"80",1
+"San Joaquin Valley","Breast Cancer",1,"NA",1
+"San Joaquin Valley","Breast Cancer",2,"0",1
+"San Joaquin Valley","Breast Cancer",2,"15",1
+"San Joaquin Valley","Breast Cancer",2,"30",0.946501331505638
+"San Joaquin Valley","Breast Cancer",2,"45",0.973916002893749
+"San Joaquin Valley","Breast Cancer",2,"5",1
+"San Joaquin Valley","Breast Cancer",2,"60",0.98770164821131
+"San Joaquin Valley","Breast Cancer",2,"70",0.960610939723362
+"San Joaquin Valley","Breast Cancer",2,"80",0.931494645030683
+"San Joaquin Valley","Breast Cancer",2,"NA",1
+"San Joaquin Valley","Colon Cancer",1,"0",1
+"San Joaquin Valley","Colon Cancer",1,"15",1
+"San Joaquin Valley","Colon Cancer",1,"30",0.579870411393345
+"San Joaquin Valley","Colon Cancer",1,"45",1.09068990978946
+"San Joaquin Valley","Colon Cancer",1,"5",1
+"San Joaquin Valley","Colon Cancer",1,"60",1.02113557919959
+"San Joaquin Valley","Colon Cancer",1,"70",1.18586943860887
+"San Joaquin Valley","Colon Cancer",1,"80",0.990413495506926
+"San Joaquin Valley","Colon Cancer",1,"NA",1
+"San Joaquin Valley","Colon Cancer",2,"0",1
+"San Joaquin Valley","Colon Cancer",2,"15",1
+"San Joaquin Valley","Colon Cancer",2,"30",1.19652055114864
+"San Joaquin Valley","Colon Cancer",2,"45",0.897774440766018
+"San Joaquin Valley","Colon Cancer",2,"5",1
+"San Joaquin Valley","Colon Cancer",2,"60",1.21086467883889
+"San Joaquin Valley","Colon Cancer",2,"70",1.07259926171184
+"San Joaquin Valley","Colon Cancer",2,"80",0.871407046886759
+"San Joaquin Valley","Colon Cancer",2,"NA",1
+"San Joaquin Valley","Dementia",1,"0",1
+"San Joaquin Valley","Dementia",1,"15",1
+"San Joaquin Valley","Dementia",1,"30",1
+"San Joaquin Valley","Dementia",1,"45",1
+"San Joaquin Valley","Dementia",1,"5",1
+"San Joaquin Valley","Dementia",1,"60",1.15761585790098
+"San Joaquin Valley","Dementia",1,"70",1.11848766950163
+"San Joaquin Valley","Dementia",1,"80",0.871557698509869
+"San Joaquin Valley","Dementia",1,"NA",1
+"San Joaquin Valley","Dementia",2,"0",1
+"San Joaquin Valley","Dementia",2,"15",1
+"San Joaquin Valley","Dementia",2,"30",1
+"San Joaquin Valley","Dementia",2,"45",1.58824259133052
+"San Joaquin Valley","Dementia",2,"5",1
+"San Joaquin Valley","Dementia",2,"60",1.10474949978304
+"San Joaquin Valley","Dementia",2,"70",0.954701198276168
+"San Joaquin Valley","Dementia",2,"80",0.928306563711776
+"San Joaquin Valley","Dementia",2,"NA",1
+"San Joaquin Valley","Depression",1,"0",1
+"San Joaquin Valley","Depression",1,"15",1
+"San Joaquin Valley","Depression",1,"30",1
+"San Joaquin Valley","Depression",1,"45",1
+"San Joaquin Valley","Depression",1,"5",1
+"San Joaquin Valley","Depression",1,"60",1
+"San Joaquin Valley","Depression",1,"70",1
+"San Joaquin Valley","Depression",1,"80",1
+"San Joaquin Valley","Depression",1,"NA",1
+"San Joaquin Valley","Depression",2,"0",1
+"San Joaquin Valley","Depression",2,"15",1
+"San Joaquin Valley","Depression",2,"30",1
+"San Joaquin Valley","Depression",2,"45",1
+"San Joaquin Valley","Depression",2,"5",1
+"San Joaquin Valley","Depression",2,"60",1
+"San Joaquin Valley","Depression",2,"70",1
+"San Joaquin Valley","Depression",2,"80",1
+"San Joaquin Valley","Depression",2,"NA",1
+"San Joaquin Valley","Diabetes",1,"0",1
+"San Joaquin Valley","Diabetes",1,"15",1
+"San Joaquin Valley","Diabetes",1,"30",1.47835093893688
+"San Joaquin Valley","Diabetes",1,"45",1.4535240155251
+"San Joaquin Valley","Diabetes",1,"5",1
+"San Joaquin Valley","Diabetes",1,"60",1.38229689102394
+"San Joaquin Valley","Diabetes",1,"70",1.40879303780321
+"San Joaquin Valley","Diabetes",1,"80",1.15480365815786
+"San Joaquin Valley","Diabetes",1,"NA",1
+"San Joaquin Valley","Diabetes",2,"0",1
+"San Joaquin Valley","Diabetes",2,"15",1
+"San Joaquin Valley","Diabetes",2,"30",1.67133029366794
+"San Joaquin Valley","Diabetes",2,"45",1.5642548256427
+"San Joaquin Valley","Diabetes",2,"5",1
+"San Joaquin Valley","Diabetes",2,"60",1.43415756564127
+"San Joaquin Valley","Diabetes",2,"70",1.3040104410103
+"San Joaquin Valley","Diabetes",2,"80",1.28828125790613
+"San Joaquin Valley","Diabetes",2,"NA",1
+"San Joaquin Valley","Hypertensive Heart Disease",1,"0",1
+"San Joaquin Valley","Hypertensive Heart Disease",1,"15",1.26729349069989
+"San Joaquin Valley","Hypertensive Heart Disease",1,"30",1.25070088731898
+"San Joaquin Valley","Hypertensive Heart Disease",1,"45",1.34781615781694
+"San Joaquin Valley","Hypertensive Heart Disease",1,"5",1
+"San Joaquin Valley","Hypertensive Heart Disease",1,"60",1.47385155992029
+"San Joaquin Valley","Hypertensive Heart Disease",1,"70",1.32997752087347
+"San Joaquin Valley","Hypertensive Heart Disease",1,"80",1.09410639941442
+"San Joaquin Valley","Hypertensive Heart Disease",1,"NA",1
+"San Joaquin Valley","Hypertensive Heart Disease",2,"0",1
+"San Joaquin Valley","Hypertensive Heart Disease",2,"15",1
+"San Joaquin Valley","Hypertensive Heart Disease",2,"30",1.84080084792098
+"San Joaquin Valley","Hypertensive Heart Disease",2,"45",1.38313485979291
+"San Joaquin Valley","Hypertensive Heart Disease",2,"5",1
+"San Joaquin Valley","Hypertensive Heart Disease",2,"60",1.47507886151423
+"San Joaquin Valley","Hypertensive Heart Disease",2,"70",1.35574385271285
+"San Joaquin Valley","Hypertensive Heart Disease",2,"80",1.05991216858503
+"San Joaquin Valley","Hypertensive Heart Disease",2,"NA",1
+"San Joaquin Valley","Inflammatory Heart Disease",1,"0",1
+"San Joaquin Valley","Inflammatory Heart Disease",1,"15",1.16006096456374
+"San Joaquin Valley","Inflammatory Heart Disease",1,"30",1.36849417088829
+"San Joaquin Valley","Inflammatory Heart Disease",1,"45",1.19812998439652
+"San Joaquin Valley","Inflammatory Heart Disease",1,"5",1
+"San Joaquin Valley","Inflammatory Heart Disease",1,"60",1.28997891142067
+"San Joaquin Valley","Inflammatory Heart Disease",1,"70",1.13862522595589
+"San Joaquin Valley","Inflammatory Heart Disease",1,"80",0.932435734037967
+"San Joaquin Valley","Inflammatory Heart Disease",1,"NA",1
+"San Joaquin Valley","Inflammatory Heart Disease",2,"0",1
+"San Joaquin Valley","Inflammatory Heart Disease",2,"15",1
+"San Joaquin Valley","Inflammatory Heart Disease",2,"30",1.48756609061722
+"San Joaquin Valley","Inflammatory Heart Disease",2,"45",1.30796448697808
+"San Joaquin Valley","Inflammatory Heart Disease",2,"5",1
+"San Joaquin Valley","Inflammatory Heart Disease",2,"60",1.05171554813693
+"San Joaquin Valley","Inflammatory Heart Disease",2,"70",1.05618192607339
+"San Joaquin Valley","Inflammatory Heart Disease",2,"80",0.832864545825854
+"San Joaquin Valley","Inflammatory Heart Disease",2,"NA",1
+"San Joaquin Valley","Ischemic Heart Disease",1,"0",1
+"San Joaquin Valley","Ischemic Heart Disease",1,"15",1.00538616928858
+"San Joaquin Valley","Ischemic Heart Disease",1,"30",1.03567552546532
+"San Joaquin Valley","Ischemic Heart Disease",1,"45",1.21192983292424
+"San Joaquin Valley","Ischemic Heart Disease",1,"5",1
+"San Joaquin Valley","Ischemic Heart Disease",1,"60",1.27674986606654
+"San Joaquin Valley","Ischemic Heart Disease",1,"70",1.19542790595409
+"San Joaquin Valley","Ischemic Heart Disease",1,"80",0.984021257584684
+"San Joaquin Valley","Ischemic Heart Disease",1,"NA",1
+"San Joaquin Valley","Ischemic Heart Disease",2,"0",1
+"San Joaquin Valley","Ischemic Heart Disease",2,"15",1
+"San Joaquin Valley","Ischemic Heart Disease",2,"30",1.17476563203684
+"San Joaquin Valley","Ischemic Heart Disease",2,"45",1.33041005539736
+"San Joaquin Valley","Ischemic Heart Disease",2,"5",1
+"San Joaquin Valley","Ischemic Heart Disease",2,"60",1.367902757951
+"San Joaquin Valley","Ischemic Heart Disease",2,"70",1.19380563159204
+"San Joaquin Valley","Ischemic Heart Disease",2,"80",1.01829761446129
+"San Joaquin Valley","Ischemic Heart Disease",2,"NA",1
+"San Joaquin Valley","Lung Cancer",1,"0",1
+"San Joaquin Valley","Lung Cancer",1,"15",1
+"San Joaquin Valley","Lung Cancer",1,"30",0.913735193710725
+"San Joaquin Valley","Lung Cancer",1,"45",1.27836084876786
+"San Joaquin Valley","Lung Cancer",1,"5",1
+"San Joaquin Valley","Lung Cancer",1,"60",1.23500661535958
+"San Joaquin Valley","Lung Cancer",1,"70",0.996297072711402
+"San Joaquin Valley","Lung Cancer",1,"80",1.00140848406467
+"San Joaquin Valley","Lung Cancer",1,"NA",1
+"San Joaquin Valley","Lung Cancer",2,"0",1
+"San Joaquin Valley","Lung Cancer",2,"15",1
+"San Joaquin Valley","Lung Cancer",2,"30",1.13954338204632
+"San Joaquin Valley","Lung Cancer",2,"45",1.14408241177752
+"San Joaquin Valley","Lung Cancer",2,"5",1
+"San Joaquin Valley","Lung Cancer",2,"60",1.25109842921389
+"San Joaquin Valley","Lung Cancer",2,"70",0.951687331259747
+"San Joaquin Valley","Lung Cancer",2,"80",0.984159177438055
+"San Joaquin Valley","Lung Cancer",2,"NA",1
+"San Joaquin Valley","Other",1,"0",1.14849484025154
+"San Joaquin Valley","Other",1,"15",1.19320556355128
+"San Joaquin Valley","Other",1,"30",1.23561171773535
+"San Joaquin Valley","Other",1,"45",1.30181295937907
+"San Joaquin Valley","Other",1,"5",1.11207111230891
+"San Joaquin Valley","Other",1,"60",1.24976146622372
+"San Joaquin Valley","Other",1,"70",1.11212753533386
+"San Joaquin Valley","Other",1,"80",0.982209624955957
+"San Joaquin Valley","Other",1,"NA",1
+"San Joaquin Valley","Other",2,"0",1.15363193259157
+"San Joaquin Valley","Other",2,"15",1.01141718491948
+"San Joaquin Valley","Other",2,"30",1.20798316512427
+"San Joaquin Valley","Other",2,"45",1.3429112430814
+"San Joaquin Valley","Other",2,"5",0.995426474634046
+"San Joaquin Valley","Other",2,"60",1.24687078971669
+"San Joaquin Valley","Other",2,"70",1.08019219208119
+"San Joaquin Valley","Other",2,"80",0.975646228583657
+"San Joaquin Valley","Other",2,"NA",1
+"San Joaquin Valley","Respiratory diseases",1,"0",1
+"San Joaquin Valley","Respiratory diseases",1,"15",0.71813297806327
+"San Joaquin Valley","Respiratory diseases",1,"30",1.32185513134827
+"San Joaquin Valley","Respiratory diseases",1,"45",1.51194007019077
+"San Joaquin Valley","Respiratory diseases",1,"5",1
+"San Joaquin Valley","Respiratory diseases",1,"60",1.31630758256197
+"San Joaquin Valley","Respiratory diseases",1,"70",1.1494349591137
+"San Joaquin Valley","Respiratory diseases",1,"80",0.97356963212527
+"San Joaquin Valley","Respiratory diseases",1,"NA",1
+"San Joaquin Valley","Respiratory diseases",2,"0",1
+"San Joaquin Valley","Respiratory diseases",2,"15",1.03995805786253
+"San Joaquin Valley","Respiratory diseases",2,"30",1.1351605228846
+"San Joaquin Valley","Respiratory diseases",2,"45",1.45329387442009
+"San Joaquin Valley","Respiratory diseases",2,"5",1
+"San Joaquin Valley","Respiratory diseases",2,"60",1.32187081050191
+"San Joaquin Valley","Respiratory diseases",2,"70",1.14810219609002
+"San Joaquin Valley","Respiratory diseases",2,"80",1.04660976223151
+"San Joaquin Valley","Respiratory diseases",2,"NA",1
+"San Joaquin Valley","Road Traffic Injuries",1,"0",1.31450244457238
+"San Joaquin Valley","Road Traffic Injuries",1,"15",1.0002566480167
+"San Joaquin Valley","Road Traffic Injuries",1,"30",1.14890212350831
+"San Joaquin Valley","Road Traffic Injuries",1,"45",1.27059752377535
+"San Joaquin Valley","Road Traffic Injuries",1,"5",1.34902221205578
+"San Joaquin Valley","Road Traffic Injuries",1,"60",1.33983316886688
+"San Joaquin Valley","Road Traffic Injuries",1,"70",1.14875862197977
+"San Joaquin Valley","Road Traffic Injuries",1,"80",0.993161590666491
+"San Joaquin Valley","Road Traffic Injuries",1,"NA",1
+"San Joaquin Valley","Road Traffic Injuries",2,"0",1.24425843336703
+"San Joaquin Valley","Road Traffic Injuries",2,"15",1.13249486633762
+"San Joaquin Valley","Road Traffic Injuries",2,"30",1.351794210458
+"San Joaquin Valley","Road Traffic Injuries",2,"45",1.2850177415925
+"San Joaquin Valley","Road Traffic Injuries",2,"5",1.03936720186747
+"San Joaquin Valley","Road Traffic Injuries",2,"60",1.11735858099215
+"San Joaquin Valley","Road Traffic Injuries",2,"70",1.2938228594399
+"San Joaquin Valley","Road Traffic Injuries",2,"80",1.35605342882018
+"San Joaquin Valley","Road Traffic Injuries",2,"NA",1
+"San Joaquin Valley","Stroke",1,"0",1
+"San Joaquin Valley","Stroke",1,"15",1
+"San Joaquin Valley","Stroke",1,"30",1.34529935443256
+"San Joaquin Valley","Stroke",1,"45",1.38040224805223
+"San Joaquin Valley","Stroke",1,"5",1
+"San Joaquin Valley","Stroke",1,"60",1.42586882698867
+"San Joaquin Valley","Stroke",1,"70",1.1922620431518
+"San Joaquin Valley","Stroke",1,"80",0.970874654550552
+"San Joaquin Valley","Stroke",1,"NA",1
+"San Joaquin Valley","Stroke",2,"0",1
+"San Joaquin Valley","Stroke",2,"15",1
+"San Joaquin Valley","Stroke",2,"30",1.25634657870607
+"San Joaquin Valley","Stroke",2,"45",1.39180836434847
+"San Joaquin Valley","Stroke",2,"5",1
+"San Joaquin Valley","Stroke",2,"60",1.4399311468234
+"San Joaquin Valley","Stroke",2,"70",1.19054236993454
+"San Joaquin Valley","Stroke",2,"80",0.933752192998314
+"San Joaquin Valley","Stroke",2,"NA",1
+"SF Bay Area","Acute resp infections",1,"0",1
+"SF Bay Area","Acute resp infections",2,"0",1
+"SF Bay Area","All Causes",1,"0",1.58736795488564
+"SF Bay Area","All Causes",1,"15",1.47817721297318
+"SF Bay Area","All Causes",1,"30",1.82922645840054
+"SF Bay Area","All Causes",1,"45",2.15338581662738
+"SF Bay Area","All Causes",1,"5",0.961730324520076
+"SF Bay Area","All Causes",1,"60",1.92856843878585
+"SF Bay Area","All Causes",1,"70",1.47605276393398
+"SF Bay Area","All Causes",1,"80",0.98380919797873
+"SF Bay Area","All Causes",1,"NA",1
+"SF Bay Area","All Causes",2,"0",1.56652292603159
+"SF Bay Area","All Causes",2,"15",1.29782641528432
+"SF Bay Area","All Causes",2,"30",1.8330625499083
+"SF Bay Area","All Causes",2,"45",2.04443914356903
+"SF Bay Area","All Causes",2,"5",1.49375893502804
+"SF Bay Area","All Causes",2,"60",1.75159147105951
+"SF Bay Area","All Causes",2,"70",1.25548543181638
+"SF Bay Area","All Causes",2,"80",0.887114618861938
+"SF Bay Area","All Causes",2,"NA",1
+"SF Bay Area","Breast Cancer",1,"0",1
+"SF Bay Area","Breast Cancer",1,"15",1
+"SF Bay Area","Breast Cancer",1,"30",1
+"SF Bay Area","Breast Cancer",1,"45",1
+"SF Bay Area","Breast Cancer",1,"5",1
+"SF Bay Area","Breast Cancer",1,"60",1
+"SF Bay Area","Breast Cancer",1,"70",1
+"SF Bay Area","Breast Cancer",1,"80",1
+"SF Bay Area","Breast Cancer",1,"NA",1
+"SF Bay Area","Breast Cancer",2,"0",1
+"SF Bay Area","Breast Cancer",2,"15",1
+"SF Bay Area","Breast Cancer",2,"30",1.11630660752252
+"SF Bay Area","Breast Cancer",2,"45",1.20113147750019
+"SF Bay Area","Breast Cancer",2,"5",1
+"SF Bay Area","Breast Cancer",2,"60",1.20020516537812
+"SF Bay Area","Breast Cancer",2,"70",1.22705796590618
+"SF Bay Area","Breast Cancer",2,"80",0.733956613880407
+"SF Bay Area","Breast Cancer",2,"NA",1
+"SF Bay Area","Colon Cancer",1,"0",1
+"SF Bay Area","Colon Cancer",1,"15",1
+"SF Bay Area","Colon Cancer",1,"30",1
+"SF Bay Area","Colon Cancer",1,"45",1.51970658393227
+"SF Bay Area","Colon Cancer",1,"5",1
+"SF Bay Area","Colon Cancer",1,"60",1.35743219117936
+"SF Bay Area","Colon Cancer",1,"70",1.39168689320388
+"SF Bay Area","Colon Cancer",1,"80",1.00120044687155
+"SF Bay Area","Colon Cancer",1,"NA",1
+"SF Bay Area","Colon Cancer",2,"0",1
+"SF Bay Area","Colon Cancer",2,"15",1
+"SF Bay Area","Colon Cancer",2,"30",1
+"SF Bay Area","Colon Cancer",2,"45",1.18952634245187
+"SF Bay Area","Colon Cancer",2,"5",1
+"SF Bay Area","Colon Cancer",2,"60",1.02933783988227
+"SF Bay Area","Colon Cancer",2,"70",1.19291107231155
+"SF Bay Area","Colon Cancer",2,"80",1.02318000196831
+"SF Bay Area","Colon Cancer",2,"NA",1
+"SF Bay Area","Dementia",1,"0",1
+"SF Bay Area","Dementia",1,"15",1
+"SF Bay Area","Dementia",1,"30",1
+"SF Bay Area","Dementia",1,"45",1
+"SF Bay Area","Dementia",1,"5",1
+"SF Bay Area","Dementia",1,"60",1.36062614927625
+"SF Bay Area","Dementia",1,"70",1.10009310986965
+"SF Bay Area","Dementia",1,"80",0.776685687299695
+"SF Bay Area","Dementia",1,"NA",1
+"SF Bay Area","Dementia",2,"0",1
+"SF Bay Area","Dementia",2,"15",1
+"SF Bay Area","Dementia",2,"30",1
+"SF Bay Area","Dementia",2,"45",1
+"SF Bay Area","Dementia",2,"5",1
+"SF Bay Area","Dementia",2,"60",1.03086278483024
+"SF Bay Area","Dementia",2,"70",0.957793539796376
+"SF Bay Area","Dementia",2,"80",0.79407562377202
+"SF Bay Area","Dementia",2,"NA",1
+"SF Bay Area","Depression",1,"0",1
+"SF Bay Area","Depression",1,"15",1
+"SF Bay Area","Depression",1,"30",1
+"SF Bay Area","Depression",1,"45",1
+"SF Bay Area","Depression",1,"5",1
+"SF Bay Area","Depression",1,"60",1
+"SF Bay Area","Depression",1,"70",1
+"SF Bay Area","Depression",1,"80",1
+"SF Bay Area","Depression",1,"NA",1
+"SF Bay Area","Depression",2,"0",1
+"SF Bay Area","Depression",2,"15",1
+"SF Bay Area","Depression",2,"30",1
+"SF Bay Area","Depression",2,"45",1
+"SF Bay Area","Depression",2,"5",1
+"SF Bay Area","Depression",2,"60",1
+"SF Bay Area","Depression",2,"70",1
+"SF Bay Area","Depression",2,"80",1
+"SF Bay Area","Depression",2,"NA",1
+"SF Bay Area","Diabetes",1,"0",1
+"SF Bay Area","Diabetes",1,"15",1
+"SF Bay Area","Diabetes",1,"30",1.772139451104
+"SF Bay Area","Diabetes",1,"45",1.90997461684537
+"SF Bay Area","Diabetes",1,"5",1
+"SF Bay Area","Diabetes",1,"60",2.2410313046903
+"SF Bay Area","Diabetes",1,"70",1.36882878151261
+"SF Bay Area","Diabetes",1,"80",0.999469319365086
+"SF Bay Area","Diabetes",1,"NA",1
+"SF Bay Area","Diabetes",2,"0",1
+"SF Bay Area","Diabetes",2,"15",1
+"SF Bay Area","Diabetes",2,"30",3.82955183413977
+"SF Bay Area","Diabetes",2,"45",2.74066869300912
+"SF Bay Area","Diabetes",2,"5",1
+"SF Bay Area","Diabetes",2,"60",2.45204529428254
+"SF Bay Area","Diabetes",2,"70",1.72667575680103
+"SF Bay Area","Diabetes",2,"80",1.49980485541412
+"SF Bay Area","Diabetes",2,"NA",1
+"SF Bay Area","Hypertensive Heart Disease",1,"0",1
+"SF Bay Area","Hypertensive Heart Disease",1,"15",1
+"SF Bay Area","Hypertensive Heart Disease",1,"30",1.83502181872382
+"SF Bay Area","Hypertensive Heart Disease",1,"45",2.7591089811702
+"SF Bay Area","Hypertensive Heart Disease",1,"5",1
+"SF Bay Area","Hypertensive Heart Disease",1,"60",2.51667127849426
+"SF Bay Area","Hypertensive Heart Disease",1,"70",2.47889397905759
+"SF Bay Area","Hypertensive Heart Disease",1,"80",1.32179094697396
+"SF Bay Area","Hypertensive Heart Disease",1,"NA",1
+"SF Bay Area","Hypertensive Heart Disease",2,"0",1
+"SF Bay Area","Hypertensive Heart Disease",2,"15",1
+"SF Bay Area","Hypertensive Heart Disease",2,"30",1
+"SF Bay Area","Hypertensive Heart Disease",2,"45",3.35639324735069
+"SF Bay Area","Hypertensive Heart Disease",2,"5",1
+"SF Bay Area","Hypertensive Heart Disease",2,"60",2.33916362585071
+"SF Bay Area","Hypertensive Heart Disease",2,"70",1.58251523380757
+"SF Bay Area","Hypertensive Heart Disease",2,"80",1.09051118332538
+"SF Bay Area","Hypertensive Heart Disease",2,"NA",1
+"SF Bay Area","Inflammatory Heart Disease",1,"0",1
+"SF Bay Area","Inflammatory Heart Disease",1,"15",2.0241069719929
+"SF Bay Area","Inflammatory Heart Disease",1,"30",2.29841116688639
+"SF Bay Area","Inflammatory Heart Disease",1,"45",1.91128431372549
+"SF Bay Area","Inflammatory Heart Disease",1,"5",1
+"SF Bay Area","Inflammatory Heart Disease",1,"60",1.8114845182672
+"SF Bay Area","Inflammatory Heart Disease",1,"70",1.91837539432177
+"SF Bay Area","Inflammatory Heart Disease",1,"80",0.879229873052552
+"SF Bay Area","Inflammatory Heart Disease",1,"NA",1
+"SF Bay Area","Inflammatory Heart Disease",2,"0",1
+"SF Bay Area","Inflammatory Heart Disease",2,"15",1
+"SF Bay Area","Inflammatory Heart Disease",2,"30",2.81354828630677
+"SF Bay Area","Inflammatory Heart Disease",2,"45",3.74346303266974
+"SF Bay Area","Inflammatory Heart Disease",2,"5",1
+"SF Bay Area","Inflammatory Heart Disease",2,"60",1.77153179062481
+"SF Bay Area","Inflammatory Heart Disease",2,"70",1.14216316874807
+"SF Bay Area","Inflammatory Heart Disease",2,"80",0.956690043916139
+"SF Bay Area","Inflammatory Heart Disease",2,"NA",1
+"SF Bay Area","Ischemic Heart Disease",1,"0",1
+"SF Bay Area","Ischemic Heart Disease",1,"15",1
+"SF Bay Area","Ischemic Heart Disease",1,"30",1.09491240627265
+"SF Bay Area","Ischemic Heart Disease",1,"45",1.74274758161502
+"SF Bay Area","Ischemic Heart Disease",1,"5",1
+"SF Bay Area","Ischemic Heart Disease",1,"60",1.75052790401147
+"SF Bay Area","Ischemic Heart Disease",1,"70",1.50154320987654
+"SF Bay Area","Ischemic Heart Disease",1,"80",0.921955835137786
+"SF Bay Area","Ischemic Heart Disease",1,"NA",1
+"SF Bay Area","Ischemic Heart Disease",2,"0",1
+"SF Bay Area","Ischemic Heart Disease",2,"15",1
+"SF Bay Area","Ischemic Heart Disease",2,"30",3.97684228929899
+"SF Bay Area","Ischemic Heart Disease",2,"45",2.3087154750892
+"SF Bay Area","Ischemic Heart Disease",2,"5",1
+"SF Bay Area","Ischemic Heart Disease",2,"60",2.14665327291687
+"SF Bay Area","Ischemic Heart Disease",2,"70",1.39439636884958
+"SF Bay Area","Ischemic Heart Disease",2,"80",0.896293028175607
+"SF Bay Area","Ischemic Heart Disease",2,"NA",1
+"SF Bay Area","Lung Cancer",1,"0",1
+"SF Bay Area","Lung Cancer",1,"15",1
+"SF Bay Area","Lung Cancer",1,"30",1
+"SF Bay Area","Lung Cancer",1,"45",2.01677727909346
+"SF Bay Area","Lung Cancer",1,"5",1
+"SF Bay Area","Lung Cancer",1,"60",1.70504529984493
+"SF Bay Area","Lung Cancer",1,"70",1.53200897571278
+"SF Bay Area","Lung Cancer",1,"80",1.44914607363497
+"SF Bay Area","Lung Cancer",1,"NA",1
+"SF Bay Area","Lung Cancer",2,"0",1
+"SF Bay Area","Lung Cancer",2,"15",1
+"SF Bay Area","Lung Cancer",2,"30",1
+"SF Bay Area","Lung Cancer",2,"45",1.94166163227548
+"SF Bay Area","Lung Cancer",2,"5",1
+"SF Bay Area","Lung Cancer",2,"60",1.37245045317636
+"SF Bay Area","Lung Cancer",2,"70",1.0472991181876
+"SF Bay Area","Lung Cancer",2,"80",0.849895709987521
+"SF Bay Area","Lung Cancer",2,"NA",1
+"SF Bay Area","Other",1,"0",1.5506420429805
+"SF Bay Area","Other",1,"15",1.60903465823371
+"SF Bay Area","Other",1,"30",1.86154279249895
+"SF Bay Area","Other",1,"45",2.26108669488723
+"SF Bay Area","Other",1,"5",0.911908201551308
+"SF Bay Area","Other",1,"60",1.98260488779278
+"SF Bay Area","Other",1,"70",1.36822337590738
+"SF Bay Area","Other",1,"80",0.976790838360702
+"SF Bay Area","Other",1,"NA",1
+"SF Bay Area","Other",2,"0",1.48170783539206
+"SF Bay Area","Other",2,"15",1.28361390699014
+"SF Bay Area","Other",2,"30",1.83764990224961
+"SF Bay Area","Other",2,"45",2.0669583747483
+"SF Bay Area","Other",2,"5",1.67442004516417
+"SF Bay Area","Other",2,"60",1.80915705267321
+"SF Bay Area","Other",2,"70",1.26845391122765
+"SF Bay Area","Other",2,"80",0.845476366666528
+"SF Bay Area","Other",2,"NA",1
+"SF Bay Area","Respiratory diseases",1,"0",1
+"SF Bay Area","Respiratory diseases",1,"15",1
+"SF Bay Area","Respiratory diseases",1,"30",1.4484778707982
+"SF Bay Area","Respiratory diseases",1,"45",2.09221072707649
+"SF Bay Area","Respiratory diseases",1,"5",1
+"SF Bay Area","Respiratory diseases",1,"60",1.65388156751649
+"SF Bay Area","Respiratory diseases",1,"70",1.54108695652174
+"SF Bay Area","Respiratory diseases",1,"80",1.06181424510219
+"SF Bay Area","Respiratory diseases",1,"NA",1
+"SF Bay Area","Respiratory diseases",2,"0",1
+"SF Bay Area","Respiratory diseases",2,"15",1
+"SF Bay Area","Respiratory diseases",2,"30",1
+"SF Bay Area","Respiratory diseases",2,"45",2.47166010485302
+"SF Bay Area","Respiratory diseases",2,"5",1
+"SF Bay Area","Respiratory diseases",2,"60",1.66919649710638
+"SF Bay Area","Respiratory diseases",2,"70",1.04537655807249
+"SF Bay Area","Respiratory diseases",2,"80",0.896181391239519
+"SF Bay Area","Respiratory diseases",2,"NA",1
+"SF Bay Area","Road Traffic Injuries",1,"0",1
+"SF Bay Area","Road Traffic Injuries",1,"15",0.931089207116732
+"SF Bay Area","Road Traffic Injuries",1,"30",2.06387941516329
+"SF Bay Area","Road Traffic Injuries",1,"45",1.97568909004871
+"SF Bay Area","Road Traffic Injuries",1,"5",1
+"SF Bay Area","Road Traffic Injuries",1,"60",1.70892040279912
+"SF Bay Area","Road Traffic Injuries",1,"70",1.91419491525424
+"SF Bay Area","Road Traffic Injuries",1,"80",2.10869894481749
+"SF Bay Area","Road Traffic Injuries",1,"NA",1
+"SF Bay Area","Road Traffic Injuries",2,"0",1
+"SF Bay Area","Road Traffic Injuries",2,"15",1.27717283362173
+"SF Bay Area","Road Traffic Injuries",2,"30",1
+"SF Bay Area","Road Traffic Injuries",2,"45",1
+"SF Bay Area","Road Traffic Injuries",2,"5",1
+"SF Bay Area","Road Traffic Injuries",2,"60",1
+"SF Bay Area","Road Traffic Injuries",2,"70",1
+"SF Bay Area","Road Traffic Injuries",2,"80",1.68431693041009
+"SF Bay Area","Road Traffic Injuries",2,"NA",1
+"SF Bay Area","Stroke",1,"0",1
+"SF Bay Area","Stroke",1,"15",1
+"SF Bay Area","Stroke",1,"30",2.01722256668221
+"SF Bay Area","Stroke",1,"45",2.09979966107537
+"SF Bay Area","Stroke",1,"5",1
+"SF Bay Area","Stroke",1,"60",2.08743202817835
+"SF Bay Area","Stroke",1,"70",1.923769771529
+"SF Bay Area","Stroke",1,"80",0.985995610072538
+"SF Bay Area","Stroke",1,"NA",1
+"SF Bay Area","Stroke",2,"0",1
+"SF Bay Area","Stroke",2,"15",1
+"SF Bay Area","Stroke",2,"30",2.75727732058063
+"SF Bay Area","Stroke",2,"45",2.2807874653099
+"SF Bay Area","Stroke",2,"5",1
+"SF Bay Area","Stroke",2,"60",2.10703821954314
+"SF Bay Area","Stroke",2,"70",1.31601124516963
+"SF Bay Area","Stroke",2,"80",0.962790480694325
+"SF Bay Area","Stroke",2,"NA",1
+"Southern California","Acute resp infections",1,"0",1.34977102242256
+"Southern California","Acute resp infections",2,"0",1.25685946563916
+"Southern California","All Causes",1,"0",1.23973312836232
+"Southern California","All Causes",1,"15",1.16508220913308
+"Southern California","All Causes",1,"30",1.27852452643111
+"Southern California","All Causes",1,"45",1.39980330860277
+"Southern California","All Causes",1,"5",1.23708474545796
+"Southern California","All Causes",1,"60",1.39154041210903
+"Southern California","All Causes",1,"70",1.26158668838856
+"Southern California","All Causes",1,"80",0.985192195576774
+"Southern California","All Causes",1,"NA",1
+"Southern California","All Causes",2,"0",1.16866284135558
+"Southern California","All Causes",2,"15",1.08885654051829
+"Southern California","All Causes",2,"30",1.25616533166987
+"Southern California","All Causes",2,"45",1.37991478225044
+"Southern California","All Causes",2,"5",1.08751191506172
+"Southern California","All Causes",2,"60",1.3534394180917
+"Southern California","All Causes",2,"70",1.15032005518604
+"Southern California","All Causes",2,"80",0.936856598826919
+"Southern California","All Causes",2,"NA",1
+"Southern California","Breast Cancer",1,"0",1
+"Southern California","Breast Cancer",1,"15",1
+"Southern California","Breast Cancer",1,"30",1
+"Southern California","Breast Cancer",1,"45",1
+"Southern California","Breast Cancer",1,"5",1
+"Southern California","Breast Cancer",1,"60",1
+"Southern California","Breast Cancer",1,"70",1
+"Southern California","Breast Cancer",1,"80",1
+"Southern California","Breast Cancer",1,"NA",1
+"Southern California","Breast Cancer",2,"0",1
+"Southern California","Breast Cancer",2,"15",1
+"Southern California","Breast Cancer",2,"30",1.01064502540327
+"Southern California","Breast Cancer",2,"45",1.06055868642743
+"Southern California","Breast Cancer",2,"5",1
+"Southern California","Breast Cancer",2,"60",1.01998751431531
+"Southern California","Breast Cancer",2,"70",0.91458524031609
+"Southern California","Breast Cancer",2,"80",0.85956749717823
+"Southern California","Breast Cancer",2,"NA",1
+"Southern California","Colon Cancer",1,"0",1
+"Southern California","Colon Cancer",1,"15",1
+"Southern California","Colon Cancer",1,"30",1.31526707633137
+"Southern California","Colon Cancer",1,"45",1.04213914194952
+"Southern California","Colon Cancer",1,"5",1
+"Southern California","Colon Cancer",1,"60",1.20544063869784
+"Southern California","Colon Cancer",1,"70",1.46214224724853
+"Southern California","Colon Cancer",1,"80",1.03505300839838
+"Southern California","Colon Cancer",1,"NA",1
+"Southern California","Colon Cancer",2,"0",1
+"Southern California","Colon Cancer",2,"15",1
+"Southern California","Colon Cancer",2,"30",1.08333480405739
+"Southern California","Colon Cancer",2,"45",1.08726939817357
+"Southern California","Colon Cancer",2,"5",1
+"Southern California","Colon Cancer",2,"60",1.12671677404609
+"Southern California","Colon Cancer",2,"70",1.05141518559366
+"Southern California","Colon Cancer",2,"80",0.978569407884491
+"Southern California","Colon Cancer",2,"NA",1
+"Southern California","Dementia",1,"0",1
+"Southern California","Dementia",1,"15",1
+"Southern California","Dementia",1,"30",1
+"Southern California","Dementia",1,"45",1.1571489165217
+"Southern California","Dementia",1,"5",1
+"Southern California","Dementia",1,"60",1.06516924823591
+"Southern California","Dementia",1,"70",1.03410617974982
+"Southern California","Dementia",1,"80",0.839860589211967
+"Southern California","Dementia",1,"NA",1
+"Southern California","Dementia",2,"0",1
+"Southern California","Dementia",2,"15",1
+"Southern California","Dementia",2,"30",1
+"Southern California","Dementia",2,"45",1.14683597246295
+"Southern California","Dementia",2,"5",1
+"Southern California","Dementia",2,"60",0.769689932530311
+"Southern California","Dementia",2,"70",0.912266874336514
+"Southern California","Dementia",2,"80",0.786058881652331
+"Southern California","Dementia",2,"NA",1
+"Southern California","Depression",1,"0",1
+"Southern California","Depression",1,"15",1
+"Southern California","Depression",1,"30",1
+"Southern California","Depression",1,"45",1
+"Southern California","Depression",1,"5",1
+"Southern California","Depression",1,"60",1
+"Southern California","Depression",1,"70",1
+"Southern California","Depression",1,"80",1
+"Southern California","Depression",1,"NA",1
+"Southern California","Depression",2,"0",1
+"Southern California","Depression",2,"15",1
+"Southern California","Depression",2,"30",1
+"Southern California","Depression",2,"45",1
+"Southern California","Depression",2,"5",1
+"Southern California","Depression",2,"60",1
+"Southern California","Depression",2,"70",1
+"Southern California","Depression",2,"80",1
+"Southern California","Depression",2,"NA",1
+"Southern California","Diabetes",1,"0",1
+"Southern California","Diabetes",1,"15",1.51880409460126
+"Southern California","Diabetes",1,"30",1.53093573504462
+"Southern California","Diabetes",1,"45",1.68556790133361
+"Southern California","Diabetes",1,"5",1
+"Southern California","Diabetes",1,"60",1.59657322001818
+"Southern California","Diabetes",1,"70",1.47846272245182
+"Southern California","Diabetes",1,"80",1.2186754122586
+"Southern California","Diabetes",1,"NA",1
+"Southern California","Diabetes",2,"0",1
+"Southern California","Diabetes",2,"15",1.27837056098279
+"Southern California","Diabetes",2,"30",1.46944643934965
+"Southern California","Diabetes",2,"45",1.93965934201774
+"Southern California","Diabetes",2,"5",1
+"Southern California","Diabetes",2,"60",1.70634258460217
+"Southern California","Diabetes",2,"70",1.56633649970156
+"Southern California","Diabetes",2,"80",1.3023516100277
+"Southern California","Diabetes",2,"NA",1
+"Southern California","Hypertensive Heart Disease",1,"0",1
+"Southern California","Hypertensive Heart Disease",1,"15",0.931136105056197
+"Southern California","Hypertensive Heart Disease",1,"30",1.4198360853176
+"Southern California","Hypertensive Heart Disease",1,"45",1.63107118649498
+"Southern California","Hypertensive Heart Disease",1,"5",1
+"Southern California","Hypertensive Heart Disease",1,"60",1.7567107494712
+"Southern California","Hypertensive Heart Disease",1,"70",1.58234029169531
+"Southern California","Hypertensive Heart Disease",1,"80",1.14432620904112
+"Southern California","Hypertensive Heart Disease",1,"NA",1
+"Southern California","Hypertensive Heart Disease",2,"0",1
+"Southern California","Hypertensive Heart Disease",2,"15",2.30705937177363
+"Southern California","Hypertensive Heart Disease",2,"30",1.89011459160576
+"Southern California","Hypertensive Heart Disease",2,"45",1.94769817130822
+"Southern California","Hypertensive Heart Disease",2,"5",1
+"Southern California","Hypertensive Heart Disease",2,"60",1.65200785131563
+"Southern California","Hypertensive Heart Disease",2,"70",1.481783535193
+"Southern California","Hypertensive Heart Disease",2,"80",1.06019703698458
+"Southern California","Hypertensive Heart Disease",2,"NA",1
+"Southern California","Inflammatory Heart Disease",1,"0",1.60285308912679
+"Southern California","Inflammatory Heart Disease",1,"15",1.18581967386077
+"Southern California","Inflammatory Heart Disease",1,"30",1.35773643563931
+"Southern California","Inflammatory Heart Disease",1,"45",1.35454394933024
+"Southern California","Inflammatory Heart Disease",1,"5",1
+"Southern California","Inflammatory Heart Disease",1,"60",1.47003551306864
+"Southern California","Inflammatory Heart Disease",1,"70",1.50180869084205
+"Southern California","Inflammatory Heart Disease",1,"80",0.996291706326632
+"Southern California","Inflammatory Heart Disease",1,"NA",1
+"Southern California","Inflammatory Heart Disease",2,"0",1
+"Southern California","Inflammatory Heart Disease",2,"15",1.48276120300039
+"Southern California","Inflammatory Heart Disease",2,"30",1.52166187374844
+"Southern California","Inflammatory Heart Disease",2,"45",1.55925583179097
+"Southern California","Inflammatory Heart Disease",2,"5",1
+"Southern California","Inflammatory Heart Disease",2,"60",1.51494922104832
+"Southern California","Inflammatory Heart Disease",2,"70",1.25896401454507
+"Southern California","Inflammatory Heart Disease",2,"80",1.09760006808861
+"Southern California","Inflammatory Heart Disease",2,"NA",1
+"Southern California","Ischemic Heart Disease",1,"0",1
+"Southern California","Ischemic Heart Disease",1,"15",0.847998952819037
+"Southern California","Ischemic Heart Disease",1,"30",1.24188861689876
+"Southern California","Ischemic Heart Disease",1,"45",1.4070484835376
+"Southern California","Ischemic Heart Disease",1,"5",1
+"Southern California","Ischemic Heart Disease",1,"60",1.53008820291121
+"Southern California","Ischemic Heart Disease",1,"70",1.4016629464694
+"Southern California","Ischemic Heart Disease",1,"80",1.04792932137528
+"Southern California","Ischemic Heart Disease",1,"NA",1
+"Southern California","Ischemic Heart Disease",2,"0",1
+"Southern California","Ischemic Heart Disease",2,"15",1
+"Southern California","Ischemic Heart Disease",2,"30",1.63112104155345
+"Southern California","Ischemic Heart Disease",2,"45",1.717127781473
+"Southern California","Ischemic Heart Disease",2,"5",1
+"Southern California","Ischemic Heart Disease",2,"60",1.6946569773682
+"Southern California","Ischemic Heart Disease",2,"70",1.38149125559331
+"Southern California","Ischemic Heart Disease",2,"80",1.0271673019542
+"Southern California","Ischemic Heart Disease",2,"NA",1
+"Southern California","Lung Cancer",1,"0",1
+"Southern California","Lung Cancer",1,"15",1
+"Southern California","Lung Cancer",1,"30",1.35551805704373
+"Southern California","Lung Cancer",1,"45",1.21379256977801
+"Southern California","Lung Cancer",1,"5",1
+"Southern California","Lung Cancer",1,"60",1.1966117451179
+"Southern California","Lung Cancer",1,"70",1.2259765458391
+"Southern California","Lung Cancer",1,"80",1.05307933201137
+"Southern California","Lung Cancer",1,"NA",1
+"Southern California","Lung Cancer",2,"0",1
+"Southern California","Lung Cancer",2,"15",1
+"Southern California","Lung Cancer",2,"30",1.43439973093654
+"Southern California","Lung Cancer",2,"45",1.11449321942401
+"Southern California","Lung Cancer",2,"5",1
+"Southern California","Lung Cancer",2,"60",1.15618519642209
+"Southern California","Lung Cancer",2,"70",0.95805091984857
+"Southern California","Lung Cancer",2,"80",0.868138117073875
+"Southern California","Lung Cancer",2,"NA",1
+"Southern California","Other",1,"0",1.24255320092915
+"Southern California","Other",1,"15",1.18762288705065
+"Southern California","Other",1,"30",1.26916336604175
+"Southern California","Other",1,"45",1.37788530118263
+"Southern California","Other",1,"5",1.18022302764482
+"Southern California","Other",1,"60",1.3205222975134
+"Southern California","Other",1,"70",1.16263023700493
+"Southern California","Other",1,"80",0.934491967450017
+"Southern California","Other",1,"NA",1
+"Southern California","Other",2,"0",1.16750118902359
+"Southern California","Other",2,"15",1.06126797433313
+"Southern California","Other",2,"30",1.21577920178076
+"Southern California","Other",2,"45",1.34045019775419
+"Southern California","Other",2,"5",1.01142690710923
+"Southern California","Other",2,"60",1.29064551096933
+"Southern California","Other",2,"70",1.07449909539904
+"Southern California","Other",2,"80",0.910635358366808
+"Southern California","Other",2,"NA",1
+"Southern California","Respiratory diseases",1,"0",1
+"Southern California","Respiratory diseases",1,"15",1.25141593037372
+"Southern California","Respiratory diseases",1,"30",1.43586392684094
+"Southern California","Respiratory diseases",1,"45",1.35180502086852
+"Southern California","Respiratory diseases",1,"5",1.61921788490324
+"Southern California","Respiratory diseases",1,"60",1.42999251874428
+"Southern California","Respiratory diseases",1,"70",1.2526529320829
+"Southern California","Respiratory diseases",1,"80",1.07064757094193
+"Southern California","Respiratory diseases",1,"NA",1
+"Southern California","Respiratory diseases",2,"0",1.41903488056034
+"Southern California","Respiratory diseases",2,"15",1.06264552881695
+"Southern California","Respiratory diseases",2,"30",1.27622124477981
+"Southern California","Respiratory diseases",2,"45",1.66627383768407
+"Southern California","Respiratory diseases",2,"5",1
+"Southern California","Respiratory diseases",2,"60",1.51538598273371
+"Southern California","Respiratory diseases",2,"70",1.22144094725258
+"Southern California","Respiratory diseases",2,"80",1.01140296169021
+"Southern California","Respiratory diseases",2,"NA",1
+"Southern California","Road Traffic Injuries",1,"0",1.37387407639439
+"Southern California","Road Traffic Injuries",1,"15",1.09273664943945
+"Southern California","Road Traffic Injuries",1,"30",1.16552705637859
+"Southern California","Road Traffic Injuries",1,"45",1.46594818749963
+"Southern California","Road Traffic Injuries",1,"5",1.27744525175758
+"Southern California","Road Traffic Injuries",1,"60",1.42430371229263
+"Southern California","Road Traffic Injuries",1,"70",1.65962618311386
+"Southern California","Road Traffic Injuries",1,"80",1.23797100243462
+"Southern California","Road Traffic Injuries",1,"NA",1
+"Southern California","Road Traffic Injuries",2,"0",1.17830574903671
+"Southern California","Road Traffic Injuries",2,"15",1.13351702652029
+"Southern California","Road Traffic Injuries",2,"30",1.4063113159455
+"Southern California","Road Traffic Injuries",2,"45",1.43643060605577
+"Southern California","Road Traffic Injuries",2,"5",1.19653254919979
+"Southern California","Road Traffic Injuries",2,"60",1.34652945943034
+"Southern California","Road Traffic Injuries",2,"70",1.51768454063195
+"Southern California","Road Traffic Injuries",2,"80",1.14902200253875
+"Southern California","Road Traffic Injuries",2,"NA",1
+"Southern California","Stroke",1,"0",1
+"Southern California","Stroke",1,"15",0.913229641497424
+"Southern California","Stroke",1,"30",1.33425823530756
+"Southern California","Stroke",1,"45",1.54328345602786
+"Southern California","Stroke",1,"5",1
+"Southern California","Stroke",1,"60",1.46194729915368
+"Southern California","Stroke",1,"70",1.27069223877717
+"Southern California","Stroke",1,"80",0.994981522050593
+"Southern California","Stroke",1,"NA",1
+"Southern California","Stroke",2,"0",1
+"Southern California","Stroke",2,"15",1.09256088642134
+"Southern California","Stroke",2,"30",1.46424067096548
+"Southern California","Stroke",2,"45",1.46199270593762
+"Southern California","Stroke",2,"5",1
+"Southern California","Stroke",2,"60",1.53698989476865
+"Southern California","Stroke",2,"70",1.20757350699871
+"Southern California","Stroke",2,"80",0.927627521115537
+"Southern California","Stroke",2,"NA",1

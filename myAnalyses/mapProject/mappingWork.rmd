@@ -1,0 +1,36 @@
+---
+title: "Race Work"
+author: "Michael Samuel"
+date: "January 28, 2019"
+always_allow_html: yes
+output:
+  html_document: default
+  word_document: default
+---
+```{r echo=FALSE, message=FALSE}
+
+#-- Load Packages ------------------------------------------------------------
+ library(ggplot2)
+ library(dplyr)
+ library(tidyr)
+ library(readxl)
+ library(readr) 
+ library(fs)
+ library(markdown)
+
+#-- Key Constants -----------------------------------------------------------
+
+ whichData <- "real"
+ myPlace   <- "d:/0.CBD/myCBD"
+ STATE     <- "CALIFORNIA"
+ yearGrp   <- "2013-2017"
+
+ datCommunity <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
+ 
+```
+
+```{r}
+
+map.data.1 <- filter(datCommunity,CAUSE %in% c("D01","D10","D10b","D10c","E02","E03","0"),sex=="Total")
+write_csv(map.data.1,"CCB.map.data1.csv")
+```

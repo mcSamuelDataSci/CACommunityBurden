@@ -1,0 +1,148 @@
+---
+title: "Fusion Center OSHPD PDD homelessness code exploration"
+date: "March, 2020"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE)
+```
+
+<br>
+
+We coded 2016 and, more recently, 2018 PDD records with an ICD-10-CM code of "Z590" or "Z591" (in the primary or any of the other 24 positions) as "Homeless", and all other records as "Not Homeless".  We constructed tables based on this coding to explore numbers and percents of homeless hospitalizations by "Clinical Classification Software" grouping and by county. Presumably (?) these numbers and percents could be considered minimums, since many homeless persons are not coded as such with these codes--on the other hand, maybe there are situations where the codes are used in err (?).
+
+
+<br> 
+
+
+
+```{r}
+#---SET LOCATIONS-----------------------------------------------------------------------
+
+secure.location  <- "h:/0.Secure.Data/"
+myInfo           <- "f:/0.CBD/myCBD/myInfo"
+upPlace          <- "f:/0.CBD/myUpstream"
+
+whichData <- "real"   # "real" or "fake"
+
+
+#-------------------------------------------------LOAD PACKAGES -----------------------------------------------------------------------------------------------------------------------------------#
+
+library(dplyr)
+library(readr)
+library(fs)
+library(readxl)
+library(summarytools)
+library(kableExtra)
+library(DT)
+
+
+#--------------------------------------------------------------------LOAD AND PROCESS OSHPD DATA-----------------------------------------------------------------------------------------#
+
+if (whichData == "real") {
+  oshpd16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) 
+}
+
+if (whichData == "fake") {
+  oshpd16 <- readRDS(file=path(upPlace, "upData/oshpd_subset_SAMPLE.rds"))
+}
+
+
+
+
+```
+
+
+
+
+```{r}
+
+coMap             <- as.data.frame(read_excel(path(myInfo,"/County Codes to County Names Linkage.xlsx")))
+
+ccsLink           <- read_csv(paste0(myInfo,"/ccs_code_to_name_link.csv")) %>%
+                       mutate(ccs_diagP = as.character(ccs_diagP))
+
+oshpd16          <- full_join(oshpd16,ccsLink,by="ccs_diagP")  %>%
+                       left_join(coMap,by = c("patcnty"= "cdphcaCountyTxt")) %>%
+                       mutate(countyName = ifelse(is.na(countyName),"MISSING",countyName))
+
+oshpd16T  <-  oshpd16 %>% mutate(ccsName = "TOTAL",countyName="CALIFORNIA")
+
+oshpd16 <- bind_rows(oshpd16,oshpd16T)
+
+oshpd16 <- oshpd16 %>% mutate(all_diag = paste(diag_p, odiag1, odiag2, odiag3, odiag4,
+                                                  odiag5, odiag6, odiag7, odiag8, odiag9,
+                                                  odiag10, odiag11, odiag12, odiag13, odiag14,
+                                                  odiag15, odiag16, odiag17, odiag18, odiag19, odiag20, odiag21,
+                                                  odiag22, odiag23, odiag24,sep = "|"))  %>%
+                       mutate(homeless = ifelse(grepl("Z590|Z591", all_diag), 1,0))
+
+
+
+```
+
+
+```{r}
+
+library(tidyr)
+
+tWork <- oshpd16 %>% group_by(year,ccsName)  %>% summarize(n = n(),
+                                                      h = sum(homeless),
+                                                      ph = h/n ) %>%
+                                                        
+                                        select(year,ccsName,
+                                               `Percent Homeless` = ph,
+                                               `Number Homeless`  = h,
+                                               `N Total` = n) %>%
+                                                filter(!is.na(year)) %>%
+                                        pivot_wider(names_from = year, values_from = c(`Percent Homeless`,`Number Homeless`,`N Total`))
+
+
+```
+
+
+A number of interesting observations can been seen in the table below, including that for some conditions a large *percentage* of the hospitalizations appear to be among homeless persons, like 17.7% and 18.0% of "Schizophrenia and other psychotic disorders" in 2016 and 2018 respectively, 12.1% and 13.6% of "HIV infection", 11.9% and 12.7% of "Personality disorders", etc., and that for some additional conditions there appear to be large *numbers* of homeless, like 73,103 and 82,751 overall, 9,768 and 8,366 "Mood Disorder", and many others.  These HTML tables are sortable by clicking the arrow by the variable name (and filterable and searchable, but not much use for that here) 
+
+```{r}
+ datatable(tWork, rownames = FALSE,filter = 'top',options = list(pageLength=60) )  %>%
+   formatPercentage(columns=c("Percent Homeless_2016","Percent Homeless_2018"),digits=2)    %>%
+   formatRound(columns=c("N Total_2016","Number Homeless_2016","N Total_2018","Number Homeless_2018"),digits=0)    
+
+  
+```
+
+```{r}
+
+tWork <- oshpd16 %>% group_by(countyName)  %>% summarize(n = n(),
+                                                      h = sum(homeless),
+                                                      ph = h/n ) %>%
+                                                        
+                                        select(countyName,
+                                               `Percent Homeless` = ph,
+                                               `Number Homeless`  = h,
+                                               `N Total` = n)
+
+
+```
+
+<br>
+<br>
+
+Perhaps some interesting bservations here too, including the apparently high *percentage* of homeless persons among those records with missing data for county (based on the "patcnty" variable) and in San Francisco. 
+
+```{r}
+ datatable(tWork, rownames = FALSE,filter = 'top',options = list(pageLength=60) )  %>%
+   formatPercentage(columns="Percent Homeless",digits=2)    %>%
+   formatRound(columns=c("N Total","Number Homeless"),digits=0)    
+
+  
+```
+
+
+<br>
+
+For anyone's interest, this bit of data "wrangling", analysis, and sharing of the sortable results tables are coded in one small R "markdown" file.  
+

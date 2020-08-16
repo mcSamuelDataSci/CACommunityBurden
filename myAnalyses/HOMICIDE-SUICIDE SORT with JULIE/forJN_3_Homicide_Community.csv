@@ -1,0 +1,516 @@
+county,comName,Ndeaths 2008-2012,Ndeaths 2013-2017,Rate 2008-2012,Rate 2013-2017,Percent Change,pValue,Community 13-17 Compared to State 15-17
+Alameda,Alameda/Jack London Square/Oakland Inner Harbor,14,8,3.905,2.341,-40.051216389244544,0.12682205956288306,Lower
+Alameda,Albany/Berkeley East and North/Claremont/Cragmont/Forest Park/Rockridge/Temescal/Thousand Oaks,11,15,2.207,2.767,25.373810602628005,0.28909008947798875,Lower
+Alameda,Altamont/Livermore East/Midway/Mountain House/Scotts Corner,NA,1,NA,0.5894,NA,NA,Lower
+Alameda,Ashland/Brookfield Village/Castro Valley South/Elmhurst/Hayward Northeast/San Leandro North Central/San Lorenzo East,78,76,13.79,12.7,-7.904278462654097,0.30714720458438494,Higher
+Alameda,Berkeley South and West/Emeryville/Oakland Northwest,37,21,7.464,2.648,-64.52304394426582,5.82268919594453e-4,Lower
+Alameda,Castro Valley Central and North/Oak Knoll/San Leandro Northeast/Sheffield Village/Union City East,21,18,4.131,3.382,-18.13120309852336,0.2704400595634956,Lower
+Alameda,Centerville/Fremont West/Irvington/Newark East Central,24,16,5.444,3.501,-35.690668626010286,0.08708255510716434,Lower
+Alameda,Dimond/Montclair/Oakland East/Oakmore/Piedmont/Piedmont Pines/Trestle Glen,57,45,10.88,7.905,-27.343750000000004,0.061780466211054264,Higher
+Alameda,Dublin/Pleasanton/Santa Rita/Sunol,6,8,1.179,1.368,16.030534351145043,0.39339688421573626,Lower
+Alameda,Fremont East/Niles/Union City Central,16,15,2.958,2.336,-21.027721433400956,0.25994977469078373,Lower
+Alameda,Fremont South/Mission San Jose/Newark South/Warm Springs,12,7,2.947,1.294,-56.09093993892094,0.048456020839337866,Lower
+Alameda,Fruitvale/Melrose/Oakland Airport,199,149,28.85,21.34,-26.031195840554595,0.0027838367809095432,Higher
+Alameda,Hayward Central,63,41,9.967,6.73,-32.47717467643222,0.025356004851273317,No Diff
+Alameda,Livermore Central and West/Spring Town,4,3,1.572,1.05,-33.20610687022901,0.30064311681459677,Lower
+Alameda,Oakland West Central,99,66,22.76,14.83,-34.84182776801406,0.0039336695421618995,Higher
+Alameda,San Leandro West/San Lorenzo West/Hayward West,29,22,5.991,4.312,-28.025371390418954,0.12457455178524979,No Diff
+Amador,Ione/Jackson/Pine Grove/Sutter Creek,4,7,2.54,5.976,135.2755905511811,0.09831428470669845,No Diff
+Amador,Pioneer,1,1,2.954,8.832,198.98442789438047,0.2639657760782993,No Diff
+Amador,Plymouth,1,1,3.218,6.505,102.1441889372281,0.3253053211356284,No Diff
+Butte,Berry Creek/Brownsville/Concow/Feather Falls/Forbestown,5,2,16.29,5.759,-64.64702271332105,0.11918194412047489,No Diff
+Butte,Biggs/East Biggs/Gridley,1,NA,1.219,NA,NA,NA,NA
+Butte,Butte Meadows/Cohasset/Forest Ranch,1,NA,5.066,NA,NA,NA,NA
+Butte,Capay/Lake/Nord,1,1,6.091,4.176,-31.439829256279754,0.39769920578402096,No Diff
+Butte,Chapmantown/Chico,15,8,3.149,1.328,-57.82788186725944,0.030893553829458353,Lower
+Butte,Durham,2,2,7.503,7.461,-0.5597760895641719,0.4978456505885265,No Diff
+Butte,Magalia/Paradise/Stirling City,11,8,5.052,4.409,-12.727632620744258,0.3888544725836032,No Diff
+Butte,Oroville/Palermo/Thermalito,12,17,5.263,7.705,46.39939198175946,0.16371759312471057,No Diff
+Calaveras,Angels Camp/Arnold/Copperopolis/Mountain Ranch/Murphys/San Andreas/Valley Springs/West Point,5,11,1.848,6.589,256.5476190476191,0.015188837082992679,No Diff
+Colusa,Arbuckle/Grimes,3,NA,13.05,NA,NA,NA,NA
+Colusa,Colusa,1,NA,2.592,NA,NA,NA,NA
+Colusa,Williams,1,NA,4.667,NA,NA,NA,NA
+Contra Costa,Alamo/Danville/Diablo/San Ramon,8,4,1.225,0.4399,-64.08979591836736,0.056435748936012664,Lower
+Contra Costa,Antioch North and West/Nichols/Pittsburg Central and East/West Pittsburg,61,75,11.81,13.97,18.289585097375106,0.16711227873882317,Higher
+Contra Costa,Avon/Clyde/Concord Central/Pittsburg Southwest,17,11,4.006,2.478,-38.1427858212681,0.10882845403779451,Lower
+Contra Costa,Brentwood Central and West/Oakley,36,51,5.819,7.466,28.30383227358653,0.1279887779183153,Higher
+Contra Costa,Brentwood East/Byron/Discovery Bay/Knightsen,13,10,5.181,3.11,-39.9729781895387,0.11825653343826814,Lower
+Contra Costa,Clayton/Concord South/Walnut Creek Central and East,3,5,0.5641,1.024,81.52809785499024,0.2155570301720806,Lower
+Contra Costa,Concord West/Martinez East/Martinez Waterfront/Pacheco/Pleasant Hill East,20,17,4.899,3.857,-21.26964686670749,0.23703617176906233,No Diff
+Contra Costa,Crockett/Hercules/Martinez West/Pinole/Port Costa/Richmond Northeast/Rodeo,39,32,9.583,6.725,-29.82364603986226,0.07415702616941133,No Diff
+Contra Costa,El Cerrito/El Sobrante/Kensington/Richmond North/Richmond Southeast/Wildcat Canyon,43,31,11.77,7.624,-35.225148683092605,0.03554613878814372,Higher
+Contra Costa,Lafayette/Martinez South/Moraga/Orinda/Pleasant Hill/Rheem Valley/Rossmoor Leisure World/Walnut Creek Southwest,8,1,1.973,0.3039,-84.59706031424227,0.018731951320737572,Lower
+Contra Costa,Richmond Central/San Pablo Central,139,81,27.28,14.59,-46.517595307917894,4.112230694963692e-6,Higher
+Del Norte,Crescent City/Gasquet/Klamath/Smith River,9,9,6.322,7.381,16.75102815564695,0.37443954427001713,No Diff
+El Dorado,Cameron Park/El Dorado Hills/Shingle Springs,5,2,1.734,0.539,-68.91580161476354,0.09414325064082574,Lower
+El Dorado,Camino/Pollock Pines,9,3,8.153,1.431,-82.4481785845701,0.015418119268537978,Lower
+El Dorado,Cool/Diamond Springs/Latrobe/Pilot Hill/Placerville,4,7,1.878,2.529,34.664536741214064,0.32462491262273774,Lower
+El Dorado,Garden Valley/Georgetown/Greenwood/Kelsey/Volcanoville,3,1,6.74,1.841,-72.68545994065282,0.1331934802068655,Lower
+El Dorado,South Lake Tahoe,4,4,2.831,2.103,-25.715294948781345,0.34112570650807617,Lower
+Fresno,Auberry/Calwa/Centerville/Clovis East/Del Rey/Fowler/Friant/Sanger/Shaver Lake,31,20,6.976,4.166,-40.280963302752284,0.03733599519616071,No Diff
+Fresno,Biola/Herndon/Highway City/Kerman,14,13,7.301,6.298,-13.73784413094097,0.3520907795918208,No Diff
+Fresno,Bowles/Caruthers/Easton/Kingsburg/Lanare/Laton/Raisin City/Riverdale/Selma,45,31,9.948,7.02,-29.43305186972256,0.07017820270565711,No Diff
+Fresno,Cantua Creek/San Joaquin/Tranquility,3,1,7.291,3.824,-47.551776162391995,0.2710411334638212,No Diff
+Fresno,Clovis West/Fresno East,21,28,4.278,4.824,12.762973352033667,0.3405729701890794,No Diff
+Fresno,Coalinga,2,1,1.712,0.9065,-47.050233644859816,0.29719286792684363,Lower
+Fresno,Firebaugh/Mendota,6,9,4.511,7.011,55.42008423852804,0.20420418718833822,No Diff
+Fresno,Fresno East Central,70,60,13.82,12.47,-9.768451519536901,0.28544825635525084,Higher
+Fresno,Fresno North Central,29,18,7.103,4.25,-40.16612698859636,0.05124778085477111,No Diff
+Fresno,Fresno Northwest,24,24,3.466,3.481,0.43277553375648237,0.49411943238341083,Lower
+Fresno,Fresno South and West,47,58,10.14,12.68,25.04930966469427,0.1337629458899794,Higher
+Fresno,Fresno West Central,47,51,11.07,11.58,4.607046070460703,0.41451654857487885,Higher
+Fresno,Huron,1,5,1.682,12.26,628.8941736028537,0.033168720100887006,No Diff
+Fresno,Orange Cove/Parlier/Reedley/Squaw Valley/Tivy Valley/Wonder Valley,26,24,8.589,8.286,-3.5277680754453464,0.45051954422345475,Higher
+Glenn,Artois/Elk Creek/Glenn/Grindstone Indian Rancheria/Willows,1,NA,1.835,NA,NA,NA,NA
+Glenn,Hamilton City,2,1,14,7.511,-46.35,0.301052528840136,No Diff
+Glenn,Orland,1,7,1.31,11.09,746.5648854961831,0.014138431971118082,No Diff
+Humboldt,Arcata/Eureka,13,19,3.718,5.086,36.79397525551373,0.2006725182041732,No Diff
+Humboldt,Bluelake/McKinleyville/Orick/Trinidad,4,8,2.984,7.151,139.64477211796248,0.0809108122609008,No Diff
+Humboldt,Ferndale/Fortuna/Rio Dell/Scotia,5,7,4.466,5.631,26.085982982534706,0.3470620428124743,No Diff
+Humboldt,Garberville/Redway,NA,6,NA,20.98,NA,NA,Higher
+Humboldt,Hoopa/Willow Creek,1,2,3.089,7.681,148.65652314664942,0.2343342554808696,No Diff
+Imperial,Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach,4,3,4.016,3.984,-0.7968127490039848,0.4959033033533147,No Diff
+Imperial,Brawley/Westmorland,4,6,3.206,4.326,34.934497816593876,0.32303769549604855,No Diff
+Imperial,Calexico/Ocotillo,4,3,1.56,1.291,-17.24358974358975,0.4018618396406566,Lower
+Imperial,El Centro/Heber/Holtville/Imperial/Seeley,11,7,2.724,1.721,-36.8208516886931,0.172136979242124,Lower
+Inyo,Aberdeen/Big Pine/Big Pine Reservation/Fort Independence Indian/Independence,1,NA,4.021,NA,NA,NA,NA
+Inyo,Alabama Hills/Cartago/Darwin/Keeler/Lone Pine/Lone Pine Paiute Shoshone Tribe/Olancha/Pearsonville,1,NA,5.102,NA,NA,NA,NA
+Inyo,Bishop/Bishop Paiute Tribe/Mustang Mesa/Round Valley/West Bishop/Wilkerson,2,1,4.114,0.8165,-80.15313563441906,0.137783149777166,Lower
+Kern,Alta Sierra/Bodfish/Glennville/Kernville/Lake Isabella/Weldon/Wofford Heights,8,6,13.49,9.143,-32.22386953298739,0.2558423038904154,No Diff
+Kern,Arvin/Lamont/Weed Patch,23,28,9.334,13.23,41.73987572316264,0.12258822694898819,Higher
+Kern,Bakersfield East/Lakeview/La Loma,129,117,18.5,16.64,-10.05405405405405,0.2092117963191995,Higher
+Kern,Bakersfield Northeast/Oildale,45,48,8.635,9.46,9.554140127388548,0.33365992732619143,Higher
+Kern,Bakersfield Northwest/Rosedale,20,18,3.685,3.077,-16.499321573948443,0.29191210051318484,Lower
+Kern,Bakersfield Southwest,48,63,5.86,7.128,21.638225255972692,0.15533514596731313,Higher
+Kern,Bear Valley Springs/Keene/Stallion Springs/Tehachapi,7,10,3.769,5.209,38.20642080127353,0.2608257714216451,No Diff
+Kern,Blackwells Corners/Ford City/Maricopa/McKittrick/Taft,4,1,3.268,1.172,-64.13708690330479,0.14999142347404593,Lower
+Kern,Boron/California City/Desert Lake/Mojave/North Edwards/Rosamond,15,12,7.662,5.373,-29.874706342991384,0.18736453997180247,No Diff
+Kern,Buttonwillow,3,1,16.86,5.549,-67.08778173190984,0.15956128582096185,No Diff
+Kern,Delano/McFarland,20,49,5.716,12.88,125.33240027991604,0.0010261212386156737,Higher
+Kern,Fort Tejon/Frazier Park/Lebec/Pine Mountain,1,1,3.649,2.386,-34.61222252671964,0.38602686067398173,No Diff
+Kern,Inyokern/Ridgecrest,6,9,3.403,5.638,65.67734352042315,0.17473633263291122,No Diff
+Kern,Lost Hills/Wasco,10,8,6.963,4.928,-29.225908372827803,0.2401527740783722,No Diff
+Kern,Shafter,9,8,9.267,7.483,-19.25110607532103,0.3421257603129054,No Diff
+Kings,Armona/Hanford/Lemoore,20,26,3.592,4.832,34.52115812917594,0.1640956954378857,No Diff
+Kings,Avenal,4,6,4.333,8.224,89.79921532425571,0.16723819871414047,No Diff
+Kings,Corcoran/Kettleman City/Stratford,15,15,10.97,9.682,-11.741112123974476,0.37301218977684203,Higher
+Lake,Clearlake/Clearlake Oaks,11,19,12.5,21.01,68.08000000000001,0.09335256097788991,Higher
+Lake,Cobb/Hidden Valley/Middletown,1,3,1.403,8.48,504.41910192444766,0.08281264287073486,No Diff
+Lake,Kelseyville/Lakeport,NA,5,NA,5.085,NA,NA,No Diff
+Lake,Lower Lake,1,2,2.577,5.625,118.27706635622818,0.2621828681996963,No Diff
+Lake,Lucerne/Nice/Upper Lake,2,7,5.078,17.74,249.35013784954702,0.05726876832084005,Higher
+Lassen,Susanville,3,3,1.987,2.907,46.3009562154001,0.32931387178692173,No Diff
+Los Angeles,Acton/Ravenna,1,2,0.9004,3.823,324.5890715237672,0.18743385184575478,No Diff
+Los Angeles,Agoura Hills/Calabasas/Hidden Hills/West Hills/Westlake,11,4,2.148,0.6739,-68.6266294227188,0.0265124183492238,Lower
+Los Angeles,Alhambra/El Sereno South/San Gabriel Central,14,22,2.615,3.98,52.19885277246652,0.11015986435476444,No Diff
+Los Angeles,Altadena East/Angeles National Forest East/Azusa North/Duarte North/Glendora/Pasadena East,9,3,1.816,0.6542,-63.975770925110126,0.05376798708280206,Lower
+Los Angeles,Altadena West/Pasadena Northwest,21,25,4.248,4.813,13.300376647834263,0.3378880886183604,No Diff
+Los Angeles,Angeles National Forest West/Kagel Canyon/Lake View Terrace/San Fernando East/Sylmar,27,32,5.159,5.771,11.862764101570074,0.33462927229445183,No Diff
+Los Angeles,Arcadia Central and Northeast/Bradbury/Monrovia/Sierra Madre,12,20,2.357,4.133,75.35002121340685,0.0634558099640472,No Diff
+Los Angeles,Arcadia Southeast/San Gabriel North,12,9,2.308,1.666,-27.81629116117851,0.23461991131698,Lower
+Los Angeles,Arleta/Pacoima West/Panorama City/San Fernando West,51,43,7.432,6.362,-14.397201291711522,0.2291191577157412,No Diff
+Los Angeles,Asuza/Charter Oak/Covina,33,28,5.418,4.429,-18.253968253968253,0.21834277839265437,No Diff
+Los Angeles,Athens/Gardena Northeast/Harbor Gateway North,117,81,27.89,18.56,-33.45285048404447,0.002630547620680823,Higher
+Los Angeles,Atwater Village/Glendale Central/Glendale Southwest/Griffith Park,9,7,2.05,1.267,-38.19512195121951,0.17962459590326585,Lower
+Los Angeles,Avalon,1,NA,4.457,NA,NA,NA,NA
+Los Angeles,Baldwin Hills/Culver City South/Fox Hills/Ladera Heights/Marina del Rey/View Park/Windsor Hills,26,19,3.789,2.837,-25.12536289258379,0.17027255913758776,Lower
+Los Angeles,Baldwin Park/Irwindale,23,28,4.01,5.137,28.10473815461346,0.19147189659679864,No Diff
+Los Angeles,Bassett/Industry West/La Puente,49,27,7.502,4.395,-41.415622500666494,0.01267693655174118,No Diff
+Los Angeles,Bel Air/Beverly Glen/Beverly Hills/Brentwood/Malibu/Pacific Palisades/Santa Monica Northwest/Topanga,1,2,0.2421,0.5076,109.6654275092937,0.28450577027863266,Lower
+Los Angeles,Bell Northeast/Bell Gardens/Commerce/Maywood/Montebello South,54,36,8.504,5.935,-30.20931326434619,0.048879333718307105,No Diff
+Los Angeles,Bell Southwest/Cudahy/Vernon,35,23,7.431,5.364,-27.815906338312477,0.11491010346343045,No Diff
+Los Angeles,Bellflower/Paramount South,39,34,7.868,6.58,-16.370106761565836,0.22652510815285642,No Diff
+Los Angeles,Belmont Shore/Long Beach East/Long Beach Shoreline/Los Altos/Naples,23,17,3.57,2.48,-30.53221288515406,0.12999157345476342,Lower
+Los Angeles,Bixby Knolls/Long Beach Central,31,35,5.065,6.091,20.256663376110556,0.22947636135064253,No Diff
+Los Angeles,Boyle Heights Central/City Terrace West,63,41,12.02,8.14,-32.279534109816964,0.026678557464852926,Higher
+Los Angeles,Boyle Heights Northwest/Chinatown/Downtown Northwest/Little Tokyo/Westlake,35,30,6.799,4.869,-28.386527430504493,0.09901386809292367,No Diff
+Los Angeles,Burbank North/North Hollywood South,10,10,1.379,1.64,18.926758520667143,0.35279814510176943,Lower
+Los Angeles,Burbank South/Eagle Rock/Glendale Northwest,18,15,3.521,2.868,-18.545867651235444,0.27967838282357804,Lower
+Los Angeles,Canoga Park Northeast/Winnetka,22,18,4.635,3.434,-25.91154261057173,0.1766918956746697,Lower
+Los Angeles,Canyon Country/Santa Clarita West/Saugus,4,7,0.6397,1.037,62.10723776770359,0.2205232015788966,Lower
+Los Angeles,Carson/Compton West/Rancho Dominguez,45,41,8.592,7.181,-16.422253258845444,0.20601057240472231,Higher
+Los Angeles,Castaic/Val Verde,1,4,0.6247,3.439,450.50424203617735,0.07732159827509899,No Diff
+Los Angeles,Century City/Cheviot Hills/Rancho Park/West Los Angeles/Westwood,7,5,0.8709,0.7722,-11.333103685842234,0.42060636696736553,Lower
+Los Angeles,Cerritos/Hawaiian Gardens,16,23,2.848,4.009,40.76544943820227,0.14624809501424418,No Diff
+Los Angeles,Chatsworth,24,11,4.717,2.187,-53.63578545685817,0.015958766816465797,Lower
+Los Angeles,City Terrace East/East Los Angeles,30,48,5.818,9.51,63.45823306978344,0.01793651019957243,Higher
+Los Angeles,Claremont/La Verne/Pomona Northwest/San Dimas,15,9,2.625,1.512,-42.4,0.10303903277107473,Lower
+Los Angeles,Compton East,104,103,20.94,20.37,-2.722063037249285,0.4229321984130119,Higher
+Los Angeles,Country Club Park/Koreatown/Mid-City East,43,29,6.135,4.176,-31.931540342298288,0.05666849269690233,No Diff
+Los Angeles,Crenshaw/Culver City East/Mid-City South/West Adams,94,82,16.38,14,-14.529914529914524,0.15078973963739473,Higher
+Los Angeles,Culver City North/Palms,5,7,1.012,1.093,8.003952569169957,0.44926848488657944,Lower
+Los Angeles,Del Aire/Inglewood West/Los Angeles International Airport,29,36,5.398,6.839,26.69507224898112,0.1734495679494774,No Diff
+Los Angeles,Desert View Highlands/Lancaster West/Palmdale Northwest/Quartz Hill,30,18,5.568,3.535,-36.512212643678154,0.06343403095823918,Lower
+Los Angeles,Diamond Bar/Industry East/Phillips Ranch/Pomona West/Walnut,12,12,1.993,1.828,-8.278976417461115,0.4195006616875171,Lower
+Los Angeles,Downey Northeast,23,21,5.552,4.942,-10.987031700288174,0.35053238435884293,No Diff
+Los Angeles,Downey Southwest/Lynwood North Central/South Gate East,53,24,10.16,4.729,-53.45472440944882,7.924303541887445e-4,No Diff
+Los Angeles,Downtown Southeast/Florence North,87,54,17.19,9.638,-43.9325189063409,5.014939555806341e-4,Higher
+Los Angeles,Echo Park/Hollywood North Central/Silverlake South,9,11,2.09,2.848,36.26794258373206,0.26239019495156823,Lower
+Los Angeles,El Monte/Five Points,19,37,3.518,6.981,98.43661171119956,0.007205114755730491,No Diff
+Los Angeles,El Sereno North/Highland Park/Montecito Heights/Monterey Hills,51,42,7.645,6.668,-12.779594506213204,0.25662838092123463,No Diff
+Los Angeles,Elizabeth Lake/Gorman/Green Valley/Lake Hughes/Leona Valley/Neenach,7,4,6.53,3.484,-46.64624808575804,0.15852003326727226,No Diff
+Los Angeles,Encino/Tarzana/Warner Center/Woodland Hills,5,6,1.068,1.217,13.951310861423222,0.4170627118545571,Lower
+Los Angeles,Exposition Park/Leimert Park,68,63,13.44,11.39,-15.252976190476183,0.18308746929308606,Higher
+Los Angeles,Firestone/Florence South/Watts,152,120,21.24,16.85,-20.66854990583803,0.03234704845285552,Higher
+Los Angeles,Gardena Southeast/Harbor Gateway Central/Lawndale South/Moneta/Redondo Beach North/Torrance North,26,30,4.65,5.321,14.430107526881706,0.30870933514348553,No Diff
+Los Angeles,Gardena West/Hawthorne,34,47,8.276,11.43,38.11019816336394,0.07852500531393414,Higher
+Los Angeles,Glassell Park/Glendale Southeast/Silverlake North,21,16,4.391,3.155,-28.14848553860169,0.1632518639760876,Lower
+Los Angeles,Glendale Northeast/La Canada-Flintridge/La Crescenta/Montrose/Sunland/Tujunga/Verdugo City,10,16,1.851,2.638,42.51755807671528,0.19388521887390997,Lower
+Los Angeles,Granada Hills/Mission Hills/Porter Ranch,6,12,1.303,2.538,94.78127398311588,0.09238146295680316,Lower
+Los Angeles,Hacienda Heights/Industry Central,11,20,2.316,3.931,69.7322970639033,0.07927209745494712,No Diff
+Los Angeles,Hancock Park/Mid-City West/Park La Brea,22,11,3.186,1.629,-48.87005649717514,0.03600282166420421,Lower
+Los Angeles,Harbor Gateway South/Lomita/Torrance East Central,33,26,5.9,4.716,-20.067796610169495,0.19671966831943877,No Diff
+Los Angeles,Hermosa Beach/Lawndale North/Manhattan Beach/Redondo Beach North,15,5,3.32,1.121,-66.23493975903614,0.014905933498189472,Lower
+Los Angeles,Hollywood Hills/Hollywood West/Mount Olympus/West Hollywood,13,14,2.354,2.272,-3.4834324553950844,0.46603425307439217,Lower
+Los Angeles,Hollywood South Central/Inner Sunset,38,18,6.248,2.905,-53.505121638924464,0.003914031304815935,Lower
+Los Angeles,Huntington Park/South Gate West/Walnut Park,38,28,6.728,5.234,-22.20570749108204,0.16435639555747972,No Diff
+Los Angeles,Inglewood East/Lennox,53,53,12.5,12.99,3.9200000000000017,0.4220701014737588,Higher
+Los Angeles,Juniper Hills/Littlerock/Longview/Pearblossom/Valyermo,NA,6,NA,6.269,NA,NA,No Diff
+Los Angeles,La Habra Heights/Whittier,23,12,5.121,2.822,-44.893575473540324,0.04442981227108822,Lower
+Los Angeles,La Mirada/Santa Fe Springs South,10,13,1.901,2.722,43.18779589689637,0.20300978951829385,Lower
+Los Angeles,Lake Los Angeles,11,13,10.94,14.01,28.062157221206583,0.27794679620999174,Higher
+Los Angeles,Lancaster Central/Palmdale North Central,44,49,7.919,9.115,15.102917034979173,0.2521425896487888,Higher
+Los Angeles,Long Beach Port/San Pedro East/Wilmington,76,47,12.36,8.128,-34.239482200647245,0.011718631105122834,Higher
+Los Angeles,Long Beach West Central,69,71,11.43,11.47,0.3499562554680746,0.49203365905670393,Higher
+Los Angeles,Los Nietos/Santa Fe Springs Northeast,25,17,5.546,3.742,-32.527948070681575,0.10604892724022585,Lower
+Los Angeles,Mar Vista/Ocean Park/Santa Monica South/Venice,21,17,5.409,3.943,-27.102976520613787,0.1741249119201943,No Diff
+Los Angeles,Miraleste/Palo Verdes Estates/Portuguese Bend/Rancho Palos Verdes/Rolling Hills/San Pedro West,20,9,4.083,1.571,-61.523389664462414,0.011775354535237925,Lower
+Los Angeles,Montebello North/Monterey Park/South San Gabriel,24,10,5.974,2.119,-64.52962838968865,0.0032729333416045003,Lower
+Los Angeles,Newhall/Santa Clarita East/Valencia,14,19,2.307,3.072,33.15994798439532,0.20757403287647513,Lower
+Los Angeles,North Hills/Northridge North,21,21,3.426,3.381,-1.3134851138353874,0.4831825987503021,Lower
+Los Angeles,North Hollywood Central and North,24,27,4.48,5.077,13.325892857142845,0.330270357644892,No Diff
+Los Angeles,North Long Beach,44,50,8.974,10.2,13.661689324715836,0.27292181092608314,Higher
+Los Angeles,Northridge South/Reseda North,19,28,3.156,5.051,60.044359949302915,0.05752529533473372,No Diff
+Los Angeles,Norwalk/Studebaker,36,33,6.218,6.15,-1.0935992280475975,0.48193784426723907,No Diff
+Los Angeles,Pacoima East/Sun Valley West,55,34,9.754,6.063,-37.84088579044494,0.014761562592484068,No Diff
+Los Angeles,Palmdale Central,27,36,5.265,7.103,34.909781576448246,0.13033604290575562,No Diff
+Los Angeles,Paramount North/Willowbrook,113,102,15.96,13.44,-15.789473684210535,0.11041811451551575,Higher
+Los Angeles,Pasadena South/San Marino/South Pasadena,12,9,2.448,2.065,-15.645424836601306,0.352079331414052,Lower
+Los Angeles,Pico-Union,52,54,5.9,6.272,6.305084745762709,0.3794668426681954,No Diff
+Los Angeles,Pico Rivera/Santa Fe Springs Northwest,30,24,5.963,4.632,-22.320979372798934,0.17942950769008803,No Diff
+Los Angeles,Pomona East and South,64,59,10.04,9.424,-6.1354581673306745,0.3659911129355422,Higher
+Los Angeles,Redondo Beach Central and South/Torrance West Central,10,5,2.01,1.087,-45.92039800995025,0.1304293901899919,Lower
+Los Angeles,Reseda South/Van Nuys Southwest,12,6,2.642,1.203,-54.46631339894019,0.059427826289748964,Lower
+Los Angeles,Rosemead/San Gabriel South/South El Monte West/Temple City West,16,23,3.259,5.174,58.76035593740413,0.08264938256641052,No Diff
+Los Angeles,Santa Monica Central/Sawtelle/West Los Angeles,16,5,3.788,1.137,-69.98416050686377,0.008899583573906189,Lower
+Los Angeles,Sherman Oaks/Studio City/Valley Village,13,8,1.72,1.104,-35.813953488372086,0.1644354207281954,Lower
+Los Angeles,South Central Northeast,121,107,17.83,15.5,-13.067863151991018,0.14984637201305195,Higher
+Los Angeles,South Central Northwest,81,84,19.61,21.57,9.994900560938301,0.27210952493746643,Higher
+Los Angeles,South Central Southwest,126,132,28.55,28.7,0.5253940455341456,0.4835576373097856,Higher
+Los Angeles,Valinda/West Covina,38,23,6.073,3.407,-43.89922608266096,0.014861870320295623,Lower
+Los Angeles,Van Nuys Central,26,21,4.628,3.626,-21.65082108902334,0.2058610340401419,Lower
+Madera,Chowchilla,6,2,4.346,1.668,-61.61988034974689,0.10599228385196391,Lower
+Madera,Madera,27,29,5.693,5.568,-2.1956789039170914,0.46758410357614955,No Diff
+Madera,Oakhurst/Yosemite Lakes,4,8,2.973,6.285,111.40262361251263,0.12953350650136797,No Diff
+Marin,Angel Island/Belvedere/Marin City/Sausalito/Strawberry Manor/Tiburon,5,8,1.829,3.869,111.53635866593767,0.1169700261189508,No Diff
+Marin,Bel Marin Keys/Black Point/Ignacio/Novato/San Rafael East/Santa Venetia,16,10,3.297,1.827,-44.58598726114651,0.07767905439080813,Lower
+Marin,Bolinas/Dillon Beach/Inverness/Point Reyes Station/Stinson Beach/Tomales,1,NA,2.077,NA,NA,NA,NA
+Marin,Corte Madera/Fairfax/Kentfield/Larkspur/Marinwood/Mill Valley/Ross/San Anselmo/San Rafael West/Terra Linda,2,5,0.5302,1.158,118.40814786872878,0.18066856185971158,Lower
+Mariposa,Bootjack/Catheys Valley/Coulterville/Don Pedro/El Portal/Fish Camp/Mariposa,2,3,2.667,4.283,60.59242594675668,0.3270360454473462,No Diff
+Mendocino,Anchor Bay/Gualala/Manchester/Point Arena,NA,1,NA,6.266,NA,NA,No Diff
+Mendocino,Boonville/Navarro/Philo/Yorkville,1,NA,7.769,NA,NA,NA,NA
+Mendocino,Brooktrails/Pine Mountain/Willits,4,2,7.09,4.111,-42.016925246826524,0.2630907960769807,No Diff
+Mendocino,Covelo/Dos Rios,1,2,8.48,25.32,198.58490566037736,0.19760665657293564,No Diff
+Mendocino,Elk/Little River/Mendocino,2,3,6.88,5.501,-20.043604651162784,0.40994638793175686,No Diff
+Mendocino,Fort Bragg/Westport,5,1,8.891,0.893,-89.95613541783827,0.026756061138829224,Lower
+Mendocino,Hopland,1,NA,7.661,NA,NA,NA,NA
+Mendocino,Laytonville/Leggett/Piercy,2,4,14.04,29.57,110.61253561253562,0.19595016604046744,No Diff
+Mendocino,Redwood Valley,2,NA,7.821,NA,NA,NA,NA
+Mendocino,Talmage,1,NA,6.935,NA,NA,NA,NA
+Mendocino,Ukiah,3,5,2.156,3.695,71.38218923933208,0.23043492298393298,No Diff
+Merced,Atwater/Snelling/Winton,27,22,10.41,8.585,-17.5312199807877,0.2538942327743574,Higher
+Merced,Ballico/Cressey/Delhi/Hilmar/Livingston,10,16,5.024,7.744,54.140127388535035,0.14194445560699331,No Diff
+Merced,Dos Palos/Gustine/Los Banos,22,24,7.543,8.009,6.177913297096649,0.4204040966035937,Higher
+Merced,El Nido/Merced Southwest,18,21,11.26,16.59,47.33570159857904,0.1256655797697055,Higher
+Merced,Le Grand/Planada,3,6,8.228,14.98,82.06125425376763,0.19819435266139518,No Diff
+Merced,Merced Central and North/Merced Southeast,23,31,6.903,7.02,1.694915254237288,0.4761548018527817,No Diff
+Modoc,Adin/Lookout/Newell,NA,1,NA,8.041,NA,NA,No Diff
+Modoc,Alturas/Canby,3,4,7.004,13.08,86.75042832667049,0.22670451244646728,No Diff
+Modoc,Surprise Valley,1,1,36.97,32.62,-11.766296997565597,0.4648473956547524,No Diff
+Mono,Benton/Bridgeport/Chalfant/Crowley Lake/Coleville/Hammill Valley/June Lake/Lee Vining/Paradise/Sunny Slopes/Topaz/Walker,NA,1,NA,1.971,NA,NA,Lower
+Mono,Mammoth Lakes,NA,1,NA,2.886,NA,NA,NA
+Monterey,Aromas/Las Lomas/Pajaro/Prunedale,17,14,8.3,6.299,-24.10843373493976,0.2272167237910212,No Diff
+Monterey,Carmel Valley/Castroville/Marina/Moss Landing/Ord,14,16,4.737,5.316,12.222925902469912,0.37869379613227117,No Diff
+Monterey,Carmel/Del Rey Oaks/Monterey/Pacific Grove/Sand City/Seaside,10,17,2.145,4.074,89.93006993006992,0.056184797423141086,No Diff
+Monterey,Chualar/Gonzalez/Greenfield/Soledad,34,24,10.87,8.591,-20.96596136154554,0.19429198827566885,Higher
+Monterey,King City/San Lucas,21,17,23.17,17.38,-24.989210185584817,0.1947697717095307,Higher
+Monterey,Salinas/Spreckels,111,143,13.1,17.95,37.02290076335878,0.007061072004200697,Higher
+Napa,American Canyon,NA,2,NA,2.346,NA,NA,Lower
+Napa,Berryessa,1,1,15.76,9.049,-42.58248730964467,0.35595883516245996,No Diff
+Napa,Calistoga,1,1,3.582,3.654,2.0100502512562834,0.49438663641994207,No Diff
+Napa,Napa Central,5,7,1.408,2.145,52.343750000000014,0.23900039889082159,Lower
+Napa,Napa Northeast/Rutherford/Yountville,2,2,1.28,1.881,46.95312499999999,0.35809093314259843,Lower
+Nevada,Grass Valley/Nevada City/Penn Valley/Rough and Ready/Wildwood,10,8,2.978,1.83,-38.549361987911354,0.18095673776868304,Lower
+Nevada,North Bloomfield/North San Juan/Truckee,1,1,2.193,1.359,-38.03009575923393,0.3732482748053042,Lower
+Orange,Aliso Viejo/Laguna Hills/Laguna Niguel,6,12,1.01,1.801,78.31683168316832,0.1215974817269172,Lower
+Orange,Anaheim Central,29,25,5.807,4.652,-19.88978818667126,0.2114321059538139,No Diff
+Orange,Anaheim East/City of Orange North/Placentia Southwest,23,16,3.514,2.212,-37.05179282868525,0.08164487797668529,Lower
+Orange,Anaheim Hills/City of Orange East/Villa Park,10,5,1.723,0.7752,-55.00870574579223,0.07487726842417797,Lower
+Orange,Anaheim West,13,17,2.12,2.549,20.235849056603765,0.30894325926396493,Lower
+Orange,Brea East/Placentia Central and North/Yorba Linda,15,7,2.309,0.9945,-56.92940666955392,0.032688702545700554,Lower
+Orange,Brea West/Fullerton North/La Habra,13,9,2.384,1.718,-27.936241610738254,0.22440811236912828,Lower
+Orange,Buena Park/La Palma,6,10,1.451,2.374,63.611302549965544,0.16768076309249236,Lower
+Orange,City of Orange South/Santa Ana North/Tustin Foothills/Tustin West,20,15,2.849,2.075,-27.167427167427167,0.1785514056333477,Lower
+Orange,Costa Mesa,14,9,2.449,1.333,-45.56962025316456,0.08209033244972441,Lower
+Orange,Coto de Caza/Las Flores/Mission Viejo Northwest/Rancho Santa Margarita/Trabuco Canyon,5,8,0.8342,1.172,40.49388635818747,0.2755742867506552,Lower
+Orange,Cypress/Los Alamitos/Rossmoor,15,12,2.625,2.02,-23.047619047619047,0.2546942471880972,Lower
+Orange,Dana Point/San Clemente/San Juan Capistrano,6,7,1.095,1.148,4.840182648401821,0.46784437819941516,Lower
+Orange,Foothill Ranch/IrvineNortheast/Lake Forest West/Portola Hills/Tustin East,3,5,0.6064,0.8043,32.63522427440632,0.35081697708762205,Lower
+Orange,Fountain Valley/Huntington Beach Central,10,5,2.325,1.327,-42.9247311827957,0.14935569457257847,Lower
+Orange,Fullerton Central and South,11,10,1.819,1.814,-0.27487630566244603,0.4975702581306656,Lower
+Orange,Garden Grove North/Stanton,12,21,1.761,3.063,73.93526405451449,0.062167974572897244,Lower
+Orange,Garden Grove South/Santa Ana West,26,24,4.26,3.78,-11.267605633802818,0.3376075923094487,Lower
+Orange,Huntington Beach North/Seal Beach East/Westminster,20,20,3.166,3.212,1.452937460518012,0.4819574645765603,Lower
+Orange,Huntington Beach South,3,7,0.553,1.741,214.82820976491863,0.055609060477831096,Lower
+Orange,Huntington Beach West/Seal Beach West,9,6,2.053,1.346,-34.43740867023867,0.22523795735771412,Lower
+Orange,Irvine Central/Tustin East,6,6,1.237,1.141,-7.760711398544873,0.44495020013472286,Lower
+Orange,Irvine South/Newport Beach/Newport Coast/San Joaquin Hills,4,5,0.5321,0.6075,14.17026874647623,0.422567946408157,Lower
+Orange,Laguna Beach/Laguna Woods,6,2,1.26,0.5035,-60.039682539682545,0.14707465302012945,Lower
+Orange,Lake Forest East/Mission Viejo Central and South,4,8,0.7957,1.299,63.25248209124042,0.20664840008904306,Lower
+Orange,Santa Ana Central,39,35,5.719,5.44,-4.87847525791222,0.41654670246224046,No Diff
+Orange,Santa Ana South,29,28,4.106,4.444,8.231855820750125,0.38480116505180284,No Diff
+Placer,Auburn/Newcastle/Lincoln/Sheridan,7,13,1.853,2.671,44.14463032919589,0.22023300516874456,Lower
+Placer,Colfax/Meadow Vista,2,2,2.334,1.761,-24.550128534704378,0.3969741602922683,Lower
+Placer,Dollar Point/Kings Beach/Sunnyside/Tahoe City/Tahoe Vista,NA,1,NA,1.5,NA,NA,Lower
+Placer,Foresthill,NA,1,NA,5.546,NA,NA,No Diff
+Placer,Rocklin/Granite Bay,8,5,1.562,0.9075,-41.901408450704224,0.17690179940848338,Lower
+Placer,Roseville,11,9,2.188,1.614,-26.23400365630713,0.25189651274803937,Lower
+Plumas,Bailey Creek/Canyondam/Chester/Eastshore/Foxwood/Hamilton Branch/Lake Almanor Peninsula/Lake Almanor Peninsula/Lake Almanor West/Prattville/Warner Valley,1,NA,26.16,NA,NA,NA,NA
+Plumas,Belden/Caribou/Crescent Mills/Genessee/Greenville/Indian Falls/North Arm/Storrie/Taylorsville/Tobin/Twain,NA,1,NA,7.683,NA,NA,No Diff
+Plumas,Bucks Lake/Cromberg/East Quincy/Greenhorn/Keddie/Laporte/Little Grass Valley/Meadow Valley/Quincy/Sloat/Spring Garden,1,2,4.996,2.918,-41.59327461969576,0.35032397892459033,No Diff
+Riverside,Agua Caliente/Palm Springs Central,4,6,4.89,4.666,-4.580777096114506,0.4736959525233402,No Diff
+Riverside,Arabia/Coachella/Desert Beach/Flowing Wells/Indio South/La Quinta East/Mecca/Oasis/Thermal,33,31,6.408,5.798,-9.519350811485646,0.3466690336757725,No Diff
+Riverside,Arlington/Corona East/Home Gardens/La Sierra/Riverside Southwest,34,21,5.296,3.361,-36.53700906344411,0.051568190344006726,Lower
+Riverside,Banning/Beaumont/Cabizon/Calimesa/Cherry Valley,40,54,5.905,7.385,25.06350550381032,0.14246852032091062,Higher
+Riverside,Bermuda Dunes North/Indio North,10,19,4.29,7.254,69.09090909090908,0.08580120979218409,No Diff
+Riverside,Bermuda Dunes South/Indian Wells/La Quinta West/Palm Desert/Rancho Mirage Central and South,14,9,3.739,1.995,-46.643487563519656,0.08137418705284483,Lower
+Riverside,Blythe,5,8,7.065,10.61,50.176928520877546,0.24017294282803836,No Diff
+Riverside,Canyon Lake/Perris/Quail Valley/Romoland/Sun City/Winchester,29,41,3.457,4.49,29.881400057853643,0.14118663681593224,No Diff
+Riverside,Casablanca/Riverside Central,20,15,4.409,3.251,-26.264459061011568,0.18913348383783868,Lower
+Riverside,Cathedral City Southeast/Palm Desert North/Palm Springs South/Rancho Mirage North,47,46,7.572,6.86,-9.40306391970417,0.3207423302483021,No Diff
+Riverside,Chiriaco Summit/Desert Center/Eagle Mountain,2,NA,4.584,NA,NA,NA,NA
+Riverside,Corona North/Glen Avon/Jurupa/Norco,28,30,3.021,3.093,2.383316782522346,0.46442720366428647,Lower
+Riverside,Corona South/El Cerrito/Temescal,14,11,2.34,1.572,-32.82051282051282,0.16611729375743067,Lower
+Riverside,East Hemet/Hemet/Valle Vista,40,67,5.873,9.725,65.58828537374424,0.006445144679996462,Higher
+Riverside,Eastside/Fairmont Park/Riverside Downtown/Rubidoux/University,27,40,4.412,7.477,69.4696282864914,0.021961293573797724,Higher
+Riverside,Edgemont/Orange Crest/Woodcrest,37,36,4.625,4.051,-12.410810810810807,0.28839495267921156,Lower
+Riverside,French Valley/Murrieta East/Temecula/Winchester,18,8,2.604,0.9643,-62.96850998463901,0.010076772493883612,Lower
+Riverside,Glen Valley/Mead Valley,14,4,13.65,3.542,-74.05128205128206,0.007584721421023843,No Diff
+Riverside,Homeland/Lakeview/San Jacinto,4,8,3.445,5.388,56.40058055152395,0.22638210033413697,No Diff
+Riverside,Idyllwild/Pine Cove,4,4,12.05,5.316,-55.8838174273859,0.17750112094877757,No Diff
+Riverside,Lake Elsinore/Murrieta West/Sedco Hills/Wildomar,26,21,3.638,2.611,-28.229796591533802,0.13305063239981596,Lower
+Riverside,Moreno Valley,29,22,6.084,5.068,-16.699539776462853,0.26601989052796493,No Diff
+Riverside,Temecula South,5,7,1.314,1.541,17.275494672754938,0.39390095985413254,Lower
+Sacramento,Antelope/Citrus Heights/Foothill Farms,25,41,4.28,7.038,64.4392523364486,0.025512318460851557,No Diff
+Sacramento,Arcade/Arden/Town and Country Village,15,15,4.047,4.278,5.707931801334319,0.44106332571899454,No Diff
+Sacramento,Capitol Park/Del Paso Heights/Downtown/Gardenland/North Sacramento,75,62,11.34,8.914,-21.393298059964728,0.08653884503464238,Higher
+Sacramento,Carmichael/Fair Oaks/Gold River,24,14,5.524,3.555,-35.644460535843585,0.09511427752666257,Lower
+Sacramento,Central South Elk Grove/Franklin,12,13,3.021,3.11,2.9460443561734517,0.47122526404596354,Lower
+Sacramento,Clarksburg/Hood/Isleton/Locke/Walnut Grove,NA,3,NA,9.043,NA,NA,No Diff
+Sacramento,Clay/Galt/Herald/Wilton,8,5,4.804,2.846,-40.757701915070776,0.18087772712673034,Lower
+Sacramento,East Sacramento/La Riviera/Mather/Rancho Cordova/Rosemont,35,36,5.487,5.388,-1.8042646254784072,0.4697975981774417,No Diff
+Sacramento,Elk Grove/Laguna/Laguna West/Lakeside,12,24,3.292,6.156,86.99878493317132,0.03774780517516385,No Diff
+Sacramento,Elverta/Natomas/North Highlands/Rio Linda,50,53,5.122,5.556,8.473252635689189,0.34252041478315665,No Diff
+Sacramento,Florin/Fruitridge/Oak Park/Parkway/South Sacramento,68,76,11.2,11.57,3.3035714285714377,0.4238668786691945,Higher
+Sacramento,Folsom/Orangevale,13,12,2.24,2.116,-5.53571428571429,0.44404683287733904,Lower
+Sacramento,Freeport/Meadowview,51,58,11.62,13.75,18.330464716006894,0.19480861186780762,Higher
+Sacramento,Greenhaven/Land Park/Midtown/Pocket/Riverside/Sutterville,11,21,2.854,4.962,73.8612473721093,0.07319881888209567,No Diff
+Sacramento,Rancho Murieta/Sloughhouse,1,1,1.033,0.9382,-9.177153920619544,0.47291885001862666,Lower
+Sacramento,Vineyard,22,19,5.543,4.572,-17.517589752841424,0.2713355121129596,No Diff
+San Benito,Hollister/Paicines/Panoche/San Juan Bautista,12,9,4.782,2.964,-38.01756587202008,0.14320766336712376,Lower
+San Bernardino,Adelanto/Phelan/Pinon Hills/Victorville Northwest,30,27,11.64,8.375,-28.049828178694163,0.14262851348729155,Higher
+San Bernardino,Apple Valley/Hesperia East,39,45,7.264,8.339,14.799008810572689,0.268400803223527,Higher
+San Bernardino,Argus/Borosalvay/Trona,2,NA,40.47,NA,NA,NA,NA
+San Bernardino,Baker/Harvard/Newberry Springs,1,1,3.327,3.96,19.02614968440036,0.45129601759664684,No Diff
+San Bernardino,Barstow/Daggett/Lenwood/Nebo Center/Oro Grande/Yermo,14,25,5.678,10.14,78.58400845368088,0.04199589508944501,Higher
+San Bernardino,Big Bear Lake/Fawnskin/Moorridge/Running Springs/Sugarloaf,5,5,3.635,4.897,34.71801925722147,0.32409565661644113,No Diff
+San Bernardino,Big River/Needles,3,1,10.61,1.518,-85.6927426955702,0.09464867370025742,Lower
+San Bernardino,Bloomington/Colton Central and West/Fontana South/Rialto South,60,51,8.159,6.678,-18.151734281161914,0.15258793752220723,No Diff
+San Bernardino,Blue Jay/Crestline/Lake Arrowhead/Skyforest/Twin Peaks,5,4,4.574,4.551,-0.5028421512898926,0.4971923935773235,No Diff
+San Bernardino,Cadiz/Twentynine Palms,1,8,1.342,7.787,480.25335320417287,0.020613426839665272,No Diff
+San Bernardino,Chino Hills/Chino West Central/Los Serranos/Sleepy Hollow,17,13,2.524,1.774,-29.71473851030111,0.17160967185151965,Lower
+San Bernardino,Chino Northeast/Fontana Southwest/Ontario South,25,25,3.342,3.181,-4.817474566128067,0.4318410243977907,Lower
+San Bernardino,Colton Southeast/Grand Terrace/Loma Linda/Redlands North,15,28,2.641,5.642,113.63120030291557,0.009817018322189397,No Diff
+San Bernardino,Fontana Central/Rialto Central,56,59,8.16,7.809,-4.3014705882352935,0.4104504096708209,Higher
+San Bernardino,Fontana North/Rancho Cucamonga Northwest/Rialto Northeast,33,34,3.548,3.282,-7.497181510710259,0.37695093892929865,Lower
+San Bernardino,Hesperia West/Mountain View Acres/Victorville Central and South,52,60,6.06,6.986,15.280528052805286,0.23180663374060217,Higher
+San Bernardino,Highland/San Bernardino East,71,85,11.77,13.31,13.084112149532718,0.2258084190336611,Higher
+San Bernardino,Joshua Tree/Landers/Morongo Valley/Rimrock/Yucca Valley,8,12,3.854,6.359,64.99740529320187,0.14512613292070786,No Diff
+San Bernardino,Lucerne Valley,NA,2,NA,7.615,NA,NA,No Diff
+San Bernardino,Lytle Creek/Wrightwood,1,NA,1.922,NA,NA,NA,NA
+San Bernardino,Mentone/Redlands South/Yucaipa,16,17,3.085,3.716,20.45380875202594,0.29964205536869637,Lower
+San Bernardino,Montclair/Ontario Northwest/Upland South,32,36,5.027,5.099,1.4322657648697048,0.4768707537757293,No Diff
+San Bernardino,Muscoy/San Bernardino Central,120,104,17.53,16.15,-7.872219053051925,0.2770159747085428,Higher
+San Bernardino,Ontario Northeast/Rancho Cucamonga South,30,20,5.683,4.021,-29.245117015660743,0.11623971671366207,No Diff
+San Bernardino,Rancho Cucamonga Northwest/San Antonio Heights/Upland North,12,10,2.81,2.612,-7.046263345195729,0.4341381805884007,Lower
+San Bernardino,USMC Air-Ground Combat Training Center,1,2,0.5087,1.646,223.56988401808525,NaN,NA
+San Diego,Allied Gardens/Del Cerro/Grantville/Miramar/Tierrasanta,5,14,1.116,2.972,166.30824372759855,0.025394060805490115,Lower
+San Diego,Alpine/Blossom Valley/Crest/Descanso/Glen Oaks/Harbison Canyon/Japatul/Palo Verde,5,9,2.818,5.879,108.62313697657912,0.10820050315332119,No Diff
+San Diego,Barona/Moreno,1,2,5.196,18.76,261.04695919938416,0.17060120997377148,No Diff
+San Diego,Bay Park/Five Points/Hillcrest Northwest/Mission Hills/Mission Valley/Morena/Normal Heights/Old Town/Serra Mesa,15,14,2.639,2.491,-5.6081849185297346,0.44043775900354354,Lower
+San Diego,Bonita/Chula Vista East/Eastlake/La Presa/Lynwood Hills/Rancho del Rey/Sunnyside/Sunny Vista,10,14,1.97,2.818,43.04568527918782,0.1961909049337659,Lower
+San Diego,Bonsall/Camp Pendleton/Fallbrook/Live Oak Park/Rainbow/San Luis Rey Heights/Winterwarm,12,10,2.42,2.427,0.2892561983471123,0.4975700042636295,Lower
+San Diego,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs,4,4,7.668,10.12,31.977047470005203,0.36376375785811366,No Diff
+San Diego,Bostonia/Glenview/Granite Hills/Hillsdale/Johnstown/Lakeside/Riverview/Winter Gardens,14,7,3.079,1.534,-50.17862942513804,0.06535283164388184,Lower
+San Diego,Buckman Springs/Canyon City/Jacumba/Morena Village/Tecate,1,6,2.395,17.98,650.7306889352818,0.03148106034600606,No Diff
+San Diego,Calavo Gardens/Casa de Oro/Cottonwood/Grossmont/Homelands/Lemon Grove Central and North/Mount Helix/Rancho San Diego/Spring Valley,13,7,3.166,1.784,-43.651295009475675,0.10732052972967787,Lower
+San Diego,Cardiff by the Sea/Eden Gardens/Harmony Grove/La Costa/Ocean Hills/Lomas Santa Fe/Olivehain/Rancho Santa Fe/San Marcos South/Solana Beach/Vista South,10,11,1.273,1.208,-5.106048703849171,0.45390528684628084,Lower
+San Diego,Carlsbad East/Encinitas East/Oceanside East,11,7,1.819,1.379,-24.189114898295763,0.283721061658894,Lower
+San Diego,Carlton Hills/El Cajon North/Eucalyptus Hills/Lake Murray/Loma Portal/San Carlos/Santee,11,17,2.468,3.966,60.6969205834684,0.11374252993270628,No Diff
+San Diego,Carmel Valley/Del Dios/Escondido South/Fairbanks Ranch/Poway Southeast/Rancho Bernardo Southeast/Rancho Penasquitos,7,7,0.9941,0.8084,-18.680213258223517,0.3528800341193189,Lower
+San Diego,Castle Park/Chula Vista Southwest/Imperial Beach West/Nestor East/Palm City/San Ysidro/South San Diego,20,24,2.597,2.9,11.667308432807083,0.3599862552500328,Lower
+San Diego,Chollas Creek/City Heights/East San Diego/North Park/Oak Park/South Park,34,24,6.508,4.704,-27.71972956361402,0.1122500755416429,No Diff
+San Diego,Chula Vista Central and Northwest/National City West,21,10,4.953,2.786,-43.75126186149808,0.061906127123489973,Lower
+San Diego,Civic Center/Coronado/Harbor Island/Imperial Beach East/Nestor West/Ocean Beach/Point Loma/Silver Strand,1,4,0.2125,0.9157,330.9176470588235,0.08301972089507059,Lower
+San Diego,Clairemont/Fiesta Shores/Linda Vista/Mission Beach/Sorrento/University City,12,16,1.36,1.971,44.92647058823529,0.1724570545256846,Lower
+San Diego,Cockatoo Grove/Eastlake Greens/Otay Mesa,28,15,3.973,1.945,-51.04455071734205,0.013720792252732372,Lower
+San Diego,College Heights/Hillcrest Southeast/Kensington/Rolando North/University Heights,16,13,2.711,2.575,-5.016599040944289,0.44706978391606456,Lower
+San Diego,Crown Point/Del Mar/La Jolla/Pacific Beach,4,7,1.049,1.751,66.92087702573879,0.21343022944498347,Lower
+San Diego,Downtown/Golden Hill/Logan Heights,29,28,6.427,6.304,-1.9138011513925524,0.4724003884674368,No Diff
+San Diego,Dulzura/Engineer Springs/Indian Springs/Jamacha/Jamul,3,5,3.123,5.414,73.35894972782579,0.22918918068782834,No Diff
+San Diego,El Cajon Central and South/Fletcher Hills,12,23,2.783,5.24,88.28602227811714,0.03861460992795129,No Diff
+San Diego,Encanto/Lemon Grove Northwest/Lincoln Acres/National City East/Paradise Hills Southwest,47,33,8.984,6.741,-24.966607301869995,0.10521343930784233,No Diff
+San Diego,Encinitas Central/Leucadia/Oceanside North and West/San Luis Rey/South Oceanside,21,27,3.605,4.916,36.36615811373095,0.14534870233591113,No Diff
+San Diego,Escondido Central and South/San Marcos Central and East,16,20,2.162,2.667,23.358001850138756,0.26778750165715715,Lower
+San Diego,Escondido East/Hidden Meadows/Poway North,12,13,2.243,2.72,21.26616139099422,0.3183510985985635,Lower
+San Diego,La Mesa/Rolando South,9,11,2.056,2.168,5.447470817120627,0.45355728712301957,Lower
+San Diego,Lemon Grove South/Paradise Hills,31,17,7.403,4.129,-44.22531406186681,0.02632893464163344,No Diff
+San Diego,Mira Mesa/Scripps Miramar Ranch,11,8,1.845,1.415,-23.30623306233062,0.2848969895501442,Lower
+San Diego,Oceanside East/San Marcos West/Vista,13,19,1.929,2.756,42.87195438050802,0.1603905486049636,Lower
+San Diego,Pala/Pauma Valley,NA,5,NA,15.4,NA,NA,No Diff
+San Diego,Poway Central/Poway Grove/Rancho Bernardo Southwest/Sabre Springs,7,5,1.663,1.308,-21.346963319302464,0.343306496911545,Lower
+San Diego,Ramona/Rock Haven/Rosemont,4,2,3.803,1.322,-65.23797002366553,0.1269427214184914,Lower
+San Diego,Rincon/San Pasqual/Valley Center,2,2,3.071,2.971,-3.256268316509283,0.48711608974491927,No Diff
+San Francisco,Bayview/Candlestick/Hunters Point/Portola/Visitacion Valley,89,66,21.21,15.85,-25.271098538425274,0.037088879421413035,Higher
+San Francisco,Bernal Heights/Mission District/Potrero Hill,36,30,6.265,4.792,-23.511572226656025,0.15810612095560073,No Diff
+San Francisco,Buena Vista/Castro/Eureka Valley/Forest Hill/Haight-Ashbury/Noe Valley/West of Twin Peaks,26,14,4.797,2.599,-45.820304356889714,0.04421696858720747,Lower
+San Francisco,Chinatown/Civic Center/Inner Mission/North Beach/South of Market/Tenderloin/Western Addition,52,32,9.355,4.829,-48.38054516301444,0.0031809952619086257,No Diff
+San Francisco,Cow Hollow/Financial District/Marina/Nob Hill/Pacific Heights/Russian Hill/Seacliff,7,9,1.561,2.01,28.763613068545794,0.3179866295640187,Lower
+San Francisco,Excelsior/Glen Park/Ingleside/Lake Merced/Merced Heights/Ocean Beach South/Park Merced/Saint Francis Wood/Westwood Park,34,14,4.903,2.011,-58.98429532939016,0.0021436198004187723,Lower
+San Francisco,Golden Gate Park/Parkside/Sunset/West Portal,6,5,1.538,1.115,-27.50325097529259,0.30139880204675285,Lower
+San Francisco,Laurel Heights/Ocean Beach North/Richmond/Sutro Heights,9,6,1.659,0.8767,-47.15491259795058,0.12352330931119104,Lower
+San Joaquin,Banta/Escalon/Ripon/Vernalis,7,6,2.733,2.186,-20.014635931211128,0.34636852898505777,Lower
+San Joaquin,Farmington/Linden,2,1,8.438,4.197,-50.26072529035317,0.2814031439170084,No Diff
+San Joaquin,French Camp/Stockton South/Stockton Southeast,144,150,20.31,21.03,3.5450516986706178,0.38400990476014873,Higher
+San Joaquin,Lathrop/Manteca,16,22,4.27,4.936,15.59718969555036,0.3291841332284977,No Diff
+San Joaquin,Lockeford/North Woodbridge,19,12,10.8,6.458,-40.2037037037037,0.08333910263799904,No Diff
+San Joaquin,Lodi,12,17,3.814,5.333,39.826953329837444,0.18731937623851302,No Diff
+San Joaquin,South Woodbridge/Thornton,5,4,3.954,3.411,-13.732928679817908,0.41341517712629705,No Diff
+San Joaquin,Stockton North Central/Stockton Northeast,73,79,13.97,16.4,17.394416607015017,0.1685945211862585,Higher
+San Joaquin,Stockton Northwest/Stockton West,35,33,8.019,7.887,-1.6460905349794308,0.4732224060198227,Higher
+San Joaquin,Tracy,22,12,4.515,2.238,-50.431893687707635,0.02542099822289634,Lower
+San Luis Obispo,Arroyo Grande/Nipomo/Oceano/Pismo Beach,3,9,0.6916,2.477,258.155002891845,0.030441874639484223,Lower
+San Luis Obispo,Atascadero/Templeton,8,6,4.558,3.039,-33.32602018429135,0.2305025865609226,Lower
+San Luis Obispo,Baywood/Cambria/Cayucos/Morro Bay/Los Osos,3,4,1.288,2.385,85.17080745341613,0.2367793113934874,Lower
+San Luis Obispo,El Paso de Robles/Lake Nacimiento/San Miguel/Shandon,9,6,3.026,2.261,-25.280898876404486,0.2921725024801667,Lower
+San Luis Obispo,San Luis Obispo,4,1,1.104,0.4101,-62.85326086956521,0.1657631194885123,Lower
+San Mateo,Atherton/Lindenwood/Menlo Oaks/Menlo Park/Redwood City Central/Sharon Heights/West Menlo Park/Woodside/Woodside Hills,9,4,2.374,0.826,-65.20640269587194,0.04702392551930401,Lower
+San Mateo,Belmont/Devonshire/Emerald Lake/Farm Hills/Palomar Park/San Carlos West/The Highlands,3,5,0.708,1.219,72.17514124293787,0.23579144082086856,Lower
+San Mateo,Brisbane/Burlingame Northeast/Colma/Daly City East/Millbrae East/San Bruno/South San Francisco,18,11,4.065,2.319,-42.95202952029521,0.07298941407181858,Lower
+San Mateo,Broadmoor Village/Daly City West/San Bruno Northwest/Serramonte/Westborough,16,14,2.611,2.066,-20.873228648027588,0.263795412282256,Lower
+San Mateo,Burlingame Hills/Burlingame Southwest/Hillsborough/Hillsdale/Millbrae West/San Bruno Central/San Mateo West,6,5,1.591,1.198,-24.701445631678194,0.323094027823459,Lower
+San Mateo,East Menlo Park/East Palo Alto/North Fair Oaks/Redwood City East,44,25,10.22,5.44,-46.771037181996086,0.006359318723989094,No Diff
+San Mateo,El Granada/Half Moon Bay/Miramar/Montara/Moss Beach/Princeton by the Sea/Skyline,NA,4,NA,3.372,NA,NA,No Diff
+San Mateo,Foster City/Redwood Shores/San Mateo East,5,5,1.097,1.152,5.013673655423878,0.4699482578569568,Lower
+San Mateo,Pacifica/Rockaway Beach/San Pedro Terrace/Sharp Park/Vallemar,4,6,2.482,3.114,25.463336019339227,0.36302459663725195,Lower
+Santa Barbara,Buellton/Los Olivos/Santa Ynez/Solvang,1,2,1.824,1.614,-11.513157894736839,0.4613325223084819,Lower
+Santa Barbara,Carpinteria/New Cuyama/Summerland/Toro Canyon,1,NA,1.081,NA,NA,NA,NA
+Santa Barbara,Goleta North/Mission Canyon/Montecito/Riviera/Santa Barbara North,1,11,0.1499,2.822,1782.5883922615076,0.001645612533224261,Lower
+Santa Barbara,Goleta South/Isla Vista/Santa Barbara South,10,3,2.086,0.6583,-68.44199424736337,0.04354209827668232,Lower
+Santa Barbara,Guadalupe,1,2,2.513,5.73,128.01432550736175,0.2502749611491323,No Diff
+Santa Barbara,Lompoc/Mission Hills/Vandenberg,15,11,4.915,3.359,-31.65818921668362,0.17111053626062755,Lower
+Santa Barbara,Los Alamos,1,NA,3.964,NA,NA,NA,NA
+Santa Barbara,Orcutt/Santa Maria,30,35,4.469,5.12,14.56701722980532,0.2945372827918936,No Diff
+Santa Clara,Alum Rock South/San Jose East,28,42,4.154,6.467,55.68127106403466,0.03570654045431809,No Diff
+Santa Clara,Alviso/Palo Alto Bayshore/Santa Clara Northwest/Sunnyvale North,17,9,2.452,1.409,-42.53670473083197,0.08715293917678124,Lower
+Santa Clara,Berryessa/East San Jose/Milpitas East,25,25,3.988,3.842,-3.6609829488465375,0.4480367963138432,Lower
+Santa Clara,Cambrian Village East/San Jose South Central,8,11,1.522,1.885,23.850197109067015,0.324243183754491,Lower
+Santa Clara,Cambrian Village West/Campbell South/Los Gatos/Monte Sereno/San Tomas,8,10,1.849,1.916,3.6235803136830693,0.4709000294037736,Lower
+Santa Clara,Cupertino/Rancho Rinconada/San Jose West/Saratoga,5,10,0.7562,1.908,152.3142025919069,0.05909977990754378,Lower
+Santa Clara,Downtown San Jose,20,24,4.85,4.672,-3.670103092783504,0.4527491854020128,No Diff
+Santa Clara,Evergreen/San Jose East Central,11,17,2.299,3.129,36.10265332753371,0.2137775941991188,Lower
+Santa Clara,Gilroy/Morgan Hill/Rucker/San Martin,14,14,2.595,2.442,-5.895953757225434,0.4372200057048745,Lower
+Santa Clara,Los Altos/Los Altos Hills/Palo Alto Central/Stanford,5,4,0.7001,0.4835,-30.938437366090557,0.29479467788652913,Lower
+Santa Clara,Milpitas West/Santa Clara Northeast,13,14,1.835,1.967,7.193460490463222,0.43169984476154677,Lower
+Santa Clara,New Almaden/San Jose Southwest,6,12,1.195,2.504,109.5397489539749,0.0689442275365506,Lower
+Santa Clara,San Jose Northwest,20,17,4.339,3.338,-23.0698317584697,0.21975293805940832,Lower
+Santa Clara,San Jose Southeast,34,33,5.166,4.48,-13.27913279132791,0.2814730301315078,No Diff
+Santa Clara,Santa Clara South and West,13,6,2.285,1.026,-55.09846827133479,0.05228599986176552,Lower
+Santa Clara,Sunnyvale South,6,4,1.584,0.8703,-45.05681818181818,0.190142030813911,Lower
+Santa Cruz,Amesti/Corralitos/Day Valley/Interlaken/Pajaro Dunes,6,2,4.411,1.625,-63.16028111539333,0.10004655759970638,Lower
+Santa Cruz,Aptos/Capitola/Live Oak/Rio del Mar/Santa Cruz,22,14,3.195,2.02,-36.77621283255086,0.10029212246069008,Lower
+Santa Cruz,Ben Lomond/Felton/Scotts Valley,2,4,0.8724,1.942,122.60430994956442,0.19087213273451697,Lower
+Santa Cruz,Boulder Creek,3,1,3.826,2.196,-42.603240982749604,0.30338785172503846,No Diff
+Santa Cruz,Freedom/Watsonville,13,19,4.473,6.63,48.222669349429914,0.13947895721848058,No Diff
+Shasta,Anderson/Cottonwood/French Gulch/Happy Valley/Igo/Ono/Platina/Shasta,6,11,4.005,6.82,70.28714107365795,0.15302664967946344,No Diff
+Shasta,Bella Vista/City of Shasta Lake,4,6,3.525,6.746,91.37588652482272,0.16960506170466338,No Diff
+Shasta,Big Bend/Montgomery Creek/Oak Run/Round Mountain,2,2,13.94,3.186,-77.14490674318508,0.14517314327366948,No Diff
+Shasta,Burney/Cassel/Fall River Mills/Hat Creek/McArthur,1,2,6.335,4.815,-23.9936858721389,0.41744395297537173,No Diff
+Shasta,Castella/Lakehead/OBrien,1,1,8.989,11.62,29.269106685949474,0.4289339853927764,No Diff
+Shasta,Manton/Millville/Shingletown/Viola,1,5,1.269,30.48,2301.891252955083,0.027978695723316238,Higher
+Shasta,Palo Cedro,NA,2,NA,10.04,NA,NA,No Diff
+Shasta,Redding,12,23,2.555,4.675,82.97455968688844,0.04375186279259391,No Diff
+Siskiyou,Carrick/Edgewood/Mount Shasta/Weed,1,3,0.781,3.562,356.08194622279126,0.13983037187182024,No Diff
+Siskiyou,Etna/Fort Jones/Greenview,1,2,3.948,3.773,-4.432624113475173,0.48535159201107136,No Diff
+Siskiyou,Gazelle/Grenada/Hilt/Hornbrook/Yreka,4,7,6.176,9.156,48.25129533678757,0.2689394599044235,No Diff
+Siskiyou,Happy Camp,1,1,11.18,8.297,-25.78711985688729,0.41797498176196757,No Diff
+Solano,Benicia/Collinsville/Suisun City,13,9,8.377,4.805,-42.64056344753492,0.10634865432355833,No Diff
+Solano,Dixon,NA,3,NA,2.841,NA,NA,No Diff
+Solano,Fairfield,54,52,9.387,8.774,-6.530307872589765,0.3658770877324291,Higher
+Solano,Rio Vista,1,NA,0.9941,NA,NA,NA,NA
+Solano,Vacaville,18,12,3.563,2.253,-36.76676957619983,0.11115857139856145,Lower
+Solano,Vallejo,83,97,12.09,14.22,17.617866004962785,0.14252135166743007,Higher
+Sonoma,Bodega/Sebastopol,2,2,3.634,0.8265,-77.25646670335719,0.14520396484610576,Lower
+Sonoma,Boyes Hot Springs/Glen Ellen/Kenwood/Sonoma/Vineburg,4,3,1.994,1.194,-40.12036108324975,0.27073735173276636,Lower
+Sonoma,Cloverdale,3,2,4.977,3.434,-31.002612015270245,0.34082872217629123,No Diff
+Sonoma,Forestville/Fort Ross/Guerneville/Jenner/Monte Rio/Occidental/Sea Ranch,3,7,1.848,5.491,197.1320346320346,0.0740304335533506,No Diff
+Sonoma,Geyserville/Healdsburg,5,1,7.11,2.184,-69.28270042194093,0.10578232760407047,No Diff
+Sonoma,Petaluma,14,13,2.231,1.987,-10.936799641416396,0.3831342471326358,Lower
+Sonoma,Santa Rosa,29,19,2.974,1.937,-34.868863483523874,0.0755039659811394,Lower
+Sonoma,Two Rock/Valley Ford,2,NA,3.24,NA,NA,NA,NA
+Sonoma,Windsor,1,3,0.8798,1.795,104.02364173675835,0.25060177610292467,Lower
+Stanislaus,Ceres/Modesto South Central,54,36,11.79,7.441,-36.88719253604749,0.017582438432775294,Higher
+Stanislaus,Crows Landing/Empire/Grayson/Newman/Patterson/Westley,12,14,6.084,6.853,12.639710716633795,0.3819099247471903,No Diff
+Stanislaus,Denair/Turlock,16,19,4.471,5.192,16.126146276000895,0.3308460278830614,No Diff
+Stanislaus,Hughson,16,9,7.055,4.334,-38.56839121190645,0.11879726601952345,No Diff
+Stanislaus,Keyes,4,1,4.745,1.209,-74.52054794520548,0.09529333787126071,Lower
+Stanislaus,Modesto East,34,29,7.506,6.451,-14.055422328803632,0.2763137834052256,No Diff
+Stanislaus,Modesto West,17,26,4.225,6.256,48.07100591715978,0.10751902371598399,No Diff
+Stanislaus,Oakdale/Riverbank,17,7,5.973,2.451,-58.96534404821698,0.020757391080557297,Lower
+Stanislaus,Salida,6,7,4.814,4.73,-1.744910677191517,0.487465788686976,No Diff
+Sutter,Live Oak,3,4,5.863,8.541,45.67627494456762,0.31512973450969883,No Diff
+Sutter,Meridian/Robbins/Yuba City,22,18,5.346,4.558,-14.7399925177703,0.3090025429818686,No Diff
+Sutter,Nicolaus/Pleasant Grove,NA,1,NA,9.172,NA,NA,No Diff
+Tehama,Corning/Los Molinos/Tehama/Vina,3,4,3.447,4.774,38.4972439802727,0.3360260821752833,No Diff
+Tehama,Dairyville/Manton/Mineral/Paynes Creek,3,3,17.01,17.64,3.7037037037036975,0.4831879463444789,No Diff
+Tehama,Gerber/Los Flores/Proberta/Red Bluff,8,4,4.547,2.159,-52.518143831097426,0.11620468043752297,Lower
+Tehama,Paskenta/Rancho Tehama,2,4,11.05,17.64,59.63800904977375,0.2953200356026282,No Diff
+Trinity,Douglas City/Lewiston/Trinity Center/Weaverville,NA,2,NA,8.089,NA,NA,No Diff
+Trinity,Forest Glen/Hayfork/Hyampom/Peanut,1,3,7.154,24.15,237.57338551859098,0.13902262582679525,No Diff
+Tulare,Alpaugh/Earlimart/Pixley/Porterville/Rich Grove/Terra Bella,42,48,8.403,9.871,17.46995120790194,0.22814353761358663,Higher
+Tulare,Cutler-Orosi,16,10,14.67,10.41,-29.038854805725972,0.19789232900689568,No Diff
+Tulare,Dinuba,5,9,3.271,5.001,52.889024763069415,0.2216983987138641,No Diff
+Tulare,Exeter/Lemon Cove/Lindsay/Strathmore,19,16,8.535,8.275,-3.046280023432921,0.4642539229217365,No Diff
+Tulare,Farmersville/Goshen/Visalia,46,63,6.114,8.128,32.94079162577691,0.07194404763590179,Higher
+Tulare,Ivanhoe/Woodlake,4,6,5.174,6.981,34.92462311557788,0.3233814378682194,No Diff
+Tulare,Springville,5,1,15.35,4.84,-68.46905537459284,0.1240756666589713,No Diff
+Tulare,Three Rivers,1,3,3.503,20.1,473.79389095061373,0.09349059253080916,No Diff
+Tulare,Tipton/Tulare/Woodville,32,33,8.098,8.988,10.990367992096798,0.3401001988932266,Higher
+Tuolumne,Columbia/Jamestown/Sonora,2,5,1.983,5.191,161.77508825012603,0.13360583170341434,No Diff
+Tuolumne,East Sonora/Mi-Wuk Village/Soulsbyville/Tuolumne City/Twain Harte,2,1,2.85,0.4555,-84.01754385964911,0.12343247948102698,Lower
+Ventura,Camarillo/Moorpark,9,8,1.827,1.624,-11.111111111111102,0.40567118817283065,Lower
+Ventura,Fillmore/Los Padres National Forest/Piru/Santa Paula/Saticoy,13,19,3.774,5.171,37.016428192898786,0.19020222652113672,No Diff
+Ventura,Meiners Oaks/Oak View/Ojai,5,4,4.115,2.414,-41.33657351154313,0.22462162696836008,Lower
+Ventura,Oxnard East/Oxnard West/Oxnard South Central/Port Hueneme,25,20,4.282,3.483,-18.659504904250348,0.24744534128017381,Lower
+Ventura,Oxnard North Central,36,57,5.371,7.842,46.00633029231054,0.039061769086645715,Higher
+Ventura,Simi Valley East,6,7,1.377,1.613,17.138707334785764,0.3899225982681742,Lower
+Ventura,Simi Valley West/Thousand Oaks East,9,6,2.258,1.34,-40.65544729849424,0.16484215692419824,Lower
+Ventura,Thousand Oaks Central and West,3,5,0.5023,0.8206,63.36850487756322,0.2553067370761999,Lower
+Ventura,Ventura,10,17,2.305,3.748,62.60303687635575,0.11141794780716929,Lower
+Yolo,Bryte/Broderick/Clarksburg/Riverview/West Sacramento,10,13,3.748,4.442,18.51654215581643,0.34353509411099203,No Diff
+Yolo,Davis,4,3,1.408,1.2,-14.772727272727272,0.421683037175444,Lower
+Yolo,Knights Landing,NA,1,NA,8.959,NA,NA,No Diff
+Yolo,Winters,NA,1,NA,2.314,NA,NA,No Diff
+Yolo,Woodland,7,9,2.341,2.934,25.331055104656127,0.32787286470549737,Lower
+Yuba,Browns Valley/Brownsville/Dobbins/Oregon House,1,2,5.114,16.19,216.5819319515057,0.1885525919836223,No Diff
+Yuba,Marysville,14,19,4.748,5.992,26.200505475989885,0.2573285515480933,No Diff
