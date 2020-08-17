@@ -24,7 +24,9 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "h:/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "g:/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+#secure.location  <- "/mnt/projects/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- getwd()
@@ -59,7 +61,9 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
 
- ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_UPDATE_2018.csv"), colClasses = "character")        
+ ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_063020.csv"), colClasses = "character")  
+ ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"),          colClasses = "character")       
+ ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_UPDATE_2018.csv"),   colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
  ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
@@ -76,7 +80,7 @@ if (state.installation) {
  
 
  
-death.datA  <- bind_rows(ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
+death.datA  <- bind_rows(ca20, ca19, ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
 # %>%
 # mutate(LRD=)
@@ -200,7 +204,7 @@ death.datA          <- mutate(death.datA,
 
 death.datA$raceCode[is.na(death.datA$raceCode)] <-"-missing"
 
-# === Process 2000 - 2014 files ==============================================================
+# === Process 2000 - 2004 files ==============================================================
 
 # note: 2000-2004 files are "flat" ASCII files not .csv so need to be processed differently
 
