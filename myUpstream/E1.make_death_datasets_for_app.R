@@ -22,8 +22,8 @@ whichDat <- "real"
 subSite  <- FALSE
 
 # EDIT SECURE DATA LOCATION AS NEEDED
-securePath     <- "g:/CCB/0.Secure.Data/"
 securePath     <- "h:/0.Secure.Data/"
+securePath     <- "g:/CCB/0.Secure.Data/"
 secureDataFile <- paste0(securePath,"myData/cbdDat0FULL.R") 
 
 STATE    <- "California"
@@ -45,7 +45,7 @@ pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
 # yearGrp <- "2013-2017"
-  yearGrp <- c("2004-2008","2009-2013","2014-2018")
+  yearGrp <- c("2005-2009","2010-2014","2015-2019")
 
 myDigits= 6
   
