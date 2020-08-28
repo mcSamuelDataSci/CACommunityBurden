@@ -24,7 +24,11 @@ subSite  <- FALSE
 # EDIT SECURE DATA LOCATION AS NEEDED
 securePath     <- "h:/0.Secure.Data/"
 securePath     <- "g:/CCB/0.Secure.Data/"
+securePath     <- "g:/0.Secure.Data/"
+
+
 secureDataFile <- paste0(securePath,"myData/ccb_processed_deaths.RDS") 
+
 # secureDataFile <- "/mnt/projects/CCB/0.Secure.Data/myData/ccb_processed_deaths.RDS" 
 
 STATE    <- "California"
@@ -75,7 +79,9 @@ ageMap_EDU  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standa
 
 # ungrouping important for subsequent data set merging
 
-popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>% ungroup()  
+popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>%
+                          filter(raceCode == "Total") %>% select(-raceCode) %>%   ungroup()  
+
 popCountySex     <- filter(popCounty,ageGroup == "Total") %>% select(-ageGroup) # no need for ageGroup
 popCountySexAgeG <- filter(popCounty,ageGroup != "Total")
 
@@ -116,8 +122,8 @@ popTractSexAgeG  <- filter(popTract,ageGroup != "Total")
 popCommSex       <- popTractSex     %>% group_by(yearG5,county,comID,sex)      %>% summarise(population=sum(population))  %>% ungroup()  
 popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG5,county,comID,sex,ageGroup) %>% summarise(population=sum(population))  %>% ungroup() 
 
-popStandard         <- ageMap    %>% mutate(ageGroup = paste0(lAge," - ",uAge))
-popStandard_EDU     <- ageMap_EDU %>% mutate(ageG_EDU = paste0(lAge," - ",uAge))
+popStandard         <- ageMap    %>% mutate(ageGroup = ageLabel)
+popStandard_EDU     <- ageMap_EDU %>% mutate(ageG_EDU = ageLabel)  #######FIX
 
 
  # == LOAD AND PROCESS DEATH DATA =================================================================
@@ -174,7 +180,7 @@ cbdDat0       <- bind_rows(cbdDat0, cbdDat0Sex)
 
 aL            <-      ageMap$lAge     # lower age ranges
 aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
-aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
+aLabs         <- ageMap$ageLabel 
 aMark         <- findInterval(cbdDat0$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 cbdDat0$ageGroup  <- aLabs[aMark]                                   # make new "ageGroup" variable based on two objects above 
 
@@ -191,7 +197,7 @@ cbdDat0$ageG_EDU  <- aLabs_EDU[aMark_EDU]
 
 # -- Map ICD-10 codes to GBD conditions ----------------------------------------
 
-gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/gbd.ICD.Map.xlsx"), sheet="main"))   
+gbdMap0   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/icd10_to_CAUSE.xlsx"), sheet="main"))   
 allLabels <- sort(gbdMap0$LABEL[!is.na(gbdMap0$LABEL)])
 
 mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
@@ -272,12 +278,12 @@ calculateRates <- function(inData,yearN){
 # https://github.com/cran/epitools/blob/master/R/ageadjust.direct.R
 ageadjust.direct.SAM <- function (count, population, rate = NULL, stdpop, conf.level = 0.95) 
 {
-  if (missing(count) == TRUE & !missing(population) == TRUE & is.null(rate) == TRUE)   count <- rate * population
+  if (missing(count) == TRUE & !missing(population) == TRUE & is.null(rate) == TRUE)     count      <- rate * population
   if (missing(population) == TRUE & !missing(count) == TRUE & is.null(rate) == TRUE)     population <- count/rate
-  if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(population) == TRUE)  rate <- count/population
+  if (is.null(rate) == TRUE & !missing(count) == TRUE & !missing(population) == TRUE)    rate       <- count/population
   
-  rate[is.na(population)]   <- 0
-  rate[is.null(population)] <- 0
+  rate[is.na(population)]          <- 0
+  rate[is.null(population)]        <- 0
   population[is.na(population)]    <- 0
   population[is.null(population)]  <- 0
   
@@ -322,6 +328,8 @@ datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
 datState$county = STATE
 
 datCounty <- bind_rows(datCounty,datState)
+
+
 
 # MERGE Death and Population files
 datCounty <- merge(datCounty,popCountySex,by = c("year","county","sex"))
@@ -589,6 +597,8 @@ ageCounty_3year   <- full_join(fullMatCounty_3year,datAA1 ,by = c("county","year
 
 ageCounty_3year$Ndeaths[is.na(ageCounty_3year$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageCounty_3year$YLL[is.na(ageCounty_3year$YLL)]         <- 0    # if NA deaths in strata change to "0"
+
+
 
 countyAA_3year <- ageCounty_3year %>% group_by(county,yearG3,sex,CAUSE) %>%
   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),

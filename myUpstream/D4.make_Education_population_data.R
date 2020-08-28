@@ -51,7 +51,8 @@ a.ed1_2014 <- getEd(2014,"acs1")
 a.ed1_2015 <- getEd(2015,"acs1")
 a.ed1_2016 <- getEd(2016,"acs1")
 a.ed1_2017 <- getEd(2017,"acs1")
-a.ed1_2018 <- getEd(2017,"acs1")   ## Using 2017 data for 2018 data for now !!!!!!!!!!!!!!!!!
+a.ed1_2018 <- getEd(2018,"acs1")   
+a.ed1_2019 <- getEd(2018,"acs1")   ## Using 2018 data for 2019 data for now !!!!!!!!!!!!!!!!!
 
 
 #a.ed5_2005.09 <- getEd(2009,"acs5")   # generates ERROR
@@ -115,7 +116,7 @@ AgeGroups <- data.frame(label=c( "18 to 24 years_18 - 24",
 education.a <- left_join(education.a,EdGroups,by="level") %>% select(-level) %>%
                left_join(AgeGroups,by="age")  %>% select(-age) %>% 
                filter(ageG_EDU != "18 - 24")  %>% # analysis only for age 25 or older
-               rename(pop = estimate) %>%
+               rename(population = estimate) %>%
                mutate(eduCode = as.numeric(eduCode))
              
 
@@ -125,13 +126,13 @@ geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to C
   select(county=countyName,GEOID) %>%
   bind_rows(c("county"="California","GEOID"="06"))
 education.a <- full_join(education.a,geoMap,by="GEOID")  %>% select(-GEOID,-NAME,-interval) %>%
-               filter(!is.na(pop))   # remove 18 counties without data for now
+               filter(!is.na(population))   # remove 18 counties without data for now
 
 
 sexTotal <-  education.a %>%
              group_by(year,county,eduCode,ageG_EDU) %>%
-             summarize(pop=sum(pop),
-                       moe=moe_sum(moe[which(pop != 0)],which(pop != 0,arr.ind=T))) %>%
+             summarize(population=sum(population),
+                       moe=moe_sum(moe[which(population != 0)],which(population != 0,arr.ind=T))) %>%
              mutate(sex="Total")
 
 
@@ -140,8 +141,8 @@ education.a <- bind_rows(education.a,sexTotal)
 
 ageTotal <- education.a %>%
             group_by(year,county,eduCode,sex) %>%
-            summarize(pop=sum(pop),
-            moe=moe_sum(moe[which(pop != 0)],which(pop != 0,arr.ind=T))) %>%
+            summarize(population=sum(population),
+            moe=moe_sum(moe[which(population != 0)],which(population != 0,arr.ind=T))) %>%
             mutate(ageG_EDU = "Total")
 
 

@@ -143,7 +143,7 @@ popCounty <- populationExtract(County = T,
                                multiYear = F, 
                                popData = tDat0)
 
-popCounty <- popCounty %>% rename(county = countyName)
+popCounty <- popCounty %>% rename(county = countyName) %>% mutate(county = ifelse(county=="California","CALIFORNIA",county))
 
 yearMap   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx")))
 tDat1     <- popCounty %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
@@ -171,7 +171,7 @@ popCounty65 <- populationExtract(County = T,
                                multiYear = F, 
                                popData = tDat65)
 
-popCounty65 <- popCounty65 %>% rename(county = countyName)
+popCounty65 <- popCounty65 %>% rename(county = countyName) %>% mutate(county = ifelse(county=="California","CALIFORNIA",county))
 
 tDat1     <- popCounty65 %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
 
