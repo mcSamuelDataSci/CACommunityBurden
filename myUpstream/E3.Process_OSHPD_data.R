@@ -16,7 +16,7 @@
   
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "G:/CCB/0.Secure.Data/"
-secure.location  <- "G:/0.Secure.Data/"
+#secure.location  <- "G:/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -116,20 +116,22 @@ if(newData) {
 oshpd.ED.16.0  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_rln2016.sas7bdat") )
 
 ourVars <- c("dx_prin", "ccs_dx_prin", "patco", "sex", "race_grp",  "agyrserv", "dispn", "payer") # odx1 : odx24, 
+
 oshpd.ED.16  <- oshpd.ED.16.0  %>% mutate(year=2016) %>% select(ourVars)
 
 saveRDS(oshpd.ED.16, file=path(secure.location, "myData/oshpd.ED.16.rds"))
 
 
+oshpd.ED.17.0  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_ssn2017.sas7bdat") )  %>% mutate(year=2017) %>% select(ourVars)
 
-
-oshpd.ED.18.0  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_ssn2018.sas7bdat") )  %>% mutate(year=2018)  ## SSN!
-
-
+oshpd.ED.18.0  <- read_sas(paste0(secure.location,"rawOSHPD/ED/cdph_ed_ssn2018.sas7bdat") )  %>% mutate(year=2018) %>% select(ourVars) ## SSN!
 
 
 
-oshpd_ED_subset <- bind_rows(oshpd.ED.16, oshpd.ED.18)
+################# cdph_ed_ssn2017.sas7bdat
+
+
+oshpd_ED_subset <- bind_rows(oshpd.ED.16, oshpd.ED.17.0, oshpd.ED.18.0)
 
 
 

@@ -85,7 +85,7 @@ aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to m
 
 aMark                     <- findInterval(acs.pop.tracts$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
 aLabs                     <- paste(aL,"-",aU[-1])                           # make label for ranges
-acs.pop.tracts$ageG  <- aLabs[aMark] 
+acs.pop.tracts$ageGroup  <- aLabs[aMark] 
 
 cbd.link <- read_csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv")) 
 
@@ -95,13 +95,13 @@ acs.pop.tracts <- merge(acs.pop.tracts,linker,by=c("GEOID"),all=TRUE) %>%
 
 
 # NOT ALL NEEDED -- CHECK:
-popAgeSex            <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,ageG,sex) %>% summarise(pop=sum(estimate))
-popAge               <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,ageG)     %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total")
-popSex               <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,sex)      %>% summarise(pop=sum(estimate)) %>% mutate(               ageG = "Total")
-pop                  <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID)          %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total", ageG = "Total")
+popAgeSex            <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,ageGroup,sex) %>% summarise(pop=sum(estimate))
+popAge               <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,ageGroup)     %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total")
+popSex               <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID,sex)      %>% summarise(pop=sum(estimate)) %>% mutate(               ageGroup = "Total")
+pop                  <- acs.pop.tracts %>% group_by(yearG5,county,GEOID,comID)          %>% summarise(pop=sum(estimate)) %>% mutate(sex = "Total", ageGroup = "Total")
 
 popTractSexAgeGTotal  <- bind_rows(pop,popSex,popAge,popAgeSex) %>%
-                                    select(yearG5,county,GEOID,comID,sex,ageG,pop) %>%
+                                    select(yearG5,county,GEOID,comID,sex,ageGroup,pop) %>%
                                     arrange(yearG5,county,GEOID,comID) %>%
                                     ungroup()
 

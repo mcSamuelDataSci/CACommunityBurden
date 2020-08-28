@@ -15,6 +15,15 @@ myDrive    <- getwd()
 myPlace    <- paste0(myDrive,"/myCBD")
 upPlace    <- paste0(myDrive,"/myUpstream")
 
+local <- F
+
+if (local) {
+  myPath <- "G:/CCB/"
+} else {
+  myPath <- "/mnt/projects/CCB/"
+}
+
+
 library(dplyr)
 library(readxl)
 library(tidyr)
@@ -55,7 +64,7 @@ library(readr)
 # 
 # aMark       <- findInterval(tDat$age,aU,left.open = TRUE)
 # aLabs       <- paste(aL,"-",aU[-1])
-# tDat$ageG   <- aLabs[aMark]
+# tDat$ageGroup   <- aLabs[aMark]
 # 
 # tDat    <- tDat  %>% mutate(sex    = c("Male","Female","Total")[match(sex,c("pop_male","pop_female","pop_total"))],
 #                             county =  capwords(tDat$county,strict=TRUE)
@@ -65,14 +74,14 @@ library(readr)
 # 
 # tDat <- bind_rows(tDat,tDatState)
 # 
-# popCounty      <- tDat %>% group_by(year, county,sex,ageG) %>%  summarize(pop  = sum(pop)) 
-# popCountytemp  <- tDat %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageG = "Total")
+# popCounty      <- tDat %>% group_by(year, county,sex,ageGroup) %>%  summarize(pop  = sum(pop)) 
+# popCountytemp  <- tDat %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageGroup = "Total")
 # popCounty      <- bind_rows(popCounty,popCountytemp) %>% ungroup()
 #                             
 #                     
 # tDat65           <- filter(tDat, age < 65)
-# popCounty65      <- tDat65 %>% group_by(year, county,sex,ageG) %>%  summarize(pop  = sum(pop)) 
-# popCountytemp65  <- tDat65 %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageG = "Total")
+# popCounty65      <- tDat65 %>% group_by(year, county,sex,ageGroup) %>%  summarize(pop  = sum(pop)) 
+# popCountytemp65  <- tDat65 %>% group_by(year, county,sex     ) %>%  summarize(pop  = sum(pop)) %>%  mutate(ageGroup = "Total")
 # popCounty65      <- bind_rows(popCounty65,popCountytemp65) %>% ungroup()
 
 
@@ -84,7 +93,9 @@ library(readr)
 # tDat        <- filter(tDat, YEAR >=2000 & YEAR <= 2020)
 # saveRDS(tDat, file= paste0(upPlace,"/upData/tDat_2000_2020.rds"))
 
-tDat0 <- readRDS(file= "/mnt/projects/CCB/Population Data/DCDC/tDat_2000_2020.rds") %>%
+
+
+tDat0 <- readRDS(file= paste0(myPath, "Population Data/DCDC/tDat_2000_2020.rds")) %>%
             filter(!(COUNTY %in% c("California", "Alameda HD", "Berkeley", "Pasadena", "Long Beach", "Los Angeles HD"))) %>%  # NOTE: California totals already included with county = "California
             rename(year=YEAR, county= COUNTY, sex = SEX, agerc = AGE, raceE = RE, perwt = POP) %>%
             mutate(sex = c("Male","Female")[match(sex,c("M","F"))]) %>%
@@ -102,7 +113,7 @@ tDat0 <- readRDS(file= "/mnt/projects/CCB/Population Data/DCDC/tDat_2000_2020.rd
 rCode    <- c("W","B","I","A","P","M","H")
 tDat0    <-  tDat0 %>%  mutate( race7   = vLab[match(raceE,rCode)])
 
-countyLink <- readxl::read_xlsx("/mnt/projects/CCB/Standards/countyLink.xlsx") %>%
+countyLink <- readxl::read_xlsx(paste0(myPath, "Standards/countyLink.xlsx")) %>%
   select(countyName, FIPSCounty) %>%
   mutate(fips = as.numeric(paste0("6", FIPSCounty)))
 
@@ -115,7 +126,7 @@ tDat0  <- tDat0 %>%  left_join(countyLink, by = c("county" = "countyName"))
 
 # -----------------------------------------------------------------------------
 
-source("/mnt/projects/CCB/Standards/populationExtract.R")
+source(paste0(myPath,"Standards/populationExtract.R"))
 
 # -----------------------------------------------------------------------------
 
@@ -137,7 +148,7 @@ popCounty <- popCounty %>% rename(county = countyName)
 yearMap   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx")))
 tDat1     <- popCounty %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
                      
-popCounty_RE_3year <- tDat1 %>% group_by(yearG3, county, sex, ageGroup, raceCode) %>%    ### was ageG !!!!!
+popCounty_RE_3year <- tDat1 %>% group_by(yearG3, county, sex, ageGroup, raceCode) %>%    ### was ageGroup !!!!!
                          summarize(population  = sum(population)) %>%
                          ungroup() %>%
                          filter(!is.na(yearG3))
@@ -164,7 +175,7 @@ popCounty65 <- popCounty65 %>% rename(county = countyName)
 
 tDat1     <- popCounty65 %>%  mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) 
 
-popCounty65_RE_3year <- tDat1 %>% group_by(yearG3, county, sex, ageGroup, raceCode) %>%    ### was ageG !!!!!
+popCounty65_RE_3year <- tDat1 %>% group_by(yearG3, county, sex, ageGroup, raceCode) %>%    ### was ageGroup !!!!!
                          summarize(population  = sum(population)) %>%
                          ungroup() %>%
                          filter(!is.na(yearG3))

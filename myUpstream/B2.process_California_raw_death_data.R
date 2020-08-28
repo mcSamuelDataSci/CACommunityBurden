@@ -25,7 +25,7 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "g:/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
-#secure.location  <- "/mnt/projects/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+# secure.location  <- "/mnt/projects/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 
 .sl              <- secure.location  # short name to shorten lines of code below
 
@@ -305,15 +305,15 @@ cbdDat0FULL  <- bind_rows(death.datA,death.datB)  # "When row-binding using bind
 
 if (local.installation) cbdDat0FULL <- death.datA
 
-save(cbdDat0FULL, file= paste0(.sl,"/myData/cbdDat0FULL.R"))
-
+saveRDS(cbdDat0FULL, file= paste0(.sl,"/myData/ccb_processed_deaths.RDS"))   # ccb_processed_deaths.RDS
 
 # === Create Random Data Set =============================================================================================
 
 if (state.installation) {
 
 # CAUTION
-load(paste0(.sl,"/myData/cbdDat0FULL.R"))
+#load(paste0(.sl,"/myData/cbdDat0FULL.R"))
+cbdDat0FULL <- readRDS(paste0(.sl,"/myData/ccb_processed_deaths.RDS"))
 
 #cbdDat0FULL$ageUnit  <- NULL
 work <- cbdDat0FULL
@@ -331,6 +331,6 @@ half2        <- cbind(p1,p2,p3)
 
 cbdDat0SAMP <- rbind(half1,half2)
 
-save(cbdDat0SAMP, file= paste0(upPlace,"/upData/cbdDat0SAMP.R"))
+saveRDS(cbdDat0SAMP, file= paste0(upPlace,"/upData/ccb_processed_deaths_FAKE.RDS"))
 
 }
