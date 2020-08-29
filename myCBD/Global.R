@@ -191,7 +191,7 @@ if (subSite){
 
 #-- Load Info Files and Functions ---------------------------------------------
 
-gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/gbd.ICD.Map.xlsx"), sheet="main"))
+gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/icd10_to_CAUSE.xlsx"), sheet="main"))
 
 
 ccsMap  <- as.data.frame(read_excel( path(myPlace,"myInfo/CCS Code and Names Linkage.xlsx"))) %>%

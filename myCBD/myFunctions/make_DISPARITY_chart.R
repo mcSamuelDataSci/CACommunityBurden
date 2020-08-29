@@ -74,7 +74,7 @@ if (myAddRR) racePlot   <- racePlot + geom_text(aes(y=placeLabels3,label=paste("
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
-ageMap$ageG          <- paste(ageMap$lAge,"-",ageMap$uAge)
+ageMap$ageGroup          <- paste(ageMap$lAge,"-",ageMap$uAge)
 
 ageMap$ageOrder      <- paste(ageMap$lAge,"-",ageMap$uAge)
 ageMap$ageOrder[1:2] <- paste("",ageMap$ageOrder [1:2])
@@ -93,7 +93,7 @@ if(myCompare == "lowest rate") {
 }
 
 dat.1 <- filter(ageTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex == "Total") %>%
-           left_join(ageMap,by="ageG")  
+           left_join(ageMap,by="ageGroup")  
 
 
 tMax <- max(dat.1$cDeathRate)

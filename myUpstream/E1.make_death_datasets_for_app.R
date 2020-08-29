@@ -1,3 +1,8 @@
+# RACE STANDARIZATION
+# CALIFORNIA
+
+
+
 # ============================================================================
 # "makeDatasets.R" file   
 #
@@ -31,7 +36,7 @@ secureDataFile <- paste0(securePath,"myData/ccb_processed_deaths.RDS")
 
 # secureDataFile <- "/mnt/projects/CCB/0.Secure.Data/myData/ccb_processed_deaths.RDS" 
 
-STATE    <- "California"
+STATE    <- "CALIFORNIA"
 
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
@@ -123,7 +128,8 @@ popCommSex       <- popTractSex     %>% group_by(yearG5,county,comID,sex)      %
 popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG5,county,comID,sex,ageGroup) %>% summarise(population=sum(population))  %>% ungroup() 
 
 popStandard         <- ageMap    %>% mutate(ageGroup = ageLabel)
-popStandard_EDU     <- ageMap_EDU %>% mutate(ageG_EDU = ageLabel)  #######FIX
+popStandard_EDU     <- ageMap_EDU  %>% mutate(ageGroup = paste(lAge,"-",uAge))
+
 
 
  # == LOAD AND PROCESS DEATH DATA =================================================================
@@ -168,6 +174,44 @@ cbdDat0       <- mutate(cbdDat0,
 
 cbdDat0Sex   <- mutate(cbdDat0, sex = "Total")
 cbdDat0       <- bind_rows(cbdDat0, cbdDat0Sex)
+
+
+# 
+# > freq(cbdDat0$raceCode)
+# Frequencies  
+# cbdDat0$raceCode  
+# Type: Character  
+# 
+# Freq   % Valid   % Valid Cum.   % Total   % Total Cum.
+# -------------- --------- --------- -------------- --------- --------------
+#   -missing      2104      0.02           0.02      0.02           0.02
+# AIAN-NH     43364      0.43           0.46      0.43           0.46
+# Asian-NH    823170      8.25           8.70      8.25           8.70
+# Black-NH    762330      7.64          16.34      7.64          16.34
+# Hisp   1671212     16.75          33.09     16.75          33.09
+# Multi-NH     69286      0.69          33.79      0.69          33.79
+# NHPI-NH     30854      0.31          34.10      0.31          34.10
+# Other-NH     12040      0.12          34.22      0.12          34.22
+# Unk-NH     12862      0.13          34.34      0.13          34.34
+# White-NH   6551598     65.66         100.00     65.66         100.00
+# <NA>         0                               0.00         100.00
+# Total   9978820    100.00         100.00    100.00         100.00
+
+
+
+raceLink   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx")))  %>% select(raceCode,CHSI)
+cbdDat0    <- rename(cbdDat0,CHSI=raceCode)
+cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
+cbdDat0    <- select(cbdDat0,-CHSI)
+
+
+
+
+
+
+
+
+
 
 
 ########
@@ -230,7 +274,7 @@ cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
 # -- SAVE FILE FOR AD HOC ANALYSIS AND ERROR/ISSUE INVESTIGATION --------------
 
 
-saveRDS(cbdDat0,  file= path(securePath,"/myData/cbdDat0-INVESTIGATION-FILE.RDS"))
+# saveRDS(cbdDat0,  file= path(securePath,"/myData/cbdDat0-INVESTIGATION-FILE.RDS"))
 
 # JK: Left off here
 
@@ -332,7 +376,7 @@ datCounty <- bind_rows(datCounty,datState)
 
 
 # MERGE Death and Population files
-datCounty <- merge(datCounty,popCountySex,by = c("year","county","sex"))
+datCounty <-  merge(datCounty,popCountySex,by = c("year","county","sex"))
 
 # CALCULATE RATES
 datCounty <- calculateRates(datCounty,1)
@@ -414,6 +458,11 @@ datCounty_5year <- calculateRates(datCounty_5year,1)
 # -- RACE-ETHNICITY COUNTY 3-YEAR ----------------------------------------------
 # ------------------------------------------------------------------------------
 
+
+
+
+
+
 c.t1.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev0"),"lev0")
 c.t2.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev1"),"lev1")
 c.t3.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev2"),"lev2")
@@ -458,7 +507,8 @@ datState.EDU$county = STATE
 datCounty_EDU <- bind_rows(datCounty_EDU, datState.EDU)
 
 
-datCounty_EDU <- merge(datCounty_EDU, popCountySex_EDU, by = c("year","county","sex","eduCode"))
+datCounty_EDU <- merge(datCounty_EDU, popCountySex_EDU, by = c("year","county","sex","eduCode"))  %>% rename(population=pop)  ###FIX
+
 datCounty_EDU <- calculateRates(datCounty_EDU,1)
 
 
@@ -519,7 +569,7 @@ CAUSE2   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 4,]
 CAUSE3   <- data.frame(CAUSE    = CAUSE1[nchar(as.character(CAUSE1$CAUSE)) < 2,], stringsAsFactors = FALSE)
 sex      <- data.frame(sex      = c("Male","Female","Total"),                     stringsAsFactors = FALSE)
 ageGroup     <- data.frame(ageGroup     = sort(unique(cbdDat0$ageGroup)),                     stringsAsFactors = FALSE)
-county   <- data.frame(county   = c(geoMap$countyName,"California"),              stringsAsFactors = FALSE)        
+county   <- data.frame(county   = c(geoMap$countyName,STATE),                 stringsAsFactors = FALSE)        
 comID    <- data.frame(comID    = unique(mssaLink[,"comID"]),                    stringsAsFactors = FALSE)
 GEOID    <- data.frame(GEOID    = mssaLink[,"GEOID"],                            stringsAsFactors = FALSE)
 raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)),                 stringsAsFactors = FALSE)
@@ -677,7 +727,7 @@ ageCounty.RE$YLL[is.na(ageCounty.RE$YLL)]         <- 0
 
 
 # TEMPORARY - for State of Health Report
-saveRDS(ageCounty.RE, file= path(myPlace,"/myData/",whichDat,"datCounty_RACE_AGE_TEMP.RDS"))
+# saveRDS(ageCounty.RE, file= path(myPlace,"/myData/",whichDat,"datCounty_RACE_AGE_TEMP.RDS"))
 
 
 
@@ -815,6 +865,7 @@ tractAA  <- tractAA[!(is.na(tractAA$aRate)),]
 
 datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","CAUSE"),all=TRUE)
 
+
 # SMR Calculations --------
 
 datState  <- datCounty  %>% 
@@ -834,9 +885,10 @@ datCounty  <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
 datCounty <-  datCounty %>% 
                filter(!(is.na(CAUSE)))                                       %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
                select(-stateCrudeRate,-stateAdjustedRate)                    %>%
-               mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
-               mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
-               
+               mutate_if(is.numeric, signif,digits = myDigits)               %>%  # much smaller file and easier to read
+               mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA  #######################CALIFORNIA!!!!!!!!!!!!!!!!!!!!!
+        
+
 
 # -- COUNTY 3-YEAR ------------------------------------------------------------
 

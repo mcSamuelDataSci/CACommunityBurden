@@ -63,7 +63,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   
   if (myTab == "ageTrendTab") {
     
-     myVARIABLE <- "ageG"
+     myVARIABLE <- "ageGroup"
     
       dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
         left_join(  select(fullCauseList,CAUSE=LABEL,shortName),by="CAUSE")
@@ -89,10 +89,10 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
       myTrans    <- ifelse(myLogTrans,'log2','identity')
       myMin      <- ifelse(myLogTrans,NA,0)
       
-      dat.1 <- mutate(dat.1,ageG = ifelse(ageG == "85 - 999","85+",ageG))  ###FIX THIS A TTTTOP LEVEL!
+      dat.1 <- mutate(dat.1,ageGroup = ifelse(ageGroup == "85 - 999","85+",ageGroup))  ###FIX THIS A TTTTOP LEVEL!
       
       
-      varsIn  <- c("shortName","county","yearG3","ageG",myMeasure) 
+      varsIn  <- c("shortName","county","yearG3","ageGroup",myMeasure) 
       tabDat  <- dat.1 %>% select(varsIn)
       
   }

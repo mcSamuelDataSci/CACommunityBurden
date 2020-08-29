@@ -86,8 +86,8 @@ raceTest_HIGH <- left_join(raceTest,raceTest2,by=c("county","yearG3","sex","CAUS
     mutate(bestRate = min(cDeathRate),
            bestSE   = rateSE) %>%
     filter(bestRate == cDeathRate)  %>%
-    mutate(lowAge = ageG) %>%
-    select(-(Ndeaths:UCI),-ageG)
+    mutate(lowAge = ageGroup) %>%
+    select(-(Ndeaths:UCI),-ageGroup)
 
  ageTest_LOW <- left_join(ageTest,ageTest2,by=c("county","yearG3","sex","CAUSE")) %>%
     mutate(rateRatio = round(cDeathRate/bestRate,1),
@@ -102,8 +102,8 @@ ageTest2 <- ageTest %>% group_by(county,yearG3,sex,CAUSE) %>%
    mutate(bestRate = max(cDeathRate),
           bestSE   = rateSE) %>%
    filter(bestRate == cDeathRate)  %>%
-   mutate(lowAge = ageG) %>%
-   select(-(Ndeaths:UCI),-ageG)
+   mutate(lowAge = ageGroup) %>%
+   select(-(Ndeaths:UCI),-ageGroup)
 
 ageTest_HIGH <- left_join(ageTest,ageTest2,by=c("county","yearG3","sex","CAUSE")) %>%
    mutate(rateRatio = round(cDeathRate/bestRate,1),
