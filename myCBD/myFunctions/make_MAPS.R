@@ -13,7 +13,7 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
   
   # "blank" map to use below
   countyPop <- datCounty %>% filter(year == 2017,sex=="Total", CAUSE=="0") %>%
-                  select(county,pop)
+                  select(county,population)
   
   if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry kid, SMR calculated only for County level')
   
@@ -28,7 +28,7 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
     
   if (myGeo == "County"){
     dat.State  <- filter(datCounty,(myYear>= 2012 & myYear <= 2017),sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county)  
-    dat.1      <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county) %>% select(-pop)
+    dat.1      <- filter(datCounty,year==myYear,sex==mySex, CAUSE==myCause)  %>% mutate(geoLab = county) %>% select(-population)
     dat.1      <- left_join(countyPop,dat.1,by="county")
     map.1      <- left_join(shape_County, dat.1, by=c("county")) 
     map.1$name <- map.1$county
@@ -112,7 +112,7 @@ mapX <-  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal,
                                legend.reverse=T,
                               #legend.format=text.less.than,
                                title.col=NA,id="name", 
-                               popup.vars=c("Population: " = "pop",
+                               popup.vars=c("Population: " = "population",
                                             "Measure Value: "= myMeasure)
                                ) +
                     tm_layout(frame=F,

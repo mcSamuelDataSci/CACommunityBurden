@@ -28,7 +28,7 @@ myCex <- 1.6
 myCol <- "blue"  
 
 minYear <- 2000
-maxYear <- 2018
+maxYear <- 2020
 
 
 viewType <- "Present"
