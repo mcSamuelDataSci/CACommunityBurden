@@ -5,6 +5,7 @@ if(1==2){
   mySex   = "Total"
   myLogTrans=FALSE
   myMultiRace = FALSE
+  myCompare = "highest rate"
   }
 
 
@@ -33,8 +34,9 @@ fillColor <- c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Diffe
 
 myMeasureRace <- "aRate"
 
-dat.1 <- filter(raceTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex == "Total") %>%
-           mutate(raceName = raceNameFull[match(raceCode,raceCodeFull)] )
+dat.1 <- filter(raceTest,county == myLHJ,CAUSE == myCause, yearG3==myYearG3, sex == "Total")
+dat.1 <- left_join(dat.1,raceLink,by="raceCode")
+
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
@@ -43,6 +45,9 @@ tMax <- max(dat.1$aRate)
 placeLabels  <- tMax/5 
 placeLabels2 <- tMax/8 
 placeLabels3 <- tMax/20
+
+
+
 
 racePlot <- ggplot(data=dat.1, aes(x=raceName, y=aRate,fill=pMark)) +
    geom_bar(stat="identity") +

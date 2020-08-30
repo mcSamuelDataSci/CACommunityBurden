@@ -83,8 +83,8 @@ ageMap  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard a
 aL      <-      ageMap$lAge   # lower age ranges
 aU      <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" to make all functions work properly
 
-aMark                     <- findInterval(acs.pop.tracts$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-aLabs                     <- paste(aL,"-",aU[-1])                           # make label for ranges
+aMark                    <- findInterval(acs.pop.tracts$agell,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+aLabs                    <- ageMap$ageLabel
 acs.pop.tracts$ageGroup  <- aLabs[aMark] 
 
 cbd.link <- read_csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv")) 

@@ -22,7 +22,10 @@
 whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 myPlace           <- getwd()
 STATE             <- "CALIFORNIA"
-yearGrp           <- "2014-2018"
+yearGrp           <- "2015-2019"
+nCut      <- 20
+myYearG3  <- "2017-2019"  
+
 
 myCex <- 1.6
 myCol <- "blue"  
@@ -232,6 +235,10 @@ source(paste0(myPlace,"/myData/appText/AppText.txt"))
 source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
 # --- Shiny Stuff and Constants -----------------------------------------------
+
+raceLink    <-  read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx"))  %>% select(raceCode,raceName)
+
+
 
 chartYearMap    <-  read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx"))  
 

@@ -103,11 +103,11 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     myVARIABLE <- "raceCode"
     
-     dat.1 <- filter(datCounty_RE,county == myLHJ,CAUSE == myCause, sex=="Total") %>%
-               mutate(raceName = raceNameFull[match(raceCode,raceCodeFull)] )     %>%
+     dat.1 <- filter(datCounty_RE,county == myLHJ,CAUSE == myCause, sex=="Total")  %>%
                left_join(  select(fullCauseList,CAUSE=LABEL,shortName),by="CAUSE")
+     dat.1 <- left_join(dat.1,raceLink,by="raceCode")
     
-    if (!myMultiRace) dat.1 <- filter(dat.1,raceCode != "Multi-NH")
+    if (!myMultiRace) dat.1 <- filter(dat.1,raceName != "Multi-Race")
     
     if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
     
@@ -116,6 +116,10 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     myLabels   <- yRange
     myBreaks   <- yMid
     dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
+    
+    
+    
+    
     
     myLineLabel <- "raceName"
     
