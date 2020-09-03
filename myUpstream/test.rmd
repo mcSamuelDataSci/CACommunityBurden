@@ -1,0 +1,22 @@
+---
+title: "Test make data"
+output: html_document
+---
+
+
+```{r}
+
+secure.location  <- "/mnt/projects/CCB/0.Secure.Data/"
+
+test  <- read.csv(paste0(secure.location,"rawOSHPD/ED/test.csv") )
+saveRDS(test, file=paste0(secure.location, "myData/TeSt.rds"))
+
+
+```
+
+
+
+
+
+
+

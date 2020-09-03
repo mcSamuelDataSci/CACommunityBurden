@@ -17,6 +17,7 @@
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <- "G:/CCB/0.Secure.Data/"
 #secure.location  <- "G:/0.Secure.Data/"
+secure.location  <- "/mnt/projects/CCB/0.Secure.Data/"
 
 myDrive <- getwd()  #Root location of CBD project
 myPlace <- paste0(myDrive,"/myCBD") 

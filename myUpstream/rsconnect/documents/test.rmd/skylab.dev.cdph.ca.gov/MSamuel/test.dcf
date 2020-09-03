@@ -1,0 +1,12 @@
+name: test
+title: test
+username: MSamuel
+account: MSamuel
+server: skylab.dev.cdph.ca.gov
+hostUrl: https://skylab.dev.cdph.ca.gov/__api__
+appId: 118
+bundleId: 897
+url: https://skylab.dev.cdph.ca.gov/content/118/
+when: 1599155450.17551
+asMultiple: FALSE
+asStatic: FALSE

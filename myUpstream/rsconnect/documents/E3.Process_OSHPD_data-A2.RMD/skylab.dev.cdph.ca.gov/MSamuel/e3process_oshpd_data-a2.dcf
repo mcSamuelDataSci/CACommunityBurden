@@ -1,0 +1,12 @@
+name: e3process_oshpd_data-a2
+title: E3.Process_OSHPD_data-A2
+username: MSamuel
+account: MSamuel
+server: skylab.dev.cdph.ca.gov
+hostUrl: https://skylab.dev.cdph.ca.gov/__api__
+appId: 117
+bundleId: 896
+url: https://skylab.dev.cdph.ca.gov/content/117/
+when: 1599155211.96391
+asMultiple: FALSE
+asStatic: FALSE
