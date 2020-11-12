@@ -21,6 +21,12 @@
 #=============================================================================
 
 
+# Exclude year
+
+excludeYear <- "2020"
+excludeYear3 <- NA # 2020 is labeled as NA
+excludeYear5 <- NA # 2020 is labeled as NA
+
 # == Designate locations and load packages  =======================================================
 
 whichDat <- "real"
@@ -1100,6 +1106,8 @@ datTract  <- filter(datTract,population>0)
 
 # == SAVE DATA SETS FOR APPLICATION ===============================================================
 # =================================================================================================
+
+
 
 saveRDS(datCounty,       file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 saveRDS(datCounty_3year, file= path(myPlace,"/myData/",whichDat,"datCounty_3year.RDS"))

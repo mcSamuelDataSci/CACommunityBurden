@@ -1,0 +1,110 @@
+---
+title: "Homicide and Suicide Data for LGHC"
+author: "Michael Samuel"
+always_allow_html: yes
+output:
+  html_document: default
+  word_document: default
+---
+  
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE)
+```
+
+
+```{r}
+
+#-- Load Packages ------------------------------------------------------------
+ library(ggplot2)
+ library(dplyr)
+ library(tidyr)
+ library(readxl)
+ library(readr) 
+ library(fs)
+ library(markdown)
+
+#-- Key Constants -----------------------------------------------------------
+
+ myPlace   <- getwd()
+ myDat     <- "/myCBD/myData/real"
+ myOut     <- "/myAnalyses/LGHC Data Sets - Generate"
+ 
+ 
+ 
+ datCounty       <- readRDS(path(myPlace,myDat,"datCounty.RDS"))       %>%  filter(year != 2020)
+ datCounty_RE    <- readRDS(path(myPlace,myDat,"datCounty_RE.RDS"))    %>% rename(year = yearG3)  %>%  filter(year != "2000-2001")
+ datCounty_3year <- readRDS(path(myPlace,myDat,"datCounty_3year.RDS")) %>% rename(year = yearG3)  %>%  filter(year != "2000-2001", ! is.na(year))
+ raceLink        <-  read_excel(paste0(myPlace,"/myCBD/myInfo/raceLink.xlsx"))  %>% select(raceCode,raceName)
+
+```
+
+```{r}
+
+lghc0 <- filter(datCounty, CAUSE %in% c("E07","E08")) %>%
+           mutate(`Strata`="Sex",Year=as.character(year)) %>% 
+           select(CAUSE, Geography=county, Year , `Strata`,
+                  `Strata Name`= sex, Numerator=Ndeaths, Denominator=population, Rate=cDeathRate, aRate, aSE) 
+
+lghc1 <- filter(datCounty_RE,CAUSE %in% c("E07","E08"), sex=="Total")  %>%
+           mutate(`Strata`="Race/Ethnicity") %>%
+           left_join(raceLink,by="raceCode") %>%
+           select(CAUSE,Geography=county, Year = year,`Strata`,
+                  `Strata Name` = raceName, Numerator=Ndeaths, Denominator=population, Rate=cDeathRate, aRate, aSE) 
+
+lghc2 <- filter(datCounty_3year,   CAUSE %in% c("E07","E08")) %>%
+           mutate(`Strata`="Sex", Year = year) %>%
+           select(CAUSE,Geography=county,Year,`Strata`,
+                  `Strata Name`=sex, Numerator=Ndeaths, Denominator=population, Rate=cDeathRate, aRate, aSE) 
+
+lghc3 <- bind_rows(lghc0,lghc1,lghc2) %>%
+           mutate(`Strata Name` = ifelse(Strata=="Total","Total",`Strata Name`))   
+
+
+lghcSuicide <- filter(lghc3,CAUSE=="E07") %>%
+                mutate(Indicator="Suicide") %>%
+                select(Indicator,Geography,Year,Strata,`Strata Name`,Numerator,Denominator,Rate,`Age Adjusted Rate`=aRate, `SE Adjusted Rate`=aSE)
+write_csv(lghcSuicide,path(myPlace, myOut, "lghcSuicide.csv"))
+
+
+lghcHomicide <- filter(lghc3,CAUSE=="E08") %>%
+                mutate(Indicator="Homicide") %>%
+                select(Indicator,Geography,Year,Strata,`Strata Name`,Numerator,Denominator,Rate, `Age Adjusted Rate`=aRate, `SE Adjusted Rate`=aSE)
+
+write_csv(lghcHomicide,path(myPlace, myOut, "lghcHomicide.csv"))
+
+
+```
+
+
+```{r}
+ temp <- lghc0 %>% filter(Geography=="CALIFORNIA",Strata=="Sex") %>%
+                  mutate(Year = as.numeric(Year),
+                         Cause = ifelse(CAUSE=="E07","Suicide","Homicide"))
+```
+
+
+```{r}
+library(ggplot2)
+ggplot(temp,aes(x = Year,y = aRate, group=Cause)) +
+geom_line(aes(color=Cause), size = 1.5) + 
+facet_grid(`Strata Name` ~ .) +
+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5))  +
+  # expand_limits( y = 0) +
+  # scale_x_continuous(breaks=1990:2017) +
+   ggtitle("California Suicide and Homicide Rates by Year and Sex\n (Equal y-axis scale by sex all starting at 0)") 
+```
+
+
+```{r}
+library(ggplot2)
+ggplot(temp,aes(x = Year,y = aRate, group=Cause)) +
+geom_line(aes(color=Cause), size = 1.5) + 
+theme(axis.text.x = element_text(angle = 90, vjust = 0.5))  +
+  scale_x_continuous(breaks=1990:2017) +   
+  facet_grid(`Strata Name` ~ .,scales = "free") +
+  ggtitle("California Suicide and Homicide Rates by Year and Sex\n ('Free' y-axis scale)") 
+
+
+```
+
