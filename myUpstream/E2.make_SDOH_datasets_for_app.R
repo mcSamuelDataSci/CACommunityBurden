@@ -253,8 +253,7 @@ sdohTract  <- full_join(sdoh_ACS_Tract,  sdoh_HCI_Tract,  by="GEOID")
 sdohComm   <- full_join(sdoh_ACS_Comm,   sdoh_HCI_Comm,   by="comID")
 sdohCounty <- full_join(sdoh_ACS_County, sdoh_HCI_County, by="county")
 
-
-save(sdohTract,  file= path(myPlace,"/myData/","sdohTract.R"))
-save(sdohComm,   file= path(myPlace,"/myData/","sdohComm.R"))
-save(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.R"))
+saveRDS(sdohTract,  file= path(myPlace,"/myData/","sdohTract.RDS"))
+saveRDS(sdohComm,   file= path(myPlace,"/myData/","sdohComm.RDS"))
+saveRDS(sdohCounty, file= path(myPlace,"/myData/","sdohCounty.RDS"))
 

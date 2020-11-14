@@ -61,7 +61,7 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
 
- ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_063020.csv"), colClasses = "character")  
+ ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_093020.csv"), colClasses = "character")  
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"),          colClasses = "character")       
  ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_UPDATE_2018.csv"),   colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
@@ -82,6 +82,8 @@ if (state.installation) {
  
 death.datA  <- bind_rows(ca20, ca19, ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
+
+#death.datA  <- bind_rows(ca20, ca19)
 # %>%
 # mutate(LRD=)
 

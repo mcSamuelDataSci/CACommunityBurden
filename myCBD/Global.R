@@ -31,7 +31,7 @@ myCex <- 1.6
 myCol <- "blue"  
 
 minYear <- 2000
-maxYear <- 2020
+maxYear <- 2019
 
 
 viewType <- "Present"
@@ -173,9 +173,10 @@ source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
 # age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
 
 
-load(path(myPlace,"/myData/","sdohTract.R"))
-load(path(myPlace,"/myData/","sdohComm.R"))
-load(path(myPlace,"/myData/","sdohCounty.R"))
+sdohTract        <- readRDS(path(myPlace,"/myData/","sdohTract.RDS"))
+sdohComm        <- readRDS(path(myPlace,"/myData/","sdohComm.RDS"))
+sdohCounty        <- readRDS(path(myPlace,"/myData/","sdohCounty.RDS"))
+
 
 if (subSite){
   mTitle <- subsiteName  

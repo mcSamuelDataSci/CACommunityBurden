@@ -23,7 +23,7 @@
 
 # Exclude year
 
-excludeYear <- "2020"
+excludeYear <- 2020
 excludeYear3 <- NA # 2020 is labeled as NA
 excludeYear5 <- NA # 2020 is labeled as NA
 
@@ -35,7 +35,8 @@ subSite  <- FALSE
 # EDIT SECURE DATA LOCATION AS NEEDED
 securePath     <- "h:/0.Secure.Data/"
 securePath     <- "g:/CCB/0.Secure.Data/"
-securePath     <- "g:/0.Secure.Data/"
+# securePath     <- "g:/0.Secure.Data/"
+# securePath     <- "/mnt/projects/CCB/0.Secure.Data/"
 
 
 secureDataFile <- paste0(securePath,"myData/ccb_processed_deaths.RDS") 
@@ -134,7 +135,7 @@ popCommSex       <- popTractSex     %>% group_by(yearG5,county,comID,sex)      %
 popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG5,county,comID,sex,ageGroup) %>% summarise(population=sum(population))  %>% ungroup() 
 
 popStandard         <- ageMap    %>% mutate(ageGroup = ageLabel)
-popStandard_EDU     <- ageMap_EDU  %>% mutate(ageGroup = paste(lAge,"-",uAge))
+popStandard_EDU     <- ageMap_EDU  %>% mutate(ageG_EDU = ageLabel)
 
 
 
@@ -773,9 +774,11 @@ datAA1 <- bind_rows(tA1,tA2,tA3,tA5,tA6,tA7)  %>% ungroup()  # UNGROUP HERE!!!!
 
 
 
-
+# JASPO - REVISE D4 script that generates popCountySexAgeG_EDU file
+# rename po
 ageCounty.EDU   <- full_join(datAA1 ,popCountySexAgeG_EDU, by = c("county","year","sex","ageG_EDU","eduCode")) %>%
   full_join(popStandard_EDU[,c("ageG_EDU","US2000POP")], by="ageG_EDU")   %>%
+  rename(population = pop) %>%
   filter(population > 0) # this needs to be done more carefully, but removed counties with data not available from ACS
 
 
@@ -1109,16 +1112,16 @@ datTract  <- filter(datTract,population>0)
 
 
 
-saveRDS(datCounty,       file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
-saveRDS(datCounty_3year, file= path(myPlace,"/myData/",whichDat,"datCounty_3year.RDS"))
-saveRDS(datCounty_AGE_3year, file= path(myPlace,"/myData/",whichDat,"datCounty_AGE_3year.RDS"))
+saveRDS(filter(datCounty, year < excludeYear),       file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
+saveRDS(filter(datCounty_3year, !is.na(yearG3)),  file= path(myPlace,"/myData/",whichDat,"datCounty_3year.RDS"))
+saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(myPlace,"/myData/",whichDat,"datCounty_AGE_3year.RDS"))
 
 
-saveRDS(datCounty_5year, file= path(myPlace,"/myData/",whichDat,"datCounty_5year.RDS"))
-saveRDS(datCounty_RE,    file= path(myPlace,"/myData/",whichDat,"datCounty_RE.RDS"))
-saveRDS(datCounty_EDU,   file= path(myPlace,"/myData/",whichDat,"datCounty_EDU.RDS"))
-saveRDS(datComm,         file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
-saveRDS(datTract,        file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
+saveRDS(filter(datCounty_5year, !is.na(yearG5)), file= path(myPlace,"/myData/",whichDat,"datCounty_5year.RDS"))
+saveRDS(filter(datCounty_RE, !is.na(yearG3)),    file= path(myPlace,"/myData/",whichDat,"datCounty_RE.RDS"))
+saveRDS(filter(datCounty_EDU, year < excludeYear),   file= path(myPlace,"/myData/",whichDat,"datCounty_EDU.RDS"))
+saveRDS(filter(datComm, !is.na(yearG5)),         file= path(myPlace,"/myData/",whichDat,"datComm.RDS"))
+saveRDS(filter(datTract, !is.na(yearG5)),        file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 
 
 
@@ -1139,12 +1142,12 @@ de  <- left_join(datCounty_EDU,  causeNameLink,by="CAUSE")
 dCm <- left_join(datComm,        causeNameLink,by="CAUSE")
 dT  <- left_join(datTract,       causeNameLink,by="CAUSE")
 
-write_csv(dC,  (paste0(myPlace,"/myData/",whichDat,"/analysisDataSets/County.csv")))
-write_csv(d3,  (paste0(myPlace,"/myData/",whichDat,"/analysisDataSets/County_3year.csv")))
-write_csv(dr,  (paste0(myPlace,"/myData/",whichDat,"/analysisDataSets/County_RE.csv")))
-write_csv(de,  (paste0(myPlace,"/myData/",whichDat,"/analysisDataSets/datCounty_EDU.csv")))
-write_csv(dCm, (paste0(myPlace,"/myData/",whichDat,"/analysisDataSets/Community.csv")))
-write_csv(dT,  (paste0(myPlace,"/myData/",whichDat,"/analysisDataSets/Tract.csv")))
+write_csv(dC,  (paste0(myPlace,"/myData/",whichDat,"/analysisDatasets/County.csv")))
+write_csv(d3,  (paste0(myPlace,"/myData/",whichDat,"/analysisDatasets/County_3year.csv")))
+write_csv(dr,  (paste0(myPlace,"/myData/",whichDat,"/analysisDatasets/County_RE.csv")))
+write_csv(de,  (paste0(myPlace,"/myData/",whichDat,"/analysisDatasets/datCounty_EDU.csv")))
+write_csv(dCm, (paste0(myPlace,"/myData/",whichDat,"/analysisDatasets/Community.csv")))
+write_csv(dT,  (paste0(myPlace,"/myData/",whichDat,"/analysisDatasets/Tract.csv")))
 
 
 
