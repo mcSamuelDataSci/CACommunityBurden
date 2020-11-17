@@ -5,7 +5,7 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
 
   
   if (1==2){
-    myLHJ     = "Aamador";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
+    myLHJ     = "Amador";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
     mySex     = "Total";myStateCut  = TRUE; myGeo     = "County";
     myLabName = FALSE;  myCutSystem ="fisher" 
   }
@@ -133,8 +133,8 @@ mapX <-  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal,
  # Interative Map to Display -------------------------------
  tmap_mode("view")
  tt.map <-  mapX + 
-             tm_view(control.position = c("left","bottom"),
-                     basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
+             tm_view(control.position = c("left","bottom"))#,
+                     #basemaps = c("OpenStreetMap","Esri.WorldGrayCanvas","Esri.WorldTopoMap","Stamen.Watercolor"))
  tplot <- tmap_leaflet(tt.map)
  
  # Static Map to Download ----------------------------------
