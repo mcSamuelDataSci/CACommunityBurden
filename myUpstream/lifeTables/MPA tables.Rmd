@@ -1,0 +1,106 @@
+---
+title: "exploring life expectancy data for MPA"
+output: html_document
+---
+
+
+
+<style type="text/css">
+
+
+body{ /* Normal  */
+      font-size: 16px;
+  }
+
+
+h1.title {
+  font-size: 16px;
+  color: DarkRed;
+}
+
+h1 { /* Header 1 */
+  font-size: 34px;
+  color: DarkRed;
+}
+
+h2 { /* Header 2 */
+    font-size: 18px;
+  color: DarkRed;
+}
+
+</style>
+
+
+
+
+```{r setup, include=FALSE, messages=FALSE}
+knitr::opts_chunk$set(echo = FALSE, messages=FALSE, warnings=FALSE)
+library(dplyr)
+library(summarytools)
+library(readxl)
+library(ggplot2)
+library(janitor)
+library(knitr)
+
+myPlace <- getwd()
+
+```
+
+
+
+```{r}
+lifeExp    <- readRDS(paste0("C:/0files/0.CCB/myUpstream/lifeTables/dataOut/LTciCounty.rds"))  %>%
+                filter(year==2016,x %in% c(0,50)) %>%
+                filter(GEOID == "06001000000",nyrs==5, race7 != "TOTAL")
+
+# freq(lifeExp$race7)
+
+
+# raceLink   <- as.data.frame(read_excel(paste0(myPlace,"/myCBD/myInfo/raceLink.xlsx"))) 
+
+# cbdDat0    <- rename(cbdDat0,CHSI=raceCode)
+# cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
+# cbdDat0    <- select(cbdDat0,-CHSI)
+
+```
+
+
+* sharing this chart just to show the data we have; data table of same data readily available too of course
+* this chart is for California overall; same data is available for most counties
+* these data are based on five-year aggregations of data, 2014-2018; we may be able to update to 2015-2019 soon
+
+* the charts on the left with the "0" label are life expectancy at birth
+* the charts on the right are life expectancy for persons who make it to age 50
+* I suggest we focus on just life expectancy at birth
+
+
+```{r}
+
+lifeExp <- mutate(lifeExp,ex=ifelse(x==50,ex+50,ex))
+
+
+ggplot(data=lifeExp, aes(x=race7,y=ex)) + geom_bar(stat="identity") +
+  facet_grid(rows=vars(sex),cols=vars(x)) +  geom_text(aes(label = round(ex,1)),nudge_y=-10,col="yellow") 
+
+
+
+  
+
+```
+
+
+<br><br>
+
+```{r}
+tDat <- lifeExp %>% filter(x==0)  %>%
+         group_by(sex) %>%
+         mutate(maxLife     = max(ex),
+                yearsLess    = maxLife - ex,
+                percentLess = 100*yearsLess/maxLife) %>%
+         select(sex,race7,ex,yearsLess,percentLess) %>%
+         adorn_rounding(digits = 1)
+
+kable(tDat)
+
+```
+
