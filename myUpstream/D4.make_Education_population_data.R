@@ -52,7 +52,7 @@ a.ed1_2015 <- getEd(2015,"acs1")
 a.ed1_2016 <- getEd(2016,"acs1")
 a.ed1_2017 <- getEd(2017,"acs1")
 a.ed1_2018 <- getEd(2018,"acs1")   
-a.ed1_2019 <- getEd(2018,"acs1")   ## Using 2018 data for 2019 data for now !!!!!!!!!!!!!!!!!
+a.ed1_2019 <- getEd(2019,"acs1")   ## Using 2018 data for 2019 data for now !!!!!!!!!!!!!!!!!
 
 
 #a.ed5_2005.09 <- getEd(2009,"acs5")   # generates ERROR
