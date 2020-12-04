@@ -3,15 +3,11 @@ title: "exploring life expectancy data for MPA"
 output: html_document
 ---
 
-
-
 <style type="text/css">
-
 
 body{ /* Normal  */
       font-size: 16px;
   }
-
 
 h1.title {
   font-size: 16px;
@@ -31,8 +27,6 @@ h2 { /* Header 2 */
 </style>
 
 
-
-
 ```{r setup, include=FALSE, messages=FALSE}
 knitr::opts_chunk$set(echo = FALSE, messages=FALSE, warnings=FALSE)
 library(dplyr)
@@ -41,29 +35,36 @@ library(readxl)
 library(ggplot2)
 library(janitor)
 library(knitr)
+library(stringr)
 
 myPlace <- getwd()
 
 ```
 
 
-
 ```{r}
-lifeExp    <- readRDS(paste0("C:/0files/0.CCB/myUpstream/lifeTables/dataOut/LTciCounty.rds"))  %>%
-                filter(year==2016,x %in% c(0,50)) %>%
-                filter(GEOID == "06001000000",nyrs==5, race7 != "TOTAL")
 
-# freq(lifeExp$race7)
+raceLink   <- as.data.frame(read_excel("/mnt/projects/CCB/CCB Project/0.CCB/myCBD/myInfo/raceLink.xlsx")) 
+                                                                                                   
 
+lifeExpMPA    <- readRDS(paste0("/mnt/projects/CCB/CCB Project/0.CCB/myUpstream/lifeTables/dataOut/LTciCounty.rds")) %>%
+                  left_join(raceLink,by=c("race7" = "Ethan")) %>%
+                  filter(x %in% c(0,50)) %>%
+                  filter(year > 2012, nyrs==5) %>%
+                  mutate(GEOID = str_sub(GEOID,1,5)) %>%
+                  select(year, GEOID, sex, raceName, lAge = x, population = Nx, deaths = Dx, life_expectancy = ex, LE_lci = exlow, LE_uci = exhigh)
+ 
+ 
+write.csv(lifeExpMPA, "/mnt/projects/CCB/CCB Project/0.CCB/myUpstream/lifeTables/dataOut/lifeExpMPA.csv")
 
-# raceLink   <- as.data.frame(read_excel(paste0(myPlace,"/myCBD/myInfo/raceLink.xlsx"))) 
+#write.csv(lifeExpMPA, "G:/CCB/CCB Project/0.CCB/myUpstream/lifeTables/dataOut/lifeExpMPA.csv")
 
-# cbdDat0    <- rename(cbdDat0,CHSI=raceCode)
-# cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
-# cbdDat0    <- select(cbdDat0,-CHSI)
 
 ```
 
+
+* discuss all cause mortality
+* discuss premature mortality
 
 * sharing this chart just to show the data we have; data table of same data readily available too of course
 * this chart is for California overall; same data is available for most counties
@@ -81,10 +82,6 @@ lifeExp <- mutate(lifeExp,ex=ifelse(x==50,ex+50,ex))
 
 ggplot(data=lifeExp, aes(x=race7,y=ex)) + geom_bar(stat="identity") +
   facet_grid(rows=vars(sex),cols=vars(x)) +  geom_text(aes(label = round(ex,1)),nudge_y=-10,col="yellow") 
-
-
-
-  
 
 ```
 

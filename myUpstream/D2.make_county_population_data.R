@@ -9,6 +9,9 @@
 #                                                                                                    |   
 # ====================================================================================================
 
+# Add comment about why using DCDC over DOF - 2000 vs 2010
+
+
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------
 
 myDrive    <- getwd()
@@ -93,6 +96,7 @@ library(readr)
 # tDat        <- filter(tDat, YEAR >=2000 & YEAR <= 2020)
 # saveRDS(tDat, file= paste0(upPlace,"/upData/tDat_2000_2020.rds"))
 
+raceLink <- readxl::read_xlsx(paste0(myPath, "Standards/raceLink.xlsx")) 
 
 
 tDat0 <- readRDS(file= paste0(myPath, "Population Data/DCDC/tDat_2000_2020.rds")) %>%
@@ -101,17 +105,20 @@ tDat0 <- readRDS(file= paste0(myPath, "Population Data/DCDC/tDat_2000_2020.rds")
             mutate(sex = c("Male","Female")[match(sex,c("M","F"))]) %>%
             filter(year %in% 2000:2020)
 
+tDat0_check <- tDat0 %>%
+  left_join(select(raceLink, ccbRace, DCDC), by = c("raceE" = "DCDC")) %>%
+  select(-raceE)
 
 # IN DEATH DATA
 # vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
-  vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH",           "Multi-NH",         "Hisp")
-  vLab  <- c("f",       "b",       "a",      "c",       "e",                 "g",                "d")
-  vLab  <- c(  1,         2,        3,        4,         5,                   6,                  7)
-  
-# NO OTHER
-# NO UNKNOWN
-rCode    <- c("W","B","I","A","P","M","H")
-tDat0    <-  tDat0 %>%  mutate( race7   = vLab[match(raceE,rCode)])
+#   vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH",           "Multi-NH",         "Hisp")
+#   vLab  <- c("f",       "b",       "a",      "c",       "e",                 "g",                "d")
+#   vLab  <- c(  1,         2,        3,        4,         5,                   6,                  7)
+#   
+# # NO OTHER
+# # NO UNKNOWN
+# rCode    <- c("W","B","I","A","P","M","H")
+# tDat0    <-  tDat0 %>%  mutate( race7   = vLab[match(raceE,rCode)])
 
 countyLink <- readxl::read_xlsx(paste0(myPath, "Standards/countyLink.xlsx")) %>%
   select(countyName, FIPSCounty) %>%

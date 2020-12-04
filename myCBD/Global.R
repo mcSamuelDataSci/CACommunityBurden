@@ -73,6 +73,21 @@ myLineSize  <- 2
 myPointSize <- 5 # line markers
 myPointShape <- 18
 
+
+# -- Work towards this standard code for race and sex coloring
+
+# raceNames         <- linkRace$raceName
+# raceColors        <- brewer.pal(length(raceNames), "Paired")
+# names(raceColors) <- raceNames
+# 
+# genderNames         <- c("Female","Male")
+# genderColors          <- c("gray","lightblue")
+# names(genderColors) <- genderNames
+
+# scale_fill_manual(values = raceColors) +  <------------- Example of using raceColors in ggplot
+
+
+
 #-- Load Packages ------------------------------------------------------------
 
 library(shiny)  

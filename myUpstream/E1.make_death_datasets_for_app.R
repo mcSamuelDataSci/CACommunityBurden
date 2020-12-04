@@ -36,7 +36,7 @@ subSite  <- FALSE
 securePath     <- "h:/0.Secure.Data/"
 securePath     <- "g:/CCB/0.Secure.Data/"
 # securePath     <- "g:/0.Secure.Data/"
-# securePath     <- "/mnt/projects/CCB/0.Secure.Data/"
+securePath     <- "/mnt/projects/CCB/0.Secure.Data/"
 
 
 secureDataFile <- paste0(securePath,"myData/ccb_processed_deaths.RDS") 
@@ -85,6 +85,7 @@ mssaLink   <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),
 comName    <- unique(mssaLink[,c("comID","comName")])                                    # dataframe linking comID and comName
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 ageMap_EDU  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "dataEducation"))
+raceLink   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx")))  %>% select(raceCode,CHSI)
 
 
 #== LOAD AND PROCESS POPULATION DATA ==============================================================
@@ -174,10 +175,15 @@ cbdDat0       <- mutate(cbdDat0,
                          yll     = ifelse(age > 75, 0, 75-age),
                          yearG5  = yearMap[match(year,yearMap[,"year"]),"yearGroup5"], 
                          yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"],
+                         quarter JASPO
                          education = ifelse(education == 8,7,education)  # one "Graduate or professional degree" category for now
                         ) %>%
                 rename(eduCode = education) 
 
+
+cbdDat0    <- rename(cbdDat0,CHSI=raceCode) # remove this step soon by chaning in B2 to use "CHSI" as name rather than raceCode
+cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
+cbdDat0    <- select(cbdDat0,-CHSI)
 
 cbdDat0Sex   <- mutate(cbdDat0, sex = "Total")
 cbdDat0       <- bind_rows(cbdDat0, cbdDat0Sex)
@@ -203,13 +209,6 @@ cbdDat0       <- bind_rows(cbdDat0, cbdDat0Sex)
 # White-NH   6551598     65.66         100.00     65.66         100.00
 # <NA>         0                               0.00         100.00
 # Total   9978820    100.00         100.00    100.00         100.00
-
-
-
-raceLink   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx")))  %>% select(raceCode,CHSI)
-cbdDat0    <- rename(cbdDat0,CHSI=raceCode)
-cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
-cbdDat0    <- select(cbdDat0,-CHSI)
 
 
 
@@ -388,6 +387,38 @@ datCounty <-  merge(datCounty,popCountySex,by = c("year","county","sex"))
 # CALCULATE RATES
 datCounty <- calculateRates(datCounty,1)
 
+
+
+# -- COUNTY BY QUARTER BY JASPO------------------------------------------------
+# -----------------------------------------------------------------------------
+
+c.t1      <- calculateYLLmeasures(c("county","year","quarter","sex","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2")
+c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3")
+datCounty_Q <- bind_rows(c.t1,c.t2,c.t3,c.t4)
+
+s.t1      <- calculateYLLmeasures(c(         "year","sex","lev0"),"lev0")
+s.t2      <- calculateYLLmeasures(c(         "year","sex","lev1"),"lev1")
+s.t3      <- calculateYLLmeasures(c(         "year","sex","lev2"),"lev2")
+s.t4      <- calculateYLLmeasures(c(         "year","sex","lev3"),"lev3")
+datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
+datState$county = STATE
+
+datCounty <- bind_rows(datCounty,datState)
+
+
+
+# MERGE Death and Population files
+datCounty <-  merge(datCounty,popCountySex,by = c("year","county","sex"))  change to full_join()  %>%
+                mutate population = population / 4
+
+# CALCULATE RATES
+datCounty <- calculateRates(datCounty,1)
+
+
+
+
 # -- COUNTY 3-YEAR -------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
@@ -434,6 +465,10 @@ datCounty_AGE_3year <- calculateRates(datCounty_AGE_3year,1)
 
 # NcOTE: "1" used above for number of years, because both numerators (deaths) and denominators 
 # (population data) are already BOTH aggregated over THREE year 
+
+
+# -- COUNTY 3-YEAR *OLDER AGE SPECIFIC* -------JASPO---------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # -- COUNTY 5-YEAR -------------------------------------------------------------
@@ -883,8 +918,8 @@ datState  <- datCounty  %>%
                stateAdjustedRate = aRate) %>%
                select(year,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") save(datState, file = path(myPlace,"/myData/datState.RDS"))
-if ( subSite)                      load(          file = path(myPlace,"/myData/datState.RDS"))
+if (!subSite & whichDat == "real") write_rds(datState, file = path(myPlace,"/myData/datState.RDS"))
+if ( subSite)                      datState <- read_rds(file = path(myPlace,"/myData/datState.RDS"))
 
 datCounty  <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
                 mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -912,8 +947,8 @@ datState_3year  <- datCounty_3year  %>%
                           stateAdjustedRate = aRate) %>%
                    select(yearG3,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") save(datState_3year, file = path(myPlace,"/myData/datState_3yr.RDS"))
-if ( subSite)                      load(                file = path(myPlace,"/myData/datState_3yr.RDS"))
+if (!subSite & whichDat == "real") write_rds(datState_3year, file = path(myPlace,"/myData/datState_3yr.RDS"))
+if ( subSite)                      datState_3yr <- read_rds( file = path(myPlace,"/myData/datState_3yr.RDS"))
 
 datCounty_3year  <- merge(datCounty_3year,datState_3year,by = c("yearG3","sex","Level","CAUSE")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -953,8 +988,8 @@ datState_5year  <- datCounty_5year  %>%
          stateAdjustedRate = aRate) %>%
   select(yearG5,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") save(datState_5year, file = path(myPlace,"/myData/datState_5yr.RDS"))
-if ( subSite)                      load(                file = path(myPlace,"/myData/datState_5yr.RDS"))
+if (!subSite & whichDat == "real") write_rds(datState_5year, file = path(myPlace,"/myData/datState_5yr.RDS"))
+if ( subSite)                      datState_5yr <- read_rds( file = path(myPlace,"/myData/datState_5yr.RDS"))
 
 datCounty_5year  <- merge(datCounty_5year,datState_5year,by = c("yearG5","sex","Level","CAUSE")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -1114,6 +1149,9 @@ datTract  <- filter(datTract,population>0)
 
 saveRDS(filter(datCounty, year < excludeYear),       file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
 saveRDS(filter(datCounty_3year, !is.na(yearG3)),  file= path(myPlace,"/myData/",whichDat,"datCounty_3year.RDS"))
+
+
+#JASPO datCounty_AGE_OLDER_3year
 saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(myPlace,"/myData/",whichDat,"datCounty_AGE_3year.RDS"))
 
 

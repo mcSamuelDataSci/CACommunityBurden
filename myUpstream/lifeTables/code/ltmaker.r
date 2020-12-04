@@ -7,10 +7,10 @@
 # - ACS 5-yr datasets populations are weighted by age/sex to sum to CB PEP estimates from middle year.
 # - ACS tract population tables: from B01001 = age/sex by tract; subtables by race/ethnicity.
 # - combine years to get higher exposures for better tables: 
-#		geo		years (total)	years (by race)	agegroups 			by-characteristics
-#		state	1				1				0,1-4,5(5)85,199	GEOID,sex,race
-#		county	3				5				0,1-4,5(5)85,199	GEOID,sex,race
-#		mssa	5				NA  			0(5)85,199			GEOID,sex
+#		geo		years (total)	years (by race)	      agegroups 			  by-characteristics
+#		state	    1		                    1				0,1-4,5(5)85,199	GEOID,sex,race
+#		county	  3		                    5				0,1-4,5(5)85,199	GEOID,sex,race
+#		mssa	    5		                   NA  			0(5)85,199			  GEOID,sex
 # - GEOID = unique geography level code, tract and higher: SSCCCTTTTTT where S=state fips, C=county fips, T=tract.
 # - race schema: WNH BNH APINH H. exclude MR, AIAN, and combine A+PI.
 #		before 2000, no MR data, so issues in denominators for those years.
@@ -45,35 +45,40 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, require, character.only=TRUE)           
 
 ## 1.2  options
-controlPop<-TRUE # whether to control ACS to DOF pop totals
-whichDeaths<-"real" # source of deaths data (real,fake,dof)
-whichPop<-"pep" # source of population data (dof,pep)
-critNx<-10000
-critDx<-700
+controlPop  <-  TRUE  # whether to control ACS to DOF pop totals
+whichDeaths <- "real" # source of deaths data (real,fake,dof)
+whichPop    <- "pep"  # source of population data (dof,pep)
+critNx      <- 10000
+critDx      <-   700
 
 ## 1.3 	paths 
 #setwd("C:/Users/fieshary/projects/CACommunityBurden")
-myDrive <- getwd()
-myPlace <- paste0(myDrive,"/myCBD") 
-upPlace <- paste0(myDrive,"/myUpstream") 
+myDrive   <- getwd()
+myPlace   <- paste0(myDrive,"/myCBD") 
+upPlace   <- paste0(myDrive,"/myUpstream") 
 dofSecure <- "d:/users/fieshary/projects/vry-lt/dx"
-mySecure <- "d:/0.Secure.Data/myData"
+mySecure  <- "d:/0.Secure.Data/myData"
+mySecure  <- "G:/CCB/0.Secure.Data/myData"
+mySecure  <- "/mnt/projects/CCB/0.Secure.Data/myData"  
 
 ## 1.4 	links
-#.ckey	    <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
+#.ckey	  <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
 .nxacs		<- ifelse(controlPop,
 					paste0(upPlace,"/lifeTables/dataIn/acs5_mssa_adj.dta"), # ACS tract pop, collapsed to MSSA and controlled to DOF county 
 					paste0(upPlace,"/lifeTables/dataIn/acs5_mssa.dta") # ACS tract pop collapsed to MSSA 
 				) 
-.trt00mssa	<- paste0(upPlace,"/lifeTables/dataIn/trt00mssa13.dta") # 2009 TIGER/LINE census tracts to 2013 MSSAs
-.trt10mssa	<- paste0(upPlace,"/lifeTables/dataIn/trt10mssa13.dta") # 2010 TIGER/LINE census tracts to 2013 MSSAs
-.mssacfips	<- paste0(upPlace,"/lifeTables/dataIn/mssa13cfips.dta") # 2013 MSSA to county
+
+.trt00mssa	 <- paste0(upPlace,"/lifeTables/dataIn/trt00mssa13.dta") # 2009 TIGER/LINE census tracts to 2013 MSSAs
+.trt10mssa	 <- paste0(upPlace,"/lifeTables/dataIn/trt10mssa13.dta") # 2010 TIGER/LINE census tracts to 2013 MSSAs
+.mssacfips	 <- paste0(upPlace,"/lifeTables/dataIn/mssa13cfips.dta") # 2013 MSSA to county
 .countycfips <- paste0(upPlace,"/lifeTables/dataIn/countycfips.dta") # county name to county FIPS in GEOID format
+
 if (whichDeaths=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") 
 if (whichDeaths=="real") .deaths		<- paste0(mySecure,"/cbdDat0FULL.R") 
 if (whichDeaths=="dof")  .deaths 		<- paste0(dofSecure,"/dof_deaths_mi.dta") 
-if (whichPop=="dof") .pop 				<- paste0(upPlace,"/lifeTables/dataIn/dof_ic10pc19.dta")  
-if (whichPop=="pep") .pop				<- paste0(upPlace,"/lifeTables/dataIn/pep_ic10pc18_special.dta") 
+
+if (whichPop=="dof")     .pop 			<- paste0(upPlace,"/lifeTables/dataIn/dof_ic10pc19.dta")  
+if (whichPop=="pep")     .pop				<- paste0(upPlace,"/lifeTables/dataIn/pep_ic10pc18_special.dta") 
 
 ## 2	GEOGRAPHY	----------------------------------------------------------------------
 
@@ -115,7 +120,7 @@ nxacs[,.id:=NULL]
 ## 4	DEATHS ---------------------------------------------------------------------------
 
 ## 4.1	load selected deaths master file
-if (whichDeaths=="dof") setDT(dofdeaths<-read.dta13(.deaths))
+if (whichDeaths=="dof")                   setDT(dofdeaths<-read.dta13(.deaths))
 if (whichDeaths=="fake") { load(.deaths); setDT(cbdDat0SAMP); cbddeaths<-cbdDat0SAMP }
 if (whichDeaths=="real") { load(.deaths); setDT(cbdDat0FULL); cbddeaths<-cbdDat0FULL }
 
@@ -222,13 +227,15 @@ doExtract <- function(dx=NULL, nx=NULL, nyrs=NA, y=NA, level=NA) {
 
 ## 5.2	call doExtract for various geographies
 ## GEO by:	sex/age		race
-## state	1 year 		1yr
-## county	3 yr		5yr
-## mssa		5 yr		-
+## state  	1 year 		1yr
+## county	  3 yr		  5yr
+## mssa		  5 yr	   	-
 
+#XXX INPUT DATES
 ## mssa
 if (whichDeaths %in% c("real","fake")) { 
 	range<-2009:2014 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
+	range<-2009:2016 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
 	mx.mssa<-data.table(do.call(rbind,lapply(range,doExtract,dx=dx.mssa,nx=nxacs,nyrs=2,level="mssa")))[,nyrs:=5]
 }
 ## county
@@ -239,12 +246,15 @@ mx.county<-rbind( # combine 3-year TOTAL race, 5-year race7
 ## state
 mx.state<-data.table(do.call(rbind,lapply(2000:2018,doExtract,dx=dx.state,nx=nx.state,nyrs=0,level="state")))[,nyrs:=1]
 
+#XXX testing
+mx.state$pDead = 100*mx.state$Dx / mx.state$Nx
+
 ## 6	LIFE TABLES ----------------------------------------------------------------------
 
 ## 6.1	generic function to produce a life table 
 ## 		x is a vector of age groups, nx is the corresponding vector of pop, dx of deaths
 ##		sex is M or MALE or F or FEMALE (used to calc ax); ax is an optional vector of ax values
-##		previously estimated ax values are avaliable from the UN WPP, USMDB, NCHS, including by race. 
+##		previously estimated ax values are available from the UN WPP, USMDB, NCHS, including by race. 
 ##		values used here are from USMDB CA 1x10 or 5x10 (2010-17) by sex.
 ##		also exports LTCI from Chiang's method with adjusted final age group
 ## - D. Eayres and E.S. Williams. 2004. "Evaluation of methodologies for small area life 
