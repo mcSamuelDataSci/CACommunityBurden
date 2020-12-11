@@ -103,20 +103,21 @@ tDat0 <- readRDS(file= paste0(myPath, "Population Data/DCDC/tDat_2000_2020.rds")
             filter(!(COUNTY %in% c("California", "Alameda HD", "Berkeley", "Pasadena", "Long Beach", "Los Angeles HD"))) %>%  # NOTE: California totals already included with county = "California
             rename(year=YEAR, county= COUNTY, sex = SEX, agerc = AGE, raceE = RE, perwt = POP) %>%
             mutate(sex = c("Male","Female")[match(sex,c("M","F"))]) %>%
-            filter(year %in% 2000:2020)
-
-tDat0_check <- tDat0 %>%
-  left_join(select(raceLink, ccbRace, DCDC), by = c("raceE" = "DCDC")) %>%
+            filter(year %in% 2000:2020) %>%
+  left_join(select(raceLink, race7, DCDC), by = c("raceE" = "DCDC")) %>% # JASPO EDIT - TAKE OUT, AND UNCOMMENT BELOW IF NEW RACECODES CAUSES MAJOR ISSUES
   select(-raceE)
+
+
+# JASPO EDIT - UNCOMMENT BELOW IF NEW RACECODES CAUSES MAJOR ISSUES
 
 # IN DEATH DATA
 # vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
 #   vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH",           "Multi-NH",         "Hisp")
 #   vLab  <- c("f",       "b",       "a",      "c",       "e",                 "g",                "d")
 #   vLab  <- c(  1,         2,        3,        4,         5,                   6,                  7)
-#   
-# # NO OTHER
-# # NO UNKNOWN
+# #   
+# # # NO OTHER
+# # # NO UNKNOWN
 # rCode    <- c("W","B","I","A","P","M","H")
 # tDat0    <-  tDat0 %>%  mutate( race7   = vLab[match(raceE,rCode)])
 
@@ -194,6 +195,4 @@ saveRDS(popCounty_RE_3year, file = paste0(upPlace,"/upData/popCounty_RE_3year.RD
 
 saveRDS(popCounty65,          file = paste0(upPlace,"/upData/popCounty65.RDS"))
 saveRDS(popCounty65_RE_3year, file = paste0(upPlace,"/upData/popCounty65_RE_3year.RDS"))
-
-
 

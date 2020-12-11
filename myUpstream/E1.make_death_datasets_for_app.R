@@ -27,6 +27,9 @@ excludeYear <- 2020
 excludeYear3 <- NA # 2020 is labeled as NA
 excludeYear5 <- NA # 2020 is labeled as NA
 
+# JASPO - Specify the years for the quarterly data
+forQuarter_selectYears <- 2016:2020
+
 # == Designate locations and load packages  =======================================================
 
 whichDat <- "real"
@@ -36,7 +39,7 @@ subSite  <- FALSE
 securePath     <- "h:/0.Secure.Data/"
 securePath     <- "g:/CCB/0.Secure.Data/"
 # securePath     <- "g:/0.Secure.Data/"
-securePath     <- "/mnt/projects/CCB/0.Secure.Data/"
+# securePath     <- "/mnt/projects/CCB/0.Secure.Data/"
 
 
 secureDataFile <- paste0(securePath,"myData/ccb_processed_deaths.RDS") 
@@ -48,6 +51,9 @@ STATE    <- "CALIFORNIA"
 myDrive <- getwd()  
 myPlace <- paste0(myDrive,"/myCBD") 
 upPlace <- paste0(myDrive,"/myUpstream") 
+
+standardsPlace <- "g:/CCB/Standards/"
+# standardsPlace <- "/mnt/projects/CCB/Standards/"
 
 library(readr)
 library(stringr)
@@ -85,22 +91,29 @@ mssaLink   <- read.csv(paste0(myPlace,"/myInfo/Tract to Community Linkage.csv"),
 comName    <- unique(mssaLink[,c("comID","comName")])                                    # dataframe linking comID and comName
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 ageMap_EDU  <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "dataEducation"))
-raceLink   <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx")))  %>% select(raceCode,CHSI)
-
+raceLink <- as.data.frame(read_excel(paste0(standardsPlace,"raceLink.xlsx")))  %>% select(raceCode,CHSI)
 
 #== LOAD AND PROCESS POPULATION DATA ==============================================================
 
 # ungrouping important for subsequent data set merging
 
 popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>%
-                          filter(raceCode == "Total") %>% select(-raceCode) %>%   ungroup()  
+                         # filter(raceCode == "Total") %>% select(-raceCode) # JASPO commented this out
+                         ungroup()  
 
-popCountySex     <- filter(popCounty,ageGroup == "Total") %>% select(-ageGroup) # no need for ageGroup
-popCountySexAgeG <- filter(popCounty,ageGroup != "Total")
+# JASPO changed some parts of this, plus added popCountyRACE, and popCountyAgeGRACE
+popCountySex     <- filter(popCounty,ageGroup == "Total", raceCode == "Total") %>% select(-ageGroup, -raceCode) # no need for ageGroup
+popCountySexAgeG <- filter(popCounty,ageGroup != "Total", raceCode == "Total") %>% select(-raceCode)
 
-popCounty.RACE        <- readRDS(path(upPlace,"/upData/popCounty_RE_3year.RDS")) %>% ungroup() 
-popCountySex.RACE     <- filter(popCounty.RACE,ageGroup == "Total")
-popCountySexAgeG.RACE <- filter(popCounty.RACE,ageGroup != "Total")
+# For quarter
+popCountySexRACE    <- filter(popCounty,ageGroup == "Total", year %in% forQuarter_selectYears) 
+popCountySexAgeGRACE <- filter(popCounty, ageGroup != "Total", year %in% forQuarter_selectYears)
+###
+
+
+popCountyRACE_3year        <- readRDS(path(upPlace,"/upData/popCounty_RE_3year.RDS")) %>% ungroup() 
+popCountySexRACE_3year     <- filter(popCountyRACE_3year,ageGroup == "Total")
+popCountySexAgeGRACE_3year <- filter(popCountyRACE_3year,ageGroup != "Total")
 
 
 popCountySex_3year      <- popCountySex %>%
@@ -137,6 +150,20 @@ popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG5,county,comID,sex,ageGrou
 
 popStandard         <- ageMap    %>% mutate(ageGroup = ageLabel)
 popStandard_EDU     <- ageMap_EDU  %>% mutate(ageG_EDU = ageLabel)
+
+###################
+#####  POP 65 JASPO #####
+###################
+
+popCounty65        <- readRDS(path(upPlace,"/upData/popCounty65.RDS")) %>% ungroup() 
+popCountySex65     <- filter(popCounty65,ageGroup == "Total", raceCode == "Total") %>% select(-ageGroup, -raceCode) # no need for ageGroup
+popCountySexAgeG65 <- filter(popCounty65,ageGroup != "Total", raceCode == "Total") %>% select(-raceCode)
+
+popCountyRACE65_3year        <- readRDS(path(upPlace,"/upData/popCounty65_RE_3year.RDS")) %>% ungroup() 
+popCountySexRACE65_3year     <- filter(popCountyRACE65_3year,ageGroup == "Total")
+popCountySexAgeGRACE65_3year <- filter(popCountyRACE65_3year,ageGroup != "Total")
+
+popStandard65         <- ageMap    %>% mutate(ageGroup = paste0(lAge," - ",uAge))  %>% filter(lAge < 65)
 
 
 
@@ -175,13 +202,17 @@ cbdDat0       <- mutate(cbdDat0,
                          yll     = ifelse(age > 75, 0, 75-age),
                          yearG5  = yearMap[match(year,yearMap[,"year"]),"yearGroup5"], 
                          yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"],
-                         quarter JASPO
+                         quarter = dplyr::case_when(month %in% c("01", "02", "03") ~ "01", 
+                                             month %in% c("04", "05", "06") ~ "02", 
+                                             month %in% c("07", "08", "09") ~ "03", 
+                                             month %in% c("10", "11", "12") ~ "04", 
+                                             TRUE ~ month),
                          education = ifelse(education == 8,7,education)  # one "Graduate or professional degree" category for now
                         ) %>%
                 rename(eduCode = education) 
 
 
-cbdDat0    <- rename(cbdDat0,CHSI=raceCode) # remove this step soon by chaning in B2 to use "CHSI" as name rather than raceCode
+#cbdDat0    <- rename(cbdDat0,CHSI=raceCode) # remove this step soon by chaning in B2 to use "CHSI" as name rather than raceCode
 cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
 cbdDat0    <- select(cbdDat0,-CHSI)
 
@@ -275,6 +306,7 @@ cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
                                         lev3  = ifelse(nLast4 == 4,codeLast4,NA)
                                        )
 
+
 # -- MORE DATA CLEANING ISSUES (see at bottom of file) ------------------------
 
 # -- SAVE FILE FOR AD HOC ANALYSIS AND ERROR/ISSUE INVESTIGATION --------------
@@ -301,7 +333,6 @@ calculateYLLmeasures <- function(group_vars,levLab){
     dat %>%  data.frame
 
 }
-
 
 pois.approx <- function (x, pt = 1, conf.level = 0.95) 
 {
@@ -379,8 +410,6 @@ datState$county = STATE
 
 datCounty <- bind_rows(datCounty,datState)
 
-
-
 # MERGE Death and Population files
 datCounty <-  merge(datCounty,popCountySex,by = c("year","county","sex"))
 
@@ -389,34 +418,92 @@ datCounty <- calculateRates(datCounty,1)
 
 
 
-# -- COUNTY BY QUARTER BY JASPO------------------------------------------------
+# -- COUNTY 65 JASPO -------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-c.t1      <- calculateYLLmeasures(c("county","year","quarter","sex","lev0"),"lev0")
+cbdDat0_SAVE <- cbdDat0
+cbdDat0 <- filter(cbdDat0, age < 65)
+
+c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0")
 c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1")
 c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2")
 c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3")
-datCounty_Q <- bind_rows(c.t1,c.t2,c.t3,c.t4)
+datCounty65 <- bind_rows(c.t1,c.t2,c.t3,c.t4)
 
 s.t1      <- calculateYLLmeasures(c(         "year","sex","lev0"),"lev0")
 s.t2      <- calculateYLLmeasures(c(         "year","sex","lev1"),"lev1")
 s.t3      <- calculateYLLmeasures(c(         "year","sex","lev2"),"lev2")
 s.t4      <- calculateYLLmeasures(c(         "year","sex","lev3"),"lev3")
-datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
-datState$county = STATE
+datState65  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
+datState65$county = STATE
 
-datCounty <- bind_rows(datCounty,datState)
-
-
+datCounty65 <- bind_rows(datCounty65,datState65)
 
 # MERGE Death and Population files
-datCounty <-  merge(datCounty,popCountySex,by = c("year","county","sex"))  change to full_join()  %>%
-                mutate population = population / 4
+datCounty65 <- merge(datCounty65,popCountySex65,by = c("year","county","sex"))
 
 # CALCULATE RATES
-datCounty <- calculateRates(datCounty,1)
+datCounty65 <- calculateRates(datCounty65,1)
 
 
+# -- RACE-ETHNICITY COUNTY65 3-YEAR JASPO ----------------------------------------------
+# ------------------------------------------------------------------------------
+
+c.t1.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev0"),"lev0")
+c.t2.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev1"),"lev1")
+c.t3.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev2"),"lev2")
+c.t4.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode","lev3"),"lev3")
+datCounty65_RE <- bind_rows(c.t1.RE,c.t2.RE,c.t3.RE,c.t4.RE)
+
+s.t1.RE      <- calculateYLLmeasures(c(         "yearG3","sex","raceCode","lev0"),"lev0")
+s.t2.RE      <- calculateYLLmeasures(c(         "yearG3","sex","raceCode","lev1"),"lev1")
+s.t3.RE      <- calculateYLLmeasures(c(         "yearG3","sex","raceCode","lev2"),"lev2")
+s.t4.RE      <- calculateYLLmeasures(c(         "yearG3","sex","raceCode","lev3"),"lev3")
+datState65.RE  <- bind_rows(s.t1.RE,s.t2.RE,s.t3.RE,s.t4.RE)
+datState65.RE$county = STATE
+
+datCounty65_RE <- bind_rows(datCounty65_RE, datState65.RE)
+datCounty65_RE <- merge(datCounty65_RE, popCountySexRACE65_3year, by = c("yearG3","county","sex","raceCode"))
+datCounty65_RE <- calculateRates(datCounty65_RE,1)
+
+# NOTE: "1" used above for number of years, because both numerators (deaths) and denominators 
+# (population data) are already BOTH aggregated over THREE year
+
+
+cbdDat0 <- cbdDat0_SAVE # JASPO - Done with calculating crude rate for <65. Going back to original cbdDat0
+
+# -- COUNTY BY RACE BY QUARTER BY JASPO------------------------------------------------
+# -----------------------------------------------------------------------------
+
+cbdDat0_SAVE <- cbdDat0
+
+cbdDat0 <- filter(cbdDat0, year %in% forQuarter_selectYears)
+cbdDat0_RACE <- mutate(cbdDat0, raceCode = "Total")
+cbdDat0 <- bind_rows(cbdDat0, cbdDat0_RACE)
+
+c.t1      <- calculateYLLmeasures(c("county","year","quarter","sex","raceCode","lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","year","quarter","sex","raceCode","lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","year","quarter","sex","raceCode","lev2"),"lev2")
+c.t4      <- calculateYLLmeasures(c("county","year","quarter","sex","raceCode","lev3"),"lev3")
+datCounty_Q <- bind_rows(c.t1,c.t2,c.t3,c.t4)
+
+s.t1      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","lev0"),"lev0")
+s.t2      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","lev1"),"lev1")
+s.t3      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","lev2"),"lev2")
+s.t4      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","lev3"),"lev3")
+datState_Q  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
+datState_Q$county = STATE
+
+datCounty_Q <- bind_rows(datCounty_Q,datState_Q)
+
+# MERGE Death and Population files - THIS IS PERFORMING AN INNER JOIN. MAY WANT TO PERFORM ANOTHER TYPE OF JOIN
+datCounty_Q <-  merge(datCounty_Q,popCountySexRACE,by = c("year","county","sex", "raceCode")) %>%
+                mutate(population = population / 4)
+
+# CALCULATE RATES
+datCounty_Q <- calculateRates(datCounty_Q,1)
+
+cbdDat0 <- cbdDat0_SAVE
 
 
 # -- COUNTY 3-YEAR -------------------------------------------------------------
@@ -519,7 +606,7 @@ datState.RE  <- bind_rows(s.t1.RE,s.t2.RE,s.t3.RE,s.t4.RE)
 datState.RE$county = STATE
 
 datCounty_RE <- bind_rows(datCounty_RE, datState.RE)
-datCounty_RE <- merge(datCounty_RE, popCountySex.RACE, by = c("yearG3","county","sex","raceCode"))
+datCounty_RE <- merge(datCounty_RE, popCountySexRACE_3year, by = c("yearG3","county","sex","raceCode"))
 datCounty_RE <- calculateRates(datCounty_RE,1)
 
 # NOTE: "1" used above for number of years, because both numerators (deaths) and denominators 
@@ -549,7 +636,7 @@ datState.EDU$county = STATE
 datCounty_EDU <- bind_rows(datCounty_EDU, datState.EDU)
 
 
-datCounty_EDU <- merge(datCounty_EDU, popCountySex_EDU, by = c("year","county","sex","eduCode"))  %>% rename(population=pop)  ###FIX
+datCounty_EDU <- merge(datCounty_EDU, popCountySex_EDU, by = c("year","county","sex","eduCode"))
 
 datCounty_EDU <- calculateRates(datCounty_EDU,1)
 
@@ -603,6 +690,7 @@ datTract <- calculateRates(datTract,5) %>%
 # -- makes dataframeS of all possible combinations -----------------------------
 # ------------------------------------------------------------------------------
 
+quarter  <- data.frame(quarter  = sort(unique(cbdDat0$quarter)),                  stringsAsFactors = FALSE)
 year     <- data.frame(year     = sort(unique(cbdDat0$year))) # these "vectors" need to be dataframes for the sq merge below to work
 yearG5   <- data.frame(yearG5   = sort(unique(cbdDat0$yearG5)),                   stringsAsFactors = FALSE) 
 yearG3   <- data.frame(yearG3   = sort(unique(cbdDat0$yearG3)),                   stringsAsFactors = FALSE)
@@ -616,16 +704,20 @@ comID    <- data.frame(comID    = unique(mssaLink[,"comID"]),                   
 GEOID    <- data.frame(GEOID    = mssaLink[,"GEOID"],                            stringsAsFactors = FALSE)
 raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)),                 stringsAsFactors = FALSE)
 
+yearForQuarterly <- data.frame(year = sort(unique(filter(cbdDat0, year %in% forQuarter_selectYears)$year))) # JASPO - used for quarterly
+
 # other cool approach from Adam:
 # fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageGroup))
-fullMatCounty       <- sqldf(" select * from  county cross join year   cross join CAUSE1 cross join sex cross join ageGroup")  %>% mutate(tester=0)
-fullMatCounty_3year <- sqldf(" select * from  county cross join yearG3 cross join CAUSE1 cross join sex cross join ageGroup")  %>% mutate(tester=0)
-fullMatCounty_5year <- sqldf(" select * from  county cross join yearG5 cross join CAUSE1 cross join sex cross join ageGroup")  %>% mutate(tester=0)
-fullMatComm         <- sqldf(" select * from  comID  cross join yearG5 cross join CAUSE2 cross join sex cross join ageGroup")  %>% mutate(tester=0)
-fullMatTract        <- sqldf(" select * from  GEOID  cross join yearG5 cross join CAUSE3 cross join sex cross join ageGroup")  %>% mutate(tester=0)
-fullMatCounty_RE    <- sqldf(" select * from  county cross join yearG3 cross join CAUSE1 cross join sex cross join ageGroup join raceCode") %>% mutate(tester=0)
+fullMatCounty          <- sqldf(" select * from  county cross join year   cross join CAUSE1 cross join sex cross join ageGroup")  %>% mutate(tester=0)
+fullMatCounty_3year    <- sqldf(" select * from  county cross join yearG3 cross join CAUSE1 cross join sex cross join ageGroup")  %>% mutate(tester=0)
+fullMatCounty_5year    <- sqldf(" select * from  county cross join yearG5 cross join CAUSE1 cross join sex cross join ageGroup")  %>% mutate(tester=0)
+fullMatComm            <- sqldf(" select * from  comID  cross join yearG5 cross join CAUSE2 cross join sex cross join ageGroup")  %>% mutate(tester=0)
+fullMatTract           <- sqldf(" select * from  GEOID  cross join yearG5 cross join CAUSE3 cross join sex cross join ageGroup")  %>% mutate(tester=0)
+fullMatCounty_RE_3year <- sqldf(" select * from  county cross join yearG3 cross join CAUSE1 cross join sex cross join ageGroup join raceCode") %>% mutate(tester=0)
 
 
+fullMatCounty_RE_Q     <- sqldf(" select * from  county cross join yearForQuarterly cross join quarter cross join CAUSE1 cross join sex cross join ageGroup cross join raceCode") %>% mutate(tester=0)
+# JASPO added above for quarterly
 
 # -- COUNTY (age-adjusted) ----------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -665,6 +757,138 @@ countyAA <- ageCounty %>% group_by(county,year,sex,CAUSE) %>%
 
 countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 
+
+# -- COUNTY65 (age-adjusted) - JASPO ----------------------------------------------------
+# -----------------------------------------------------------------------------
+
+cbdDat0_SAVE <- cbdDat0
+cbdDat0 <- filter(cbdDat0, age < 65)
+
+tA1      <- cbdDat0 %>% group_by(county,year, sex, ageGroup,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(county,year, sex, ageGroup,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA3      <- cbdDat0 %>% group_by(county,year, sex, ageGroup,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA4      <- cbdDat0 %>% group_by(county,year, sex, ageGroup,CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA5      <- cbdDat0 %>% group_by(       year, sex, ageGroup,CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA6      <- cbdDat0 %>% group_by(       year, sex, ageGroup,CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA7      <- cbdDat0 %>% group_by(       year, sex, ageGroup,CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA8      <- cbdDat0 %>% group_by(       year, sex, ageGroup,CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+
+datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)  %>% ungroup()  # UNGROUP HERE!!!!
+
+# DATA CLEANING ISSUES as above
+datAA1 <- filter(datAA1,!is.na(ageGroup))     # remove 403 records with missing age (0.065% of deaths)  -- impact of this?
+# datAA1 <- filter(datAA1,!is.na(CAUSE))  # remove 6955 records with missing CAUSE
+datAA1 <- filter(datAA1,!is.na(county))   # remove 758 records with missing county
+# datAA1 <- filter(datAA1,!is.na(sex))    # remove 
+
+ageCounty65   <- full_join(filter(fullMatCounty, !ageGroup %in% c("65 - 74", "75 - 84", "85+")),datAA1 ,by = c("county","year","sex","ageGroup","CAUSE"))  %>%    # merge death data and "fullMatCounty"
+  full_join(popCountySexAgeG65, by = c("county","year","sex","ageGroup") )             %>%    # merge population
+  full_join(popStandard65[,c("ageGroup","US2000POP")],          by="ageGroup")                    # merge standard population
+
+ageCounty65$Ndeaths[is.na(ageCounty65$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
+ageCounty65$YLL[is.na(ageCounty65$YLL)]         <- 0    # if NA deaths in strata change to "0"
+
+countyAA65 <- ageCounty65 %>% group_by(county,year,sex,CAUSE) %>%
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+
+
+countyAA65 <- countyAA65[!(countyAA65$oDeaths==0),c("county","year","sex","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
+
+
+# -- RACE-ETHNICITY COUNTY65 3-YEAR (age-adjusted) - JASPO -------------------------------
+# ------------------------------------------------------------------------------
+
+tA1      <- cbdDat0 %>% group_by(county,yearG3, sex, ageGroup, raceCode, CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(county,yearG3, sex, ageGroup, raceCode, CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA3      <- cbdDat0 %>% group_by(county,yearG3, sex, ageGroup, raceCode, CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA4      <- cbdDat0 %>% group_by(county,yearG3, sex, ageGroup, raceCode, CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+
+tA5      <- cbdDat0 %>% group_by(       yearG3, sex, ageGroup, raceCode, CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA6      <- cbdDat0 %>% group_by(       yearG3, sex, ageGroup, raceCode, CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA7      <- cbdDat0 %>% group_by(       yearG3, sex, ageGroup, raceCode, CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA8      <- cbdDat0 %>% group_by(       yearG3, sex, ageGroup, raceCode, CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+
+datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)  %>% ungroup()  # UNGROUP HERE!!!!
+
+datAA1 <- filter(datAA1,!is.na(ageGroup))   # remove 403 records with missing age (0.065% of deaths)  -- impact of this?
+# datAA1 <- filter(datAA1,!is.na(county)) # remove 758 records with missing county ### removed this from RACE DATA......
+
+ageCounty.RE65   <- full_join(filter(fullMatCounty_RE_3year, !ageGroup %in% c("65 - 74", "75 - 84", "85+")),datAA1 ,by = c("county","yearG3","sex","ageGroup","raceCode","CAUSE"))  %>%   
+  full_join(popCountySexAgeGRACE65_3year, by = c("county","yearG3","sex","ageGroup","raceCode") )           %>%   
+  full_join(popStandard65[,c("ageGroup","US2000POP")],          by="ageGroup")                
+
+ageCounty.RE65$Ndeaths[is.na(ageCounty.RE65$Ndeaths)] <- 0  
+ageCounty.RE65$YLL[is.na(ageCounty.RE65$YLL)]         <- 0  
+
+
+
+countyAA.RE65 <- ageCounty.RE65 %>% group_by(county,yearG3,sex,raceCode,CAUSE) %>%
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+
+countyAA.RE65 <- countyAA.RE65[!(countyAA.RE65$oDeaths==0),c("county","yearG3","sex","raceCode","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
+
+
+cbdDat0 <- cbdDat0_SAVE
+
+# -- Quarter By Race (age-adjusted) - JASPO -------------------------------
+# ------------------------------------------------------------------------------
+
+cbdDat0_SAVE <- cbdDat0
+
+cbdDat0 <- filter(cbdDat0, year %in% forQuarter_selectYears)
+cbdDat0_RACE <- mutate(cbdDat0, raceCode = "Total")
+cbdDat0 <- bind_rows(cbdDat0, cbdDat0_RACE)
+
+tA1      <- cbdDat0 %>% group_by(county,year, quarter, sex, ageGroup, raceCode, CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA2      <- cbdDat0 %>% group_by(county,year, quarter, sex, ageGroup, raceCode, CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA3      <- cbdDat0 %>% group_by(county,year, quarter, sex, ageGroup, raceCode, CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+tA4      <- cbdDat0 %>% group_by(county,year, quarter, sex, ageGroup, raceCode, CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+
+tA5      <- cbdDat0 %>% group_by(       year, quarter, sex, ageGroup, raceCode, CAUSE=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA6      <- cbdDat0 %>% group_by(       year, quarter, sex, ageGroup, raceCode, CAUSE=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA7      <- cbdDat0 %>% group_by(       year, quarter, sex, ageGroup, raceCode, CAUSE=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+tA8      <- cbdDat0 %>% group_by(       year, quarter, sex, ageGroup, raceCode, CAUSE=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
+
+datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)  %>% ungroup()  # UNGROUP HERE!!!!
+
+datAA1 <- filter(datAA1,!is.na(ageGroup))   # remove 403 records with missing age (0.065% of deaths)  -- impact of this?
+# datAA1 <- filter(datAA1,!is.na(county)) # remove 758 records with missing county ### removed this from RACE DATA......
+
+ageCounty_Q   <- full_join(fullMatCounty_RE_Q,datAA1 ,by = c("county","year","quarter", "sex","ageGroup","raceCode","CAUSE"))  %>%   
+  full_join(popCountySexAgeGRACE, by = c("county","year","sex","ageGroup","raceCode") )           %>%   
+  full_join(popStandard[,c("ageGroup","US2000POP")],          by="ageGroup") %>%
+  mutate(population = population/4) # JASPO ADDITION - DIVIDE BY 4 HERE?
+
+ageCounty_Q$Ndeaths[is.na(ageCounty_Q$Ndeaths)] <- 0  
+ageCounty_Q$YLL[is.na(ageCounty_Q$YLL)]         <- 0  
+
+
+# TEMPORARY - for State of Health Report
+saveRDS(ageCounty_Q, file= path(myPlace,"/myData/",whichDat,"datCounty_RACE_AGE_Q.RDS"))
+
+
+
+countyAA_Q <- ageCounty_Q %>% group_by(county,year,quarter,sex,raceCode,CAUSE) %>%
+  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+            aRate   = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+            aLCI    = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+            aUCI    = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+            aSE     = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+
+countyAA_Q <- countyAA_Q[!(countyAA_Q$oDeaths==0),c("county","year","quarter","sex","raceCode","CAUSE","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
+
+cbdDat0 <- cbdDat0_SAVE
 
 # -- COUNTY 3-YEAR (age-adjusted) ----------------------------------------------
 # ------------------------------------------------------------------------------
@@ -760,8 +984,8 @@ datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)  %>% ungroup()  # UNGROUP H
 datAA1 <- filter(datAA1,!is.na(ageGroup))   # remove 403 records with missing age (0.065% of deaths)  -- impact of this?
 # datAA1 <- filter(datAA1,!is.na(county)) # remove 758 records with missing county ### removed this from RACE DATA......
 
-ageCounty.RE   <- full_join(fullMatCounty_RE,datAA1 ,by = c("county","yearG3","sex","ageGroup","raceCode","CAUSE"))  %>%   
-                  full_join(popCountySexAgeG.RACE, by = c("county","yearG3","sex","ageGroup","raceCode") )           %>%   
+ageCounty.RE   <- full_join(fullMatCounty_RE_3year,datAA1 ,by = c("county","yearG3","sex","ageGroup","raceCode","CAUSE"))  %>%   
+                  full_join(popCountySexAgeGRACE_3year, by = c("county","yearG3","sex","ageGroup","raceCode") )           %>%   
                   full_join(popStandard[,c("ageGroup","US2000POP")],          by="ageGroup")                
 
 ageCounty.RE$Ndeaths[is.na(ageCounty.RE$Ndeaths)] <- 0  
@@ -769,7 +993,7 @@ ageCounty.RE$YLL[is.na(ageCounty.RE$YLL)]         <- 0
 
 
 # TEMPORARY - for State of Health Report
-# saveRDS(ageCounty.RE, file= path(myPlace,"/myData/",whichDat,"datCounty_RACE_AGE_TEMP.RDS"))
+saveRDS(ageCounty.RE, file= path(myPlace,"/myData/",whichDat,"datCounty_RACE_AGE.RDS")) # JASPO - RACE AGE TEMP PRODUCED HERE
 
 
 
@@ -813,7 +1037,7 @@ datAA1 <- bind_rows(tA1,tA2,tA3,tA5,tA6,tA7)  %>% ungroup()  # UNGROUP HERE!!!!
 # rename po
 ageCounty.EDU   <- full_join(datAA1 ,popCountySexAgeG_EDU, by = c("county","year","sex","ageG_EDU","eduCode")) %>%
   full_join(popStandard_EDU[,c("ageG_EDU","US2000POP")], by="ageG_EDU")   %>%
-  rename(population = pop) %>%
+  # rename(population = pop) %>%
   filter(population > 0) # this needs to be done more carefully, but removed counties with data not available from ACS
 
 
@@ -918,8 +1142,8 @@ datState  <- datCounty  %>%
                stateAdjustedRate = aRate) %>%
                select(year,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") write_rds(datState, file = path(myPlace,"/myData/datState.RDS"))
-if ( subSite)                      datState <- read_rds(file = path(myPlace,"/myData/datState.RDS"))
+if (!subSite & whichDat == "real") saveRDS(datState, path(myPlace,"/myData/datState.RDS"))
+if ( subSite)                      datState <- readRDS(path(myPlace,"/myData/datState.RDS"))
 
 datCounty  <- merge(datCounty,datState,by = c("year","sex","Level","CAUSE")) %>%
                 mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -932,6 +1156,36 @@ datCounty <-  datCounty %>%
                mutate_if(is.numeric, signif,digits = myDigits)               %>%  # much smaller file and easier to read
                mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA  #######################CALIFORNIA!!!!!!!!!!!!!!!!!!!!!
         
+
+# COUNTY65 - JASPO ----------------------------------------------------------------------
+
+datCounty65 <- merge(datCounty65,countyAA65 ,by = c("county","year","sex","CAUSE"),all=TRUE)
+
+datCounty65 <-  datCounty65 %>% 
+  filter(!(is.na(CAUSE)))                                    %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
+  # select(-stateCrudeRate,-stateAdjustedRate)                    %>%
+  mutate_if(is.numeric, signif,digits = myDigits)                      %>%  # much smaller file and easier to read
+  mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
+
+# -- RACE65 - JASPO ---------------------------------------------------------------------
+
+datCounty65_RE <- merge(datCounty65_RE,countyAA.RE65, by = c("county","yearG3","sex","raceCode","CAUSE"),all=TRUE)
+
+datCounty65_RE <- datCounty65_RE                                    %>% 
+  filter(!(is.na(CAUSE)))                                       %>%  
+  select(-ageGroup)                                                 %>%
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  
+  mutate(county = ifelse(county==STATE, toupper(STATE),county))
+
+# -- Quarter - JASPO ---------------------------------------------------------------------
+
+datCounty_Q <- merge(datCounty_Q,countyAA_Q, by = c("county","year", "quarter", "sex","raceCode","CAUSE"),all=TRUE)
+
+datCounty_Q <- datCounty_Q                                    %>% 
+  filter(!(is.na(CAUSE)))                                       %>%  
+  select(-ageGroup)                                                 %>%
+  mutate_if(is.numeric, signif,digits = myDigits)                        %>%  
+  mutate(county = ifelse(county==STATE, toupper(STATE),county)) 
 
 
 # -- COUNTY 3-YEAR ------------------------------------------------------------
@@ -947,8 +1201,8 @@ datState_3year  <- datCounty_3year  %>%
                           stateAdjustedRate = aRate) %>%
                    select(yearG3,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") write_rds(datState_3year, file = path(myPlace,"/myData/datState_3yr.RDS"))
-if ( subSite)                      datState_3yr <- read_rds( file = path(myPlace,"/myData/datState_3yr.RDS"))
+if (!subSite & whichDat == "real") saveRDS(datState_3year, path(myPlace,"/myData/datState_3yr.RDS"))
+if ( subSite)                      datState_3yr <- readRDS( path(myPlace,"/myData/datState_3yr.RDS"))
 
 datCounty_3year  <- merge(datCounty_3year,datState_3year,by = c("yearG3","sex","Level","CAUSE")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -988,8 +1242,8 @@ datState_5year  <- datCounty_5year  %>%
          stateAdjustedRate = aRate) %>%
   select(yearG5,sex,Level,CAUSE,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") write_rds(datState_5year, file = path(myPlace,"/myData/datState_5yr.RDS"))
-if ( subSite)                      datState_5yr <- read_rds( file = path(myPlace,"/myData/datState_5yr.RDS"))
+if (!subSite & whichDat == "real") saveRDS(datState_5year, path(myPlace,"/myData/datState_5yr.RDS"))
+if ( subSite)                      datState_5yr <- readRDS( path(myPlace,"/myData/datState_5yr.RDS"))
 
 datCounty_5year  <- merge(datCounty_5year,datState_5year,by = c("yearG5","sex","Level","CAUSE")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -1066,7 +1320,24 @@ datCounty <- filter(datCounty,
                     ) %>%
              select(-supIndicator)
 
+# COUNTY65 - JASPO
+gBy       <-  c("county","year","Level","CAUSE")         # FOR MAIN
+datCounty65 <- mutate(datCounty65, supIndicator = mySuppress(datCounty65,gBy,"Ndeaths"))
+datCounty65 <- filter(datCounty65,
+                    supIndicator != 1,
+                    !(CAUSE=="A09" & sex %in% c("Male","Female"))
+                    ) %>%
+             select(-supIndicator)
 
+
+# COUNTY65 - RACE - JASPO
+gBy          <- c("county","yearG3","Level","CAUSE","sex")   # FOR RACE
+datCounty65_RE <- mutate(datCounty65_RE, supIndicator = mySuppress(datCounty65_RE,gBy,"Ndeaths"))
+datCounty65_RE <- filter(datCounty65_RE,
+                       supIndicator != 1,
+                       !(CAUSE=="A09" & sex %in% c("Male","Female"))
+                       ) %>%
+                select(-supIndicator)
 
 
 # COUNTY 3-YEAR
@@ -1148,12 +1419,16 @@ datTract  <- filter(datTract,population>0)
 
 
 saveRDS(filter(datCounty, year < excludeYear),       file= path(myPlace,"/myData/",whichDat,"datCounty.RDS"))
+saveRDS(datCounty_Q,                                 file= path(myPlace,"/myData/",whichDat,"datCounty_Q.RDS"))
+saveRDS(filter(datCounty65, year < excludeYear),       file= path(myPlace,"/myData/",whichDat,"datCounty65.RDS"))
+saveRDS(filter(datCounty65_RE, !is.na(yearG3)),    file= path(myPlace,"/myData/",whichDat,"datCounty65_RE.RDS"))
 saveRDS(filter(datCounty_3year, !is.na(yearG3)),  file= path(myPlace,"/myData/",whichDat,"datCounty_3year.RDS"))
 
 
 #JASPO datCounty_AGE_OLDER_3year
-saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(myPlace,"/myData/",whichDat,"datCounty_AGE_3year.RDS"))
+#saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(myPlace,"/myData/",whichDat,"datCounty_AGE_3year.RDS"))
 
+saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(myPlace,"/myData/",whichDat,"datCounty_AGE_3year.RDS"))
 
 saveRDS(filter(datCounty_5year, !is.na(yearG5)), file= path(myPlace,"/myData/",whichDat,"datCounty_5year.RDS"))
 saveRDS(filter(datCounty_RE, !is.na(yearG3)),    file= path(myPlace,"/myData/",whichDat,"datCounty_RE.RDS"))
@@ -1162,12 +1437,8 @@ saveRDS(filter(datComm, !is.na(yearG5)),         file= path(myPlace,"/myData/",w
 saveRDS(filter(datTract, !is.na(yearG5)),        file= path(myPlace,"/myData/",whichDat,"datTract.RDS"))
 
 
-
 # == SAVE AS .CSV FILES FOR AD HOC ANALYSIS =======================================================
 # =================================================================================================
-
-
-
 
 causeNameLink <- gbdMap0 %>% 
                   filter(!is.na(causeList)) %>%

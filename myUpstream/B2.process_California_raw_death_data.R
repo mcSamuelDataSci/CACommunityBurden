@@ -63,7 +63,7 @@ if (state.installation) {
 
  ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_093020.csv"), colClasses = "character")  
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"),          colClasses = "character")       
- ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_UPDATE_2018.csv"),   colClasses = "character")        
+ ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"),   colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
  ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
@@ -307,6 +307,9 @@ cbdDat0FULL  <- bind_rows(death.datA,death.datB)  # "When row-binding using bind
 
 if (local.installation) cbdDat0FULL <- death.datA
 
+cbdDat0FULL <- cbdDat0FULL %>%
+  rename(CHSI = raceCode)
+
 saveRDS(cbdDat0FULL, file= paste0(.sl,"/myData/ccb_processed_deaths.RDS"))   # ccb_processed_deaths.RDS
 
 # === Create Random Data Set =============================================================================================
@@ -319,14 +322,14 @@ cbdDat0FULL <- readRDS(paste0(.sl,"/myData/ccb_processed_deaths.RDS"))
 
 #cbdDat0FULL$ageUnit  <- NULL
 work <- cbdDat0FULL
-work <- work[,c("year","state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","raceCode","education","ICD10")]
+work <- work[,c("year", "state","county","zip","GEOID","countyFIPS","stateFIPS","age","sex","CHSI","education","ICD10")] # ADD MONTH HERE? - JASPO
 
 sampN1 <- 400000  
 half1  <- sample_n(work,sampN1)  # sample function from dplyr
 
 sampN2       <- 600000
 p1           <- sample_n(work[,1:7],  sampN2)
-p2           <- sample_n(work[,8:10], sampN2)
+p2           <- sample_n(work[,8:10], sampN2) # JASPO - DISCUSS SOON WHY COLUMN 10 IS USED FOR BOTH P2 AND P3
 p3           <- sample_n(work[,10:12], sampN2)
 p3$raceCode  <- NULL
 half2        <- cbind(p1,p2,p3)

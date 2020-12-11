@@ -55,6 +55,17 @@ lifeExpMPA    <- readRDS(paste0("/mnt/projects/CCB/CCB Project/0.CCB/myUpstream/
                   select(year, GEOID, sex, raceName, lAge = x, population = Nx, deaths = Dx, life_expectancy = ex, LE_lci = exlow, LE_uci = exhigh)
  
  
+lifeExpMPA.State <- readRDS(paste0("/mnt/projects/CCB/CCB Project/0.CCB/myUpstream/lifeTables/dataOut/LTciState.rds")) %>%
+                  left_join(raceLink,by=c("race7" = "Ethan")) %>%
+                  filter(x %in% c(0,50)) %>%
+                  filter(year > 2012) %>%
+                  mutate(GEOID = str_sub(GEOID,1,5)) %>%
+                  select(year, GEOID, sex, raceName, lAge = x, population = Nx, deaths = Dx, life_expectancy = ex, LE_lci = exlow, LE_uci = exhigh)
+
+
+lifeExpMPA <- bind_rows(lifeExpMPA,lifeExpMPA.State)
+
+
 write.csv(lifeExpMPA, "/mnt/projects/CCB/CCB Project/0.CCB/myUpstream/lifeTables/dataOut/lifeExpMPA.csv")
 
 #write.csv(lifeExpMPA, "G:/CCB/CCB Project/0.CCB/myUpstream/lifeTables/dataOut/lifeExpMPA.csv")

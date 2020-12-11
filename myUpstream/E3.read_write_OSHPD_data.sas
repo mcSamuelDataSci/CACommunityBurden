@@ -22,11 +22,10 @@ data pdd.pdd_2018; set pdd.cdph_pdd_ssn2018;
       mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los; 
 run;
 
-
 data pdd.pdd_work1; set pdd.pdd_2016 pdd.pdd_2016 pdd.pdd_2016; run;
 
 data pdd.pdd_work2; set pdd.pdd_work1; 
- keep year patcnty patzip sex agyrdsch race_grp ccs_diagP diag_p;  run;
+ keep admtyr patcnty patzip sex agyrdsch race_grp ccs_diagP diag_p;  run;
 
 data ed_2016; set ed.cdph_ed_rln2016; year = 2016;keep year dx_prin ccs_dx_prin patco sex race_grp agyrserv dispn payer; run;
 data ed_2017; set ed.cdph_ed_ssn2017; year = 2017;keep year dx_prin ccs_dx_prin patco sex race_grp agyrserv dispn payer; run;

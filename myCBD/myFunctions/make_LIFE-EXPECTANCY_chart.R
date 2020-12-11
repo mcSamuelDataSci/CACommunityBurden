@@ -1,4 +1,3 @@
-
 raceColors1        <- c("seashell4", "chocolate1", "firebrick", "royalBlue1", "darkblue", "navajowhite3", "red",   "chartreuse4")
 raceNames1         <- c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "MR_NH",    "NHPI_NH",      "TOTAL", "WHITE_NH")
 names(raceColors1) <- raceNames1
@@ -34,14 +33,24 @@ lifeTableSet <- filter(lifeTableSet0,race7 != "MR_NH")
   
   
   
- LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
+ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, CCB = T) {
 
    
  if (1==2){
    myLHJ="CALIFORNIA"
    mySexMult = "Total"
    myRace = "TOTAL"
- }   
+ }
+  
+   # Put in standards 
+ if(!CCB) {
+   myWrapNumber <- 70
+   myAxisSize  <- 22
+   myTitleColor <- "darkblue"
+   myTitleSize <- 24
+   
+   source(paste0(myPlace, "myFunctions/helperFunctions/wrapLabels.R"))
+ }
    
    
  dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult ,race7 %in% myRace)
