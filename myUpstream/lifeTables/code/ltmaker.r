@@ -74,7 +74,7 @@ mySecure  <- "/mnt/projects/CCB/0.Secure.Data/myData"
 .countycfips <- paste0(upPlace,"/lifeTables/dataIn/countycfips.dta") # county name to county FIPS in GEOID format
 
 if (whichDeaths=="fake") .deaths		<- paste0(upPlace,"/upData/cbdDat0SAMP.R") 
-if (whichDeaths=="real") .deaths		<- paste0(mySecure,"/cbdDat0FULL.R") 
+if (whichDeaths=="real") .deaths		<- paste0(mySecure,"/ccb_processed_deaths.RDS") 
 if (whichDeaths=="dof")  .deaths 		<- paste0(dofSecure,"/dof_deaths_mi.dta") 
 
 if (whichPop=="dof")     .pop 			<- paste0(upPlace,"/lifeTables/dataIn/dof_ic10pc19.dta")  
@@ -96,7 +96,7 @@ countycfips<-setDT(read.dta13(.countycfips))
 nx.county<-setDT(read.dta13(.pop))
 nx.county<-rbind(nx.county, # sex+race detail
 			 	 nx.county[,.(Nx=sum(Nx)),by=.(year,GEOID,agell,ageul)], # sex=TOTAL, race=TOTAL
-			 	 nx.county[,.(Nx=sum(Nx)),by=.(year,GEOID,sex,agell,ageul)], # race7=TOTAL
+			 	 nx.county[,.(Nx=sum(Nx)),by=.(year,GEOID,sex,agell,ageul)], # CHSI=TOTAL
 			 	 nx.county[,.(Nx=sum(Nx)),by=.(year,GEOID,race7,agell,ageul)], # sex=TOTAL
 			 	 use.names=TRUE,fill=TRUE,idcol=TRUE) 
 nx.county[.id==2, ':=' (sex="TOTAL",race7="TOTAL")]
@@ -124,6 +124,13 @@ if (whichDeaths=="dof")                   setDT(dofdeaths<-read.dta13(.deaths))
 if (whichDeaths=="fake") { load(.deaths); setDT(cbdDat0SAMP); cbddeaths<-cbdDat0SAMP }
 if (whichDeaths=="real") { load(.deaths); setDT(cbdDat0FULL); cbddeaths<-cbdDat0FULL }
 
+if (whichDeaths=="real") { cbddeaths <- readRDS(.deaths); setDT(cbddeaths) }
+
+
+
+
+
+
 ## 4.2 	clean CBD deaths files
 if (whichDeaths %in% c("real","fake")) {
 	## MSSA
@@ -142,7 +149,7 @@ if (whichDeaths %in% c("real","fake")) {
 			 	   use.names=TRUE,fill=TRUE,idcol=TRUE) 
 	dx.mssa[.id==2,sex:="TOTAL"]
 	dx.mssa[,.id:=NULL]
-	dx.mssa[,race7:="TOTAL"]
+	dx.mssa[,CHSI:="TOTAL"]
 	## county
 	dx.county<-copy(cbddeaths[sex %in% c("M","F") & 
 						!is.na(age) & !is.na(year) & 
@@ -157,46 +164,46 @@ if (whichDeaths %in% c("real","fake")) {
 	dx.county[age>=85,ageul:=199]
 	dx.county[sex=="F",sex:="FEMALE"]
 	dx.county[sex=="M",sex:="MALE"]
-	dx.county[raceCode=="AIAN-NH",race7:="AIAN_NH"]
-	dx.county[raceCode=="Asian-NH",race7:="ASIAN_NH"]
-	dx.county[raceCode=="Black-NH",race7:="BLACK_NH"]
-	dx.county[raceCode=="Hisp",race7:="HISPANIC"]
-	dx.county[raceCode=="Multi-NH",race7:="MR_NH"]
-	dx.county[raceCode=="NHPI-NH",race7:="NHPI_NH"]
-	dx.county[raceCode=="White-NH",race7:="WHITE_NH"]
-	dx.county[raceCode=="Other-NH",race7:="SOR_NH"]
+	dx.county[CHSI=="AIAN-NH",raceCode:="AIAN_NH"]
+	dx.county[CHSI=="Asian-NH",raceCode:="ASIAN_NH"]
+	dx.county[CHSI=="Black-NH",raceCode:="BLACK_NH"]
+	dx.county[CHSI=="Hisp",raceCode:="HISPANIC"]
+	dx.county[CHSI=="Multi-NH",raceCode:="MR_NH"]
+	dx.county[CHSI=="NHPI-NH",raceCode:="NHPI_NH"]
+	dx.county[CHSI=="White-NH",raceCode:="WHITE_NH"]
+	dx.county[CHSI=="Other-NH",raceCode:="SOR_NH"]
 	dx.county<-merge(dx.county,countycfips,on=county,all.x=TRUE) # merge cname->GEOID
 	dx.county[,GEOID:=sprintf("%05d000000",cfips)]
-	dx.county<-rbind(dx.county[,.(Dx=.N),by=.(year,GEOID,sex,race7,agell,ageul)], # sex+race detail
+	dx.county<-rbind(dx.county[,.(Dx=.N),by=.(year,GEOID,sex,CHSI,agell,ageul)], # sex+race detail
 					 dx.county[,.(Dx=.N),by=.(year,GEOID,agell,ageul)], # sex=TOTAL, race=TOTAL
-					 dx.county[,.(Dx=.N),by=.(year,GEOID,sex,agell,ageul)], # race7=TOTAL
-					 dx.county[,.(Dx=.N),by=.(year,GEOID,race7,agell,ageul)], # sex=TOTAL
+					 dx.county[,.(Dx=.N),by=.(year,GEOID,sex,agell,ageul)], # CHSI=TOTAL
+					 dx.county[,.(Dx=.N),by=.(year,GEOID,CHSI,agell,ageul)], # sex=TOTAL
 					 use.names=TRUE,fill=TRUE,idcol=TRUE) 
-	dx.county[.id==2, ':=' (sex="TOTAL",race7="TOTAL")]
-	dx.county[.id==3,race7:="TOTAL"]
+	dx.county[.id==2, ':=' (sex="TOTAL",CHSI="TOTAL")]
+	dx.county[.id==3,CHSI:="TOTAL"]
 	dx.county[.id==4,sex:="TOTAL"]
 	dx.county[,.id:=NULL]
 	## state
-	dx.state<-copy(dx.county[,.(Dx=sum(Dx)),by=.(year,sex,race7,agell,ageul)])
+	dx.state<-copy(dx.county[,.(Dx=sum(Dx)),by=.(year,sex,CHSI,agell,ageul)])
 	dx.state[,GEOID:="06000000000"]
 }
 
-## 4.3	clean DOF deaths files
-if (whichDeaths == "dof") {
-	dx.county<-copy(dofdeaths)
-	dx.county<-rbind(dx.county, # sex+race detail
-					 dx.county[,.(Dx=sum(Dx)),by=.(year,GEOID,agell,ageul)], # sex=TOTAL, race=TOTAL
-					 dx.county[,.(Dx=sum(Dx)),by=.(year,GEOID,sex,agell,ageul)], # race7=TOTAL
-					 dx.county[,.(Dx=sum(Dx)),by=.(year,GEOID,race7,agell,ageul)], # sex=TOTAL
-					 use.names=TRUE,fill=TRUE,idcol=TRUE) 
-	dx.county[.id==2, ':=' (sex="TOTAL",race7="TOTAL")]
-	dx.county[.id==3,race7:="TOTAL"]
-	dx.county[.id==4,sex:="TOTAL"]
-	dx.county[,.id:=NULL]
-	## state
-	dx.state<-copy(dx.county[,.(Dx=sum(Dx)),by=.(year,sex,race7,agell,ageul)])
-	dx.state[,GEOID:="06000000000"]
-}
+# ## 4.3	clean DOF deaths files
+# if (whichDeaths == "dof") {
+# 	dx.county<-copy(dofdeaths)
+# 	dx.county<-rbind(dx.county, # sex+race detail
+# 					 dx.county[,.(Dx=sum(Dx)),by=.(year,GEOID,agell,ageul)], # sex=TOTAL, race=TOTAL
+# 					 dx.county[,.(Dx=sum(Dx)),by=.(year,GEOID,sex,agell,ageul)], # CHSI=TOTAL
+# 					 dx.county[,.(Dx=sum(Dx)),by=.(year,GEOID,CHSI,agell,ageul)], # sex=TOTAL
+# 					 use.names=TRUE,fill=TRUE,idcol=TRUE) 
+# 	dx.county[.id==2, ':=' (sex="TOTAL",CHSI="TOTAL")]
+# 	dx.county[.id==3,CHSI:="TOTAL"]
+# 	dx.county[.id==4,sex:="TOTAL"]
+# 	dx.county[,.id:=NULL]
+# 	## state
+# 	dx.state<-copy(dx.county[,.(Dx=sum(Dx)),by=.(year,sex,CHSI,agell,ageul)])
+# 	dx.state[,GEOID:="06000000000"]
+# }
 
 ## 5	MORTALITY ----------------------------------------------------------------------
 
@@ -210,10 +217,10 @@ doExtract <- function(dx=NULL, nx=NULL, nyrs=NA, y=NA, level=NA) {
 	if (length(unique(nx[year>=y-nyrs & year<=y+nyrs,year]))<(2*nyrs+1)) { stop("Exposure data are missing for one or more years") }
 	if (length(unique(dx[year>=y-nyrs & year<=y+nyrs,year]))<(2*nyrs+1)) { stop("Incidence data are missing for one or more years") }
 	tmp<-merge(nx[year>=y-nyrs & year<=y+nyrs],dx[year>=y-nyrs & year<=y+nyrs],
-				    on=c('GEOID','sex','year','agell','ageul','race7'),
+				    on=c('GEOID','sex','year','agell','ageul','CHSI'),
 		  			all.x=TRUE,all.y=TRUE) # merge pop+deaths (filtered years)
-	tmp<-tmp[,.(Nx=sum(Nx),Dx=sum(Dx)),by=c('GEOID','sex','agell','ageul','race7')] # collapse
-	tmp<-setDT(complete(tmp,GEOID,sex,race7,agell)) # (tidyr) rectangularize 
+	tmp<-tmp[,.(Nx=sum(Nx),Dx=sum(Dx)),by=c('GEOID','sex','agell','ageul','CHSI')] # collapse
+	tmp<-setDT(complete(tmp,GEOID,sex,CHSI,agell)) # (tidyr) rectangularize 
 	tmp[is.na(Dx),Dx:=0] # convert implicit to explicit zero.
 	tmp[,year:=y] # recode year
 	if (level=="mssa") {
@@ -239,8 +246,8 @@ if (whichDeaths %in% c("real","fake")) {
 	mx.mssa<-data.table(do.call(rbind,lapply(range,doExtract,dx=dx.mssa,nx=nxacs,nyrs=2,level="mssa")))[,nyrs:=5]
 }
 ## county
-mx.county<-rbind( # combine 3-year TOTAL race, 5-year race7
-				data.table(do.call(rbind,lapply(2001:2017,doExtract,dx=dx.county,nx=nx.county,nyrs=1,level="county")))[race7=="TOTAL"][,nyrs:=3],
+mx.county<-rbind( # combine 3-year TOTAL race, 5-year CHSI
+				data.table(do.call(rbind,lapply(2001:2017,doExtract,dx=dx.county,nx=nx.county,nyrs=1,level="county")))[CHSI=="TOTAL"][,nyrs:=3],
 				data.table(do.call(rbind,lapply(2002:2016,doExtract,dx=dx.county,nx=nx.county,nyrs=2,level="county")))[,nyrs:=5]
 			)
 ## state
@@ -319,12 +326,12 @@ doLTChiangCI <- function(x, Nx, Dx, sex, ax=NULL, level=0.95) {
 }
 
 ## 6.2	add index to mx tables
-mx.state[, i:=.GRP, by=c("nyrs","GEOID","sex","race7","year")]	
+mx.state[, i:=.GRP, by=c("nyrs","GEOID","sex","CHSI","year")]	
 setkeyv(mx.state,c("i","agell"))
-mx.county[, i:=.GRP, by=c("nyrs","GEOID","sex","race7","year")]	
+mx.county[, i:=.GRP, by=c("nyrs","GEOID","sex","CHSI","year")]	
 setkeyv(mx.county,c("i","agell"))
 if (whichDeaths %in% c("real","fake")) {
-	mx.mssa[, i:=.GRP, by=c("nyrs","comID","sex","race7","year")]	
+	mx.mssa[, i:=.GRP, by=c("nyrs","comID","sex","CHSI","year")]	
 	setkeyv(mx.mssa,c("i","agell"))
 }
 
@@ -337,14 +344,14 @@ if (whichDeaths %in% c("real","fake")) {
 
 ## 6.4	Call LT routine by geography
 ## state
-system.time({	lt.state<-mx.state[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","race7","year")] }) 
+system.time({	lt.state<-mx.state[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","CHSI","year")] }) 
 setkeyv(lt.state,c("i","x"))
 ## county
-system.time({	lt.county<-mx.county[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","race7","year")] }) 
+system.time({	lt.county<-mx.county[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","CHSI","year")] }) 
 setkeyv(lt.county,c("i","x"))
 ## MSSA
 if (whichDeaths %in% c("real","fake")) { 
-	system.time({ lt.mssa<-mx.mssa[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","comID","sex","race7","year")] }) 
+	system.time({ lt.mssa<-mx.mssa[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","comID","sex","CHSI","year")] }) 
 	setkeyv(lt.mssa,c("i","x"))
 }
 
@@ -358,24 +365,24 @@ if (whichDeaths %in% c("real","fake")) {
 	saveRDS(lt.mssa,paste0(upPlace,"/lifeTables/dataOut/LTciMSSA.rds"))
 }
 ## e0 only
-saveRDS(lt.state[x==0,c("nyrs","GEOID","sex","race7","year","ex","exlow","exhigh")],
+saveRDS(lt.state[x==0,c("nyrs","GEOID","sex","CHSI","year","ex","exlow","exhigh")],
 		paste0(upPlace,"/lifeTables/dataOut/e0ciState.rds"))
-saveRDS(lt.county[x==0,c("nyrs","GEOID","sex","race7","year","ex","exlow","exhigh")],
+saveRDS(lt.county[x==0,c("nyrs","GEOID","sex","CHSI","year","ex","exlow","exhigh")],
 		paste0(upPlace,"/lifeTables/dataOut/e0ciCounty.rds"))
 if (whichDeaths %in% c("real","fake")) { 
-	saveRDS(lt.mssa[x==0,c("nyrs","comID","sex","race7","year","ex","exlow","exhigh")]
+	saveRDS(lt.mssa[x==0,c("nyrs","comID","sex","CHSI","year","ex","exlow","exhigh")]
 			,paste0(upPlace,"/lifeTables/dataOut/e0ciMSSA.rds"))
 }
 
 ## 7.2	Review
-mx.state[sex=="TOTAL" & race7=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("GEOID","sex","year","race7")] # state sum
-lt.state[x==0 & sex=="TOTAL" & race7=="TOTAL",c("GEOID","sex","year","race7","ex","exlow","exhigh")] 
-mx.county[sex=="TOTAL" & race7=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("nyrs","sex","year","race7")] # state sum
-lt.county[x==0 & sex=="TOTAL" & race7=="TOTAL" & year==2017,
-			c("nyrs","GEOID","sex","year","race7","ex","exlow","exhigh")] 
-mx.mssa[sex=="TOTAL" & race7=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("sex","year","race7")] # state sum
-lt.mssa[x==0 & sex=="TOTAL" & race7=="TOTAL" & (year %in% c(2010,2017)),
-			c("comID","sex","year","race7","ex","exlow","exhigh")] 
+mx.state[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("GEOID","sex","year","CHSI")] # state sum
+lt.state[x==0 & sex=="TOTAL" & CHSI=="TOTAL",c("GEOID","sex","year","CHSI","ex","exlow","exhigh")] 
+mx.county[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("nyrs","sex","year","CHSI")] # state sum
+lt.county[x==0 & sex=="TOTAL" & CHSI=="TOTAL" & year==2017,
+			c("nyrs","GEOID","sex","year","CHSI","ex","exlow","exhigh")] 
+mx.mssa[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("sex","year","CHSI")] # state sum
+lt.mssa[x==0 & sex=="TOTAL" & CHSI=="TOTAL" & (year %in% c(2010,2017)),
+			c("comID","sex","year","CHSI","ex","exlow","exhigh")] 
 
 ## 7.3	NOTES	----------------------------------------------------------
 
