@@ -51,7 +51,7 @@ BEIGE <- "#F9F5F1"
 
 # # Styles for help buttons and boxes
 myTabHelpButtonSty <- "background-color:#694D75; font-size:14px;"
-myDownloadButtonSty <- "padding-left: 8px; padding-right: 8px; margin: 5px;"
+myDownloadButtonSty <- "padding-left: 6px; padding-right: 6px; margin-top: 5px;"
 myBoxSty        <- "cursor:pointer; border: 3px solid blue; padding-right:0px;padding-left:0px;"
 mySidebarTextSty <- "float:left; margin: 20px; color:#000000;"
 
@@ -228,8 +228,8 @@ shinyUI(
                          # div(id = "rankCauseDownloads", style = "margin: 10px;",
                          #     downloadButton('rankCauseFigure', 'Download Figure', style = myDownloadButtonSty)
                          # ),
-                         div(id = "disparityDownloads", style = "margin: 10px;",
-                             downloadButton('disparityPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty))
+                         div(id = "ourOnlyPNGDownload", style = "margin: 10px;",
+                             downloadButton('ourOnlyPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty))
                          )
                        ),
 
@@ -328,10 +328,14 @@ shinyUI(
                                                  plotOutput("rankGeo", width="100%", height=1700)
                                         ),
                                   
-                                        tabPanel(title = "AGE RACE FOCUS", value = "agePlaceFocusTab",
-                                                 plotOutput("agePlaceFocus", width="100%", height=1700)
+                                        tabPanel(title = "AGE RACE FOCUS", value = "ageRaceFocusTab",
+                                                 plotOutput("ageRaceFocus", width="100%", height=1700)
                                         ),
                                               
+                                        tabPanel(title = "Death Hosp ED", value = "deathHospEDTab",
+                                                 plotOutput("deathHospED", width="100%", height=1700)
+                                        ),
+                                        
                                         tabPanel(title = "Attributable Risks - IHME", value = "riskByCauseTab",
                                                  plotlyOutput("riskByCause", height = 600)
                                         ),
@@ -412,6 +416,42 @@ shinyUI(
                                                  plotOutput("any_primary", height = 700)
                                         )
                             )
+                   ),
+                    
+                    # JASPO - Demographics
+                   tabPanel(strong("DEMOGRAPHICS"), value = "demographics",
+                            
+                            tabsetPanel(type = "tab", id = "demographicsID",
+                                        tabPanel(title = "Demographics", value = "demographicsTab",
+                                                 br(),
+                                                 
+                                                 fluidRow( 
+                                                   column(width = 7, 
+                                                          style = 'padding:0px; height:49vh', 
+                                                          plotlyOutput("demoPop_RacePie", 
+                                                                       height = '49vh')),
+                                                   
+                                                   column(width = 5,
+                                                          style = 'padding:0px; height:49vh',
+                                                          plotlyOutput("demoPop_Pyramid", 
+                                                                       height = '49vh')) 
+                                                   #column(width = 1)
+                                                   
+                                                 ), 
+                                                 
+                                                 fluidRow(
+                                                   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff'),
+                                                   column(width = 10,
+                                                          style = 'padding:0px; height:37vh', 
+                                                          plotlyOutput("demoPop_RaceAge",
+                                                                       height = '37vh')),
+                                                   
+                                                   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff')
+                                                   )
+                                                 
+                                        )
+                            )
+      
                    ),
                    
                    

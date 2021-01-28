@@ -7,7 +7,7 @@ if(1==2){
 }
 
 
-trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE, myMultiRace=FALSE) {
+trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE, myMultiRace=FALSE, myLineLabelSize = myLineLabelCex) {
 
   # ----- sexTrendTab ---------------------------------------------------------
   
@@ -124,7 +124,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     
     
-    myLineLabel <- "raceName"
+    myLineLabel <- "raceCode" # Changed to raceCode
     
     myTrans    <- ifelse(myLogTrans,'log2','identity')
     myMin      <- ifelse(myLogTrans,NA,0)    
@@ -140,7 +140,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
                       " in ",myLHJ," by RACE/ETHNIC Group*, ",yearBit)
     myTitle <-  wrap.labels(myTitle,myWrapNumber)
     
-    varsIn  <- c("causeNameShort","county","yearG3","raceName",myMeasure) # JASPO
+    varsIn  <- c("causeNameShort","county","yearG3","raceCode",myMeasure) # JASPO
     tabDat  <- dat.1 %>% select(varsIn)
     
     
@@ -161,13 +161,17 @@ tplot <-  ggplot(data=dat.1,
           geom_line(size=myLineSize, show.legend=FALSE)  +
           geom_point(shape = myPointShape, size=myPointSize, show.legend=FALSE)  +
           #geom_dl(method = list(box.color = NA, "angled.boxes")) +
-          scale_x_continuous(minor_breaks=myBreaks, breaks=myBreaks, expand=c(0,3), labels=myLabels) +
+          scale_x_continuous(minor_breaks=myBreaks, 
+                             breaks=myBreaks, 
+                             # expand=c(0,3), 
+                             labels=myLabels, 
+                             expand = expansion(mult = c(0, 0), add = c(1, 3))) +
           scale_y_continuous(limits = c(0, NA)) +
 
-          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", size = myLineLabelSize, 'last.bumpup',font="bold")) +
+          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex = myLineLabelSize, 'last.bumpup',font="bold")) +
           # geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x - 0.2), "first.points",size = myLineLabelSize,'first.bumpup' ,font="bold"))  +
   
-          labs(y = deathMeasuresNames[deathMeasures == myMeasure]
+          labs(y = deathMeasuresNames[deathMeasures == myMeasure], x = "Year"
                ) +
           # labs(title = myTitle) +
           theme_bw(
@@ -178,6 +182,9 @@ tplot <-  ggplot(data=dat.1,
             axis.text   = element_text(size=myTextSize2),
             axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1,)
             ) 
+
+
+if (myTab == "raceTrendTab") tplot <- tplot + scale_color_manual(values = raceCodesColors)
 
  list(plotL = tplot, dataL = tabDat)
 

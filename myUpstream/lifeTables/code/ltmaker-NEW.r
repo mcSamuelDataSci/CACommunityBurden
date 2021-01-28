@@ -1,3 +1,41 @@
+# title: ltmake.r
+# purpose: produce lifetables for CA burden project
+# author: ethan sharygin (github:sharygin)
+# notes:
+# - intention is for analyst to be able to generate life tables by using default population + deaths,
+#		or inputting their own population + deaths.
+# - ACS 5-yr datasets populations are weighted by age/sex to sum to CB PEP estimates from middle year.
+# - ACS tract population tables: from B01001 = age/sex by tract; subtables by race/ethnicity.
+# - combine years to get higher exposures for better tables: 
+#		geo		years (total)	years (by race)	      agegroups 			  by-characteristics
+#		state	    1,3		                1,3				0,1-4,5(5)85,199	GEOID,sex,race
+#		county	  1,3		                  5				0,1-4,5(5)85,199	GEOID,sex,race
+#		mssa	    5		                   NA  			0(5)85,199			  GEOID,sex
+# - GEOID = unique geography level code, tract and higher: SSCCCTTTTTT where S=state fips, C=county fips, T=tract.
+# - race schema: WNH BNH APINH H. exclude MR, AIAN, and combine A+PI.
+#		before 2000, no MR data, so issues in denominators for those years.
+#		issues in matching numerators/denominators. possible solution -- bridged race.
+# - Census tracts changed between 2009-2010-2013. MSSA boundaries changed between 2009 and 2013.
+#		as a result, had to map 2000 and 2010 tracts both into 2013 MSSA boundaries.
+# - MSSA issues: combined 0-4 age group combined + no tracts coded before 2005; 2005 onward about 3% missing.
+# - unknown whether CA RESIDENCE criteria are correctly reflected in the death file.
+# - dropped Bernoulli trials method for LTCI
+# instructions:
+# - set path
+# - set options
+# - required input files: 
+#	(1) ACS population B01001* 2009-2017 5-year files by tract from NHGIS (acs5_B01001_tracts.dta)
+#	(2) DOF population 2000-09 and 2010-2018 by county from WWW (dof_ic00pc10v19.dta)
+#	(3) 2009 and 2010 tracts to 2013 MSSAs by ESRI ArcGIS from OSHPD+TIGER/LINE (trt00mssa13.dta + trt10mssa13.dta)
+#	(4) 2013 MSSA to county maps from OSHPD (mssa13cfips.dta)
+#	(5) a deaths microdata file, for example: cbdDat0SAMP.R, cbdDat0FULL.R, or dof_deaths_mi.dta
+# TBD:
+# - convert packaged inputs from stata to csv
+# - repackage default deaths/population into a standard text format: e.g., HMD format. 
+#		(easier for analysts to substitute their own deaths/population data)
+#		(use the readHMDHFD package to sideload txt files?)
+# - calculate nqx from better data + package an included set of ax values.
+
 ## 1    SETUP		----------------------------------------------------------------------
 
 ## 1.1  packages
@@ -7,19 +45,22 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, require, character.only=TRUE)           
 
 ## 1.2  options
-controlPop  <-  TRUE  # whether to control ACS to DOF pop totals
+controlPop  <-  F  # whether to control ACS to DOF pop totals
 whichDeaths <- "real" # source of deaths data (real,fake,dof)
 whichPop    <- "pep"  # source of population data (dof,pep)
 critNx      <- 10000
 critDx      <-   700
 
+# critNx1 <- 1000
+# critDx1 <- 70
+
 ## 1.3 	paths 
 #setwd("C:/Users/fieshary/projects/CACommunityBurden")
 myDrive   <- getwd()
-myPlace   <- paste0(myDrive,"/myCBD") 
+myPlace   <- paste0(myDrive,"/myCCB") 
 upPlace   <- paste0(myDrive,"/myUpstream") 
 
-server <- F
+server <- T
 if (server) {
   mySecure  <- "/mnt/projects/FusionData/0.Secure.Data/myData"
   myStandards <- "/mnt/projects/FusionData/Standards/"
@@ -107,10 +148,13 @@ if (controlPop) {
     left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
     select(-Ethan)
 } else {
-  nxACS <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/acs5_mssa.dta")) %>% # ACS tract pop collapsed to MSSA
-    rename(Ethan = race7) %>%
-    left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
-    select(-Ethan) 
+  # nxACS <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/acs5_mssa.dta")) %>% # ACS tract pop collapsed to MSSA
+  #   rename(Ethan = race7) %>%
+  #   left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
+  #   select(-Ethan) 
+  
+  nxACS <- readRDS(paste0(upPlace,"/lifeTables/dataIn/nxMSSA.RDS")) %>%
+    rename(Nx = nx) 
 }
 
 # Grab total sex - nxACS already has total Race
@@ -138,7 +182,7 @@ if (whichDeaths %in% c("real","fake")) {
     mutate(agell = 5*floor(age/5), # create lower ageGroup by cutting into 5 years
            agell = ifelse(agell > 85, 85, agell), # set lower ageGroup > 85 to 85
            ageul = ifelse(age < 85, agell + 4, 199), # create upper ageGroup; if age > 85, then set to 199
-           sex = ifelse(sex == "F", "FEMALE", "MALE")) %>%
+           sex = ifelse(sex == "F", "Female", "Male")) %>%
     left_join(trt10mssa, by = "GEOID") %>%
     group_by(year,comID,sex, agell,ageul) %>%
     summarise(Dx = n()) %>%
@@ -162,14 +206,14 @@ if (whichDeaths %in% c("real","fake")) {
                            my_lAge = c(0, 1, seq(5, 85, by = 5)),
                            my_uAge = c(0, seq(4, 84, by = 5), 199),
                            my_ageName = c(0, 1, seq(5, 85, by = 5)), 
-                           ourServer = F), 
+                           ourServer = T), 
            ageul = ageChop(INAGE = age,
                            myCuts = TRUE,
                            my_lAge = c(0, 1, seq(5, 85, by = 5)),
                            my_uAge = c(0, seq(4, 84, by = 5), 199),
                            my_ageName = c(0, seq(4, 84, by = 5), 199), 
-                           ourServer = F),
-           sex = ifelse(sex == "F", "FEMALE", "MALE")) %>%
+                           ourServer = T),
+           sex = ifelse(sex == "F", "Female", "Male")) %>%
     left_join(countycfips, by = "county") %>%
     mutate(GEOID = sprintf("%05d000000",cfips)) %>%
     group_by(year,GEOID,sex, raceCode, agell,ageul) %>%
@@ -179,7 +223,7 @@ if (whichDeaths %in% c("real","fake")) {
   dxCounty_totalSex <- dxCounty %>%
     group_by(year,GEOID, raceCode, agell,ageul) %>%
     summarise(Dx = sum(Dx)) %>%
-    mutate(sex = "TOTAL")
+    mutate(sex = "Total")
   
   dxCounty <- bind_rows(dxCounty, dxCounty_totalSex)
   
@@ -266,7 +310,7 @@ doExtract <- function(dx=NULL, nx=NULL, nyrs=NA, y=NA, level=NA) {
 # For some reason, the range is 2009-2016 for MSSA
 if (whichDeaths %in% c("real","fake")) { 
   range<-2009:2014 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
-  range<-2009:2016 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
+  range<-2009:2017 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
   
   mxMssa_list <- lapply(range,doExtract,dx=dxMssa,nx=nxACS,nyrs=2,level="mssa")
   
@@ -397,7 +441,7 @@ doLTChiangCI <- function(x, Nx, Dx, sex, ax=NULL, level=0.95) {
 
 
 ## 6.2 add index to mx tables, and calculate sum pop and deaths per each index
-mxState <- mxState %>%
+mxState1 <- mxState %>%
   group_by(agell, ageul) %>%
   mutate(i = row_number()) %>%
   group_by(i) %>%
@@ -406,7 +450,7 @@ mxState <- mxState %>%
   ungroup() %>%
   filter(sumNx >= critNx & sumDx >= critDx)
 
-mxCounty <- mxCounty %>%
+mxCounty1 <- mxCounty %>%
   group_by(agell, ageul) %>%
   mutate(i = row_number()) %>%
   group_by(i) %>%
@@ -415,7 +459,7 @@ mxCounty <- mxCounty %>%
   ungroup() %>%
   filter(sumNx >= critNx & sumDx >= critDx)
 
-mxMssa <- mxMssa %>%
+mxMssa1 <- mxMssa %>%
   group_by(agell, ageul) %>%
   mutate(i = row_number()) %>%
   group_by(i) %>%
@@ -431,16 +475,16 @@ mxMssa <- mxMssa %>%
 #   group_by(id, nyrs, GEOID, sex, raceCode, year) %>%
 #   bind_cols(doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex))
 
-ltState <- setDT(mxState)[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","raceCode","year")]
+ltState <- setDT(mxState1)[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","raceCode","year")]
 setkeyv(ltState,c("i","x"))
 
 ## county
-ltCounty <- setDT(mxCounty)[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","raceCode","year")]
+ltCounty <- setDT(mxCounty1)[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","GEOID","sex","raceCode","year")]
 setkeyv(ltCounty,c("i","x"))
 
 ## MSSA
 if (whichDeaths %in% c("real","fake")) { 
-  ltMssa <- setDT(mxMssa)[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","comID","sex","raceCode","year")]
+  ltMssa <- setDT(mxMssa1)[, doLTChiangCI(x=agell,Nx=Nx,Dx=Dx,sex=sex), by=c("i","nyrs","comID","sex","raceCode","year")]
   setkeyv(ltMssa,c("i","x"))
 }
 
@@ -486,6 +530,27 @@ lt.county[x==0 & sex=="TOTAL" & CHSI=="TOTAL" & year==2017,
 mx.mssa[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("sex","year","CHSI")] # state sum
 lt.mssa[x==0 & sex=="TOTAL" & CHSI=="TOTAL" & (year %in% c(2010,2017)),
         c("comID","sex","year","CHSI","ex","exlow","exhigh")] 
+
+
+
+
+
+# Jaspo MSSA Pop Exploration - DELETE SOON
+# source("/mnt/projects/FusionData/SDOH/pullACS_function_V2.R")
+# 
+# 
+# sdohVars <- read_xlsx("/mnt/projects/FusionData/SDOH/linkageSDOH.xlsx", sheet = "Age") %>%
+#   slice(1:2)
+# 
+# mssaPop <- getACS(State=06, # Set to NULL if pulling ZCTA
+#                   Geography="tract", # Options: county, zcta, tract.. for acs1, puma
+#                   MSSA = F, # if you want MSSA output, set T and geograph = Tract
+#                   Survey="acs5",
+#                   Year=2018,
+#                   moeLevel=95,
+#                   asList = T, # Want as a list, or as one data frame?
+#                   df = sdohVars)
+
 
 ## 7.3	NOTES	----------------------------------------------------------
 

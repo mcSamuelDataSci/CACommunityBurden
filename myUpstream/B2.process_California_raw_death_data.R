@@ -3,7 +3,6 @@
 ############
 
 
-
 # =============================================================================
 # process_raw_death_data.R
 #  Inputs:
@@ -24,14 +23,14 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <- "g:/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
-# secure.location  <- "/mnt/projects/CCB/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <-            "g:/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+#secure.location  <- "/mnt/projects/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 
 .sl              <- secure.location  # short name to shorten lines of code below
 
 myDrive    <- getwd()
 
-myPlace    <- paste0(myDrive,"/myCBD")
+myPlace    <- paste0(myDrive,"/myCCB")
 upPlace    <- paste0(myDrive,"/myUpstream")
 
 #-- EDIT for Local versus State installation -------------------------------------------------
@@ -61,9 +60,11 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
 
- ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_093020.csv"), colClasses = "character")  
- ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"),          colClasses = "character")       
- ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"),   colClasses = "character")        
+ ca20x   <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_123120.csv"), colClasses = "character")  # contains some prior years data
+ ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")  
+ ca19x   <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019_OLD.csv"), colClasses = "character")       
+ ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
+ ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
  ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
  ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
@@ -111,7 +112,25 @@ vInfo             <- filter(raw.death.variable.info, CCDF == 1)  # CCDF 2005-cur
 death.datA        <- death.datA[vInfo$seqID1]   # select only needed columns of 2005-2015 data!
 names(death.datA) <- vInfo$varName           # name columns based on varName!
 
+# j2019 <- ca19[vInfo$seqID1] 
+# names(j2019) <- vInfo$varName
+# ctable(j2019$month, j2019$year)
+# 
+# j2019x <- ca19x[vInfo$seqID1] 
+# names(j2019x) <- vInfo$varName
+# ctable(j2019x$month, j2019x$year)
 
+# j2020x <- ca20x %>% select(F1) %>% mutate(x2020 = TRUE)
+# j2019x <- ca19x %>% select(F1) %>% mutate(x2019 = TRUE)
+# jBoth <- full_join(j2020x, j2019x, by="F1") %>%
+#            mutate(whichYears = ifelse(x2020 & x2019,"both","one"))
+# freq(jBoth$whichYears)
+# 
+# j2020x <- ca20 %>% select(F1) %>% mutate(x2020 = TRUE)
+# j2019x <- ca19 %>% select(F1) %>% mutate(x2019 = TRUE)
+# jBoth <- full_join(j2020x, j2019x, by="F1") %>%
+#   mutate(whichYears = ifelse(x2020 & x2019,"both","one"))
+# freq(jBoth$whichYears)
 
 
 

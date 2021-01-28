@@ -1,0 +1,21 @@
+---
+title: "IHME Process Document"
+output: html_document
+---
+
+
+
+
+
+http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2019-permalink/a8e5c5d836f9a5ddace131144273f892
+
+
+
+
+
+
+
+
+
+
+

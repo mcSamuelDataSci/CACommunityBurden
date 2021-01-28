@@ -1,89 +1,84 @@
-library(dplyr)
-library(readr)
-library(tidyr)
-library(readxl)
 
-myPlace <- getwd()
-
-fusionPlace <- "/mnt/projects/FusionData"
-ccbPlace    <- paste0(fusionPlace,"/CCB Project/0.CCB/myCBD")
-ccbPlace2    <- paste0(fusionPlace,"/CCB Project/0.CCB")
+server <- T
+if (!server) source("g:/FusionData/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
 
 
 # --Global constants and settings-----------------------------------
 
-myYear   <-  2017
-bestYear <- 2018
+myYear   <-  2019
+bestYear <- 2019
 
 mySex     <-  "Total"
 
 # --CCB DEATH DATA ------------------------------------------------
 
-causeLink  <- read_excel(paste0(ccbPlace,"/myInfo/icd10_to_CAUSE.xlsx")) %>%
-                  select(causeCode, causeName) %>%
-                  mutate(causeName = ifelse(causeCode == "D05","Alzheimers",causeName),
-                         causeName = ifelse(causeCode == "Z01","Ill-Defined",causeName))
 
-
-ccbData     <- readRDS(paste0(ccbPlace,"/myData/real/datCounty.RDS")) %>%
-                     rename(causeCode = CAUSE)   %>%   #### FIX!!!!
+ccbDataX     <- readRDS(paste0(ccbData,"real/datCounty.RDS")) %>%
                      filter(Level == "lev2", causeCode != "Z01") %>%
-                     left_join(causeLink,by="causeCode")       
+                     left_join(deathCauseLink ,by="causeCode")       
                      
-ccb         <- filter(ccbData,year==myYear,sex==mySex) 
+ccb         <- filter(ccbDataX,year==myYear,sex==mySex) 
 
 ccbDeaths   <- ccb %>%
                  mutate(measure = Ndeaths,
-                        mValues = causeName)
+                        mValues = causeNameShort)
 
 ccbYLL      <- ccb %>%
                  mutate(measure = YLLper,
-                        mValues = causeName)
+                        mValues = causeNameShort)
 
-ccbChange   <- filter(ccbData,year %in% c(2009,2019), sex==mySex) %>% 
-                  select(county,year,causeName,aRate) %>%
+ccbChange   <- filter(ccbDataX,year %in% c(2009,2019), sex==mySex) %>% 
+                  select(county,year,causeNameShort,aRate) %>%
                   pivot_wider(names_from = year, values_from = aRate, names_prefix="rate")
 
 ccbChange      <- ccbChange %>%
                      mutate(change = round(100*(rate2019-rate2009)/rate2009,1))%>%
                      filter(!(is.na(rate2009) | is.na(rate2019))) %>% # exclude if either is 0 -- check
                      mutate(measure=change,
-                            mValues = causeName) 
+                            mValues = causeNameShort) 
                     # mutate(mValues = ifelse(measure < 0,NA,mValues))
 
 
 # --CCB RACE DATA ---------------------------------------------------
 
 
-ccbRace <-  readRDS(paste0(ccbPlace,"/myData/real/ccbRaceDisparity.RDS"))   %>%
+ccbRace <-  readRDS(paste0(ccbData,"real/ccbRaceDisparity.RDS")) %>%
+                left_join(deathCauseLink ,by="causeCode")   %>%
                   mutate(measure=round(rateRatio,1),
-                  mValues = causeName)
+                  mValues = causeNameShort)
 
 
 # -- CID DATA ------------------------------------------------
 
 
-cidData     <- read_csv(paste0(ccbPlace2,"/myUpstream/CID/dcdcData.csv")) 
+cidData     <- read_csv(paste0(ccbUpstream,"CID/dcdcData.csv")) 
 
-cidData     <- filter(cidData,Year==myYear) %>%
-  mutate(county = County,
-         measure=Cases,
-         mValues = Disease)
+cidData     <- cidData %>%
+                 mutate(county = County,
+                 measure=Cases,
+                 mValues = Disease)
 
 
 # -- HOSPITALZATION DATA -----------------------------------------------
 
 
 
-causeLinkCCS  <- read_excel(paste0(ccbPlace,"/myInfo/CCS Code and Names Linkage.xlsx")) %>%
-                       select(causeCode, ccsName) 
+edData  <- readRDS(paste0(ccbData,"real/hosp_ED_year.RDS")) %>%
+             left_join(hospCauseLink, by="causeCode") %>%
+             filter(year==bestYear) %>% 
+             mutate(measure = n_ED,
+                    mValues = causeNameShort)
 
 
-hospData <- readRDS(paste0(ccbPlace,"/myData/real/hosp_ED_year.RDS")) %>%
-             left_join(causeLinkCCS, by="causeCode") %>%
+hospData <- readRDS(paste0(ccbData,"real/hosp_ED_year.RDS")) %>%
+             left_join(hospCauseLink, by="causeCode") %>%
              filter(year==bestYear) %>% 
              mutate(measure = n_hosp,
-                    mValues = ccsName)
+                    mValues = causeNameShort)
+
+
+
 
 
 # -- IMHE DATA -----------------------------------------------
@@ -92,7 +87,7 @@ hospData <- readRDS(paste0(ccbPlace,"/myData/real/hosp_ED_year.RDS")) %>%
 myLevel <- c('2','2,3,4')
 #myLevel <- c(2, 3)
 
-dataIHME     <- readRDS(paste0(ccbPlace,"/myData/v2IHME.RDS"))
+dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
 
 dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD  
                                       year_id    == 2017,
@@ -116,7 +111,7 @@ dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #YLD
 # --APP Constants ------------------------------------------------------
 
 
-countyList  <- sort(as.character(unique(ccbData$county)))
+countyList  <- sort(as.character(unique(ccbDataX$county)))
 
 BAR_WIDTH <-  0.9
 PLOT_WIDTH_MULTIPLIER <- 1.0
@@ -125,27 +120,29 @@ plot_title <- c("Deaths",
                 "Years of Life Lost",
                 "Increase in Deaths",
                 "Race Disparity in Deaths",
-                "Number of Hospitalizations",
+                "Number of Hospitalizations",  #"Number of ED Visits",
                 "Reportable Disease Cases",
                 "Years Lived with Disability",
-                "Risk Factors")
+                "Risk Factors"
+                )
 
 metric <-     c("Number",
                 "Rate",
                 "Percent",
                 "Rate Ratio",
                 "Number",
-                "Number",
                 "Rate",
-                "Rate")
+                "Rate",
+                "Number")
 
-dataSets   <- list(ccbDeaths, ccbYLL,ccbChange, ccbRace,hospData,cidData, dat.YLD.cause,dat.DALY.risk)
-ourColors <-    c("#8F98B5", "#E9A291", "#E9A291","#8ECAE3", "#E6C8A0","#8F98B5","#E9A291","#8F98B5")
+dataSets   <- list(ccbDeaths, ccbYLL,   ccbChange, ccbRace, hospData, cidData , dat.YLD.cause, dat.DALY.risk)
+
+#ourColors <-    c("#8F98B5", "#E9A291", "#E9A291","#8ECAE3", "#E6C8A0","#8F98B5","#E9A291",   "#8F98B5","blue")
 
 
 
 # https://stackoverflow.com/questions/50600425/r-convert-colors-to-pastel-colors
-a <-c("red","red1","red2","red3","grey","darkgreen","skyblue","blue","magenta","magenta4","yellow","orange","pink","pink","black")
+a <-c("red","red1","red2","red3","grey","darkgreen","skyblue","blue","magenta","magenta4","yellow","orange","pink","pink")
 # transform to rgb
 a1 <- col2rgb(a)
 # transform to HSV space
@@ -157,7 +154,7 @@ a3 <- hcl(hue, 35, 85)
 
 #barplot(seq_along(a), col=a3, main="Pastel_hcl")
 
-ourColors <- a3[c(5,6,7,8,9,11,12,15)]
+ourColors <- a3[c(5,6,7,8,9,11,12,14)]
 
 
 
@@ -230,7 +227,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10){
   
   # if (IDnum == 4) work.dat <- mutate(work.dat,xValues=paste0(xValues,"      (",raceCode,":",lowRace,")"))
   if (IDnum == 4) work.dat <- mutate(work.dat,xRaceValue=paste0("(",raceCode,":",lowRace,")"))
-  if (IDnum == 4) myYear <- "2016-2018"
+  if (IDnum == 4) myYear <- "2017-2019"
   if (IDnum == 3) myYear <- "2007 to 2017"
   
   plot_width <- max(work.dat$measure)*PLOT_WIDTH_MULTIPLIER
@@ -274,7 +271,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10){
 
 
 
-save(dataSets, ourColors, plot_title, metric, plotMeasures, file = paste0(ccbPlace,"/myData/real/burdenViewData.RData"))
+save(dataSets, ourColors, plot_title, metric, plotMeasures, file = paste0(ccbData,"real/burdenViewData.RData"))
 
 
 

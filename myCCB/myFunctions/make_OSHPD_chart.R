@@ -15,9 +15,6 @@ if (1==2) {
   
 myVar = "CCS-Beta"  
 
-# ccsMap <- ccsMap %>% select(ccsCode,ccsName, preg)
-
-
 #Ordering dataset, converting "type" values from short names to full names, joining with names
   oshpd_PD_work <- oshpd_PDD %>% 
                       mutate(type = factor(type, levels = c("n_hosp", 
@@ -31,14 +28,10 @@ myVar = "CCS-Beta"
                                                             "medcharge", 
                                                             "medcharge_per_day"))) %>%
                           mutate(type = plyr::revalue(type, hospMeasures_Revalue)) %>%   
-                          left_join(ccsMap, by =  "ccsCode")   
+                          left_join(hospCauseLink, by =  c("ccsCode"="causeCode") )  
     
   
-  # %>%
-    # filtering so that only lev2 data is used (for icd10_cm data), and all drg/mdc (since they didn't have lev1/2/0 options)
-    # filter(diagnosis_var == "drg" | diagnosis_var == "mdc" | Level == "lev2")
-  
-
+ 
 # Selecting specified county, sex, level, selecting the top N rows for the given myOSHPDtype 
   myOSHPDtype_N_cause <- oshpd_PD_work %>%
     #filter(diagnosis_var == "drg" | diagnosis_var == "mdc" | Level == "lev2")  %>%
@@ -51,7 +44,7 @@ myVar = "CCS-Beta"
   plotData <- oshpd_PD_work %>%
     filter(!is.na(ccsCode), county == myCounty, (type %in% c("Number of Hospitalizations","Average Length of Stay (Days)", "Total Charges", "Median Charges"))) %>% filter(ccsCode %in% myOSHPDtype_N_cause, sex == mySex) %>%
     group_by(type)   %>%
-    mutate(names = forcats::fct_reorder(ccsName, filter(.,type == myOSHPDtype)  %>%
+    mutate(names = forcats::fct_reorder(causeName, filter(.,type == myOSHPDtype)  %>%
                                              pull(measure)))
 
 # Creating ggplot facet grid plot

@@ -40,7 +40,7 @@ if (1==2) {
       ungroup()
    
    
-   tNames <- gbdMap0 %>% select(causeCode,causeName)
+   tNames <- causeLink %>% select(causeCode,causeName)
    
    ccbRaceDisparity <- raceDisparityUnique %>%
       left_join(tNames,by="causeCode") %>%

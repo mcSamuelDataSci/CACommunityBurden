@@ -1,80 +1,117 @@
-library(dplyr)
-library(ggplot2)
-library(readxl)
+server <- T
+if (!server) source("g:/FusionData/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
 
 
-if(1==2){
-  myLHJ="Alameda" 
-  myLHJ="CALIFORNIA"
-  myLHJ="Alameda" 
-  myLHJ="Butte"
-  myLHJ="Marin"
-  mySex <- c("Male","Female")
-  myRace <- "TOTAL"
-  myCause="A01"
-  myMeasure = "YLL"
-  mySex   = "Total"
-  myLHJ="CALIFORNIA"
-  mySexMult = c("Male","Female")
-  # myRace = c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "WHITE_NH")
-  myRace = c("AIAN",   "Asian",   "Black",  "Hisp",   "White")
-  }
 
-# LTplace    <- paste0(myPlace,"/myData")   # "/myUpstream","/lifeTables/dataOut"
-
-
-geoMap          <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) %>%
+geoMap          <- as.data.frame(read_excel(paste0(ccbInfo,"/County Codes to County Names Linkage.xlsx"))) %>%
                      select(FIPSCounty,county=countyName)
 
-lifeTableCounty <- readRDS(paste0(myPlace,"/myData/e0ciCounty.RDS")) %>%
+lifeTableCounty <- readRDS(paste0(ccbData,"/e0ciCounty.RDS")) %>%
                      mutate(FIPSCounty=substr(GEOID,3,5))  %>%
                      left_join(geoMap,by="FIPSCounty") %>%
                      mutate(sex = str_to_title(sex))
 
-lifeTableState  <- readRDS(paste0(myPlace,"/myData/e0ciState.RDS")) %>%
+lifeTableState  <- readRDS(paste0(ccbData,"/e0ciState.RDS")) %>%
                      mutate(county = "CALIFORNIA") %>%
                      mutate(sex = str_to_title(sex))
 
-lifeTableSet0   <- bind_rows(lifeTableCounty, lifeTableState)
-
-
-
-lifeTableSet <- filter(lifeTableSet0,raceCode != "Multi") # JASPO changed from race7 to raceCode
+lifeTableSet   <- bind_rows(lifeTableCounty, lifeTableState)
 
 # FIX MIN and MAX Year in global or other life tables function eventaully
   minYear_LT <- min(lifeTableSet$year)
   maxYear_LT <- max(lifeTableSet$year)
 
+#== FUNTION ========================================================================================================  
   
   
-  
- LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
+LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
    
-   raceColors1        <- c("seashell4", "chocolate1", "firebrick", "royalBlue1", "darkblue", "navajowhite3", "red",   "chartreuse4")
-   # raceNames1         <- c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "MR_NH",    "NHPI_NH",      "TOTAL", "WHITE_NH")
-   raceNames1         <- c("AIAN",   "Asian",   "Black",  "Hisp",   "Multi",    "NHPI",      "Total", "White")
-   names(raceColors1) <- raceNames1
-   totalColor         <- "red"
+ 
+#---BAR PART------------------------------------------------------------------------------------------------------
+   
+  
+  if(1==2){
+    myLHJ="Alameda" 
+    myLHJ="CALIFORNIA"
+    myLHJ="Alameda" 
+    myLHJ="Butte"
+    myLHJ="Marin"
+    mySex <- c("Male","Female")
+    myRace <- "TOTAL"
+    myCause="A01"
+    myMeasure = "YLL"
+    mySex   = "Total"
+    myLHJ="CALIFORNIA"
+    mySexMult = c("Male","Female")
+    # myRace = c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "WHITE_NH")
+    myRace = c(  "Asian",   "Black",  "Hisp",   "White")
+    myCI = FALSE
+  }  
+  
+  
+  
 
- dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult ,raceCode %in% myRace) %>% # originally race7, now raceCode JASPO
+ dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult, raceCode %in% myRace) %>% # originally race7, now raceCode JASPO
              mutate(lineLabel = paste(raceCode,"-",sex))
 
 
- if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
+ tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceCode, y=ex, fill=sex)) + 
+                geom_bar(stat = "identity",position="dodge")  +
+                scale_fill_manual(values = genderColors) + 
+                labs(x = "Race/Ethnicity", y = "Life Expectancy at Birth", x = "Year") +
+               coord_cartesian(ylim=c(65,90)) +
+               geom_segment(aes(x = .3, y = 64.8, xend = .5, yend = 65.3),
+                            color="red",size=1.2) +
+               geom_segment(aes(x = .3, y = 64.4, xend = .5, yend = 64.9),
+                    color="red",size=1.2) +
+               geom_text(aes(label=round(ex,1)), position=position_dodge(width=0.9), vjust=2,fontface="bold")
+ 
+ # 
+ # tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceCode, y=ex, fill=sex)) + 
+ #   geom_bar(stat = "identity",position="dodge")  +
+ #   scale_fill_manual(values = genderColors) + 
+ #   labs(x = "Race/Ethnicity", y = "Life Expectancy at Birth", x = "Year") +
+ #   coord_cartesian(ylim=c(65,90),  clip="off") +
+ #   geom_segment(aes(x = 1.25, y = 70, xend = 2.25, yend = 70), 
+ #                arrow=arrow(angle = 45, length = unit(0.08, "inches"), ends = "last") ,
+ #                color="blue",size=.5) +
+ #   geom_segment(aes(x = 1.25, y = 68, xend = 3.25, yend = 68), 
+ #                arrow=arrow(angle = 45, length = unit(0.08, "inches"), ends = "last") ,
+ #                color="blue",size=.5) +
+ #   geom_segment(aes(x = 1.25, y = 66, xend = 4.25, yend = 66), 
+ #                arrow=arrow(angle = 45, length = unit(0.08, "inches"), ends = "last") ,
+ #                color="blue",size=.5) +
+ #   geom_segment(aes(x = -0.1, y = 64.5, xend = 0.1, yend = 64.9),
+ #                color="red",size=1) +
+ #   geom_segment(aes(x = -0.1, y = 63.5, xend = 0.1, yend = 63.9),
+ #                color="red",size=1) 
+ 
+ 
+ # coord_cartesian(ylim = c(0, 0.75), clip="off") +
+ #   theme(plot.margin = unit(c(1,1,1,0), "lines"))
+ 
+
+ #---LINE PART------------------------------------------------------------------------------------------------------
+ 
  myTitle <- paste0("Trend in Life Expectancy, ",myLHJ,", ",minYear_LT,"-",maxYear_LT)
  myTitle <-  wrap.labels(myTitle,myWrapNumber)
-
+ 
+ 
+ 
+ 
+ dat.1 <-  filter(dat.1, county == "CALIFORNIA" & nyrs==1 | county != "California" & nyrs == 5) 
+ 
+ if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+ 
+ 
  myBreaks <- minYear_LT:maxYear_LT
  myLabels <- myBreaks
-
- 
- tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceCode, y=ex, fill=sex)) + geom_bar(stat = "identity",position="dodge")  +
-   scale_fill_manual(values = c("firebrick", "blue")) + labs(x = "Race/Ethnicity", y = "Life Expectancy at Birth")
-   
  
  
- tplot<- ggplot(data=filter(dat.1, nyrs == 1), aes(x=year, y=ex)) +
+ 
+ tplot<- ggplot(data=dat.1, aes(x=year, y=ex)) +                     # , nyrs == 1
                  geom_line(size=1.6,aes(color=raceCode,linetype=sex)) +
                # geom_point(shape = myPointShape,size=myPointSize)  +
                  ylim(62, 93) +
@@ -82,8 +119,8 @@ lifeTableSet <- filter(lifeTableSet0,raceCode != "Multi") # JASPO changed from r
                                     expand = expansion(mult = c(0, 0), add = c(1, 5)), # lower-limit: 2000 - (2018 - 2000) * 0 - 1... upper-limit: 2018 + (2018 - 2000) * 0 + 5
                                     #expand=c(0,5), # 
                                     labels=myLabels) +
-                 scale_color_manual(values = raceColors1) +   
-                 labs(title =myTitle, y = "life expectancy at birth")  +
+                 scale_color_manual(values = raceCodesColors) +   
+                 labs(title =myTitle, y = "Life Expectancy at Birth", x = "Year")  +
                  theme_bw() +
                   theme(axis.text=element_text(size=myAxisSize),
                         axis.title=element_text(size=myAxisSize,face="bold"),
@@ -92,8 +129,8 @@ lifeTableSet <- filter(lifeTableSet0,raceCode != "Multi") # JASPO changed from r
                         legend.position = "none"
                        ) +    
                   geom_dl(aes(label = lineLabel,color=raceCode), method = list(dl.trans(x = x + 0.2), "last.points", 
-                                                                            size = myLineLabelSize, # use this instead of cex
-                                                                            #cex=myCex1*.3, 
+                                                                            #size = myLineLabelSize, # use this instead of cex
+                                                                            cex=myLineLabelCex, 
                                                                             'last.bumpup',font="bold")) 
  
 if (myCI) {
@@ -106,15 +143,10 @@ if (myCI) {
 # tplot <- tplot + ylim(62, 93)
  
  
-  list(trend=tplot, bar=tplot_bar)
+   list(trend=tplot, bar=tplot_bar)
 
-  
-  
-  
-  
+ 
  }
  
- 
- # -------------------------------------------------------------------------------
  
  

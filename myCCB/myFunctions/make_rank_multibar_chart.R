@@ -4,27 +4,12 @@
 
 # ------------------------------------------------------------------------------------------------------------------
 
-if(1==2) {
-  myDataSet     = "hosp_race" # leave it in for now
-  myData        = "Hospitalizations"   # "Hospitalizations", "Emergency Department".. will be part of  title
-  myStrata  = "Race/Ethnicity" # "Race/Ethnicity" , "sex".. for title
-  mySort        = "Black"
-  myCounty      = "CALIFORNIA"
-  myMeasure     = "cRate"           # n_hosp
-  mySex         = "Total"
-  myN           = 10
-  myYearG3      = "2016-2018" # no year in dataset
-  myScale       = "fixed"
-  myFillManual  = T
-  
-  myData = "Deaths"
-  myStrata = "Age Group"
-  mySort        = "85+"
-  
-}
 
 
-raceSort <- raceLink$raceCode
+raceSort <- raceLink %>%
+  filter(!raceCode %in% c("Other", "Unknown", "Total")) %>%
+  pull(raceCode)
+
 ageSort  <- ageLink$ageName
 
 makePlotRank <- function(myDataSet     = NA,
@@ -35,8 +20,10 @@ makePlotRank <- function(myDataSet     = NA,
                          myMeasure     = "N", 
                          mySex         = "Total",
                          myN           = 10,
-                         myYearG3      = "2016-2018", # no year in dataset
+                         myOlderFocus    = TRUE,
+                         myYearG3      = "2017-2019", # no year in dataset
                          myScale       = "free",
+                         myLiveborn    = TRUE,
                          myFillManual  = T # Set true if the bars should be filled by topLev (which will then have a legend). Setting to F defaults to blue bars
 ){
   
@@ -60,9 +47,20 @@ makePlotRank <- function(myDataSet     = NA,
   if (myData == "Emergency Department" & myStrata == "Race/Ethnicity") myDataSet <- ed_race
  
   
+  if (myStrata == "Age Group" & myOlderFocus) myDataSet <- filter(myDataSet, MAINSTRATA >= "55 - 64")
+  
+  
+  
+  
+  # mutate(myDataSet,aRate = ifelse(N==0,0,aRate))
+  
+  
    tDat <- myDataSet %>%
-    filter(county == myCounty, !MAINSTRATA %in% c("Unknown", "Other"), causeName != "Liveborn") %>%
+    filter(county == myCounty, !MAINSTRATA %in% c("Unknown", "Other")) %>%
       mutate(measure = get(myMeasure))
+   
+   if(!myLiveborn) tDat <- filter(tDat, causeName != "Liveborn")
+   
    
    
    if(myStrata == "Age Group")  tDat <- mutate(tDat, MAINSTRATA = factor(MAINSTRATA, levels = ageSort)) 
@@ -79,33 +77,38 @@ makePlotRank <- function(myDataSet     = NA,
   
   # Sorting ----------------------------------------------------------------------------------------
   
+ 
   pullTopN <- tDat %>%
     filter(MAINSTRATA == mySort) %>%
     arrange(desc(measure)) %>%
     slice(1:myN) %>%
-    pull(causeName)
+    pull(causeNameShort)
   
   pullTopN <- factor(pullTopN, levels = pullTopN) # Setting that vector to a factor with levels = desc(topN)
   
   tDat_topN <- tDat %>%
-    filter(causeName %in% pullTopN) %>% # filtering our conditions
-    mutate(causeName = factor(causeName, levels = rev(pullTopN))) # setting conditions to a factor in REVERSE order of the original levels
+    filter(causeNameShort %in% pullTopN) %>% # filtering our conditions
+    mutate(causeNameShort = factor(causeNameShort, levels = rev(pullTopN))) # setting conditions to a factor in REVERSE order of the original levels
+  
+  
+  
   
   # Plot set up ------------------------------------------------------------------------------------
   
-  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", myYearG3, " in ", myCounty)
+  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", myYearG3)
   #myTitle <- wrap.labels(myTitle, 50)
   
-  mySubTitle <- paste0("Ordered by: ", mySort) 
+  mySubTitle <- paste0("In ", myCounty, ", Ordered by: ", mySort) 
   myXTitle <- "Cause"
-  myYTitle <- "Hmmmm"
+  if (myMeasure == "cRate") myYTitle <- "Crude Rate"
+  if (myMeasure != "cRate") myYTitle <- myMeasure
+  if (myScale == "free") myYTitle <- paste(myMeasure, "(NOTE axis scales differ)")
   
  # if(!myFillManual) tDat_topN$topLevName <- NULL
   
   # Plot --------------------------------------------------------------------------------------------
   
- 
-  plotX  <-   ggplot(data=tDat_topN, aes(x = causeName, y = measure, fill=topLevName)) +   #
+ plotX  <-   ggplot(data=tDat_topN, aes(x = causeNameShort, y = measure, fill=topLevName)) +   #
     geom_bar(stat = "identity")   +
     coord_flip() + 
     facet_grid(~ MAINSTRATA, scales = myScale, labeller=labeller(type = label_wrap_gen(5)))  +
@@ -124,7 +127,7 @@ makePlotRank <- function(myDataSet     = NA,
   
   # 
   if(myFillManual) {
-    topLevColors <- topLevColors[names(topLevColors) %in% unique(tDat$topLevName)]
+    #topLevColors <- topLevColors[names(topLevColors) %in% unique(tDat$topLevName)]
     plotX <- plotX + scale_fill_manual(values = topLevColors)
   } else {
     plotX <- plotX + geom_bar(stat = "identity", fill = "blue")
@@ -132,9 +135,107 @@ makePlotRank <- function(myDataSet     = NA,
   
   #ggplotly(plotX, height = 750) %>% layout(autosize = TRUE, margin = list(l = 0, r = 0, b = 0, t = 100, pad = 0))
  
+   list(plotL= plotX, dataL=tDat_topN)
   
-  list(plot= plotX)
+  
+}
+
+
+
+
+
+
+# ========================================================================================================
+# ========================================================================================================
+
+# t1 <- 5
+# t2 <- 10
+
+deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = "Los Angeles", myMeasure = "cRate") {
+  
+  library(cowplot)  
   
   
+  t.chart <- function(dataSet,source, legend =FALSE, myTopN = 10) {
+    
+    t.dat   <-  dataSet %>% 
+      mutate(measure = get(myMeasure)) %>%
+      filter(MAINSTRATA %in% mySort, county == myCounty) %>% 
+      arrange(-measure) %>% 
+      slice(1:myTopN)
+    
+    if (myMeasure == "cRate") myYTitle <- "Crude Rate"
+    if (myMeasure != "cRate") myYTitle <- myMeasure
+    
+    tPlot <- ggplot(data=t.dat, aes(x=reorder(causeNameShort,measure), y=measure, fill=topLevName)) + 
+      geom_bar(stat="identity") + coord_flip() + 
+      labs(title=source,x="",y = str_wrap(myYTitle, width = 15)) +  scale_x_discrete(labels = wrap_format(20)) +
+      theme(legend.position="bottom", 
+            legend.title = element_blank(),
+            plot.title = element_text(size=myTextSize - 2, color="blue"),
+            axis.title   = element_text(size = myAxisTitleSize - 4, face="bold"),
+            axis.text.y  = element_text(size = myAxisTextSize - 2),
+            axis.text.x  = element_text(size = myAxisTextSize - 2, angle = 90, vjust = 0.5, hjust=1)) + 
+      scale_fill_manual(values = topLevColors) 
+    
+    if(!legend) tPlot <- tPlot + theme(legend.position = "none")
+    
+    tPlot
+  }
+  
+  if (myStrata == "Age Group") {
+    d1 <- death_age
+    d2 <- hosp_age
+    d3 <- ed_age }
+  
+  
+  if (myStrata == "Race/Ethnicity") {
+    d1 <- death_race
+    d2 <- hosp_race
+    d3 <- ed_race }
+  
+  
+  c.1 <- t.chart(d1,"Deaths")
+  c.2 <- t.chart(d2,"Hospitalizations")
+  c.3 <- t.chart(d3,"ED Visits")
+  
+  
+  # https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html
+  # https://wilkelab.org/cowplot/articles/plot_grid.html
+  
+  r1       <- plot_grid(c.1,c.2,c.3,nrow=1)
+  c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
+  title    <- ggdraw() + draw_label(paste("Leading Causes of Death, Hospitlazation, and ED Visits for",mySort,myStrata,"in",myCounty),size=myTextSize, color="blue") 
+  
+  pPlot <- plot_grid(title,r1,c.legend,nrow=3,rel_heights = c(.2,1,.25))
+  
+  list(plotL= pPlot)
+  
+}
+
+
+
+
+
+
+
+if(1==2) {
+  myDataSet     = "hosp_race" # leave it in for now
+  myData        = "Deaths"   # "Hospitalizations", "Emergency Department".. will be part of  title
+  myStrata  = "Race/Ethnicity" # "Race/Ethnicity" , "sex".. for title
+  mySort        = "Black"
+  myCounty      = "CALIFORNIA"
+  myMeasure     = "cRate"           # n_hosp
+  mySex         = "Total"
+  myN           = 10
+  myYearG3      = "2016-2018" # no year in dataset
+  myScale       = "fixed"
+  myFillManual  = T
+  
+  myData = "Hospitalizations"
+  myStrata = "Age Group"
+  mySort        = "15 - 24"
+  myOlderFocus = FALSE
+  myLiveborn   = TRUE
 }
 

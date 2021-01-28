@@ -1,11 +1,6 @@
-
-
 ######  CELL SUPRESSION
 
-
 # in SAS file consider standardizing approach to "year" in PDD and ED data 
-  
-
 
 # OSHPD sheet on coding of charges:
 # https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
@@ -21,61 +16,48 @@
 
 #---SET LOCATIONS-----------------------------------------------------------------------
   
-ourServer <- F
+server  <- FALSE
 readSAS   <- F
 
-if (ourServer) {
-secure.location <- "/mnt/projects/CCB/0.Secure.Data/"
-standardsPlace  <- "/mnt/projects/CCB/Standards/"
-focusData       <- "/mnt/projects/CCB/CCB Project/0.CCB/myCBD/myData/real/age_race_focus_data/inData"
-ccbData         <- "/mnt/projects/CCB/CCB Project/0.CCB/myCBD/myData/real/"
-}
+ if (!server) source("g:/FusionData/Standards/FusionStandards.R")
+ if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
 
-if (!ourServer) {
-secure.location <- "G:/CCB/0.Secure.Data/"
-standardsPlace  <- "g:/CCB/Standards/"
-focusData       <- "G:/CCB/CCB Project/0.CCB/myCBD/myData/real/age_race_focus_data/inData/"
-ccbData         <- "G:/CCB/CCB Project/0.CCB/myCBD/myData/real/"
-}  
-
-
-myDrive <- getwd()  #Root location of CBD project
-myPlace <- paste0(myDrive,"/myCBD") 
-upPlace <- paste0(myDrive,"/myUpstream")
+# myDrive <- getwd()  #Root location of CBD project
+# myPlace <- paste0(myDrive,"/myCBD") 
+# upPlace <- paste0(myDrive,"/myUpstream")
 
 
 whichData <- "real"   # "real" or "fake"
 
 yF    <- 100000  # rate constant 
 STATE <- "CALIFORNIA"
+myYearG.t <- "2016-2018"
 
 #-------------------------------------------------LOAD PACKAGES -------------------------
 
-library(dplyr)
-library(readr)
-library(stringr)
-library(tidyr)
 library(haven)
-library(fs)
-library(readxl)
-# library(epitools)
-library(summarytools)
-
 
 #---CONVERT SAS TO RDS HERE----------------------------------------------------------------
 
 if (readSAS) {
-oshpd.pdd.work1  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/pdd_work1.sas7bdat") )
-saveRDS(oshpd.pdd.work1, file = paste0(secure.location, "myData/oshpd_pdd.RDS"))
+oshpd.pdd.work1  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work1.sas7bdat") )
+saveRDS(oshpd.pdd.work1, file = paste0(securePlace, "myData/oshpd_pdd.RDS"))
 
-oshpd.ed.work    <- read_sas(paste0(secure.location,"rawOSHPD/ED/ed_work.sas7bdat") )
-saveRDS(oshpd.ed.work, file = path(secure.location, "myData/oshpd_ed.RDS"))
+oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
+saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
 
 # FOR AGE/RACE Focus charts
-oshpd.pdd.work2  <- read_sas(paste0(secure.location,"rawOSHPD/PDD/pdd_work2.sas7bdat") )
-saveRDS(oshpd.pdd.work2, file = path(secure.location, "myData/oshpd_pdd_small.RDS"))
+oshpd.pdd.work2  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work2.sas7bdat") )
+saveRDS(oshpd.pdd.work2, file = path(securePlace, "myData/oshpd_pdd_small.RDS"))
 
 }
+
+if (1==2){
+junk <-   oshpd.ed.work %>% group_by(year,ccs_dx_prin) %>%
+             summarize(N=n()) %>%
+             pivot_wider(names_from = year, values_from= N)
+}
+
 
 #------------------------------------------------------------------------------------------
 #---PROCESS DATA ONLY FOR AGE/RACE FOCUS HERE FOR -----------------------------------------
@@ -95,12 +77,15 @@ source(paste0(standardsPlace,"ageChop.R"))
 source(paste0(standardsPlace,"populationExtract.R"))
 
 
+
+
+
 # ---------------------------------------------------------------------------------
 
 #-- PDD DATA ---------------
 #---Read Data---------------------------------------------------------------------------
 
-pdd0    <- readRDS(paste0(secure.location,"/myData/oshpd_pdd_small.RDS")) 
+pdd0    <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_small.RDS")) 
 
 pdd0  <- pdd0 %>% rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP) 
                     
@@ -117,14 +102,15 @@ hospYear <-  pdd1 %>%
              ungroup()
 
 hospAge  <- pdd1 %>%
-              mutate(ageGroup = ageChop(age,"standard", ourServer = ourServer)) %>%
+              mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%
               group_by(countyName, ageGroup, CCS) %>%
               summarise(n_hosp=n()) %>%
               select(causeCode = CCS, county = countyName, ageGroup, n_hosp) %>%
               mutate(sex = "Total") %>% 
-              mutate( yearG3 = "2016-2018") %>%   #HACK TO FIX Eventually
+              mutate( yearG3 = myYearG.t) %>%   #HACK TO FIX Eventually
               ungroup()
-saveRDS(hospAge, paste0(focusData,"hospAge.RDS"))
+
+saveRDS(hospAge, paste0(ccbData,"real/age_race_focus_data/hospAge.RDS"))
 
 
 hospRace  <- pdd1 %>%
@@ -132,15 +118,15 @@ hospRace  <- pdd1 %>%
                summarise(n_hosp=n()) %>%
                select(causeCode = CCS, county = countyName, raceCode, n_hosp) %>%
                mutate(sex = "Total") %>% 
-               mutate( yearG3 = "2016-2018") %>%   #HACK TO FIX Eventually
+               mutate( yearG3 = myYearG.t) %>%   #HACK TO FIX Eventually
                ungroup()
-saveRDS(hospRace, paste0(focusData,"hospRace.RDS"))
+saveRDS(hospRace, paste0(ccbData,"real/age_race_focus_data/hospRace.RDS"))
 
 
 
 #---Read Data---------------------------------------------------------------------------
 #-- ED DATA ----------------
-ed0     <- readRDS(paste0(secure.location,"/myData/oshpd_ed.RDS")) 
+ed0     <- readRDS(paste0(securePlace,"/myData/oshpd_ed.RDS")) 
 
 ed0 <- ed0 %>% rename(age = agyrserv, pCounty = patco, CCS = ccs_dx_prin)
 
@@ -157,12 +143,12 @@ edYear <- ed1 %>%
           ungroup()
 
 edAge  <- ed1 %>%
-           mutate(ageGroup = ageChop(age,"standard", ourServer = ourServer)) %>%
+           mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%
            group_by(countyName, ageGroup, CCS) %>%
            summarise(n_ED=n()) %>%
            select(causeCode = CCS, county = countyName, ageGroup, n_ED) %>%
            mutate(sex = "Total") %>%
-           mutate( yearG3 = "2016-2018") %>%   #HACK TO FIX Eventually
+           mutate( yearG3 = myYearG.t) %>%   #HACK TO FIX Eventually
            ungroup()
 saveRDS(edAge, paste0(focusData,"edAge.RDS"))
 
@@ -177,7 +163,7 @@ saveRDS(edRace, paste0(focusData,"edRace.RDS"))
 
 
 hosp_ED_year <- full_join(hospYear, edYear, by =c("year", "county", "causeCode"))
-saveRDS(hosp_ED_year, paste0(ccbData,"hosp_ED_year.RDS"))
+saveRDS(hosp_ED_year, paste0(ccbData,"real/hosp_ED_year.RDS"))
 
 
 #==========================================================================================
@@ -194,11 +180,11 @@ saveRDS(hosp_ED_year, paste0(ccbData,"hosp_ED_year.RDS"))
 #-------------------------------------LOAD AND PROCESS OSHPD DATA-------------------------
 
 if (whichData == "real") {
-  oshpd.PDD.16 <- readRDS(file=path(secure.location, "myData/oshpd_subset.rds")) 
-  oshpd.ED.16 <- readRDS(file=path(secure.location, "myData/oshpd_ED_subset.rds")) 
+  oshpd.PDD.16 <- readRDS(file=path(securePlace, "myData/oshpd_subset.rds")) 
+  oshpd.ED.16 <- readRDS(file=path(securePlace, "myData/oshpd_ED_subset.rds")) 
   
-  pdd_current_small  <-  readRDS(file=path(secure.location, "myData/oshpd_pdd_small.RDS")) 
-  ed_current         <-  readRDS(file=path(secure.location, "myData/oshpd_ed.RDS")) 
+  pdd_current_small  <-  readRDS(file=path(securePlace, "myData/oshpd_pdd_small.RDS")) 
+  ed_current         <-  readRDS(file=path(securePlace, "myData/oshpd_ed.RDS")) 
   
 }
 
@@ -299,8 +285,8 @@ oshpdPDDAny <- select(oshpdPDDAny,-(ccs_odiag1:msdrg),-all_CCS_One_String)
 
 
 # save/read this file
-saveRDS(oshpdPDDAny, file=path(secure.location, "myData/oshpdPDDAny.rds"))
-#oshpdPDDAny <- readRDS(file=path(secure.location, "myData/oshpdPDDAny.rds")) 
+saveRDS(oshpdPDDAny, file=path(securePlace, "myData/oshpdPDDAny.rds"))
+#oshpdPDDAny <- readRDS(file=path(securePlace, "myData/oshpdPDDAny.rds")) 
 
 ##################################################
 

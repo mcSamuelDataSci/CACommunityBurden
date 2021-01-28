@@ -250,3 +250,21 @@ This tab shows differences, or <b>disparities</b>, in death rates between <b>rac
 In each chart, the group with the lowest rate is shown in green, any group that is statistically significantly higher (based on a statistical cut point of p < 0.01) is shown in red, and any group that is not statistically different from the "lowest" group is shown in blue. In addition, 95% confidence intervals are also shown for all rates, to provide visual guidance about the stability of each rate.
 <br><br>
 In many instances, not all groups within a demographic category will be shown because all rates based on fewer than 20 deaths are excluded, to avoid misleading observations from very unstable rates. ')
+
+
+
+
+
+
+
+ageRaceFocusTab <- paste0('
+This tab displays cause-of-death, hospitalization, or emergency department visit rankings for either a selected county or the whole state. The figure shows the ranking based on three data types that can be selected under the Data Type tool. The Grouping Variable tool allows users to view the data either by Age Group or by Race/Ethnicity. 
+<br><br>
+When sorting by Age Group, users have the option to select Older Adult Focus, which emphasizes data for Age Groups 55 and older. The option chosen under the Sort by tool will rank the causes for the specific Age Group or Race/Ethnicity selected. Different measures, including Number, Crude Rate, and Adjusted Rate can be viewed by selecting one of these options in the Measure tool. The Scale tool enables users to select Fixed to view selected groups with the same axis scale or Free to view selected groups with varied axis scales. The Free scale can enhance the viewability of some data. ')
+
+
+
+
+
+deathHospEDTab <- paste0('
+This tab displays a snapshot of cause-of-death, hospitalization, or emergency department visit rankings side-by-side for either a selected county or the whole state. The Grouping Variable tool allows users to view the data either by Age Group or by Race/Ethnicity. The option chosen under the Sort by tool will rank the causes for the specific Age Group or Race/Ethnicity selected. Different measures, including Number, Crude Rate, and Adjusted Rate can be viewed by selecting one of these options in the Measure tool. ')

@@ -57,6 +57,8 @@ hidden(
       # myMeasureShort ======================
       selectInput("myMeasureShort",  label="Measure Sort Order:", choices=dMNames_short, selected="Age-Adjusted Death Rate"),
       
+     
+      
       # myYearGrouping ======================
       radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three","Five"), inline = TRUE),
       
@@ -67,10 +69,28 @@ hidden(
       # myStrata ======================
       selectInput("myStrata","Grouping Variable:", choices=c("Age Group", "Race/Ethnicity")),  
       
+      
       # mySort ==============================
       selectInput( "mySort", "Sort by?",
                             choices = raceSort,
                             selected = "White"),
+      
+      
+      # myOlderFocus ===========================
+      checkboxInput("myOlderFocus", label="Older Adult Focus",value=FALSE),
+      
+      
+      # myLiveborn =============================
+      checkboxInput("myLiveborn", label="Include Births",value=FALSE),
+      
+      
+      
+      
+       # myMeasureAgeRaceFocus ======================
+      selectInput("myMeasureAgeRaceFocus",  label="Measure:", choices=c("Number"="N","Crude Rate"="cRate","Adjusted Rate"="aRate"), selected="cRate"),
+      
+      # myScale ======================
+      selectInput("myScale",  label="Scale:", choices=c("fixed","free")),
       
       # myCutSystem ======================
       
@@ -114,13 +134,13 @@ hidden(
       
       # myRace ==========================
       checkboxGroupButtons( "myRace", "Which Race/Ethnic Groups?",
-            choices = c("AIAN_NH", "ASIAN_NH", "BLACK_NH", "HISPANIC", "MR_NH", "NHPI_NH", "TOTAL", "WHITE_NH"),
-            selected = "TOTAL",individual=TRUE,size="sm"),
+            choices = raceList,
+            selected = raceList[!raceList %in% c("Multi","Total","NHPI","AIAN")],individual=TRUE,size="sm"),
       
       # mySexMult ==========================
       checkboxGroupButtons( "mySexMult", "Which Sex Groups?",
                          choices = c("Total", "Male", "Female"),
-                         selected = "Total", individual=TRUE,size="sm"),
+                         selected = c("Male", "Female"), individual=TRUE,size="sm"),
       
       
       
@@ -140,8 +160,8 @@ hidden(
       
       
       # myVar(ICD/MDC/DRG) ======================
-      selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),
-                  choice = MDC_DRG_ICD_Dropdown),
+      # selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),
+      #            choice = MDC_DRG_ICD_Dropdown),
       
       
       

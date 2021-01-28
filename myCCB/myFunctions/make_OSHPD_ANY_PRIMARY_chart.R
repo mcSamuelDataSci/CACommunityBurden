@@ -15,9 +15,7 @@ primary_any <- left_join(oshpd_PDD_any.t,countyOSHPD.t,by=c("year","county","sex
          primary        = nPrimary)
 
 
-ccsMap  <- ccsLinker()
-
-primary_any <- left_join(primary_any,ccsMap,by="ccsCode") %>%
+primary_any <- left_join(primary_any,hospCauseLink,by=c("ccsCode" = "causeCode")) %>%
   filter(nTotal > 50,
          ccsCode != "oo259")  ### TODO need to study this
 
@@ -35,7 +33,7 @@ if (1==2) {
 
 anyprimary1 <- function(myCounty = "CALIFORNIA",  myPosition = "nPrimary", myN = 10, mySex = "Total"){
   
-primary_any_NOPREG <- primary_any %>% filter(!(birth)) %>%
+primary_any_NOPREG <- primary_any %>% filter(birth == "FALSE") %>%
                        filter(sex=="Total", county == myCounty) 
 
 
@@ -47,7 +45,7 @@ plot_data.1 <- plot_data.0 %>%
                  dplyr::slice(1:(myN*2))
 
 
-ggplot(plot_data.1, aes(x = reorder(ccsName,get(myPosition)), y = value, fill=Measure)) + 
+ggplot(plot_data.1, aes(x = reorder(causeName,get(myPosition)), y = value, fill=Measure)) + 
   coord_flip() + geom_bar(stat = "identity") + 
     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
   scale_x_discrete(labels = scales::wrap_format(50)) +

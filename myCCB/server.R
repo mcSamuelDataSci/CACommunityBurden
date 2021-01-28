@@ -30,6 +30,7 @@ shinyServer(function(input, output,session) {
                           "disparities" = input$disparitiesID,
                           "hospitalizations" = input$hospitalizationsID,
                           "sdoh" = input$sdohID,
+                          "demographics" = input$demographicsID, # JASPO added demographics
                           current$nav)
     print(current$tab) # For debugging only
     updateTabItems(session, "plotsMenuItems", "tabInputs")  # Always set menu to tabInputs, not tabInfo
@@ -161,18 +162,20 @@ observeEvent(input$dxGroupsHelp,  {myModal(dxGroupsHelp)})
 
 
 # generates help "objects" used for tab help buttons, as above
-tabHelpList <- list("dataTableTab" = conditionTableTab,
-                    "interactiveMapTab" = mapTab,
-                    "socialDeterminantsTab" = sdohTab,
-                    "trendTab" = trendTab,
-                    "rankByCauseTab" = conditionTab,
+tabHelpList <- list("dataTableTab"           = conditionTableTab,
+                    "interactiveMapTab"      = mapTab,
+                    "socialDeterminantsTab"  = sdohTab,
+                    "trendTab"               = trendTab,
+                    "rankByCauseTab"         = conditionTab,
                     "rankByGeographyTab" = rankGeoTab,
                     "rankByCauseAndSexTab" = conditionSexTab,
                     "lifeExpectancyTab" = lifeExpectancyTab,
                     "hospitalDischargeTab" = HospitalizationsTab,
                     "hospitalPrimaryAnyTab" = HospitalPrimaryAnyTab,
                     "riskByCauseTab"        = ihmeTab,
-                    "disparitiesTab"        = disparitiesTab
+                    "disparitiesTab"        = disparitiesTab,
+                    "ageRaceFocusTab"       = ageRaceFocusTab,
+                    "deathHospEDTab"        = deathHospEDTab
                     )
 
 whoNeedsHelp <- reactive({
@@ -368,7 +371,7 @@ disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare,
 output$disparityRace  <- renderPlot(disparityStep()$plot)
 
 
-output$disparityPNG <- downloadHandler(filename=function(){paste0("new_disparity.jpg")},content = function(file) {
+output$ourOnlyPNG <- downloadHandler(filename=function(){paste0("new_disparity.jpg")},content = function(file) {
   jpeg(file, width = 1200, height = 680)  # , pointsize = 20
   print(disparityStep()$plot)
   dev.off()
@@ -384,12 +387,97 @@ output$disparityPNG <- downloadHandler(filename=function(){paste0("new_disparity
 # ---------------------------------------------------------------------------------------------------------
 
 observeEvent(input$myStrata, {
-  if(input$myStrata=="Race/Ethnicity"){updateSelectInput(session, "mySort", choices = raceSort) }
-  if(input$myStrata=="Age Group")     {updateSelectInput(session, "mySort", choices = ageSort) }
+  
+  if(input$myStrata=="Race/Ethnicity") {
+    
+    updateSelectInput(session, "mySort",                choices = raceSort) 
+    updateSelectInput(session, "myMeasureAgeRaceFocus", choices = c("Number"="N","Crude Rate"="cRate","Adjusted Rate"="aRate"), selected = "cRate")
+    shinyjs::hide("myOlderFocus")
+    
+  }
+  
+  if(input$myStrata=="Age Group") {
+    
+    updateSelectInput(session, "mySort",                choices = ageSort,                     selected = "75 - 84") 
+    updateSelectInput(session, "myMeasureAgeRaceFocus", choices = c("Number"="N","Crude Rate"="cRate"), selected = "cRate")
+    if (current$tab == "ageRaceFocusTab") shinyjs::show("myOlderFocus")
+    }
+})
+
+observeEvent(input$myOlderFocus, {
+  if(input$myOlderFocus) {updateSelectInput(session, "mySort", choices = ageSort[ageSort >= "55 - 64"], selected = "75 - 84") }
+  if(!input$myOlderFocus){updateSelectInput(session, "mySort", choices = ageSort,                       selected = "75 - 84")}
 })
     
-agePlaceFocusStep <- reactive(makePlotRank(myCounty = input$myLHJ, myData = input$myData, myStrata = input$myStrata, mySort = input$mySort))
-output$agePlaceFocus <- renderPlot(agePlaceFocusStep()$plot)
+ageRaceFocusStep    <- reactive(makePlotRank(myCounty = input$myLHJ, myData = input$myData, myStrata = input$myStrata, mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus, myLiveborn = input$myLiveborn, myOlderFocus = input$myOlderFocus, myScale = input$myScale))
+output$ageRaceFocus <- renderPlot(ageRaceFocusStep()$plotL, height = 800)
+
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("ageRaceFocusTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                     content = function(file) {
+                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                       print(ageRaceFocusStep()$plotL)
+                                       dev.off() } )
+    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
+                                      content = function(file) {
+                                        write.csv(ageRaceFocusStep()$dataL, file,row.names = FALSE) } )
+    
+  } } )
+
+
+
+
+
+
+
+deathHospEDStep  <- reactive(deathHospEDchart(myCounty = input$myLHJ, myStrata = input$myStrata, mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus))
+output$deathHospED <- renderPlot(deathHospEDStep()$plot, height = 800)
+
+
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("deathHospEDTab") ) {
+    
+    output$ourOnlyPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                     content = function(file) {
+                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                       print(deathHospEDStep()$plotL)
+                                       dev.off() } )
+    
+   
+    
+  } } )
+
+
+
+
+# --DEMOGRAPHICS - JASPO------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+
+demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ))
+output$demoPop_RacePie <- renderPlotly(demographics1Step())
+
+
+demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
+
+output$demoPop_Pyramid <- renderPlotly({
+  
+  ggplotly(demographics2Step(), 
+           sort = TRUE) #%>% layout(legend = list(orientation = "h", xanchor="center", x = 0.6, y = 1.1))
+  
+}) 
+
+demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
+
+output$demoPop_RaceAge <- renderPlotly({
+  
+  ggplotly(demographics3Step())  %>%
+    layout(margin=list(t = 55, l = 0), title = list(x=0.5))
+})
 
 
 # IHME ----------------------------------------------------------------------------------------------------

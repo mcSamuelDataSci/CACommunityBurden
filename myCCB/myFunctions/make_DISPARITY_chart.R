@@ -19,6 +19,11 @@ highColor <- "tomato"
 
 disparity <- function(myLHJ="CALIFORNIA",myCause="A",myCompare="lowest rate",myAddN,myAddRR,myAddRate) {
 
+mySmaller <- 0.8   
+myAxisSize <- myAxisSize  * mySmaller
+myTextSize3 <-  myTextSize3 * mySmaller
+myLegendSize <- myLegendSize * mySmaller
+
 
 #--RACE ------------------------------------------------------------------------------------------------------------------------
 
@@ -49,7 +54,7 @@ placeLabels3 <- tMax/20
 
 
 
-racePlot <- ggplot(data=dat.1, aes(x=raceName, y=aRate,fill=pMark)) +
+racePlot <- ggplot(data=dat.1, aes(x=raceNameShort, y=aRate,fill=pMark)) +
    geom_bar(stat="identity") +
    
    
@@ -79,12 +84,6 @@ if (myAddRR) racePlot   <- racePlot + geom_text(aes(y=placeLabels3,label=paste("
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
-ageMap$ageGroup          <- paste(ageMap$lAge,"-",ageMap$uAge)
-
-ageMap$ageOrder      <- paste(ageMap$lAge,"-",ageMap$uAge)
-ageMap$ageOrder[1:2] <- paste("",ageMap$ageOrder [1:2])
-ageMap$ageOrder[10]  <- "85+"
-
 myMeasure <- "cDeathRate"
 
 if(myCompare == "highest rate") {
@@ -98,8 +97,11 @@ if(myCompare == "lowest rate") {
 }
 
 dat.1 <- filter(ageTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3, sex == "Total") %>%
-           left_join(ageMap,by="ageGroup")  
+              mutate(ageGroup = factor(ageGroup,levels= ageMap$ageLabel))
 
+
+###KEY new approach here:
+#dat.1$ageGroup <- factor(dat.1$ageGroup,levels = ageMap$ageLabel)
 
 tMax <- max(dat.1$cDeathRate)
 AGEplaceLabels  <- tMax/5
@@ -109,7 +111,7 @@ AGEplaceLabels3 <- tMax/20
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-agePlot <- ggplot(data=dat.1, aes(x=ageOrder, y= cDeathRate, fill=pMark)) +
+agePlot <- ggplot(data=dat.1, aes(x=ageGroup, y= cDeathRate, fill=pMark)) +
    geom_bar(stat="identity") +
    theme_grey() +   #base_size = myBaseSize
    scale_fill_manual("legend", values = fillColor) +

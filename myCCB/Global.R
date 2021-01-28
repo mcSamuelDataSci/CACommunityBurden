@@ -227,13 +227,7 @@ if (subSite){
 
 #-- Load Info Files and Functions ---------------------------------------------
 
-gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/icd10_to_CAUSE.xlsx"), sheet="main"))
-
-
-ccsMap  <- as.data.frame(read_excel( path(myPlace,"myInfo/CCS Code and Names Linkage.xlsx"))) %>%
-                 mutate(ccsCode = str_pad(ccsCode, 5,"left",pad="o"))
-
-source(paste0(myPlace,"/myFunctions/helperFunctions/ccsLinker.R"))
+# gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/icd10_to_CAUSE.xlsx"), sheet="main"))
 
 
 #Saved OSHPD MDC_DRG file in myCBD/myInfo
@@ -261,7 +255,7 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
 source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
 source(paste0(ccbFunctions, "make_rank_multibar_chart.R"))
-
+source(paste0(ccbFunctions, "make_DEMOGRAPHICS_charts.R"))
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
@@ -279,7 +273,7 @@ death_age$MAINSTRATA <-  death_age$MAINSTRATA
 # --- Shiny Stuff and Constants -----------------------------------------------
 
 # raceLink    <-  read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx"))  %>% select(raceCode,raceName)
-raceLink    <-    select(raceLink, raceCode,raceName)
+raceLink    <-    select(raceLink, raceCode,raceName,raceNameShort)
 
 
 chartYearMap    <-  read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx"))  
