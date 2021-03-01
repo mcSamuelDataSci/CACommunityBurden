@@ -45,7 +45,7 @@ plot_data.1 <- plot_data.0 %>%
                  dplyr::slice(1:(myN*2))
 
 
-ggplot(plot_data.1, aes(x = reorder(causeName,get(myPosition)), y = value, fill=Measure)) + 
+myPlot <- ggplot(plot_data.1, aes(x = reorder(causeName,get(myPosition)), y = value, fill=Measure)) + 
   coord_flip() + geom_bar(stat = "identity") + 
     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
   scale_x_discrete(labels = scales::wrap_format(50)) +
@@ -53,6 +53,8 @@ ggplot(plot_data.1, aes(x = reorder(causeName,get(myPosition)), y = value, fill=
   theme(axis.text.x = element_text(angle = 90, hjust = 1), 
         axis.title=element_blank(), axis.text = element_text(size = rel(1.5)), 
         legend.text = element_text(size = rel(1.2)), legend.title = element_text(size = rel(1.2)))
+
+list(plotL = myPlot, dataL = plot_data.1)
 
 
 }

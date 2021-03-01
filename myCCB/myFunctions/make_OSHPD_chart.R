@@ -48,7 +48,7 @@ myVar = "CCS-Beta"
                                              pull(measure)))
 
 # Creating ggplot facet grid plot
-ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
+myPlot <- ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +
      facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
        theme_bw( ) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes   # base_size = 25
@@ -59,5 +59,7 @@ ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      axis.text.y = element_text(size = myAxisSize), #increases size of disease condition labels
      axis.text.x = element_text(size = myAxisSize, face="bold",angle = 90, hjust = 1), #controls size of measure labels
      strip.text.x = element_text(size = myAxisSize)) #increases the size of the facet labels
+
+list(plotL = myPlot, dataL = plotData)
 
 }

@@ -349,6 +349,26 @@ observeEvent(current$tab,{
 
  } } )
 
+# Education Trend ----------------------------------------------------------------------------------
+
+trendEducationStep <- reactive(trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
+output$trendEducation <- renderPlot(trendEducationStep()$plotL)
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("educationTrendTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(),".png")},
+                                     content = function(file) {
+                                       png(file,width=1000, height=600)
+                                       print(trendEducationStep()$plotL)
+                                       dev.off()  }  )
+    
+    output$ourData <- downloadHandler(filename = function() {paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(), ".csv")},
+                                      content = function(file) {
+                                        write.csv(trendEducationStep()$dataL, file,row.names = FALSE) } )
+    
+  } } )
+
 
 # Life Expectancy ---------------------------------------------------------------------------------------------------------------
 
@@ -419,10 +439,10 @@ observeEvent(current$tab,{
       
       output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
                                        content = function(file) {
-                                         png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+                                         png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
                                          print(rankCauseStep()$plotL)
                                          dev.off() } )
-      
+
       output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
                                         content = function(file) {
                                           write.csv(rankCauseStep()$dataL, file,row.names = FALSE) } )
@@ -439,7 +459,7 @@ observeEvent(current$tab,{
       
       output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".png")},
                                        content = function(file) {
-                                         png(file, width = 10, height = 7, units = "in", pointsize = 10,res=100)
+                                         png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
                                          print(rankGeoStep()$plotL)
                                          dev.off() }, contentType = "png" )
       
@@ -693,12 +713,49 @@ output$riskByCause <- renderPlotly({
 
 # ---------------------------------------------------------------------------------------------------------
 
+# Hospital Discharge --------------------------------------------------------------------------------------
+
+oshpdStep <- reactive(oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+output$OSHPD1 <- renderPlot(oshpdStep()$plotL)
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("hospitalDischargeTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                     content = function(file) {
+                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                       print(oshpdStep()$plotL)
+                                       dev.off() } )
+    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
+                                      content = function(file) {
+                                        write.csv(oshpdStep()$dataL, file,row.names = FALSE) } )
+    
+  } } )
+
+# Hospital Discharge - Any Primary --------------------------------------------------
+
+anyPrimaryStep <- reactive(anyprimary1(input$myLHJ,input$myPosition))
+output$any_primary <- renderPlot(anyPrimaryStep()$plotL)
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("hospitalPrimaryAnyTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                     content = function(file) {
+                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                       print(anyPrimaryStep()$plotL)
+                                       dev.off() } )
+    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
+                                      content = function(file) {
+                                        write.csv(anyPrimaryStep()$dataL, file,row.names = FALSE) } )
+    
+  } } )
 
 
-output$trendEducation    <- renderPlot(         trendEducation(input$myLHJ, input$myCAUSE, input$mySex,input$myMeasure,input$myLogTrans))
-
-output$OSHPD1      <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
-output$any_primary <- renderPlot(anyprimary1(input$myLHJ,input$myPosition))
+# output$OSHPD1      <- renderPlot(         oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+# output$any_primary <- renderPlot(anyprimary1(input$myLHJ,input$myPosition))
 
 
 output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))

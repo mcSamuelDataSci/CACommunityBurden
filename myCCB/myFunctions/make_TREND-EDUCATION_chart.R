@@ -30,7 +30,7 @@ yMid       <- minYear:maxYear
 myTrans    <- ifelse(myLogTrans,'log2','identity')
 myMin      <- ifelse(myLogTrans,NA,0)
 
- ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=eduName, color=eduName))  +
+ myPlot <- ggplot(data=dat.1, aes(x=year, y=eval(parse(text=paste0(myMeasure))), group=eduName, color=eduName))  +
    geom_line(size=myLineSize)  +
    geom_point(shape = myPointShape,size=myPointSize)  +
        scale_x_continuous(minor_breaks=yMid,breaks=yMid,expand=c(0,3),labels=yRange) +
@@ -52,6 +52,8 @@ myMin      <- ifelse(myLogTrans,NA,0)
           plot.caption = element_text(hjust = 0, face = "italic",size=14)) 
   
  #theme(axis.text.x = element_text(angle = 60, hjust = 1))
+ 
+ list(plotL = myPlot, dataL = dat.1)
  
  
  }
