@@ -4,7 +4,7 @@
 
 # ------------------------------------------------------------------------------------------------------------------
 
-
+## FIX yearG3
 
 raceSort <- raceLink %>%
   filter(!raceCode %in% c("Other", "Unknown", "Total")) %>%
@@ -26,6 +26,18 @@ makePlotRank <- function(myDataSet     = NA,
                          myLiveborn    = TRUE,
                          myFillManual  = T # Set true if the bars should be filled by topLev (which will then have a legend). Setting to F defaults to blue bars
 ){
+  
+  
+  
+  if  ( myData %in% c("Hospitalizations","Emergency Department") & 
+        (myStrata == "Race/Ethnicity") & 
+        (mySort %in% c("NHPI", "Multi") )
+        ) stop("Sorry friend, there is no NHPI or Multirace in Hospitalization or ED data -- kindly select another race/ethnic group")
+  
+  
+  
+  
+  
   
    if(1==200) {
   # Looking at myMeasure to: 1) filter type, 2) create titles for plots
@@ -49,8 +61,11 @@ makePlotRank <- function(myDataSet     = NA,
   
   if (myStrata == "Age Group" & myOlderFocus) myDataSet <- filter(myDataSet, MAINSTRATA >= "55 - 64")
   
-  
-  
+  # if (myStrata == "Race/Ethnicity") {
+  #   myDataSet <- myDataSet %>% 
+  #     left_join(select(raceLink, raceCode, raceNameShort), by = c("MAINSTRATA" = "raceCode")) %>%
+  #     select(-MAINSTRATA, MAINSTRATA = raceNameShort)
+  # }
   
   # mutate(myDataSet,aRate = ifelse(N==0,0,aRate))
   
@@ -58,6 +73,9 @@ makePlotRank <- function(myDataSet     = NA,
    tDat <- myDataSet %>%
     filter(county == myCounty, !MAINSTRATA %in% c("Unknown", "Other")) %>%
       mutate(measure = get(myMeasure))
+   
+   # Return message if no rows exist
+   if (nrow(tDat)==0) stop("Sorry friend, but thank goodness there are none of those OR all data are suppressed because of small numbers")
    
    if(!myLiveborn) tDat <- filter(tDat, causeName != "Liveborn")
    
@@ -135,6 +153,14 @@ makePlotRank <- function(myDataSet     = NA,
   
   #ggplotly(plotX, height = 750) %>% layout(autosize = TRUE, margin = list(l = 0, r = 0, b = 0, t = 100, pad = 0))
  
+  
+  
+   tDat_topN <- tDat_topN %>% filter(N > 0)  %>% mutate(MAINSTRATA = paste(" ",MAINSTRATA),
+                                                        cRate = round(cRate,1),
+                                                        measure = round(measure,1))  %>% 
+                                select(county, MAINSTRATA, causeName, causeNameShort, N, cRate, causeName, measure)
+  
+   #list(plotL= plotX, dataL=dataTable, loadData = tDat_topN)
    list(plotL= plotX, dataL=tDat_topN)
   
   
@@ -151,10 +177,10 @@ makePlotRank <- function(myDataSet     = NA,
 # t1 <- 5
 # t2 <- 10
 
+
+
+
 deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = "Los Angeles", myMeasure = "cRate") {
-  
-  library(cowplot)  
-  
   
   t.chart <- function(dataSet,source, legend =FALSE, myTopN = 10) {
     
@@ -169,18 +195,22 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
     
     tPlot <- ggplot(data=t.dat, aes(x=reorder(causeNameShort,measure), y=measure, fill=topLevName)) + 
       geom_bar(stat="identity") + coord_flip() + 
-      labs(title=source,x="",y = str_wrap(myYTitle, width = 15)) +  scale_x_discrete(labels = wrap_format(20)) +
+      labs(title=source,x="",y = str_wrap(myYTitle, width = 15)) +  
+      scale_x_discrete(labels = wrap_format(20)) +
+      # scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +
       theme(legend.position="bottom", 
             legend.title = element_blank(),
-            plot.title = element_text(size=myTextSize - 2, color="blue"),
-            axis.title   = element_text(size = myAxisTitleSize - 4, face="bold"),
-            axis.text.y  = element_text(size = myAxisTextSize - 2),
-            axis.text.x  = element_text(size = myAxisTextSize - 2, angle = 90, vjust = 0.5, hjust=1)) + 
+            plot.title = element_text(size=myTextSize, color="blue"),
+            axis.title   = element_text(size = myAxisTitleSize, face="bold"),
+            axis.text.y  = element_text(size = myAxisTextSize),
+            axis.text.x  = element_text(size = myAxisTextSize, angle = 90, vjust = 0.5, hjust=1)) + 
       scale_fill_manual(values = topLevColors) 
     
     if(!legend) tPlot <- tPlot + theme(legend.position = "none")
     
-    tPlot
+    # tPlot
+    
+   list(plotL = tPlot, dataL = t.dat)
   }
   
   if (myStrata == "Age Group") {
@@ -195,21 +225,30 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
     d3 <- ed_race }
   
   
-  c.1 <- t.chart(d1,"Deaths")
-  c.2 <- t.chart(d2,"Hospitalizations")
-  c.3 <- t.chart(d3,"ED Visits")
+  c.1 <- t.chart(d1,"Deaths")$plotL
+  c.2 <- t.chart(d2,"Hospitalizations")$plotL
+  c.3 <- t.chart(d3,"ED Visits")$plotL
+  
+  d.1 <- t.chart(d1,"Deaths")$dataL
+  d.2 <- t.chart(d2,"Hospitalizations")$dataL
+  d.3 <- t.chart(d3,"ED Visits")$dataL
+  
+  tempDF <- bind_rows(d.1, d.2, d.3)
   
   
   # https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html
   # https://wilkelab.org/cowplot/articles/plot_grid.html
   
   r1       <- plot_grid(c.1,c.2,c.3,nrow=1)
-  c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
-  title    <- ggdraw() + draw_label(paste("Leading Causes of Death, Hospitlazation, and ED Visits for",mySort,myStrata,"in",myCounty),size=myTextSize, color="blue") 
+  c.legend <- get_legend(t.chart(d2,"Hospitalizations", myTopN = 100, legend = TRUE)$plotL)
+  # c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
+  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",myYearG3),size=myTextSize, color="blue") 
   
   pPlot <- plot_grid(title,r1,c.legend,nrow=3,rel_heights = c(.2,1,.25))
   
-  list(plotL= pPlot)
+  
+  
+  list(plotL= pPlot, loadData = tempDF)
   
 }
 

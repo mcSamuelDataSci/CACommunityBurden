@@ -31,33 +31,81 @@ if( myGeo %in% c("Community","Census Tract") & myMeasure == "SMR" ) stop('Sorry 
   
 t.y <- 11  # Dumb quick fix to select measure column
 xL <-  which(sdohVec == t.x)
-xM <-  which(deathMeasures== myMeasure)
-
+# xM <-  which(deathMeasures== myMeasure)
+xM <-  deathMeasuresNames[which(deathMeasures== myMeasure)]
 
 temp <- paste0("dat.1$",myMeasure)
 
-if (myGeo=="Census Tract") {
-                          sdohWork <- sdohTract
-                          dat.1 <- filter(datTract,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
-                          temp  <- dat.1[,c("GEOID",myMeasure)]
-                          sdohWork  <- merge(sdohWork,temp,by="GEOID")
-                           }
+# if (myGeo=="Census Tract") {
+#                           sdohWork <- sdohTract
+#                           dat.1 <- filter(datTract,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
+#                           temp  <- dat.1[,c("GEOID",myMeasure)]
+#                           sdohWork  <- merge(sdohWork,temp,by="GEOID")
+#                            }
+# 
+# if (myGeo=="Community") {
+#                        sdohWork <- sdohComm
+#                        dat.1 <- filter(datComm,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
+#                        temp  <- dat.1[,c("comID",myMeasure)]
+#                        sdohWork  <- merge(sdohWork,temp,by="comID")}
+# if (myGeo=="County") {
+#                    sdohWork <- sdohCounty
+#                    dat.1 <- filter(datCounty,year==myYear,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
+#                    temp  <- dat.1[,c("county",myMeasure)]
+#                    sdohWork  <- merge(sdohWork,temp,by="county")
+#              
+# }
 
-if (myGeo=="Community") {
-                       sdohWork <- sdohComm
-                       dat.1 <- filter(datComm,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
-                       temp  <- dat.1[,c("comID",myMeasure)]
-                       sdohWork  <- merge(sdohWork,temp,by="comID")}
-if (myGeo=="County") {
-                   sdohWork <- sdohCounty
-                   dat.1 <- filter(datCounty,year==myYear,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
-                   temp  <- dat.1[,c("county",myMeasure)]
-                   sdohWork  <- merge(sdohWork,temp,by="county")
-             
+if (myGeo=="Census Tract") {
+  sdohWork <- sdohTract
+  dat.1 <- filter(datTract,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
+  temp  <- dat.1[,c("GEOID",myMeasure)]
+  sdohWork  <- merge(sdohWork,temp,by="GEOID")
+  sdohWork <- sdohWork %>%
+    left_join(select(commInfo, comID, comName), by = "comID") %>%
+    select(mySDOH = {{ t.x }}, myMeasure = {{ myMeasure }}, pop, county, region, comName, GEOID) %>%
+    mutate(sdohText = if(t.x == "hpi2score") round(mySDOH, 2) else scales::percent(mySDOH/100, accuracy = 0.1),
+           plotText = paste('GEOID:', GEOID,
+                            '<br>Community:', comName,  
+                            '<br>County:',county,
+                            '<br>Region:', region,
+                            '<br>Population:',format(pop, big.mark = ","), 
+                            '<br>',!!names(xL),":",sdohText,
+                            '<br>',!!xM,":",round(myMeasure)))
 }
 
+if (myGeo=="Community") {
+  sdohWork <- sdohComm
+  dat.1 <- filter(datComm,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
+  temp  <- dat.1[,c("comID", "comName", myMeasure)]
+  sdohWork  <- merge(sdohWork,temp,by="comID")
+  sdohWork <- sdohWork %>%
+    select(mySDOH = {{ t.x }}, myMeasure = {{ myMeasure }}, pop, county, region, comName) %>%
+    mutate(sdohText = if(t.x == "hpi2score") round(mySDOH, 2) else scales::percent(mySDOH/100, accuracy = 0.1),
+           plotText = paste('Community:', comName,  
+                            '<br>County:',county,
+                            '<br>Region:', region,
+                            '<br>Population:',format(pop, big.mark = ","), 
+                            '<br>',!!names(xL),":", sdohText,
+                            '<br>',!!xM,":",round(myMeasure)))
+}
+if (myGeo=="County") {
+  sdohWork <- sdohCounty
+  dat.1 <- filter(datCounty,year==myYear,sex==mySex,causeCode==myCause,county != "CALIFORNIA")  
+  temp  <- dat.1[,c("county",myMeasure)]
+  sdohWork  <- merge(sdohWork,temp,by="county")
+  sdohWork <- sdohWork %>%
+    select(mySDOH = {{ t.x }}, myMeasure = {{ myMeasure }}, pop, county, region) %>%
+    mutate(sdohText = if(t.x == "hpi2score") round(mySDOH, 2) else scales::percent(mySDOH/100, accuracy = 0.1),
+           plotText = paste('<br>County:',county,
+                            '<br>Region:', region,
+                            '<br>Population:',format(pop, big.mark = ","), 
+                            '<br>',!!names(xL),":",sdohText,
+                            '<br>',!!xM,":",round(myMeasure)))
+  
+}
 
-sdohWork <- sdohWork[,c(sdohVec,myMeasure,"pop","county","region")]
+# sdohWork <- sdohWork[,c(sdohVec,myMeasure,"pop","county","region")]
 
 sdohWorkList <- as.list(sdohWork)  
 
@@ -68,24 +116,38 @@ if (nrow(sdohWork)==0) stop("Sorry friend, but thank goodness there are none of 
 
 
 
+# p <-plot_ly(
+#   data = sdohWork,
+#   x =    sdohWork[,t.x],
+#   y =    sdohWork[,t.y],
+#   type="scatter",mode="markers",
+#   colors=pal,
+#   color = sdohWork[,"region"],
+#   size =  sdohWork[,"pop"], sizes=c(20,400),
+#   hoverinfo = 'text',
+#   text   = paste('County:',sdohWork[,"county"],
+#                 '<br> Population:',format(sdohWork[,"pop"], big.mark = ","),
+#                 '<br>',names(xL),":",round(sdohWork[,t.x]),"%",
+#                 '<br>',names(xM),":",round(sdohWork[,t.y])) ) %>%
+#   layout(title=wrap.labels(paste('<b>','Association of',sdohVecL[xL],"and",deathMeasuresNames[xM],"for",deathCauseLink[deathCauseLink[,1]==myCause,2],"by",myGeo,"in",myYear,'</b>'),100),
+# 
+#                  xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE, linewidth = 2),
+#                  yaxis=  list(title=deathMeasuresNames[xM],titlefont = f, showline = TRUE,linewidth = 2))
+
 p <-plot_ly(
   data = sdohWork,
-  x =    sdohWork[,t.x],
-  y =    sdohWork[,t.y],
+  x =    ~mySDOH,
+  y =    ~myMeasure,
   type="scatter",mode="markers",
   colors=pal,
-  color = sdohWork[,"region"],
-  size =  sdohWork[,"pop"], sizes=c(20,400),
+  color = ~region,
+  size =  ~pop, sizes=c(20,400),
   hoverinfo = 'text',
-  text   = paste('County:',sdohWork[,"county"],
-                '<br> Population:',format(sdohWork[,"pop"], big.mark = ","), 
-                '<br>',names(xL),":",round(sdohWork[,t.x]),"%",
-                '<br>',names(xM),":",round(sdohWork[,t.y])) ) %>%
-  layout(title=wrap.labels(paste('<b>','Association of',sdohVecL[xL],"and",deathMeasuresNames[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo,"in",myYear,'</b>'),100),
-                 
-                 xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE, linewidth = 2),
-                 yaxis=  list(title=deathMeasuresNames[xM],titlefont = f, showline = TRUE,linewidth = 2))
-
+  text   = ~plotText ) %>%
+  layout(title=wrap.labels(paste('<b>','Association of',sdohVecL[xL],"and",xM,"for",deathCauseLink[deathCauseLink[,1]==myCause,2],"by",myGeo,"in",myYear,'</b>'),100),
+         
+         xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE, linewidth = 2),
+         yaxis=  list(title=deathMeasuresNames[xM],titlefont = f, showline = TRUE,linewidth = 2))
 
 
 # 
@@ -106,7 +168,7 @@ p <-plot_ly(
 #     #                  '</br>',myMeasure,":",round(sdohWorkList[[t.y]],1)) 
 #     ) %>%
 # #    hide_colorbar() %>% 
-# layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",fullCauseList[fullCauseList[,1]==myCause,2],"by",myGeo),
+# layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",deathCauseLink[deathCauseLink[,1]==myCause,2],"by",myGeo),
 #        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
 #        yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
 p

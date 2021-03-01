@@ -16,7 +16,7 @@
 
 #---SET LOCATIONS-----------------------------------------------------------------------
   
-server  <- FALSE
+server  <- TRUE
 readSAS   <- F
 
  if (!server) source("g:/FusionData/Standards/FusionStandards.R")
@@ -85,9 +85,16 @@ source(paste0(standardsPlace,"populationExtract.R"))
 #-- PDD DATA ---------------
 #---Read Data---------------------------------------------------------------------------
 
-pdd0    <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_small.RDS")) 
+pdd0   <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_small.RDS")) 
+pdd0   <- pdd0 %>% rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP) 
 
-pdd0  <- pdd0 %>% rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP) 
+###---------------------------------------------------------
+### race_grp changed in 2019 to include NHPI and Multiracial
+### prior to 2019 code 6 was "other"; in 2019 other is "8"
+### line below standardized that
+pdd0$race_grp[pdd0$year %in% 2017:2018 & pdd0$race_grp == 6] <- 8
+
+
                     
 pdd0 <-  left_join(pdd0,raceLink,by=c("race_grp"="OSHPD")) 
 pdd0 <-  left_join(pdd0,countyLink,by=c("pCounty"="cdphcaCountyTxt")) %>%
@@ -126,9 +133,19 @@ saveRDS(hospRace, paste0(ccbData,"real/age_race_focus_data/hospRace.RDS"))
 
 #---Read Data---------------------------------------------------------------------------
 #-- ED DATA ----------------
-ed0     <- readRDS(paste0(securePlace,"/myData/oshpd_ed.RDS")) 
 
-ed0 <- ed0 %>% rename(age = agyrserv, pCounty = patco, CCS = ccs_dx_prin)
+ed0  <- readRDS(paste0(securePlace,"/myData/oshpd_ed.RDS")) 
+ed0  <- ed0 %>% rename(age = agyrserv, pCounty = patco, CCS = ccs_dx_prin)
+
+
+###---------------------------------------------------------
+### race_grp changed in 2019 to include NHPI and Multiracial
+### prior to 2019 code 6 was "other"; in 2019 other is "8"
+### line below standardized that
+pdd0$race_grp[pdd0$year %in% 2017:2018 & pdd0$race_grp == 6] <- 8
+
+
+
 
 ed0 <-  left_join(ed0,raceLink,by=c("race_grp"="OSHPD")) 
 ed0 <-  left_join(ed0,countyLink,by=c("pCounty"="cdphcaCountyTxt"))  %>%

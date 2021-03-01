@@ -9,7 +9,7 @@
 #                       select(year,sex,Level,CAUSE,county,type,measure) %>%
 #                       mutate(type = factor(type,levels= dM_short))    %>% #orders factor
 #                       mutate(type = plyr::revalue(type, dMRevalue_short))    %>% #replaces values with full name labels
-#                       left_join(., fullCauseList, by = c("CAUSE" = "LABEL"))  
+#                       left_join(., deathCauseLink, by = c("CAUSE" = "LABEL"))  
 # 
 # #create a vector of CAUSE for top N 
 # temp_N_cause <- temp %>%
@@ -80,7 +80,7 @@ rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", 
     select(year,sex,Level,causeCode,county,type,measure) %>%
     mutate(type = factor(type,levels= dM_short))    %>% #orders factor
     mutate(type = plyr::revalue(type, dMRevalue_short))    %>% #replaces values with full name labels
-    left_join(., fullCauseList, by = "causeCode")  
+    left_join(., deathCauseLink, by = "causeCode")  
   
   #create a vector of CAUSE for top N 
   temp_N_cause <- temp %>%

@@ -24,7 +24,7 @@
 
 # PROVIDE PATH FOR SECURE DATA HERE
 secure.location  <-            "g:/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
-#secure.location  <- "/mnt/projects/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+secure.location  <- "/mnt/projects/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
 
 .sl              <- secure.location  # short name to shorten lines of code below
 
@@ -108,9 +108,24 @@ death.datA$F62  <- str_pad(death.datA$F62,3,pad="0")
 }
 
 
+
 vInfo             <- filter(raw.death.variable.info, CCDF == 1)  # CCDF 2005-current variable names 
 death.datA        <- death.datA[vInfo$seqID1]   # select only needed columns of 2005-2015 data!
 names(death.datA) <- vInfo$varName           # name columns based on varName!
+
+
+#------------------------------------------------------------------------
+
+# https://www.cdc.gov/niosh/topics/coding/nioccsuserdocumentation.html
+
+temp <- ca19[vInfo$seqID1]
+names(temp) <- vInfo$varName
+
+temp2 <- temp %>% slice_sample(n=1000)
+freq(temp2$occupation)
+freq(temp2$industry)
+
+# --------------------------------------------------------------------------
 
 # j2019 <- ca19[vInfo$seqID1] 
 # names(j2019) <- vInfo$varName
@@ -137,11 +152,6 @@ names(death.datA) <- vInfo$varName           # name columns based on varName!
 death.datA$year               <- as.numeric(death.datA$year)
 death.datA$multiraceStatus    <- as.numeric(death.datA$multiraceStatus)
 death.datA$education          <- as.numeric(death.datA$education)
-
-
-# temp <- ca17[vInfo$seqID1]
-# temp <- OOSca17[vInfo$seqID1]
-# names(temp) <- vInfo$varName
 
 
 

@@ -7,7 +7,7 @@ if(1==2){
 }
 
 
-trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE, myMultiRace=FALSE, myLineLabelSize = myLineLabelCex) {
+trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE, myMultiRace=FALSE) {
 
   # ----- sexTrendTab ---------------------------------------------------------
   
@@ -16,12 +16,12 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
       
         myVARIABLE <- "sex"
      
-        if (myYearGrouping == "One") {
+        if (myYearGrouping == 1) {
          inDat    <- datCounty  
          myBreaks <- minYear:maxYear
          myLabels <- myBreaks                                   }
     
-        if (myYearGrouping == "Three")  {
+        if (myYearGrouping == 3)  {
          inDat <- datCounty_3year 
          chartYearMap  <-  chartYearMap %>%
           select(yearGroup3,midYear3)   %>%
@@ -30,7 +30,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
          myBreaks   <- chartYearMap$midYear3
          inDat$year <- myBreaks[match(inDat$yearG3,myLabels)]   }
     
-        if (myYearGrouping == "Five") {
+        if (myYearGrouping == 5) {
          inDat <- datCounty_5year 
          chartYearMap    <-  chartYearMap %>%
           select(yearGroup5,midYear5)     %>%
@@ -41,7 +41,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
      
         dat.1   <- filter(inDat,county == myLHJ,causeCode == myCause) %>%
-                     left_join(  select(fullCauseList,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
+                     left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
           mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
         
     
@@ -67,7 +67,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
      myVARIABLE <- "ageGroup"
     
       dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,causeCode == myCause, sex=="Total") %>%
-        left_join(  select(fullCauseList,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
+        left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
         mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
       
       if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
@@ -82,7 +82,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
       yearBit <- paste(min(yearBit),"to",max(yearBit))
    
       myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
-                         " of ",fullCauseList[fullCauseList[,"causeCode"]== myCause,"causeName"], # JASPO
+                         " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO
                          " in ",myLHJ," by AGE GROUP, ",yearBit)
       myTitle <-  wrap.labels(myTitle,myWrapNumber)
       
@@ -106,7 +106,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     myVARIABLE <- "raceCode"
     
      dat.1 <- filter(datCounty_RE,county == myLHJ,causeCode == myCause, sex=="Total")  %>%
-               left_join(  select(fullCauseList,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
+               left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
        mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
      dat.1 <- left_join(dat.1,raceLink,by="raceCode")
     
@@ -124,7 +124,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     
     
-    myLineLabel <- "raceCode" # Changed to raceCode
+    myLineLabel <- "raceNameShort" # Changed to raceCode
     
     myTrans    <- ifelse(myLogTrans,'log2','identity')
     myMin      <- ifelse(myLogTrans,NA,0)    
@@ -136,7 +136,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     
     myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
-                      " of ",fullCauseList[fullCauseList[,"causeCode"]== myCause,"causeName"], # JASPO 
+                      " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO 
                       " in ",myLHJ," by RACE/ETHNIC Group*, ",yearBit)
     myTitle <-  wrap.labels(myTitle,myWrapNumber)
     
@@ -168,12 +168,12 @@ tplot <-  ggplot(data=dat.1,
                              expand = expansion(mult = c(0, 0), add = c(1, 3))) +
           scale_y_continuous(limits = c(0, NA)) +
 
-          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex = myLineLabelSize, 'last.bumpup',font="bold")) +
+          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex = myLineLabelCex, 'last.bumpup',font="bold")) +
           # geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x - 0.2), "first.points",size = myLineLabelSize,'first.bumpup' ,font="bold"))  +
   
           labs(y = deathMeasuresNames[deathMeasures == myMeasure], x = "Year"
                ) +
-          # labs(title = myTitle) +
+          labs(title = myTitle) +
           theme_bw(
             base_size   = myAxisSize) +
           theme(

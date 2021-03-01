@@ -16,12 +16,11 @@
 #
 # =============================================================================
 
+CCB <- TRUE
 myPlace     <- getwd()
 # myCCBPath   <- "/mnt/projects/FusionData/"
 
-server <- T
-if (!server) source("g:/FusionData/Standards/FusionStandards.R")
-if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+source(paste0(myPlace,"/Standards/FusionStandards.R"))
 
 # myCCBPlace <- paste0(ccbPlace, "myCCB/")
 
@@ -46,7 +45,7 @@ maxYear <- 2019
 viewType <- "Present"
 
 # TEXT Constants
-VERSION           <- "Version P2.5"
+VERSION           <- "Version P3.0"
 criticalNumber    <- 11
 mTitle            <- "California Community Burden of Disease and Cost Engine"
 
@@ -126,7 +125,8 @@ library(stringr)
 library(shinydashboard)
 
 library(DT) # for better rendering of Data Table  https://community.rstudio.com/t/data-table-issue-while-rendering-the-shiny-page-datatables-warning-table-id-datatables-table-0-requested-unknown-parameter/44016/3
-
+library(cowplot)
+library(docxtractr)
 
 
 # !!!!!!!!!!!!!!! THIS LINE ELIMIANTES DROPDOWNS
@@ -180,6 +180,15 @@ ed_age      <- readRDS(path(focusData, "ed_age_stn.RDS"))
 death_race  <- readRDS(path(focusData, "deaths_race_stn.RDS"))
 hosp_race   <- readRDS(path(focusData, "hospital_race_stn.RDS"))
 ed_race     <- readRDS(path(focusData, "ed_race_stn.RDS"))
+
+
+
+popData_AgePyramid  <- readRDS(path(ccbData, "popData_AgePyramid.RDS"))
+popData_RacePie  <- readRDS(path(ccbData,"popData_RacePie.RDS"))
+popData_RaceAge   <- readRDS(path(ccbData,"popData_RaceAge.RDS"))
+
+
+
 
 
 
@@ -254,18 +263,24 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 #source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
 source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
-source(paste0(ccbFunctions, "make_rank_multibar_chart.R"))
-source(paste0(ccbFunctions, "make_DEMOGRAPHICS_charts.R"))
+source(path(ccbFunctions, "make_rank_multibar_chart.R"))
+source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V2.R"))
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
 
 source(paste0(myPlace,"/myData/appText/AppText.txt"))
-source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
+# source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
+# Used for 'News and Updates' ----
+readDoc <- read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
+newsUse_df <- docx_extract_tbl(readDoc, 1) %>%
+  mutate(Text = paste("<li>", Date, Update, "</li>"))
 
-
+newsUse <- paste("\n<li>Welcome to the CCB!</li>\n<br>", (paste(newsUse_df$Text, collapse = "\n")), sep = "\n")
+#-----------------------------------
+  
 death_age$MAINSTRATA <-  death_age$MAINSTRATA 
 
 
@@ -274,6 +289,15 @@ death_age$MAINSTRATA <-  death_age$MAINSTRATA
 
 # raceLink    <-  read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx"))  %>% select(raceCode,raceName)
 raceLink    <-    select(raceLink, raceCode,raceName,raceNameShort)
+
+# Fix following two lines soon - Search soon to see where it's used
+#raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
+#raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","**Multirace**","unknown","Hispanic")
+
+
+# move these...
+raceNote         <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
+multiRaceWarning <- "** Note: Multirace data are NOT RELIABLE due to changing data collection practices"
 
 
 chartYearMap    <-  read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx"))  
@@ -342,7 +366,7 @@ MDCDRG_Dropdown <- MDC_DRG
 names(MDCDRG_Dropdown) <- MDC_DRGNames
 
 
-fullCauseList <- deathCauseLink
+# fullCauseList <- deathCauseLink
 
 # Get rid of lines 334 where fullcauselist is used, and change to deathcauselink in all functions and other files
 
@@ -358,6 +382,11 @@ bigList           <- deathCauseLink[nchar(deathCauseLink$causeCode) == 1,]
 bigCode           <- bigList[,"causeCode"]
 names(bigCode)    <- bigList[,"causeList"]
 
+# Level 3 conditions
+cause_level3 <- setdiff(fullList, phCode)
+
+# Level 2 and 3 condition
+cause_level2_3 <- setdiff(fullList, bigCode)
 
 #-- Social Determinants of Health Measures and Names
 
@@ -391,14 +420,6 @@ names(sdohVec) <- sdohVecL
 lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
 
-# Fix following two lines soon
-raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
-raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","**Multirace**","unknown","Hispanic")
-
-
-# move these...
-raceNote         <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
-multiRaceWarning <- "** Note: Multirace data are NOT RELIABLE due to changing data collection practices"
 
 
 # --- END ---------------------------------------------------------------------

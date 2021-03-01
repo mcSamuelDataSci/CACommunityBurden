@@ -751,7 +751,9 @@ comID    <- data.frame(comID    = unique(mssaLink[,"comID"]),                   
 GEOID    <- data.frame(GEOID    = mssaLink[,"GEOID"],                            stringsAsFactors = FALSE)
 raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)),                 stringsAsFactors = FALSE)
 
-yearForQuarterly <- data.frame(year = sort(unique(filter(cbdDat0, year %in% forQuarter_selectYears)$year))) # JASPO - used for quarterly and monthly
+
+yearForQuarterly <- data.frame(year = forQuarter_selectYears) # forQuarter_selectYears assigned at the top of script. Run into memory issues when too many years are selected
+raceCodeForQuarterly <- raceCode %>% tibble::add_row(raceCode = "Total") # For the quarterly dataset, we need to add Total race to crossjoin in fullmat
 
 # other cool approach from Adam:
 # fullMatCounty <- Reduce(function(...) merge(..., all = TRUE), list(county, year, CAUSE, sex, ageGroup))
@@ -763,7 +765,7 @@ fullMatTract           <- sqldf(" select * from  GEOID  cross join yearG5 cross 
 fullMatCounty_RE_3year <- sqldf(" select * from  county cross join yearG3 cross join CAUSE1 cross join sex cross join ageGroup join raceCode") %>% mutate(tester=0)
 
 
-fullMatCounty_RE_Q     <- sqldf(" select * from  county cross join yearForQuarterly cross join quarter cross join CAUSE1 cross join sex cross join ageGroup cross join raceCode") %>% mutate(tester=0)
+fullMatCounty_RE_Q     <- sqldf(" select * from  county cross join yearForQuarterly cross join quarter cross join CAUSE1 cross join sex cross join ageGroup cross join raceCodeForQuarterly") %>% mutate(tester=0)
 # JASPO added above for quarterly
 
 fullMatCounty_M     <- sqldf(" select * from  county cross join yearForQuarterly cross join month cross join CAUSE1 cross join sex cross join ageGroup") %>% mutate(tester=0)
@@ -934,7 +936,7 @@ countyAA_M <- ageCounty_M %>% group_by(county,year, month, sex,causeCode) %>%
 
 countyAA_M <- countyAA_M[!(countyAA_M$oDeaths==0),c("county","year","month", "sex","causeCode","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
 
-
+cbdDat0 <- cbdDat0_SAVE
 
 # -- Quarter By Race (age-adjusted) - JASPO -------------------------------
 # ------------------------------------------------------------------------------

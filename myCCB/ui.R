@@ -49,11 +49,34 @@ GREEN <- "#5C8727"
 ORANGE <- "#EB6E1F"
 BEIGE <- "#F9F5F1"
 
+
+
+
+# Styles for help buttons and boxes ============================
+
+myInputHelpButtonSty <- paste0("width:20px;  color:#fff; background-color:#337ab7; border-color:white; padding:0px; font-size: 18px;",
+                               "margin:0px;",
+                               "margin-left:10px;",
+                               "float:right;"
+)   #2e6da4
+helpIcon <- "?"
+#helpIcon <- icon("question-circle-o") # or: HTML('<i class="fa fa-question-circle-o"></i>')
+#helpIcon <- icon("question-circle")   # or: HTML('<i class="fa fa-question-circle"></i>')  
+#helpIcon <- icon("question") 
+#helpIcon <- icon("info")
+
+
 # # Styles for help buttons and boxes
 myTabHelpButtonSty <- "background-color:#694D75; font-size:14px;"
 myDownloadButtonSty <- "padding-left: 6px; padding-right: 6px; margin-top: 5px;"
 myBoxSty        <- "cursor:pointer; border: 3px solid blue; padding-right:0px;padding-left:0px;"
 mySidebarTextSty <- "float:left; margin: 20px; color:#000000;"
+
+
+
+
+
+
 
 
 # START OF UI --------------------------------------------------------------------
@@ -239,32 +262,32 @@ shinyUI(
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
                            br(),br(),
                            
-                           helpText(h4("Welcome to the Preview Version of the CCB!"),style=paste0("color:", GREEN),align="left"), br(),
                            
-                           h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/",target="_blank", "SEE MULTIPLE MEASURE OF HEALTH IN YOUR COUNTY'")), br(),
-                           
-                           h5(tags$a(href="CA_Health_Views.pdf",target="_blank", "SEE CCB DATA IN ACTION, in the new 'Measuring Health Status in California'")), br(),
-                           
-                           
-                           
-                           actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
-                           h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV",target="_blank","Report 'bugs' HERE!")),
-                           h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8",target="_blank","Share your feedback HERE!")),
+                           h5(tags$a(href="SOPH_2020.pdf",target="_blank", "CCB Data in Action, 2020 State of Public Health Handout")), 
+                           h5(tags$a(href="SOPH_2019.pdf",target="_blank", "CCB Data in Action, 2019 State of Public Health Handout")), 
+                           h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/",target="_blank", "See Multiple Measures of Health in Your County")), br(),
                            textIntroA, br(), br(), textIntroC, br(), br(),
                            #helpText(textIntroA,style="color:black"), br(),
                            #helpText(textIntroC,style="color:black"), br(),
                            if (whichData == "real") { helpText(textNote.real,style="color:black")},
                            if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
                            br(),br(),
+                           
+                           actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
+                           h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV",target="_blank","Report 'bugs' HERE!")),
+                           h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8",target="_blank","Share your feedback HERE!")),
+                           
+                           
                            icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"), br(),
                                                       tags$a(href="https://shiny.rstudio.com/",target="_blank","Developed in R-Shiny"), br(),
                            tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden",target="_blank","GitHub Site")
+                           
                        ),
                        
                        div(id = "textNotHomeTab", style = mySidebarTextSty,
-                           br(),HTML('<center><img src="CDPH.gif" height="125" width="150"></center>'),
+                           HTML('<center><img src="CDPH.gif" height="125" width="150"></center>'),
                            br(),
-                           br(),HTML('<center><img src="Fusion Center Knot.png" height="125" width="150"></center>')
+                           br(),HTML('<center><img src="Fusion Center Knot.png" height="125" width="150"></center>'),
                        ),
                        
                        # Home page 0 side bar text. condition = fC(c(10)),  Not sure when this comes up?
@@ -275,7 +298,8 @@ shinyUI(
                        
                        # Text on all side bars ------------------------------------------------------
                        div(id = "textAllTabs", style = mySidebarTextSty,
-                           helpText(br(),h4(VERSION),style=paste0("color:", GREEN))
+                           helpText(br(),h4(VERSION),style=paste0("color:", GREEN)),
+                           helpText(h4(paste(format(Sys.Date(),"%B 01, %Y"))),style=paste0("color:", GREEN))
                        )
                        
                        
@@ -466,7 +490,7 @@ shinyUI(
                    
                 
                    
-                   tabPanel(title = strong("ABOUT"), value = "abouts",
+                   tabPanel(title = strong("ABOUT"), value = "about", #changed from abouts to about
                             tabsetPanel(type="tab", id="aboutsID",
                                         
                                         tabPanel(title = "OVERVIEW", value = "overviewTab",

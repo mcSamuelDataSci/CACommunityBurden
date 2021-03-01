@@ -3,18 +3,7 @@
 # Jonah Golden, October 8 2019
 # ==============================================================
 
-# Styles for help buttons and boxes ============================
 
-myInputHelpButtonSty <- paste0("width:20px;  color:#fff; background-color:#337ab7; border-color:white; padding:0px; font-size: 18px;",
-                               "margin:0px;",
-                               "margin-left:10px;",
-                               "float:right;"
-                               )   #2e6da4
-helpIcon <- "?"
-#helpIcon <- icon("question-circle-o") # or: HTML('<i class="fa fa-question-circle-o"></i>')
-#helpIcon <- icon("question-circle")   # or: HTML('<i class="fa fa-question-circle"></i>')  
-#helpIcon <- icon("question") 
-#helpIcon <- icon("info")
 
 # Input Widgets ================================================
 hidden(
@@ -55,12 +44,16 @@ hidden(
                   choices=deathMeasures_Dropdown,selected = "aRate"), 
       
       # myMeasureShort ======================
-      selectInput("myMeasureShort",  label="Measure Sort Order:", choices=dMNames_short, selected="Age-Adjusted Death Rate"),
+      selectInput("myMeasureShort",  "Measure Sort Order:",  
+                  choices=dMNames_short, selected="Age-Adjusted Death Rate"),
+      
+      # selectInput("myMeasureShort",  list(label="Measure Sort Order:", actionButton("measureHelp", label=helpIcon,style=myInputHelpButtonSty)),  
+      #             choices=dMNames_short, selected="Age-Adjusted Death Rate"),
       
      
       
       # myYearGrouping ======================
-      radioButtons("myYearGrouping", "Years to Group:", choices=c("One","Three","Five"), inline = TRUE),
+      radioButtons("myYearGrouping", "Years to Group:", choices=c(1,3,5), inline = TRUE),
       
    
       # myData ======================
@@ -83,14 +76,13 @@ hidden(
       # myLiveborn =============================
       checkboxInput("myLiveborn", label="Include Births",value=FALSE),
       
-      
-      
-      
-       # myMeasureAgeRaceFocus ======================
-      selectInput("myMeasureAgeRaceFocus",  label="Measure:", choices=c("Number"="N","Crude Rate"="cRate","Adjusted Rate"="aRate"), selected="cRate"),
+      # myMeasureAgeRaceFocus ======================
+      selectInput("myMeasureAgeRaceFocus",  list(label="Measure:", actionButton("measureAgeRaceFocusHelp", label=helpIcon, style=myInputHelpButtonSty)),
+                  choices=c("Number"="N","Crude Rate"="cRate","Adjusted Rate"="aRate"), selected="cRate"),
       
       # myScale ======================
-      selectInput("myScale",  label="Scale:", choices=c("fixed","free")),
+      selectInput("myScale",  label= list("Scale:", actionButton("axisScaleHelp", label=helpIcon,style=myInputHelpButtonSty)),
+      choices=c("fixed","free")),
       
       # myCutSystem ======================
       
@@ -135,7 +127,7 @@ hidden(
       # myRace ==========================
       checkboxGroupButtons( "myRace", "Which Race/Ethnic Groups?",
             choices = raceList,
-            selected = raceList[!raceList %in% c("Multi","Total","NHPI","AIAN")],individual=TRUE,size="sm"),
+            selected = raceList[!raceList %in% c("Multi-Race","Total","NH/PI","AI/AN")],individual=TRUE,size="sm"),
       
       # mySexMult ==========================
       checkboxGroupButtons( "mySexMult", "Which Sex Groups?",
@@ -186,7 +178,7 @@ hidden(
                                                               "Years Lived with Disability (YLDs)" = 3,
                                                               "Years of Life Lost (YLLs)" = 4), selected = 1),
       div(id="suppressionNote",
-          paste('Note: All measures associated with counts <',criticalNumber,', as well as necessary complementrary counts/measures are excluded for data de-identification purposes'),style="color:blue;font-size:10px;"
+          paste('Note: All measures associated with counts <',criticalNumber,', as well as necessary complementrary counts/measures are excluded for data de-identification purposes'),style="color:blue;font-size:12px;padding-left:5px;"
       )
       
       

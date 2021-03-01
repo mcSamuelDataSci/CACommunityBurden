@@ -19,7 +19,7 @@ dat.1 <- filter(datCounty_EDU,county == myLHJ,causeCode == myCause, sex==mySex)
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
-myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",fullCauseList[fullCauseList[,"causeCode"]== myCause,"causeName"]," in ",myLHJ," by EDUCATION Group, ",minYear," to ",maxYear,", ",mySex,", >24 years-old only, (crude age-adjustement)")
+myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ," by EDUCATION Group, ",minYear," to ",maxYear,", ",mySex,", >24 years-old only, (crude age-adjustement)")
 myTit <-  wrap.labels(myTit,80)
 
 

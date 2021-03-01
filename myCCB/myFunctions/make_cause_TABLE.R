@@ -3,7 +3,7 @@ rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
   if(1==2){
     myYear <- 2017
     myLHJ  <- "Amador"
-    temp <- full_join(datCounty,fullCauseList,by="causeCode")
+    temp <- full_join(datCounty,deathCauseLink,by="causeCode")
     temp <- filter(temp,is.na(causeList))
   }
   
@@ -16,7 +16,7 @@ rankCauseTab  <- function(myLHJ="Alameda",myYear=2015,mySex="Total") {
   
     dat.1 <- filter(inDat,county==myLHJ,year==myYear,sex==mySex,causeCode !=0)
 
-  dat.1$causeList <- fullCauseList[match(dat.1$causeCode,fullCauseList[,"causeCode"]),"causeList"]
+  dat.1$causeList <- deathCauseLink[match(dat.1$causeCode,deathCauseLink[,"causeCode"]),"causeList"]
   
   dat.1 <- dat.1[,c("causeList","Ndeaths","cDeathRate","aRate","aLCI","aUCI","YLL","YLLper","YLL.adj.rate","SMR")]
   

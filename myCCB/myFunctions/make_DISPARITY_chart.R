@@ -202,7 +202,7 @@ library(cowplot)
 # https://wilkelab.org/cowplot/articles/plot_grid.html
 
 mainTitle <- ggdraw() + 
-   draw_label(paste0("Disparities in Deaths Rates, ", fullCauseList[fullCauseList[,"causeCode"]== myCause,"causeName"]," in ",myLHJ,", ",myYearG3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
+   draw_label(paste0("Disparities in Deaths Rates, ", deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ,", ",myYearG3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
 
 
 topRow <- cowplot::plot_grid(racePlot,sexPlot,rel_widths = c(6,3))

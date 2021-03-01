@@ -22,7 +22,7 @@ rankStrataAge <- function(myAgeG = "75 - 84",
                ageG = ifelse(ageG == "85 - 999","85+",ageG)) %>%
         filter(sex == mySex,!is.na(ageG)) 
         
-      causeTemp <- data.frame(causeCode = fullCauseList$causeCode ,stringsAsFactors = FALSE)
+      causeTemp <- data.frame(causeCode = deathCauseLink$causeCode ,stringsAsFactors = FALSE)
       ageTemp   <- data.frame(ageG = unique(t.dataSet$ageG),stringsAsFactors = FALSE)
       county    <- data.frame(county   = unique(t.dataSet$county),stringsAsFactors = FALSE)
       fullMat   <- sqldf(" select * from  county cross join causeTemp cross join ageTemp")
@@ -30,7 +30,7 @@ rankStrataAge <- function(myAgeG = "75 - 84",
       t.dataSet <- full_join(t.dataSet,fullMat,by=c("county","causeCode","ageG")) %>%
         arrange(county,causeCode, ageG) %>%
         mutate(measure = ifelse(is.na(measure),0,measure))    %>%
-        left_join(., fullCauseList, by = "causeCode") %>%
+        left_join(., deathCauseLink, by = "causeCode") %>%
         rename(ccsName = causeName)
       
   }

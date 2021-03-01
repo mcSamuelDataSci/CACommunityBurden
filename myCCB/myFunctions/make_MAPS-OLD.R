@@ -54,7 +54,7 @@ cbdMapX <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "Y
     }  
   
  myTit  <- paste0(deathMeasuresNames[deathMeasures == myMeasure],
-                    " from ",fullCauseList[fullCauseList[,"causeCode"]== myCause,"causeName"],
+                    " from ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause],
                     " in ",myTitYear,myTitGeo,sexLab,geoLab)
  myTit  <- wrap.labels(myTit,80)
   

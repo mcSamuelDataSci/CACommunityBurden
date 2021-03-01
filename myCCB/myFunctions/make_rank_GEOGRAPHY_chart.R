@@ -131,7 +131,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
 
   if (cZoom & myMeasure == "SMR") stop("I appologize dear, but SMR is not calcualted for now below the county level")
 
-  causeLab <- fullCauseList[fullCauseList[,"causeCode"]==myCause,"causeName"]
+  causeLab <- deathCauseLink$causeName[deathCauseLink$causeCode == myCause]
   sexLab   <- ""
   if (mySex != "Total") sexLab <- paste0(", among ",mySex,"s")
 

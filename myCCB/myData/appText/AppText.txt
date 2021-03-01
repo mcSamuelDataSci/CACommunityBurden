@@ -98,7 +98,7 @@ measureHelp <- paste0('<p>The current MEASURES of deaths are:</p>
 
 
 causeHelp <-
-'The <b>Cause</b> list contains about 70 conditions, organized based on the hierarchal structure of the Global Burden of Disease Project of the <a href=" https://www.who.int/healthinfo/global_burden_disease/about/en/""> World Health Organization (WHO)</a> and the <a href=" http://www.healthdata.org/gbd/about "">Institute for Health Metrics and Evaluation (IHME)</a>. We have made modifications to the WHO and IHME lists to enhance the usefulness and applicability for U.S., and specifically California, public health priorities and programs. These modifications are described on the Technical Tab of this website.
+'The <b>Cause</b> list contains about 70 conditions, organized based on the hierarchal structure of the Global Burden of Disease Project of the <a href=" https://www.who.int/healthinfo/global_burden_disease/about/en/""> World Health Organization (WHO)</a> and the <a href=" http://www.healthdata.org/gbd/about "">Institute for Health Metrics and Evaluation (IHME)</a>. We have made modifications to the WHO and IHME lists to enhance the usefulness and applicability for U.S., and specifically California, public health priorities and programs. These modifications are described on the <b>About -> Technical Documentation</b> tab of this website.
 <br><br>
 Depending on the geographic level selected, different levels of detail in the cause list will be available.  The more granular the geographic level, the less granular the cause list will become, for statistical stability. [For our partners in Local Health Departments and in other California Department of Health Programs, fully granular data on all levels are available on request.]
 
@@ -109,7 +109,7 @@ Depending on the geographic level selected, different levels of detail in the ca
 <br><br>
 <b>Detail Levels</b> are available for a small number of the Public Health Level conditions; these are indicated by a lowercase letter and allow for further specificity. 
 <br><br>
-Our full cause list hierarchy is available <a href="gbd.ICD.MapIMAGE.pdf"">here</a>. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions, can be found on the Technical Tab of this website. 
+Our full cause list hierarchy is available <a href="icd10_to_condition_IMAGE.pdf"">here</a>. Additional information, including a link to the list of detailed ICD-10 codes as they map to all conditions, can be found on the <b>About -> Technical Documentation</b> tab of this website. 
 <br><br>
 We welcome comments and suggested changes to any aspect of our hierarchal list.
 '
@@ -121,6 +121,23 @@ Looking at the map with the box checked allows you to see how things compare to 
 <br><br>
 Different insights can be gained by looking at these maps in the two different ways.
 "
+
+axisScaleHelp  <- "A <b>fixed</b> scale results in the same x-axis scale applied across the selected groups.
+<br><br>
+In contrast, a <b>free</b> scale results in varied x-axis scales applied to each selected group for enhanced viewability of some data.
+"
+measureAgeRaceFocusHelp <- paste0('<p>The current MEASURES are:</p> 
+<ui style="list-style-type:circle">
+<li style="margin-left: 40px">Number</li>
+<li style="margin-left: 40px">Crude Rate (per 100,000 population)</li>
+<li style="margin-left: 40px">Age-Adjusted Rate</li>
+</ui><br>
+<p>No one measure is best--each measure provides a different view or perspective into the impact of the condition. For example, <b>Number</b> is the simplest, most direct measure, and has clear intuitive meaning, and, other things being equal, will be larger in areas with larger populations.  
+<br><br>
+<b>Crude Rate</b> takes the size of the population into account by dividing the number of deaths, hospitalizations, or emergency department visits by the number of people in the population (multiplied by 100,000 for interpretability, i.e. number of deaths per 100,000 people).
+<br><br>
+<b>Age-adjusted Rate</b> is the rate that would have existed if the population had the same age distribution as a reference population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality. 
+')
 
 cutmethodHelp <- 
 "Specifies method used to determine the cut-points for the color categories. <b>Quantile</b> divides the frequency distribution into equal categories, each containing the same fraction of the total dataset. <b>Fisher</b> uses the Fisher-Jenks algorithm which reduces the variance within categories and maximizes the variance between categories."

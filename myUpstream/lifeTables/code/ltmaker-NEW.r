@@ -321,15 +321,20 @@ if (whichDeaths %in% c("real","fake")) {
 ## county
 
 # 1 year with TOTAL race
+# mxCounty_1year_list <- lapply(range_1year,doExtract,dx=dxCounty,nx=nxCounty,nyrs=0,level="county")
+# mxCounty_1year <- bind_rows(mxCounty_1year_list) %>%
+#   filter(raceCode == "Total") %>%
+#   mutate(nyrs = 1)
+
+# 1 year with race
 mxCounty_1year_list <- lapply(range_1year,doExtract,dx=dxCounty,nx=nxCounty,nyrs=0,level="county")
 mxCounty_1year <- bind_rows(mxCounty_1year_list) %>%
-  filter(raceCode == "Total") %>%
   mutate(nyrs = 1)
 
-# 3 year TOTAL race
+# 3 year with race
 mxCounty_3year_list <- lapply(range_3year,doExtract,dx=dxCounty,nx=nxCounty,nyrs=1,level="county")
 mxCounty_3year <- bind_rows(mxCounty_3year_list) %>%
-  filter(raceCode == "Total") %>%
+  # filter(raceCode == "Total") %>%
   mutate(nyrs = 3)
 
 # 5 year with race
@@ -355,8 +360,13 @@ mxState_3year_list <- lapply(range_3year,doExtract,dx=dxState,nx=nxState,nyrs=1,
 mxState_3year <- bind_rows(mxState_3year_list) %>%
   mutate(nyrs = 3) 
 
+# 5 year with race
+mxState_5year_list <- lapply(range_5year,doExtract,dx=dxState,nx=nxState,nyrs=2,level="state")
+mxState_5year <- bind_rows(mxState_5year_list) %>%
+  mutate(nyrs = 5) 
+
 # Final state
-mxState <- bind_rows(mxState_1year, mxState_3year) %>%
+mxState <- bind_rows(mxState_1year, mxState_3year, mxState_5year) %>%
   filter(!raceCode %in% c("Other", "Unknown"))
 
 

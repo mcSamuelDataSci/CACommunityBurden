@@ -19,31 +19,27 @@ shinyServer(function(input, output,session) {
   # Store current navID (big tabs) and tabID (subtabs) for use throughout Server
   current <- reactiveValues()
   
-
   # Update current nav and tab values any time tab selection changes
   observe({
     current$nav = input$navsID
     current$tab <- switch(current$nav,
-                          "maps" = input$mapsID,
-                          "ranks" = input$ranksID,
-                          "trends" = input$trendsID,
-                          "disparities" = input$disparitiesID,
+                          "maps"             = input$mapsID,
+                          "ranks"            = input$ranksID,
+                          "trends"           = input$trendsID,
+                          "disparities"      = input$disparitiesID,
                           "hospitalizations" = input$hospitalizationsID,
-                          "sdoh" = input$sdohID,
-                          "demographics" = input$demographicsID, # JASPO added demographics
+                          "sdoh"             = input$sdohID,
+                          "demographics"     = input$demographicsID, # JASPO added demographics
                           current$nav)
     print(current$tab) # For debugging only
+    print(current$nav) # For debugging only
+    
     updateTabItems(session, "plotsMenuItems", "tabInputs")  # Always set menu to tabInputs, not tabInfo
   })
   
-  # Update sidebar inputs and text based on current tab selection
-  
-  observeEvent(input$myGeo, {  # This is here so it happens before map loads. There may be a better way
-    updateMyGeoHelpText(current$tab, input$myGeo)
-  })
-  
+ 
   observe({
-    if (current$nav %in% c("home", "abouts")) {
+    if (current$nav %in% c("home", "about")) {
       hideAllInputs()
       hide("plotsMenu")
       show("textHomeTab")
@@ -68,8 +64,7 @@ shinyServer(function(input, output,session) {
   #     # footer = modalButton("Close")
   #   )
   # )
-  #
-  #
+ 
 
   
 ## TEMP FIX...... -------------------------------------------------------  
@@ -89,8 +84,7 @@ shinyServer(function(input, output,session) {
   
   
 ## TEMP FIX...... -------------------------------------------------------  
-  
-  
+
 
 # Navigation from home tab Images -------------------------------------------------------------------------------
 
@@ -157,6 +151,8 @@ observeEvent(input$stateCutHelp,  {myModal(stateCutHelp)})
 observeEvent(input$measureHelp,   {myModal(measureHelp)})
 observeEvent(input$levelHelp,     {myModal(levelHelp)})
 observeEvent(input$dxGroupsHelp,  {myModal(dxGroupsHelp)})
+observeEvent(input$axisScaleHelp,  {myModal(axisScaleHelp)})
+observeEvent(input$measureAgeRaceFocusHelp, {myModal(measureAgeRaceFocusHelp)})
 
 
 
@@ -227,13 +223,14 @@ observeEvent(input$myGeo, {
     if(input$myGeo=="County")      {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()) }
 })
 
-
 # if myLHJ is not STATE (e.g. "CALIFORNIA"), then myGeo is "Community" so
 #  that county map will not show just overall county data
 
 # Can combine these 2 into 1:
 observeEvent(input$myLHJ, {
-  if(input$myLHJ != STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){updateSelectInput(session, "myGeo", selected = "Community") }
+  if(input$myLHJ != STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){
+    updateSelectInput(session, "myGeo", selected = "Community") 
+     }
 })
 
 observeEvent(current$tab, {
@@ -258,6 +255,69 @@ observeEvent(current$tab,{
   {updateSelectInput(session, "myCAUSE", choices = bigCode )}
 })
 
+
+# -- Jaspo's Version ---
+  
+# observe({
+#   
+#   # Jaspo added additional check - This solves the following issue:
+#   
+#   # User is in Maps tab, and selects a level 3 cause and county. The app updates myGEO to community and myCAUSE list to phCode.
+#   # However, the level 3 cause is currently selected, which doesn't exist in phCode. This results in an error. Same with Census Tract.
+#   # The additional if conditions in Census Tract and Community below resolve this issue.
+#   
+#   if(input$myGeo=="Census Tract" & current$tab == "interactiveMapTab"){
+#     
+#     tempCause <- substr(current_Cause(), 1, 1)
+#     current_Cause(tempCause) # current_Cause$val <- tempCause
+#     updateSelectInput(session, "myCAUSE", choices = bigCode, selected=current_Cause())
+#   }
+#   
+#   if(input$myGeo=="Community" & current$tab == "interactiveMapTab")   {
+#     
+#     tempCause <- substr(current_Cause(), 1, 3)
+#     current_Cause(tempCause) # current_Cause$val <- tempCause
+#     updateSelectInput(session, "myCAUSE", choices = phCode, selected=current_Cause())
+#   }
+#   
+#   if(input$myGeo=="County" & current$tab == "interactiveMapTab") {updateSelectInput(session, "myCAUSE", choices = fullList,selected=current_Cause()) }
+# })
+# 
+# # The problem with above is:
+# 
+# # 1) if Community or Census Tract is chosen, and a user exits map tab to a tab that has a myCAUSE dropdown,
+# # then the list of options will not be the full list.
+# 
+# # 2) If, for example, a third level dropdown is chosen outside of maps Tab, and a user enters the map Tab where input$myGEO != County,
+# # then an error is outputted
+# 
+# # As a [temp] solution, we observe the tab event and make updates entering and exiting the map tab. For entering the map tab:
+# 
+# # 1) If myLHJ == STATE, automatically update myGEO to County, which then triggers the observeEvent(myGEO) code above
+# # 2) If myLHJ != STATE, automatically update myGEO to Community, which then triggers the observeEvent(myGEO) code above
+# 
+# # This means entering the map tab will never default myGEO to Census Tract, which I think is the right choice since CT maps 
+# # (particularly California) takes a while to load
+# 
+# observeEvent(current$tab, {
+#   
+#   # Exiting map tab - Ensure myCAUSE dropdown contains full list
+#   if (current$tab != "interactiveMapTab") updateSelectInput(session, "myCAUSE", choices = fullList, selected=current_Cause())
+#   
+#   # Entering map tab
+#   
+#   # Always update myGeo to 'Community' upon entering map Tab if myLHJ != STATE
+#   if(input$myLHJ != STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){updateSelectInput(session, "myGeo", selected = "Community") }
+#   # Always update myGeo to 'County' upon entering map Tab if myLHJ == STATE
+#   if(input$myLHJ == STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){updateSelectInput(session, "myGeo", selected = "County") }
+#   
+# })
+#
+# observeEvent(input$myLHJ, {
+#   if(input$myLHJ != STATE & current$tab %in% c("interactiveMapTab","staticMapTab")){
+#     updateSelectInput(session, "myGeo", selected = "Community") 
+#   }
+# })
 
 
 
@@ -290,11 +350,36 @@ observeEvent(current$tab,{
  } } )
 
 
+# Life Expectancy ---------------------------------------------------------------------------------------------------------------
+
+
+
+leStep            <- reactive(LEtrend(input$myLHJ, input$mySexMult, input$myRace,input$myCI, input$myYearGrouping))
+output$lifeTable  <- renderPlot(leStep()$plotL)
+
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("lifeExpectancyTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(),".png")},
+                                     content = function(file) {
+                                       png(file,width=1000, height=600)
+                                       print(leStep()$plotL)
+                                       dev.off()  }  )
+    
+    output$ourData <- downloadHandler(filename = function() {paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(), ".csv")},
+                                      content = function(file) {
+                                        write.csv(leStep()$dataL, file,row.names = FALSE) } )
+    
+  } } )
+
+
+
 # MAPS --------------------------------------------------
 
 
 # ALL HELL BREAKS LOOSE WITH dbounce
-# use dbounce() below to "delay" rendering of may to avoid temporary error
+# use dbounce() below to "delay" rendering to avoid temporary error
 # output$cbdMapTL     <- debounce(renderLeaflet(cbdMapXLeaf(input$myLHJ, input$myCAUSE, input$myMeasure,      input$myYear, input$mySex,input$myStateCut, input$myGeo, input$myLabName, input$myCutSystem)),2000)
 
 # make's sure inputs are Truthy (read ?isTruthy)
@@ -386,31 +471,114 @@ output$ourOnlyPNG <- downloadHandler(filename=function(){paste0("new_disparity.j
 # --AGE/PLACE FOCUS------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
 
+#------- Initialize the Memory ----------
+selected_vals = reactiveValues(myData = "Deaths", myStrata = "Age Group", mySort = "75 - 84", myOlderFocus = F, myMeasureAgeRaceFocus = "cRate")
+
+# AgeRace tab
+
+
+observe({
+  
+  selected_vals$myData <- input$myData
+  selected_vals$myStrata <- input$myStrata
+  selected_vals$mySort <- input$mySort
+  selected_vals$myMeasureAgeRaceFocus <- input$myMeasureAgeRaceFocus
+  selected_vals$myOlderFocus <- input$myOlderFocus
+  
+ # print(selected_vals$myOlderFocus)
+ # print(selected_vals$mySort)
+  
+})
+
+# Older Adult Focus
+# 1) Only show when age group is selected
+# 2) Hide when race/ethncity is selected
+# 3) Update sort list when olderAdultFocus = T
+# 4) Update sort list when olderAdultFocus = F
+# 5) Update default olderAdultFocus value to F when exiting ageRaceFocusTab
+
+# Ensure Older Adult Focus is always set to F when coming into Age Race Focus Tab
+observe({
+  if (current$tab != "ageRaceFocusTab") updateCheckboxInput(session, "myOlderFocus", label = "Older Adult Focus", value = F)
+})
+
+# If age group is chosen AND tab is currently in ageRaceFocus, show older focus checkbox. If Race/Ethnicity is chosen, hide OlderFocus
+observe({
+  if (selected_vals$myStrata == "Age Group" & current$tab == "ageRaceFocusTab") shinyjs::show("myOlderFocus")
+  if (selected_vals$myStrata == "Race/Ethnicity") shinyjs::hide("myOlderFocus")
+})
+
+# Update age groups based on OlderAdultFocus selection
+observe({
+  if(selected_vals$myOlderFocus & current$tab == "ageRaceFocusTab" & selected_vals$myStrata == "Age Group") {
+    selectedSort <- if (selected_vals$mySort %in% c("55 - 64", "65 - 74", "75 - 84", "85+")) selected_vals$mySort else "75 - 84"
+    updateSelectInput(session, "mySort", choices = ageSort[ageSort >= "55 - 64"], selected = selectedSort)
+  }
+  
+  if(!selected_vals$myOlderFocus & current$tab == "ageRaceFocusTab" & selected_vals$myStrata == "Age Group") {
+    updateSelectInput(session, "mySort", choices = ageSort, selected = selected_vals$mySort)
+  }
+})
+
+# In the event OlderFocus is True, and we go to DeathHospED tab, the age group sorting should be updated to include full list
+observe({
+  if (current$tab == "deathHospEDTab" & selected_vals$myStrata == "Age Group") {
+    updateSelectInput(session, "mySort", choices = ageSort, selected = selected_vals$mySort)
+  }
+})
+
+# Update age groups based on OlderAdultFocus selection
+
+# observeEvent(input$myOlderFocus, {
+#   if(input$myOlderFocus) {updateSelectInput(session, "mySort", choices = ageSort[ageSort >= "55 - 64"], selected = "75 - 84") }
+#   if(!input$myOlderFocus){updateSelectInput(session, "mySort", choices = ageSort,                       selected = "75 - 84")}
+# })
+
+
+# If Race/Ethnicity is chosen, update grouping variable dropdown. If age group is chosen, update grouping variable dropdown
 observeEvent(input$myStrata, {
   
-  if(input$myStrata=="Race/Ethnicity") {
+  if (input$myStrata == "Race/Ethnicity") {
+    updateSelectInput(session, "mySort", choices = raceSort, selected = "Black")
+  } else {
+    updateSelectInput(session, "mySort", choices = ageSort, selected = "75 - 84")
+  }
+   
+})
+
+# Condition to show Adjusted-Rate in measure dropdown
+observe({
+  if (current$tab == "ageRaceFocusTab" & selected_vals$myData == "Deaths" & selected_vals$myStrata == "Race/Ethnicity") updateSelectInput(session, "myMeasureAgeRaceFocus", choices = c("Number"="N","Crude Rate"="cRate","Adjusted Rate"="aRate"), selected = selected_vals$myMeasureAgeRaceFocus)
+})
+
+# Condition to hide Adjusted-Rate in measure dropdown
+observe({
+  
+  if (current$tab == "deathHospEDTab" | selected_vals$myData != "Deaths" | selected_vals$myStrata == "Age Group"){
     
-    updateSelectInput(session, "mySort",                choices = raceSort) 
-    updateSelectInput(session, "myMeasureAgeRaceFocus", choices = c("Number"="N","Crude Rate"="cRate","Adjusted Rate"="aRate"), selected = "cRate")
-    shinyjs::hide("myOlderFocus")
+    selectedMeasure <- if (selected_vals$myMeasureAgeRaceFocus != "aRate") selected_vals$myMeasureAgeRaceFocus else "cRate"
+    
+    updateSelectInput(session, "myMeasureAgeRaceFocus", choices = c("Number"="N","Crude Rate"="cRate"), selected = selectedMeasure)
     
   }
   
-  if(input$myStrata=="Age Group") {
-    
-    updateSelectInput(session, "mySort",                choices = ageSort,                     selected = "75 - 84") 
-    updateSelectInput(session, "myMeasureAgeRaceFocus", choices = c("Number"="N","Crude Rate"="cRate"), selected = "cRate")
-    if (current$tab == "ageRaceFocusTab") shinyjs::show("myOlderFocus")
-    }
+ # print(selected_vals$myData)
+
 })
 
-observeEvent(input$myOlderFocus, {
-  if(input$myOlderFocus) {updateSelectInput(session, "mySort", choices = ageSort[ageSort >= "55 - 64"], selected = "75 - 84") }
-  if(!input$myOlderFocus){updateSelectInput(session, "mySort", choices = ageSort,                       selected = "75 - 84")}
-})
-    
-ageRaceFocusStep    <- reactive(makePlotRank(myCounty = input$myLHJ, myData = input$myData, myStrata = input$myStrata, mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus, myLiveborn = input$myLiveborn, myOlderFocus = input$myOlderFocus, myScale = input$myScale))
-output$ageRaceFocus <- renderPlot(ageRaceFocusStep()$plotL, height = 800)
+ageRaceFocusStep    <- reactive(makePlotRank(myCounty = input$myLHJ, myData = input$myData, myStrata = input$myStrata, 
+                                             mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus, 
+                                             myLiveborn = input$myLiveborn, myOlderFocus = input$myOlderFocus, myScale = input$myScale))
+output$ageRaceFocus <- renderPlot({
+  
+  # shiny::validate(
+  #   need(nrow(ageRaceFocusStep()$dataL) > 0, "Loading...")
+  # )
+  
+  
+  ageRaceFocusStep()$plotL 
+  
+}, height = 800)
 
 
 observeEvent(current$tab,{
@@ -429,13 +597,16 @@ observeEvent(current$tab,{
   } } )
 
 
-
-
-
-
-
 deathHospEDStep  <- reactive(deathHospEDchart(myCounty = input$myLHJ, myStrata = input$myStrata, mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus))
-output$deathHospED <- renderPlot(deathHospEDStep()$plot, height = 800)
+output$deathHospED <- renderPlot({
+  
+  # shiny::validate(
+  #   need(nrow(deathHospEDStep()$loadData) > 0, "Loading...")
+  # )
+  
+  deathHospEDStep()$plotL 
+  
+}, height = 800)
 
 
 
@@ -443,14 +614,15 @@ observeEvent(current$tab,{
   if(current$tab %in% c("deathHospEDTab") ) {
     
     output$ourOnlyPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
-                                     content = function(file) {
-                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
-                                       print(deathHospEDStep()$plotL)
-                                       dev.off() } )
+                                         content = function(file) {
+                                           png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                           print(deathHospEDStep()$plotL)
+                                           dev.off() } )
     
-   
+    
     
   } } )
+
 
 
 
@@ -463,21 +635,23 @@ output$demoPop_RacePie <- renderPlotly(demographics1Step())
 
 
 demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
+output$demoPop_Pyramid <- renderPlotly(demographics2Step())
 
-output$demoPop_Pyramid <- renderPlotly({
-  
-  ggplotly(demographics2Step(), 
-           sort = TRUE) #%>% layout(legend = list(orientation = "h", xanchor="center", x = 0.6, y = 1.1))
-  
-}) 
+# output$demoPop_Pyramid <- renderPlotly({
+#   
+#   ggplotly(demographics2Step(), 
+#            sort = TRUE) #%>% layout(legend = list(orientation = "h", xanchor="center", x = 0.6, y = 1.1))
+#   
+# }) 
 
 demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
+output$demoPop_RaceAge <- renderPlotly(demographics3Step())
 
-output$demoPop_RaceAge <- renderPlotly({
-  
-  ggplotly(demographics3Step())  %>%
-    layout(margin=list(t = 55, l = 0), title = list(x=0.5))
-})
+# output$demoPop_RaceAge <- renderPlotly({
+#   
+#   ggplotly(demographics3Step())  %>%
+#     layout(margin=list(t = 55, l = 0), title = list(x=0.5))
+# })
 
 
 # IHME ----------------------------------------------------------------------------------------------------
@@ -533,7 +707,6 @@ output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, i
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::
 
 
-output$lifeTable  <- renderPlot(         LEtrend(input$myLHJ, input$mySexMult, input$myRace,input$myCI)$trend)
 
 
 
@@ -543,14 +716,31 @@ sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else
 geoLabel   <- renderText({if (input$myLHJ==STATE)      geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
 
+# output$map_title <- renderUI({h4(strong(
+#                     HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
+#                                    " from ",
+#                                    deathCauseLink[deathCauseLink[,"causeCode"]==input$myCAUSE,"causeName"][1],     # FIX this [1] here now since second element is NA
+#                                    " in ",span(timeLabel(),style="color:blue"),
+#                                    " by ",input$myGeo,
+#                                    sexLabel(), geoLabel(),
+#                                    sep = " ")))) })
+
+
 output$map_title <- renderUI({h4(strong(
-                    HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
-                                   " from ",
-                                   fullCauseList[fullCauseList[,"causeCode"]==input$myCAUSE,"causeName"][1],     # FIX this [1] here now since second element is NA
-                                   " in ",span(timeLabel(),style="color:blue"),
-                                   " by ",input$myGeo,
-                                   sexLabel(), geoLabel(),
-                                   sep = " ")))) })
+  HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
+                 " from ",
+                # pull(filter( deathCauseLink,causeCode==input$myCAUSE),causeName),
+                 deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE],
+                 " in ",span(timeLabel(),style="color:blue"),
+                 " by ",input$myGeo,
+                 sexLabel(), geoLabel(),
+                 sep = " ")))) })
+
+
+
+
+
+
 
 # END of shinyServer ---------------------------------------------------------
 

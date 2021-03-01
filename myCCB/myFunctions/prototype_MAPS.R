@@ -94,7 +94,7 @@ cbdMap  <- function(myLHJ,      # county or whole state = "CALIFORNIA"
   
  # map title  
  myTitle  <- paste0("TEST", #deathMeasuresNames[deathMeasures == myMeasure]
-                    " from ",#fullCauseList[fullCauseList[,"LABEL"]== myCause,"nameOnly"],
+                    " from ",#deathCauseLink[deathCauseLink[,"LABEL"]== myCause,"nameOnly"],
                     " in ",myTitleYear,myTitleGeo,sexLab,geoLab)
  myTitle  <- wrap.labels(myTitle,80)
   

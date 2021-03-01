@@ -120,10 +120,11 @@ plot_title <- c("Deaths",
                 "Years of Life Lost",
                 "Increase in Deaths",
                 "Race Disparity in Deaths",
-                "Number of Hospitalizations",  #"Number of ED Visits",
+                "Number of Hospitalizations",  
+                "Number of ED Visits",
                 "Reportable Disease Cases",
                 "Years Lived with Disability",
-                "Risk Factors"
+                "Risk Factors" 
                 )
 
 metric <-     c("Number",
@@ -131,11 +132,12 @@ metric <-     c("Number",
                 "Percent",
                 "Rate Ratio",
                 "Number",
+                "Number",
                 "Rate",
                 "Rate",
                 "Number")
 
-dataSets   <- list(ccbDeaths, ccbYLL,   ccbChange, ccbRace, hospData, cidData , dat.YLD.cause, dat.DALY.risk)
+dataSets   <- list(ccbDeaths, ccbYLL,   ccbChange, ccbRace, hospData, edData, cidData , dat.YLD.cause, dat.DALY.risk)
 
 #ourColors <-    c("#8F98B5", "#E9A291", "#E9A291","#8ECAE3", "#E6C8A0","#8F98B5","#E9A291",   "#8F98B5","blue")
 
@@ -154,43 +156,31 @@ a3 <- hcl(hue, 35, 85)
 
 #barplot(seq_along(a), col=a3, main="Pastel_hcl")
 
-ourColors <- a3[c(5,6,7,8,9,11,12,14)]
+ourColors <- a3[c(5,6,7,8,9,11,12,14, 1)]
 
 
 
 #==========================================================================================================================
 
-plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10){ 
+plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrease = F){ 
   
   
   lblwrap <- function (x,L) { # x=object, L=desired character length
     sapply(lapply(x, strwrap, L),paste, collapse = "\n   ")
   }
   
-  
+  # Jaspo
+  if (IDnum == 3 & decrease) plot_title[IDnum] <- "Decrease in Deaths"
   
   myObserv=as.numeric(myObserv)
   
   if(1==2){
-    IDnum=4
+    IDnum=3
     myCounty = "Butte"
     myObserv = 10
   }  
   
-  
-  #  if (dMode == "display") { 
-  #    SHOW_TOP <- 5   
-  #    tSize1   <- 8 
-  #    tSize2   <- 5 
-  #    tSize3   <- 5 
-  #    } 
-  # if (dMode == "study") { 
-  #    SHOW_TOP <- 15 
-  #    tSize1   <- 5 
-  #    tSize2   <- 3 
-  #    tSize3   <- 2.5 
-  #    }    
-  
+
   SHOW_TOP <- myObserv  
   tSize1   <- #round(((2e-07)*(myObserv^4))-((6e-05)*(myObserv^3))+
     #        0.007*(myObserv^2)-(0.3276*myObserv)+8.4091)
@@ -203,15 +193,30 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10){
   
   
   
-  if(IDnum %in% 1:6)  work.dat  <- filter(dataSets[[IDnum]],county==myCounty)
-  if(IDnum %in% 7:8)  work.dat  <-        dataSets[[IDnum]]                 
+  if(IDnum %in% 1:7)  work.dat  <- filter(dataSets[[IDnum]],county==myCounty)
+  if(IDnum %in% 8:9)  work.dat  <-        dataSets[[IDnum]]                 
   
   
   test <- data.frame(xrow=1:SHOW_TOP)
   
   
+  # work.dat <- work.dat %>%
+  #   mutate(rankX = rank(-measure))   %>%
+  #   filter(rankX <= SHOW_TOP)   %>%
+  #   arrange(rankX) %>%
+  #   mutate(xrow = row_number()  ) %>%
+  #   full_join(test,by="xrow")    %>%
+  #   mutate(xValues = ifelse(is.na(mValues),xrow,paste(xrow,mValues)))  %>%
+  #   mutate(xSize1 =ifelse(is.na(mValues),0.01,tSize1),   #5
+  #          xSize2 =ifelse(is.na(mValues),0.01,tSize2),   #3
+  #          xSize3 =ifelse(is.na(mValues),0.01,tSize3),   #2.5
+  #   )  %>%
+  #   mutate(measure=ifelse(is.na(mValues),0,measure))  %>%
+  #   arrange(xrow)
+  
+  # Jaspo
   work.dat <- work.dat %>%
-    mutate(rankX = rank(-measure))   %>%
+    mutate(rankX = if(decrease) rank(measure) else rank(-measure))   %>%
     filter(rankX <= SHOW_TOP)   %>%
     arrange(rankX) %>%
     mutate(xrow = row_number()  ) %>%
@@ -228,18 +233,51 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10){
   # if (IDnum == 4) work.dat <- mutate(work.dat,xValues=paste0(xValues,"      (",raceCode,":",lowRace,")"))
   if (IDnum == 4) work.dat <- mutate(work.dat,xRaceValue=paste0("(",raceCode,":",lowRace,")"))
   if (IDnum == 4) myYear <- "2017-2019"
-  if (IDnum == 3) myYear <- "2007 to 2017"
+  if (IDnum == 3) myYear <- "2009 to 2019"
   
   plot_width <- max(work.dat$measure)*PLOT_WIDTH_MULTIPLIER
+  # Jaspo
+  if (decrease) plot_width <- max(abs(work.dat$measure))*PLOT_WIDTH_MULTIPLIER
   
+  # tPlot <-  
+  #   ggplot(data=work.dat, aes(x=reorder(xValues, -xrow),y=measure)) +
+  #   coord_flip() +
+  #   geom_bar(position="dodge", stat="identity", width=BAR_WIDTH, fill=ourColors[IDnum])   +
+  #   geom_text(hjust=0, y=0, label=lblwrap(paste0(work.dat$xValues),ifelse(SHOW_TOP<13,38,48) ),
+  #             size=work.dat$xSize1, lineheight = 0.7) +  # , size=xSize
+  #   annotate(geom="text", hjust=1, x=work.dat$xValues, y=plot_width, label=work.dat$measure,size=work.dat$xSize2) +
+  #   theme(panel.grid.major=element_blank(),
+  #         panel.grid.minor=element_blank(),
+  #         panel.background=element_blank(),
+  #         axis.title.x=element_blank(),
+  #         axis.text.x=element_blank(),
+  #         axis.ticks.x=element_blank(),
+  #         axis.title.y=element_blank(),
+  #         axis.text.y=element_blank(),
+  #         axis.ticks.y=element_blank(),
+  #         legend.position="none",
+  #         # panel.border = element_rect(colour = "gray", fill=NA, size=1),
+  #         plot.title=element_text(size=20, face="bold", vjust=-4),                 # size units?
+  #         plot.subtitle=element_text(size=16, face="bold", hjust=1, vjust=-2)
+  #   ) +
+  #   labs(title=paste(plot_title[IDnum]), subtitle=metric[IDnum])  +
+  #   scale_y_continuous(expand = c(0,0), limits = c(0, plot_width))
+  
+  # Jaspo
   
   tPlot <-  
     ggplot(data=work.dat, aes(x=reorder(xValues, -xrow),y=measure)) +
     coord_flip() +
     geom_bar(position="dodge", stat="identity", width=BAR_WIDTH, fill=ourColors[IDnum])   +
-    geom_text(hjust=0, y=0, label=lblwrap(paste0(work.dat$xValues),ifelse(SHOW_TOP<13,38,48) ),
-              size=work.dat$xSize1, lineheight = 0.7) +  # , size=xSize
-    annotate(geom="text", hjust=1, x=work.dat$xValues, y=plot_width, label=work.dat$measure,size=work.dat$xSize2) +
+    geom_text(hjust= if (decrease) 1 else 0, 
+              y= if (decrease) -.02 else 0, 
+              label=lblwrap(paste0(work.dat$xValues), ifelse(SHOW_TOP<13,38,48) ),
+              size=work.dat$xSize1, 
+              lineheight = 0.7) +  # , size=xSize
+    annotate(geom="text", 
+             hjust= if (decrease) 0 else 1, x=work.dat$xValues, 
+             y= if (decrease) -plot_width else plot_width, 
+             label=work.dat$measure,size=work.dat$xSize2) +
     theme(panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),
           panel.background=element_blank(),
@@ -251,11 +289,11 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10){
           axis.ticks.y=element_blank(),
           legend.position="none",
           # panel.border = element_rect(colour = "gray", fill=NA, size=1),
-          plot.title=element_text(size=20, face="bold", vjust=-4),                 # size units?
-          plot.subtitle=element_text(size=16, face="bold", hjust=1, vjust=-2)
+          plot.title=element_text(size=20, face="bold", vjust=-4, hjust = if (decrease) 1 else 0),                 # size units?
+          plot.subtitle=element_text(size=16, face="bold", hjust= if (decrease) 0 else 1, vjust=-2)
     ) +
     labs(title=paste(plot_title[IDnum]), subtitle=metric[IDnum])  +
-    scale_y_continuous(expand = c(0,0), limits = c(0, plot_width))
+    scale_y_continuous(expand = c(0,0), limits = if (decrease) c(-plot_width, 0) else c(0, plot_width))
   
   if (IDnum == 4) {
     tPlot <- tPlot + geom_text(hjust=0, aes(x=xValues,y=plot_width*.72, label=paste0(xRaceValue)),size=work.dat$xSize3)

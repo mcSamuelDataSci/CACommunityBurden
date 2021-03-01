@@ -54,7 +54,7 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
     }  
   
  myTit  <- paste0(deathMeasuresNames[deathMeasures == myMeasure],
-                    " from ",fullCauseList[fullCauseList[,"causeCode"]== myCause,"causeName"], # JASPO
+                    " from ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO
                     " in ",myTitYear,myTitGeo,sexLab,geoLab)
  myTit  <- wrap.labels(myTit,80)
   

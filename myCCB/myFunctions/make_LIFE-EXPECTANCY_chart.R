@@ -1,6 +1,6 @@
-server <- T
-if (!server) source("g:/FusionData/Standards/FusionStandards.R")
-if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+# server <- T
+# if (!server) source("g:/FusionData/Standards/FusionStandards.R")
+# if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
 
 
 
@@ -16,16 +16,17 @@ lifeTableState  <- readRDS(paste0(ccbData,"/e0ciState.RDS")) %>%
                      mutate(county = "CALIFORNIA") %>%
                      mutate(sex = str_to_title(sex))
 
-lifeTableSet   <- bind_rows(lifeTableCounty, lifeTableState)
+lifeTableSet   <- bind_rows(lifeTableCounty, lifeTableState) %>%
+  left_join(select(raceLink, raceCode, raceNameShort), by = "raceCode")
 
 # FIX MIN and MAX Year in global or other life tables function eventaully
   minYear_LT <- min(lifeTableSet$year)
   maxYear_LT <- max(lifeTableSet$year)
 
-#== FUNTION ========================================================================================================  
+#== FUNCTION ========================================================================================================  
   
   
-LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
+LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping = 1) {
    
  
 #---BAR PART------------------------------------------------------------------------------------------------------
@@ -45,19 +46,19 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
     myLHJ="CALIFORNIA"
     mySexMult = c("Male","Female")
     # myRace = c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "WHITE_NH")
-    myRace = c(  "Asian",   "Black",  "Hisp",   "White")
+    myRace = c(  "Asian",   "Black",  "Latino",   "White")
     myCI = FALSE
   }  
   
   
   
 
- dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult, raceCode %in% myRace) %>% # originally race7, now raceCode JASPO
-             mutate(lineLabel = paste(raceCode,"-",sex))
+ dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult, raceNameShort %in% myRace) %>% 
+             mutate(lineLabel = paste(raceNameShort,"-",sex))
 
 
 
- tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceCode, y=ex, fill=sex)) + 
+ tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceNameShort, y=ex, fill=sex)) + 
                 geom_bar(stat = "identity",position="dodge")  +
                 scale_fill_manual(values = genderColors) + 
                 labs(x = "Race/Ethnicity", y = "Life Expectancy at Birth", x = "Year") +
@@ -101,7 +102,12 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
  
  
  
- dat.1 <-  filter(dat.1, county == "CALIFORNIA" & nyrs==1 | county != "California" & nyrs == 5) 
+#  dat.1 <-  filter(dat.1, (county == "CALIFORNIA" & nyrs==1) | (county != "CALIFORNIA" & nyrs == 3))
+ 
+   dat.1 <-  filter(dat.1, nyrs == myYearGrouping)
+ 
+ 
+ 
  
  if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
  
@@ -112,14 +118,14 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
  
  
  tplot<- ggplot(data=dat.1, aes(x=year, y=ex)) +                     # , nyrs == 1
-                 geom_line(size=1.6,aes(color=raceCode,linetype=sex)) +
+                 geom_line(size=1.6,aes(color=raceNameShort,linetype=sex)) +
                # geom_point(shape = myPointShape,size=myPointSize)  +
                  ylim(62, 93) +
                  scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,
                                     expand = expansion(mult = c(0, 0), add = c(1, 5)), # lower-limit: 2000 - (2018 - 2000) * 0 - 1... upper-limit: 2018 + (2018 - 2000) * 0 + 5
                                     #expand=c(0,5), # 
                                     labels=myLabels) +
-                 scale_color_manual(values = raceCodesColors) +   
+                 scale_color_manual(values = raceNamesShortColors) +   
                  labs(title =myTitle, y = "Life Expectancy at Birth", x = "Year")  +
                  theme_bw() +
                   theme(axis.text=element_text(size=myAxisSize),
@@ -128,24 +134,26 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI) {
                         axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1), 
                         legend.position = "none"
                        ) +    
-                  geom_dl(aes(label = lineLabel,color=raceCode), method = list(dl.trans(x = x + 0.2), "last.points", 
+                  geom_dl(aes(label = lineLabel,color=raceNameShort), method = list(dl.trans(x = x + 0.2), "last.points", 
                                                                             #size = myLineLabelSize, # use this instead of cex
                                                                             cex=myLineLabelCex, 
                                                                             'last.bumpup',font="bold")) 
  
 if (myCI) {
     tplot <- tplot +
-        geom_line(data=dat.1,aes(x=year, y=exlow, color=raceCode,linetype=sex)) +
-        geom_line(data=dat.1,aes(x=year, y=exhigh,color=raceCode,linetype=sex)) 
+        geom_line(data=dat.1,aes(x=year, y=exlow, color=raceNameShort,linetype=sex)) +
+        geom_line(data=dat.1,aes(x=year, y=exhigh,color=raceNameShort,linetype=sex)) 
  }
      
  
 # tplot <- tplot + ylim(62, 93)
  
  
-   list(trend=tplot, bar=tplot_bar)
-
+   dat.1 <- dat.1 %>% mutate(ex=round(ex,2), exlow=round(exlow,2),exhigh=round(exhigh,2)) %>%
+                      select(county,nyrs,year, sex,race=raceNameShort, LifeExpectancy=ex, LECI_lower = exlow, LECI_upper=exhigh)
  
+   list(plotL = tplot, dataL = dat.1, bar=tplot_bar)
+
  }
  
  

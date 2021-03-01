@@ -34,25 +34,31 @@ deathRace <- readRDS(file= path(ccbData,"real/datCounty_RE.RDS")) %>%
 
 focusData <- paste0(ccbData,"real/age_race_focus_data/")
 
+critN <- 11
+
 hospAge   <- readRDS(file = path(focusData,"inData/hospAge.rds"))  %>%  
               left_join(popAge3Year,by=c("county","ageGroup")) %>%
               rename(N = n_hosp) %>%
-              mutate(cRate = 100000*N/population)
+              mutate(cRate = 100000*N/population) %>%
+              filter(N >= critN)
 
 hospRace  <- readRDS(file = path(focusData,"inData/hospRace.rds"))    %>%  
               left_join(popRace3Year,by=c("county","raceCode")) %>%
               rename(N = n_hosp) %>%
-              mutate(cRate = 100000*N/population)
+              mutate(cRate = 100000*N/population) %>%
+              filter(N >= critN)
 
 edAge    <-  readRDS(file = path(focusData,"inData/edAge.rds"))      %>%  
               left_join(popAge3Year,by=c("county","ageGroup"))%>%
               rename( N = n_ED) %>%
-              mutate(cRate = 100000*N/population)
+              mutate(cRate = 100000*N/population) %>%
+              filter(N >= critN)
 
 edRace   <-  readRDS(file = path(focusData, "inData/edRace.rds"))    %>%  
               left_join(popRace3Year,by=c("county","raceCode")) %>%
               rename( N = n_ED) %>%
-              mutate(cRate = 100000*N/population)
+              mutate(cRate = 100000*N/population)  %>%
+              filter(N >= critN)
 
 
 makePlotRankData <- function(myDataSet     = "deathAge", 

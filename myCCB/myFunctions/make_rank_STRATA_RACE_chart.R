@@ -22,7 +22,7 @@ rankStrataRace <- function(myRace = "Black-NH",
         select(sex,raceCode,causeCode,county,measure=myMeasure) %>%
         filter(sex == mySex,!is.na(raceCode)) 
         
-      causeTemp <- data.frame(causeCode = fullCauseList$causeCode ,stringsAsFactors = FALSE)
+      causeTemp <- data.frame(causeCode = deathCauseLink$causeCode ,stringsAsFactors = FALSE)
       raceTemp   <- data.frame(raceCode = unique(t.dataSet$raceCode),stringsAsFactors = FALSE)
       county    <- data.frame(county   = unique(t.dataSet$county),stringsAsFactors = FALSE)
       fullMat   <- sqldf(" select * from  county cross join causeTemp cross join raceTemp")
@@ -30,7 +30,7 @@ rankStrataRace <- function(myRace = "Black-NH",
       t.dataSet <- full_join(t.dataSet,fullMat,by=c("county","causeCode","raceCode")) %>%
         arrange(county,causeCode, raceCode) %>%
         mutate(measure = ifelse(is.na(measure),0,measure))    %>%
-        left_join(., fullCauseList, by = "causeCode") %>%
+        left_join(., deathCauseLink, by = "causeCode") %>%
         rename(ccsName = causeName)
       
   }

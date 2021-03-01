@@ -1,0 +1,346 @@
+---
+title: "Increases in California Mortaily in 2020 - Exploration"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=10)
+```
+
+
+
+
+<style type="text/css">
+
+.main-container {
+  max-width: 95% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+h1.title {
+  font-size: 30px;
+  color: DarkBlue;
+}
+
+h1 { /* Header 1 */
+  font-size: 20px;
+  color: black;
+}
+
+
+h2 {
+  font-size: 18px;
+  color: DarkBlue;
+}
+
+ul {
+  display: block;
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  color: black;
+}
+
+
+</style>
+
+
+
+
+<br> 
+
+```{r}
+  server <- T
+  if (!server) source("g:/FusionData/Standards/FusionStandards.R")
+  if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+
+# dat.0.1   <- readRDS(path(ccbData, "real/datCounty_RACE_AGE_Q.RDS"))
+
+# dat.00     <- readRDS(path(ccbData, "real/datCounty_M.RDS"))  %>%
+#                 left_join(deathCauseLink, by = "causeCode")
+
+
+dat.0      <- readRDS(path(ccbData, "real/datCounty_Q.RDS"))  %>%
+                left_join(deathCauseLink, by = "causeCode")
+
+tDat <- dat.0 %>% 
+          filter(year %in% 2017:2020, county=="CALIFORNIA", sex == "Total", raceCode == "Total")  %>%
+          mutate(quarter = as.numeric(quarter),
+          year = as.character(year))
+
+
+```
+
+
+
+
+# After many years of decreasing or level death rates in California the rate increased substantailly in 2020
+
+* Most of this increase is due directly to Covid-19
+
+* Some of the increase is due to other conditions
+
+
+<br>
+
+## All-Cause Death Rate by Quarter and Year, California 2017-2020
+
+```{r fig.width=10}
+library(directlabels)  # Used to directly label lines in Trend plots
+
+
+ ggplot(filter(tDat,Level == "lev0"), 
+             aes(x= quarter, y = aRate, color = year)) +
+             geom_line(size=myLineSize ) +
+             labs(
+                  x= "Quarter", y = "Age-Adjusted Death Rate") +
+             theme(axis.text  = element_text(size = 14, angle = 0),
+                   plot.title   = element_text(size = 16, color="darkblue"),
+                  axis.title   = element_text(size = 14),  
+               legend.position = "none") +
+             scale_x_continuous( 
+                             expand = expansion(mult = c(0, 0), add = c(.1, .5))) +
+              geom_dl(aes(label = year), method = list(dl.trans(x = x + 0.2), "last.points", cex = 1.5, 'last.bumpup',font="bold")) 
+
+```
+
+<br>
+
+## All Cause Age-Adjusted Mortality Rate by Race/Ethnicity and YearGroup, California 2017-2020",
+
+
+```{r}
+
+t.Race <-  filter(dat.0,
+                  sex == "Total",
+                  year %in% 2017:2020,
+                  causeCode == "0",
+                  county   == "CALIFORNIA")  %>%
+            mutate(yearG = ifelse(year == 2020, "2020","2017-19"),
+            quarter = as.numeric(quarter)) %>%
+            group_by(quarter, raceCode, yearG) %>%
+            summarise(mRate = mean(aRate)) %>%
+            filter(raceCode %in% c("Black","White","Hisp","Asian"))
+
+junk <- t.Race %>% filter(quarter==3) %>% 
+            pivot_wider(names_from = yearG, values_from = mRate,names_prefix = "X") %>%
+            mutate(inc = 100*(`X2020`-`X2017-19`)/`X2017-19`)
+
+
+t.Race$yearG <- factor(t.Race$yearG,c("2020","2017-19"))
+
+ggplot(data = t.Race, aes(x= quarter, y = mRate, color = raceCode, linetype = yearG)) +
+       geom_line(size=myLineSize) +
+      # scale_linetype_manual(values=c("shortdashed", "solid"))+
+       labs( linetype = "Year", color = "Race/Ethnicity") +
+       labs(x="Quarter", y = "Value") +
+       theme(legend.key.width=unit(2,"cm"))
+
+```
+
+
+
+
+<br>
+
+# Data/Methods
+
+* California vital statistic death data received mid-January 2021
+  * number of 2020 deaths are not quite complete
+  * cause of death coding is not complete -- particularly for Quarter 3 (Q3) and Quarter 4 (Q4) (Q4 is too incomplete to include in this analysis)
+* Compare 2019 and 2020 Q2 and Q3 cause-specific age-adjusted deaths rates and numbers of deaths 
+* Analysis restricted to conditions with at least 500 deaths in Q3 or Q4 2020
+* Cause of death condition groupings and age-adjustment calculations use the [California Community Burden of Disease Engine](https://skylab.dev.cdph.ca.gov/communityBurden/) tools and data systems
+
+
+
+
+```{r}
+tDat2 <- filter(tDat,
+                Level == "lev2",
+                quarter %in% 2:3 ) %>% 
+            select(year,quarter, Ndeaths, causeName, aRate)   %>%
+  pivot_wider(names_from = year,values_from=c(Ndeaths,aRate)) %>%           
+  mutate(change17_18 = round(100*(aRate_2018 - aRate_2017) / aRate_2017  ,1),
+         change18_19 = round(100*(aRate_2019 - aRate_2018) / aRate_2018  ,1),  
+         change19_20 = round(100*(aRate_2020 - aRate_2019) / aRate_2019  ,1),
+         numchange19_20 = Ndeaths_2020-Ndeaths_2019
+  )   %>%
+  filter(Ndeaths_2020 > 500) 
+```
+
+<br>
+
+# Key Summary Observations
+
+* Aside from COVID-19, the conditions with the five **largest percentage increases** from 2019 to 2020 were
+  *  Drug overdose/poisonings (45% Q2 increase, 37% Q3)
+  *  Homicide (38% Q3 increase)
+  *  Diabetes (29% Q3 increase)
+  *  Endocrine, blood, and immune disorders (23% increase)
+* The conditions with the five **largest absolute increases** from 2019 to 2020 were
+  *  Alzheimer's disease (N=1267 increase Q3, N=757 increase Q2)
+  *  Ischemic heart disease (1060), reversing a steady prior decreases
+  *  Drug overdose/poisoning (N=594 increase Q2, N=536 Q3)
+* Regarding **decreases**
+  * suicide has the largest percentage and absolute decrease of any condition in both Q2 and Q3
+  * lung cancer had large percentage and absolute decreases in both Q2 and Q3 
+ 
+<br><br>
+  
+## Quarter 2 and 3, 2019 and 2020, Selected Causes of Death, ordered by percent increase 2019 to 2020  
+  
+```{r}
+
+tDat2 <- filter(tDat,
+                Level == "lev2",
+                quarter %in% 1:3 ,
+                year > 2016) %>% 
+            select(year,quarter, Ndeaths, causeName, aRate)   %>%
+  pivot_wider(names_from = year,values_from=c(Ndeaths,aRate)) %>%           
+  mutate(  
+         percent_change19_20 = (aRate_2020 - aRate_2019) / aRate_2019 ,
+         numchange19_20 = Ndeaths_2020-Ndeaths_2019
+  )   %>%
+  filter(Ndeaths_2020 > 500) %>%
+        filter( causeName %in% c("Suicide/Self-harm","Trachea, bronchus and lung cancers","Drug poisonings","Homicide/Interpersonal violence","Endocrine, blood, immune disorders","Diabetes mellitus","Ischemic heart disease","Alzheimer’s disease and other dementias")) %>%
+   arrange(-percent_change19_20)
+
+
+library(gt)
+
+
+tDat2 %>% gt() %>%
+  fmt_number(columns = c(3:6,12), decimals = 0) %>%
+  fmt_number(columns = 7:10, decimals = 1) %>%
+  fmt_percent(columns = 11, decimals = 1) %>%
+  tab_options(table.align = "left")
+
+
+
+# table "Q2", "Q3"  "quarterly"  
+
+
+
+
+
+```
+  
+  
+  
+  
+```{r}
+
+tDatA <- filter(tDat, Level == "lev2") %>% 
+            select(year,quarter, Ndeaths, causeName, causeCode, aRate)  %>%
+            mutate(caMissing = ifelse(causeCode %in% c("Z01","Z02"),"Miss","Good")) %>%
+            group_by(year,quarter,caMissing) %>% summarize(N=sum(Ndeaths)) %>%
+            pivot_wider(values_from = N, names_from = caMissing) %>%
+            mutate(pmiss = Miss / (Miss + Good))  %>% select(-Miss,-Good)
+
+
+
+
+library(directlabels)  
+library(zoo)
+
+tDat2 <- filter(tDat,
+                  causeName %in% c("Suicide/Self-harm",
+                                   "Trachea, bronchus and lung cancers",
+                                   "Drug overdose (poisoning/substance use disorders)",
+                                   "Homicide/Interpersonal violence",
+                                   "Endocrine, blood, immune disorders",
+                                   "Diabetes mellitus",
+                                   "Ischemic heart disease",
+                                   "Alzheimer’s disease and other dementias",
+                                   "COVID-19")) %>%
+   left_join(tDatA,by = c("year","quarter"))  %>%
+   mutate(aRateX = aRate*(1+ pmiss))  %>%
+         mutate(YearQuarter = as.yearqtr(paste0(year,"-",as.numeric(quarter))))
+
+lSize= 1.2
+
+ 
+
+
+```
+
+
+<br><br>
+
+# Exploratory Trend Charts
+
+<br>
+
+## Quarterly Trend in Selected Causes 2017-2020
+  
+```{r}
+
+tY      <- rep(2017:2020,each=4)
+tQ      <- rep(1:4,time=4)
+tBreaks <- paste0(tY," Q",tQ) 
+
+tBreaks <- as.yearqtr(paste0(tY,"-",tQ))
+
+
+
+cdph1 <- 
+  theme_bw() + 
+  theme(panel.grid.minor = element_blank(), 
+        axis.text.x      = element_text(size=14, angle=90, vjust=0.5, hjust=1,color=c("blue","black","black","black")), 
+        plot.title       = element_text(size = 16, color="darkblue"),
+        axis.title       = element_text(size = 14),  
+        legend.position  = "none") 
+
+theme_set(cdph1)
+  
+
+tPlot <- function(dataIN, measureIN) {
+          ggplot(dataIN, 
+          aes(x= YearQuarter, y = get(measureIN), color = causeNameShort)) +
+          geom_line(size=lSize) +
+          labs(y = "Age-Adjusted Death Rate") +
+          geom_dl(aes(label = causeNameShort), method = list(dl.trans(x = x + 0.2), "last.points", cex = 1, 'last.bumpup',font="bold")) +
+          scale_x_yearqtr(breaks = tBreaks, format = "%Y-%q",expand = expansion(mult = c(0, 0), add = c(.1, 1)))
+         }
+
+tPlot(tDat2, "aRate")
+
+
+```
+  
+## Quarterly Trend in Selected Causes 2017-2020, with adjustment for missing data  
+
+```{r}
+tPlot(tDat2, "aRateX")
+```
+  
+## Quarterly Trend in Selected Causes 2017-2020, with adjustment for missing data, exclude Q4 2020  
+
+```{r}
+tPlot(filter(tDat2, YearQuarter != "2020 Q4"), "aRateX")
+```
+  
+  
+## Quarterly Trend in Selected Causes 2017-2020, with adjustment for missing data, exclude Q4 2020, y-axis log scale
+  
+```{r}
+tPlot(filter(tDat2, YearQuarter != "2020 Q4"), "aRateX") +  scale_y_continuous(trans='log2')
+```
+  
+<br><br>
+
+# Next Steps
+
+* Tidy up this document
+* Obtain updated 2020 data
+* Determine who can use these findings, and expanded analyses, for what purposes
+* Determine who else at CDPH, CHHS and academic partners are doing related analyses, and collaborate with these entities
+* Provide additional analyses and data

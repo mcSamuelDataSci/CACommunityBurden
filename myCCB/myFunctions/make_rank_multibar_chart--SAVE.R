@@ -92,7 +92,7 @@ makePlotRank <- function(myDataSet     = NA,
   
   # Plot set up ------------------------------------------------------------------------------------
   
-  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", myYearG3, " in ", myCounty)
+  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", myYearG3, " in ", myCounty,": ",myYearG3)
   #myTitle <- wrap.labels(myTitle, 50)
   
   mySubTitle <- paste0("Ordered by: ", mySort) 
