@@ -459,7 +459,7 @@ observeEvent(current$tab,{
       
       output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".png")},
                                        content = function(file) {
-                                         png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                         png(file, width = 18, height = 18, units = "in", pointsize = 10,res=100)
                                          print(rankGeoStep()$plotL)
                                          dev.off() }, contentType = "png" )
       
