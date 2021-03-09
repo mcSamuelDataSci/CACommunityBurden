@@ -187,9 +187,8 @@ The following labeling is used for these race/ethnic groups:
 -   Age adjusted rates
 
     -   Age-adjusted rates are based on the "direct" method, using standard definitions and procedures. Great descriptions and the motivations for these methods can be found [here](https://www26.state.nj.us/doh-shad/sharedstatic/AgeAdjustedDeathRate.pdf), from the New Jersey Department of Health, and [here](https://www.cdc.gov/nchs/data/statnt/statnt06rv.pdf), from CDC.
-    -   The US 2000 Standard Population from [NCI](https://seer.cancer.gov/stdpopulations/) and [CDC/NCHS](https://www.cdc.gov/nchs/data/statnt/statnt20.pdf) was used; details of the methods and implications of using the 2000 standard population are described by NCHS and can be found [here](https://www.cdc.gov/nchs/data/nvsr/nvsr47/nvs47_03.pdf)
-    -   Ten age-groupings were used for these calculations. These groups and the corresponding standard population data can be found [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/Age%20Groups%20and%20Standard%20US%202000%20pop.xlsx).
-    -   The age-adjusted calculation, and generation of confidence intervals was conducted using the "ageAdjust.Direct()" function of the [R epitools package](https://github.com/cran/epitools).
+    -   The Standard Population used is based on the 2000 projected U.S. population [published by CDC/NCHS in January 2001](https://www.cdc.gov/nchs/data/statnt/statnt20.pdf)--specifically, Table 2, Distribution \#1 was used, but with age groups \<1 and 1-4 combined. These ten age-groupings and corresponding standard population numbers can be found [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/Age%20Groups%20and%20Standard%20US%202000%20pop.xlsx).
+    -   The age-adjustment calculation, and generation of confidence intervals, was conducted using the "ageAdjust.Direct()" function of the [R epitools package](https://github.com/cran/epitools).
     -   Because a very small number of census tracts with otherwise useful data had zero population in one or more age strata (often the youngest or oldest strata, for just one sex), the above-mentioned function was modified such that rates in such strata were assigned to (reasonably enough) be 0 (rather than undefined/infinity), allowing an adjusted rate to be calculated.
 
 <br>

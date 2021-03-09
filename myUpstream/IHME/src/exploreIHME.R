@@ -1,3 +1,6 @@
+library(dplyr)
+
+
 # JASPO - Explore IHME data; compare 2019 data file vs 2017 data file
 options(scipen=999)
 
@@ -13,46 +16,50 @@ causeList <- read.csv("/mnt/projects/FusionData/0.CCB/myUpstream/IHME/data/cause
 dataCause <- read.csv("/mnt/projects/FusionData/0.CCB/myUpstream/IHME/IHME-GBD_2019_Cause.csv", header = T) %>%
   mutate(display = "cause") 
 
-# dataCause <- read.csv("/mnt/projects/FusionData/0.CCB/myUpstream/IHME/IHME-GBD_2019_Cause.csv", header = T) %>%
-#   mutate(display = "cause") %>%
-#   #left_join(causeList, by = "cause_id")  %>%
-#   select(id_num = cause_id,
-#          measure_id,
-#          year_id = year,
-#          location_id,
-#          sex_id,
-#          age_group_id = age_id,
-#          metric_id,
-#          val,
-#          upper,
-#          lower,
-#          id_name = cause_name,
-#          display)
-
 # New RISK downloaded dataset
 dataRisk <- read.csv("/mnt/projects/FusionData/0.CCB/myUpstream/IHME/IHME-GBD_2019_Risk.csv", header = T) %>%
   mutate(display = "risk") %>%
   select(-rei_name, -rei_id)
 
-# dataRisk <- read.csv("/mnt/projects/FusionData/0.CCB/myUpstream/IHME/IHME-GBD_2019_Risk.csv", header = T) %>%
-#   mutate(display = "risk") %>%
-#   select(id_num = cause_id, 
-#          measure_id, 
-#          year_id = year, 
-#          location_id, 
-#          sex_id, 
-#          age_group_id = age_id, 
-#          metric_id, 
-#          val, 
-#          upper, 
-#          lower, 
-#          id_name = cause_name, 
-#          display)
-
-
 fullData <- bind_rows(dataCause, dataRisk)
 
-# check <- filter(fullData, !year_id %in% 2018:2019)
+# Don't need location, age, upper, lower
+
+oldIHME <- ihmeData %>%
+  select(-location_id, -age_group_id, -upper, -lower) %>%
+  rename(oldIHME_name = id_name, oldIHME_val = val)
+
+newIHME <- fullData %>%
+  select(-location_id, -location_name, -age_id, -age_name, -upper, -lower) %>%
+  rename(newIHME_name = cause_name, newIHME_val = val) %>%
+  filter(!year %in% 2018:2019)
+
+
+ihme <- oldIHME %>%
+  full_join(newIHME, by = c("year_id" = "year", 
+                            "display",
+                            "sex_id", 
+                            "metric_id", 
+                            "measure_id", 
+                            "id_num" = "cause_id")) %>%
+  mutate(diff = newIHME_val - oldIHME_val, 
+         abs = abs(diff), 
+         perc_diff = 100*(newIHME_val - oldIHME_val)/oldIHME_val) %>%
+  select(year = year_id, display, sex_name, metric_name, measure_name, id_num, oldIHME_name, newIHME_name, oldIHME_val, newIHME_val, diff, abs, perc_diff, level, first_parent)
+
+
+# 2017 - Look at certain conditions
+
+check <- ihme %>%
+  filter(year == 2017, metric_name == "Number", measure_name %in% c("Deaths", "YLDs (Years Lived with Disability)"), 
+         sex_name == "Both", display == "cause", id_num %in% c(494:497, 542:557, 521, 534, 626, 619)) %>%
+  select(year, measure_name, id_num, id_name = oldIHME_name, oldIHME_val, newIHME_val, diff, abs, perc_diff, level, first_parent) %>%
+  mutate(measure_name = ifelse(measure_name == "Deaths", "Death", "YLD")) %>%
+  tidyr::pivot_wider(names_from = "measure_name", values_from = c("oldIHME_val", "newIHME_val", "diff", "abs", "perc_diff")) %>%
+  select(1:5, ends_with("YLD"), ends_with("Death"))
+
+
+
 
 
 ## -------------------------------
@@ -92,6 +99,13 @@ stroke <- check %>%
 # ID 619 (Endocrine, metabolic, blood, and immune disorders) YLD #
 
 # pivot wider - # of deaths and YLD
+
+
+
+
+
+
+
 
 # datCounty
 

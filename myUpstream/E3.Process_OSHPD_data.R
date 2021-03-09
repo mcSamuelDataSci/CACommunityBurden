@@ -31,7 +31,7 @@ whichData <- "real"   # "real" or "fake"
 
 yF    <- 100000  # rate constant 
 STATE <- "CALIFORNIA"
-myYearG.t <- "2016-2018"
+myYearG.t <- "2017-2019"
 
 #-------------------------------------------------LOAD PACKAGES -------------------------
 
@@ -43,12 +43,13 @@ if (readSAS) {
 oshpd.pdd.work1  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work1.sas7bdat") )
 saveRDS(oshpd.pdd.work1, file = paste0(securePlace, "myData/oshpd_pdd.RDS"))
 
-oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
-saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
-
 # FOR AGE/RACE Focus charts
 oshpd.pdd.work2  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work2.sas7bdat") )
 saveRDS(oshpd.pdd.work2, file = path(securePlace, "myData/oshpd_pdd_small.RDS"))
+
+oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
+saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
+
 
 }
 
@@ -100,13 +101,33 @@ pdd0 <-  left_join(pdd0,raceLink,by=c("race_grp"="OSHPD"))
 pdd0 <-  left_join(pdd0,countyLink,by=c("pCounty"="cdphcaCountyTxt")) %>%
             mutate(CCS = str_pad(CCS, 5,"left",pad="o"))   # %>% select(-CCS)   
   
+
+# pdd_stroke_for_Catrina <- pdd0 %>%
+#                           filter(age > 17) %>%
+#                           mutate(stroke = ifelse(CCS=="oo109","Yes","No")) %>%
+#                           group_by(year,stroke) %>%
+#                           summarize(N=n()) %>%
+#                           pivot_wider(names_from = stroke, values_from = N) %>%
+#                           mutate(Stroke=Yes,
+#                                  Total = Yes+No,
+#                                  Percent_Stroke = 100*Yes/Total) %>%
+#                           select(Year=year,Total,Stroke,Percent_Stroke)
+# write_csv(pdd_stroke_for_Catrina, "pdd_stroke_for_Catrina.csv")
+
+
+
 pdd1 <- bind_rows(pdd0,mutate(pdd0,countyName = "CALIFORNIA"))
+
+
 
 hospYear <-  pdd1 %>%
              group_by(year, countyName, CCS) %>%
              summarise(n_hosp=n()) %>%
              select(year,  county = countyName, causeCode = CCS, n_hosp) %>%
              ungroup()
+
+
+
 
 hospAge  <- pdd1 %>%
               mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%

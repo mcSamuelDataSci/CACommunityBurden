@@ -36,7 +36,7 @@ focusData <- paste0(ccbData,"real/age_race_focus_data/")
 
 critN <- 11
 
-hospAge   <- readRDS(file = path(focusData,"inData/hospAge.rds"))  %>%  
+hospAge   <- readRDS(file = path(focusData,"inData/hospAge.rds"))%>%  
               left_join(popAge3Year,by=c("county","ageGroup")) %>%
               rename(N = n_hosp) %>%
               mutate(cRate = 100000*N/population) %>%
