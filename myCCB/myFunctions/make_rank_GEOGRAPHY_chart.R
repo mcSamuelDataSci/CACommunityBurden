@@ -129,7 +129,7 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   } else { cZoom <-FALSE}
 
 
-  if (cZoom & myMeasure == "SMR") stop("I appologize dear, but SMR is not calcualted for now below the county level")
+  if (cZoom & myMeasure == "SMR") stop("I appologize dear, but SMR is not calculated for now below the county level")
 
   causeLab <- deathCauseLink$causeName[deathCauseLink$causeCode == myCause]
   sexLab   <- ""
@@ -198,6 +198,12 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   
   if(myCI && myMeasure=="aRate") { rank_geo_plot = rank_geo_plot +
     geom_errorbar(aes(ymin = dat.1$aLCI, ymax = dat.1$aUCI), width = 0.5, color = "blue")}
+  
+  # Clean up data frame for plotting
+  
+  dat.1 <- dat.1 %>%
+    left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
+    select(-causeCode, -plotter, -lab)
   
   list(plotL = rank_geo_plot, dataL = dat.1)
 

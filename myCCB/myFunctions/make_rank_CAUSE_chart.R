@@ -142,6 +142,11 @@ rankCause <- function(myCounty = "Los Angeles", myMeasure = "Number of deaths", 
     
   }
   
+  # Clean up data frame for downloading
+  
+  plotData <- plotData %>%
+    select(year, sex, county, type, measure, causeName)
+  
   
 
 

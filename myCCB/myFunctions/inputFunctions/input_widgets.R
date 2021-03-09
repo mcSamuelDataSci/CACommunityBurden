@@ -74,7 +74,8 @@ hidden(
       
       
       # myLiveborn =============================
-      checkboxInput("myLiveborn", label="Include Births",value=FALSE),
+      checkboxInput("myLiveborn", list(label="Include Births", actionButton("includeBirthsHelp", label=helpIcon, style=myInputHelpButtonSty)),
+                    value=FALSE),
       
       # myMeasureAgeRaceFocus ======================
       selectInput("myMeasureAgeRaceFocus",  list(label="Measure:", actionButton("measureAgeRaceFocusHelp", label=helpIcon, style=myInputHelpButtonSty)),
