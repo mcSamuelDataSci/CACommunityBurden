@@ -97,11 +97,10 @@ pdf(NULL)
 
 
 #-- Load Packages ------------------------------------------------------------
-
+# library(bs4Dash) # Has two same functions: tabPanel and tabsetPanel
 library(shiny)  
 library(shinyjs)
 library(shinyWidgets)
-
 library(dplyr)
 library(tidyr)
 library(magrittr)
@@ -129,6 +128,7 @@ library(DT) # for better rendering of Data Table  https://community.rstudio.com/
 library(cowplot)
 library(docxtractr)
 library(highcharter)
+
 
 # !!!!!!!!!!!!!!! THIS LINE ELIMIANTES DROPDOWNS
 #library(sqldf) # needed for "fullmat" for strata ranking

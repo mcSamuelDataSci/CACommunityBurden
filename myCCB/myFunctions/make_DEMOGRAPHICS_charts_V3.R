@@ -39,12 +39,14 @@ make_demoPop_Pyramid <- function(myCounty) {
 demoPop_RacePie <- function(myCounty) {
   
   plotColors <- raceNamesShortColors[!names(raceNamesShortColors) %in% c("Other", "Unknown", "Total", NA)]
+  raceColors_df <- data.frame(raceNameShort = names(plotColors), raceColor = unname(plotColors))
   
-  tDat <- filter(popData_RacePie, countyName == myCounty)
+  tDat <- filter(popData_RacePie, countyName == myCounty) %>%
+    left_join(raceColors_df, by = "raceNameShort")
   
   # Plot
   myPlot <- tDat %>%
-    hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = plotColors)) %>%
+    hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = raceColor)) %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + ': </b>(Population:' +this.y+', Percentage: '+Highcharts.numberFormat(this.percentage)+'%)'
   }"),useHTML = FALSE) %>%
@@ -90,7 +92,8 @@ demoPop_RaceAge <- function(myCounty) {
     hc_xAxis(title = list(text = "Race/Ethnicity")) %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + ' (' +this.point.ageGroup+ ')</b><br>' + 'Population: ' +this.y+ '<br>Percentage: ' + Highcharts.numberFormat(this.percentage)+'%'
-  }"),useHTML = FALSE)
+  }"),useHTML = FALSE) %>%
+    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
   
   # Table
   tDat <- tDat %>%
