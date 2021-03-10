@@ -449,29 +449,98 @@ shinyUI(
                                         tabPanel(title = "Demographics", value = "demographicsTab",
                                                  br(),
                                                  
-                                                 fluidRow( 
-                                                   column(width = 7, 
-                                                          style = 'padding:0px; height:49vh', 
-                                                          plotlyOutput("demoPop_RacePie", 
-                                                                       height = '49vh')),
-                                                   
-                                                   column(width = 5,
-                                                          style = 'padding:0px; height:49vh',
-                                                          plotlyOutput("demoPop_Pyramid", 
-                                                                       height = '49vh')) 
-                                                   #column(width = 1)
-                                                   
+                                                 fluidRow(
+                                                   column(width = 6, 
+                                                          boxPlus(
+                                                            title = "Population in California by Race/Ethnicity",
+                                                            closable = F,
+                                                            width = NULL,
+                                                            solidHeader = T, 
+                                                            collapsible = F,
+                                                            enable_dropdown = F,
+                                                            actionButton("plotButton_demoPop_RacePie", "Plot"),
+                                                            actionButton("tableButton_demoPop_RacePie", "Table"), 
+                                                            hr(),
+                                                            highchartOutput("demoPop_RacePie"),
+                                                            hidden(dataTableOutput("demoPop_RacePie_table"))
+                                                          )), 
+                                                   column(width = 6, 
+                                                          boxPlus(
+                                                            title = "Population Pyramid in California",
+                                                            closable = F,
+                                                            width = NULL,
+                                                            solidHeader = T, 
+                                                            collapsible = F,
+                                                            enable_dropdown = F,
+                                                            actionButton("plotButton_demoPop_Pyramid", "Plot"),
+                                                            actionButton("tableButton_demoPop_Pyramid", "Table"), 
+                                                            hr(),
+                                                            highchartOutput("demoPop_Pyramid"),
+                                                            hidden(dataTableOutput("demoPop_Pyramid_table"))
+                                                          ))
                                                  ), 
                                                  
                                                  fluidRow(
-                                                   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff'),
-                                                   column(width = 10,
-                                                          style = 'padding:0px; height:37vh', 
-                                                          plotlyOutput("demoPop_RaceAge",
-                                                                       height = '37vh')),
-                                                   
-                                                   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff')
-                                                   )
+                                                   column(width = 12, 
+                                                     boxPlus(
+                                                       title = "Population Distribution in California by Race/Ethnicity and Age Group",
+                                                       closable = F,
+                                                       width = NULL,
+                                                       solidHeader = T, 
+                                                       collapsible = F,
+                                                       enable_dropdown = F,
+                                                       actionButton("plotButton_demoPop_RaceAge", "Plot"),
+                                                       actionButton("tableButton_demoPop_RaceAge", "Table"), 
+                                                       hr(),
+                                                       highchartOutput("demoPop_RaceAge"), 
+                                                       hidden(dataTableOutput("demoPop_RaceAge_table"))
+                                                       )
+                                                     ))
+                                                 
+                                                 
+                                                 # boxPlus(
+                                                 #   title = "Population Demographics in California",
+                                                 #   closable = F,
+                                                 #   width = NULL,
+                                                 #   solidHeader = F,
+                                                 #   collapsible = F,
+                                                 #   enable_dropdown = F,
+                                                 #   fluidRow(
+                                                 #     column(width = 7, 
+                                                 #            plotlyOutput("demoPop_RacePie")), 
+                                                 #     column(width = 5, 
+                                                 #            plotlyOutput("demoPop_Pyramid"))
+                                                 #   ), 
+                                                 #   fluidRow(
+                                                 #     column(width = 1),
+                                                 #     column(width = 10, plotlyOutput("demoPop_RaceAge")),
+                                                 #     column(width = 1)
+                                                 #   )
+                                                 # )
+                                                 
+                                                 # fluidRow( 
+                                                 #   column(width = 7, 
+                                                 #          style = 'padding:0px; height:49vh', 
+                                                 #          plotlyOutput("demoPop_RacePie", 
+                                                 #                       height = '49vh')),
+                                                 #   
+                                                 #   column(width = 5,
+                                                 #          style = 'padding:0px; height:49vh',
+                                                 #          plotlyOutput("demoPop_Pyramid", 
+                                                 #                       height = '49vh')) 
+                                                 #   #column(width = 1)
+                                                 #   
+                                                 # ), 
+                                                 # 
+                                                 # fluidRow(
+                                                 #   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff'),
+                                                 #   column(width = 10,
+                                                 #          style = 'padding:0px; height:37vh', 
+                                                 #          plotlyOutput("demoPop_RaceAge",
+                                                 #                       height = '37vh')),
+                                                 #   
+                                                 #   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff')
+                                                 #   )
                                                  
                                         )
                             )

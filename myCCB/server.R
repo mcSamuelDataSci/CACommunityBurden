@@ -652,27 +652,55 @@ observeEvent(current$tab,{
 # ---------------------------------------------------------------------------------------------------------
 
 demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ))
-output$demoPop_RacePie <- renderPlotly(demographics1Step())
+output$demoPop_RacePie <- renderHighchart(demographics1Step()$plotL)
+output$demoPop_RacePie_table <- renderDataTable(demographics1Step()$tableL)
+
+observeEvent(input$plotButton_demoPop_RacePie,{
+  show("demoPop_RacePie")
+  hide("demoPop_RacePie_table")
+  
+})
+
+observeEvent(input$tableButton_demoPop_RacePie,{
+  show("demoPop_RacePie_table")
+  hide("demoPop_RacePie")
+  
+})
 
 
 demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
-output$demoPop_Pyramid <- renderPlotly(demographics2Step())
+output$demoPop_Pyramid <- renderHighchart(demographics2Step()$plotL)
+output$demoPop_Pyramid_table <- renderDataTable(demographics2Step()$tableL)
 
-# output$demoPop_Pyramid <- renderPlotly({
-#   
-#   ggplotly(demographics2Step(), 
-#            sort = TRUE) #%>% layout(legend = list(orientation = "h", xanchor="center", x = 0.6, y = 1.1))
-#   
-# }) 
+observeEvent(input$plotButton_demoPop_Pyramid,{
+  show("demoPop_Pyramid")
+  hide("demoPop_Pyramid_table")
+  
+})
+
+observeEvent(input$tableButton_demoPop_Pyramid,{
+  show("demoPop_Pyramid_table")
+  hide("demoPop_Pyramid")
+  
+})  
 
 demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
-output$demoPop_RaceAge <- renderPlotly(demographics3Step())
+output$demoPop_RaceAge <- renderHighchart(demographics3Step()$plotL)
+output$demoPop_RaceAge_table <- renderDataTable(demographics3Step()$tableL)
 
-# output$demoPop_RaceAge <- renderPlotly({
-#   
-#   ggplotly(demographics3Step())  %>%
-#     layout(margin=list(t = 55, l = 0), title = list(x=0.5))
-# })
+observeEvent(input$plotButton_demoPop_RaceAge,{
+  show("demoPop_RaceAge")
+  hide("demoPop_RaceAge_table")
+  
+})
+
+observeEvent(input$tableButton_demoPop_RaceAge,{
+  show("demoPop_RaceAge_table")
+  hide("demoPop_RaceAge")
+  
+})
+
+
 
 
 # IHME ----------------------------------------------------------------------------------------------------
