@@ -452,11 +452,11 @@ shinyUI(
                                                  fluidRow(
                                                    column(width = 6, 
                                                           boxPlus(
-                                                            title = "Population in California by Race/Ethnicity",
+                                                            title = NULL,
                                                             closable = F,
+                                                            status = "primary",
                                                             width = NULL,
-                                                            #status = "primary",
-                                                            solidHeader = T, 
+                                                            solidHeader = F, 
                                                             collapsible = F,
                                                             #maximizable = T,
                                                             enable_dropdown = F,
@@ -468,10 +468,11 @@ shinyUI(
                                                           )), 
                                                    column(width = 6, 
                                                           boxPlus(
-                                                            title = "Population Pyramid in California",
+                                                            title = NULL,
                                                             closable = F,
+                                                            status = "primary",
                                                             width = NULL,
-                                                            solidHeader = T, 
+                                                            solidHeader = F, 
                                                             collapsible = F,
                                                             enable_dropdown = F,
                                                             actionButton("plotButton_demoPop_Pyramid", "Plot"),
@@ -485,10 +486,11 @@ shinyUI(
                                                  fluidRow(
                                                    column(width = 6, 
                                                      boxPlus(
-                                                       title = "Population Distribution in California by Race/Ethnicity and Age Group",
+                                                       title = NULL,
                                                        closable = F,
+                                                       status = "primary",
                                                        width = NULL,
-                                                       solidHeader = T, 
+                                                       solidHeader = F, 
                                                        collapsible = F,
                                                        enable_dropdown = F,
                                                        actionButton("plotButton_demoPop_RaceAge", "Plot"),
@@ -500,15 +502,22 @@ shinyUI(
                                                      ), 
                                                    column(width = 6, 
                                                           boxPlus(
-                                                            title = "Population Trends in California",
+                                                            title = NULL,
                                                             closable = F,
+                                                            status = "primary",
                                                             width = NULL,
-                                                            solidHeader = T, 
+                                                            solidHeader = F, 
                                                             collapsible = F,
                                                             enable_dropdown = F,
-                                                            selectInput("plotSelect_demoPop_Trend", label = "Select Trend:", choices = c("Total", "Sex", "Race/Ethnicity", "Sex")),
-                                                            actionButton("plotButton_demoPop_Trend", "Plot"),
-                                                            actionButton("tableButton_demoPop_Trend", "Table"), 
+                                                            div(style = "display:inline-block",
+                                                                actionButton("plotButton_demoPop_Trend", "Plot")
+                                                            ),
+                                                            div(style = "display:inline-block",
+                                                                actionButton("tableButton_demoPop_Trend", "Table")
+                                                            ),
+                                                            div(style="display:inline-block; float:right;", 
+                                                                selectInput("plotSelect_demoPop_Trend", label = "Select Trend:", choices = c("Total", "Sex", "Race/Ethnicity", "Age Group"))
+                                                                ),
                                                             hr(),
                                                             highchartOutput("demoPop_Trend"), 
                                                             hidden(dataTableOutput("demoPop_Trend_table"))

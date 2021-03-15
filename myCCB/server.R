@@ -709,8 +709,8 @@ observeEvent(input$tableButton_demoPop_RaceAge,{
 # Trends
 
 demographics4Step <- reactive(make_demoPop_trend(myCounty = input$myLHJ, trendType = input$plotSelect_demoPop_Trend))
-output$demoPop_Trend <- renderHighchart(demographics3Step()$plotL)
-output$demoPop_Trend_table <- renderDataTable(demographics3Step()$tableL)
+output$demoPop_Trend <- renderHighchart(demographics4Step()$plotL)
+output$demoPop_Trend_table <- renderDataTable(demographics4Step()$tableL)
 
 observeEvent(input$plotButton_demoPop_Trend,{
   show("plotSelect_demoPop_Trend")

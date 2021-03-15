@@ -5,13 +5,17 @@ make_demoPop_Pyramid <- function(myCounty) {
            plotText = paste0("Sex: ", sex, "\nAge Group: ", ageGroup, "\nPopulation: ", scales::comma(population))) %>%
     arrange(desc(ageGroup))
   
+    if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty)
+    if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, " County")
+    
   # Plot
   myPlot <- tDat %>%
     hchart('bar', hcaes(x = ageGroup, y = population_notAbs, group = sex), stacking = 'normal') %>%
     hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
     hc_colors(c("#FF706E", "#00BEC6")) %>%
     hc_yAxis(title = list(text = "Population")) %>%
-    hc_xAxis(title = list(text = "Age Group"))
+    hc_xAxis(title = list(text = "Age Group")) %>%
+    hc_title(text = plotTitle, align = "left")
   
   # Table
   
@@ -45,9 +49,13 @@ demoPop_RacePie <- function(myCounty) {
   tDat <- filter(popData_RacePie, county == myCounty) %>%
     left_join(raceColors_df, by = "raceNameShort")
   
+  if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity in ", myCounty)
+  if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity in ", myCounty, " County")
+  
   # Plot
   myPlot <- tDat %>%
     hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = raceColor)) %>%
+    hc_title(text = plotTitle, align = 'center') %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + ': </b>(Population:' +this.y+', Percentage: '+Highcharts.numberFormat(this.percentage)+'%)'
   }"),useHTML = FALSE) %>%
@@ -87,11 +95,15 @@ demoPop_RaceAge <- function(myCounty) {
     mutate(plotText = paste0("Race/Ethnicity: ", raceName, "\nAge Group: ", ageGroup, "\nPercent: ", scales::percent(percent/100, accuracy = 0.1), "\nPopulation: ", scales::comma(population)), 
            ageGroup = factor(ageGroup, levels = rev(levels(popData_RaceAge$ageGroup))))
   
+  if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty)
+  if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty, " County")
+  
   # Plot
   myPlot <- tDat %>%
     hchart('bar', hcaes(x = raceNameShort, y = population, label = raceNameShort, group = ageGroup), stacking = 'percent') %>%
     hc_yAxis(title = list(text = "Percent")) %>%
     hc_xAxis(title = list(text = "Race/Ethnicity")) %>%
+    hc_title(text = plotTitle, align = "left") %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + ' (' +this.point.ageGroup+ ')</b><br>' + 'Population: ' +this.y+ '<br>Percentage: ' + Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
@@ -121,6 +133,10 @@ demoPop_RaceAge <- function(myCounty) {
 
 # Trends function
 make_demoPop_trend <- function(myCounty, trendType = "Total") {
+  
+  
+  if (myCounty == "CALIFORNIA") plotTitle <- paste0(trendType, " Population Trend in ", myCounty)
+  if (myCounty != "CALIFORNIA") plotTitle <- paste0(trendType, " Population Trend in ", myCounty, " County")
   
   # Total Trend
   if (trendType == "Total") {
@@ -187,6 +203,10 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
                                return  '<b>' + this.x + '</b><br>' + this.point.ageGroup + ' Age Group Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE) %>%
       hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
   }
+  
+  myPlot <- myPlot %>%
+    hc_title(text = plotTitle, 
+             align = "left")
   
   
   # Table
