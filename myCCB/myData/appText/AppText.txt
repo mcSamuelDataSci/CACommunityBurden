@@ -130,7 +130,7 @@ measureAgeRaceFocusHelp <- paste0('<p>The current MEASURES are:</p>
 <ui style="list-style-type:circle">
 <li style="margin-left: 40px">Number</li>
 <li style="margin-left: 40px">Crude Rate (per 100,000 population)</li>
-<li style="margin-left: 40px">Age-Adjusted Rate</li>
+<li style="margin-left: 40px">Age-Adjusted Rate (currently unavailable for Hospitalizations and Emergency Department Visits)</li>
 </ui><br>
 <p>No one measure is best--each measure provides a different view or perspective into the impact of the condition. For example, <b>Number</b> is the simplest, most direct measure, and has clear intuitive meaning, and, other things being equal, will be larger in areas with larger populations.  
 <br><br>
@@ -138,6 +138,8 @@ measureAgeRaceFocusHelp <- paste0('<p>The current MEASURES are:</p>
 <br><br>
 <b>Age-adjusted Rate</b> is the rate that would have existed if the population had the same age distribution as a reference population. This allows for comparisons between populations with differences in age distributions, accounting for the fact that age itself is generally correlated with higher mortality. 
 ')
+
+includeBirthsHelp <- "Births, of course, are not an adverse health outcome. One may or may not want to include them in the assessment of this data. In any case the birth 'condition' is associated with the infant, not the mother."
 
 cutmethodHelp <- 
 "Specifies method used to determine the cut-points for the color categories. <b>Quantile</b> divides the frequency distribution into equal categories, each containing the same fraction of the total dataset. <b>Fisher</b> uses the Fisher-Jenks algorithm which reduces the variance within categories and maximizes the variance between categories."

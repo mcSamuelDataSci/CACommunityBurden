@@ -153,6 +153,7 @@ observeEvent(input$levelHelp,     {myModal(levelHelp)})
 observeEvent(input$dxGroupsHelp,  {myModal(dxGroupsHelp)})
 observeEvent(input$axisScaleHelp,  {myModal(axisScaleHelp)})
 observeEvent(input$measureAgeRaceFocusHelp, {myModal(measureAgeRaceFocusHelp)})
+observeEvent(input$includeBirthsHelp, {myModal(includeBirthsHelp)})
 
 
 
