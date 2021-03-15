@@ -187,7 +187,7 @@ ed_race     <- readRDS(path(focusData, "ed_race_stn.RDS"))
 popData_AgePyramid  <- readRDS(path(ccbData, "popData_AgePyramid.RDS"))
 popData_RacePie  <- readRDS(path(ccbData,"popData_RacePie.RDS"))
 popData_RaceAge   <- readRDS(path(ccbData,"popData_RaceAge.RDS"))
-
+popData_trends   <- readRDS(path(ccbData,"popData_SexRaceAge_Trends.RDS"))
 
 
 

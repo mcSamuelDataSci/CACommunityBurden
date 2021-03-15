@@ -483,7 +483,7 @@ shinyUI(
                                                  ), 
                                                  
                                                  fluidRow(
-                                                   column(width = 12, 
+                                                   column(width = 6, 
                                                      boxPlus(
                                                        title = "Population Distribution in California by Race/Ethnicity and Age Group",
                                                        closable = F,
@@ -497,7 +497,24 @@ shinyUI(
                                                        highchartOutput("demoPop_RaceAge"), 
                                                        hidden(dataTableOutput("demoPop_RaceAge_table"))
                                                        )
-                                                     ))
+                                                     ), 
+                                                   column(width = 6, 
+                                                          boxPlus(
+                                                            title = "Population Trends in California",
+                                                            closable = F,
+                                                            width = NULL,
+                                                            solidHeader = T, 
+                                                            collapsible = F,
+                                                            enable_dropdown = F,
+                                                            selectInput("plotSelect_demoPop_Trend", label = "Select Trend:", choices = c("Total", "Sex", "Race/Ethnicity", "Sex")),
+                                                            actionButton("plotButton_demoPop_Trend", "Plot"),
+                                                            actionButton("tableButton_demoPop_Trend", "Table"), 
+                                                            hr(),
+                                                            highchartOutput("demoPop_Trend"), 
+                                                            hidden(dataTableOutput("demoPop_Trend_table"))
+                                                          )
+                                                   )
+                                                   )
                                                  
                                                  
                                                  # boxPlus(

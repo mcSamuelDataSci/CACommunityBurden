@@ -651,6 +651,8 @@ observeEvent(current$tab,{
 # --DEMOGRAPHICS - JASPO------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
 
+# Race/Ethnicity Pie Chart
+
 demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ))
 output$demoPop_RacePie <- renderHighchart(demographics1Step()$plotL)
 output$demoPop_RacePie_table <- renderDataTable(demographics1Step()$tableL)
@@ -668,6 +670,8 @@ observeEvent(input$tableButton_demoPop_RacePie,{
 })
 
 
+# Population Pyramid Bar Chart
+
 demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
 output$demoPop_Pyramid <- renderHighchart(demographics2Step()$plotL)
 output$demoPop_Pyramid_table <- renderDataTable(demographics2Step()$tableL)
@@ -683,6 +687,8 @@ observeEvent(input$tableButton_demoPop_Pyramid,{
   hide("demoPop_Pyramid")
   
 })  
+
+# Race/Ethnicity & Age Chart
 
 demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
 output$demoPop_RaceAge <- renderHighchart(demographics3Step()$plotL)
@@ -700,6 +706,25 @@ observeEvent(input$tableButton_demoPop_RaceAge,{
   
 })
 
+# Trends
+
+demographics4Step <- reactive(make_demoPop_trend(myCounty = input$myLHJ, trendType = input$plotSelect_demoPop_Trend))
+output$demoPop_Trend <- renderHighchart(demographics3Step()$plotL)
+output$demoPop_Trend_table <- renderDataTable(demographics3Step()$tableL)
+
+observeEvent(input$plotButton_demoPop_Trend,{
+  show("plotSelect_demoPop_Trend")
+  show("demoPop_Trend")
+  hide("demoPop_Trend_table")
+  
+})
+
+observeEvent(input$tableButton_demoPop_Trend,{
+  show("demoPop_Trend_table")
+  hide("demoPop_Trend")
+  hide("plotSelect_demoPop_Trend")
+  
+})
 
 
 

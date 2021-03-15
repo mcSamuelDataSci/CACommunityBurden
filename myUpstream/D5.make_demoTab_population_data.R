@@ -23,7 +23,7 @@ if (server) {
   
 }
 
-
+# Age groups
 
 ageDF <- data.frame(lAge = seq(0, 95, by = 5), 
                     uAge = seq(4, 99, by = 5)) %>%
@@ -35,6 +35,12 @@ ageDF2 <- data.frame(lAge = c(0, 15, 25, 45, 75),
   mutate(ageName = paste0(lAge, " - ", uAge), 
          ageName = ifelse(ageName == "75 - 120", "75+", ageName))
 
+# 2000-most recent year population data - RDS file created in D2
+
+fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000_", myYear, ".RDS")
+
+dof_pop_2000_myYear <- readRDS(file = fileName) %>%
+  select(-county)
 
 popData <- populationExtract(County = T, # all uppercase in arguments; explain the ageGroups better; raceCode; 
                              Race   = F,
@@ -48,7 +54,7 @@ popData <- populationExtract(County = T, # all uppercase in arguments; explain t
                              Total = F,
                              multiYear = F, 
                              popData = NA, 
-                             path = myPath)
+                             server = T)
 
 
 popData2 <- populationExtract(County = T, # all uppercase in arguments; explain the ageGroups better; raceCode; 
@@ -63,8 +69,23 @@ popData2 <- populationExtract(County = T, # all uppercase in arguments; explain 
                               Total = F,
                               multiYear = F, 
                               popData = NA, 
-                              path = myPath)
+                              server = T)
+
+popDataTrend <- populationExtract(County = T, # all uppercase in arguments; explain the ageGroups better; raceCode; 
+                              Race   = T,
+                              Sex    = T, 
+                              Age    = T,
+                              Year      = 2000:myYear,
+                              ageGroups = c(-1, ageDF$uAge), # Add NA to not include ageGroups
+                              ageLabels = ageDF$ageName,
+                              raceLabel = "raceName", 
+                              CA    = T, 
+                              Total = T,
+                              multiYear = F, 
+                              popData = dof_pop_2000_myYear, 
+                              server = T)
 
 
 saveRDS(popData, path(ccbUpstream, "upData/popDemo_countySexAge.RDS"))
 saveRDS(popData2, path(ccbUpstream, "upData/popDemo_countyRaceAge.RDS"))
+saveRDS(popDataTrend, path(ccbUpstream, "upData/popDemo_countySexRaceAge_trend.RDS"))
