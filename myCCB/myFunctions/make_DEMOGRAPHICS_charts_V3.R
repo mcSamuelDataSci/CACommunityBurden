@@ -57,7 +57,7 @@ demoPop_RacePie <- function(myCounty) {
     hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = raceColor)) %>%
     hc_title(text = plotTitle, align = 'center') %>%
     hc_tooltip(formatter = JS("function(){
-                             return  '<b>' + this.point.label + ': </b>(Population:' +this.y+', Percentage: '+Highcharts.numberFormat(this.percentage)+'%)'
+                             return  '<b>' + this.point.label + '</b><br>Population: ' +this.y.toLocaleString()+ '<br>Percentage: '+ Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
     hc_plotOptions(pie = list(dataLabels = list(enabled = TRUE,format="{point.label}<br>{point.percentage:.2f} %"))) %>%
     hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
@@ -105,7 +105,7 @@ demoPop_RaceAge <- function(myCounty) {
     hc_xAxis(title = list(text = "Race/Ethnicity")) %>%
     hc_title(text = plotTitle, align = "left") %>%
     hc_tooltip(formatter = JS("function(){
-                             return  '<b>' + this.point.label + ' (' +this.point.ageGroup+ ')</b><br>' + 'Population: ' +this.y+ '<br>Percentage: ' + Highcharts.numberFormat(this.percentage)+'%'
+                             return  '<b>' + this.point.label + ' (' +this.point.ageGroup+ ')</b><br>' + 'Population: ' +this.y.toLocaleString()+ '<br>Percentage: ' + Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
     hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
   
