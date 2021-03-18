@@ -45,7 +45,7 @@ popData_RaceAge <- popData2 %>%
 
 popData_trends <- popDataTrend %>%
   mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
-         ageGroup = factor(ageGroup, levels = c(ageDF$ageName, "Total")), 
+         ageGroup = factor(ageGroup, levels = c(ageDF2$ageName, "Total")), 
          population = round(population, 0)) %>%
   left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
 
