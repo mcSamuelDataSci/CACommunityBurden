@@ -460,8 +460,11 @@ shinyUI(
                                                             collapsible = F,
                                                             #maximizable = T,
                                                             enable_dropdown = F,
-                                                            actionButton("plotButton_demoPop_RacePie", "Plot"),
-                                                            actionButton("tableButton_demoPop_RacePie", "Table"), 
+                                                            actionButton("plotButton_demoPop_RacePie", "Plot", icon("chart-pie"), 
+                                                                         style="padding: 6px;"),
+                                                            actionButton("tableButton_demoPop_RacePie", "Table", icon("table"), 
+                                                                         style = "padding: 6px;"
+                                                                         ), 
                                                             hr(),
                                                             highchartOutput("demoPop_RacePie"),
                                                             hidden(dataTableOutput("demoPop_RacePie_table"))
@@ -475,8 +478,10 @@ shinyUI(
                                                             solidHeader = F, 
                                                             collapsible = F,
                                                             enable_dropdown = F,
-                                                            actionButton("plotButton_demoPop_Pyramid", "Plot"),
-                                                            actionButton("tableButton_demoPop_Pyramid", "Table"), 
+                                                            actionButton("plotButton_demoPop_Pyramid", "Plot", icon("chart-bar"), 
+                                                                         style = "padding: 6px;"),
+                                                            actionButton("tableButton_demoPop_Pyramid", "Table", icon("table"), 
+                                                                         style = "padding: 6px;"), 
                                                             hr(),
                                                             highchartOutput("demoPop_Pyramid"),
                                                             hidden(dataTableOutput("demoPop_Pyramid_table"))
@@ -493,8 +498,10 @@ shinyUI(
                                                        solidHeader = F, 
                                                        collapsible = F,
                                                        enable_dropdown = F,
-                                                       actionButton("plotButton_demoPop_RaceAge", "Plot"),
-                                                       actionButton("tableButton_demoPop_RaceAge", "Table"), 
+                                                       actionButton("plotButton_demoPop_RaceAge", "Plot", icon("chart-bar"), 
+                                                                    style = "padding: 6px;"),
+                                                       actionButton("tableButton_demoPop_RaceAge", "Table", icon("table"), 
+                                                                    style = "padding: 6px;"), 
                                                        hr(),
                                                        highchartOutput("demoPop_RaceAge"), 
                                                        hidden(dataTableOutput("demoPop_RaceAge_table"))
@@ -510,14 +517,18 @@ shinyUI(
                                                             collapsible = F,
                                                             enable_dropdown = F,
                                                             div(style = "display:inline-block",
-                                                                actionButton("plotButton_demoPop_Trend", "Plot")
+                                                                actionButton("plotButton_demoPop_Trend", "Plot", icon("chart-line"), 
+                                                                             style = "padding: 6px;")
                                                             ),
                                                             div(style = "display:inline-block",
-                                                                actionButton("tableButton_demoPop_Trend", "Table")
+                                                                actionButton("tableButton_demoPop_Trend", "Table", icon("table"), 
+                                                                             style = "padding: 6px;")
                                                             ),
                                                             div(style="display:inline-block; float:right;", 
                                                                 selectInput("plotSelect_demoPop_Trend", label = "Select Trend:", choices = c("Total", "Sex", "Race/Ethnicity", "Age Group"))
                                                                 ),
+                                                            br(),
+                                                            br(),
                                                             hr(),
                                                             highchartOutput("demoPop_Trend"), 
                                                             hidden(dataTableOutput("demoPop_Trend_table"))

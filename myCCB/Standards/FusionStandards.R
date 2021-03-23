@@ -256,6 +256,23 @@ myTheme <- theme_bw() +
 theme_set(myTheme)
 
 
+# Highcharter standards + theme
+
+hc_myTitleSize <- '20px'
+hc_myAxisTitleSize <- '18px'
+
+# myHCTheme <- hc_theme(
+#   title = list(
+#     style = list(
+#       color = 'darkblue',
+#       fontSize = '20px'
+#     )
+#   )
+# )
+
+
+
+
 # color standards -------------------------------
 
 

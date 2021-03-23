@@ -9,13 +9,21 @@ make_demoPop_Pyramid <- function(myCounty) {
     if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, " County")
     
   # Plot
-  myPlot <- tDat %>%
-    hchart('bar', hcaes(x = ageGroup, y = population_notAbs, group = sex), stacking = 'normal') %>%
-    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
-    hc_colors(c("#FF706E", "#00BEC6")) %>%
-    hc_yAxis(title = list(text = "Population")) %>%
-    hc_xAxis(title = list(text = "Age Group")) %>%
-    hc_title(text = plotTitle, align = "left")
+    myPlot <- tDat %>%
+      hchart('bar', hcaes(x = ageGroup, y = population_notAbs, group = sex), stacking = 'normal') %>%
+      hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
+      hc_colors(c("#FF706E", "#00BEC6")) %>%
+      hc_yAxis(title = list(text = "Population", style = list(fontSize = hc_myAxisTitleSize)), 
+               labels = list(
+                 formatter = JS("function(){ return Math.abs(this.value) }"))) %>%
+      hc_xAxis(title = list(text = "Age Group", style = list(fontSize = hc_myAxisTitleSize))) %>%
+      hc_title(text = plotTitle, align = "left", 
+               style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
+      hc_tooltip(formatter = JS("function(){
+                             return  '<b>' + this.point.sex + ' (' + this.point.ageGroup + ')<br>Population: ' + Math.abs(this.y).toLocaleString() 
+  }"),useHTML = FALSE) 
+  
+
   
   # Table
   
@@ -32,7 +40,7 @@ make_demoPop_Pyramid <- function(myCounty) {
                          scrollX = TRUE, # horizontal scrollbar
                          buttons = list('copy', 'print', list(extend = 'collection', buttons = c('csv', 'excel'), text = 'Download'))
                          )) %>%
-    formatCurrency('population', currency = "", interval = 3, mark = ",")
+    formatCurrency('population', currency = "", interval = 3, mark = ",", digits = 0)
   
   list(plotL = myPlot, tableL = myTable)
 }
@@ -55,7 +63,7 @@ demoPop_RacePie <- function(myCounty) {
   # Plot
   myPlot <- tDat %>%
     hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = raceColor)) %>%
-    hc_title(text = plotTitle, align = 'center') %>%
+    hc_title(text = plotTitle, align = 'center', style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + '</b><br>Population: ' +this.y.toLocaleString()+ '<br>Percentage: '+ Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
@@ -76,7 +84,7 @@ demoPop_RacePie <- function(myCounty) {
                          scrollX = TRUE, # horizontal scrollbar
                          buttons = list('copy', 'print', list(extend = 'collection', buttons = c('csv', 'excel'), text = 'Download'))
                        )) %>%
-    formatCurrency('population', currency = "", interval = 3, mark = ",")
+    formatCurrency('population', currency = "", interval = 3, mark = ",", digits = 0)
   
   list(plotL = myPlot, tableL = myTable)
   
@@ -101,9 +109,9 @@ demoPop_RaceAge <- function(myCounty) {
   # Plot
   myPlot <- tDat %>%
     hchart('bar', hcaes(x = raceNameShort, y = population, label = raceNameShort, group = ageGroup), stacking = 'percent') %>%
-    hc_yAxis(title = list(text = "Percent")) %>%
-    hc_xAxis(title = list(text = "Race/Ethnicity")) %>%
-    hc_title(text = plotTitle, align = "left") %>%
+    hc_yAxis(title = list(text = "Percent", style = list(fontSize = hc_myAxisTitleSize))) %>%
+    hc_xAxis(title = list(text = "Race/Ethnicity", style = list(fontSize = hc_myAxisTitleSize))) %>%
+    hc_title(text = plotTitle, align = "left", style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + ' (' +this.point.ageGroup+ ')</b><br>' + 'Population: ' +this.y.toLocaleString()+ '<br>Percentage: ' + Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
@@ -123,7 +131,7 @@ demoPop_RaceAge <- function(myCounty) {
                          scrollX = TRUE, # horizontal scrollbar
                          buttons = list('copy', 'print', list(extend = 'collection', buttons = c('csv', 'excel'), text = 'Download'))
                        )) %>%
-    formatCurrency('population', currency = "", interval = 3, mark = ",")
+    formatCurrency('population', currency = "", interval = 3, mark = ",", digits = 0)
   
   list(plotL = myPlot, tableL = myTable)
   
@@ -145,11 +153,8 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
     
     myPlot <- tDat_Total %>% 
       hchart(., type = "line", hcaes(x = year, y = population)) %>%
-      hc_yAxis(title = list(text = "Population")) %>%
-      hc_xAxis(title = list(text = "Year")) %>%
       hc_tooltip(formatter = JS("function(){
-                               return  '<b>' + this.x + '</b><br>Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE) %>%
-      hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+                               return  '<b>' + this.x + '</b><br>Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE)
   }
   
   # Race trend
@@ -164,11 +169,8 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
     myPlot <- tDat_Race %>% 
       hchart(., type = "line", hcaes(x = year, y = population, group = raceNameShort, color = raceColor), 
              color = plotColors) %>%
-      hc_yAxis(title = list(text = "Population")) %>%
-      hc_xAxis(title = list(text = "Year")) %>%
       hc_tooltip(formatter = JS("function(){
-                               return  '<b>' + this.x + '</b><br>' + this.point.raceNameShort + ' Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE) %>%
-      hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+                               return  '<b>' + this.x + '</b><br>' + this.point.raceNameShort + ' Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE)
   }
   
   # Sex
@@ -183,11 +185,8 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
     myPlot <- tDat_Sex %>% 
       hchart(., type = "line", hcaes(x = year, y = population, group = sex, color = sexColor), 
              color = plotColors) %>%
-      hc_yAxis(title = list(text = "Population")) %>%
-      hc_xAxis(title = list(text = "Year")) %>%
       hc_tooltip(formatter = JS("function(){
-                               return  '<b>' + this.x + '</b><br>' + this.point.sex + ' Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE) %>%
-      hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+                               return  '<b>' + this.x + '</b><br>' + this.point.sex + ' Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE)
   }
   
   # Age Group
@@ -197,16 +196,16 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
     
     myPlot <- tDat_Age %>% 
       hchart(., type = "line", hcaes(x = year, y = population, group = ageGroup)) %>%
-      hc_yAxis(title = list(text = "Population")) %>%
-      hc_xAxis(title = list(text = "Year")) %>%
       hc_tooltip(formatter = JS("function(){
-                               return  '<b>' + this.x + '</b><br>' + this.point.ageGroup + ' Age Group Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE) %>%
-      hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+                               return  '<b>' + this.x + '</b><br>' + this.point.ageGroup + ' Age Group Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE)
   }
   
   myPlot <- myPlot %>%
     hc_title(text = plotTitle, 
-             align = "left")
+             align = "left", style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
+    hc_yAxis(title = list(text = "Population", style = list(fontSize = hc_myAxisTitleSize))) %>%
+    hc_xAxis(title = list(text = "Year", style = list(fontSize = hc_myAxisTitleSize))) %>%
+    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
   
   
   # Table
@@ -224,7 +223,7 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
                          scrollX = TRUE, # horizontal scrollbar
                          buttons = list('copy', 'print', list(extend = 'collection', buttons = c('csv', 'excel'), text = 'Download'))
                        )) %>%
-    formatCurrency('population', currency = "", interval = 3, mark = ",")
+    formatCurrency('population', currency = "", interval = 3, mark = ",", digits = 0)
   
   list(plotL = myPlot, 
        tableL = myTable)
