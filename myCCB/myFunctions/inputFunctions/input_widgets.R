@@ -18,7 +18,7 @@ hidden(
       # myGeo ======================
       selectInput("myGeo","Geographic Level:", choices=c("County","Community","Census Tract")),
       # helpText
-      div(id = "myGeoHelpText", helpText(h6(tractWarning,style="color:red; float:left; margin: 20px;"))),
+      div(id = "myGeoHelpText", helpText(h6(appTextL$tractWarning,style="color:red; float:left; margin: 20px;"))),
       
       # myYear ======================
       sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,

@@ -266,11 +266,11 @@ shinyUI(
                            h5(tags$a(href="SOPH_2020.pdf",target="_blank", "CCB Data in Action, 2020 State of Public Health Handout")), 
                            h5(tags$a(href="SOPH_2019.pdf",target="_blank", "CCB Data in Action, 2019 State of Public Health Handout")), 
                            h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/",target="_blank", "See Multiple Measures of Health in Your County")), br(),
-                           textIntroA, br(), br(), textIntroC, br(), br(),
-                           #helpText(textIntroA,style="color:black"), br(),
+                           appTextL$textIntroA, br(), br(), appTextL$textIntroC, br(), br(),
+                           #helpText(appTextL$textIntroA,style="color:black"), br(),
                            #helpText(textIntroC,style="color:black"), br(),
-                           if (whichData == "real") { helpText(textNote.real,style="color:black")},
-                           if (whichData == "fake") { helpText(textNote.fake,style="color:red")},
+                           if (whichData == "real") { helpText(appTextL$textNote.real,style="color:black")},
+                           if (whichData == "fake") { helpText(appTextL$textNote.fake,style="color:red")},
                            br(),br(),
                            
                            actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
@@ -312,7 +312,7 @@ shinyUI(
                    
                    tabPanel(title = strong("HOME"), value = "home",
                             br(),align='center',
-                            h4(HTML(above1),align="left"),
+                            h4(HTML(appTextL$above1),align="left"),
  fluidRow(
   column(width=3,img(id="mapI",       src="map.png",              width="100%", onmouseout="this.src='map.png'",               onmouseover="this.src='map2.png'",       style = myBoxSty)),
   column(width=3,img(id="trendI",     src="trends.png",           width="100%", onmouseout="this.src='trends.png'",            onmouseover="this.src='trends2.png'",    style = myBoxSty)),

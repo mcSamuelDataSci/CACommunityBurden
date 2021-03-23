@@ -270,7 +270,22 @@ source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V3.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
 
-source(paste0(myPlace,"/myData/appText/AppText.txt"))
+# App Text
+# source(paste0(myPlace,"/myData/appText/AppText.txt"))
+
+appText <- read_docx(path(ccbData, "appText/appText.docx")) # Read in appText Word Doc
+appText <- docx_extract_tbl(appText, 1) # Extract table
+appTextL <- split(appText$Text, seq(nrow(appText))) # Convert data frame into a list
+names(appTextL) <- appText$varName # Add varNames to list
+
+# We use appTextL list object to insert text throughout the app
+
+# For hospTab text
+HospitalizationsTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospB)
+HospitalPrimaryAnyTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospC)
+
+
+
 
 # source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
 
