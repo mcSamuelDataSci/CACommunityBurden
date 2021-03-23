@@ -42,9 +42,10 @@ ihme <- oldIHME %>%
                             "metric_id", 
                             "measure_id", 
                             "id_num" = "cause_id")) %>%
-  mutate(diff = newIHME_val - oldIHME_val, 
+  mutate(newIHME_val = round(newIHME_val, 0),
+         diff = newIHME_val - oldIHME_val, 
          abs = abs(diff), 
-         perc_diff = 100*(newIHME_val - oldIHME_val)/oldIHME_val) %>%
+         perc_diff = scales::percent((newIHME_val - oldIHME_val)/oldIHME_val, accuracy = 0.1, big.mark = ",")) %>%
   select(year = year_id, display, sex_name, metric_name, measure_name, id_num, oldIHME_name, newIHME_name, oldIHME_val, newIHME_val, diff, abs, perc_diff, level, first_parent)
 
 
@@ -52,15 +53,26 @@ ihme <- oldIHME %>%
 
 check <- ihme %>%
   filter(year == 2017, metric_name == "Number", measure_name %in% c("Deaths", "YLDs (Years Lived with Disability)"), 
-         sex_name == "Both", display == "cause", id_num %in% c(494:497, 542:557, 521, 534, 626, 619)) %>%
+         sex_name == "Both", display == "cause", id_num %in% c(294, 494:497, 542:557, 521, 534, 626, 619)) %>%
   select(year, measure_name, id_num, id_name = oldIHME_name, oldIHME_val, newIHME_val, diff, abs, perc_diff, level, first_parent) %>%
   mutate(measure_name = ifelse(measure_name == "Deaths", "Death", "YLD")) %>%
   tidyr::pivot_wider(names_from = "measure_name", values_from = c("oldIHME_val", "newIHME_val", "diff", "abs", "perc_diff")) %>%
-  select(1:5, ends_with("YLD"), ends_with("Death"))
+  select(1:5, ends_with("YLD"), ends_with("Death")) %>%
+  select(-starts_with("abs"))
 
+library(xlsx)
+write.csv(check, "/mnt/projects/FusionData/jaspoWork/ihmeCompare.csv")
 
+# 421 & 1021, Liver cancer due to other causes 
+# 489 & 1022, Other Malignant Neoplasms
 
+checkonce <- ihme %>%
+  filter(year == 2017, is.na(oldIHME_val)) %>%
+  distinct(newIHME_name, .keep_all = T)
 
+checkonce1 <- ihme %>%
+  filter(year == 2017, is.na(newIHME_val)) %>%
+  distinct(oldIHME_name, .keep_all = T)
 
 ## -------------------------------
 

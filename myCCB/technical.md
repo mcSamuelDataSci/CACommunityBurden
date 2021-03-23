@@ -195,17 +195,15 @@ The following labeling is used for these race/ethnic groups:
 
 -   Life Expectancy
 
-    -   Life tables for tracts, communities, counties and states are generated from age specific mortality rates, which are the quotient of deaths during a calendar year and exposure , approximated by the population of the same age at the midpoint of the year (July 1). Age structured population data for tracts and communities are estimated using data from the American Community Survey, 5-year sample (table B01001; multiple years). County and state age population by age are estimated by the Demographic Research Unit, CA Department of Finance. Deaths data are based on 100% extracts from the vital statistics reporting system, CA Department of Public Health.
+    -   Life tables for tracts, communities, counties and states are generated from age specific mortality rates, which are the quotient of deaths during a calendar year to the person-years of exposure to mortality hazard, approximated by the population of the same age range at the midpoint of the year (July 1). Age structured population data for communities are estimated using aggregation of census tract level data from the American Community Survey, 5-year sample (table B01001; multiple years). County and state age population by age are estimated by the Demographic Research Unit, CA Department of Finance. Deaths by age are based on 100% tabulations obtained from the CA Department of Public Health.
 
-    -   Life tables are estimated for communities (MSSAs) in counties where at least 95% of deaths could be accurately geocoded to the tract level. Mortality and exposure data were combined on the basis of 1-, 3-, and 5-year aggregations. Then, life tables were calculated for geographies meeting a minimum of at least 10,000 person-years of exposure. Intra-age mortality (nax) was calculated for ages below 5 using factors provided by Preston et al. (2001) and by the midpoint of the age interval for other age groups. Estimates, confidence intervals, and standard errors for age specific probabilities of death were calculated using Chiang's method (Chiang 1984) with adjusted final age group (Eayres 2004).
-
-        -   Preston, Samuel H. and P. Heuveline and M. Guillot. 2001. Demography. Blackwell, pp. 47-48.
+    -   Life tables were estimated for communities (MSSAs) in counties where at least 95% of deaths could be accurately geocoded to the tract level. Mortality and exposure data were combined on the basis of 1-, 3-, or 5-year intervals. Life tables with fewer than 700 deaths or 10,000 person-years of exposure were censored. Intra-age mortality (~n~a~x~) was calculated for ages below 5 using values from a standard population (California life tables from the US Mortality Database). Confidence intervals were calculated from standard errors for age specific probabilities of death using Chiang's method (Chiang 1984) with adjustments to the final age group (Eayres 2004).
 
         -   Chiang, C.L. 1984. The Life Table and its Applications. Robert E Krieger Publ Co., pp. 153-168.
 
         -   D. Eayres and E.S. Williams. Evaluation of methodologies for small area life expectancy estimation. Journal of Epidemiology & Community Health 2004. 58(3):243-249.
 
-    -   Simulated life tables were explored by bootstrapping life table deaths to produce confidence intervals for life expectancy (Andreev & Shkolnikov 2010), but are not currently shown. Andreev, E.M. and V. M. Shkolnikov. 2010. Spreadsheet for calculation of confidence limits for any life table or healthy-life table quantity. Max Planck Institute for Demographic Research: MPIDR Technical Report 2010-005; June 2010.
+        -   *United States Mortality Database*. University of California, Berkeley (USA). Available at usa.mortality.org (data downloaded on 2020-02-27).
 
 <br><br>
 
