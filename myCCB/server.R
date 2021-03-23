@@ -154,7 +154,7 @@ observeEvent(input$dxGroupsHelp,  {myModal(appTextL$dxGroupsHelp)})
 observeEvent(input$axisScaleHelp,  {myModal(appTextL$axisScaleHelp)})
 observeEvent(input$measureAgeRaceFocusHelp, {myModal(appTextL$measureAgeRaceFocusHelp)})
 observeEvent(input$includeBirthsHelp, {myModal(appTextL$includeBirthsHelp)})
-
+observeEvent(input$disparityCompareHelp, {myModal(appTextL$disparityCompareHelp)})
 
 
 

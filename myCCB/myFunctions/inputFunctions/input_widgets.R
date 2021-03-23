@@ -108,8 +108,8 @@ hidden(
       div(id = "myMultiRaceHelpText", helpText(h6(multiRaceWarning,style="color:red; float:left; margin: 20px;"))),
       
       # myCompare ======================
-      radioButtons("myCompare", "Compare to group with:", choices=c("lowest rate","highest rate")),
-      
+      radioButtons("myCompare", list(label = "Compare to group with:", actionButton("disparityCompareHelp", label = helpIcon, style = myInputHelpButtonSty)), 
+                   choices=c("lowest rate","highest rate")),
       
       # myAddN ======================
       checkboxInput("myAddN",  "Show NUMBER of Deaths?", value=FALSE),
