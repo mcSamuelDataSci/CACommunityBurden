@@ -655,7 +655,7 @@ observeEvent(current$tab,{
 
 demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ))
 output$demoPop_RacePie <- renderHighchart(demographics1Step()$plotL)
-output$demoPop_RacePie_table <- renderDataTable(demographics1Step()$tableL)
+output$demoPop_RacePie_table <- renderDataTable(demographics1Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_RacePie,{
   show("demoPop_RacePie")
@@ -674,7 +674,7 @@ observeEvent(input$tableButton_demoPop_RacePie,{
 
 demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
 output$demoPop_Pyramid <- renderHighchart(demographics2Step()$plotL)
-output$demoPop_Pyramid_table <- renderDataTable(demographics2Step()$tableL)
+output$demoPop_Pyramid_table <- renderDataTable(demographics2Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_Pyramid,{
   show("demoPop_Pyramid")
@@ -692,7 +692,7 @@ observeEvent(input$tableButton_demoPop_Pyramid,{
 
 demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
 output$demoPop_RaceAge <- renderHighchart(demographics3Step()$plotL)
-output$demoPop_RaceAge_table <- renderDataTable(demographics3Step()$tableL)
+output$demoPop_RaceAge_table <- renderDataTable(demographics3Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_RaceAge,{
   show("demoPop_RaceAge")
@@ -710,7 +710,7 @@ observeEvent(input$tableButton_demoPop_RaceAge,{
 
 demographics4Step <- reactive(make_demoPop_trend(myCounty = input$myLHJ, trendType = input$plotSelect_demoPop_Trend))
 output$demoPop_Trend <- renderHighchart(demographics4Step()$plotL)
-output$demoPop_Trend_table <- renderDataTable(demographics4Step()$tableL)
+output$demoPop_Trend_table <- renderDataTable(demographics4Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_Trend,{
   show("plotSelect_demoPop_Trend")
