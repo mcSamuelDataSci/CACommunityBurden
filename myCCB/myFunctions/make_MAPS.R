@@ -5,7 +5,7 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
 
   
   if (1==2){
-    myLHJ     = "Amador";myCause     ="A01";myMeasure = "YLLper";  myYear = 2015;
+    myLHJ     = "Alameda";myCause     ="0";myMeasure = "YLLper";  myYear = 2015;
     mySex     = "Total";myStateCut  = TRUE; myGeo     = "County";
     myLabName = FALSE;  myCutSystem ="fisher" 
   }
@@ -147,8 +147,11 @@ mapX <-  tm_shape(map.1) + tm_polygons(col=myMeasure, palette = myPal,
  # --------------------------------------------------------
  
  # FIX: "year",
- varsIn  <- c("GEOID"="name","county","sex",myMeasure) 
- tabDat  <- map.1 %>%  st_drop_geometry()    %>%   select(varsIn)
+ if (myGeo == "County") varsIn <- c("year", "county","sex",myMeasure, "causeCode") else varsIn <- c("yearG5", "GEOID"="name","county","sex",myMeasure, "causeCode")
+ 
+ tabDat  <- map.1 %>%  st_drop_geometry() %>%   select(varsIn) %>%
+   left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
+   select(-causeCode)
  
  list(leafPlot = tplot, plotL = tt.map.STAT, dataL = tabDat)
  
