@@ -631,16 +631,31 @@ output$deathHospED <- renderPlot({
 
 
 
+# observeEvent(current$tab,{
+#   if(current$tab %in% c("deathHospEDTab") ) {
+#     
+#     output$ourOnlyPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+#                                          content = function(file) {
+#                                            png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+#                                            print(deathHospEDStep()$plotL)
+#                                            dev.off() } )
+#     
+#     
+#     
+#   } } )
+
 observeEvent(current$tab,{
   if(current$tab %in% c("deathHospEDTab") ) {
     
-    output$ourOnlyPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
-                                         content = function(file) {
-                                           png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
-                                           print(deathHospEDStep()$plotL)
-                                           dev.off() } )
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
+                                     content = function(file) {
+                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                       print(deathHospEDStep()$plotL)
+                                       dev.off() } )
     
-    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  }, 
+                                      content = function(file) {
+                                        write.csv(deathHospEDStep()$dataL, file,row.names = FALSE) } )
     
   } } )
 

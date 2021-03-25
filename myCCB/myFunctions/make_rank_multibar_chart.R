@@ -225,22 +225,36 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
     d2 <- hosp_race
     d3 <- ed_race }
   
+  # Call functions to get plot and data
+  c.1 <- t.chart(d1,"Deaths")
+  c.2 <- t.chart(d2,"Hospitalizations")
+  c.3 <- t.chart(d3,"ED Visits")
   
-  c.1 <- t.chart(d1,"Deaths")$plotL
-  c.2 <- t.chart(d2,"Hospitalizations")$plotL
-  c.3 <- t.chart(d3,"ED Visits")$plotL
+  # For download data
+  d.1 <- c.1$dataL %>% mutate(dataType = "Deaths")
+  d.2 <- c.2$dataL %>% mutate(dataType = "Hospitalizations")
+  d.3 <- c.3$dataL %>% mutate(dataType = "ED Visits")
   
-  d.1 <- t.chart(d1,"Deaths")$dataL
-  d.2 <- t.chart(d2,"Hospitalizations")$dataL
-  d.3 <- t.chart(d3,"ED Visits")$dataL
+  df <- bind_rows(d.1, d.2, d.3) %>%
+    select(year = yearG3, county, MAINSTRATA, causeName, dataType, !!myMeasure) %>%
+    mutate(year = ifelse(is.na(year), "2019", "2017-2019")) # FIX THIS upstream
   
-  tempDF <- bind_rows(d.1, d.2, d.3)
+  
+  # c.1 <- t.chart(d1,"Deaths")$plotL
+  # c.2 <- t.chart(d2,"Hospitalizations")$plotL
+  # c.3 <- t.chart(d3,"ED Visits")$plotL
+  # 
+  # d.1 <- t.chart(d1,"Deaths")$dataL %>% mutate(dataType = "Deaths")
+  # d.2 <- t.chart(d2,"Hospitalizations")$dataL %>% mutate(dataType = "Hospitalizations")
+  # d.3 <- t.chart(d3,"ED Visits")$dataL %>% mutate(dataType = "ED Visits")
+  # 
+  # tempDF <- bind_rows(d.1, d.2, d.3)
   
   
   # https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html
   # https://wilkelab.org/cowplot/articles/plot_grid.html
   
-  r1       <- plot_grid(c.1,c.2,c.3,nrow=1)
+  r1       <- plot_grid(c.1$plotL,c.2$plotL,c.3$plotL,nrow=1)
   c.legend <- get_legend(t.chart(d2,"Hospitalizations", myTopN = 100, legend = TRUE)$plotL)
   # c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
   title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",myYearG3),size=myTextSize, color="blue") 
@@ -249,7 +263,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
   
   
   
-  list(plotL= pPlot, loadData = tempDF)
+  list(plotL= pPlot, dataL = df) 
   
 }
 
