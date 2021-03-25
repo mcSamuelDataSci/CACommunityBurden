@@ -201,9 +201,17 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   
   # Clean up data frame for plotting
   
+  # County Vars vs State Vars
+  if(myLHJ == "CALIFORNIA") varsIn <- c("year", "county", "sex", "population", "causeName", myMeasure)
+  if(myLHJ != "CALIFORNIA") varsIn <- c("yearG5", "county", "comName", "sex", "population", "causeName", myMeasure)
+  
+  # aRate and cRate have standard errors
+  if(myMeasure == "cDeathRate") varsIn <- c(varsIn, "rateSE", "rateLCI", "rateUCI")
+  if(myMeasure == "aRate") varsIn <- c(varsIn, "aSE", "aLCI", "aUCI")
+  
   dat.1 <- dat.1 %>%
     left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
-    select(-causeCode, -plotter, -lab)
+    select(varsIn)
   
   list(plotL = rank_geo_plot, dataL = dat.1)
 
