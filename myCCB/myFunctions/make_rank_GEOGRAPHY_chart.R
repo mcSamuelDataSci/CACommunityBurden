@@ -211,7 +211,8 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
   
   dat.1 <- dat.1 %>%
     left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
-    select(varsIn)
+    select(varsIn) %>%
+    arrange(desc(get(myMeasure)))
   
   list(plotL = rank_geo_plot, dataL = dat.1)
 
