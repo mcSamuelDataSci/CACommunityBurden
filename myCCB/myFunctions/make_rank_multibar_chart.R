@@ -240,17 +240,6 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
     mutate(year = ifelse(is.na(year), "2019", "2017-2019")) # FIX THIS upstream
   
   
-  # c.1 <- t.chart(d1,"Deaths")$plotL
-  # c.2 <- t.chart(d2,"Hospitalizations")$plotL
-  # c.3 <- t.chart(d3,"ED Visits")$plotL
-  # 
-  # d.1 <- t.chart(d1,"Deaths")$dataL %>% mutate(dataType = "Deaths")
-  # d.2 <- t.chart(d2,"Hospitalizations")$dataL %>% mutate(dataType = "Hospitalizations")
-  # d.3 <- t.chart(d3,"ED Visits")$dataL %>% mutate(dataType = "ED Visits")
-  # 
-  # tempDF <- bind_rows(d.1, d.2, d.3)
-  
-  
   # https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html
   # https://wilkelab.org/cowplot/articles/plot_grid.html
   

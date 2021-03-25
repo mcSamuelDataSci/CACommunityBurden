@@ -630,20 +630,6 @@ output$deathHospED <- renderPlot({
 }, height = 800)
 
 
-
-# observeEvent(current$tab,{
-#   if(current$tab %in% c("deathHospEDTab") ) {
-#     
-#     output$ourOnlyPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")}, 
-#                                          content = function(file) {
-#                                            png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
-#                                            print(deathHospEDStep()$plotL)
-#                                            dev.off() } )
-#     
-#     
-#     
-#   } } )
-
 observeEvent(current$tab,{
   if(current$tab %in% c("deathHospEDTab") ) {
     
