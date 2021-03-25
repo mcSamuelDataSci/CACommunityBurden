@@ -53,7 +53,18 @@ myMin      <- ifelse(myLogTrans,NA,0)
   
  #theme(axis.text.x = element_text(angle = 60, hjust = 1))
  
- list(plotL = myPlot, dataL = dat.1)
+ # Download data
+ varsIn <- c("year", "county", "sex", "eduName", "causeName", myMeasure)
+ 
+ if(myMeasure == "cDeathRate") varsIn <- c(varsIn, "rateSE", "rateLCI", "rateUCI")
+ if(myMeasure == "aRate") varsIn <- c(varsIn, "aSE", "aLCI", "aUCI")
+ 
+ df <- dat.1 %>%
+   left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
+   select(varsIn) %>%
+   arrange(year)
+ 
+ list(plotL = myPlot, dataL = df)
  
  
  }
