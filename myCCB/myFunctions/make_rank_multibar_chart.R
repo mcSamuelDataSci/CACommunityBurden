@@ -158,7 +158,8 @@ makePlotRank <- function(myDataSet     = NA,
    tDat_topN <- tDat_topN %>% filter(N > 0)  %>% mutate(MAINSTRATA = paste(" ",MAINSTRATA),
                                                         cRate = round(cRate,1),
                                                         measure = round(measure,1))  %>% 
-                                select(county, MAINSTRATA, causeName, causeNameShort, N, cRate, causeName, measure)
+                               select(county, MAINSTRATA, causeName, causeNameShort, measure) %>%
+     rename(!!myMeasure:=measure)
   
    #list(plotL= plotX, dataL=dataTable, loadData = tDat_topN)
    list(plotL= plotX, dataL=tDat_topN)
