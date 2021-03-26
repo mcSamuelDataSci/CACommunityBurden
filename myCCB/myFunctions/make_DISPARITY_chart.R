@@ -42,6 +42,12 @@ myMeasureRace <- "aRate"
 dat.1 <- filter(raceTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3, sex == "Total")
 dat.1 <- left_join(dat.1,raceLink,by="raceCode")
 
+raceDF <- dat.1 %>%
+   mutate(ageGroup = "Total", rateType = "Age-Adjusted Death Rate") %>%
+   left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
+   select(yearG3, county, causeName, sex, ageGroup, raceName, Ndeaths, rateType, 
+          rate = aRate, rateSE = aSE, LCI, UCI, compareGroup = lowRace, compareRate = bestRate, 
+          compareSE = bestSE, rateRatio, Ztest, pValue, pMark)
 
 if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
 
@@ -99,7 +105,12 @@ if(myCompare == "lowest rate") {
 dat.1 <- filter(ageTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3, sex == "Total") %>%
               mutate(ageGroup = factor(ageGroup,levels= ageMap$ageLabel))
 
-
+ageDF <- dat.1 %>%
+   mutate(raceName = "Total", rateType = "Age-Specific Death Rate") %>%
+   left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
+   select(yearG3, county, causeName, sex, ageGroup, raceName, Ndeaths, rateType, 
+          rate = cDeathRate, rateSE, LCI, UCI, compareGroup = lowAge, compareRate = bestRate, 
+          compareSE = bestSE, rateRatio, Ztest, pValue, pMark)
 ###KEY new approach here:
 #dat.1$ageGroup <- factor(dat.1$ageGroup,levels = ageMap$ageLabel)
 
@@ -154,6 +165,12 @@ if(myCompare == "lowest rate") {
 
 dat.1 <- filter(sexTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3) 
 
+sexDF <- dat.1 %>%
+   mutate(ageGroup = "Total", raceName = "Total", rateType = "Age-Adjusted Death Rate") %>%
+   left_join(select(deathCauseLink, causeCode, causeName), by = "causeCode") %>%
+   select(yearG3, county, causeName, sex, ageGroup, raceName, Ndeaths, rateType, 
+          rate = aRate, rateSE = aSE, LCI, UCI, compareGroup = lowRace, compareRate = bestRate, 
+          compareSE = bestSE, rateRatio, Ztest, pValue, pMark)
 
 tMax <- max(dat.1$aRate)
 placeLabels  <- tMax/5 
@@ -208,6 +225,10 @@ mainTitle <- ggdraw() +
 topRow <- cowplot::plot_grid(racePlot,sexPlot,rel_widths = c(6,3))
 dPlot   <- plot_grid(mainTitle,topRow,agePlot,ncol=1,rel_heights = c(1,5,5))
 
-list(plot=dPlot)
+# Download data
+
+df <- bind_rows(sexDF, raceDF, ageDF)
+
+list(plot=dPlot, dataL = df)
  
 }
