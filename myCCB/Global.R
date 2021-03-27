@@ -32,7 +32,7 @@ whichData         <- "real" #changed to fake so I (CD) can run app on my compute
 STATE             <- "CALIFORNIA"
 yearGrp           <- "2015-2019"
 nCut      <- 20
-myYearG3  <- "2017-2019"  
+# myYearG3  <- "2017-2019"  
 
 
 myCex <- 1.6
@@ -201,8 +201,10 @@ popData_trends   <- readRDS(path(ccbData,"popData_SexRaceAge_Trends.RDS"))
 # any_primary_diff   <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
 
 oshpd_PDD      <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD.rds"))
-oshpd_PDD_AGE  <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_AGE.rds"))
-oshpd_ED_AGE   <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_ED_AGE.rds"))
+
+# these two files have been superseded by the age-race focus files
+# oshpd_PDD_AGE  <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_AGE.rds"))
+# oshpd_ED_AGE   <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_ED_AGE.rds"))
 
 oshpd_PDD_any.t <- readRDS(file=path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds")) %>%
   mutate(year=2016) %>% ## TODO fix year
@@ -263,7 +265,7 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
 #source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
 #source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
-source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
+#source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
 source(path(ccbFunctions, "make_rank_multibar_chart.R"))
 source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V3.R"))
 

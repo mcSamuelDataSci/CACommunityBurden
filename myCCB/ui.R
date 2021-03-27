@@ -451,7 +451,7 @@ shinyUI(
                                                  
                                                  fluidRow(
                                                    column(width = 6, 
-                                                          boxPlus(
+                                                          shinydashboardPlus::box(
                                                             title = NULL,
                                                             closable = F,
                                                             status = "primary",
@@ -459,7 +459,7 @@ shinyUI(
                                                             solidHeader = F, 
                                                             collapsible = F,
                                                             #maximizable = T,
-                                                            enable_dropdown = F,
+                                                            #enable_dropdown = F,
                                                             actionButton("plotButton_demoPop_RacePie", "Plot", icon("chart-pie"), 
                                                                          style="padding: 6px;"),
                                                             actionButton("tableButton_demoPop_RacePie", "Table", icon("table"), 
@@ -470,14 +470,14 @@ shinyUI(
                                                             hidden(dataTableOutput("demoPop_RacePie_table"))
                                                           )), 
                                                    column(width = 6, 
-                                                          boxPlus(
+                                                          shinydashboardPlus::box(
                                                             title = NULL,
                                                             closable = F,
                                                             status = "primary",
                                                             width = NULL,
                                                             solidHeader = F, 
                                                             collapsible = F,
-                                                            enable_dropdown = F,
+                                                            #enable_dropdown = F,
                                                             actionButton("plotButton_demoPop_Pyramid", "Plot", icon("chart-bar"), 
                                                                          style = "padding: 6px;"),
                                                             actionButton("tableButton_demoPop_Pyramid", "Table", icon("table"), 
@@ -490,14 +490,14 @@ shinyUI(
                                                  
                                                  fluidRow(
                                                    column(width = 6, 
-                                                     boxPlus(
+                                                    shinydashboardPlus::box(
                                                        title = NULL,
                                                        closable = F,
                                                        status = "primary",
                                                        width = NULL,
                                                        solidHeader = F, 
                                                        collapsible = F,
-                                                       enable_dropdown = F,
+                                                      # enable_dropdown = F,
                                                        actionButton("plotButton_demoPop_RaceAge", "Plot", icon("chart-bar"), 
                                                                     style = "padding: 6px;"),
                                                        actionButton("tableButton_demoPop_RaceAge", "Table", icon("table"), 
@@ -508,14 +508,14 @@ shinyUI(
                                                        )
                                                      ), 
                                                    column(width = 6, 
-                                                          boxPlus(
+                                                          shinydashboardPlus::box(
                                                             title = NULL,
                                                             closable = F,
                                                             status = "primary",
                                                             width = NULL,
                                                             solidHeader = F, 
                                                             collapsible = F,
-                                                            enable_dropdown = F,
+                                                            #enable_dropdown = F,
                                                             div(style = "display:inline-block",
                                                                 actionButton("plotButton_demoPop_Trend", "Plot", icon("chart-line"), 
                                                                              style = "padding: 6px;")

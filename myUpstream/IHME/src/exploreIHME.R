@@ -53,7 +53,7 @@ ihme <- oldIHME %>%
 
 check <- ihme %>%
   filter(year == 2017, metric_name == "Number", measure_name %in% c("Deaths", "YLDs (Years Lived with Disability)"), 
-         sex_name == "Both", display == "cause", id_num %in% c(294, 494:497, 542:557, 521, 534, 626, 619)) %>%
+         sex_name == "Both", display == "cause", id_num %in% c(294, 494:497, 542:557, 521, 534, 626:639, 619)) %>%
   select(year, measure_name, id_num, id_name = oldIHME_name, oldIHME_val, newIHME_val, diff, abs, perc_diff, level, first_parent) %>%
   mutate(measure_name = ifelse(measure_name == "Deaths", "Death", "YLD")) %>%
   tidyr::pivot_wider(names_from = "measure_name", values_from = c("oldIHME_val", "newIHME_val", "diff", "abs", "perc_diff")) %>%
@@ -61,7 +61,7 @@ check <- ihme %>%
   select(-starts_with("abs"))
 
 library(xlsx)
-write.csv(check, "/mnt/projects/FusionData/jaspoWork/ihmeCompare.csv")
+write.csv(check, "/mnt/projects/FusionData/jaspoWork/ihmeCompare1.csv")
 
 # 421 & 1021, Liver cancer due to other causes 
 # 489 & 1022, Other Malignant Neoplasms
