@@ -451,9 +451,9 @@ shinyUI(
                                                  
                                                  fluidRow(
                                                    column(width = 6, 
-                                                          shinydashboardPlus::box(
+                                                          shinydashboard::box(
                                                             title = NULL,
-                                                            closable = F,
+                                                            #closable = F,
                                                             status = "primary",
                                                             width = NULL,
                                                             solidHeader = F, 
@@ -470,9 +470,9 @@ shinyUI(
                                                             hidden(dataTableOutput("demoPop_RacePie_table"))
                                                           )), 
                                                    column(width = 6, 
-                                                          shinydashboardPlus::box(
+                                                          shinydashboard::box(
                                                             title = NULL,
-                                                            closable = F,
+                                                            #closable = F,
                                                             status = "primary",
                                                             width = NULL,
                                                             solidHeader = F, 
@@ -490,9 +490,9 @@ shinyUI(
                                                  
                                                  fluidRow(
                                                    column(width = 6, 
-                                                    shinydashboardPlus::box(
+                                                    shinydashboard::box(
                                                        title = NULL,
-                                                       closable = F,
+                                                      # closable = F,
                                                        status = "primary",
                                                        width = NULL,
                                                        solidHeader = F, 
@@ -508,9 +508,9 @@ shinyUI(
                                                        )
                                                      ), 
                                                    column(width = 6, 
-                                                          shinydashboardPlus::box(
+                                                          shinydashboard::box(
                                                             title = NULL,
-                                                            closable = F,
+                                                           # closable = F,
                                                             status = "primary",
                                                             width = NULL,
                                                             solidHeader = F, 
