@@ -7,7 +7,7 @@ if(1==2){
 }
 
 
-trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping="One", myLogTrans=FALSE, myMultiRace=FALSE) {
+trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping=1, myLogTrans=FALSE, myMultiRace=FALSE) {
 
   # ----- sexTrendTab ---------------------------------------------------------
   

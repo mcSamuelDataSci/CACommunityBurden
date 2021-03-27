@@ -54,7 +54,7 @@ ccbData        <-  path(myPlace,"/myData")
 ccbFunctions   <-  path(myPlace,"/myFunctions/")
 }
   
-
+myYearG3  <- "2017-2019" 
 
 
 

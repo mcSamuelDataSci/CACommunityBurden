@@ -4,6 +4,9 @@ server <- TRUE
 if (!server) source("g:/FusionData/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
 
+
+raceLink <- raceLink %>% select(raceCode, raceNameShort)
+
 #==========================================================================================================
 
 popCounty        <- readRDS(paste0(ccbUpstream,"/upData/popCounty.RDS")) %>% ungroup()  
@@ -28,7 +31,8 @@ deathAge <- readRDS(file= path(ccbData,"real/datCounty_AGE_3year.RDS")) %>%
   
 deathRace <- readRDS(file= path(ccbData,"real/datCounty_RE.RDS")) %>%
               filter(sex == "Total", yearG3 == "2017-2019", Level == "lev2") %>%  
-              select(yearG3, county, sex, raceCode, causeCode, N =  Ndeaths, aRate, cRate = cDeathRate ) 
+              left_join(raceLink,by="raceCode") %>%
+              select(yearG3, county, sex, raceNameShort, causeCode, N =  Ndeaths, aRate, cRate = cDeathRate ) 
 
 #---------------------------------------------------------------------------------------------
 
@@ -44,6 +48,7 @@ hospAge   <- readRDS(file = path(focusData,"inData/hospAge.rds"))%>%
 
 hospRace  <- readRDS(file = path(focusData,"inData/hospRace.rds"))    %>%  
               left_join(popRace3Year,by=c("county","raceCode")) %>%
+              left_join(raceLink,by="raceCode") %>%
               rename(N = n_hosp) %>%
               mutate(cRate = 100000*N/population) %>%
               filter(N >= critN)
@@ -56,6 +61,7 @@ edAge    <-  readRDS(file = path(focusData,"inData/edAge.rds"))      %>%
 
 edRace   <-  readRDS(file = path(focusData, "inData/edRace.rds"))    %>%  
               left_join(popRace3Year,by=c("county","raceCode")) %>%
+              left_join(raceLink,by="raceCode") %>%
               rename( N = n_ED) %>%
               mutate(cRate = 100000*N/population)  %>%
               filter(N >= critN)
@@ -100,9 +106,9 @@ t.DeathAge  <-   makePlotRankData(myDataSet = "deathAge",  myData = "Deaths",   
 t.HospAge   <-   makePlotRankData(myDataSet = "hospAge",   myData = "Hospitalizations",    myMAINSTRATA  = "ageGroup")
 t.EDAge     <-   makePlotRankData(myDataSet = "edAge",     myData = "Emergency Department",myMAINSTRATA  = "ageGroup")
 
-t.DeathRace <-   makePlotRankData(myDataSet = "deathRace", myData = "Deaths",              myMAINSTRATA  = "raceCode")   
-t.HospRace  <-   makePlotRankData(myDataSet = "hospRace",  myData = "Hospitalizations",    myMAINSTRATA  = "raceCode")
-t.EDRace    <-   makePlotRankData(myDataSet = "edRace",    myData = "Emergency Department",myMAINSTRATA  = "raceCode")
+t.DeathRace <-   makePlotRankData(myDataSet = "deathRace", myData = "Deaths",              myMAINSTRATA  = "raceNameShort")   
+t.HospRace  <-   makePlotRankData(myDataSet = "hospRace",  myData = "Hospitalizations",    myMAINSTRATA  = "raceNameShort")
+t.EDRace    <-   makePlotRankData(myDataSet = "edRace",    myData = "Emergency Department",myMAINSTRATA  = "raceNameShort")
 
     
 
