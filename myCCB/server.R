@@ -476,12 +476,21 @@ observeEvent(current$tab,{
 disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
 output$disparityRace  <- renderPlot(disparityStep()$plot)
 
-
-output$ourOnlyPNG <- downloadHandler(filename=function(){paste0("new_disparity.jpg")},content = function(file) {
-  jpeg(file, width = 1200, height = 680)  # , pointsize = 20
-  print(disparityStep()$plot)
-  dev.off()
-})
+observeEvent(current$tab,{
+  if(current$tab %in% c("disparitiesTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".jpg")},content = function(file) {
+      jpeg(file, width = 1200, height = 680)  # , pointsize = 20
+      print(disparityStep()$plot)
+      dev.off()
+    })
+    
+    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myCAUSE,"-",Sys.Date(),".csv")  },
+                                      content = function(file) {
+                                        write.csv(disparityStep()$dataL, file,row.names = FALSE) } )
+    
+  } } )
 
 
 
