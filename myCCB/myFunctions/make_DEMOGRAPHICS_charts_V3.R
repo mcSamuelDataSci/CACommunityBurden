@@ -21,7 +21,8 @@ make_demoPop_Pyramid <- function(myCounty) {
                style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
       hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.sex + ' (' + this.point.ageGroup + ')<br>Population: ' + Math.abs(this.y).toLocaleString() 
-  }"),useHTML = FALSE) 
+  }"),useHTML = FALSE) %>%
+      hc_plotOptions(series = list(pointWidth = 10)) 
   
 
   
@@ -101,7 +102,7 @@ demoPop_RaceAge <- function(myCounty) {
     mutate(percent = round(100*population/sum(population), 1)) %>%
     ungroup() %>%
     mutate(plotText = paste0("Race/Ethnicity: ", raceName, "\nAge Group: ", ageGroup, "\nPercent: ", scales::percent(percent/100, accuracy = 0.1), "\nPopulation: ", scales::comma(population)), 
-           ageGroup = factor(ageGroup, levels = rev(levels(popData_RaceAge$ageGroup))))
+           ageGroup = factor(ageGroup, levels = levels(popData_RaceAge$ageGroup)))
   
   if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty)
   if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty, " County")
@@ -109,7 +110,8 @@ demoPop_RaceAge <- function(myCounty) {
   # Plot
   myPlot <- tDat %>%
     hchart('bar', hcaes(x = raceNameShort, y = population, label = raceNameShort, group = ageGroup), stacking = 'percent') %>%
-    hc_yAxis(title = list(text = "Percent", style = list(fontSize = hc_myAxisTitleSize))) %>%
+    hc_yAxis(title = list(text = "Percent", style = list(fontSize = hc_myAxisTitleSize)), 
+             reversedStacks = F) %>%
     hc_xAxis(title = list(text = "Race/Ethnicity", style = list(fontSize = hc_myAxisTitleSize))) %>%
     hc_title(text = plotTitle, align = "left", style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
     hc_tooltip(formatter = JS("function(){
