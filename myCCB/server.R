@@ -164,15 +164,16 @@ tabHelpList <- list("dataTableTab"           = appTextL$conditionTableTab,
                     "socialDeterminantsTab"  = appTextL$sdohTab,
                     "trendTab"               = appTextL$trendTab,
                     "rankByCauseTab"         = appTextL$conditionTab,
-                    "rankByGeographyTab" = appTextL$rankGeoTab,
-                    "rankByCauseAndSexTab" = appTextL$conditionSexTab,
-                    "lifeExpectancyTab" = appTextL$lifeExpectancyTab,
-                    "hospitalDischargeTab" = HospitalizationsTab, # created in Global.R
-                    "hospitalPrimaryAnyTab" = HospitalPrimaryAnyTab, # created in Global.R
-                    "riskByCauseTab"        = appTextL$ihmeTab,
-                    "disparitiesTab"        = appTextL$disparitiesTab,
-                    "ageRaceFocusTab"       = appTextL$ageRaceFocusTab,
-                    "deathHospEDTab"        = appTextL$deathHospEDTab
+                    "rankByGeographyTab"     = appTextL$rankGeoTab,
+                    "rankByCauseAndSexTab"   = appTextL$conditionSexTab,
+                    "lifeExpectancyTab"      = appTextL$lifeExpectancyTab,
+                    "hospitalDischargeTab"   = HospitalizationsTab, # created in Global.R
+                    "hospitalPrimaryAnyTab"  = HospitalPrimaryAnyTab, # created in Global.R
+                    "riskByCauseTab"         = appTextL$ihmeTab,
+                    "disparitiesTab"         = appTextL$disparitiesTab,
+                    "ageRaceFocusTab"        = appTextL$ageRaceFocusTab,
+                    "deathHospEDTab"         = appTextL$deathHospEDTab,
+                    "demographicsTab"        = appTextL$demographicsTab
                     )
 
 whoNeedsHelp <- reactive({
