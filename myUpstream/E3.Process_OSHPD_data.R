@@ -1,7 +1,5 @@
 ######  CELL SUPRESSION
 
-# in SAS file consider standardizing approach to "year" in PDD and ED data 
-
 # OSHPD sheet on coding of charges:
 # https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
 
@@ -19,8 +17,8 @@ server    <- FALSE
 readSAS   <- FALSE
 whichData <- "real"   # "fake"
 
-if (!server) source("g:/FusionData/Standards/FusionStandards.R")
-if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 #---Get Standards -----------------------------------------------------------------------
@@ -58,21 +56,36 @@ library(haven)
 #---CONVERT SAS TO RDS HERE----------------------------------------------------------------
 
 if (readSAS) {
-  oshpd.pdd.work1  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work1.sas7bdat") )
-  saveRDS(oshpd.pdd.work1, file = paste0(securePlace, "myData/oshpd_pdd.RDS"))
+
+  pdd.work  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work.sas7bdat") )
+  ###---------------------------------------------------------
+  ### race_grp changed in 2019 to include NHPI and Multiracial
+  ### prior to 2019 code 6 was "other"; in 2019 other is "8"
+  ### line below standardizes that
+  pdd.work$race_grp[pdd.work$year %in% 2017:2018 & pdd.work$race_grp == 6] <- 8
   
-  oshpd.pdd.currentYear <- oshpd.pdd.work1 %>% filter(year==currentYear)
-  saveRDS(oshpd.pdd.currentYear, file = paste0(securePlace, "myData/oshpd_pdd_currentYear.RDS"))
+  pdd.work  <- pdd.work %>%
+                  rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP)  %>%
+                  mutate(causeCode = str_pad(CCS, 5,"left",pad="o"))
+                    
+  saveRDS(pdd.work, file = paste0(securePlace, "myData/oshpd_pdd.RDS"))
+  
+  pdd.currentYear <- pdd.work %>% filter(year==currentYear)
+  saveRDS(pdd.currentYear, file = paste0(securePlace, "myData/oshpd_pdd_currentYear.RDS"))
   
   # FOR AGE/RACE Focus charts
-  oshpd.pdd.work2  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work2.sas7bdat") )
-  saveRDS(oshpd.pdd.work2, file = path(securePlace, "myData/oshpd_pdd_small.RDS"))
+  pdd.small <- pdd.work %>% select(-c(oshpd_id,los:msdrg,CCS:ccs_odiag24))
+  saveRDS(pdd.small, file = paste0(securePlace, "myData/oshpd_pdd_small.RDS"))
+  
+  
+  # oshpd.pdd.work2  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work2.sas7bdat") )
+  # saveRDS(oshpd.pdd.work2, file = path(securePlace, "myData/oshpd_pdd_small.RDS"))
+  
   
   oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
   saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
   
-  
-}
+}  
 
 if (1==2){
   junk <-   oshpd.ed.work %>% group_by(year,ccs_dx_prin) %>%
@@ -90,18 +103,10 @@ if (1==2){
 #---Read Data---------------------------------------------------------------------------
 
 pdd0   <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_small.RDS")) 
-pdd0   <- pdd0 %>% rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP) 
 
-###---------------------------------------------------------
-### race_grp changed in 2019 to include NHPI and Multiracial
-### prior to 2019 code 6 was "other"; in 2019 other is "8"
-### line below standardized that
-pdd0$race_grp[pdd0$year %in% 2017:2018 & pdd0$race_grp == 6] <- 8
-
-
-pdd0 <-  left_join(pdd0,raceLink,by=c("race_grp"="OSHPD")) 
-pdd0 <-  left_join(pdd0,countyLink,by=c("pCounty"="cdphcaCountyTxt")) %>%
-  mutate(CCS = str_pad(CCS, 5,"left",pad="o"))   # %>% select(-CCS)   
+pdd0 <-  pdd0 %>%
+          left_join(raceLink, by=c("race_grp"="OSHPD")) %>% 
+          left_join(countyLink, by=c("pCounty"="cdphcaCountyTxt")) 
 
 
 # pdd_stroke_for_Catrina <- pdd0 %>%
@@ -119,27 +124,26 @@ pdd0 <-  left_join(pdd0,countyLink,by=c("pCounty"="cdphcaCountyTxt")) %>%
 pdd1 <- bind_rows(pdd0,mutate(pdd0,countyName = "CALIFORNIA"))
 
 hospYear <-  pdd1 %>%
-  group_by(year, countyName, CCS) %>%
+  group_by(year, countyName, causeCode) %>%
   summarise(n_hosp=n()) %>%
-  select(year,  county = countyName, causeCode = CCS, n_hosp) %>%
+  select(year,  county = countyName, causeCode, n_hosp) %>%
   ungroup()
 
 hospAge  <- pdd1 %>%
   mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%
-  group_by(countyName, ageGroup, CCS) %>%
+  group_by(countyName, ageGroup, causeCode) %>%
   summarise(n_hosp=n()) %>%
-  select(causeCode = CCS, county = countyName, ageGroup, n_hosp) %>%
+  select(causeCode, county = countyName, ageGroup, n_hosp) %>%
   mutate(sex = "Total") %>% 
   mutate( yearG3 = myYearG.t) %>%   #HACK TO FIX Eventually
   ungroup()
 
 saveRDS(hospAge, paste0(ccbData,"real/age_race_focus_data/hospAge.RDS"))
 
-
 hospRace  <- pdd1 %>%
-  group_by(countyName, raceCode, CCS) %>%
+  group_by(countyName, raceCode, causeCode) %>%
   summarise(n_hosp=n()) %>%
-  select(causeCode = CCS, county = countyName, raceCode, n_hosp) %>%
+  select(causeCode, county = countyName, raceCode, n_hosp) %>%
   mutate(sex = "Total") %>% 
   mutate( yearG3 = myYearG.t) %>%   #HACK TO FIX Eventually
   ungroup()
@@ -153,24 +157,22 @@ saveRDS(hospRace, paste0(ccbData,"real/age_race_focus_data/hospRace.RDS"))
 ed0  <- readRDS(paste0(securePlace,"/myData/oshpd_ed.RDS")) 
 ed0  <- ed0 %>% rename(age = agyrserv, pCounty = patco, CCS = ccs_dx_prin)
 
-
 ###---------------------------------------------------------
 ### race_grp changed in 2019 to include NHPI and Multiracial
 ### prior to 2019 code 6 was "other"; in 2019 other is "8"
 ### line below standardized that
-pdd0$race_grp[pdd0$year %in% 2017:2018 & pdd0$race_grp == 6] <- 8
-
+ed0$race_grp[ed0$year %in% 2017:2018 & ed0$race_grp == 6] <- 8
 
 ed0 <-  left_join(ed0,raceLink,by=c("race_grp"="OSHPD")) 
 ed0 <-  left_join(ed0,countyLink,by=c("pCounty"="cdphcaCountyTxt"))  %>%
-  mutate(CCS = str_pad(CCS, 5,"left",pad="o"))   # %>% select(-CCS) #JASPO NEW
+         mutate(causeCode = str_pad(CCS, 5,"left",pad="o"))   
 
 ed1 <- bind_rows(ed0,mutate(ed0,countyName = "CALIFORNIA"))
 
 edYear <- ed1 %>%
-  group_by(year, countyName, CCS) %>%
+  group_by(year, countyName, causeCode) %>%
   summarise(n_ED=n()) %>%
-  select(year,  county = countyName, causeCode = CCS, n_ED) %>%
+  select(year,  county = countyName, causeCode, n_ED) %>%
   ungroup()
 
 edAge  <- ed1 %>%
@@ -181,7 +183,7 @@ edAge  <- ed1 %>%
   mutate(sex = "Total") %>%
   mutate( yearG3 = myYearG.t) %>%   #HACK TO FIX Eventually
   ungroup()
-saveRDS(edAge, paste0(focusData,"edAge.RDS"))
+saveRDS(edAge, paste0(ccbData,"real/age_race_focus_data/edAge.RDS"))
 
 edRace  <- ed1 %>%
   group_by(countyName, raceCode, CCS) %>%
@@ -190,8 +192,7 @@ edRace  <- ed1 %>%
   mutate(sex = "Total") %>% 
   mutate( yearG3 = "2016-2018") %>%   #HACK TO FIX Eventually
   ungroup()
-saveRDS(edRace, paste0(focusData,"edRace.RDS"))
-
+saveRDS(edRace, paste0(ccbData,"real/age_race_focus_data/edRace.RDS"))
 
 hosp_ED_year <- full_join(hospYear, edYear, by =c("year", "county", "causeCode"))
 saveRDS(hosp_ED_year, paste0(ccbData,"real/hosp_ED_year.RDS"))
@@ -211,34 +212,43 @@ saveRDS(hosp_ED_year, paste0(ccbData,"real/hosp_ED_year.RDS"))
 #-------------------------------------LOAD AND PROCESS OSHPD DATA-------------------------
 
 
-if (whichData == "real") {
-  oshpd.PDD.16 <- readRDS(file=path(securePlace, "myData/oshpd_subset.rds")) 
-  oshpd.ED.16 <- readRDS(file=path(securePlace, "myData/oshpd_ED_subset.rds")) 
-  
-  pdd_current_small  <-  readRDS(file=path(securePlace, "myData/oshpd_pdd_small.RDS")) 
-  ed_current         <-  readRDS(file=path(securePlace, "myData/oshpd_ed.RDS")) 
-  
-}
-
-if (whichData == "fake") {
-  oshpd.PDD.16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
-}
+# if (whichData == "real") {
+#   oshpd.PDD.16 <- readRDS(file=path(securePlace, "myData/oshpd_subset.rds")) 
+#   oshpd.ED.16 <- readRDS(file=path(securePlace, "myData/oshpd_ED_subset.rds")) 
+#   
+#   pdd_current_small  <-  readRDS(file=path(securePlace, "myData/oshpd_pdd_small.RDS")) 
+#   ed_current         <-  readRDS(file=path(securePlace, "myData/oshpd_ed.RDS")) 
+#   
+# }
+# 
+# if (whichData == "fake") {
+#   oshpd.PDD.16 <- readRDS(file=path(upPlace, "upData/oshpd16_sample.rds"))
+# }
 
 
 
 #NEW:
 
 pdd1  <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_currentYear.RDS")) 
-pdd1  <- pdd1 %>% select(-c(oshpd_id,odiag1:odiag24))
+#pdd1  <- pdd1 %>% select(-c(oshpd_id,odiag1:odiag24))
 
 # Adding "o" pads before numeric CCS codes for consistent matching/linking/coding
 ccsCols               <- grep("^ccs_",colnames(pdd1))
-pdd1[,ccsCols]        <-  apply(pdd1[,ccsCols],2, function(x) str_pad(x, 5,"left",pad="o"))
+pdd1[,ccsCols]        <-  apply(pdd1[,ccsCols],2, function(x) str_pad(x, 5,"left",pad="o"))  ## tidyverse?  map?
 pdd1[pdd1 == "ooooo"] <-  NA
 
 
-ccsMap           <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/CCS Code and Names Linkage.xlsx"),sheet = "names")) %>%
-  mutate(ccsCodePaded = str_pad(ccsCode, 5,"left",pad="o"))  
+###---------------------------------------------------------
+### race_grp changed in 2019 to include NHPI and Multiracial
+### prior to 2019 code 6 was "other"; in 2019 other is "8"
+### line below standardized that
+pdd1$race_grp[pdd1$year %in% 2017:2018 & pdd1$race_grp == 6] <- 8
+
+
+
+# USE hospCauseLink
+# ccsMap           <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/CCS Code and Names Linkage.xlsx"),sheet = "names")) %>%
+#   mutate(ccsCodePaded = str_pad(ccsCode, 5,"left",pad="o"))  
 
 
 
@@ -254,15 +264,6 @@ ccsMap           <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/CCS Code an
 sex_num   <- c(   "1",      "2",     "3",       "4",    "5")
 sex_cat   <- c("Male", "Female", "Other", "Unknown","Total")
 OSHPD_sex <- bind_cols(sex_num=sex_num, sex_cat=sex_cat) %>% as.data.frame() 
-
-#race categories
-race_grp       <- c("0",          "1",        "2",        "3",    "4",        "5",       "6")
-race_cat       <- c("Unk/missing","White-NH", "Black-NH", "Hisp", "Asian-NH", "AIAN-NH", "Other-NH")
-OSHPD_race_grp <- bind_cols(race_grp=race_grp, race_cat=race_cat) %>% as.data.frame() 
-
-
-
-
 
 
 ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),trim_ws = FALSE,sheet = "data"))

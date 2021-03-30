@@ -1,6 +1,6 @@
 # server <- F
-# if (!server) source("g:/FusionData/Standards/FusionStandards.R")
-# if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+# if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+# if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 
@@ -30,12 +30,10 @@ library(tidyr)
 
 #server <- TRUE
 
-# if (server) highPath <-  "/mnt/projects/"
-# if(!server) highPath <-  "G:/"
+
 
 # securePlace    <-  path(highPath,"FusionData/0.Secure.Data/")  
 
-# fusionPlace    <- path(highPath,"FusionData/")
 # standardsPlace <- path("/Standards")
 # sdohPlace      <- path(highPath,"FusionData/SDOH/")
 
@@ -47,13 +45,26 @@ library(tidyr)
 
 
 
-if (CCB) {
-standardsPlace <-  path(myPlace,"/Standards")
-ccbInfo        <-  path(myPlace,"/myInfo")
-ccbData        <-  path(myPlace,"/myData")
-ccbFunctions   <-  path(myPlace,"/myFunctions/")
-}
+if (!server) myPlace <- "g:/FusionData/0.CCB/myCCB/"
+if (server)  myPlace <- "/mnt/projects/FusionData/0.CCB/myCCB/"
+
+
+# if (CCB) {
+standardsPlace <-  paste0(myPlace,"Standards/")
+ccbInfo        <-  paste0(myPlace,"myInfo/")
+ccbData        <-  paste0(myPlace,"myData/")
+ccbFunctions   <-  paste0(myPlace,"myFunctions/")
+# }
   
+
+
+
+if (server) highPath <-  "/mnt/projects/"
+if(!server) highPath <-  "G:/"
+securePlace    <-  paste0(highPath,"FusionData/0.Secure.Data/")  
+fusionPlace    <- paste0(highPath,"FusionData/")
+
+
 myYearG3  <- "2017-2019" 
 
 
@@ -94,14 +105,14 @@ names(topLevTextColors) <- topLev
 
 #FROM plot life tables function
 
-raceColors1        <- c("seashell4", "chocolate1", "firebrick", "royalBlue1", "darkblue", "navajowhite3", "red",   "chartreuse4")
-raceNames1         <- c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "MR_NH",    "NHPI_NH",      "TOTAL", "WHITE_NH")
-names(raceColors1) <- raceNames1
-totalColor         <- "red"
-
-raceNames         <- raceLink$raceName 
-raceColors        <- brewer.pal(length(raceNames), "Paired")
-names(raceColors) <- raceNames
+# raceColors1        <- c("seashell4", "chocolate1", "firebrick", "royalBlue1", "darkblue", "navajowhite3", "red",   "chartreuse4")
+# raceNames1         <- c("AIAN_NH",   "ASIAN_NH",   "BLACK_NH",  "HISPANIC",   "MR_NH",    "NHPI_NH",      "TOTAL", "WHITE_NH")
+# names(raceColors1) <- raceNames1
+# totalColor         <- "red"
+# 
+# raceNames         <- raceLink$raceName 
+# raceColors        <- brewer.pal(length(raceNames), "Paired")
+# names(raceColors) <- raceNames
 
 raceList <- raceLink[-8:-10,"raceNameShort"] %>% unlist() %>% unname()
 
@@ -109,16 +120,16 @@ raceList <- raceLink[-8:-10,"raceNameShort"] %>% unlist() %>% unname()
 
 
 # Race Codes
-raceCodes <- c("AIAN", "Asian", "Black", "Hisp", "Multi", "NHPI", "Other", "White", "Total")
-raceCodesColors <- c(greyPalette[1:(length(raceCodes) - 1)], "red")
+#raceCodes <- c("AIAN", "Asian", "Black", "Hisp", "Multi", "NHPI", "Other", "White", "Total")
+#raceCodesColors <- c(greyPalette[1:(length(raceCodes) - 1)], "red")
 # raceCodesColors <- c(greyPalette[1:length(raceCodes)], "red")
 # raceCodesColors <- c("red", "yellow", "black", "brown", "blue", "lightblue", "darkblue", "gray","purple")
 
-names(raceCodesColors) <- raceCodes
-totalColor         <- "red"
+#names(raceCodesColors) <- raceCodes
+#totalColor         <- "red"
 
 # Race Names
-raceNames <- c("American Indian or Alaska Native", 
+raceName <- c("American Indian or Alaska Native", 
                "Asian", 
                "Black",
                "Latino",
@@ -127,11 +138,11 @@ raceNames <- c("American Indian or Alaska Native",
                "Other",
                "White", 
                "Total")
-raceNamesColors <- c(greyPalette[1:length(raceNames)], "red")
-names(raceNamesColors) <- raceNames
+raceNameColors <- c(greyPalette[1:(length(raceName)-1)], "red")
+names(raceNameColors) <- raceName
 
 # Race Name Short
-raceNamesShort <- c("AI/AN", 
+raceNameShort <- c("AI/AN", 
                "Asian", 
                "Black",
                "Latino",
@@ -140,8 +151,8 @@ raceNamesShort <- c("AI/AN",
                "Other",
                "White", 
                "Total")
-raceNamesShortColors <- c(greyPalette[1:length(raceNamesShort)], "red")
-names(raceNamesShortColors) <- raceNamesShort
+raceNameShortColors <- c(greyPalette[1:(length(raceNameShort)-1)], "red")
+names(raceNameShortColors) <- raceNameShort
 
 
 

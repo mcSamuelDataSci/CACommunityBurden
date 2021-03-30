@@ -17,6 +17,7 @@
 # =============================================================================
 
 CCB <- TRUE
+server <- TRUE
 myPlace     <- getwd()
 # myCCBPath   <- "/mnt/projects/FusionData/"
 

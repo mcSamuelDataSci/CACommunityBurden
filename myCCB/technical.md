@@ -14,7 +14,7 @@
 
 <br>
 
--   Note regarding **"Race/Ethnicity"**:
+-   Note regarding **"Race/Ethnicity"** for death data:
 
     -   Race/Ethnicity is shown in the CCB as one combined variable, with mutually exclusive values, in hierarchical order of:
 
@@ -45,6 +45,12 @@ The following labeling is used for these race/ethnic groups:
 | Unknown                                    | Unknown       |
 
 </center>
+
+-   Note regarding **"Race/Ethnicity"** for hospitalization and emergency department data:
+
+    -   Coding and labeling of race/ethnicity for hospitalization and emergency department data largely follows the same approach as for death data described above.
+
+    -   However, prior to 2019 the "Native Hawaiian and other Pacific Islander" and "Multi-Race" categories were not included in those data--presumably such persons would have been included in the "Asian" or "Other" categories as appropriate.
 
 <br>
 
@@ -124,7 +130,13 @@ The following labeling is used for these race/ethnic groups:
 
     -   Categorization of deaths was extracted from death certificates based on the International Classification of Diseases version 10 (ICD-10). The primary basis for the ICD10-to-condition mapping was the WHO Annex Table A from "[WHO methods and data sources for global burden of disease estimates 2000-2015, January 2017](http://www.who.int/healthinfo/global_burden_disease/GlobalDALYmethods_2000_2015.pdf)". We did not use a similar, more recent and more detailed, system developed by the Institute for Health Metrics and Evaluation (IHME) at the University of Washington (recent relevant publications include [The State of US Health, 1990-2016 Burden of Diseases, Injuries, and Risk Factors Among US States, JAMA 2018](https://jamanetwork.com/journals/jama/fullarticle/2678018) and [US County-Level Trends in Mortality Rates for Major Causes of Death, 1980-2014, JAMA 2016](https://jamanetwork.com/journals/jama/fullarticle/2592499)) in this version of the CCB because that system resulted in 721,783 (19.2%) of California deaths from 2000 to 2015 being mapped to "garbage codes", for which more sophisticated methods would need to be employed. The possibility of redistributing these "garbage codes" to valid categories at the census tract level and otherwise using the IHME system is being explored and may be implemented in future versions of the CCB. However, to enhance our use of the WHO system we compared the mapping of 3,758,856 deaths based on the WHO and IHME systems and changed the WHO mapping of ICD codes for several categories wherein the IHME classification was considered more appropriate (e.g., specific cancer sites rather than "other malignant neoplasms."). All of these modifications are carefully described in a key resources tool for the CCB, available [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/gbd.ICD.Map.xlsx) on our GitHub site. In addition, because our focus was on the "Public health" list of conditions, we remapped a number of ICD-10 codes from the WHO mapping to our own CCB system. All of these modifications are documented in a "key resources" tab for the CCB available noted above. The latest IHME/GBD results and methods can be found [here](https://www.thelancet.com/journals/lancet/issue/vol392no10159/PIIS0140-6736(18)X0048-8)
 
-    -   **NOTE:** In order make drug- and poisoning-related conditions in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on consensus with colleagues and on ["Consensus Recommendations for National and State Poisoning Surveillance -- ISW7 2012"](https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf).
+    -   For some conditions for some charts an abbreviated label is used. For most this is unambiguous, but for a couple additional detail may be useful:
+
+        -   "Alzheimer's disease" = "Alzheimer disease and other dementias"
+
+        -   "Lung Cancer" = "Trachea, bronchus and lung cancers""
+
+    -   **NOTE:** In order make **drug- and poisoning-related conditions** in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on consensus with colleagues and on ["Consensus Recommendations for National and State Poisoning Surveillance -- ISW7 2012"](https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf).
 
         -   The "**Drug overdose (poisoning/substance use disorders)**" condition includes "accidental poisonings by drugs" codes (X40-X44) **and** "substance use disorder codes" (F11-F16, F18, F19), but not alcohol use disorder (F10) which is included in the separate detailed level "Alcohol use disorders" condition. This conditions also includes "newborn (suspected to be) affected by maternal use of drugs of addiction" (P044).
 

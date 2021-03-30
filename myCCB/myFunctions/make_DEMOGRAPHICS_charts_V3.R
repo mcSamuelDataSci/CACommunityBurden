@@ -52,7 +52,7 @@ make_demoPop_Pyramid <- function(myCounty) {
 
 demoPop_RacePie <- function(myCounty) {
   
-  plotColors <- raceNamesShortColors[!names(raceNamesShortColors) %in% c("Other", "Unknown", "Total", NA)]
+  plotColors <- raceNameShortColors[!names(raceNameShortColors) %in% c("Other", "Unknown", "Total", NA)]
   raceColors_df <- data.frame(raceNameShort = names(plotColors), raceColor = unname(plotColors))
   
   tDat <- filter(popData_RacePie, county == myCounty) %>%
@@ -161,7 +161,7 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
   
   # Race trend
   if (trendType == "Race/Ethnicity") {
-    plotColors <- raceNamesShortColors[!names(raceNamesShortColors) %in% c("Other", "Unknown", "Total", NA)]
+    plotColors <- raceNameShortColors[!names(raceNameShortColors) %in% c("Other", "Unknown", "Total", NA)]
     raceColors_df <- data.frame(raceNameShort = names(plotColors), raceColor = unname(plotColors))
     
     tDat_Race <- popData_trends %>%

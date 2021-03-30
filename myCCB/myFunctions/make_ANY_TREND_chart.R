@@ -103,7 +103,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   
   if (myTab == "raceTrendTab") {
     
-    myVARIABLE <- "raceCode"
+    myVARIABLE <- "raceNameShort"
     
      dat.1 <- filter(datCounty_RE,county == myLHJ,causeCode == myCause, sex=="Total")  %>%
                left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
@@ -184,7 +184,7 @@ tplot <-  ggplot(data=dat.1,
             ) 
 
 
-if (myTab == "raceTrendTab") tplot <- tplot + scale_color_manual(values = raceCodesColors)
+if (myTab == "raceTrendTab") tplot <- tplot + scale_color_manual(values = raceNameShortColors)
 
  list(plotL = tplot, dataL = tabDat)
 

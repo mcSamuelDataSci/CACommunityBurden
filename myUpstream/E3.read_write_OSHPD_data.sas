@@ -6,38 +6,39 @@ run;
 
 data pdd.pdd_2016; set pdd.cdph_pdd_rln2016; 
  year = 2016;
- keep diag_p        odiag1-odiag24
+ keep diag_p        
       ccs_diagP ccs_odiag1-ccs_odiag24
       mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
 run;
+* removed odiag1-odiag24  3/30;
 
 data pdd.pdd_2017; set pdd.cdph_pdd_ssn2017; 
  year = 2017;
- keep diag_p        odiag1-odiag24
+ keep diag_p        
       ccs_diagP ccs_odiag1-ccs_odiag24
       mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
 run;
 
 data pdd.pdd_2018; set pdd.cdph_pdd_ssn2018; 
  year = 2018;
- keep diag_p        odiag1-odiag24
+ keep diag_p        
       ccs_diagP ccs_odiag1-ccs_odiag24
       mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
 run;
 
 data pdd.pdd_2019; set pdd.cdph_pdd_rln2019; 
  year = 2019;
- keep diag_p        odiag1-odiag24
+ keep diag_p        
       ccs_diagP ccs_odiag1-ccs_odiag24
       mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
 run;
 
-data pdd.pdd_work1; set pdd.pdd_2017 pdd.pdd_2018 pdd.pdd_2019; run;
+data pdd.pdd_work; set pdd.pdd_2017 pdd.pdd_2018 pdd.pdd_2019; run;
 
-
+/*
 data pdd.pdd_work2; set pdd.pdd_work1; 
  keep year admtyr patcnty patzip sex agyrdsch race_grp ccs_diagP diag_p;  run;
-
+*/
 
 
 

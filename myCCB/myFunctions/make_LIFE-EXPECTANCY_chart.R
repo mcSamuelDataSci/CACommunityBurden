@@ -125,7 +125,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
                                     expand = expansion(mult = c(0, 0), add = c(1, 5)), # lower-limit: 2000 - (2018 - 2000) * 0 - 1... upper-limit: 2018 + (2018 - 2000) * 0 + 5
                                     #expand=c(0,5), # 
                                     labels=myLabels) +
-                 scale_color_manual(values = raceNamesShortColors) +   
+                 scale_color_manual(values = raceNameShortColors) +   
                  labs(title =myTitle, y = "Life Expectancy at Birth", x = "Year")  +
                  theme_bw() +
                   theme(axis.text=element_text(size=myAxisSize),
