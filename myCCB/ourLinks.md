@@ -17,13 +17,13 @@
  *  **California-Specific**
       *  [Let's Get Healthy California](https://letsgethealthy.ca.gov/) 1,2,3 
       *  [California Asthma Data](https://www.cdph.ca.gov/Programs/CCDPHP/DEODC/EHIB/CPE/Pages/CaliforniaBreathingCountyAsthmaProfiles.aspx)
-      *  [Healthy Communities Index - CDPH Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Meets-the-Basic-Needs-of-All-1-2.aspx) 1
+      *  [Healthy Communities Data and Indicators Project - CDPH Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Search.aspx) 1
       *  [California Cancer Data](https://www.cancer-rates.info/ca/) 1
  
  * **United States/International with California Specific (A) or California Sub-County Data (B)**
    *  [City Health Dashboard](https://www.cityhealthdashboard.com/) 1,2,3; A, B
    *  [500 Cities Project – CDC & Robert Wood Johnson Foundation](https://www.cdc.gov/500cities/) 1, 2, 3; B
-      * [500 Cities methodology](https://www.cdc.gov/500cities/methodology.htm)
+      * [500 Cities methodology](https://www.cdc.gov/places/methodology/index.html)
    *  [CDC Wonder - Multiple Data Sets/Systems](https://wonder.cdc.gov/) 1, 4; A
    *  [Social Vulnerability Indicators & Index - CDC](https://svi.cdc.gov/) 2, 3; B
    *  [Fatal Injury Visualization Tool -  CDC](https://wisqars-viz.cdc.gov/) 2; A
@@ -66,7 +66,7 @@
  * [Climate Change and Health Vulnerability Indicators](https://discovery.cdph.ca.gov/ohe/CCHVIz/)
  * [California Opioid Overdose Surveillance Dashboard](https://discovery.cdph.ca.gov/CDIC/ODdash/)
  * [Disparities/SDOH Prototype](https://phdataviz.shinyapps.io/HCI_Viz/)
- * [Infectious Diseases Prototype](https://discovery.dev.cdph.ca.gov/fusion/cidVIS/)
+ * [Infectious Diseases Prototype](https://skylab.dev.cdph.ca.gov/content/247ee1e4-e31a-4529-968c-44c98f2da234)
 
 ## Resource for Program Action
  * [The Community Guide - online guide to what works to promote healthy communities - Community Preventive Services Task Force](https://www.thecommunityguide.org/)

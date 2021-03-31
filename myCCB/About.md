@@ -28,15 +28,15 @@ The CCB is intended to be an evolving tool-set developing new content and functi
 * Automated report generation 
 
 
-### California Department of Public Health [CDPH](https://www.cdph.ca.gov/)
+### California Department of Public Health <a target="_blank" rel="noopener noreferrer" href="https://www.cdph.ca.gov/">CDPH</a>
 
-* Office of Strategic Development and External Relations (Fusion Center) - The CCB is one of the ways the [Fusion Center](https://www.cdph.ca.gov/Programs/FCSD/Pages/FusionCenter.aspx) explores the lens of place and its impact on health disparities.  The CCB is an initiative of the Fusion Center implemented with participation from a crosscutting technical team, of representatives from multiple CDPH programs.  
+* Office of Strategic Development and External Relations (Fusion Center) - The CCB is one of the ways the <a target="_blank" rel="noopener noreferrer" href="https://www.cdph.ca.gov/Programs/FCSD/Pages/FusionCenter.aspx">Fusion Center</a> explores the lens of place and its impact on health disparities.  The CCB is an initiative of the Fusion Center implemented with participation from a crosscutting technical team, of representatives from multiple CDPH programs.  
 * This platform is also a pilot component of the CDPH Ecosystem of Data Sharing, leveraging a rich multi-level data set/system for modeling and predictive analytics and demonstrating automated and integrated data processing, analytics, and visualizations. The project employs nimble modular development, with the goal to share tools/resources with outside partners (counties and other states). 
 
 
 ### Acknowledgements
-* [Martijn Tennekes](https://github.com/mtennekes), for modifications to his R tmap package that he made on our request
-* [Zev Ross](http://www.zevross.com/) for an R function to "trim" the pesky islands off of California county coasts, and for other assistance
+* <a target="_blank" rel="noopener noreferrer" href="https://github.com/mtennekes">Martijn Tennekes</a>, for modifications to his R tmap package that he made on our request
+* <a target="_blank" rel="noopener noreferrer" href="http://www.zevross.com/">Zev Ross</a> for an R function to "trim" the pesky islands off of California county coasts, and for other assistance
 
 
 
