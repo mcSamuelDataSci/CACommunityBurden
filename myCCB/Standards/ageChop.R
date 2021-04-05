@@ -1,17 +1,11 @@
-require(readxl)
+# require(readxl)
 
 #mainPath <- 
 
 ageChop <- function(INAGE, mSheet="age3", myCuts=FALSE, my_lAge, my_uAge, my_ageName, ourServer = T) {
   
-  if (ourServer) {
-    ageLink <- read_excel("/mnt/projects/FusionData/Standards/ageLink.xlsx",sheet=mSheet)
-  } else {
-    ageLink <- read_excel("G:/FusionData/Standards/ageLink.xlsx",sheet=mSheet)
-  }
- 
-# ageLink <- read_excel("G:/CCB/Standards/ageLink.xlsx",sheet=mSheet)
-
+    ageLink <- read_excel(paste0(standardsPlace, "ageLink.xlsx"),sheet=mSheet)
+  
 if(!myCuts) {
 aL       <-      ageLink$lAge   
 aU       <- c(-1,ageLink$uAge)  

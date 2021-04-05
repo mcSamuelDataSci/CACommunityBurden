@@ -45,15 +45,15 @@ library(tidyr)
 
 
 
-if (!server) myPlace <- "g:/FusionData/0.CCB/myCCB/"
-if (server)  myPlace <- "/mnt/projects/FusionData/0.CCB/myCCB/"
+if (!CCB & !server) myPlace <- "g:/FusionData/0.CCB/myCCB"
+if (!CCB & server)  myPlace <- "/mnt/projects/FusionData/0.CCB/myCCB"
 
 
 # if (CCB) {
-standardsPlace <-  paste0(myPlace,"Standards/")
-ccbInfo        <-  paste0(myPlace,"myInfo/")
-ccbData        <-  paste0(myPlace,"myData/")
-ccbFunctions   <-  paste0(myPlace,"myFunctions/")
+standardsPlace <-  paste0(myPlace,"/Standards/")
+ccbInfo        <-  paste0(myPlace,"/myInfo/")
+ccbData        <-  paste0(myPlace,"/myData/")
+ccbFunctions   <-  paste0(myPlace,"/myFunctions/")
 # }
   
 
@@ -76,8 +76,8 @@ myYearG3  <- "2017-2019"
 # incudes ccs_diagP	and ccsName variables
 # should be replaced  with files below and ccsCode and ccsName  OR whatever we call thouse
 
-raceLink    <-  read_excel(path(standardsPlace,"/raceLink.xlsx"))
-ageLink     <-  read_excel(path(standardsPlace,"/ageLink.xlsx"),sheet = "standard")
+raceLink    <-  read_excel(paste0(standardsPlace,"raceLink.xlsx"))
+ageLink     <-  read_excel(paste0(standardsPlace,"ageLink.xlsx"),sheet = "standard")
 
 
 ## COLORS==========================================================

@@ -6,9 +6,6 @@
 # ====================================================================================================
 # "E3.Process_OSHPD_data.R" file                                                                     |
 #                                                                                                    |
-#            Reads in OSHPD 2016 PDD sas file, saves as rds file (random sample)                     |
-#            Used to assess hospitalizations for diabetes--primary diagnoses and all diagnoses.      |
-#                                                                                                    |
 # ====================================================================================================
 
 #---SET LOCATIONS-----------------------------------------------------------------------
@@ -48,15 +45,14 @@ currentYear <- 2019
 
 
 
-
-#-------------------------------------------------LOAD PACKAGES -------------------------
-
-library(haven)
-
 #---CONVERT SAS TO RDS HERE----------------------------------------------------------------
+
+
 
 if (readSAS) {
 
+  library(haven)
+  
   pdd.work  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work.sas7bdat") )
   ###---------------------------------------------------------
   ### race_grp changed in 2019 to include NHPI and Multiracial
@@ -87,20 +83,11 @@ if (readSAS) {
   
 }  
 
-if (1==2){
-  junk <-   oshpd.ed.work %>% group_by(year,ccs_dx_prin) %>%
-    summarize(N=n()) %>%
-    pivot_wider(names_from = year, values_from= N)
-}
-
-
 
 #------------------------------------------------------------------------------------------
 #---PROCESS DATA ONLY FOR AGE/RACE FOCUS HERE FOR -----------------------------------------
 
-
 #-- PDD DATA ---------------
-#---Read Data---------------------------------------------------------------------------
 
 pdd0   <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_small.RDS")) 
 
@@ -149,18 +136,11 @@ hospRace  <- pdd1 %>%
   ungroup()
 saveRDS(hospRace, paste0(ccbData,"real/age_race_focus_data/hospRace.RDS"))
 
-
-
-#---Read Data---------------------------------------------------------------------------
 #-- ED DATA ----------------
 
 ed0  <- readRDS(paste0(securePlace,"/myData/oshpd_ed.RDS")) 
 ed0  <- ed0 %>% rename(age = agyrserv, pCounty = patco, CCS = ccs_dx_prin)
 
-###---------------------------------------------------------
-### race_grp changed in 2019 to include NHPI and Multiracial
-### prior to 2019 code 6 was "other"; in 2019 other is "8"
-### line below standardized that
 ed0$race_grp[ed0$year %in% 2017:2018 & ed0$race_grp == 6] <- 8
 
 ed0 <-  left_join(ed0,raceLink,by=c("race_grp"="OSHPD")) 
@@ -200,10 +180,6 @@ saveRDS(hosp_ED_year, paste0(ccbData,"real/hosp_ED_year.RDS"))
 
 #==========================================================================================
 #==========================================================================================
-#==========================================================================================
-
-
-
 
 
 # NOTE - input files names have changed.
@@ -238,21 +214,6 @@ pdd1[,ccsCols]        <-  apply(pdd1[,ccsCols],2, function(x) str_pad(x, 5,"left
 pdd1[pdd1 == "ooooo"] <-  NA
 
 
-###---------------------------------------------------------
-### race_grp changed in 2019 to include NHPI and Multiracial
-### prior to 2019 code 6 was "other"; in 2019 other is "8"
-### line below standardized that
-pdd1$race_grp[pdd1$year %in% 2017:2018 & pdd1$race_grp == 6] <- 8
-
-
-
-# USE hospCauseLink
-# ccsMap           <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/CCS Code and Names Linkage.xlsx"),sheet = "names")) %>%
-#   mutate(ccsCodePaded = str_pad(ccsCode, 5,"left",pad="o"))  
-
-
-
-
 # do this at the end  
 ##             rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP)  
 ##    pdd0 <-  left_join(pdd0,countyLink,by=c("pCounty"="cdphcaCountyTxt")) %>%
@@ -266,28 +227,35 @@ sex_cat   <- c("Male", "Female", "Other", "Unknown","Total")
 OSHPD_sex <- bind_cols(sex_num=sex_num, sex_cat=sex_cat) %>% as.data.frame() 
 
 
-ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),trim_ws = FALSE,sheet = "data"))
 
 #----------------------------------------------ADD AGE-GROUp VARIABLE---------------------------------------------------------#
 
-
-
-aL            <-      ageMap$lAge     # lower age ranges
-aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
-aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
-aLabs         <- ageMap$ageLabel
-aMark         <- findInterval(oshpd.PDD.16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-oshpd.PDD.16$ageG  <- aLabs[aMark] 
-
+# ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),trim_ws = FALSE,sheet = "data"))
+# 
+# 
+# aL            <-      ageMap$lAge     # lower age ranges
+# aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
+# aLabs         <- paste(aL,"-",aU[-1]) # make label for ranges
+# aLabs         <- ageMap$ageLabel
+# aMark         <- findInterval(oshpd.PDD.16$agyrdsch,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+# oshpd.PDD.16$ageG  <- aLabs[aMark] 
+# 
 
 #-------------------------------------LOAD AND PROCESS POPULATION DATA------------------------------
 
-# ungrouping important for subsequent data set merging
-popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>% ungroup() 
-popCountySex     <- filter(popCounty,ageG == "Total")
-popCountySexAgeG <- filter(popCounty,ageG != "Total")
 
-popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
+
+
+
+# ungrouping important for subsequent data set merging
+# popCounty        <- readRDS(path(upPlace,"/upData/popCounty.RDS")) %>% ungroup() 
+# popCountySex     <- filter(popCounty,ageG == "Total")
+# popCountySexAgeG <- filter(popCounty,ageG != "Total")
+# 
+# popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
+
+
+
 
 
 
@@ -299,13 +267,23 @@ popStandard         <- ageMap %>% mutate(ageG = paste0(lAge," - ",uAge))
 
 
 # Create one variable with all 25 CCS codes concatenated for efficient string searching
-oshpdPDDAny <- oshpd.PDD.16 %>% 
+pddAny <- pdd1 %>% 
   mutate(all_CCS_One_String = 
-           paste(ccs_diagP,    ccs_odiag1,  ccs_odiag2, ccs_odiag3, ccs_odiag4,
+           paste(causeCode,    ccs_odiag1,  ccs_odiag2, ccs_odiag3, ccs_odiag4,
                  ccs_odiag5,   ccs_odiag6,  ccs_odiag7, ccs_odiag8, ccs_odiag9,
                  ccs_odiag10, ccs_odiag11, ccs_odiag12, ccs_odiag13, ccs_odiag14,
                  ccs_odiag15, ccs_odiag16, ccs_odiag17, ccs_odiag18, ccs_odiag19, 
                  ccs_odiag20, ccs_odiag21, ccs_odiag22, ccs_odiag23, ccs_odiag24))  
+
+
+
+
+
+
+
+
+
+
 
 # TODO
 # learning about OSHPD data
@@ -314,51 +292,51 @@ oshpdPDDAny <- oshpd.PDD.16 %>%
 start_time <- Sys.time()
 
 # Create (283) new indicator varibles, one for each CCS code, indicting if that code occurrs in the
-#  primary CCS code of any of the 24 secondary CCS codes
+#  primary CCS code or any of the 24 secondary CCS codes
 
-for (i in 1:nrow(ccsMap)) {
-  oshpdPDDAny <- oshpdPDDAny %>% mutate(
-    !!ccsMap$ccsCodePaded[i] := ifelse(grepl(ccsMap$ccsCodePaded[i], all_CCS_One_String), 1, 0)) 
-  # !!ccsMap$ccsCodePaded[i] := ifelse(apply(oshpd16_new[,2:26], 1, function(r) any(r == ccsMap$ccsCodePaded[i])), 1, 0)) #SLOWER 
+for (i in 1:nrow(hospCauseLink)) {
+  pddAny <- pddAny %>% mutate(
+    !!hospCauseLink$causeCode[i] := ifelse(grepl(hospCauseLink$causeCode[i], all_CCS_One_String), 1, 0)) 
+  # !!hospCauseLink$ccsCodePaded[i] := ifelse(apply(oshpd16_new[,2:26], 1, function(r) any(r == hospCauseLink$causeCode[i])), 1, 0)) #SLOWER 
 }
 end_time <- Sys.time()
 end_time - start_time
+#Time difference of 45.19121 mins
+
 
 # discard bunch of variable for efficient processing
-oshpdPDDAny <- select(oshpdPDDAny,-(ccs_odiag1:msdrg),-all_CCS_One_String)
-
-
+pddAny <- select(pddAny,-c(CCS:ccs_odiag24, all_CCS_One_String))
 
 
 ##################################################
 
 
 # save/read this file
-saveRDS(oshpdPDDAny, file=path(securePlace, "myData/oshpdPDDAny.rds"))
-#oshpdPDDAny <- readRDS(file=path(securePlace, "myData/oshpdPDDAny.rds")) 
+saveRDS(pddAny, file=path(securePlace, "myData/pddAnyIntermediate.rds"))
+pddAny <- readRDS(file=path(securePlace, "myData/pddAnyIntermediate.rds")) 
 
 ##################################################
 
 
 
 # Sum each CCS indicator variable, by county and sex, and "flip" it (i.e. wide to long) such that there is one
-#  varible ("ccsANY") with the count for that CCS code, and one varible ("ccsMeasure") that indicates the CCS code
+#  variable ("ccsANY") with the count for that CCS code, and one variable ("ccsMeasure") that indicates the CCS code
 
 ## NOT ENOUGH MEMORY(?) TO DO THIS
-# temp <- pivot_longer(oshpdPDDAny,ooo1:o237,names_to = "ccsANY")
+# temp <- pivot_longer(pddAny,ooo1:o237,names_to = "ccsANY")
 
 i <- 1
 ## get function!
-ccs.t0 <- oshpdPDDAny %>% 
+ccs.t0 <- pddAny %>% 
   group_by(patcnty, sex) %>% 
-  summarize(n_hosp_any = sum(get(ccsMap$ccsCodePaded[i]))) %>% 
-  mutate(ccsCode=ccsMap$ccsCodePaded[i])
+  summarize(n_hosp_any = sum(get(hospCauseLink$causeCode[i]))) %>% 
+  mutate(ccsCode=hospCauseLink$causeCode[i])
 
-for (i in 2:nrow(ccsMap)) {
-  ccs.t1 <- oshpdPDDAny %>% 
+for (i in 2:nrow(hospCauseLink)) {
+  ccs.t1 <- pddAny %>% 
     group_by(patcnty, sex) %>% 
-    summarize(n_hosp_any = sum(get(ccsMap$ccsCodePaded[i]))) %>% 
-    mutate(ccsCode=ccsMap$ccsCodePaded[i])
+    summarize(n_hosp_any = sum(get(hospCauseLink$causeCode[i]))) %>% 
+    mutate(ccsCode=hospCauseLink$causeCode[i])
   
   ccs.t0 <- bind_rows(ccs.t0,ccs.t1)
 }
@@ -591,66 +569,70 @@ calculated_metrics     <- bind_rows(calculated_sums, calculated_crude_rates, cal
   select(sex, ccsCode, year, Level, county, ageG, pop, type, measure, diagnosis_var)
 
 #Saving RDS file of this dataframe
+
+XXXXX rename this something with primary.  here, global, and plotting functions.
+
+
 saveRDS(calculated_metrics, file = path(myPlace, "myData/",whichData,"/oshpd_PDD.rds"))
 
 
 
 # ====== QUICK AND DIRTY ED PROCESSING=================================================================================
 
-
-# TODO check age variable name is differnt that PDD
-
-aMark             <- findInterval(oshpd.ED.16$agyrserv,aU,left.open = TRUE)  
-oshpd.ED.16$ageG  <- aLabs[aMark] 
-oshpd.ED.16       <- oshpd.ED.16 %>% mutate( ccsCode = str_pad(ccs_dx_prin, 5,"left",pad="o"))
-
-
-# functions WITHOUT CHARGES----------------------------------------------------------------------------------------------
-
-sum_num_costsX <- function(data, groupvar, levLab) {
-  
-  dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
-    summarize(n_hosp = n(), ) #adding median charge per day
-}
-
-#function to calculate crude hospitalization rates and charge-rates 
-calculate_crude_ratesX <- function(data, yearN) {
-  data %>% mutate(cHospRate = yF*n_hosp/(yearN*pop), 
-                  hosp_rateLCI    = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
-                  hosp_rateUCI    = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper)
-}
-
-# processing -----------------------------------------------------------
-
-## TODO  county names different than PDD
-
-oshpd.ED.16.Primary <- oshpd.ED.16 %>% #            select(-(ccs_odiag1:msdrg)) %>% 
-  left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patco"= "cdphcaCountyTxt")) %>% 
-  left_join(., OSHPD_race_grp, by = "race_grp") %>%
-  left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% select(-sex) %>% mutate(sex=sex_cat)  %>% select(-sex_cat)
-
-#Adding Total in order to create total/statewide estimates (for grouping function later)
-oshpd.ED.16.Primary <- mutate(oshpd.ED.16.Primary, sex = "Total") %>% 
-  bind_rows(oshpd.ED.16.Primary) 
-
-# ----------- by AGE GROUP ------------------------------------------------------------------------------------
-
-#NO YEAR FOR NOW
-t.ED.age.state   <- sum_num_costsX(oshpd.ED.16.Primary, c("sex", "ageG","ccsCode"), "ccs0") %>% mutate(county=STATE)
-t.ED.age.county  <- sum_num_costsX(oshpd.ED.16.Primary, c("sex", "ageG","ccsCode", "county"), "ccs0") 
-popCountySexAgeG <- filter(popCountySexAgeG,year==2016)
-
-t.ED.age        <- bind_rows(t.ED.age.state ,t.ED.age.county) %>% 
-  left_join(., popCountySexAgeG, by = c("sex", "ageG","county")) %>% 
-  as.data.frame()
-
-ED.age    <- calculate_crude_ratesX(t.ED.age, yearN = 1)
-
-saveRDS(ED.age, file = path(myPlace, "myData/",whichData,"/oshpd_ED_AGE.rds"))
-
-# ====== END QUICK AND DIRTY ED PROCESSING=================================================================================
-
-
+# 
+# # TODO check age variable name is differnt that PDD
+# 
+# aMark             <- findInterval(oshpd.ED.16$agyrserv,aU,left.open = TRUE)  
+# oshpd.ED.16$ageG  <- aLabs[aMark] 
+# oshpd.ED.16       <- oshpd.ED.16 %>% mutate( ccsCode = str_pad(ccs_dx_prin, 5,"left",pad="o"))
+# 
+# 
+# # functions WITHOUT CHARGES----------------------------------------------------------------------------------------------
+# 
+# sum_num_costsX <- function(data, groupvar, levLab) {
+#   
+#   dat <- data %>% group_by_at(.,vars(groupvar)) %>% 
+#     summarize(n_hosp = n(), ) #adding median charge per day
+# }
+# 
+# #function to calculate crude hospitalization rates and charge-rates 
+# calculate_crude_ratesX <- function(data, yearN) {
+#   data %>% mutate(cHospRate = yF*n_hosp/(yearN*pop), 
+#                   hosp_rateLCI    = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$lower,
+#                   hosp_rateUCI    = yF*pois.approx(n_hosp,yearN*pop, conf.level = 0.95)$upper)
+# }
+# 
+# # processing -----------------------------------------------------------
+# 
+# ## TODO  county names different than PDD
+# 
+# oshpd.ED.16.Primary <- oshpd.ED.16 %>% #            select(-(ccs_odiag1:msdrg)) %>% 
+#   left_join(., select(geoMap,cdphcaCountyTxt,county=countyName), by = c("patco"= "cdphcaCountyTxt")) %>% 
+#   left_join(., OSHPD_race_grp, by = "race_grp") %>%
+#   left_join(., OSHPD_sex, by = c("sex" = "sex_num"))  %>% select(-sex) %>% mutate(sex=sex_cat)  %>% select(-sex_cat)
+# 
+# #Adding Total in order to create total/statewide estimates (for grouping function later)
+# oshpd.ED.16.Primary <- mutate(oshpd.ED.16.Primary, sex = "Total") %>% 
+#   bind_rows(oshpd.ED.16.Primary) 
+# 
+# # ----------- by AGE GROUP ------------------------------------------------------------------------------------
+# 
+# #NO YEAR FOR NOW
+# t.ED.age.state   <- sum_num_costsX(oshpd.ED.16.Primary, c("sex", "ageG","ccsCode"), "ccs0") %>% mutate(county=STATE)
+# t.ED.age.county  <- sum_num_costsX(oshpd.ED.16.Primary, c("sex", "ageG","ccsCode", "county"), "ccs0") 
+# popCountySexAgeG <- filter(popCountySexAgeG,year==2016)
+# 
+# t.ED.age        <- bind_rows(t.ED.age.state ,t.ED.age.county) %>% 
+#   left_join(., popCountySexAgeG, by = c("sex", "ageG","county")) %>% 
+#   as.data.frame()
+# 
+# ED.age    <- calculate_crude_ratesX(t.ED.age, yearN = 1)
+# 
+# saveRDS(ED.age, file = path(myPlace, "myData/",whichData,"/oshpd_ED_AGE.rds"))
+# 
+# # ====== END QUICK AND DIRTY ED PROCESSING=================================================================================
+# 
+# 
 
 
 

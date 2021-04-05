@@ -123,7 +123,7 @@ library(scales)
 library(visNetwork)
 library(stringr)
 library(shinydashboard)
-library(shinydashboardPlus)
+#library(shinydashboardPlus)
 
 library(DT) # for better rendering of Data Table  https://community.rstudio.com/t/data-table-issue-while-rendering-the-shiny-page-datatables-warning-table-id-datatables-table-0-requested-unknown-parameter/44016/3
 library(cowplot)

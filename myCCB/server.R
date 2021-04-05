@@ -666,18 +666,18 @@ observeEvent(current$tab,{
 
 demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ))
 output$demoPop_RacePie <- renderHighchart(demographics1Step()$plotL)
-output$demoPop_RacePie_table <- renderDataTable(demographics1Step()$tableL, server = F)
+output$demoPop_RacePie_table <- DT::renderDataTable(demographics1Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_RacePie,{
   show("demoPop_RacePie")
   hide("demoPop_RacePie_table")
-  
+
 })
 
 observeEvent(input$tableButton_demoPop_RacePie,{
   show("demoPop_RacePie_table")
   hide("demoPop_RacePie")
-  
+
 })
 
 
@@ -685,56 +685,56 @@ observeEvent(input$tableButton_demoPop_RacePie,{
 
 demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
 output$demoPop_Pyramid <- renderHighchart(demographics2Step()$plotL)
-output$demoPop_Pyramid_table <- renderDataTable(demographics2Step()$tableL, server = F)
+output$demoPop_Pyramid_table <- DT::renderDataTable(demographics2Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_Pyramid,{
   show("demoPop_Pyramid")
   hide("demoPop_Pyramid_table")
-  
+
 })
 
 observeEvent(input$tableButton_demoPop_Pyramid,{
   show("demoPop_Pyramid_table")
   hide("demoPop_Pyramid")
-  
-})  
+
+})
 
 # Race/Ethnicity & Age Chart
 
 demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
 output$demoPop_RaceAge <- renderHighchart(demographics3Step()$plotL)
-output$demoPop_RaceAge_table <- renderDataTable(demographics3Step()$tableL, server = F)
+output$demoPop_RaceAge_table <- DT::renderDataTable(demographics3Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_RaceAge,{
   show("demoPop_RaceAge")
   hide("demoPop_RaceAge_table")
-  
+
 })
 
 observeEvent(input$tableButton_demoPop_RaceAge,{
   show("demoPop_RaceAge_table")
   hide("demoPop_RaceAge")
-  
+
 })
 
 # Trends
 
 demographics4Step <- reactive(make_demoPop_trend(myCounty = input$myLHJ, trendType = input$plotSelect_demoPop_Trend))
 output$demoPop_Trend <- renderHighchart(demographics4Step()$plotL)
-output$demoPop_Trend_table <- renderDataTable(demographics4Step()$tableL, server = F)
+output$demoPop_Trend_table <- DT::renderDataTable(demographics4Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_Trend,{
   show("plotSelect_demoPop_Trend")
   show("demoPop_Trend")
   hide("demoPop_Trend_table")
-  
+
 })
 
 observeEvent(input$tableButton_demoPop_Trend,{
   show("demoPop_Trend_table")
   hide("demoPop_Trend")
   hide("plotSelect_demoPop_Trend")
-  
+
 })
 
 

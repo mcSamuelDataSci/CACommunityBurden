@@ -450,93 +450,95 @@ shinyUI(
                                                  br(),
                                                  
                                                  fluidRow(
-                                                   column(width = 6, 
+                                                   column(width = 6,
                                                           shinydashboard::box(
                                                             title = NULL,
                                                             #closable = F,
                                                             status = "primary",
                                                             width = NULL,
-                                                            solidHeader = F, 
+                                                            solidHeader = F,
                                                             collapsible = F,
                                                             #maximizable = T,
                                                             #enable_dropdown = F,
-                                                            actionButton("plotButton_demoPop_RacePie", "Plot", icon("chart-pie"), 
+                                                            actionButton("plotButton_demoPop_RacePie", "Plot", icon("chart-pie"),
                                                                          style="padding: 6px; background-color: #D1D1D1; color: black;"),
-                                                            actionButton("tableButton_demoPop_RacePie", "Table", icon("table"), 
+                                                            actionButton("tableButton_demoPop_RacePie", "Table", icon("table"),
                                                                          style = "padding: 6px; background-color: #D1D1D1; color: black;"
-                                                                         ), 
+                                                                         ),
                                                             hr(),
                                                             highchartOutput("demoPop_RacePie"),
-                                                            hidden(dataTableOutput("demoPop_RacePie_table"))
-                                                          )), 
-                                                   column(width = 6, 
+                                                            hidden(DT::dataTableOutput("demoPop_RacePie_table"))
+                                                          )),
+                                                   column(width = 6,
                                                           shinydashboard::box(
                                                             title = NULL,
                                                             #closable = F,
                                                             status = "primary",
                                                             width = NULL,
-                                                            solidHeader = F, 
+                                                            solidHeader = F,
                                                             collapsible = F,
                                                             #enable_dropdown = F,
-                                                            actionButton("plotButton_demoPop_Pyramid", "Plot", icon("chart-bar"), 
+                                                            actionButton("plotButton_demoPop_Pyramid", "Plot", icon("chart-bar"),
                                                                          style = "padding: 6px; background-color: #D1D1D1; color: black;"),
-                                                            actionButton("tableButton_demoPop_Pyramid", "Table", icon("table"), 
-                                                                         style = "padding: 6px; background-color: #D1D1D1; color: black;"), 
+                                                            actionButton("tableButton_demoPop_Pyramid", "Table", icon("table"),
+                                                                         style = "padding: 6px; background-color: #D1D1D1; color: black;"),
                                                             hr(),
                                                             highchartOutput("demoPop_Pyramid"),
-                                                            hidden(dataTableOutput("demoPop_Pyramid_table"))
+                                                            hidden(DT::dataTableOutput("demoPop_Pyramid_table"))
                                                           ))
-                                                 ), 
-                                                 
+                                                 ),
+
                                                  fluidRow(
-                                                   column(width = 6, 
+                                                   column(width = 6,
                                                     shinydashboard::box(
                                                        title = NULL,
                                                       # closable = F,
                                                        status = "primary",
                                                        width = NULL,
-                                                       solidHeader = F, 
+                                                       solidHeader = F,
                                                        collapsible = F,
                                                       # enable_dropdown = F,
-                                                       actionButton("plotButton_demoPop_RaceAge", "Plot", icon("chart-bar"), 
+                                                       actionButton("plotButton_demoPop_RaceAge", "Plot", icon("chart-bar"),
                                                                     style = "padding: 6px; background-color: #D1D1D1; color: black;"),
-                                                       actionButton("tableButton_demoPop_RaceAge", "Table", icon("table"), 
-                                                                    style = "padding: 6px; background-color: #D1D1D1; color: black;"), 
+                                                       actionButton("tableButton_demoPop_RaceAge", "Table", icon("table"),
+                                                                    style = "padding: 6px; background-color: #D1D1D1; color: black;"),
                                                        hr(),
-                                                       highchartOutput("demoPop_RaceAge"), 
-                                                       hidden(dataTableOutput("demoPop_RaceAge_table"))
+                                                       highchartOutput("demoPop_RaceAge"),
+                                                       hidden(DT::dataTableOutput("demoPop_RaceAge_table"))
                                                        )
-                                                     ), 
-                                                   column(width = 6, 
+                                                     ),
+                                                   column(width = 6,
                                                           shinydashboard::box(
                                                             title = NULL,
                                                            # closable = F,
                                                             status = "primary",
                                                             width = NULL,
-                                                            solidHeader = F, 
+                                                            solidHeader = F,
                                                             collapsible = F,
                                                             #enable_dropdown = F,
                                                             div(style = "display:inline-block",
-                                                                actionButton("plotButton_demoPop_Trend", "Plot", icon("chart-line"), 
+                                                                actionButton("plotButton_demoPop_Trend", "Plot", icon("chart-line"),
                                                                              style = "padding: 6px; background-color: #D1D1D1; color: black;")
                                                             ),
                                                             div(style = "display:inline-block",
-                                                                actionButton("tableButton_demoPop_Trend", "Table", icon("table"), 
+                                                                actionButton("tableButton_demoPop_Trend", "Table", icon("table"),
                                                                              style = "padding: 6px; background-color: #D1D1D1; color: black;")
                                                             ),
-                                                            div(style="display:inline-block; float:right;", 
+                                                            div(style="display:inline-block; float:right;",
                                                                 selectInput("plotSelect_demoPop_Trend", label = "Select Trend:", choices = c("Total", "Sex", "Race/Ethnicity", "Age Group"))
                                                                 ),
                                                             br(),
                                                             br(),
                                                             hr(),
-                                                            highchartOutput("demoPop_Trend"), 
-                                                            hidden(dataTableOutput("demoPop_Trend_table"))
+                                                            highchartOutput("demoPop_Trend"),
+                                                            hidden(DT::dataTableOutput("demoPop_Trend_table"))
                                                           )
                                                    )
                                                    )
-                                                 
-                                                 
+
+                                                 # Uncomment above
+
+
                                                  # boxPlus(
                                                  #   title = "Population Demographics in California",
                                                  #   closable = F,
@@ -545,39 +547,39 @@ shinyUI(
                                                  #   collapsible = F,
                                                  #   enable_dropdown = F,
                                                  #   fluidRow(
-                                                 #     column(width = 7, 
-                                                 #            plotlyOutput("demoPop_RacePie")), 
-                                                 #     column(width = 5, 
+                                                 #     column(width = 7,
+                                                 #            plotlyOutput("demoPop_RacePie")),
+                                                 #     column(width = 5,
                                                  #            plotlyOutput("demoPop_Pyramid"))
-                                                 #   ), 
+                                                 #   ),
                                                  #   fluidRow(
                                                  #     column(width = 1),
                                                  #     column(width = 10, plotlyOutput("demoPop_RaceAge")),
                                                  #     column(width = 1)
                                                  #   )
                                                  # )
-                                                 
-                                                 # fluidRow( 
-                                                 #   column(width = 7, 
-                                                 #          style = 'padding:0px; height:49vh', 
-                                                 #          plotlyOutput("demoPop_RacePie", 
+
+                                                 # fluidRow(
+                                                 #   column(width = 7,
+                                                 #          style = 'padding:0px; height:49vh',
+                                                 #          plotlyOutput("demoPop_RacePie",
                                                  #                       height = '49vh')),
-                                                 #   
+                                                 # 
                                                  #   column(width = 5,
                                                  #          style = 'padding:0px; height:49vh',
-                                                 #          plotlyOutput("demoPop_Pyramid", 
-                                                 #                       height = '49vh')) 
+                                                 #          plotlyOutput("demoPop_Pyramid",
+                                                 #                       height = '49vh'))
                                                  #   #column(width = 1)
-                                                 #   
-                                                 # ), 
                                                  # 
+                                                 # ),
+                                                 #
                                                  # fluidRow(
                                                  #   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff'),
                                                  #   column(width = 10,
-                                                 #          style = 'padding:0px; height:37vh', 
+                                                 #          style = 'padding:0px; height:37vh',
                                                  #          plotlyOutput("demoPop_RaceAge",
                                                  #                       height = '37vh')),
-                                                 #   
+                                                 # 
                                                  #   column(width = 1, style = 'padding:0px; height:37vh; background-color:#ffffff')
                                                  #   )
                                                  

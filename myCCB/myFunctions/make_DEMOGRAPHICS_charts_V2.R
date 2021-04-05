@@ -1,5 +1,3 @@
-
-
 make_demoPop_Pyramid <- function(myCounty) {
   
   roundUpNice <- function(x, nice=c(1:10)) {

@@ -5,7 +5,7 @@ countyOSHPD.t   <- oshpd_PDD  %>%
   select(year, county, sex, ccsCode,nPrimary = measure)  
 
 
-primary_any <- left_join(oshpd_PDD_any.t,countyOSHPD.t,by=c("year","county","sex","ccsCode")) %>%
+primary_any <- left_join(oshpd_PDD_any.t, countyOSHPD.t, by=c("year","county","sex","ccsCode")) %>%
   rename(nTotal = Nany) %>%   # change this in original code
   mutate(nPrimary = ifelse(is.na(nPrimary),0,nPrimary)) %>%
   mutate(nOther = nTotal - nPrimary,
