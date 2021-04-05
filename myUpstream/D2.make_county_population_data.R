@@ -82,6 +82,8 @@ saveRDS(dof_pop_2000_myYear, file = fileName)
 # Bring in function for aggregating population data
 source(paste0(standardsPlace,"populationExtract.R"))
 
+# For the function, we can't have county column since the function links fips code to county
+dof_pop_2000_myYear <- select(dof_pop_2000_myYear, -county)
 
 popCounty <- populationExtract(County    = T, 
                                Race      = T,

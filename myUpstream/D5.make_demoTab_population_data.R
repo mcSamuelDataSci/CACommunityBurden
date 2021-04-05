@@ -1,8 +1,11 @@
-#### ----- Generating two population data frames for CCB Demographics Tab ------------------------------
+#### ----- Generating four population data frames for CCB Demographics Tab ------------------------------
 
-#### Pop Data -- Race -- Sex --------- Age --
-####    1         F       T        Increments of 5
-####    2         T       F        0-14, 15-24, 25-34, 45-64, 75-120
+####    Pop Data ---- Race -- Sex --------- Age --
+####    Age Pyramid    F       T        Increments of 5, 100+
+####    RaceAge Bar    T       F        0-14, 15-24, 25-34, 45-64, 75-120
+####    Race Pie       T       F             F
+####    Trend          T       T        0-14, 15-24, 25-34, 45-64, 75-120
+
 
 
 myYear <- 2020
@@ -22,6 +25,8 @@ if (server) {
   myPath <- "G:"
   
 }
+
+# --- Step 1: Generate population files using the standard populationExtract function -------------
 
 # Age groups
 
@@ -86,6 +91,38 @@ popDataTrend <- populationExtract(County = T, # all uppercase in arguments; expl
                               server = T)
 
 
-saveRDS(popData, path(ccbUpstream, "upData/popDemo_countySexAge.RDS"))
-saveRDS(popData2, path(ccbUpstream, "upData/popDemo_countyRaceAge.RDS"))
-saveRDS(popDataTrend, path(ccbUpstream, "upData/popDemo_countySexRaceAge_trend.RDS"))
+# ----- Step 2: Prepare data frames for Demographics tab, save in myCCB/myData/ ----------------------
+
+options(scipen = 999) # To get rid of exponential notation
+
+popData_AgePyramid <- popData %>%
+  mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
+         ageGroup = factor(ageGroup, levels = ageDF$ageName), 
+         population = round(population, 0)) %>%
+  left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
+
+
+popData_RacePie <- popData2 %>%
+  mutate(county = ifelse(county == "California", "CALIFORNIA", county)) %>%
+  group_by(year, county, raceName) %>%
+  summarise(population = sum(population))  %>%
+  mutate(population = round(population, 0)) %>%
+  left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
+
+popData_RaceAge <- popData2 %>%
+  mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
+         ageGroup = factor(ageGroup, levels = ageDF2$ageName), 
+         population = round(population, 0))  %>%
+  left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
+
+popData_trends <- popDataTrend %>%
+  mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
+         ageGroup = factor(ageGroup, levels = c(ageDF2$ageName, "Total")), 
+         population = round(population, 0)) %>%
+  left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
+
+
+saveRDS(popData_AgePyramid,path(ccbData, "popData_AgePyramid.RDS"))
+saveRDS(popData_RacePie,path(ccbData,  "popData_RacePie.RDS"))
+saveRDS(popData_RaceAge,path(ccbData,    "popData_RaceAge.RDS"))
+saveRDS(popData_trends,path(ccbData,    "popData_SexRaceAge_Trends.RDS"))
