@@ -28,12 +28,12 @@ myLegendSize <- myLegendSize * mySmaller
 #--RACE ------------------------------------------------------------------------------------------------------------------------
 
 if(myCompare == "highest rate") {
-raceTest <- raceTest_HIGH
+raceTest <- raceTest_HIGH %>% filter(raceCode != "Multi")
 fillColor <- c("Highest" = highColor, "Sig. Lower (p<.01)" = lowColor, "No Difference" = midColor)
 }
 
 if(myCompare == "lowest rate") {
-raceTest <- raceTest_LOW
+raceTest <- raceTest_LOW %>% filter(raceCode != "Multi")
 fillColor <- c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Difference" = midColor)
 }
 
