@@ -212,7 +212,17 @@ oshpd_PDD_any.t <- readRDS(file=path(myPlace, "myData/",whichData,"/oshpd_PDD_an
   select(year, county, sex, ccsCode, Nany = n_hosp_any)
 
 
-source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
+# source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
+
+# Disparity data frames
+ageTest_LOW <- readRDS(path(ccbData, "real/disparity_ageLow.RDS"))
+ageTest_HIGH <- readRDS(path(ccbData, "real/disparity_ageHigh.RDS"))
+
+raceTest_LOW <- readRDS(path(ccbData, "real/disparity_raceLow.RDS"))
+raceTest_HIGH <- readRDS(path(ccbData, "real/disparity_raceHigh.RDS"))
+
+sexTest_LOW <- readRDS(path(ccbData, "real/disparity_sexLow.RDS"))
+sexTest_HIGH <- readRDS(path(ccbData, "real/disparity_sexHigh.RDS"))
 
 
 # age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)

@@ -1,4 +1,15 @@
+server <- T
+CCB <- F
 
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+
+# Load death datasets
+datCounty_RE <- readRDS(path(ccbData, "real/datCounty_RE.RDS"))
+datCounty_AGE_3year <- readRDS(path(ccbData, "real/datCounty_AGE_3year.RDS"))
+datCounty_3year <- readRDS(path(ccbData, "real/datCounty_3year.RDS"))
+
+nCut      <- 20
 
 # RACE --------------------------------------------------------------------------------------------------------------------------
 
@@ -40,7 +51,7 @@ if (1==2) {
       ungroup()
    
    
-   tNames <- causeLink %>% select(causeCode,causeName)
+   tNames <- deathCauseLink %>% select(causeCode,causeName)
    
    ccbRaceDisparity <- raceDisparityUnique %>%
       left_join(tNames,by="causeCode") %>%
@@ -155,6 +166,16 @@ sexTest_HIGH <- left_join(sexTest,sexTest2,by=c("county","yearG3","causeCode")) 
           pMark = as.factor(ifelse(aRate==bestRate,"Highest",ifelse(pValue < .01,"Sig. Lower (p<.01)","No Difference")))
 ) 
 
+
+# Save data frame
+saveRDS(ageTest_LOW, path(ccbData, "real/disparity_ageLow.RDS"))
+saveRDS(ageTest_HIGH, path(ccbData, "real/disparity_ageHigh.RDS"))
+
+saveRDS(raceTest_LOW, path(ccbData, "real/disparity_raceLow.RDS"))
+saveRDS(raceTest_HIGH, path(ccbData, "real/disparity_raceHigh.RDS"))
+
+saveRDS(sexTest_LOW, path(ccbData, "real/disparity_sexLow.RDS"))
+saveRDS(sexTest_HIGH, path(ccbData, "real/disparity_sexHigh.RDS"))
 
 
 

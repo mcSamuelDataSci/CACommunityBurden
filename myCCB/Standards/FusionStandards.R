@@ -63,7 +63,7 @@ if (server) highPath <-  "/mnt/projects/"
 if(!server) highPath <-  "G:/"
 securePlace    <-  paste0(highPath,"FusionData/0.Secure.Data/")  
 fusionPlace    <- paste0(highPath,"FusionData/")
-
+ccbUpstream    <-  paste0(highPath,"FusionData/0.CCB/myUpstream/")  
 
 myYearG3  <- "2017-2019" 
 

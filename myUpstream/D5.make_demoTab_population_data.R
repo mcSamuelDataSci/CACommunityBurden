@@ -11,18 +11,17 @@
 myYear <- 2020
 
 server <- T
+CCB <- F
 
 if (server) {
   
-  source("/mnt/projects/FusionData/Standards/populationExtract.R")
-  source("/mnt/projects/FusionData/Standards/FusionStandards.R")
-  myPath <- "mnt"
+  source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/populationExtract.R")
+  source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
   
 } else {
   
-  source("G:/FusionData/Standards/populationExtract.R")
-  source("G:/FusionData/Standards/FusionStandards.R")
-  myPath <- "G:"
+  source("G:/FusionData/0.CCB/myCCB/Standards/populationExtract.R")
+  source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
   
 }
 

@@ -15,8 +15,10 @@ myYear <- 2020
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------
 
 server <- TRUE
-if (!server) source("g:/FusionData/Standards/FusionStandards.R")
-if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+CCB <- F
+
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 # -- Get links -------------------------------------------------------------------------------------------------------------------------
