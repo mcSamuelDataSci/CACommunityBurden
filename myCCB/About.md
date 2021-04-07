@@ -20,7 +20,7 @@
 The CCB is intended to be an evolving tool-set developing new content and functionality in response to the needs of public health practitioners. Examples of upcoming development enhancements:
 
 * Cost (charges) data based on hospital discharge
-* Life expectancy estimates at the census tract, community, and county levels
+* Life expectancy estimates at the census tract and community levels
 * Incorporation of 'multiple cause of death' and 'out of state' death data files
 * Expanded range and analysis of social determinants data
 * Additional displays of statistical significance
