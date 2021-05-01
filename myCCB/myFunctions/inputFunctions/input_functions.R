@@ -7,12 +7,12 @@
 # Constants =========================================================================
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
-INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear","mySex",
+INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear", "myYearDemo", "mySex",
             "myRace", "mySexMult",
             "myLev","myStateCut","myN","myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine",
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
-            "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote","myCompare","ourOnlyPNGDownload")
+            "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload")
 
 # Tab to inputs mapping: Associates each tab with it's input widgets
 TAB_INPUTS <- list("homeTab"=c(),
@@ -20,14 +20,14 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "techDocTab"=c(),
                    "otherLinksTab"=c(),
                    "lifeExpectancyTab"=c("ourDownloads","myLHJ","mySexMult","myRace","myYearGrouping","myCI"),
-                   "interactiveMapTab"=c("ourDownloads","myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem", "suppressionNote"),   # "tabHelp", -- REMOVED FROM ALL
+                   "interactiveMapTab"=c("ourDownloads","myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem", "suppressionNote", "recentYearNote"),   # "tabHelp", -- REMOVED FROM ALL
                    "staticMapTab"=c("tabHelp", "myCAUSE", "myLHJ", "myGeo", "myMeasure", "myCutSystem", "myLabName", "mySex", "myStateCut"),
-                   "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote"),
+                   "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote", "recentYearNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
-                   "rankByGeographyTab"=c("ourDownloads","myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote"),
+                   "rankByGeographyTab"=c("ourDownloads","myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "recentYearNote"),
                    "ageRaceFocusTab" = c("ourDownloads", "myLHJ", "myData", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","myOlderFocus","myScale", "suppressionNote"),
                    "deathHospEDTab" = c("ourDownloads", "myLHJ", "myStrata","mySort", "myMeasureAgeRaceFocus", "suppressionNote"),
-                   "sexTrendTab"=c("ourDownloads", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote"),
+                   "sexTrendTab"=c("ourDownloads", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "suppressionNote", "recentYearNote"),
                    "ageTrendTab"=c("ourDownloads", "myCAUSE", "myLHJ", "myMeasure", "suppressionNote"),
                    "raceTrendTab"=c("ourDownloads","myCAUSE", "myLHJ", "myMeasure","myLogTrans", "myMultiRace", "suppressionNote"),
                    "disparitiesTab"=c("ourDownloads","myCAUSE", "myLHJ", "myCompare","myAddN","myAddRate","myAddRR","suppressionNote"),
@@ -40,7 +40,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                  # "hospitalMapTab"=c("myCAUSE", "myLHJ", "mySex"),
                    "arrowsTab"=c("display", "level", "measure", "yearRange", "sex", "metric"),
                    "riskByCauseTab"=c("level", "year", "sex", "metric", "measure"), 
-                   "demographicsTab" = c("myLHJ")
+                   "demographicsTab" = c("myLHJ", "myYearDemo")
 )
 
 # Functions =========================================================================

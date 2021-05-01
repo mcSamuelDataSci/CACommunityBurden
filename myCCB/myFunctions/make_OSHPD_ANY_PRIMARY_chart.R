@@ -1,12 +1,16 @@
 listPosition <- c("nPrimary","nOther","nTotal","percentPrimary","percentOther")
 
-countyOSHPD.t   <- oshpd_PDD  %>%
+OSHPD.t1   <- oshpd_PDD_any  %>%
+ # filter(type == "n_hosp") %>%
+ # select(year, county, sex, causeCode, nPrimary = measure) 
+   select(year, county, sex, causeCode, nTotal = Nany)
+
+OSHPD.t2   <- oshpd_PDD_primary  %>%
   filter(type == "n_hosp") %>%
-  select(year, county, sex, ccsCode,nPrimary = measure)  
+  select(year, county, sex, causeCode, nPrimary = measure) 
 
 
-primary_any <- left_join(oshpd_PDD_any.t, countyOSHPD.t, by=c("year","county","sex","ccsCode")) %>%
-  rename(nTotal = Nany) %>%   # change this in original code
+primary_any <- left_join(OSHPD.t1, OSHPD.t2, by=c("year","county","sex","causeCode")) %>%
   mutate(nPrimary = ifelse(is.na(nPrimary),0,nPrimary)) %>%
   mutate(nOther = nTotal - nPrimary,
          percentPrimary = 100*nPrimary/nTotal,
@@ -15,9 +19,9 @@ primary_any <- left_join(oshpd_PDD_any.t, countyOSHPD.t, by=c("year","county","s
          primary        = nPrimary)
 
 
-primary_any <- left_join(primary_any,hospCauseLink,by=c("ccsCode" = "causeCode")) %>%
+primary_any <- left_join(primary_any,hospCauseLink,by= "causeCode") %>%
   filter(nTotal > 50,
-         ccsCode != "oo259")  ### TODO need to study this
+         causeCode != "oo259")  ### TODO need to study this
 
 if (1==2) {
   myPosition <- "nOther"

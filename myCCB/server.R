@@ -664,7 +664,7 @@ observeEvent(current$tab,{
 
 # Race/Ethnicity Pie Chart
 
-demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ))
+demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ, myYear = input$myYearDemo))
 output$demoPop_RacePie <- renderHighchart(demographics1Step()$plotL)
 output$demoPop_RacePie_table <- DT::renderDataTable(demographics1Step()$tableL, server = F)
 
@@ -683,7 +683,7 @@ observeEvent(input$tableButton_demoPop_RacePie,{
 
 # Population Pyramid Bar Chart
 
-demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ))
+demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ, myYear = input$myYearDemo))
 output$demoPop_Pyramid <- renderHighchart(demographics2Step()$plotL)
 output$demoPop_Pyramid_table <- DT::renderDataTable(demographics2Step()$tableL, server = F)
 
@@ -701,7 +701,7 @@ observeEvent(input$tableButton_demoPop_Pyramid,{
 
 # Race/Ethnicity & Age Chart
 
-demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ))
+demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ, myYear = input$myYearDemo))
 output$demoPop_RaceAge <- renderHighchart(demographics3Step()$plotL)
 output$demoPop_RaceAge_table <- DT::renderDataTable(demographics3Step()$tableL, server = F)
 
@@ -836,7 +836,7 @@ output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, i
 
 sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
 geoLabel   <- renderText({if (input$myLHJ==STATE)      geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
-timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp else timeLabel <- paste(input$myYear)})
+timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp5 else timeLabel <- paste(input$myYear)})
 
 # output$map_title <- renderUI({h4(strong(
 #                     HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],

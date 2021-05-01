@@ -23,15 +23,24 @@
 #-- Set Locations Etc-----------------------------------------------------------------------
 
 # PROVIDE PATH FOR SECURE DATA HERE
-secure.location  <-            "g:/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
-secure.location  <- "/mnt/projects/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+# secure.location  <-            "g:/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+# secure.location  <- "/mnt/projects/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
+# 
+# .sl              <- secure.location  # short name to shorten lines of code below
+# 
+# myDrive    <- getwd()
 
-.sl              <- secure.location  # short name to shorten lines of code below
+#myPlace    <- paste0(myDrive,"/myCCB")
+#upPlace    <- paste0(myDrive,"/myUpstream")
 
-myDrive    <- getwd()
 
-myPlace    <- paste0(myDrive,"/myCCB")
-upPlace    <- paste0(myDrive,"/myUpstream")
+
+
+server <- F
+CCB    <- F
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+
 
 #-- EDIT for Local versus State installation -------------------------------------------------
 
@@ -51,18 +60,21 @@ library(readr)
 #--  for the death data variables used in the CBD
 
 raw.death.variable.info <- as.data.frame(read_excel(
-                             paste0(upPlace,"/upstreamInfo/death.File.Vars.xlsx"), 
+                             paste0(ccbUpstream,"/upstreamInfo/death.File.Vars.xlsx"), 
                              sheet="variableNames")
                              )   
+
+# PROVIDE PATH FOR SECURE DATA HERE
+.sl <- securePlace
 
 # === Process 2005 - 2015 files ==============================================================
 
 
 if (state.installation) {
 
- ca20x   <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_123120.csv"), colClasses = "character")  # contains some prior years data
+# ca20x   <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_123120.csv"), colClasses = "character")  # contains some prior years data
  ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")  
- ca19x   <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019_OLD.csv"), colClasses = "character")       
+# ca19x   <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019_OLD.csv"), colClasses = "character")       
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
  ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
@@ -118,12 +130,12 @@ names(death.datA) <- vInfo$varName           # name columns based on varName!
 
 # https://www.cdc.gov/niosh/topics/coding/nioccsuserdocumentation.html
 
-temp <- ca19[vInfo$seqID1]
-names(temp) <- vInfo$varName
-
-temp2 <- temp %>% slice_sample(n=1000)
-freq(temp2$occupation)
-freq(temp2$industry)
+# temp <- ca19[vInfo$seqID1]
+# names(temp) <- vInfo$varName
+# 
+# temp2 <- temp %>% slice_sample(n=1000)
+# freq(temp2$occupation)
+# freq(temp2$industry)
 
 # --------------------------------------------------------------------------
 

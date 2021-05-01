@@ -24,6 +24,10 @@ hidden(
       sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,
                   round=TRUE,sep="",step=1),  #can use value=c(2017,2017)
       
+      # myYearDemo ======================
+      sliderInput("myYearDemo","Year:",value=maxYear,min=2000,max=maxYear,animate = TRUE,
+                  round=TRUE,sep="",step=1),
+      
       # mySex ======================
       radioButtons("mySex", "Sex:", choices=c("Total","Female","Male"), inline=TRUE),
       
@@ -180,7 +184,14 @@ hidden(
                                                               "Years of Life Lost (YLLs)" = 4), selected = 1),
       div(id="suppressionNote",
           paste('Note: All measures associated with counts <',criticalNumber,', as well as necessary complementrary counts/measures are excluded for data de-identification purposes'),style="color:blue;font-size:12px;padding-left:5px;"
-      )
+      ),
+      
+      br(),
+      
+      div(id="recentYearNote",
+          paste('Note: Data for', currentYear, 'are not yet final. Number of deaths are likely to increase slightly.  Some cause of death codes will become more accurate. These changes are not expected to significantly impact the interpretation of any observed noteworthy patterns or trends.'),
+          style="color:blue;font-size:12px;padding-left:5px;"
+          )
       
       
   )

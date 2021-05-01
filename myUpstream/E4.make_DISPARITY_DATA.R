@@ -1,5 +1,4 @@
-server <- T
-CCB <- F
+server <- F
 
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")

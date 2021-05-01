@@ -1,12 +1,12 @@
-make_demoPop_Pyramid <- function(myCounty) {
+make_demoPop_Pyramid <- function(myCounty, myYear) {
   
-    tDat <- filter(popData_AgePyramid, county == myCounty) %>%
+    tDat <- filter(popData_AgePyramid, county == myCounty, year == myYear) %>%
     mutate(population_notAbs = ifelse(sex == "Male", -1 * population, population), 
            plotText = paste0("Sex: ", sex, "\nAge Group: ", ageGroup, "\nPopulation: ", scales::comma(population))) %>%
     arrange(desc(ageGroup))
   
-    if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty)
-    if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, " County")
+    if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, ", ", myYear)
+    if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, " County, ", myYear)
     
   # Plot
     myPlot <- tDat %>%
@@ -50,16 +50,16 @@ make_demoPop_Pyramid <- function(myCounty) {
 
 # Pie chart - Race Pop
 
-demoPop_RacePie <- function(myCounty) {
+demoPop_RacePie <- function(myCounty, myYear) {
   
   plotColors <- raceNameShortColors[!names(raceNameShortColors) %in% c("Other", "Unknown", "Total", NA)]
   raceColors_df <- data.frame(raceNameShort = names(plotColors), raceColor = unname(plotColors))
   
-  tDat <- filter(popData_RacePie, county == myCounty) %>%
+  tDat <- filter(popData_RacePie, county == myCounty, year == myYear) %>%
     left_join(raceColors_df, by = "raceNameShort")
   
-  if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity in ", myCounty)
-  if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity in ", myCounty, " County")
+  if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity in ", myCounty, ", ", myYear)
+  if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity in ", myCounty, " County, ", myYear)
   
   # Plot
   myPlot <- tDat %>%
@@ -95,17 +95,17 @@ demoPop_RacePie <- function(myCounty) {
 
 # Race Age Pop
 
-demoPop_RaceAge <- function(myCounty) {
+demoPop_RaceAge <- function(myCounty, myYear) {
   
-  tDat <- filter(popData_RaceAge, county == myCounty) %>%
+  tDat <- filter(popData_RaceAge, county == myCounty, year == myYear) %>%
     group_by(raceName) %>%
     mutate(percent = round(100*population/sum(population), 1)) %>%
     ungroup() %>%
     mutate(plotText = paste0("Race/Ethnicity: ", raceName, "\nAge Group: ", ageGroup, "\nPercent: ", scales::percent(percent/100, accuracy = 0.1), "\nPopulation: ", scales::comma(population)), 
            ageGroup = factor(ageGroup, levels = levels(popData_RaceAge$ageGroup)))
   
-  if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty)
-  if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty, " County")
+  if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty, ", ", myYear)
+  if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population by Race/Ethnicity & Age Group in ", myCounty, " County, ", myYear)
   
   # Plot
   myPlot <- tDat %>%

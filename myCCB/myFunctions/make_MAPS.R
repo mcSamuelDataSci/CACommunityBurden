@@ -37,19 +37,19 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
     }
   
   if (myGeo == "Census Tract") { 
-    dat.1      <- filter(datTract,yearG5==yearGrp,sex==mySex, causeCode==myCause)  %>% mutate(geoLab = GEOID)
+    dat.1      <- filter(datTract,yearG5==yearGrp5,sex==mySex, causeCode==myCause)  %>% mutate(geoLab = GEOID)
     map.1      <- left_join(shape_Tract, dat.1, by=c("county","GEOID"))
     map.1$name <- map.1$GEOID
-    myTitYear  <- yearGrp
+    myTitYear  <- yearGrp5
     myTitGeo   <- " by Tract"
     }
 
   if (myGeo == "Community") {
-    dat.1      <- filter(datComm,yearG5==yearGrp,sex==mySex, causeCode==myCause,  comID != "Unknown") %>% 
+    dat.1      <- filter(datComm,yearG5==yearGrp5,sex==mySex, causeCode==myCause,  comID != "Unknown") %>% 
                           mutate(geoLab = wrap.labels(comName,15))
     map.1      <- left_join(shape_Comm, dat.1, by=c("county","comID")) 
     map.1$name <- map.1$comName
-    myTitYear  <- yearGrp
+    myTitYear  <- yearGrp5
     myTitGeo   <- " by Community"
     }  
   

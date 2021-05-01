@@ -43,8 +43,7 @@ library(tidyr)
 # ccbFunctions   <-  path(highPath,"FusionData/0.CCB/myCCB/myFunctions/")  
 # ccbUpstream    <-  path(highPath,"FusionData/0.CCB/myUpstream/")  
 
-
-
+if(!exists("CCB"))  CCB     <- FALSE
 if (!CCB & !server) myPlace <- "g:/FusionData/0.CCB/myCCB"
 if (!CCB & server)  myPlace <- "/mnt/projects/FusionData/0.CCB/myCCB"
 
@@ -65,8 +64,19 @@ securePlace    <-  paste0(highPath,"FusionData/0.Secure.Data/")
 fusionPlace    <- paste0(highPath,"FusionData/")
 ccbUpstream    <-  paste0(highPath,"FusionData/0.CCB/myUpstream/")  
 
-myYearG3  <- "2017-2019" 
+#myYearG3  <- "2017-2019" 
+STATE       <- "CALIFORNIA"
 
+# True if app should include 2020 data; False to exclude
+# SET TO FALSE BEFORE PUBLIC APP GETS UPDATED ON THE 1ST OF EVERY MONTH
+incRecentYearData <- T 
+currentYear <- ifelse(incRecentYearData, 2020, 2019)
+yearGrp5      <- "2015-2019"
+yearGrp3     <- "2017-2019"
+minYear      <- 2000
+maxYear      <- currentYear
+
+yF           <- 100000  # rate constant 
 
 
 # NOTE: "LABEL" was changed to "causeCode" 12/2020

@@ -39,7 +39,7 @@ fillColor <- c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Diffe
 
 myMeasureRace <- "aRate"
 
-dat.1 <- filter(raceTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3, sex == "Total")
+dat.1 <- filter(raceTest,county == myLHJ,causeCode == myCause, yearG3==yearGrp3, sex == "Total")
 dat.1 <- left_join(dat.1,raceLink,by="raceCode")
 
 raceDF <- dat.1 %>%
@@ -102,7 +102,7 @@ if(myCompare == "lowest rate") {
    fillColor <- c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Difference" = midColor)
 }
 
-dat.1 <- filter(ageTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3, sex == "Total") %>%
+dat.1 <- filter(ageTest,county == myLHJ,causeCode == myCause, yearG3==yearGrp3, sex == "Total") %>%
               mutate(ageGroup = factor(ageGroup,levels= ageMap$ageLabel))
 
 ageDF <- dat.1 %>%
@@ -163,7 +163,7 @@ if(myCompare == "lowest rate") {
    fillColor <- c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Difference" = midColor)
 }
 
-dat.1 <- filter(sexTest,county == myLHJ,causeCode == myCause, yearG3==myYearG3) 
+dat.1 <- filter(sexTest,county == myLHJ,causeCode == myCause, yearG3==yearGrp3) 
 
 sexDF <- dat.1 %>%
    mutate(ageGroup = "Total", raceName = "Total", rateType = "Age-Adjusted Death Rate") %>%
@@ -219,7 +219,7 @@ library(cowplot)
 # https://wilkelab.org/cowplot/articles/plot_grid.html
 
 mainTitle <- ggdraw() + 
-   draw_label(paste0("Disparities in Deaths Rates, ", deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ,", ",myYearG3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
+   draw_label(paste0("Disparities in Deaths Rates, ", deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ,", ",yearGrp3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
 
 
 topRow <- cowplot::plot_grid(racePlot,sexPlot,rel_widths = c(6,3))

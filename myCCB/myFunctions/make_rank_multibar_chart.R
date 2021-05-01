@@ -21,7 +21,7 @@ makePlotRank <- function(myDataSet     = NA,
                          mySex         = "Total",
                          myN           = 10,
                          myOlderFocus    = TRUE,
-                         myYearG3      = "2017-2019", # no year in dataset
+                       #  myYearG3      = "2017-2019", # no year in dataset
                          myScale       = "free",
                          myLiveborn    = TRUE,
                          myFillManual  = T # Set true if the bars should be filled by topLev (which will then have a legend). Setting to F defaults to blue bars
@@ -113,7 +113,7 @@ makePlotRank <- function(myDataSet     = NA,
   
   # Plot set up ------------------------------------------------------------------------------------
   
-  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", myYearG3)
+  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", yearGrp3)
   #myTitle <- wrap.labels(myTitle, 50)
   
   mySubTitle <- paste0("In ", myCounty, ", Ordered by: ", mySort) 
@@ -246,7 +246,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
   r1       <- plot_grid(c.1$plotL,c.2$plotL,c.3$plotL,nrow=1)
   c.legend <- get_legend(t.chart(d2,"Hospitalizations", myTopN = 100, legend = TRUE)$plotL)
   # c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
-  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",myYearG3),size=myTextSize, color="blue") 
+  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",yearGrp3),size=myTextSize, color="blue") 
   
   pPlot <- plot_grid(title,r1,c.legend,nrow=3,rel_heights = c(.2,1,.25))
   

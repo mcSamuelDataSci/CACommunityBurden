@@ -50,14 +50,14 @@ popData <- populationExtract(County = T, # all uppercase in arguments; explain t
                              Race   = F,
                              Sex    = T, 
                              Age    = T,
-                             Year      = myYear,
+                             Year      = 2000:myYear,
                              ageGroups = c(-1, ageDF$uAge), # Add NA to not include ageGroups
                              ageLabels = ageDF$ageName,
                              raceLabel = "raceName", 
                              CA    = T, 
                              Total = F,
                              multiYear = F, 
-                             popData = NA, 
+                             popData = dof_pop_2000_myYear, 
                              server = T)
 
 
@@ -65,14 +65,14 @@ popData2 <- populationExtract(County = T, # all uppercase in arguments; explain 
                               Race   = T,
                               Sex    = F, 
                               Age    = T,
-                              Year      = myYear,
+                              Year      = 2000:myYear,
                               ageGroups = c(-1, ageDF2$uAge), # Add NA to not include ageGroups
                               ageLabels = ageDF2$ageName,
                               raceLabel = "raceName", 
                               CA    = T, 
                               Total = F,
                               multiYear = F, 
-                              popData = NA, 
+                              popData = dof_pop_2000_myYear, 
                               server = T)
 
 popDataTrend <- populationExtract(County = T, # all uppercase in arguments; explain the ageGroups better; raceCode; 

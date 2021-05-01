@@ -7,7 +7,7 @@
 #   loads all packages needed for application                                                           
 #   reads in shape and data files, and loads functions                                                          
 #   read key "info" files                                             
-#   creates vectors and contants used for Shiny app   
+#   creates vectors and constants used for Shiny app   
 #
 #   has set ups for local sites
 # 
@@ -30,8 +30,7 @@ source(paste0(myPlace,"/Standards/FusionStandards.R"))
 # DATA Constants
 whichData         <- "real" #changed to fake so I (CD) can run app on my computer
 
-STATE             <- "CALIFORNIA"
-yearGrp           <- "2015-2019"
+
 nCut      <- 20
 # myYearG3  <- "2017-2019"  
 
@@ -39,8 +38,7 @@ nCut      <- 20
 myCex <- 1.6
 myCol <- "blue"  
 
-minYear <- 2000
-maxYear <- 2019
+
 
 
 viewType <- "Present"
@@ -160,7 +158,7 @@ shape_Tract$county <- as.character(shape_Tract$county)
 
 datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
 datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
-datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS"))
+datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS")) %>% filter(year <= maxYear)
 datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
 datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
 datCounty_AGE_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_AGE_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, 
@@ -168,7 +166,7 @@ datCounty_AGE_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_AGE_
 datCounty_5year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_5year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
 
 
-datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS"))
+datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS")) 
 
 eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
 datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
@@ -201,15 +199,14 @@ popData_trends   <- readRDS(path(ccbData,"popData_SexRaceAge_Trends.RDS"))
 # full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
 # any_primary_diff   <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
 
-oshpd_PDD      <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD.rds"))
-
+oshpd_PDD_primary      <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_primary.rds"))
 # these two files have been superseded by the age-race focus files
 # oshpd_PDD_AGE  <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_AGE.rds"))
 # oshpd_ED_AGE   <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_ED_AGE.rds"))
 
-oshpd_PDD_any.t <- readRDS(file=path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds")) %>%
-  mutate(year=2016) %>% ## TODO fix year
-  select(year, county, sex, ccsCode, Nany = n_hosp_any)
+oshpd_PDD_any <- readRDS(file=path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds")) %>%
+ # mutate(year=2016) %>% ## TODO fix year
+  select(year, county, sex, causeCode = ccsCode, Nany = n_hosp_any)
 
 
 # source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
