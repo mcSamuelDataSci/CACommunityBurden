@@ -11,7 +11,7 @@
 myYear <- 2020
 
 server <- T
-CCB <- F
+#CCB <- F
 
 if (server) {
   
@@ -34,8 +34,8 @@ ageDF <- data.frame(lAge = seq(0, 95, by = 5),
   mutate(ageName = paste0(lAge, " - ", uAge)) %>%
   tibble::add_row(lAge = 100, uAge = 120, ageName = "100+")
 
-ageDF2 <- data.frame(lAge = c(0, 15, 25, 45, 75), 
-                     uAge = c(14, 24, 34, 64, 120)) %>%
+ageDF2 <- data.frame(lAge = c(0, 15, 25, 35, 45, 65, 75), 
+                     uAge = c(14, 24, 34, 44, 64, 74, 120)) %>%
   mutate(ageName = paste0(lAge, " - ", uAge), 
          ageName = ifelse(ageName == "75 - 120", "75+", ageName))
 

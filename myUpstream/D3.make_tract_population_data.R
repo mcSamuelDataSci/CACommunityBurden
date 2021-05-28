@@ -11,6 +11,12 @@
 #!		to prepare for race/eth specific results, perhaps introduce placeholder values of race (eg, =0)
 #!		do the county labels need to be added to the population datasets at this time or later?
 
+# 0 ACS years
+
+myACS_year1 <- 2010 # For 2006-2010
+myACS_year2 <- 2015 # For 2011-2015
+myACS_year3 <- 2019 # Temporarily use this for 2016-2020... 2020 5-year ACS scheduled to release in December 2021
+
 # 1 Setting Paths, and Packages
 .packages	  <- c("tidycensus",    #load_variables, get_acs
                  "tidyr",         #spread
@@ -21,18 +27,18 @@
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst]) 
 lapply(.packages, require, character.only=TRUE) 
 
+server <- F
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
-myDrive <- getwd()  
-myPlace <- paste0(myDrive,"/myCBD") 
-upPlace <- paste0(myDrive,"/myUpstream")
-.ckey   <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) 
+.ckey   <- read_file(paste0(ccbUpstream,"upstreamInfo/census.api.key.txt")) 
 
 # 2 User Input Variables
 #Variable Descriptions: https://www.census.gov/data/developers/data-sets.html
-Labels      <- load_variables(2017,"acs5") # view to see topics and labels
+Labels      <- load_variables(2019,"acs5") # view to see topics and labels
 
 # 3 Data Extraction Function
-getPop <- function(ACSYear=2017,ACSSurvey="acs5",ACSLabels=LabelsUsed$name) 
+getPop <- function(ACSYear=2018,ACSSurvey="acs5",ACSLabels=LabelsUsed$name) 
 {get_acs(state = 06, geography = "tract", survey = ACSSurvey,
          year = ACSYear, variables = ACSLabels,
          key=.ckey, moe_level=90)
@@ -51,7 +57,10 @@ LabelsUsed  <- filter(Labels,grepl("B01001_",name)) %>%
 
 
 # `a.pop5_2008-2012` <- getPop(2012) 
-`a.pop5_2015-2019` <- getPop(2017) 
+`a.pop5_2006-2010` <- getPop(myACS_year1) %>% mutate(GEOID = ifelse(GEOID == "06037930401", 
+                                                                    "06037137000", GEOID))
+`a.pop5_2011-2015` <- getPop(myACS_year2)
+`a.pop5_2016-2020` <- getPop(myACS_year3)
 
 
 # 5 Combining and cleaning
@@ -62,7 +71,8 @@ acs.pop.tracts <- acs.pop.tracts %>% bind_rows(.id="interval") %>%
 acs.pop.tracts <- acs.pop.tracts %>%
   separate(label,sep="!!",c(NA,NA,"sex","age")) %>%
   separate(interval,sep="_",c("interval","yearG5")) %>%
-  select(-variable,-concept)
+  select(-variable,-concept) %>%
+  mutate(sex = gsub(":", "", sex)) # JASPO added this to take out ':'
 
 acs.pop.tracts <- acs.pop.tracts %>%
   arrange(interval, GEOID, yearG5) %>%
@@ -105,4 +115,4 @@ popTractSexAgeGTotal  <- bind_rows(pop,popSex,popAge,popAgeSex) %>%
                                     arrange(yearG5,county,GEOID,comID) %>%
                                     ungroup()
 
-saveRDS(popTractSexAgeGTotal, file=paste0(upPlace,"/upData/popTract.RDS"))
+saveRDS(popTractSexAgeGTotal, file=paste0(ccbUpstream,"upData/popTract.RDS"))

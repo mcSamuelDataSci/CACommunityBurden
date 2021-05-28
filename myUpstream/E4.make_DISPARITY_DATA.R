@@ -1,4 +1,4 @@
-server <- F
+server <- T
 
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -40,7 +40,7 @@ if (1==2) {
    raceViewWork  <- raceTest_LOW %>%            
       filter(Level == "lev2" ) %>%
       #  filter(!(causeCode %in% c("A02","D04","E03") ) & Level %in% c("lev2","lev3") )
-      filter(yearG3 == "2017-2019",sex=="Total")
+      filter(yearG3 == "2018-2020",sex=="Total")
    
    
    raceDisparityUnique   <- raceViewWork %>%
@@ -50,11 +50,14 @@ if (1==2) {
       ungroup()
    
    
-   tNames <- deathCauseLink %>% select(causeCode,causeName)
+   tNames <- deathCauseLink %>% select(causeCode,causeName, causeNameShort)
    
    ccbRaceDisparity <- raceDisparityUnique %>%
       left_join(tNames,by="causeCode") %>%
-      mutate(causeName = ifelse(causeCode=="Z01","Ill-Defined",causeName)) 
+      mutate(causeName = ifelse(causeCode=="Z01","Ill-Defined",causeName),
+             causeNameShort = ifelse(causeCode=="Z01","Ill-Defined",causeNameShort)) 
+   
+   whichData <- "real"
 
    saveRDS(ccbRaceDisparity , file= path(myPlace,"/myData/",whichData,"ccbRaceDisparity.RDS"))
    

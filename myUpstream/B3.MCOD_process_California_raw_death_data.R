@@ -1,42 +1,4 @@
-####  CHECK NUMERIC VERSUS CHARACTER FOR ALL INPUT VALUES AND CODING 
-############
-############
-
-
-# =============================================================================
-# process_raw_death_data.R
-#  Inputs:
-#   - multiple raw California death data files
-#   - key variable mapping file             
-#                                                                                 
-#  Outputs:
-#   - cbdDat0FULL: cleaned (but not aggreated) death data file   
-#   - cbdDat0SAMP: identical structure to FULL, but a distorted sample
-#
-#  What is does:
-#   - data merging, cleaning, and other processing  
-#
-#  Michael Samuel
-#  2017 and 2018
-# =============================================================================
-
-#-- Set Locations Etc-----------------------------------------------------------------------
-
-# PROVIDE PATH FOR SECURE DATA HERE
-# secure.location  <-            "g:/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
-# secure.location  <- "/mnt/projects/FusionData/0.Secure.Data/"  # "F:/0.Secure.Data/"  
-# 
-# .sl              <- secure.location  # short name to shorten lines of code below
-# 
-# myDrive    <- getwd()
-
-#myPlace    <- paste0(myDrive,"/myCCB")
-#upPlace    <- paste0(myDrive,"/myUpstream")
-
-
-
-
-server <- F
+server <- T
 #CCB    <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -62,60 +24,221 @@ library(readr)
 raw.death.variable.info <- as.data.frame(read_excel(
                              paste0(ccbUpstream,"/upstreamInfo/death.File.Vars.xlsx"), 
                              sheet="variableNames")
-                             ) %>%
-  filter(!varName %in% c("placeOfDeath", "MDCP"))
+                             )   
 
 # PROVIDE PATH FOR SECURE DATA HERE
 .sl <- securePlace
 
 # === Process 2005 - 2015 files ==============================================================
 
+ ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character") %>%
+  filter(F71 == "CA")
 
-if (state.installation) {
- ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_033121.csv"), colClasses = "character") %>% filter(F24 == "2021")
- ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")  
- ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
- ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
- ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
- ca16    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2016.csv"), colClasses = "character") 
- ca15    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2015.csv"), colClasses = "character") 
- ca14    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2014.csv"), colClasses = "character") 
- ca13    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2013.csv"), colClasses = "character")
- ca12    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2012.csv"), colClasses = "character")
- ca11    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2011.csv"), colClasses = "character")
- ca10    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2010.csv"), colClasses = "character")
- ca09    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2009.csv"), colClasses = "character")
- ca08    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2008.csv"), colClasses = "character")
- ca07    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2007.csv"), colClasses = "character")
- ca06    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2006.csv"), colClasses = "character")
- ca05    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2005.csv"), colClasses = "character")
- 
+gbdMap0       <- as.data.frame(read_excel(paste0(ccbInfo,"icd10_to_CAUSE.xlsx"), sheet="main"))   
 
-#---------------------------- 
+# Will get sourced
+allCauseCodes <- sort(gbdMap0$causeCode[!is.na(gbdMap0$causeCode)])
+#allCauseCodes <- gbdMap0
+
+mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
+
+
  
-# junk         <-  inner_join(ca21,ca20,by='F1') %>% select(F1,F144.x,F144.y) %>% mutate(samICD = F144.x==F144.y)
-# junk2        <-  inner_join(ca20,ca19,by='F1')
-# ca21_useThis <-  anti_join(ca21,ca20,by='F1')
-# 
-# 
-# t0 <- ca20 %>% group_by(F144) %>% summarize(n144 = n()) %>% rename(ICD10 = F144)
-# t1 <- ca20 %>% group_by(F221) %>% summarize(n221 = n()) %>% rename(ICD10 = F221)
-# t2 <- ca20 %>% group_by(F222) %>% summarize(n222 = n()) %>% rename(ICD10 = F222)
-# t3 <- ca20 %>% group_by(F223) %>% summarize(n223 = n()) %>% rename(ICD10 = F223)
-# t4 <- ca20 %>% group_by(F240) %>% summarize(n240 = n()) %>% rename(ICD10 = F240)
-# 
-# # covid
-# # suicide
-# # ischmic
-# # hypertensive
-# # alzheimers
-# # drug overdose
-# 
-# tData <- full_join(t0,t1,by="ICD10") %>% full_join(t2,by="ICD10") %>% full_join(t4,by="ICD10")
+t0 <- ca20 %>% group_by(F144) %>% summarize(n144 = n()) %>% rename(ICD10 = F144)
+t1 <- ca20 %>% group_by(F221) %>% summarize(n221 = n()) %>% rename(ICD10 = F221)
+t2 <- ca20 %>% group_by(F222) %>% summarize(n222 = n()) %>% rename(ICD10 = F222)
+t3 <- ca20 %>% group_by(F223) %>% summarize(n223 = n()) %>% rename(ICD10 = F223)
+t4 <- ca20 %>% group_by(F240) %>% summarize(n240 = n()) %>% rename(ICD10 = F240)
+
+
+
+# covid
+# suicide
+# ischmic
+# hypertensive
+# alzheimers
+# drug overdose
+
+tData <- full_join(t0,t1,by="ICD10") %>% full_join(t2,by="ICD10") %>% full_join(t4,by="ICD10")
 
 #----------------------------
 
-death.datA  <- bind_rows(ca21, ca20, ca19, ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
+# Jaspo's section
+
+
+# -- Get count of each cause as the underlying and secondary causes of deaths
+
+colIDs <- c(144, 221:240)
+
+tList <- lapply(colIDs, function(x) {
+  
+  colID <- paste0('F', x)
+  tColName <- paste0('n', x)
+  
+  ca20 %>% 
+    group_by(!!!rlang::syms(colID)) %>% 
+    summarise(count = n()) %>%
+    rename(ICD10 = !!sym(colID),
+           !!sym(tColName) := count)
+  
+  
+})
+
+library(tidyverse)
+library(fuzzyjoin)
+# Map all ICD10 codes to causeCode
+
+tDat <- tList %>% reduce(full_join, by = "ICD10") %>%
+  regex_left_join(mapICD, by = c("ICD10" = "regEx10")) 
+
+# Level 2
+tdat_Lev2 <- tDat %>%
+  mutate(lev2  = str_sub(CODE,2,4)) %>%
+  select(lev2, n144, n221:n240) %>%
+  group_by(lev2) %>%
+  summarise_all(funs(sum(., na.rm = TRUE))) %>%
+  ungroup() %>%
+  rowwise() %>%
+  mutate(mcodCount = sum(c_across(n222:n240), na.rm = T))
+
+
+# Level 3
+codeLast4      <- str_sub(tDat$CODE,2,5)
+nLast4         <- nchar(codeLast4)
+
+tDat_lev3 <- tDat %>%
+  mutate(lev3  = ifelse(nLast4 == 4,codeLast4,NA)) %>%
+  select(lev3, n144, n221:n240) %>%
+  group_by(lev3) %>%
+  summarise_all(funs(sum(., na.rm = TRUE))) %>%
+  ungroup() %>%
+  rowwise() %>%
+  mutate(mcodCount = sum(c_across(n222:n240), na.rm = T))
+
+
+
+
+## 2019 version
+
+ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character") %>%
+  filter(F71 == "CA")
+
+colIDs <- c(144, 221:240)
+
+tList_2019 <- lapply(colIDs, function(x) {
+  
+  colID <- paste0('F', x)
+  tColName <- paste0('n', x)
+  
+  ca19 %>% 
+    group_by(!!!rlang::syms(colID)) %>% 
+    summarise(count = n()) %>%
+    rename(ICD10 = !!sym(colID),
+           !!sym(tColName) := count)
+  
+  
+})
+
+
+# Map all ICD10 codes to causeCode
+
+tDat_2019 <- tList_2019 %>% reduce(full_join, by = "ICD10") %>%
+  regex_left_join(mapICD, by = c("ICD10" = "regEx10")) 
+
+# Level 2
+tdat_Lev2_2019 <- tDat_2019 %>%
+  mutate(lev2  = str_sub(CODE,2,4)) %>%
+  select(lev2, n144, n221:n240) %>%
+  group_by(lev2) %>%
+  summarise_all(funs(sum(., na.rm = TRUE))) %>%
+  ungroup() %>%
+  rowwise() %>%
+  mutate(mcodCount = sum(c_across(n222:n240), na.rm = T))
+
+
+# Level 3
+codeLast4      <- str_sub(tDat_2019$CODE,2,5)
+nLast4         <- nchar(codeLast4)
+
+tDat_lev3_2019 <- tDat_2019 %>%
+  mutate(lev3  = ifelse(nLast4 == 4,codeLast4,NA)) %>%
+  select(lev3, n144, n221:n240) %>%
+  group_by(lev3) %>%
+  summarise_all(funs(sum(., na.rm = TRUE))) %>%
+  ungroup() %>%
+  rowwise() %>%
+  mutate(mcodCount = sum(c_across(n222:n240), na.rm = T))
+
+# -- Get all secondary causes (and counts) for one primary cause of death ---
+
+ca20_df <- ca20 %>%
+  regex_left_join(mapICD, by = c("F221" = "regEx10")) %>%
+  mutate(lev2 = str_sub(CODE, 2, 4)) %>%
+  select(lev2, F222:F240)
+
+getSecondary_forPrimary <- function(primaryCauseCode) {
+  
+  ca20_df %>%
+    filter(lev2 == primaryCauseCode) %>%
+    select(F222:F240) %>%
+    pivot_longer(cols = everything(), names_to = "fKey", values_to = "ICD10") %>%
+    filter(ICD10 != "") %>%
+    regex_left_join(mapICD, by = c("ICD10" = "regEx10")) %>%
+    mutate(lev2 = str_sub(CODE,2,4)) %>%
+    left_join(select(deathCauseLink, causeCode, causeNameShort), by = c("lev2" = "causeCode")) %>%
+    pull(causeNameShort)
+  
+}
+
+alzheimers <- getSecondary_forPrimary("D06")
+
+overdose <- getSecondary_forPrimary("E02")
+
+suicide <- getSecondary_forPrimary("E07")
+
+ischemic <- getSecondary_forPrimary("C02")
+
+covid <- getSecondary_forPrimary("A10")
+
+
+
+
+F71 == CA
+
+
+
+# Explore covid as a contributing cause
+
+covid <- ca20 %>%
+  select(F221:F240) %>%
+  filter_at(vars(F222:F240), any_vars(. == "U071")) %>%
+  regex_left_join(mapICD, by = c("F221" = "regEx10")) %>%
+  mutate(lev2 = str_sub(CODE, 2, 4)) %>%
+  left_join(select(deathCauseLink, causeCode, causeName), by = c("lev2" = "causeCode"))
+  
+hmm <- covid %>%
+  group_by(causeName) %>%
+  summarise(count = n())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+death.datA  <- bind_rows(ca20, ca19, ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
 
 #death.datA  <- bind_rows(ca20, ca19)

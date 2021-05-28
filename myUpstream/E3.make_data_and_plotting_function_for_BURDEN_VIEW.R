@@ -1,13 +1,15 @@
 
 server <- T
-if (!server) source("g:/FusionData/Standards/FusionStandards.R")
-if (server) source("/mnt/projects/FusionData/Standards/FusionStandards.R")
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 # --Global constants and settings-----------------------------------
 
-myYear   <-  2019
-bestYear <- 2019
+myYear   <-  2020 # used for deaths
+bestYear <- 2019  # used for hosp
+
+ccbChangeYear <- myYear - 10
 
 mySex     <-  "Total"
 
@@ -28,13 +30,13 @@ ccbYLL      <- ccb %>%
                  mutate(measure = YLLper,
                         mValues = causeNameShort)
 
-ccbChange   <- filter(ccbDataX,year %in% c(2009,2019), sex==mySex) %>% 
+ccbChange   <- filter(ccbDataX,year %in% c(ccbChangeYear,myYear), sex==mySex) %>% 
                   select(county,year,causeNameShort,aRate) %>%
                   pivot_wider(names_from = year, values_from = aRate, names_prefix="rate")
 
 ccbChange      <- ccbChange %>%
-                     mutate(change = round(100*(rate2019-rate2009)/rate2009,1))%>%
-                     filter(!(is.na(rate2009) | is.na(rate2019))) %>% # exclude if either is 0 -- check
+                     mutate(change = round(100*(rate2020-rate2010)/rate2010,1))%>%
+                     filter(!(is.na(rate2010) | is.na(rate2010))) %>% # exclude if either is 0 -- check
                      mutate(measure=change,
                             mValues = causeNameShort) 
                     # mutate(mValues = ifelse(measure < 0,NA,mValues))
@@ -44,7 +46,7 @@ ccbChange      <- ccbChange %>%
 
 
 ccbRace <-  readRDS(paste0(ccbData,"real/ccbRaceDisparity.RDS")) %>%
-                left_join(deathCauseLink ,by="causeCode")   %>%
+                left_join(select(deathCauseLink, -causeName, -causeNameShort) ,by="causeCode")   %>%
                   mutate(measure=round(rateRatio,1),
                   mValues = causeNameShort)
 
@@ -216,7 +218,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
   
   # Jaspo
   work.dat <- work.dat %>%
-    mutate(rankX = if(decrease) rank(measure) else rank(-measure))   %>%
+    mutate(rankX = if(decrease) rank(measure, ties.method = "first") else rank(-measure, ties.method = "first")) %>% # If xValues are tied, first xValue will be ranked higher
     filter(rankX <= SHOW_TOP)   %>%
     arrange(rankX) %>%
     mutate(xrow = row_number()  ) %>%
@@ -233,7 +235,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
   # if (IDnum == 4) work.dat <- mutate(work.dat,xValues=paste0(xValues,"      (",raceCode,":",lowRace,")"))
   if (IDnum == 4) work.dat <- mutate(work.dat,xRaceValue=paste0("(",raceCode,":",lowRace,")"))
   if (IDnum == 4) myYear <- "2017-2019"
-  if (IDnum == 3) myYear <- "2009 to 2019"
+  if (IDnum == 3) myYear <- "2010 to 2020"
   
   plot_width <- max(work.dat$measure)*PLOT_WIDTH_MULTIPLIER
   # Jaspo

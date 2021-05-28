@@ -5,12 +5,9 @@
 # Apr 24 2019
 ##############
 
-
-myDrive <- getwd()  
-myPlace <- paste0(myDrive,"/myCBD") 
-upPlace <- paste0(myDrive,"/myUpstream") 
-
-
+server <- F
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 #1a Setting Paths, and Packages
 .packages	  <- c("tidycensus",    #load_variables, get_acs
@@ -52,8 +49,8 @@ a.ed1_2015 <- getEd(2015,"acs1")
 a.ed1_2016 <- getEd(2016,"acs1")
 a.ed1_2017 <- getEd(2017,"acs1")
 a.ed1_2018 <- getEd(2018,"acs1")   
-a.ed1_2019 <- getEd(2019,"acs1")   ## Using 2018 data for 2019 data for now !!!!!!!!!!!!!!!!!
-
+a.ed1_2019 <- getEd(2019,"acs1")  
+a.ed1_2020 <- getEd(2019,"acs1") # Using 2019 ACS for 2020. UPDATE when 2020 ACS1 becomes available  
 
 #a.ed5_2005.09 <- getEd(2009,"acs5")   # generates ERROR
 # a.ed5_2006.10 <- getEd(2010,"acs5")
@@ -64,7 +61,6 @@ a.ed1_2019 <- getEd(2019,"acs1")   ## Using 2018 data for 2019 data for now !!!!
 # a.ed5_2011.15 <- getEd(2015,"acs5")
 # a.ed5_2012.16 <- getEd(2016,"acs5")
 # a.ed5_2013.17 <- getEd(2017,"acs5")
-
 
 #5a Combining and Cleaning
 education.a <- mget(ls(pattern='a.ed1+'))
@@ -121,7 +117,7 @@ education.a <- left_join(education.a,EdGroups,by="level") %>% select(-level) %>%
              
 
 library(readxl)
-geoMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))  %>%
+geoMap     <- as.data.frame(read_excel(paste0(ccbInfo,"County Codes to County Names Linkage.xlsx")))  %>%
   mutate(GEOID=paste0("06",FIPSCounty)) %>%
   select(county=countyName,GEOID) %>%
   bind_rows(c("county"="California","GEOID"="06"))
@@ -150,7 +146,7 @@ education.a <- bind_rows(education.a,ageTotal)
 
 
 
-saveRDS(education.a,  file = paste0(upPlace,"/upData/popCounty_Education.RDS"))
+saveRDS(education.a,  file = paste0(ccbUpstream,"upData/popCounty_Education.RDS"))
 
 
 

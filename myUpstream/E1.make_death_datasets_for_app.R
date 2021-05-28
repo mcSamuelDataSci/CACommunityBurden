@@ -23,12 +23,15 @@
 
 # Exclude year
 
-excludeYear <- 2020
+excludeYear <- 2021
 excludeYear3 <- NA # 2020 is labeled as NA
 excludeYear5 <- NA # 2020 is labeled as NA
 
+# T if using recent multi-year groupings; F if not
+isRecent_multiYear <- T
+
 # JASPO - Specify the years for the quarterly data
-forQuarter_selectYears <- 2016:2020
+forQuarter_selectYears <- 2016:2021
 
 # == Designate locations and load packages  =======================================================
 
@@ -78,7 +81,8 @@ pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
 # yearGrp <- "2013-2017"
-  yearGrp <- c("2005-2009","2010-2014","2015-2019")
+if(isRecent_multiYear) yearGrp <- c("2006-2010","2011-2015","2016-2020")
+if(!isRecent_multiYear) yearGrp <- c("2005-2009","2010-2014","2015-2019")
 
 myDigits= 6
   
@@ -95,7 +99,6 @@ criticalNum <- 11
 
 
 leMap      <- as.data.frame(read_excel(paste0(ccbInfo,"Age to Life-Expectancy Linkage.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
-yearMap    <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx")))
 geoMap     <- as.data.frame(read_excel(paste0(ccbInfo,"County Codes to County Names Linkage.xlsx")))
 mssaLink   <- read.csv(paste0(ccbInfo,"Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census  #### WAS cbdLinkCA
 comName    <- unique(mssaLink[,c("comID","comName")])                                    # dataframe linking comID and comName
@@ -103,6 +106,8 @@ ageMap     <- as.data.frame(read_excel(paste0(ccbInfo,"Age Group Standard and US
 ageMap_EDU  <- as.data.frame(read_excel(paste0(ccbInfo,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "dataEducation"))
 raceLink <- as.data.frame(read_excel(paste0(standardsPlace,"raceLink.xlsx")))  %>% select(raceCode,CHSI)
 
+if (isRecent_multiYear) yearMap <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "main"))
+if (!isRecent_multiYear) yearMap <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "old"))
 #== LOAD AND PROCESS POPULATION DATA ==============================================================
 
 # ungrouping important for subsequent data set merging
@@ -753,7 +758,7 @@ c.t1      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev0"),"lev0")
 c.t2      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev1"),"lev1")
 # c.t3      <- calculateYLLmeasures(c("GEOID","yearG5","sex","lev2"),"lev2") -- include for SPECIAL RUNS only
 
-datTract  <- bind_rows(c.t1,c.t2,c.t3) %>% 
+datTract  <- bind_rows(c.t1,c.t2) %>% 
                 filter(yearG5  %in%  yearGrp)  %>%    # 2013-2017 ONLY!!!
                 arrange(GEOID,yearG5,causeCode)
 # NOTE -- includes many with NA GEOID

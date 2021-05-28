@@ -113,7 +113,7 @@ makePlotRank <- function(myDataSet     = NA,
   
   # Plot set up ------------------------------------------------------------------------------------
   
-  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", yearGrp3)
+  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", yearGrp_hosp_ed_deaths)
   #myTitle <- wrap.labels(myTitle, 50)
   
   mySubTitle <- paste0("In ", myCounty, ", Ordered by: ", mySort) 
@@ -246,7 +246,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
   r1       <- plot_grid(c.1$plotL,c.2$plotL,c.3$plotL,nrow=1)
   c.legend <- get_legend(t.chart(d2,"Hospitalizations", myTopN = 100, legend = TRUE)$plotL)
   # c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
-  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",yearGrp3),size=myTextSize, color="blue") 
+  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",yearGrp_hosp_ed_deaths),size=myTextSize, color="blue") 
   
   pPlot <- plot_grid(title,r1,c.legend,nrow=3,rel_heights = c(.2,1,.25))
   

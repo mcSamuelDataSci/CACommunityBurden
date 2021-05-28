@@ -71,10 +71,15 @@ STATE       <- "CALIFORNIA"
 # SET TO FALSE BEFORE PUBLIC APP GETS UPDATED ON THE 1ST OF EVERY MONTH
 incRecentYearData <- T 
 currentYear <- ifelse(incRecentYearData, 2020, 2019)
-yearGrp5      <- "2015-2019"
-yearGrp3     <- "2017-2019"
+
+incRecent_MultiYearData <- T
+yearGrp5      <- ifelse(incRecent_MultiYearData, "2016-2020", "2015-2019")
+yearGrp3      <- ifelse(incRecent_MultiYearData, "2018-2020", "2017-2019")
 minYear      <- 2000
 maxYear      <- currentYear
+
+# For Hosp_ED_Deaths
+yearGrp_hosp_ed_deaths <- "2017-2019"
 
 yF           <- 100000  # rate constant 
 

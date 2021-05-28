@@ -10,11 +10,12 @@
 
 # -- Set most recent year --------------------------------------------------------------------------------------------------------------
 
-myYear <- 2020
+myYear <- 2021
+isRecent_multiYear <- T # T if using recent multi-year groups; F if not
 
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------
 
-server <- TRUE
+server <- F
 # CCB <- F
 
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -30,8 +31,8 @@ countyLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
                mutate(fips = as.numeric(paste0("6", FIPSCounty))) %>% 
                select(-FIPSCounty)
 
-yearMap   <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx")))
-
+if (isRecent_multiYear) yearMap   <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "main"))
+if (!isRecent_multiYear) yearMap   <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "old"))
 
 # -- Get raw popualtion data  --------------------------------------------------------------------------------------------------------
 
@@ -63,9 +64,9 @@ checkPop <- dof_pop_2000_myYear %>% group_by(year) %>% summarise(totPop=sum(popu
 
 # -- Save 2000-most recent year DOF pop file -------------------------------------
 
-fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000_", myYear, ".RDS")
-
-saveRDS(dof_pop_2000_myYear, file = fileName)
+# fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000_", myYear, ".RDS")
+# 
+# saveRDS(dof_pop_2000_myYear, file = fileName)
 
 # junk1 <- dof_pop_2000_2009 %>% filter(year==2010) %>% rename(pop2010_2000_2010_file = population)
 # junk2 <- dof_pop_2010_2020 %>% filter(year==2010) %>% rename(pop2010_2010_2020_file = population)

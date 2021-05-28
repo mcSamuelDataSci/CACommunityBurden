@@ -76,21 +76,21 @@ The following labeling is used for these race/ethnic groups:
 
 <br>
 
--   Death data
+-   Death Data
 
-    -   Provided by California Department of Public Health (CDPH), Center for Health Statistics and Informatics (CHSI) <a target="_blank" rel="noopener noreferrer" href="https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-Applications.aspx">CDPH/CHSI/Death Files</a> (with key information and differences about these files [here)](https://www.cdph.ca.gov/Programs/CHSI/CDPH%20Document%20Library/Death_Data_Source_Comparison.xlsx).
+    -   From the California Integrated Vital Records System <a target="_blank" rel="noopener noreferrer" href="https://www.cdph.ca.gov/Programs/CHSI/Pages/Data-Applications.aspx">(CalIVRS)</a>, based on death certificates/reports processed to the California Department of Public Health, Center for Health Statistics and Informatics (CHSI).
 
         -   Files used: "Death Static Master Files (DSMF)" for 2000 to 2004 and "California Comprehensive Death Files (CCDF)" for 2005 to 2019.
 
-            -   Because CCDF Files were used for 2005-2019, deaths of California residents that occurred and were recorded OUTSIDE of California those years have NOT yet been incorporated into any of the CCB working data, visualizations or tables.
+    -   Because CCDF Files were used for 2005-2019, deaths of California residents that occurred and were recorded OUTSIDE of California those years have NOT yet been incorporated into any of the CCB working data, visualizations or tables.
 
-        -   A death record was considered to be of a California resident based on field "71, Residence State/Province" for the most recent data and on field "46 State of Residence" for 2001-2004 data. A tiny fraction of these records geocoded to locations outside of California, and others had anomalies suggesting the possibility that the residence was not in California. However, the number of such anomalies is relatively minuscule, such that they are extraordinarily unlikely to have any impact on observed patterns and trends.
+    -   A death record was considered to be of a California resident based on field "71, Residence State/Province" for the most recent data and on field "46 State of Residence" for 2001-2004 data. A tiny fraction of these records geocoded to locations outside of California, and others had anomalies suggesting the possibility that the residence was not in California. However, the number of such anomalies is relatively minuscule, such that they are extraordinarily unlikely to have any impact on observed patterns and trends.
 
-        -   County was based on field "62, Decedent's County of Residence Based on City/State (NCHS Code)" for 2011-2019 data and on field "35, Place of Decedent's Residence" for 2001-2004 data except when modified as noted in "Census Tract Data Issues" below.
+    -   County was based on field "62, Decedent's County of Residence Based on City/State (NCHS Code)" for 2011-2019 data and on field "35, Place of Decedent's Residence" for 2001-2004 data except when modified as noted in "Census Tract Data Issues" below.
 
-        -   California death data are geocoded using the CDPH geocoding service, which uses StreetMap Premium for ArcGIS. We have not determined if there is a confidence score or match score below which the census tract for an address is not provided. For the years 2011-2019 where the CCB uses these data to determine census tract and (and therefore communities), a high percentage of records geocoded to a valid census tract (96.4% to 97.2%). The remaining records contained invalid addresses and/or other anomalies. While this overall rate of geocoding is high, there is substantial variation in the geocoding percent between counties, and some counties (particularly some rural counties) have geocoding rates as much as half of those noted above
+    -   California death data are geocoded using the CDPH geocoding service, which uses StreetMap Premium for ArcGIS. We have not determined if there is a confidence score or match score below which the census tract for an address is not provided. For the years 2011-2019 where the CCB uses these data to determine census tract and (and therefore communities), a high percentage of records geocoded to a valid census tract (96.4% to 97.2%). The remaining records contained invalid addresses and/or other anomalies. While this overall rate of geocoding is high, there is substantial variation in the geocoding percent between counties, and some counties (particularly some rural counties) have geocoding rates as much as half of those noted above
 
-        -   Other data coding and cleaning issues
+    -   Note: As with almost all public health and administrative data used to assess population patterns and trends in morbidity and mortality, vital statics death data are **not error free**. "Data quality issues inherent in death certificate data most often stem from errors related to the fact that the **responsibility** for providing complete and accurate information **lies with the informant and certifier**. This may impact classification of deaths and consequently under- or over-estimations of mortality."
 
 <br>
 
