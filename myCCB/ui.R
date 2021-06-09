@@ -70,6 +70,7 @@ helpIcon <- "?"
 myTabHelpButtonSty <- "background-color:#694D75; font-size:14px;"
 myDownloadButtonSty <- "padding-left: 6px; padding-right: 6px; margin-top: 5px;"
 myBoxSty        <- "cursor:pointer; border: 3px solid blue; padding-right:0px;padding-left:0px;"
+myBoxSty_side        <- "height: 75%; cursor:pointer; border: 2px solid #222D32; padding-right:0px;padding-left:0px;"
 mySidebarTextSty <- "float:left; margin: 20px; color:#000000;"
 
 
@@ -262,10 +263,21 @@ shinyUI(
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
                            br(),br(),
                            
+                           fluidRow(
+                             column(width=12,img(src="xMDA.png", width="100%", onmouseout="this.src='xMDA.png'", onmouseover="this.src='xMDA2.png'", style = myBoxSty_side))
+                           ), br(),
                            
-                           h5(tags$a(href="SOPH_2020.pdf",target="_blank", "CCB Data in Action, 2020 State of Public Health Handout")), 
-                           h5(tags$a(href="SOPH_2019.pdf",target="_blank", "CCB Data in Action, 2019 State of Public Health Handout")), 
-                           h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/",target="_blank", "See Multiple Measures of Health in Your County")), br(),
+                           fluidRow(
+                             column(width=12,img(src="xMDA.png", width="100%", onmouseout="this.src='xMDA.png'", onmouseover="this.src='xMDA2.png'", style = myBoxSty_side))
+                           ), br(),
+                           
+                           fluidRow(
+                             column(width=12,img(src="xMDA.png", width="100%", onmouseout="this.src='xMDA.png'", onmouseover="this.src='xMDA2.png'", style = myBoxSty_side))
+                           ), br(),
+                           
+                           # h5(tags$a(href="SOPH_2020.pdf",target="_blank", "CCB Data in Action, 2020 State of Public Health Handout")), 
+                           # h5(tags$a(href="SOPH_2019.pdf",target="_blank", "CCB Data in Action, 2019 State of Public Health Handout")), 
+                           # h5(tags$a(href="https://skylab.cdph.ca.gov/lghcBurdenView/",target="_blank", "See Multiple Measures of Health in Your County")), br(),
                            appTextL$textIntroA, br(), br(), appTextL$textIntroC, br(), br(),
                            #helpText(appTextL$textIntroA,style="color:black"), br(),
                            #helpText(textIntroC,style="color:black"), br(),
