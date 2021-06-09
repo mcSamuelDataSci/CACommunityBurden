@@ -97,6 +97,11 @@ ageLink     <-  read_excel(paste0(standardsPlace,"ageLink.xlsx"),sheet = "standa
 
 ## COLORS==========================================================
 
+# Colorblind friendly palette with 12 colors, in which 9 of them have sufficient contrast with a white background
+# Go to 'explore colors.R' in Standards/ to get more information about this palette
+
+cbPalette_12 <- readRDS(paste0(standardsPlace, "colorPalettes/colorblind_palette_12.RDS"))
+
 # ADA Compliant colors - http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
 
 # The palette with grey:
