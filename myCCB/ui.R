@@ -68,9 +68,10 @@ helpIcon <- "?"
 
 # # Styles for help buttons and boxes
 myTabHelpButtonSty <- "background-color:#694D75; font-size:14px;"
+myMeasuresButtonSty <- "background-color:#694D75; font-size:14px; margin: 0;"
 myDownloadButtonSty <- "padding-left: 6px; padding-right: 6px; margin-top: 5px;"
 myBoxSty        <- "cursor:pointer; border: 3px solid blue; padding-right:0px;padding-left:0px;"
-myBoxSty_side        <- "height: 75%; cursor:pointer; border: 2px solid #222D32; padding-right:0px;padding-left:0px;"
+myBoxSty_side        <- "height: auto; cursor:pointer; border: 2px solid #222D32; border-radius: 5px; padding-right:0px;padding-left:0px;"
 mySidebarTextSty <- "float:left; margin: 20px; color:#000000;"
 
 
@@ -261,19 +262,21 @@ shinyUI(
                        
                        div(id = "textHomeTab", style = mySidebarTextSty,
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
-                           br(),br(),
+                           br(),br(), br(),
+
+                           tags$a(href = "2020_Excess_Mortality.html", 
+                                  target = "_blank", 
+                                  rel = "noopener noreferrer", 
+                                  img(
+                                    src = "xMDA.png", 
+                                    width = "100%",
+                                    onmouseout = "this.src='xMDA.png'",
+                                    onmouseover = "this.src='xMDA2.png'",
+                                    style = myBoxSty_side
+                                  )
+                                  ), 
                            
-                           fluidRow(
-                             column(width=12,img(src="xMDA.png", width="100%", onmouseout="this.src='xMDA.png'", onmouseover="this.src='xMDA2.png'", style = myBoxSty_side))
-                           ), br(),
-                           
-                           fluidRow(
-                             column(width=12,img(src="xMDA.png", width="100%", onmouseout="this.src='xMDA.png'", onmouseover="this.src='xMDA2.png'", style = myBoxSty_side))
-                           ), br(),
-                           
-                           fluidRow(
-                             column(width=12,img(src="xMDA.png", width="100%", onmouseout="this.src='xMDA.png'", onmouseover="this.src='xMDA2.png'", style = myBoxSty_side))
-                           ), br(),
+                           br(), br(), br(),
                            
                            # h5(tags$a(href="SOPH_2020.pdf",target="_blank", "CCB Data in Action, 2020 State of Public Health Handout")), 
                            # h5(tags$a(href="SOPH_2019.pdf",target="_blank", "CCB Data in Action, 2019 State of Public Health Handout")), 
@@ -284,6 +287,14 @@ shinyUI(
                            if (whichData == "real") { helpText(appTextL$textNote.real,style="color:black")},
                            if (whichData == "fake") { helpText(appTextL$textNote.fake,style="color:red")},
                            br(),br(),
+                           
+                           actionButton("multipleMeasures", 
+                                        HTML("<center>See Multiple Measures of<br/>Health in Your County</center>"), 
+                                        style=myMeasuresButtonSty,
+                                        onclick = "window.open('https://skylab.cdph.ca.gov/lghcBurdenView/', '_blank')"
+                                        ), 
+                           
+                           br(), br(),
                            
                            actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
                            h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV",target="_blank","Report 'bugs' HERE!")),
