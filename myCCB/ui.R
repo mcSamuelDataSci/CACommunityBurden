@@ -264,7 +264,7 @@ shinyUI(
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
                            br(),br(), br(),
 
-                           tags$a(href = "2020_Excess_Mortality.html", 
+                           tags$a(href = "xMDA/2020_Excess_Mortality.html", 
                                   target = "_blank", 
                                   rel = "noopener noreferrer", 
                                   img(

@@ -86,4 +86,4 @@ myCB_palette
 colorblindcheck::palette_check(myCB_palette, plot = TRUE)
 
 # save color palette
-saveRDS(myCB_palette, "/mnt/projects/FusionData/0.CCB/myCCB/Standards/colorPalettes/colorblind_palette_12.RDS")
+# saveRDS(myCB_palette, "/mnt/projects/FusionData/0.CCB/myCCB/Standards/colorPalettes/colorblind_palette_12.RDS")

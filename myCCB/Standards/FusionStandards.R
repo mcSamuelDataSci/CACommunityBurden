@@ -97,23 +97,40 @@ ageLink     <-  read_excel(paste0(standardsPlace,"ageLink.xlsx"),sheet = "standa
 
 ## COLORS==========================================================
 
-# Colorblind friendly palette with 12 colors, in which 9 of them have sufficient contrast with a white background
-# Go to 'explore colors.R' in Standards/ to get more information about this palette
-
-cbPalette_12 <- readRDS(paste0(standardsPlace, "colorPalettes/colorblind_palette_12.RDS"))
 
 # ADA Compliant colors - http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
 
 # The palette with grey:
-greyPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+# greyPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-# The palette with black:
-blackPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+# Color-blind friendly (9 colors) palette 
+paletteCB <- c("#0072B2", # darker blue, 
+               "#4A4A4A", # darker gray,
+               "#D55E00", # darker orange
+               "#56B4E9", # lightblue
+               "#117733", # green
+               "#4BE62F", # light green
+               "#E69F00", # lighter orange
+               "#CC79A7",  # pink
+               "#b22222" # firebrick
+               )
+
+paletteCB_race <- paletteCB[c(
+  2, # darker gray
+  3, # darker orange
+  4, # lightblue
+  5, # green
+  7, # lighter orange
+  1, # darker blue
+  9, # firebrick
+  6, # light green
+  8 # pink
+)]
 
 # Top lev colors
 topLev              <- c("Communicable","Cancer","Cardiovascular","Other Chronic","Injury","Ill-Defined","Perinatal","Other")
 # topLevColors        <- brewer.pal(n = length(topLev), name = "Dark2") # Determine pallete; Dark2 allows max 8
-topLevColors        <- greyPalette[1:length(topLev)]
+topLevColors        <- paletteCB[1:length(topLev)]
 names(topLevColors) <- topLev
 
 # Toplev associated text colors (white or black) - for text in bars
@@ -158,7 +175,7 @@ raceName <- c("American Indian or Alaska Native",
                "Other",
                "White", 
                "Total")
-raceNameColors <- c(greyPalette[1:(length(raceName)-1)], "red")
+raceNameColors <- paletteCB_race[1:length(raceName)]
 names(raceNameColors) <- raceName
 
 # Race Name Short
@@ -171,14 +188,14 @@ raceNameShort <- c("AI/AN",
                "Other",
                "White", 
                "Total")
-raceNameShortColors <- c(greyPalette[1:(length(raceNameShort)-1)], "red")
+raceNameShortColors <- paletteCB_race[1:length(raceNameShort)]
 names(raceNameShortColors) <- raceNameShort
 
 
 
 genderNames         <- c("Female","Male", "Total")
 # genderColors          <- c("gray","lightblue")
-genderColors <- c("#FF706E", "#00BEC6", "#999999")
+genderColors <- paletteCB[1:length(genderNames)]
 names(genderColors) <- genderNames
 
 
