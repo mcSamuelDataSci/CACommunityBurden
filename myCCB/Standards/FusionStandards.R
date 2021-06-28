@@ -107,8 +107,8 @@ ageLink     <-  read_excel(paste0(standardsPlace,"ageLink.xlsx"),sheet = "standa
 paletteCB <- c("#0072B2", # darker blue, 
                "#4A4A4A", # darker gray,
                "#D55E00", # darker orange
-               "#56B4E9", # lightblue
                "#117733", # green
+               "#56B4E9", # lightblue
                "#4BE62F", # light green
                "#E69F00", # lighter orange
                "#CC79A7",  # pink
@@ -118,8 +118,8 @@ paletteCB <- c("#0072B2", # darker blue,
 paletteCB_race <- paletteCB[c(
   2, # darker gray
   3, # darker orange
-  4, # lightblue
-  5, # green
+  5, # lightblue
+  4, # green
   7, # lighter orange
   1, # darker blue
   9, # firebrick
