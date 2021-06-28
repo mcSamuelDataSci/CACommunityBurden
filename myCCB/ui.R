@@ -268,10 +268,10 @@ shinyUI(
                                   target = "_blank", 
                                   rel = "noopener noreferrer", 
                                   img(
-                                    src = "xMDA.png", 
+                                    src = "xMDA/backgroundLight_xMDA.png", 
                                     width = "100%",
-                                    onmouseout = "this.src='xMDA.png'",
-                                    onmouseover = "this.src='xMDA2.png'",
+                                    onmouseout = "this.src='xMDA/backgroundLight_xMDA.png'",
+                                    onmouseover = "this.src='xMDA/backgroundDark_xMDA.png'",
                                     style = myBoxSty_side
                                   )
                                   ), 
