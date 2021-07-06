@@ -83,6 +83,13 @@ pdd0 <-  pdd0 %>%
           left_join(raceLink, by=c("race_grp"="OSHPD")) %>% 
           left_join(countyLink, by=c("pCounty"="cdphcaCountyTxt")) 
 
+# FOR Catrina Taylor 7/1/2021
+# tempHeartFailure <- pdd0 %>% mutate(icd10 = str_sub(diag_p,1,3)) %>%
+#                       filter(icd10 == "I50") %>% 
+#                       group_by(diag_p,year) %>% summarise(count=n()) %>%
+#                       pivot_wider(names_from = year, values_from= count)
+# write_csv(tempHeartFailure,"PDD_heart_failure.csv")
+
 pdd1 <- bind_rows(pdd0,mutate(pdd0,countyName = "CALIFORNIA"))
 
 hospYear <-  pdd1 %>%

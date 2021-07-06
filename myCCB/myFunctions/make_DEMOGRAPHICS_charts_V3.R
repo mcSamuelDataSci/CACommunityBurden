@@ -8,21 +8,26 @@ make_demoPop_Pyramid <- function(myCounty, myYear) {
     if (myCounty == "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, ", ", myYear)
     if (myCounty != "CALIFORNIA") plotTitle <- paste0("Population Pyramid in ", myCounty, " County, ", myYear)
     
+    plotColors <- genderColors[names(genderColors) %in% unique(tDat$sex)]; plotColors <- unname(plotColors[sort(names(plotColors))])
+
   # Plot
     myPlot <- tDat %>%
       hchart('bar', hcaes(x = ageGroup, y = population_notAbs, group = sex), stacking = 'normal') %>%
       hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
-      hc_colors(c("#FF706E", "#00BEC6")) %>%
+      #hc_colors(c("#FF706E", "#00BEC6")) %>%
+      hc_colors(plotColors) %>%
       hc_yAxis(title = list(text = "Population", style = list(fontSize = hc_myAxisTitleSize)), 
                labels = list(
                  formatter = JS("function(){ return Math.abs(this.value) }"))) %>%
-      hc_xAxis(title = list(text = "Age Group", style = list(fontSize = hc_myAxisTitleSize))) %>%
+      hc_xAxis(title = list(text = "Age Group", style = list(fontSize = hc_myAxisTitleSize)), 
+               labels = list(step = 1)) %>% # step = 0 calculated automatically to avoid overlap. step = 1 prevents this
       hc_title(text = plotTitle, align = "left", 
                style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
       hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.sex + ' (' + this.point.ageGroup + ')<br>Population: ' + Math.abs(this.y).toLocaleString() 
   }"),useHTML = FALSE) %>%
-      hc_plotOptions(series = list(pointWidth = 10)) 
+      hc_plotOptions(series = list(pointWidth = 10)) %>%
+      hc_add_theme(hc_theme_google())
   
 
   
@@ -63,13 +68,14 @@ demoPop_RacePie <- function(myCounty, myYear) {
   
   # Plot
   myPlot <- tDat %>%
-    hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = raceColor)) %>%
+    hchart('pie', hcaes(x = raceNameShort, label = raceNameShort, y = population, color = raceColor), borderColor = "black") %>%
     hc_title(text = plotTitle, align = 'center', style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + '</b><br>Population: ' +this.y.toLocaleString()+ '<br>Percentage: '+ Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
     hc_plotOptions(pie = list(dataLabels = list(enabled = TRUE,format="{point.label}<br>{point.percentage:.2f} %"))) %>%
-    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
+    hc_add_theme(hc_theme_google())
   
   # Table
   tDat <- tDat %>%
@@ -109,7 +115,8 @@ demoPop_RaceAge <- function(myCounty, myYear) {
   
   # Plot
   myPlot <- tDat %>%
-    hchart('bar', hcaes(x = raceNameShort, y = population, label = raceNameShort, group = ageGroup), stacking = 'percent') %>%
+    hchart('bar', hcaes(x = raceNameShort, y = population, label = raceNameShort, group = ageGroup), borderColor = "black", stacking = 'percent') %>%
+    hc_colors(paletteCB) %>%
     hc_yAxis(title = list(text = "Percent", style = list(fontSize = hc_myAxisTitleSize)), 
              reversedStacks = F) %>%
     hc_xAxis(title = list(text = "Race/Ethnicity", style = list(fontSize = hc_myAxisTitleSize))) %>%
@@ -117,7 +124,8 @@ demoPop_RaceAge <- function(myCounty, myYear) {
     hc_tooltip(formatter = JS("function(){
                              return  '<b>' + this.point.label + ' (' +this.point.ageGroup+ ')</b><br>' + 'Population: ' +this.y.toLocaleString()+ '<br>Percentage: ' + Highcharts.numberFormat(this.percentage)+'%'
   }"),useHTML = FALSE) %>%
-    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
+    hc_add_theme(hc_theme_google())
   
   # Table
   tDat <- tDat %>%
@@ -155,6 +163,7 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
     
     myPlot <- tDat_Total %>% 
       hchart(., type = "line", hcaes(x = year, y = population)) %>%
+      hc_colors(paletteCB) %>%
       hc_tooltip(formatter = JS("function(){
                                return  '<b>' + this.x + '</b><br>Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE)
   }
@@ -198,6 +207,7 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
     
     myPlot <- tDat_Age %>% 
       hchart(., type = "line", hcaes(x = year, y = population, group = ageGroup)) %>%
+      hc_colors(paletteCB) %>%
       hc_tooltip(formatter = JS("function(){
                                return  '<b>' + this.x + '</b><br>' + this.point.ageGroup + ' Age Group Population:  ' + this.y.toLocaleString() }"),useHTML = FALSE)
   }
@@ -207,7 +217,8 @@ make_demoPop_trend <- function(myCounty, trendType = "Total") {
              align = "left", style = list(color = myTitleColor, fontSize = hc_myTitleSize)) %>%
     hc_yAxis(title = list(text = "Population", style = list(fontSize = hc_myAxisTitleSize))) %>%
     hc_xAxis(title = list(text = "Year", style = list(fontSize = hc_myAxisTitleSize))) %>%
-    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF"))))
+    hc_exporting(enabled = TRUE, buttons = list(contextButton = list(menuItems = c("viewFullscreen", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")))) %>%
+    hc_add_theme(hc_theme_google())
   
   
   # Table

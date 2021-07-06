@@ -49,7 +49,7 @@ raceDF <- dat.1 %>%
           rate = aRate, rateSE = aSE, LCI, UCI, compareGroup = lowRace, compareRate = bestRate, 
           compareSE = bestSE, rateRatio, Ztest, pValue, pMark)
 
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
 
 
 tMax <- max(dat.1$aRate)
@@ -120,7 +120,7 @@ AGEplaceLabels2 <- tMax/8
 AGEplaceLabels3 <- tMax/20
 
 
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
 
 agePlot <- ggplot(data=dat.1, aes(x=ageGroup, y= cDeathRate, fill=pMark)) +
    geom_bar(stat="identity") +
@@ -178,7 +178,7 @@ placeLabels2 <- tMax/8
 placeLabels3 <- tMax/20
 
 
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
 
 myTit <-  "Sex (age-adjusted rate)"
 

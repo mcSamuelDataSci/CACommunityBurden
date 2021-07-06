@@ -17,7 +17,7 @@ minYear <- 2012
 dat.1 <- filter(datCounty_EDU,county == myLHJ,causeCode == myCause, sex==mySex) 
 
 
-if (nrow(dat.1)==0) stop("Sorry friend, but thank goodness there are none of those or all data are supressed because of SMALL NUMBERS")
+if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
 
 myTit <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure]," of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ," by EDUCATION Group, ",minYear," to ",maxYear,", ",mySex,", >24 years-old only, (crude age-adjustement)")
 myTit <-  wrap.labels(myTit,80)
