@@ -52,7 +52,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
         myLineLabel <- myVARIABLE
     
     
-        if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+        if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
     
         varsIn  <- c("causeNameShort","county","year","sex",myMeasure) 
         tabDat  <- dat.1 %>% select(varsIn)
@@ -70,7 +70,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
         left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
         mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
       
-      if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+      if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
   
       yRange     <- chartYearMap$yearGroup3
       yMid       <- chartYearMap$midYear3
@@ -112,7 +112,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     if (!myMultiRace) dat.1 <- filter(dat.1,raceName != "Multi-Race")
     
-    if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+    if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
     
     yRange     <- chartYearMap$yearGroup3
     yMid       <- chartYearMap$midYear3

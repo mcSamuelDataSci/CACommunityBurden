@@ -45,6 +45,7 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, require, character.only=TRUE)           
 
 ## 1.2  options
+myYear <- 2020
 controlPop  <-  F  # whether to control ACS to DOF pop totals
 whichDeaths <- "real" # source of deaths data (real,fake,dof)
 whichPop    <- "pep"  # source of population data (dof,pep)
@@ -58,16 +59,13 @@ critDx      <-   700
 #setwd("C:/Users/fieshary/projects/CACommunityBurden")
 myDrive   <- getwd()
 myPlace   <- paste0(myDrive,"/myCCB") 
-upPlace   <- paste0(myDrive,"/myUpstream") 
+ccbUpstream   <- paste0(myDrive,"/myUpstream") 
 
-server <- T
+server <- F
 if (server) {
-  mySecure  <- "/mnt/projects/FusionData/0.Secure.Data/myData"
-  myStandards <- "/mnt/projects/FusionData/Standards/"
+  source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 } else {
-  mySecure  <- "G:/FusionData/0.Secure.Data/myData"
-  myStandards <- "G:/FusionData/Standards/"
-  
+  source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 }
 
 # dofSecure <- "d:/users/fieshary/projects/vry-lt/dx"
@@ -75,28 +73,29 @@ if (server) {
 
 
 ## 1.4 	links
-#.ckey	  <- read_file(paste0(upPlace,"/upstreamInfo/census.api.key.txt")) # census API key
+#.ckey	  <- read_file(paste0(ccbUpstream,"/upstreamInfo/census.api.key.txt")) # census API key
 
 # 1.5 - Read in Standard Files
 
-source(paste0(myStandards, "ageChop.R"))
-raceLink <- read_xlsx(paste0(myStandards, "raceLink.xlsx")) 
+source(paste0(standardsPlace, "ageChop.R"))
 
 # 1.6 - year ranges (used in Chiang's function)
-range_1year <- 2000:2019
-range_3year <- 2001:2018
-range_5year <- 2002:2017
+#yearLink <- readxl::read_xlsx(paste0(ccbInfo, "Year to Year-Group Linkage.xlsx"), sheet = "main")
+
+range_1year <- 2000:myYear
+range_3year <- 2001:(myYear - 1)
+range_5year <- 2002:(myYear - 2)
 
 
 ## 2	GEOGRAPHY	----------------------------------------------------------------------
 
 ## 2.1	load tract to MSSA maps
-trt00mssa <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/trt00mssa13.dta")) # 2009 TIGER/LINE census tracts to 2013 MSSAs
-trt10mssa <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/trt10mssa13.dta")) # 2010 TIGER/LINE census tracts to 2013 MSSAs
-mssacfips <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/mssa13cfips.dta")) # 2013 MSSA to county
+trt00mssa <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/trt00mssa13.dta")) # 2009 TIGER/LINE census tracts to 2013 MSSAs
+trt10mssa <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/trt10mssa13.dta")) # 2010 TIGER/LINE census tracts to 2013 MSSAs
+mssacfips <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/mssa13cfips.dta")) # 2013 MSSA to county
 
 ## 2.2 	load county name to county FIPS code maps
-countycfips <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/countycfips.dta")) # county name to county FIPS in GEOID format
+countycfips <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/countycfips.dta")) # county name to county FIPS in GEOID format
 # Use our standard FIPS JASPO
 
 
@@ -104,8 +103,8 @@ countycfips <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/countycfips.dta")) 
 ## 3	POPULATION	----------------------------------------------------------------------
 
 ## 3.1 	load 2000-09 intercensal + 2010-18 postcensal county + state population
-# if (whichPop == "dof") nxCounty <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/dof_ic10pc19.dta"))
-# if (whichPop == "pep") nxCounty <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/pep_ic10pc18_special.dta")) %>%
+# if (whichPop == "dof") nxCounty <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/dof_ic10pc19.dta"))
+# if (whichPop == "pep") nxCounty <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/pep_ic10pc18_special.dta")) %>%
 #   rename(Ethan = race7) %>%
 #   left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
 #   select(-Ethan)
@@ -137,23 +136,24 @@ countycfips <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/countycfips.dta")) 
 #   mutate(GEOID = "06000000000")
 
 # 3.1 Load in nxCounty and nxState
-nxCounty <- readRDS(paste0(upPlace, "/lifeTables/dataIn/nxCounty.RDS"))
-nxState <- readRDS(paste0(upPlace, "/lifeTables/dataIn/nxState.RDS"))
+nxCounty <- readRDS(paste0(ccbUpstream, "/lifeTables/dataIn/nxCounty.RDS"))
+nxState <- readRDS(paste0(ccbUpstream, "/lifeTables/dataIn/nxState.RDS"))
 
 
 ## 3.3 	load ACS 2005-2015 five-year samples from NHGIS, rolled up to MSSA level
 if (controlPop) {
-  nxACS <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/acs5_mssa_adj.dta")) %>% # ACS tract pop, collapsed to MSSA and controlled to DOF county
+  nxACS <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/acs5_mssa_adj.dta")) %>% # ACS tract pop, collapsed to MSSA and controlled to DOF county
     rename(Ethan = race7) %>%
     left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
     select(-Ethan)
 } else {
-  # nxACS <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/acs5_mssa.dta")) %>% # ACS tract pop collapsed to MSSA
+  # nxACS <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/acs5_mssa.dta")) %>% # ACS tract pop collapsed to MSSA
   #   rename(Ethan = race7) %>%
   #   left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
   #   select(-Ethan) 
   
-  nxACS <- readRDS(paste0(upPlace,"/lifeTables/dataIn/nxMSSA.RDS")) %>%
+  nxACS <- readRDS(paste0(ccbUpstream,"/lifeTables/dataIn/nxMSSA.RDS")) %>%
+    mutate(sex = str_to_title(sex)) %>%
     rename(Nx = nx) 
 }
 
@@ -161,7 +161,7 @@ if (controlPop) {
 nxACS_totalSex <- nxACS %>%
   group_by(comID, year, agell, ageul, raceCode) %>%
   summarise(Nx = sum(Nx)) %>%
-  mutate(sex = "TOTAL")
+  mutate(sex = "Total")
 
 nxACS <- bind_rows(nxACS, nxACS_totalSex)
 
@@ -169,10 +169,17 @@ nxACS <- bind_rows(nxACS, nxACS_totalSex)
 ## 4	DEATHS ---------------------------------------------------------------------------
 
 ## 4.1	load selected deaths master file
-if (whichDeaths=="fake") cbdDeaths		<- load(paste0(upPlace,"/upData/cbdDat0SAMP.R")) 
-if (whichDeaths=="real") cbdDeaths		<- readRDS(paste0(mySecure,"/ccb_processed_deaths.RDS")) %>%
-  left_join(select(raceLink, raceCode, CHSI), by = "CHSI") %>%
-  select(-CHSI)
+if (whichDeaths=="fake") cbdDeaths		<- load(paste0(ccbUpstream,"/upData/cbdDat0SAMP.R")) 
+
+if (whichDeaths=="real") {
+  
+  cbdDeaths		<- readRDS(paste0(securePlace,"myData/ccb_processed_deaths.RDS")) %>%
+    filter(year <= myYear) %>%
+    left_join(select(raceLink, raceCode, CHSI), by = "CHSI") %>%
+    select(-CHSI)
+  
+} 
+
 if (whichDeaths=="dof")  cbdDeaths 		<- read.dta13(paste0(dofSecure,"/dof_deaths_mi.dta")) 
 
 if (whichDeaths %in% c("real","fake")) {
@@ -192,7 +199,7 @@ if (whichDeaths %in% c("real","fake")) {
   dxMssa_totalSex <- dxMssa %>%
     group_by(year,comID,raceCode,agell,ageul) %>%
     summarise(Dx = sum(Dx)) %>%
-    mutate(sex = "TOTAL")
+    mutate(sex = "Total")
     
   dxMssa <- bind_rows(dxMssa, dxMssa_totalSex)
   
@@ -206,13 +213,13 @@ if (whichDeaths %in% c("real","fake")) {
                            my_lAge = c(0, 1, seq(5, 85, by = 5)),
                            my_uAge = c(0, seq(4, 84, by = 5), 199),
                            my_ageName = c(0, 1, seq(5, 85, by = 5)), 
-                           ourServer = T), 
+                           ourServer = server), 
            ageul = ageChop(INAGE = age,
                            myCuts = TRUE,
                            my_lAge = c(0, 1, seq(5, 85, by = 5)),
                            my_uAge = c(0, seq(4, 84, by = 5), 199),
                            my_ageName = c(0, seq(4, 84, by = 5), 199), 
-                           ourServer = T),
+                           ourServer = server),
            sex = ifelse(sex == "F", "Female", "Male")) %>%
     left_join(countycfips, by = "county") %>%
     mutate(GEOID = sprintf("%05d000000",cfips)) %>%
@@ -310,12 +317,14 @@ doExtract <- function(dx=NULL, nx=NULL, nyrs=NA, y=NA, level=NA) {
 # For some reason, the range is 2009-2016 for MSSA
 if (whichDeaths %in% c("real","fake")) { 
   range<-2009:2014 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
-  range<-2009:2017 # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
+  range<-2009:(myYear - 2) # or later if available. 'fake' has nx 2009-2018 and dx 2007-2014
   
   mxMssa_list <- lapply(range,doExtract,dx=dxMssa,nx=nxACS,nyrs=2,level="mssa")
   
   mxMssa <- bind_rows(mxMssa_list) %>%
     mutate(nyrs = 5)
+  
+
 }
 
 ## county
@@ -501,34 +510,34 @@ if (whichDeaths %in% c("real","fake")) {
 
 ## 7	REVIEW/EXPORT ----------------------------------------------------------------------
 
-# checkState <- readRDS(paste0(upPlace,"/lifeTables/dataOut/LTciState.rds"))
-# checkCounty <- readRDS(paste0(upPlace,"/lifeTables/dataOut/LTciCounty.rds"))
-# checkMssa <- readRDS(paste0(upPlace,"/lifeTables/dataOut/LTciMSSA.rds"))
+# checkState <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciState.rds"))
+# checkCounty <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciCounty.rds"))
+# checkMssa <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciMSSA.rds"))
 
 ## 7.1	EXPORT
 ## full LT
-saveRDS(ltState, paste0(upPlace, "/lifeTables/dataOut/LTciState.RDS"))
-saveRDS(ltCounty, paste0(upPlace, "/lifeTables/dataOut/LTciCounty.RDS"))
-saveRDS(ltMssa, paste0(upPlace, "/lifeTables/dataOut/LTciMSSA.RDS"))
+saveRDS(ltState, paste0(ccbUpstream, "/lifeTables/dataOut/LTciState.RDS"))
+saveRDS(ltCounty, paste0(ccbUpstream, "/lifeTables/dataOut/LTciCounty.RDS"))
+saveRDS(ltMssa, paste0(ccbUpstream, "/lifeTables/dataOut/LTciMSSA.RDS"))
 
 ## e0 only - save upStream
 saveRDS(ltState[x==0,c("nyrs","GEOID","sex","raceCode","year","ex","exlow","exhigh")],
-        paste0(upPlace,"/lifeTables/dataOut/e0ciState.RDS"))
+        paste0(ccbUpstream,"/lifeTables/dataOut/e0ciState.RDS"))
 saveRDS(ltCounty[x==0,c("nyrs","GEOID","sex","raceCode","year","ex","exlow","exhigh")],
-        paste0(upPlace,"/lifeTables/dataOut/e0ciCounty.RDS"))
+        paste0(ccbUpstream,"/lifeTables/dataOut/e0ciCounty.RDS"))
 if (whichDeaths %in% c("real","fake")) { 
   saveRDS(ltMssa[x==0,c("nyrs","comID","sex","raceCode","year","ex","exlow","exhigh")]
-          ,paste0(upPlace,"/lifeTables/dataOut/e0ciMSSA.RDS"))
+          ,paste0(ccbUpstream,"/lifeTables/dataOut/e0ciMSSA.RDS"))
 }
 
 # e0 only - save myCBD/data
 saveRDS(ltState[x==0,c("nyrs","GEOID","sex","raceCode","year","ex","exlow","exhigh")],
-        paste0(myPlace,"/myData/e0ciState.RDS"))
+        paste0(ccbData,"e0ciState.RDS"))
 saveRDS(ltCounty[x==0,c("nyrs","GEOID","sex","raceCode","year","ex","exlow","exhigh")],
-        paste0(myPlace,"/myData/e0ciCounty.RDS"))
+        paste0(ccbData,"e0ciCounty.RDS"))
 if (whichDeaths %in% c("real","fake")) { 
   saveRDS(ltMssa[x==0,c("nyrs","comID","sex","raceCode","year","ex","exlow","exhigh")]
-          ,paste0(myPlace,"/myData/e0ciMSSA.RDS"))
+          ,paste0(ccbData,"e0ciMSSA.RDS"))
 }
 
 ## 7.2	Review

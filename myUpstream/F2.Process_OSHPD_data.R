@@ -69,6 +69,13 @@ if (readSAS) {
   oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
   saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
   
+  
+  
+  # PDD data with all ICD-10-CM diagnoses for Mental Health Brief 
+  pdd.workMH  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019_all_diag.sas7bdat") )
+  saveRDS(pdd.workMH, file = path(securePlace, "myData/oshpd_pdd_2019_ALL_dx.RDS"))
+  
+  
 }  
 
 
@@ -83,12 +90,14 @@ pdd0 <-  pdd0 %>%
           left_join(raceLink, by=c("race_grp"="OSHPD")) %>% 
           left_join(countyLink, by=c("pCounty"="cdphcaCountyTxt")) 
 
-# FOR Catrina Taylor 7/1/2021
+#FOR Catrina Taylor 7/2021
 # tempHeartFailure <- pdd0 %>% mutate(icd10 = str_sub(diag_p,1,3)) %>%
-#                       filter(icd10 == "I50") %>% 
-#                       group_by(diag_p,year) %>% summarise(count=n()) %>%
+#                       mutate(age65plus = ifelse(age > 64,"yes","no")) %>%
+#                       filter(icd10 == "I50") %>%
+#                       group_by(age65plus,diag_p,year) %>% summarise(count=n()) %>%
 #                       pivot_wider(names_from = year, values_from= count)
-# write_csv(tempHeartFailure,"PDD_heart_failure.csv")
+# write_csv(tempHeartFailure,"PDD_heart_failure_65plus.csv")
+
 
 pdd1 <- bind_rows(pdd0,mutate(pdd0,countyName = "CALIFORNIA"))
 

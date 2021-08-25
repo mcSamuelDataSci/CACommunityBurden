@@ -218,9 +218,29 @@ covid <- ca20 %>%
   
 hmm <- covid %>%
   group_by(causeName) %>%
-  summarise(count = n())
+  summarise(count = n()) %>%
+  arrange(desc(count)) %>%
+  head(5)
 
 
+# For xMDA text
+
+covid_mcod <- tdat_Lev2 %>%
+  filter(lev2 == "A10") %>%
+  select(primaryCount = 2, last_col())
+
+alc <- tDat_lev3 %>%
+  filter(lev3 == "D99a") %>%
+  select(primaryCount = 2, last_col())
+  
+
+for_xMDA <- list(covidCounts = covid_mcod, 
+                 covidMCOD = hmm, 
+                 alcoholCounts = alc)
+
+
+
+saveRDS(for_xMDA, "/mnt/projects/FusionData/Excess Mortality 2020 Brief/covidMCOD.RDS")
 
 
 

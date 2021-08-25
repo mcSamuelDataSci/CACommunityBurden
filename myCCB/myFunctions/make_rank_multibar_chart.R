@@ -75,7 +75,7 @@ makePlotRank <- function(myDataSet     = NA,
       mutate(measure = get(myMeasure))
    
    # Return message if no rows exist
-   if (nrow(tDat)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+   if (nrow(tDat)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
    
    if(!myLiveborn) tDat <- filter(tDat, causeName != "Liveborn")
    

@@ -8,9 +8,9 @@
 
 
 
-myYear <- 2020
+myYear <- 2021
 
-server <- T
+server <- F
 #CCB <- F
 
 if (server) {
@@ -41,7 +41,7 @@ ageDF2 <- data.frame(lAge = c(0, 15, 25, 35, 45, 65, 75),
 
 # 2000-most recent year population data - RDS file created in D2
 
-fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000_", myYear, ".RDS")
+fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000plus.RDS")
 
 dof_pop_2000_myYear <- readRDS(file = fileName) %>%
   select(-county)
@@ -95,6 +95,7 @@ popDataTrend <- populationExtract(County = T, # all uppercase in arguments; expl
 options(scipen = 999) # To get rid of exponential notation
 
 popData_AgePyramid <- popData %>%
+  ungroup() %>%
   mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
          ageGroup = factor(ageGroup, levels = ageDF$ageName), 
          population = round(population, 0)) %>%
@@ -102,6 +103,7 @@ popData_AgePyramid <- popData %>%
 
 
 popData_RacePie <- popData2 %>%
+  ungroup() %>%
   mutate(county = ifelse(county == "California", "CALIFORNIA", county)) %>%
   group_by(year, county, raceName) %>%
   summarise(population = sum(population))  %>%
@@ -109,12 +111,14 @@ popData_RacePie <- popData2 %>%
   left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
 
 popData_RaceAge <- popData2 %>%
+  ungroup() %>%
   mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
          ageGroup = factor(ageGroup, levels = ageDF2$ageName), 
          population = round(population, 0))  %>%
   left_join(select(raceLink, raceName, raceNameShort), by = "raceName")
 
 popData_trends <- popDataTrend %>%
+  ungroup() %>%
   mutate(county = ifelse(county == "California", "CALIFORNIA", county), 
          ageGroup = factor(ageGroup, levels = c(ageDF2$ageName, "Total")), 
          population = round(population, 0)) %>%

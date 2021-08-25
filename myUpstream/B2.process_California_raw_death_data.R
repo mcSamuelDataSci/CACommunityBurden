@@ -36,7 +36,7 @@
 
 
 
-server <- F
+server <- T
 #CCB    <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -72,8 +72,12 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 
 if (state.installation) {
- ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010120_033121.csv"), colClasses = "character") %>% filter(F24 == "2021")
- ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")  
+  
+ 
+  
+  
+ ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_063021.csv"), colClasses = "character") %>% filter(F24 == "2021")
+ ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")    
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
  ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
  ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character") 
@@ -152,8 +156,8 @@ names(death.datA) <- vInfo$varName           # name columns based on varName!
 
 # https://www.cdc.gov/niosh/topics/coding/nioccsuserdocumentation.html
 
-# temp <- ca19[vInfo$seqID1]
-# names(temp) <- vInfo$varName
+ temp <- ca20[vInfo$seqID1]
+ names(temp) <- vInfo$varName
 # 
 # temp2 <- temp %>% slice_sample(n=1000)
 # freq(temp2$occupation)

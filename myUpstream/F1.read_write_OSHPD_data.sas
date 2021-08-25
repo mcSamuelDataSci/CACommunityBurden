@@ -61,8 +61,20 @@ WARNING: Multiple lengths were specified for the variable ccs_dx_prin by input d
 
 
 
+data pdd.pdd_2019_ALL_diag; set pdd.cdph_pdd_rln2019; 
+ year = 2019;
+ keep diag_p  odiag1-odiag24      
+      pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
+run;
 
-proc contents data=ed_2018;run;
+
+
+
+
+
+
+
+proc contents data=pdd.cdph_pdd_rln2019;run;
 
 
 proc freq; table ccs_dx_prin;run;

@@ -24,7 +24,7 @@ if (1 == 2) {
 
  library(dplyr)
 
- inDat           <- read.csv("f:/0.CBD/myUpstream/upstreamInfo/suppressionTestData.csv")
+ inDat           <- read.csv(paste0(ccbUpstream,"/upstreamInfo/suppressionTestData.csv"))
  gBy             <-  c("Year","Place")
  inDatNew        <- mutate(inDat, supIndictor = mySuppress(inDat,gBy,"events"))
  inDatSupprssed  <- filter(inDatNew,supIndictor != 1)

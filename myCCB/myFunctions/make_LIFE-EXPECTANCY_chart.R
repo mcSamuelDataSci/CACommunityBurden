@@ -109,7 +109,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
  
  
  
- if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+ if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
  
  
  myBreaks <- minYear_LT:maxYear_LT
@@ -119,7 +119,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
  
  tplot<- ggplot(data=dat.1, aes(x=year, y=ex)) +                     # , nyrs == 1
                  geom_line(size=1.6,aes(color=raceNameShort,linetype=sex)) +
-               # geom_point(shape = myPointShape,size=myPointSize)  +
+                 geom_point(shape = 21, size=2.5, aes(color = raceNameShort), fill = "white")  +
                  ylim(62, 93) +
                  scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,
                                     expand = expansion(mult = c(0, 0), add = c(1, 5)), # lower-limit: 2000 - (2018 - 2000) * 0 - 1... upper-limit: 2018 + (2018 - 2000) * 0 + 5

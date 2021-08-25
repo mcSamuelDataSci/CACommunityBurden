@@ -64,7 +64,7 @@ cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YL
 # HELP why doesn't this one line stop the function when Amador and TB????
 # CRASHES!
 # message is generated, but code still runs somewhere???
-if (nrow(dat.1)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
 
  nCut <- 5
 

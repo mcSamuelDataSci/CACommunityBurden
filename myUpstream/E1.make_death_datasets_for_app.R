@@ -32,6 +32,8 @@ isRecent_multiYear <- T
 
 # JASPO - Specify the years for the quarterly data
 forQuarter_selectYears <- 2016:2021
+# Specify the years for RE_1year
+RE_1year_years <- 2010:2021
 
 # == Designate locations and load packages  =======================================================
 
@@ -189,156 +191,188 @@ popStandard65         <- ageMap    %>% mutate(ageGroup = paste0(lAge," - ",uAge)
 
  # == LOAD AND PROCESS DEATH DATA =================================================================
 
-if (whichDat == "real") {
-  #load(secureDataFile)
-  cbdDat0 <- readRDS(secureDataFile)
+
+if (1 == 2) {
+  
+  if (whichDat == "real") {
+    #load(secureDataFile)
+    cbdDat0 <- readRDS(secureDataFile)
+  }
+  
+  # if (whichDat == "fake") { 
+  #   #load(paste0(ccbUpstream,"upData/cbdDat0SAMP.R"))  
+  #   
+  #   cbdDat0 <- cbdDat0SAMP
+  # }
+  
+  
+  # -- GEOID/COUNTY CORRECTION HERE ---------------------------------------------
+  # TODO TODO TODO
+  # (1) LA CENSUS TRACT TO RECODE
+  # 06037930401 should be recoded to  06037137000 in all data files
+  cbdDat0$GEOID[cbdDat0$GEOID=="06037930401"] <- "06037137000"
+  # (2) all occurences of "06037800325" in death data are Ventura, all are LA in pop data
+  # (3) fix county based on GEOID analysis here:
+  allWater <- c("06017990000","06037990300","06061990000","06083990000","06111990100")
+  
+  
+  # -- RECODES AND CALCULATIONS -------------------------------------------------
+  
+  cbdDat0       <- mutate(cbdDat0,
+                          sex     = c("Male","Female")[match(sex,c("M","F"))],
+                          age     = as.numeric(age),                                                  # redundant...
+                          ICD10   = as.character(ICD10),                                              # redundant...
+                          comID   = mssaLink[match(cbdDat0$GEOID,mssaLink[,"GEOID"]),"comID"],   
+                          # yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],
+                          yll     = ifelse(age > 75, 0, 75-age),
+                          yearG5  = yearMap[match(year,yearMap[,"year"]),"yearGroup5"], 
+                          yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"],
+                          quarter = dplyr::case_when(month %in% c("01", "02", "03") ~ "01", 
+                                                     month %in% c("04", "05", "06") ~ "02", 
+                                                     month %in% c("07", "08", "09") ~ "03", 
+                                                     month %in% c("10", "11", "12") ~ "04", 
+                                                     TRUE ~ month),
+                          education = ifelse(education == 8,7,education)  # one "Graduate or professional degree" category for now
+  ) %>%
+    rename(eduCode = education) 
+  
+  
+  #cbdDat0    <- rename(cbdDat0,CHSI=raceCode) # remove this step soon by chaning in B2 to use "CHSI" as name rather than raceCode
+  cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
+  cbdDat0    <- select(cbdDat0,-CHSI)
+  
+  cbdDat0Sex   <- mutate(cbdDat0, sex = "Total")
+  cbdDat0       <- bind_rows(cbdDat0, cbdDat0Sex)
+  
+  
+  # 
+  # > freq(cbdDat0$raceCode)
+  # Frequencies  
+  # cbdDat0$raceCode  
+  # Type: Character  
+  # 
+  # Freq   % Valid   % Valid Cum.   % Total   % Total Cum.
+  # -------------- --------- --------- -------------- --------- --------------
+  #   -missing      2104      0.02           0.02      0.02           0.02
+  # AIAN-NH     43364      0.43           0.46      0.43           0.46
+  # Asian-NH    823170      8.25           8.70      8.25           8.70
+  # Black-NH    762330      7.64          16.34      7.64          16.34
+  # Hisp   1671212     16.75          33.09     16.75          33.09
+  # Multi-NH     69286      0.69          33.79      0.69          33.79
+  # NHPI-NH     30854      0.31          34.10      0.31          34.10
+  # Other-NH     12040      0.12          34.22      0.12          34.22
+  # Unk-NH     12862      0.13          34.34      0.13          34.34
+  # White-NH   6551598     65.66         100.00     65.66         100.00
+  # <NA>         0                               0.00         100.00
+  # Total   9978820    100.00         100.00    100.00         100.00
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ########
+  #### CONSIDER ADDING CALIFONRIA TOTAL HERE
+  
+  
+  
+  
+  # -- Add Age-Group variable ---------------------------------------------------
+  
+  aL            <-      ageMap$lAge     # lower age ranges
+  aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
+  aLabs         <- ageMap$ageLabel 
+  aMark         <- findInterval(cbdDat0$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+  cbdDat0$ageGroup  <- aLabs[aMark]                                   # make new "ageGroup" variable based on two objects above 
+  
+  
+  
+  
+  aL_EDU            <-     ageMap_EDU$lAge     # lower age ranges
+  aU_EDU            <- c(-1,ageMap_EDU$uAge)     # upper age ranges, plus inital value of "-1" for lower limit
+  aLabs_EDU         <- c("less",paste(aL_EDU,"-",aU_EDU[-1])) # make label for ranges
+  aMark_EDU         <- findInterval(cbdDat0$age,c(-1,24,aU_EDU[2:5]),left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+  cbdDat0$ageG_EDU  <- aLabs_EDU[aMark_EDU]  
+  
+  
+  
+  # -- Map ICD-10 codes to GBD conditions ----------------------------------------
+  
+  # Jaspo "source" or use below temporariy .....
+  
+  gbdMap0       <- as.data.frame(read_excel(paste0(ccbInfo,"icd10_to_CAUSE.xlsx"), sheet="main"))   
+  
+  # Will get sourced
+  allCauseCodes <- sort(gbdMap0$causeCode[!is.na(gbdMap0$causeCode)])
+  #allCauseCodes <- gbdMap0
+  
+  mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
+  
+  # Old method
+  
+  icdToGroup <- function(inputVectorICD10) {
+    Cause   <- rep(NA,length(inputVectorICD10))
+    for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],inputVectorICD10)] <- mapICD[i,"CODE"] }
+    Cause}
+  
+  cbdDat0$icdCODE  <- icdToGroup(inputVectorICD10=cbdDat0$ICD10)
+  
+  # New method - Performs a regex left join
+  # 
+  # library(fuzzyjoin)
+  # 
+  # cbdDat0 <- cbdDat0 %>%
+  #   regex_left_join(mapICD, by = c("ICD10" = "regEx10")) %>%
+  #   select(-regEx10) %>%
+  #   rename(icdCODE = CODE)
+  
+  table(cbdDat0$icdCODE,useNA = "ifany")
+  # nrow(filter(cbdDat0,ICD10 %in% c("","000","0000")))
+  cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
+  
+  codeDoesntMap  <- filter(cbdDat0,is.na(icdCODE))
+  table(codeDoesntMap$ICD10,useNA = "ifany") # These codes are not assigned in the CCB
+  
+  codeLast4      <- str_sub(cbdDat0$icdCODE,2,5)
+  nLast4         <- nchar(codeLast4)
+  
+  cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
+                                          lev1  = str_sub(icdCODE,2,2),
+                                          lev2  = str_sub(icdCODE,2,4),
+                                          lev3  = ifelse(nLast4 == 4,codeLast4,NA)
+  )
+  
+  
+  # -- MORE DATA CLEANING ISSUES (see at bottom of file) ------------------------
+  
+  # -- SAVE FILE FOR AD HOC ANALYSIS AND ERROR/ISSUE INVESTIGATION --------------
+  
+  
+  # saveRDS(cbdDat0,  file= path(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS"))
+  
 }
 
-# if (whichDat == "fake") { 
-#   #load(paste0(ccbUpstream,"upData/cbdDat0SAMP.R"))  
-#   
-#   cbdDat0 <- cbdDat0SAMP
-# }
+if (1 == 2) {
+  
+  # Jaspo "source" or use below temporariy .....
+  
+  gbdMap0       <- as.data.frame(read_excel(paste0(ccbInfo,"icd10_to_CAUSE.xlsx"), sheet="main"))   
+  
+  # Will get sourced
+  allCauseCodes <- sort(gbdMap0$causeCode[!is.na(gbdMap0$causeCode)])
+  #allCauseCodes <- gbdMap0
+  
+  mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
+  
+  cbdDat0 <- readRDS(file= path(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS"))
+  
+}
 
-
-# -- GEOID/COUNTY CORRECTION HERE ---------------------------------------------
-# TODO TODO TODO
-# (1) LA CENSUS TRACT TO RECODE
-# 06037930401 should be recoded to  06037137000 in all data files
-cbdDat0$GEOID[cbdDat0$GEOID=="06037930401"] <- "06037137000"
-# (2) all occurences of "06037800325" in death data are Ventura, all are LA in pop data
-# (3) fix county based on GEOID analysis here:
-allWater <- c("06017990000","06037990300","06061990000","06083990000","06111990100")
-
-
-# -- RECODES AND CALCULATIONS -------------------------------------------------
-
-cbdDat0       <- mutate(cbdDat0,
-                         sex     = c("Male","Female")[match(sex,c("M","F"))],
-                         age     = as.numeric(age),                                                  # redundant...
-                         ICD10   = as.character(ICD10),                                              # redundant...
-                         comID   = mssaLink[match(cbdDat0$GEOID,mssaLink[,"GEOID"]),"comID"],   
-                       # yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],
-                         yll     = ifelse(age > 75, 0, 75-age),
-                         yearG5  = yearMap[match(year,yearMap[,"year"]),"yearGroup5"], 
-                         yearG3  = yearMap[match(year,yearMap[,"year"]),"yearGroup3"],
-                         quarter = dplyr::case_when(month %in% c("01", "02", "03") ~ "01", 
-                                             month %in% c("04", "05", "06") ~ "02", 
-                                             month %in% c("07", "08", "09") ~ "03", 
-                                             month %in% c("10", "11", "12") ~ "04", 
-                                             TRUE ~ month),
-                         education = ifelse(education == 8,7,education)  # one "Graduate or professional degree" category for now
-                        ) %>%
-                rename(eduCode = education) 
-
-
-#cbdDat0    <- rename(cbdDat0,CHSI=raceCode) # remove this step soon by chaning in B2 to use "CHSI" as name rather than raceCode
-cbdDat0    <- left_join(cbdDat0,raceLink,by="CHSI")
-cbdDat0    <- select(cbdDat0,-CHSI)
-
-cbdDat0Sex   <- mutate(cbdDat0, sex = "Total")
-cbdDat0       <- bind_rows(cbdDat0, cbdDat0Sex)
-
-
-# 
-# > freq(cbdDat0$raceCode)
-# Frequencies  
-# cbdDat0$raceCode  
-# Type: Character  
-# 
-# Freq   % Valid   % Valid Cum.   % Total   % Total Cum.
-# -------------- --------- --------- -------------- --------- --------------
-#   -missing      2104      0.02           0.02      0.02           0.02
-# AIAN-NH     43364      0.43           0.46      0.43           0.46
-# Asian-NH    823170      8.25           8.70      8.25           8.70
-# Black-NH    762330      7.64          16.34      7.64          16.34
-# Hisp   1671212     16.75          33.09     16.75          33.09
-# Multi-NH     69286      0.69          33.79      0.69          33.79
-# NHPI-NH     30854      0.31          34.10      0.31          34.10
-# Other-NH     12040      0.12          34.22      0.12          34.22
-# Unk-NH     12862      0.13          34.34      0.13          34.34
-# White-NH   6551598     65.66         100.00     65.66         100.00
-# <NA>         0                               0.00         100.00
-# Total   9978820    100.00         100.00    100.00         100.00
-
-
-
-
-
-
-
-
-
-
-
-########
-#### CONSIDER ADDING CALIFONRIA TOTAL HERE
-
-
-
-
-# -- Add Age-Group variable ---------------------------------------------------
-
-aL            <-      ageMap$lAge     # lower age ranges
-aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
-aLabs         <- ageMap$ageLabel 
-aMark         <- findInterval(cbdDat0$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-cbdDat0$ageGroup  <- aLabs[aMark]                                   # make new "ageGroup" variable based on two objects above 
-
-
-
-
-aL_EDU            <-     ageMap_EDU$lAge     # lower age ranges
-aU_EDU            <- c(-1,ageMap_EDU$uAge)     # upper age ranges, plus inital value of "-1" for lower limit
-aLabs_EDU         <- c("less",paste(aL_EDU,"-",aU_EDU[-1])) # make label for ranges
-aMark_EDU         <- findInterval(cbdDat0$age,c(-1,24,aU_EDU[2:5]),left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-cbdDat0$ageG_EDU  <- aLabs_EDU[aMark_EDU]  
-
-
-
-# -- Map ICD-10 codes to GBD conditions ----------------------------------------
-
-# Jaspo "source" or use below temporariy .....
-
-gbdMap0       <- as.data.frame(read_excel(paste0(ccbInfo,"icd10_to_CAUSE.xlsx"), sheet="main"))   
-
-# Will get sourced
-allCauseCodes <- sort(gbdMap0$causeCode[!is.na(gbdMap0$causeCode)])
-#allCauseCodes <- gbdMap0
-
-mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
-
-
-icdToGroup <- function(inputVectorICD10) {
-  Cause   <- rep(NA,length(inputVectorICD10))
-  for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],inputVectorICD10)] <- mapICD[i,"CODE"] } 
-  Cause}
-
-cbdDat0$icdCODE  <- icdToGroup(inputVectorICD10=cbdDat0$ICD10)
-
-table(cbdDat0$icdCODE,useNA = "ifany")
-# nrow(filter(cbdDat0,ICD10 %in% c("","000","0000")))
-cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
-
-codeDoesntMap  <- filter(cbdDat0,is.na(icdCODE))
-table(codeDoesntMap$ICD10,useNA = "ifany") # These codes are not assigned in the CCB
-
-codeLast4      <- str_sub(cbdDat0$icdCODE,2,5)
-nLast4         <- nchar(codeLast4)
-
-cbdDat0          <- cbdDat0  %>% mutate(lev0  = "0",
-                                        lev1  = str_sub(icdCODE,2,2),
-                                        lev2  = str_sub(icdCODE,2,4),
-                                        lev3  = ifelse(nLast4 == 4,codeLast4,NA)
-                                       )
-
-
-# -- MORE DATA CLEANING ISSUES (see at bottom of file) ------------------------
-
-# -- SAVE FILE FOR AD HOC ANALYSIS AND ERROR/ISSUE INVESTIGATION --------------
-
-
-# saveRDS(cbdDat0,  file= path(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS"))
 
 # JK: Left off here
 
@@ -572,7 +606,7 @@ cbdDat0 <- cbdDat0_SAVE
 
 cbdDat0_SAVE <- cbdDat0
 
-# cbdDat0 <- filter(cbdDat0, year %in% forQuarter_selectYears)
+cbdDat0 <- filter(cbdDat0, year %in% RE_1year_years)
 cbdDat0_RACE <- mutate(cbdDat0, raceCode = "Total")
 cbdDat0 <- bind_rows(cbdDat0, cbdDat0_RACE)
 
@@ -794,6 +828,7 @@ raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)),               
 
 
 yearForQuarterly <- data.frame(year = forQuarter_selectYears) # forQuarter_selectYears assigned at the top of script. Run into memory issues when too many years are selected
+yearForRE1 <- data.frame(year = RE_1year_years)
 raceCodeForQuarterly <- raceCode %>% tibble::add_row(raceCode = "Total") # For the quarterly dataset, we need to add Total race to crossjoin in fullmat
 
 # other cool approach from Adam:
@@ -811,7 +846,7 @@ fullMatCounty_RE_Q     <- sqldf(" select * from  county cross join yearForQuarte
 fullMatCounty_M     <- sqldf(" select * from  county cross join yearForQuarterly cross join month cross join CAUSE1 cross join sex cross join ageGroup") %>% mutate(tester=0)
 # JASPO added above for monthly
 
-fullMatCounty_RE_1year <- sqldf(" select * from  county cross join year cross join CAUSE1 cross join sex cross join ageGroup cross join raceCodeForQuarterly") %>% mutate(tester=0)
+fullMatCounty_RE_1year <- sqldf(" select * from  county cross join yearForRE1 cross join CAUSE1 cross join sex cross join ageGroup cross join raceCodeForQuarterly") %>% mutate(tester=0)
 # JASPO added above for RE 1 year (includes Total Race)
 
 # -- COUNTY (age-adjusted) ----------------------------------------------------
@@ -1036,7 +1071,7 @@ cbdDat0 <- cbdDat0_SAVE
 
 cbdDat0_SAVE <- cbdDat0
 
-# cbdDat0 <- filter(cbdDat0, year %in% forQuarter_selectYears)
+cbdDat0 <- filter(cbdDat0, year %in% RE_1year_years)
 cbdDat0_RACE <- mutate(cbdDat0, raceCode = "Total")
 cbdDat0 <- bind_rows(cbdDat0, cbdDat0_RACE)
 
@@ -1631,11 +1666,11 @@ datTract  <- filter(datTract,population>0)
 
 
 
-saveRDS(datCounty,                                   file= path(ccbData,whichDat,"datCounty.RDS"))
+saveRDS(filter(datCounty, year != excludeYear),      file= path(ccbData,whichDat,"datCounty.RDS"))
 saveRDS(datCounty_RE_1year,                          file= path(ccbData,whichDat,"datCounty_RE_1year.RDS"))
 saveRDS(datCounty_Q,                                 file= path(ccbData,whichDat,"datCounty_Q.RDS"))
 saveRDS(datCounty_M,                                 file= path(ccbData,whichDat,"datCounty_M.RDS"))
-saveRDS(datCounty65,                                 file= path(ccbData,whichDat,"datCounty65.RDS"))
+saveRDS(filter(datCounty65, year != excludeYear),    file= path(ccbData,whichDat,"datCounty65.RDS"))
 saveRDS(filter(datCounty65_RE, !is.na(yearG3)),      file= path(ccbData,whichDat,"datCounty65_RE.RDS"))
 saveRDS(filter(datCounty_3year, !is.na(yearG3)),     file= path(ccbData,whichDat,"datCounty_3year.RDS"))
 

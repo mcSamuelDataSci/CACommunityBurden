@@ -112,7 +112,7 @@ sdohWorkList <- as.list(sdohWork)
 
 # https://plot.ly/r/axes/
   
-if (nrow(sdohWork)==0) stop("Sorry friend, there are no cases that meet this criteria or data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines.")
+if (nrow(sdohWork)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
 
 
 

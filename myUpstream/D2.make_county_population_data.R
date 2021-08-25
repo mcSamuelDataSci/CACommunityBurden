@@ -64,9 +64,9 @@ checkPop <- dof_pop_2000_myYear %>% group_by(year) %>% summarise(totPop=sum(popu
 
 # -- Save 2000-most recent year DOF pop file -------------------------------------
 
-# fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000_", myYear, ".RDS")
-# 
-# saveRDS(dof_pop_2000_myYear, file = fileName)
+fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000plus.RDS")
+
+saveRDS(dof_pop_2000_myYear, file = fileName)
 
 # junk1 <- dof_pop_2000_2009 %>% filter(year==2010) %>% rename(pop2010_2000_2010_file = population)
 # junk2 <- dof_pop_2010_2020 %>% filter(year==2010) %>% rename(pop2010_2010_2020_file = population)

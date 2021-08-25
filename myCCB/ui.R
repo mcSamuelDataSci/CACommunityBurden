@@ -301,7 +301,7 @@ shinyUI(
                            h5(tags$a(href="https://www.surveymonkey.com/r/ZH9LSR8",target="_blank","Share your feedback HERE!")),
                            
                            
-                           icon("envelope-o"),tags$a(href = "mailto:michael.samuel@cdph.ca.gov","Questions?  Want to Help?"), br(),
+                           icon("envelope-o"),tags$a(href = "mailto:CCB@cdph.ca.gov","Questions?  Want to Help?"), br(),
                                                       tags$a(href="https://shiny.rstudio.com/",target="_blank","Developed in R-Shiny"), br(),
                            tags$a(href="https://github.com/mcSamuelDataSci/CACommunityBurden",target="_blank","GitHub Site")
                            
