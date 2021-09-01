@@ -16,6 +16,7 @@ source(paste0(myPlace,"/myFunctions/inputFunctions/input_functions.R"))
 
 shinyServer(function(input, output,session) {
 
+
   # Store current navID (big tabs) and tabID (subtabs) for use throughout Server
   current <- reactiveValues()
   
@@ -860,6 +861,63 @@ output$map_title <- renderUI({h4(strong(
 
 
 
+# URL to tabs
+
+# observe({
+#   query <- parseQueryString(session$clientData$url_search)
+#   print(names(query))
+#   print(query)
+#   query1 <- paste(names(query), query, sep = "=", collapse=", ")
+#   print(query1)
+#   if(query1 == "tab=education trend"){
+#     updatePanels(navsID = "trends", tabID = "educationTrendTab")
+#   }
+#   
+#   if(query1 == "tab=disparities"){
+#     updatePanels(navsID = "disparities", tabID = "disparitiesTab")
+#   }
+#   
+#   if(query1 == "tab=sex trend, county=alameda") {
+#     updatePanels(navsID = "trends", tabID = "sexTrendTab")
+#     updateSelectInput(session, inputId = "myLHJ", selected = "Alameda")
+#   }
+# })
+
+
+observe({
+  query <- parseQueryString(session$clientData$url_search)
+  
+  storeQueryNames <- names(query)
+  
+  if ('tab' %in% storeQueryNames) {
+    
+    tFilter <- queryLink_tab %>% filter(queryName == query$tab) 
+    
+    updatePanels(navsID = pull(tFilter, tabID), tabID = pull(tFilter, sub_tabID))
+    
+  }
+  
+  if ('cause' %in% storeQueryNames) {
+    
+    updateSelectInput(session, "myCAUSE", selected = str_to_upper(query$cause))
+    
+  }
+  
+  if ('county' %in% storeQueryNames) {
+    
+    queryCounty <- ifelse(query$county == 'california', 'CALIFORNIA', str_to_title(query$county))
+    updateSelectInput(session, inputId = 'myLHJ', selected = queryCounty)
+    
+  }
+  
+  # if ('measure' %in% storeQueryNames) {
+  #   
+  #   queryMeasure <- queryLink_measure %>% filter(queryName == query$measure) %>% pull(ccbShortName)
+  #   updateSelectInput(session, inputId = 'myMeasure', selected = queryMeasure)
+  #   
+  # }
+
+})
 
 
 

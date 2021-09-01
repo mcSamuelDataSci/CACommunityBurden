@@ -447,6 +447,10 @@ lList         <- sort(as.character(unique(datCounty$county)))
 lListNoState  <- lList[lList != STATE]
 
 
+# ----- Query Parameter Linkage - Link to tabs, views -------------
+
+queryLink_tab <- readxl::read_xlsx(path(myPlace, 'myInfo/queryParameter_Linkage.xlsx'), sheet = 'tab')
+# queryLink_measure <- readxl::read_xlsx(path(myPlace, 'myInfo/queryParameter_Linkage.xlsx'), sheet = 'measure')
 
 # --- END ---------------------------------------------------------------------
 # ----------------------------------------------------------------------------
