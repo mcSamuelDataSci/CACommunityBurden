@@ -6920,6 +6920,61 @@ button.btn.checkbtn.btn-default.active {
   background-color: #051DA5;
 }
 
+
+
+/* State of Public Health Dropdown  */
+
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: #694D75;
+  color: white;
+  padding: 16px 22px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+#sophDropdown.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+#sophDropdownContent.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+#sophDropdownContent.dropdown-content a {
+  color: black;
+  padding: 16px 22px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+#sophDropdownContent.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+#sophDropdown.dropdown:hover #sophDropdownContent.dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+#sophDropdown.dropdown:hover .dropbtn {
+  background-color: #694D75;
+}
+
+
 /*
 .box-header {
   color: white;

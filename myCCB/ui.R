@@ -288,6 +288,19 @@ shinyUI(
                            if (whichData == "fake") { helpText(appTextL$textNote.fake,style="color:red")},
                            br(),br(),
                            
+                           
+                           HTML("<div id='sophDropdown' class='dropdown'>
+                             <button class='dropbtn'>STATE OF PUBLIC HEALTH</button>
+                             <div id = 'sophDropdownContent' class='dropdown-content'>
+                               <a href='SOPH/2021/Full.HTML' target = '_blank' rel = 'noopener noreferrer'>2021</a>
+                               <a href='SOPH/2020/Handout.PDF' target = '_blank' rel = 'noopener noreferrer'>2020</a>
+                               <a href='SOPH/2019/Handout.PDF' target = '_blank' rel = 'noopener noreferrer'>2019</a>
+                             </div>
+                             </div>"
+                             ),
+                           
+                           br(), br(), br(), 
+                           
                            actionButton("multipleMeasures", 
                                         HTML("<center>See Multiple Measures of<br/>Health in Your County</center>"), 
                                         style=myMeasuresButtonSty,
