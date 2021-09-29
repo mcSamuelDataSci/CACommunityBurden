@@ -290,7 +290,7 @@ shinyUI(
                            
                            
                            HTML("<div id='sophDropdown' class='dropdown'>
-                             <button class='dropbtn'>STATE OF PUBLIC HEALTH</button>
+                             <button class='dropbtn'>STATE OF PUBLIC HEALTH REPORT</button>
                              <div id = 'sophDropdownContent' class='dropdown-content'>
                                <a href='SOPH/2021/Full.HTML' target = '_blank' rel = 'noopener noreferrer'>2021</a>
                                <a href='SOPH/2020/Handout.PDF' target = '_blank' rel = 'noopener noreferrer'>2020</a>
