@@ -4,11 +4,19 @@
 
 # ------------------------------------------------------------------------------------------------------------------
 
-## FIX yearG3
+
+
+##### IS THIS ONLY USED FOR hosp/ed/death?  if so, change name?
+### issue of year and yearG3.....
+
+
+
+
 
 raceSort <- raceLink %>%
   filter(!raceCode %in% c("Other", "Unknown", "Total")) %>%
-  pull(raceCode)
+  pull(raceNameShort)
+  #pull(raceCode)
 
 ageSort  <- ageLink$ageName
 
@@ -113,7 +121,7 @@ makePlotRank <- function(myDataSet     = NA,
   
   # Plot set up ------------------------------------------------------------------------------------
   
-  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", yearGrp_hosp_ed_deaths)
+  myTitle <- paste0(myData," by Cause by ", myStrata, ", ", yearGrp3_hosp_ed)
   #myTitle <- wrap.labels(myTitle, 50)
   
   mySubTitle <- paste0("In ", myCounty, ", Ordered by: ", mySort) 
@@ -155,11 +163,13 @@ makePlotRank <- function(myDataSet     = NA,
  
   
   
-   tDat_topN <- tDat_topN %>% filter(N > 0)  %>% mutate(MAINSTRATA = paste(" ",MAINSTRATA),
-                                                        cRate = round(cRate,1),
-                                                        measure = round(measure,1))  %>% 
-                               select(county, MAINSTRATA, causeName, causeNameShort, measure) %>%
-     rename(!!myMeasure:=measure)
+   tDat_topN <- tDat_topN %>% 
+                  filter(N > 0) %>% 
+                  mutate(MAINSTRATA = paste(" ",MAINSTRATA),
+                         cRate      = round(cRate,1),
+                         measure    = round(measure,1))  %>% 
+                  select(county, MAINSTRATA, causeName, causeNameShort, measure) %>%
+                  rename(!!myMeasure:=measure)
   
    #list(plotL= plotX, dataL=dataTable, loadData = tDat_topN)
    list(plotL= plotX, dataL=tDat_topN)
@@ -175,9 +185,6 @@ makePlotRank <- function(myDataSet     = NA,
 # ========================================================================================================
 # ========================================================================================================
 
-# t1 <- 5
-# t2 <- 10
-
 
 
 
@@ -188,6 +195,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
     t.dat   <-  dataSet %>% 
       mutate(measure = get(myMeasure)) %>%
       filter(MAINSTRATA %in% mySort, county == myCounty) %>% 
+      filter(causeName != "Liveborn") %>%
       arrange(-measure) %>% 
       slice(1:myTopN)
     
@@ -235,9 +243,18 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
   d.2 <- c.2$dataL %>% mutate(dataType = "Hospitalizations")
   d.3 <- c.3$dataL %>% mutate(dataType = "ED Visits")
   
-  df <- bind_rows(d.1, d.2, d.3) %>%
-    select(year = yearG3, county, MAINSTRATA, causeName, dataType, !!myMeasure) %>%
-    mutate(year = ifelse(is.na(year), "2019", "2017-2019")) # FIX THIS upstream
+  
+  
+  #####################  CHECK yearG3 and year here......
+  ### what about general use....?
+    df <- bind_rows(d.1, d.2, d.3)   %>%
+    select(yearG3, county, MAINSTRATA, causeName, dataType, !!myMeasure) 
+  #%>%
+  #  mutate(year = ifelse(is.na(year), "2019", "2017-2019")) # FIX THIS upstream
+  
+  
+  
+  
   
   
   # https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html
@@ -246,7 +263,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
   r1       <- plot_grid(c.1$plotL,c.2$plotL,c.3$plotL,nrow=1)
   c.legend <- get_legend(t.chart(d2,"Hospitalizations", myTopN = 100, legend = TRUE)$plotL)
   # c.legend <- get_legend(t.chart(hosp_age,"Deaths",myTopN = 100,legend=TRUE))
-  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",yearGrp_hosp_ed_deaths),size=myTextSize, color="blue") 
+  title    <- ggdraw() + draw_label(paste0("Leading Causes of Death, Hospitalization, and ED Visits for ",mySort," ",myStrata," in ",myCounty,": ",yearGrp3_hosp_ed),size=myTextSize, color="blue") 
   
   pPlot <- plot_grid(title,r1,c.legend,nrow=3,rel_heights = c(.2,1,.25))
   

@@ -6928,7 +6928,7 @@ button.btn.checkbtn.btn-default.active {
 .dropbtn {
   background-color: #694D75;
   color: white;
-  padding: 16px 22px;
+  padding: 16px;
   font-size: 14px;
   border: none;
   cursor: pointer;
@@ -6956,7 +6956,7 @@ button.btn.checkbtn.btn-default.active {
 /* Links inside the dropdown */
 #sophDropdownContent.dropdown-content a {
   color: black;
-  padding: 16px 22px;
+  padding: 16px;
   text-decoration: none;
   display: block;
 }

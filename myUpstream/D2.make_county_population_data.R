@@ -139,6 +139,22 @@ saveRDS(popCounty65,          file = paste0(ccbUpstream,"/upData/popCounty65.RDS
 saveRDS(popCounty65_RE_3year, file = paste0(ccbUpstream,"/upData/popCounty65_RE_3year.RDS"))
 
 
+
+# Region
+regionLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
+  select(county = countyName, region = FUSION)
+
+popRegion <- popCounty %>%
+  ungroup() %>%
+  left_join(regionLink, by = "county") %>%
+  mutate(region = ifelse(county == "CALIFORNIA", "CALIFORNIA", region)) %>%
+  group_by(year, region, raceCode, ageGroup, sex) %>%
+  summarise(population = sum(population, na.rm = T))
+
+# options(scipen = 99)
+
+saveRDS(popRegion,          file = paste0(ccbUpstream,"upData/popRegion.RDS"))
+
 # = DCDC ============================================================================================================
 
 # Prior to January 2021, county population data was based on a data set complied by CID/DCDC/STD Control

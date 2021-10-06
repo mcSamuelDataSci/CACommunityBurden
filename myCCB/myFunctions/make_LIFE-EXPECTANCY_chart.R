@@ -54,11 +54,11 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
   
 
  dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult, raceNameShort %in% myRace) %>% 
-             mutate(lineLabel = paste(raceNameShort,"-",sex))
+             mutate(lineLabel = ifelse(sex == "Total", raceNameShort, paste(raceNameShort,"-",sex)))
 
 
 
- tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceNameShort, y=ex, fill=sex)) + 
+ tplot_bar <- ggplot(data=filter(dat.1, year== 2019, nyrs == myYearGrouping), aes(x=raceNameShort, y=ex, fill=sex)) + 
                 geom_bar(stat = "identity",position="dodge")  +
                 scale_fill_manual(values = genderColors) + 
                 labs(x = "Race/Ethnicity", y = "Life Expectancy at Birth", x = "Year") +
@@ -119,7 +119,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
  
  tplot<- ggplot(data=dat.1, aes(x=year, y=ex)) +                     # , nyrs == 1
                  geom_line(size=1.6,aes(color=raceNameShort,linetype=sex)) +
-                 geom_point(shape = 21, size=2.5, aes(color = raceNameShort), fill = "white")  +
+                 # geom_point(shape = 21, size=2.5, aes(color = raceNameShort), fill = "white")  +
                  ylim(62, 93) +
                  scale_x_continuous(minor_breaks=myBreaks,breaks=myBreaks,
                                     expand = expansion(mult = c(0, 0), add = c(1, 5)), # lower-limit: 2000 - (2018 - 2000) * 0 - 1... upper-limit: 2018 + (2018 - 2000) * 0 + 5

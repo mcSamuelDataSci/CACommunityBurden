@@ -69,17 +69,38 @@ STATE       <- "CALIFORNIA"
 
 # True if app should include 2020 data; False to exclude
 # SET TO FALSE BEFORE PUBLIC APP GETS UPDATED ON THE 1ST OF EVERY MONTH
-incRecentYearData <- T 
-currentYear <- ifelse(incRecentYearData, 2020, 2019)
+# hmmmmmmmmmmmmmmmmmm
 
-incRecent_MultiYearData <- T
-yearGrp5      <- ifelse(incRecent_MultiYearData, "2016-2020", "2015-2019")
-yearGrp3      <- ifelse(incRecent_MultiYearData, "2018-2020", "2017-2019")
+
+
+currentYear          <- 2020
+currentYear_hosp_ed  <- 2020
+
+incRecentYearData <- T 
+currentYear <- ifelse(incRecentYearData, currentYear, 2019)
+
+incRecent_MultiYearData <- T   
+
+t.year3 <- currentYear - 2
+t.year5 <- currentYear - 4
+
+yearGrp3 <- paste0(t.year3, "-", currentYear)
+yearGrp5 <- paste0(t.year5, "-", currentYear)
+
+
+###### USE THIS EVERYWHERE......
+# yearGrp5      <- ifelse(incRecent_MultiYearData, "2016-2020", "2015-2019")
+# yearGrp3      <- ifelse(incRecent_MultiYearData, "2018-2020", "2017-2019")
 minYear      <- 2000
 maxYear      <- currentYear
 
-# For Hosp_ED_Deaths
-yearGrp_hosp_ed_deaths <- "2017-2019"
+
+# For Hosp_ED_Deaths  
+# use this FOR ALL combine  hosp/ed/Death work
+# AND maybe add incRecent year type switch
+yearGrp3_hosp_ed     <- paste0(currentYear_hosp_ed-2, "-", currentYear_hosp_ed)
+
+
 
 yF           <- 100000  # rate constant 
 

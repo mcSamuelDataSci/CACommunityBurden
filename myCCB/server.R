@@ -129,11 +129,11 @@ myModal <- function(whatInfo) {
 #}, once = TRUE)  # Set once to TRUE to make it only happen once
 
 # Option 2 ---
-observe({
-  if (current$tab == "hospitalDischargeTab") {
-    myModal(appTextL$oshpdModal)
-  }
-})  # Set once to TRUE to make it only happen once
+# observe({
+#   if (current$tab == "hospitalDischargeTab") {
+#     myModal(appTextL$oshpdModal)
+#   }
+# })  # Set once to TRUE to make it only happen once
 
 observe({
   if (current$tab == "educationTrendTab") {

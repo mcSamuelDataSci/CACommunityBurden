@@ -1,25 +1,37 @@
+# link via code to current oshpd year etc.
+
 ######  CELL SUPRESSION
 
 # OSHPD sheet on coding of charges:
 # https://oshpd.ca.gov/ml/v1/resources/document?rs:path=/Data-And-Reports/Documents/Submit/Patient-Level-Administrative/IP/IP-Total-Charges.pdf
+
+#
+# https://oshpd.ca.gov/wp-content/uploads/2021/07/PDD_DataDictionary_2020.pdf
+
+#  https://www.hcup-us.ahrq.gov/tools_software.jsp
+
 
 # ====================================================================================================
 # "E3.Process_OSHPD_data.R" file                                                                     |
 #                                                                                                    |
 # ====================================================================================================
 
+
+# A ------
 #--- GET STANDARDS AND SET LOCATIONS-----------------------------------------------------------------------
 
 server    <- FALSE
-readSAS   <- FALSE
 whichData <- "real"   # "fake"
 
 if (!server) source           ("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if  (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
-# per Standards, currentYear is "currentYear  <- 2019"; edit here as needed
-currentYear <- currentYear
-currentYear <- 2019
+# # per Standards, currentYear is "currentYear  <- 2019"; edit here as needed
+# currentYear <- currentYear
+# currentYear <- 2020
+# yearGrp_hosp_ed_deaths     <- yearGrp_hosp_ed_deaths   # hack to check and fix....
+# currentYear_hosp_ed
+
 
 raceLink   <-  raceLink %>%
                  select(raceCode, OSHPD, raceNameShort) %>%
@@ -32,29 +44,97 @@ source(paste0(standardsPlace,"ageChop.R"))
 source(paste0(standardsPlace,"populationExtract.R"))
 
 
-#---CONVERT SAS TO RDS HERE----------------------------------------------------------------
-
-if (readSAS) {
-
-  library(haven)
+ccsMap <- read_excel(paste0(ccbUpstream,"upstreamInfo/ccs_dx_icd10cm_2019_1-BETA.xlsx"))  %>%
+                       select(icd10    = "'ICD-10-CM CODE'",
+                              ccscode  = "'CCS CATEGORY'", 
+                              ccsname  =  "'CCS CATEGORY DESCRIPTION'") %>%
+                       mutate(icd10    = str_remove_all(icd10,"'"),
+                              ccscode  = str_remove_all(ccscode,"'")
+                            )
   
-  pdd.work  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work.sas7bdat") )
+  ccsMap    <- ccsMap %>% select(-ccsname)
+
+  
+  
+  
+# B ------   
+#--- READ RAW ANNUAL SAS FILES, TIDY UP, JOIN YEARS, OUTPUT R DATA SETS ---------------------------------------------------------------
+
+library(haven)  
+  
+### NOTE different names for dx_prin and diag_p in ED and PDD sets
+
+  
+  
+# Hospital Discharge --------------------------------  
+  
+  
+# 2020 processing -- 'back calculate' ICD10-CM to CSS
+
+pdd.2020         <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2020.sas7bdat") )
+  
+pdd.2020.work   <- pdd.2020  %>% rename(icd10 = diag_p) %>%
+                        left_join(ccsMap, by="icd10") %>% 
+                        mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+                        rename(ccs_diagP = ccscode) %>%
+                        rename(diag_p = icd10)
+  
+# Map ICD-10-CM to css in odiag1 - odiag24 
+for (i in 1:24) {
+    column_name <- paste0("odiag", i)
+    ccs_column_name <- paste0("ccs_odiag", i)
+    
+    pdd.2020.work <- pdd.2020.work %>%
+      mutate(icd10 = !!sym(column_name)) %>%
+      left_join(ccsMap, by="icd10") %>% 
+      mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+      rename(!!sym(ccs_column_name) := ccscode) %>%
+      select(-icd10)
+  }
+  
+pdd.2020.work <- pdd.2020.work %>% select(-(odiag1:odiag24))                   
+  
+
+pdd.2017       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
+  mutate(year = 2017)
+
+pdd.2018       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
+  mutate(year = 2018)
+
+pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") ) %>%
+  mutate(year = 2019) %>% rename(ccs_diagP = ccs_diagp)
+
+
+## error in CCS code from OSHPD  -- there is no CCS cod 261, but occurs for the 363 records -- likely should have been 2617
+
+
+# pdd.work <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_work.sas7bdat") )
+ 
+######## THINK about issue here, where three most recent years are hardwired together
+
+ pdd.work <- bind_rows(pdd.2018, pdd.2019, pdd.2020.work)
+ pdd.work <- bind_rows(pdd.2018, pdd.2019, pdd.2017)
+ 
+
   ###---------------------------------------------------------
   ### race_grp changed in 2019 to include NHPI and Multiracial
   ### prior to 2019 code 6 was "other"; in 2019 other is "8"
   ### line below standardizes that
+  
+  
   pdd.work$race_grp[pdd.work$year %in% 2017:2018 & pdd.work$race_grp == 6] <- 8
   
   pdd.work  <- pdd.work %>%
-                  rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP)  %>%
-                  mutate(causeCode = str_pad(CCS, 5,"left",pad="o"))  %>%
-                  mutate(sex = ifelse(sex=="M", "Male", ifelse(sex=="F", "Female", "unk")))
+    rename(pCounty = patcnty, age = agyrdsch, CCS=ccs_diagP)  %>%
+    mutate(causeCode = str_pad(CCS, 5,"left",pad="o"))  %>%
+    mutate(sex = ifelse(sex=="M", "Male", ifelse(sex=="F", "Female", "unk")))
   
   # Full PDD data
   saveRDS(pdd.work, file = paste0(securePlace, "myData/oshpd_pdd.RDS"))
   
   # Current year PDD data
-  pdd.currentYear <- pdd.work %>% filter(year==currentYear)
+  pdd.currentYear <- pdd.work %>% filter(year==currentYear_hosp_ed)
+  
   saveRDS(pdd.currentYear, file = paste0(securePlace, "myData/oshpd_pdd_currentYear.RDS"))
   
   # Tiny sample of current year data
@@ -65,22 +145,54 @@ if (readSAS) {
   pdd.small <- pdd.work %>% select(-c(oshpd_id,los:msdrg,CCS:ccs_odiag24))
   saveRDS(pdd.small, file = paste0(securePlace, "myData/oshpd_pdd_small.RDS"))
   
-  # Full ED data
-  oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
-  saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
-  
-  
-  
+  ###### NOT updated to 2020!!!!!!!!!!!!!!!!!!!
   # PDD data with all ICD-10-CM diagnoses for Mental Health Brief 
   pdd.workMH  <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019_all_diag.sas7bdat") )
   saveRDS(pdd.workMH, file = path(securePlace, "myData/oshpd_pdd_2019_ALL_dx.RDS"))
   
   
-}  
+  
+# Emergency Department --------------------------------------------------------------------------  
 
+  
+  
+ed.2020         <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2020.sas7bdat") )
 
+ed.2020.work   <- ed.2020  %>% rename(icd10 = dx_prin) %>%
+    left_join(ccsMap, by="icd10") %>% 
+    mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+    rename(ccs_dx_prin = ccscode) %>%
+    rename(dx_prin = icd10) %>%
+    mutate(year=2020)
+
+  ed.2017       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2017.sas7bdat") ) 
+  ed.2018       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2018.sas7bdat") ) 
+  ed.2019       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2019.sas7bdat") ) 
+  
+  
+  #ed.work <- bind_rows(ed.2017, ed.2018, ed.2019)
+  ed.work <- bind_rows(ed.2018, ed.2019, ed.2020.work)
+  
+  # Full ED data
+  # oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
+  # saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
+  saveRDS(ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
+  
+  
+  
+  
+  
+  
+  
+  
+  
 #------------------------------------------------------------------------------------------
-#---PROCESS DATA ONLY FOR AGE/RACE FOCUS HERE FOR -----------------------------------------
+
+
+
+# C process data for hosp/ed/death tabs   
+  
+  #---PROCESS DATA ONLY FOR AGE/RACE FOCUS HERE FOR -----------------------------------------
 
 #-- PDD DATA ---------------
 
@@ -99,6 +211,7 @@ pdd0 <-  pdd0 %>%
 # write_csv(tempHeartFailure,"PDD_heart_failure_65plus.csv")
 
 
+
 pdd1 <- bind_rows(pdd0,mutate(pdd0,countyName = "CALIFORNIA"))
 
 hospYear <-  pdd1 %>%
@@ -107,27 +220,34 @@ hospYear <-  pdd1 %>%
   select(year,  county = countyName, causeCode, n_hosp) %>%
   ungroup()
 
+#yearGrp3_hosp_ed <- "2017-2019"
+
+
 hospAge  <- pdd1 %>%
   mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%
   group_by(countyName, ageGroup, causeCode) %>%
   summarise(n_hosp=n()) %>%
   select(causeCode, county = countyName, ageGroup, n_hosp) %>%
   mutate(sex = "Total") %>% 
-  mutate( yearG3 = yearG3) %>%   #HACK TO FIX Eventually
+  mutate( yearG3 = yearGrp3_hosp_ed) %>%   #HACK TO FIX Eventually
   ungroup()
 
-saveRDS(hospAge, paste0(ccbData,"real/age_race_focus_data/hospAge.RDS"))
+saveRDS(hospAge, paste0(ccbData,"real/age_race_focus_data/inData/hospAge.RDS"))
 
 hospRace  <- pdd1 %>%
   group_by(countyName, raceCode, causeCode) %>%
   summarise(n_hosp=n()) %>%
   select(causeCode, county = countyName, raceCode, n_hosp) %>%
   mutate(sex = "Total") %>% 
-  mutate( yearG3 = yearGrp3) %>%   #HACK TO FIX Eventually
+  mutate( yearG3 = yearGrp3_hosp_ed) %>%   #HACK TO FIX Eventually
   ungroup()
-saveRDS(hospRace, paste0(ccbData,"real/age_race_focus_data/hospRace.RDS"))
+saveRDS(hospRace, paste0(ccbData,"real/age_race_focus_data/inData/hospRace.RDS"))
 
 #-- ED DATA ----------------
+
+
+
+
 
 ed0  <- readRDS(paste0(securePlace,"/myData/oshpd_ed.RDS")) 
 ed0  <- ed0 %>% rename(age = agyrserv, pCounty = patco, CCS = ccs_dx_prin)
@@ -148,26 +268,35 @@ edYear <- ed1 %>%
 
 edAge  <- ed1 %>%
   mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%
-  group_by(countyName, ageGroup, CCS) %>%
+  group_by(countyName, ageGroup, causeCode) %>%
   summarise(n_ED=n()) %>%
-  select(causeCode = CCS, county = countyName, ageGroup, n_ED) %>%
+  select(causeCode, county = countyName, ageGroup, n_ED) %>%
   mutate(sex = "Total") %>%
-  mutate( yearG3 = yearGrp3) %>%   #HACK TO FIX Eventually
+  mutate( yearG3 = yearGrp3_hosp_ed) %>%   #HACK TO FIX Eventually
   ungroup()
-saveRDS(edAge, paste0(ccbData,"real/age_race_focus_data/edAge.RDS"))
+saveRDS(edAge, paste0(ccbData,"real/age_race_focus_data/inData/edAge.RDS"))
 
 edRace  <- ed1 %>%
-  group_by(countyName, raceCode, CCS) %>%
+  group_by(countyName, raceCode, causeCode) %>%
   summarise(n_ED=n()) %>%
-  select(causeCode = CCS, county = countyName, raceCode, n_ED) %>%
+  select(causeCode , county = countyName, raceCode, n_ED) %>%
   mutate(sex = "Total") %>% 
-  mutate( yearG3 = "2016-2018") %>%   #HACK TO FIX Eventually
+  mutate( yearG3 = yearGrp3_hosp_ed) %>%   #HACK TO FIX Eventually
   ungroup()
-saveRDS(edRace, paste0(ccbData,"real/age_race_focus_data/edRace.RDS"))
+saveRDS(edRace, paste0(ccbData,"real/age_race_focus_data/inData/edRace.RDS"))
+
+
+
+
 
 hosp_ED_year <- full_join(hospYear, edYear, by =c("year", "county", "causeCode"))
-saveRDS(hosp_ED_year, paste0(ccbData,"real/hosp_ED_year.RDS"))
+saveRDS(hosp_ED_year, paste0(ccbData,"real/age_race_focus_data/hosp_ED_year.RDS"))
 
+
+
+
+
+# D ###############
 
 #==========================================================================================
 #==========================================================================================
@@ -219,9 +348,14 @@ for (i in 1:nrow(hospCauseLink)) {
     !!hospCauseLink$causeCode[i] := ifelse(grepl(hospCauseLink$causeCode[i], all_CCS_One_String), 1, 0)) 
   # !!hospCauseLink$ccsCodePaded[i] := ifelse(apply(oshpd16_new[,2:26], 1, function(r) any(r == hospCauseLink$causeCode[i])), 1, 0)) #SLOWER 
 }
+
+
+
+
 end_time <- Sys.time()
 end_time - start_time
 #Time difference of 45.19121 mins
+#Time difference of 38.02718 mins
 
 # discard bunch of variable for efficient processing
 pddAny <- select(pddAny,-c(CCS:ccs_odiag24, all_CCS_One_String))
@@ -285,6 +419,9 @@ saveRDS(ccsAnyWork, file = path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds
 # ---------------------------------------------------------------------------------------------------------------------
 # start OSHPD PRIMARY work here
 
+
+
+###################  shouldn't really need to read in again, but....
 # pdd1   <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_currentYear_sample.RDS")) 
   pdd1   <- readRDS(paste0(securePlace,"/myData/oshpd_pdd_currentYear.RDS")) 
 
@@ -419,7 +556,7 @@ total_sum_age <- filter(total_sum_age, !is.na(county)) #removed records with mis
 
 #joining population data and standard population data with summary hosp/charges by age and sex
 
-popCountySexAgeG <- popCountySexAgeG %>% filter(year == currentYear)
+popCountySexAgeG <- popCountySexAgeG %>% filter(year == currentYear_hosp_ed)
 
 ageCounty <- full_join(total_sum_age, popCountySexAgeG, by = c("county", "year", "sex", "ageGroup")) %>% 
               full_join(ageStandard[,c("ageLabel", "US2000POP")], by = c("ageGroup"="ageLabel")) 

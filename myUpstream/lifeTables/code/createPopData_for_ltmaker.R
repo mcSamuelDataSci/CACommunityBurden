@@ -15,7 +15,7 @@ myYear <- 2020
 
 # --- Set necessary paths ---------------------------------------------------------------------------------
 
-server <- F
+server <- T
 if (server) {
   source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 } else {

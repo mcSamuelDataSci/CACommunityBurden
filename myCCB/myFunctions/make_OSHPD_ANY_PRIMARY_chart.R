@@ -32,17 +32,38 @@ if (1==2) {
   myCounty  <- "CALIFORNIA"
   myN = 10
   
+  
 }
 
 
 anyprimary1 <- function(myCounty = "CALIFORNIA",  myPosition = "nPrimary", myN = 10, mySex = "Total"){
-  
-primary_any_NOPREG <- primary_any %>% filter(birth == "FALSE") %>%
-                       filter(sex=="Total", county == myCounty) 
+
+  #   
+# primary_any_NOPREG <- primary_any %>% filter(birth == "FALSE") %>%
+#                        filter(sex=="Total", county == myCounty) 
+# 
+# 
+# plot_data.0 <- primary_any_NOPREG %>% 
+#   pivot_longer(cols=other:primary,names_to = "Measure") %>% ungroup()
+
+
+
+
+
+
+
+primary_any_NOPREG <- primary_any %>% 
+  filter(sex=="Total", county == myCounty) 
 
 
 plot_data.0 <- primary_any_NOPREG %>% 
   pivot_longer(cols=other:primary,names_to = "Measure") %>% ungroup()
+
+
+
+
+
+
 
 plot_data.1 <- plot_data.0 %>% 
                  arrange(desc(get(myPosition))) %>%
@@ -54,9 +75,13 @@ myPlot <- ggplot(plot_data.1, aes(x = reorder(causeName,get(myPosition)), y = va
     scale_y_continuous(labels = scales::comma) + #numbers shown with commas rather than scientific notation
   scale_x_discrete(labels = scales::wrap_format(50)) +
   # theme(axis.text.x = element_text(angle = 90, hjust = 1))
-  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+  theme( plot.title.position = "plot",
+         plot.title = element_text( margin=margin(0,0,30,0)),
+         axis.text.x = element_text(angle = 90, hjust = 1), 
         axis.title=element_blank(), axis.text = element_text(size = rel(1.5)), 
-        legend.text = element_text(size = rel(1.2)), legend.title = element_text(size = rel(1.2)))
+        legend.text = element_text(size = rel(1.2)), legend.title = element_text(size = rel(1.2)))  +
+  labs(title=paste("Rankings of PRIMARY and all OTHER Conditions associated with Hospitalizaions, California, ",currentYear_hosp_ed)) 
+  
 
 list(plotL = myPlot, dataL = plot_data.1)
 

@@ -57,11 +57,14 @@ myVar = "CCS-Beta"
 # Creating ggplot facet grid plot
 myPlot <- ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +
+     labs(title=paste("Rankings of Causes of Hospitalizaions, Lengths of Stay, and Associated Charges, California, ",currentYear_hosp_ed)) +
      facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
-       theme_bw( ) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes   # base_size = 25
+       #theme_bw( ) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes   # base_size = 25
      scale_y_continuous(labels = comma) + #numbers shown with commas rather than scientific notation
      scale_x_discrete(labels = scales::wrap_format(50)) + #x-axis is condition label--wrapping text so it stacks on top of each other
-     theme(axis.title.y = element_blank(), #removes nameOnly label
+     theme(  plot.title.position = "plot",
+             plot.title = element_text( margin=margin(0,0,30,0)),
+             axis.title.y = element_blank(), #removes nameOnly label
      axis.title.x = element_blank(), #removes measure label
      axis.text.y = element_text(size = myAxisSize), #increases size of disease condition labels
      axis.text.x = element_text(size = myAxisSize, face="bold",angle = 90, hjust = 1), #controls size of measure labels

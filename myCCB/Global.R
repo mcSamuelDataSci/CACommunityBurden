@@ -190,9 +190,6 @@ popData_trends   <- readRDS(path(ccbData,"popData_SexRaceAge_Trends.RDS"))
 
 
 
-
-
-
 #FIX THIS --- OSHPD !!!!
 # mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
 # calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
