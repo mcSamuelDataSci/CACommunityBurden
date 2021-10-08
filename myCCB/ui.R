@@ -502,7 +502,7 @@ shinyUI(
                                                                          style = "padding: 6px; background-color: #D1D1D1; color: black;"
                                                                          ),
                                                             hr(),
-                                                            highchartOutput("demoPop_RacePie"),
+                                                            plotlyOutput("demoPop_RacePie"),
                                                             hidden(DT::dataTableOutput("demoPop_RacePie_table"))
                                                           )),
                                                    column(width = 6,
@@ -519,7 +519,7 @@ shinyUI(
                                                             actionButton("tableButton_demoPop_Pyramid", "Table", icon("table"),
                                                                          style = "padding: 6px; background-color: #D1D1D1; color: black;"),
                                                             hr(),
-                                                            highchartOutput("demoPop_Pyramid"),
+                                                            plotlyOutput("demoPop_Pyramid"),
                                                             hidden(DT::dataTableOutput("demoPop_Pyramid_table"))
                                                           ))
                                                  ),
@@ -539,7 +539,7 @@ shinyUI(
                                                        actionButton("tableButton_demoPop_RaceAge", "Table", icon("table"),
                                                                     style = "padding: 6px; background-color: #D1D1D1; color: black;"),
                                                        hr(),
-                                                       highchartOutput("demoPop_RaceAge"),
+                                                       plotlyOutput("demoPop_RaceAge"),
                                                        hidden(DT::dataTableOutput("demoPop_RaceAge_table"))
                                                        )
                                                      ),
@@ -566,7 +566,7 @@ shinyUI(
                                                             br(),
                                                             br(),
                                                             hr(),
-                                                            highchartOutput("demoPop_Trend"),
+                                                            plotlyOutput("demoPop_Trend"),
                                                             hidden(DT::dataTableOutput("demoPop_Trend_table"))
                                                           )
                                                    )

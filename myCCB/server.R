@@ -665,8 +665,8 @@ observeEvent(current$tab,{
 
 # Race/Ethnicity Pie Chart
 
-demographics1Step <- reactive(demoPop_RacePie(myCounty = input$myLHJ, myYear = input$myYearDemo))
-output$demoPop_RacePie <- renderHighchart(demographics1Step()$plotL)
+demographics1Step <- reactive(make_demoPop_RacePie(myCounty = input$myLHJ, myYear = input$myYearDemo))
+output$demoPop_RacePie <- renderPlotly(demographics1Step()$plotL)
 output$demoPop_RacePie_table <- DT::renderDataTable(demographics1Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_RacePie,{
@@ -685,7 +685,7 @@ observeEvent(input$tableButton_demoPop_RacePie,{
 # Population Pyramid Bar Chart
 
 demographics2Step <- reactive(make_demoPop_Pyramid(myCounty = input$myLHJ, myYear = input$myYearDemo))
-output$demoPop_Pyramid <- renderHighchart(demographics2Step()$plotL)
+output$demoPop_Pyramid <- renderPlotly(demographics2Step()$plotL)
 output$demoPop_Pyramid_table <- DT::renderDataTable(demographics2Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_Pyramid,{
@@ -702,8 +702,8 @@ observeEvent(input$tableButton_demoPop_Pyramid,{
 
 # Race/Ethnicity & Age Chart
 
-demographics3Step <- reactive(demoPop_RaceAge(myCounty = input$myLHJ, myYear = input$myYearDemo))
-output$demoPop_RaceAge <- renderHighchart(demographics3Step()$plotL)
+demographics3Step <- reactive(make_demoPop_RaceAge(myCounty = input$myLHJ, myYear = input$myYearDemo))
+output$demoPop_RaceAge <- renderPlotly(demographics3Step()$plotL)
 output$demoPop_RaceAge_table <- DT::renderDataTable(demographics3Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_RaceAge,{
@@ -721,7 +721,7 @@ observeEvent(input$tableButton_demoPop_RaceAge,{
 # Trends
 
 demographics4Step <- reactive(make_demoPop_trend(myCounty = input$myLHJ, trendType = input$plotSelect_demoPop_Trend))
-output$demoPop_Trend <- renderHighchart(demographics4Step()$plotL)
+output$demoPop_Trend <- renderPlotly(demographics4Step()$plotL)
 output$demoPop_Trend_table <- DT::renderDataTable(demographics4Step()$tableL, server = F)
 
 observeEvent(input$plotButton_demoPop_Trend,{
