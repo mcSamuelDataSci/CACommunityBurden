@@ -126,7 +126,7 @@ library(shinydashboard)
 library(DT) # for better rendering of Data Table  https://community.rstudio.com/t/data-table-issue-while-rendering-the-shiny-page-datatables-warning-table-id-datatables-table-0-requested-unknown-parameter/44016/3
 library(cowplot)
 library(docxtractr)
-library(highcharter)
+# library(highcharter)
 
 
 # !!!!!!!!!!!!!!! THIS LINE ELIMIANTES DROPDOWNS
@@ -272,7 +272,7 @@ source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
 #source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
 #source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
 source(path(ccbFunctions, "make_rank_multibar_chart.R"))
-source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V3.R"))
+source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V2.R"))
 
 source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
 source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
