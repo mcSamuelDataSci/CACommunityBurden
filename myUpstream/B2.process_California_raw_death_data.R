@@ -36,7 +36,7 @@
 
 
 
-server <- T
+server <- F
 #CCB    <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -76,7 +76,7 @@ if (state.installation) {
  
   
   
- ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_063021.csv"), colClasses = "character") %>% filter(F24 == "2021")
+ ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_093021.csv"), colClasses = "character") %>% filter(F24 == "2021")
  ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")    
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
  ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        

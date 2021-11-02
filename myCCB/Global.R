@@ -46,7 +46,7 @@ viewType <- "Present"
 # TEXT Constants
 VERSION           <- "Version P3.0"
 criticalNumber    <- 11
-mTitle            <- "California Community Burden of Disease and Cost Engine"
+mTitle            <- "California Community Burden of Disease Engine"
 
 figureAttribution <- "California Department of Public Health"
 

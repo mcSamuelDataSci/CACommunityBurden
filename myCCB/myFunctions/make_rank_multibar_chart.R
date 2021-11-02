@@ -18,6 +18,7 @@ raceSort <- raceLink %>%
   pull(raceNameShort)
   #pull(raceCode)
 
+
 ageSort  <- ageLink$ageName
 
 makePlotRank <- function(myDataSet     = NA,
@@ -188,17 +189,21 @@ makePlotRank <- function(myDataSet     = NA,
 
 
 
-deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = "Los Angeles", myMeasure = "cRate") {
+deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = "Los Angeles", myMeasure = "cRate", myLiveborn  = FALSE) {
   
   t.chart <- function(dataSet,source, legend =FALSE, myTopN = 10) {
     
     t.dat   <-  dataSet %>% 
       mutate(measure = get(myMeasure)) %>%
       filter(MAINSTRATA %in% mySort, county == myCounty) %>% 
-      filter(causeName != "Liveborn") %>%
-      arrange(-measure) %>% 
+         arrange(-measure) %>% 
       slice(1:myTopN)
+   
     
+    if(!myLiveborn) t.dat <- filter(t.dat, causeName != "Liveborn")
+    
+    
+     
     if (myMeasure == "cRate") myYTitle <- "Crude Rate"
     if (myMeasure != "cRate") myYTitle <- myMeasure
     

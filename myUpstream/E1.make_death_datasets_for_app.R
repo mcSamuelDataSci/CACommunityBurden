@@ -43,7 +43,7 @@ standardsPlace <- "g:/FusionData/0.CCB/myCCB/Standards/"
 server <- F
 source(paste0(standardsPlace, "FusionStandards.R"))
 
-myCCBPlace <- paste0(myPlace, "myCCB/")
+myCCBPlace <- paste0(myPlace, "/")
 
 
 whichDat <- "real"
@@ -370,7 +370,7 @@ if (1 == 2) {
   # -- SAVE FILE FOR AD HOC ANALYSIS AND ERROR/ISSUE INVESTIGATION --------------
   
   
-  # saveRDS(cbdDat0,  file= path(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS"))
+  saveRDS(cbdDat0,  file= path(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS"))
   
 }
 

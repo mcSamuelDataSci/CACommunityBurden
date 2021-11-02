@@ -629,7 +629,7 @@ observeEvent(current$tab,{
   } } )
 
 
-deathHospEDStep  <- reactive(deathHospEDchart(myCounty = input$myLHJ, myStrata = input$myStrata, mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus))
+deathHospEDStep  <- reactive(deathHospEDchart(myCounty = input$myLHJ, myStrata = input$myStrata, mySort = input$mySort, myMeasure = input$myMeasureAgeRaceFocus, myLiveborn = input$myLiveborn))
 output$deathHospED <- renderPlot({
   
   # shiny::validate(
@@ -781,7 +781,7 @@ output$riskByCause <- renderPlotly({
 
 # Hospital Discharge --------------------------------------------------------------------------------------
 
-oshpdStep <- reactive(oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myVar))
+oshpdStep <- reactive(oshpdPlot1(input$myLHJ, input$myOSHPDtype, input$mySex, input$myN, input$myLiveborn))
 output$OSHPD1 <- renderPlot(oshpdStep()$plotL)
 
 observeEvent(current$tab,{
@@ -886,12 +886,12 @@ output$map_title <- renderUI({h4(strong(
 
 observe({
   query <- parseQueryString(session$clientData$url_search)
-  
+  names(query) <- str_to_lower(names(query))
   storeQueryNames <- names(query)
   
   if ('tab' %in% storeQueryNames) {
     
-    tFilter <- queryLink_tab %>% filter(queryName == query$tab) 
+    tFilter <- queryLink_tab %>% filter(queryName == str_to_lower(query$tab)) 
     
     updatePanels(navsID = pull(tFilter, tabID), tabID = pull(tFilter, sub_tabID))
     
@@ -905,16 +905,34 @@ observe({
   
   if ('county' %in% storeQueryNames) {
     
-    queryCounty <- ifelse(query$county == 'california', 'CALIFORNIA', str_to_title(query$county))
+    countyValue <- str_to_lower(query$county)
+    
+    queryCounty <- ifelse(countyValue == 'california', 'CALIFORNIA', str_to_title(query$county))
     updateSelectInput(session, inputId = 'myLHJ', selected = queryCounty)
+    
+  }
+  
+  if ('year' %in% storeQueryNames) {
+    
+    yearValue <- as.numeric(query$year)
+    
+    if ( !is.null(query$tab) ) {
+      
+      if ( str_to_lower(query$tab) == 'demographics' ) { updateSliderInput(session, inputId = 'myYearDemo', value = yearValue) } else { updateSliderInput(session, inputId = 'myYear', value = yearValue) }
+      
+    } else {
+      updateSliderInput(session, inputId = 'myYear', value = yearValue)
+    }
     
   }
   
   # if ('measure' %in% storeQueryNames) {
   #   
-  #   queryMeasure <- queryLink_measure %>% filter(queryName == query$measure) %>% pull(ccbShortName)
-  #   updateSelectInput(session, inputId = 'myMeasure', selected = queryMeasure)
+  #   measureValue <- str_to_lower(query$measure)
+  #   measureValue <- queryLink_measure %>% filter(queryName == query$measure) %>% pull(ccbShortName)
   #   
+  #   updateSelectInput(session, inputId = 'myMeasure', selected = queryMeasure)
+  # 
   # }
 
 })

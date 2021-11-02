@@ -1,6 +1,6 @@
 #OSHPD Chart 1 = ggplot version
 
-oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myVar = "CCS-Beta" ) {
+oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myLiveborn = FALSE) {
 
   
 if (1==2) {
@@ -8,12 +8,8 @@ if (1==2) {
   myOSHPDtype = "Number of Hospitalizations"
   mySex = "Total"
   myN = 10
-  myVar = "mdc"
-  myVar = "drg"
-  myVar = "CCS-Beta"
 }
   
-myVar = "CCS-Beta"  
 
 #Ordering dataset, converting "type" values from short names to full names, joining with names
   oshpd_PD_work <- oshpd_PDD_primary %>% 
@@ -35,13 +31,14 @@ myVar = "CCS-Beta"
 # Selecting specified county, sex, level, selecting the top N rows for the given myOSHPDtype 
     myOSHPDtype_N_cause <- oshpd_PD_work %>%
     #filter(diagnosis_var == "drg" | diagnosis_var == "mdc" | Level == "lev2")  %>%
-    filter(!is.na(causeCode), county == myCounty, sex == mySex, diagnosis_var == myVar) %>%
+    filter(!is.na(causeCode), county == myCounty, sex == mySex) %>%
     filter(type == myOSHPDtype)     %>%
     group_by(type) %>% 
     arrange(desc(measure)) %>% dplyr::slice(1:myN)   %>% #this selects the top N rows for myOSHPDtype
     filter(type == myOSHPDtype) %>% ungroup() %>% pull(causeCode) 
   
     
+    if(!myLiveborn) oshpd_PD_work <- filter(oshpd_PD_work, causeName != "Liveborn")
     
    
     
@@ -54,6 +51,11 @@ myVar = "CCS-Beta"
     mutate(names = forcats::fct_reorder(causeName, filter(.,type == myOSHPDtype)  %>%
                                              pull(measure)))
 
+  
+  
+  
+  
+  
 # Creating ggplot facet grid plot
 myPlot <- ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +

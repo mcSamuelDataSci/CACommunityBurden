@@ -33,7 +33,7 @@ hidden(
       
       # myLev ======================
       radioButtons("myLev", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
-                   choices=c("Top" = "lev1","Public Health" = "lev2","Detail" = "lev3"), inline=TRUE),
+                   choices=c("Top" = "lev1","Public Health" = "lev2","Detail" = "lev3"), inline=TRUE, selected = 'lev2'),
       
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....
