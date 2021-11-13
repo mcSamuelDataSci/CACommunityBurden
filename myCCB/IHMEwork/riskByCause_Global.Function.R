@@ -2,8 +2,10 @@
 # Functions for the Risk By Cause plot
 # ====================================================================================
 
-# Data ===============================================================================
-riskByCauseData <- readRDS(path(myPlace, "/myData/risk-by-cause.RDS"))
+# Constants ==========================================================================
+
+if ( !exists("CCB") ) riskByCauseData <- readRDS(path(ccbData, "risk-by-cause.RDS"))
+
 
 # Constants ==========================================================================
 SHOW_TOP = 25  # Could be a user input if we want

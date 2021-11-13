@@ -45,11 +45,14 @@ hidden(
       
       # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?)
       selectInput("myMeasure",  label=list("Measure:", actionButton( "measureHelp", label=helpIcon,style=myInputHelpButtonSty)),
-                  choices=deathMeasures_Dropdown,selected = "aRate"), 
+                  choices=deathMeasures_Dropdown, selected = "aRate"), 
       
       # myMeasureShort ======================
+      # selectInput("myMeasureShort",  "Measure Sort Order:",  
+      #             choices=dMNames_short, selected="Age-Adjusted Death Rate"),
+      
       selectInput("myMeasureShort",  "Measure Sort Order:",  
-                  choices=dMNames_short, selected="Age-Adjusted Death Rate"),
+                  choices=deathMeasuresShort_Dropdown, selected= "aRate"),
       
       # selectInput("myMeasureShort",  list(label="Measure Sort Order:", actionButton("measureHelp", label=helpIcon,style=myInputHelpButtonSty)),  
       #             choices=dMNames_short, selected="Age-Adjusted Death Rate"),

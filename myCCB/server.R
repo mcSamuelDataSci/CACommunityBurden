@@ -208,7 +208,7 @@ output$currTabInfo <- renderText(whoNeedsHelp())
 # observeEvent(input$sdohTab,           {myModal(sdohTab) })
 
 # generates text "object" used for news you can use buttons, from "...newsUseText.txt" as above
-observeEvent(input$newsUse,           {myModal(newsUse)})
+observeEvent(input$newsUse,           {myModal(news_and_updates)})
 
 # -------------------------------------------------------------------------------
 # TODO figure out what these observeEvents should achieve & simplify

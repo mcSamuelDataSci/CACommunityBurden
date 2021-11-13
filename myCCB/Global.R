@@ -3,177 +3,108 @@
 #
 #   Core file for Shiny Application
 #
-#   designates constants and folders locations for application
-#   loads all packages needed for application                                                           
-#   reads in shape and data files, and loads functions                                                          
-#   read key "info" files                                             
-#   creates vectors and constants used for Shiny app   
+#   Loads standards; Set Paths
+#   Designates global constants for application
+#   Loads all packages needed for application                                                           
+#   Reads in datasets and info files needed for application                                                          
+#   Load functions used to create visualizations
+#   Loads and creates app text files/objects
+#   Creates vectors used for Shiny app inputs   
 #
-#   has set ups for local sites
 # 
-#   Michael Samuel
-#   2018
+#   Michael Samuel, Jaspreet Kang
+#   2021
 #
 # =============================================================================
 
-CCB <- TRUE
-server <- TRUE
+
+# - 1. LOAD STANDARDS & SET PATHS ----------------------------------------------------------------------------------------------------
+
+CCB         <- TRUE
+server      <- TRUE
 myPlace     <- getwd()
-# myCCBPath   <- "/mnt/projects/FusionData/"
 
 source(paste0(myPlace,"/Standards/FusionStandards.R"))
 
-# myCCBPlace <- paste0(ccbPlace, "myCCB/")
-
-#-- Key Constants -----------------------------------------------------------
-
-# DATA Constants
-whichData         <- "real" #changed to fake so I (CD) can run app on my computer
+raceLink    <- select(raceLink, raceCode,raceName,raceNameShort)
 
 
-nCut      <- 20
-# myYearG3  <- "2017-2019"  
+# - 2. GLOBAL CONSTANTS --------------------------------------------------------------------------------------------------
 
-
-myCex <- 1.6
-myCol <- "blue"  
-
-
-
+whichData <- 'real' # Change to fake to run app on local machine without access to real datasets
 
 viewType <- "Present"
 
 # TEXT Constants
-VERSION           <- "Version P3.0"
-criticalNumber    <- 11
-mTitle            <- "California Community Burden of Disease Engine"
+VERSION           <- "Version P3.0" # Used in ui.R
+criticalNumber    <- 11 # Used in input_widgets.R
+appTitle          <- "California Community Burden of Disease Engine" # Used in ui.R
 
-figureAttribution <- "California Department of Public Health"
+figureAttribution <- "California Department of Public Health" # Used in make_MAPS.R
 
-#SUBSITE Constants
-subSite     <- FALSE
-#subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
-#subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
-subsiteList <- c("Butte")
-subsiteName <- "Butte County CBD"
+
 
 # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 pdf(NULL) 
-
-#-- DISPLAY Constants ----------------------------------------------------
-
-# myTitleSize <- 24
-# myLegendSize <- 24
-# myAxisSize  <- 22
-# 
-# myTextSize2 <- 12
-# myTextSize3 <- 16
-# 
-# myWrapNumber <- 70
-# myTitleColor <- "darkblue"
-# 
-# myCex1           <- 2  # 1.5  #line labels
-# myCex2           <- 1.2  #currently used only in education trend
-# myLineLabelSpace <- 0.3
-# 
-# myLineSize  <- 2
-# myPointSize <- 5 # line markers
-# myPointShape <- 18
-
-
-# -- Work towards this standard code for race and sex coloring
-
-# raceNames         <- linkRace$raceName
-# raceColors        <- brewer.pal(length(raceNames), "Paired")
-# names(raceColors) <- raceNames
-# 
-# genderNames         <- c("Female","Male")
-# genderColors          <- c("gray","lightblue")
-# names(genderColors) <- genderNames
-
-# scale_fill_manual(values = raceColors) +  <------------- Example of using raceColors in ggplot
-
-
-
-#-- Load Packages ------------------------------------------------------------
-# library(bs4Dash) # Has two same functions: tabPanel and tabsetPanel
-library(shiny)  
-library(shinyjs)
-library(shinyWidgets)
-library(dplyr)
-library(tidyr)
-library(magrittr)
-library(readxl)
-library(readr) 
-
-library(leaflet) 
-library(tmap)
-library(sf)
-
-library(classInt)  
-library(RColorBrewer)
-library(plotly)  # Note: also loads ggplot2
-library(fs)
-library(markdown)
-library(directlabels)  # Used to directly label lines in Trend plots
-library(scales)
-
-library(visNetwork)
-library(stringr)
-library(shinydashboard)
-#library(shinydashboardPlus)
-
-library(DT) # for better rendering of Data Table  https://community.rstudio.com/t/data-table-issue-while-rendering-the-shiny-page-datatables-warning-table-id-datatables-table-0-requested-unknown-parameter/44016/3
-library(cowplot)
-library(docxtractr)
-# library(highcharter)
-
-
-# !!!!!!!!!!!!!!! THIS LINE ELIMIANTES DROPDOWNS
-#library(sqldf) # needed for "fullmat" for strata ranking
-
-# --- IHME work -----------------------
-
-source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
-source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
-
-
-# --- CBD Key Inputs ---------------------------------------------------------
-
-# Shapes file: ------------------------------- 
 
 # USE consistent map projection system throughout all app code !
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 
-# Read shape files as simple features objects (st_read is from sf package)
-shape_Tract        <- st_read(path(myPlace,"/myData/shape_Tract.shp"),stringsAsFactors=FALSE)
-shape_Comm         <- st_read(path(myPlace,"/myData/shape_Comm.shp"),stringsAsFactors=FALSE)
-shape_County       <- st_read(path(myPlace,"/myData/shape_County.shp"),stringsAsFactors=FALSE)
 
-shape_Tract$GEOID  <- as.character(shape_Tract$GEOID)    
-shape_Tract$county <- as.character(shape_Tract$county)   
+# - 3. LOAD PACKAGES ------------------------------------------------------------------------------------------------------
 
-# Data: ----------------------------------------- 
+library(shiny)
+library(shinyjs)
+library(shinyWidgets)
+library(shinydashboard)
+library(magrittr)
+library(leaflet)
+library(tmap)
+library(sf)
+library(classInt) # Used in maps
+library(plotly)
+library(markdown)
+library(directlabels)
+library(scales)
+library(visNetwork) # used in IHME tab
+library(DT)
+library(cowplot)
+library(docxtractr)
 
-datTract        <- readRDS(path(myPlace,"/myData/",whichData,"datTract.RDS"))
-datComm         <- readRDS(path(myPlace,"/myData/",whichData,"datComm.RDS"))
-datCounty       <- readRDS(path(myPlace,"/myData/",whichData,"datCounty.RDS")) %>% filter(year <= maxYear)
-datCounty_RE    <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_RE.RDS")) #this was written as "datCounty_RE.RDS", but the file is actually saved as "datCounty.RE.REDS"
-datCounty_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
-datCounty_AGE_3year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_AGE_3year.RDS")) #this file doesn't exist in the fake (or real) data folder, 
+# - 4. READ DATASETS & INFO ------------------------------------------------------------------------------------------------------
 
-datCounty_5year <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_5year.RDS")) #this file doesn't exist in the fake (or real) data folder, so currently commented out to allow app to run. 
+# SHAPE FILES - MAPS TAB
+shape_Tract        <- st_read(path(ccbData, "shape_Tract.shp"), stringsAsFactors=FALSE)
+shape_Comm         <- st_read(path(ccbData, "shape_Comm.shp"), stringsAsFactors=FALSE)
+shape_County       <- st_read(path(ccbData, "shape_County.shp"), stringsAsFactors=FALSE)
 
 
-datCounty_EDU <- readRDS(path(myPlace,"/myData/",whichData,"datCounty_EDU.RDS")) 
+# MORTALITY DATASETS
+datTract            <- readRDS(path(ccbData, whichData, "datTract.RDS"))
+datComm             <- readRDS(path(ccbData, whichData, "datComm.RDS"))
+datCounty           <- readRDS(path(ccbData, whichData, "datCounty.RDS")) %>% filter(year <= maxYear)
+datCounty_RE        <- readRDS(path(ccbData, whichData, "datCounty_RE.RDS")) 
+datCounty_3year     <- readRDS(path(ccbData, whichData, "datCounty_3year.RDS")) 
+datCounty_AGE_3year <- readRDS(path(ccbData, whichData, "datCounty_AGE_3year.RDS")) 
+datCounty_5year     <- readRDS(path(ccbData, whichData, "datCounty_5year.RDS")) 
+datCounty_EDU       <- readRDS(path(ccbData, whichData, "datCounty_EDU.RDS")) 
 
-eduMap        <- as.data.frame(read_csv(paste0(myPlace,"/myInfo/Education Codes and Names.csv")))
-datCounty_EDU <- left_join(datCounty_EDU,eduMap,by="eduCode")
+eduMap        <- as.data.frame(read_csv(paste0(ccbInfo, "/Education Codes and Names.csv")))
+datCounty_EDU <- left_join(datCounty_EDU, eduMap, by="eduCode")
 
+# MORTALITY DATASETS - DISPARITIES TAB
+ageTest_LOW   <- readRDS(path(ccbData, "real/disparity_ageLow.RDS"))
+ageTest_HIGH  <- readRDS(path(ccbData, "real/disparity_ageHigh.RDS"))
 
+raceTest_LOW  <- readRDS(path(ccbData, "real/disparity_raceLow.RDS"))
+raceTest_HIGH <- readRDS(path(ccbData, "real/disparity_raceHigh.RDS"))
 
-focusData <- path(ccbData,"real/age_race_focus_data")
+sexTest_LOW   <- readRDS(path(ccbData, "real/disparity_sexLow.RDS"))
+sexTest_HIGH  <- readRDS(path(ccbData, "real/disparity_sexHigh.RDS"))
+
+# HOSPITALIZATION/ED DATASETS - AGE RACE FOCUS TABS
+focusData  <- path(ccbData,"real/age_race_focus_data")
 death_age   <- readRDS(path(focusData, "deaths_age_stn.RDS"))
 hosp_age    <- readRDS(path(focusData, "hospital_age_stn.RDS"))
 ed_age      <- readRDS(path(focusData, "ed_age_stn.RDS"))
@@ -181,151 +112,97 @@ death_race  <- readRDS(path(focusData, "deaths_race_stn.RDS"))
 hosp_race   <- readRDS(path(focusData, "hospital_race_stn.RDS"))
 ed_race     <- readRDS(path(focusData, "ed_race_stn.RDS"))
 
+# HOSPITALIZATION DATASETS - HOSPITALIZATIONS TAB
+oshpd_PDD_primary  <- readRDS(file = path(ccbData, whichData, "oshpd_PDD_primary.rds"))
 
-
-popData_AgePyramid  <- readRDS(path(ccbData, "popData_AgePyramid.RDS"))
-popData_RacePie  <- readRDS(path(ccbData,"popData_RacePie.RDS"))
-popData_RaceAge   <- readRDS(path(ccbData,"popData_RaceAge.RDS"))
-popData_trends   <- readRDS(path(ccbData,"popData_SexRaceAge_Trends.RDS"))
-
-
-
-#FIX THIS --- OSHPD !!!!
-# mdc_drg            <- readRDS(path(myPlace,"/myData/",whichData,"mdc_drg.rds"))
-# calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
-# full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
-# any_primary_diff   <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
-
-oshpd_PDD_primary      <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_primary.rds"))
-# these two files have been superseded by the age-race focus files
-# oshpd_PDD_AGE  <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_PDD_AGE.rds"))
-# oshpd_ED_AGE   <- readRDS(file = path(myPlace, "myData/", whichData, "oshpd_ED_AGE.rds"))
-
-oshpd_PDD_any <- readRDS(file=path(myPlace, "myData/",whichData,"/oshpd_PDD_any.rds")) %>%
- # mutate(year=2016) %>% ## TODO fix year
+oshpd_PDD_any      <- readRDS(file=path(ccbData, whichData,"/oshpd_PDD_any.rds")) %>%
   select(year, county, sex, causeCode = ccsCode, Nany = n_hosp_any)
 
 
-# source(paste0(myPlace,"/myFunctions/make_DISPARITY_DATA.R"))
+# POPULATION DATASETS - DEMOGRAPHICS TAB
+popData_AgePyramid  <- readRDS(path(ccbData, "popData_AgePyramid.RDS"))
+popData_RacePie     <- readRDS(path(ccbData, "popData_RacePie.RDS"))
+popData_RaceAge     <- readRDS(path(ccbData, "popData_RaceAge.RDS"))
+popData_trends      <- readRDS(path(ccbData, "popData_SexRaceAge_Trends.RDS"))
 
-# Disparity data frames
-ageTest_LOW <- readRDS(path(ccbData, "real/disparity_ageLow.RDS"))
-ageTest_HIGH <- readRDS(path(ccbData, "real/disparity_ageHigh.RDS"))
-
-raceTest_LOW <- readRDS(path(ccbData, "real/disparity_raceLow.RDS"))
-raceTest_HIGH <- readRDS(path(ccbData, "real/disparity_raceHigh.RDS"))
-
-sexTest_LOW <- readRDS(path(ccbData, "real/disparity_sexLow.RDS"))
-sexTest_HIGH <- readRDS(path(ccbData, "real/disparity_sexHigh.RDS"))
-
-
-# age_adjusted_hosp_rates  <- readRDS(path(myPlace,"/myData/",whichData,"ageadj_hospratesOSHPD.rds")) %>% rename(ahospRate = measure) %>% select(-type)
+# SOCIAL DETERMINANTS OF HEALTH DATASETS
+sdohTract         <- readRDS(path(ccbData, "sdohTract.RDS"))
+sdohComm          <- readRDS(path(ccbData, "sdohComm.RDS"))
+sdohCounty        <- readRDS(path(ccbData, "sdohCounty.RDS"))
 
 
-sdohTract        <- readRDS(path(myPlace,"/myData/","sdohTract.RDS"))
-sdohComm        <- readRDS(path(myPlace,"/myData/","sdohComm.RDS"))
-sdohCounty        <- readRDS(path(myPlace,"/myData/","sdohCounty.RDS"))
+# IHME DATASETS
+riskByCauseData <- readRDS(path(ccbData, "risk-by-cause.RDS"))
+
+endpoints <- read.csv(path(ccbInfo, "IHME_API_endpoints.csv"), header = TRUE)
+
+ihmeData <- readRDS(paste0(ccbData, "v2IHME.RDS")) %>%
+  subset(., year_id >= 1990)
 
 
-if (subSite){
-  mTitle <- subsiteName  
-  shape_County <- filter(shape_County, county %in% subsiteList)
-  shape_Comm   <- filter(shape_Comm,   county %in% subsiteList)
-  shape_Tract  <- filter(shape_Tract,  county %in% subsiteList)
-  
-  datCounty    <- filter(datCounty,    county %in% subsiteList)
-  datComm      <- filter(datComm,      county %in% subsiteList)
-  datTract     <- filter(datTract,     county %in% subsiteList)
-  
-  mdc_drg      <- filter(mdc_drg,      county %in% subsiteList)
-  
-}
+# URL PARAMETER LINKAGE
+queryLink_tab <- readxl::read_xlsx(path(myPlace, 'myInfo/queryParameter_Linkage.xlsx'), sheet = 'tab')
+
+chartYearMap    <-  read_excel(paste0(ccbInfo, "Year to Year-Group Linkage.xlsx"))
 
 
-#-- Load Info Files and Functions ---------------------------------------------
+# - 5. LOAD FUNCTIONS ------------------------------------------------------------------------------------------------------------------------------------
 
-# gbdMap0 <- as.data.frame(read_excel( path(myPlace,"myInfo/icd10_to_CAUSE.xlsx"), sheet="main"))
-
-
-#Saved OSHPD MDC_DRG file in myCBD/myInfo
-
-hdCodes   <- read.delim(paste0(myPlace, "/myInfo/MDC_DRG.txt"), header = FALSE, sep = "=") 
-hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
-
-full_CAUSE_mdcdrg_list <- read.csv(paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"), header = TRUE, sep = ",")
-
-source(paste0(myPlace,"/myFunctions/make_MAPS.R"))
-source(paste0(myPlace,"/myFunctions/make_rank_CAUSE_chart.R")) 
-source(paste0(myPlace,"/myFunctions/make_cause_TABLE.R"))
-source(paste0(myPlace,"/myFunctions/make_rank_GEOGRAPHY_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_ANY_TREND_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_DISPARITY_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_TREND-EDUCATION_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_LIFE-EXPECTANCY_chart.R"))
-source(paste0(myPlace,"/myFunctions/make_SDOH_scatter_chart.R"))
-source(paste0(myPlace, "/myFunctions/make_OSHPD_chart.R"))
-#source(paste0(myPlace, "/myFunctions/make_OSHPD_chart2.R"))
-#source(paste0(myPlace, "/myFunctions/make_MDC_DRG_chart.R"))
-source(paste0(myPlace, "/myFunctions/make_OSHPD_ANY_PRIMARY_chart.R"))
-#source(paste0(myPlace, "/myFunctions/make_OSHPD_map.R"))
-#source(paste0(myPlace,"/myFunctions/rankCausesSex.R")) 
-#source(paste0(myPlace,"/myFunctions/make_AGE_CAUSE_chart.R")) 
-#source(paste0(myPlace,"/myFunctions/make_rank_STRATA_AGE_chart.R")) 
+# PLOTTING/TABLE FUNCTIONS
+source(paste0(ccbFunctions, "make_MAPS.R"))
+source(paste0(ccbFunctions, "make_rank_CAUSE_chart.R")) 
+source(paste0(ccbFunctions, "make_cause_TABLE.R"))
+source(paste0(ccbFunctions, "make_rank_GEOGRAPHY_chart.R"))
+source(paste0(ccbFunctions, "make_ANY_TREND_chart.R"))
+source(paste0(ccbFunctions, "make_DISPARITY_chart.R"))
+source(paste0(ccbFunctions, "make_TREND-EDUCATION_chart.R"))
+source(paste0(ccbFunctions, "make_LIFE-EXPECTANCY_chart.R"))
+source(paste0(ccbFunctions, "make_SDOH_scatter_chart.R"))
+source(paste0(ccbFunctions, "make_OSHPD_chart.R"))
+source(paste0(ccbFunctions, "make_OSHPD_ANY_PRIMARY_chart.R"))
 source(path(ccbFunctions, "make_rank_multibar_chart.R"))
 source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V2.R"))
 
-source(paste0(myPlace,"/myFunctions/helperFunctions/wrapLabels.R"))
-source(paste0(myPlace,"/myFunctions/helperFunctions/dottedSelectInput.R"))
+# HELPER FUNCTIONS
+source(paste0(ccbFunctions, "helperFunctions/wrapLabels.R"))
+source(paste0(ccbFunctions, "helperFunctions/dottedSelectInput.R"))
 
-# App Text
-# source(paste0(myPlace,"/myData/appText/AppText.txt"))
+# IHME FUNCTIONS
+source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
+source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
 
-appText <- read_docx(path(ccbData, "appText/appText.docx")) # Read in appText Word Doc
-appText <- docx_extract_tbl(appText, 1) # Extract table
-appTextL <- split(appText$Text, seq(nrow(appText))) # Convert data frame into a list
+
+# - 6. APP TEXT ---------------------------------------------------------------------------------------------------------------------------------------
+
+appText         <- read_docx(path(ccbData, "appText/appText.docx")) # Read in appText Word Doc
+appText         <- docx_extract_tbl(appText, 1) # Extract table
+appTextL        <- split(appText$Text, seq(nrow(appText))) # Convert data frame into a list
 names(appTextL) <- appText$varName # Add varNames to list
 
 # We use appTextL list object to insert text throughout the app
 
 # For hospTab text
-HospitalizationsTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospB)
+HospitalizationsTab   <- paste(appTextL$hospA,"<br><br>", appTextL$hospB)
 HospitalPrimaryAnyTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospC)
 
 
-
-
-# source(paste0(myPlace,"/myData/appText/newsUseText.txt"))
-
-# Used for 'News and Updates' ----
-readDoc <- read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
-newsUse_df <- docx_extract_tbl(readDoc, 1) %>%
+# NEWS AND UPDATES
+news_and_updates <- read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
+news_and_updates <- docx_extract_tbl(news_and_updates, 1) %>%
   mutate(Text = paste("<li>", Date, Update, "</li>"))
-
-newsUse <- paste("\n<li>Welcome to the CCB!</li>\n<br>", (paste(newsUse_df$Text, collapse = "\n")), sep = "\n")
-#-----------------------------------
-  
-death_age$MAINSTRATA <-  death_age$MAINSTRATA 
+news_and_updates <- paste("\n<li>Welcome to the CCB!</li>\n<br>", (paste(news_and_updates$Text, collapse = "\n")), sep = "\n")
 
 
-
-# --- Shiny Stuff and Constants -----------------------------------------------
-
-# raceLink    <-  read_excel(paste0(myPlace,"/myInfo/raceLink.xlsx"))  %>% select(raceCode,raceName)
-raceLink    <-    select(raceLink, raceCode,raceName,raceNameShort)
-
-# Fix following two lines soon - Search soon to see where it's used
-#raceCodeFull <- c("-missing","White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
-#raceNameFull <- c("missing","White","Black","Native American","Asian","Nat. Haw./PI.","Other","**Multirace**","unknown","Hispanic")
-
-
-# move these...
-raceNote         <- "* Note: All race/ethnic groups except 'Hispanic' are NON-Hispanic; 'Black'='Black/African American',\n 'Native American' include Alaska Natives, 'Nat. Haw./PI' is 'Native Hawaiian/Pacific Islander'"
+# WARNING MESSAGES
 multiRaceWarning <- "** Note: Multirace data are NOT RELIABLE due to changing data collection practices"
 
 
-chartYearMap    <-  read_excel(paste0(myPlace,"/myInfo/Year to Year-Group Linkage.xlsx"))  
+# - 7. CREATE VECTORS FOR SHINY INPUTS -------------------------------------------------------------------------------------------------------------
 
-deathMeasures <- c("Ndeaths","cDeathRate","aRate","YLL","YLLper","YLL.adj.rate", "mean.age","SMR")
+
+# -- DEATH MEASURE DROPDOWNS ---------
+
+deathMeasures <- c("Ndeaths", "cDeathRate", "aRate", "YLL", "YLLper", "YLL.adj.rate", "mean.age", "SMR")
 
 deathMeasuresNames <- c(
   "Number of deaths",
@@ -337,44 +214,42 @@ deathMeasuresNames <- c(
   "Mean Age at Death",
   "Standard Mortality Ratio")
 
-deathMeasures_Dropdown         <- deathMeasures[-8]  # drops SMR
-names(deathMeasures_Dropdown)  <- deathMeasuresNames[-8]
+names(deathMeasures) <- deathMeasuresNames
 
-deathMeasures_Revalue          <- deathMeasuresNames
-names(deathMeasures_Revalue)   <- deathMeasures
 
-shortdeathList <- c(1,3,5,7,8)
-dM_short       <- deathMeasures[shortdeathList]
-dMNames_short  <- deathMeasuresNames[shortdeathList]
+# MOST TABS
+deathMeasures_Dropdown         <- deathMeasures[deathMeasures != 'SMR']
 
-#dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
-dMRevalue_short  <- deathMeasures_Revalue[shortdeathList]
+# AGE TREND TAB
+deathMeasures_Dropdown_noADJ   <- deathMeasures[!deathMeasures %in% c("aRate", "YLL.adj.rate", "SMR")]
 
-#This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
-#Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
-deathMeasures_Dropdown_noADJ         <- deathMeasures_Dropdown[-c(3,6)]  # drops SMR
+# RANK BY CAUSE TAB
+deathMeasuresShort_Dropdown    <- deathMeasures[deathMeasures %in% c("Ndeaths", "aRate", "YLLper", "mean.age", "SMR")]
 
-hospMeasures <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day")
+
+
+# HOSPITALIZATION INPUTS
+hospMeasures      <- c("n_hosp", "cHospRate", "ahospRate","avg_los", "charges", "cChargeRate", "avgcharge", "avgcharge_per_day", "medcharge", "medcharge_per_day")
 
 hospMeasuresNames <- c("Number of Hospitalizations", "Crude Hospitalization Rate", "Age-Adjusted Hospitalization Rate", "Average Length of Stay (Days)", "Total Charges",
                        "Crude Charge Rate", "Average Charges", "Average Charges per Day", "Median Charges", "Median Charges per Day")
 
-hospMeasures_Revalue <- hospMeasuresNames #used in function to rename from short to long names
+hospMeasures_Revalue        <- hospMeasuresNames #used in function to rename from short to long names
 names(hospMeasures_Revalue) <- hospMeasures
 
 
 shorthospList <- c(-2, -3, -6, -7, -8, -10)
-shortMDCList <- c(-2,-3,-4,-6,-8, -10)
-hM_short <- hospMeasures[shorthospList] 
+shortMDCList  <- c(-2,-3,-4,-6,-8, -10)
+hM_short      <- hospMeasures[shorthospList] 
 hMNames_short <- hospMeasuresNames[shorthospList]#Used in shiny app dropdown menu
+
+
 
 MDC_DRG_ICD <- c("icd10_cm", "mdc", "drg")
 MDC_DRG_ICD_names <- c("Global Burden", "Major Diagnostic Code", "Diagnostic Related Groups")
 
 MDC_DRG_ICD_Dropdown <- MDC_DRG_ICD
 names(MDC_DRG_ICD_Dropdown) <- MDC_DRG_ICD_names
-
-#for mdc_drg
 
 
 hMDCRevalue_short <- hospMeasures_Revalue[shortMDCList]
@@ -385,35 +260,26 @@ hMDCDrop_down <- c("Number of Hospitalizations", "Total Charges (in thousands)",
 MDC_DRG <- c("mdc", "drg")
 MDC_DRGNames <- c("Major Diagnostic Code", "Diagnostic Related Groups")
 
-MDCDRG_Dropdown <- MDC_DRG 
+MDCDRG_Dropdown <- MDC_DRG
 names(MDCDRG_Dropdown) <- MDC_DRGNames
 
 
-# fullCauseList <- deathCauseLink
-
-# Get rid of lines 334 where fullcauselist is used, and change to deathcauselink in all functions and other files
-
-# fullCauseList     <- gbdMap0[!is.na(gbdMap0$causeList),c("causeCode","causeList","causeName","causeNameShort")] %>% arrange(causeCode)
-fullList          <- deathCauseLink[,"causeCode"]
-names(fullList)   <- deathCauseLink[,"causeList" ]
-
-phList            <- deathCauseLink[nchar(deathCauseLink$causeCode) <= 3,]
-phCode            <- phList[,"causeCode"]
-names(phCode)     <- phList[,"causeList" ]
-
-bigList           <- deathCauseLink[nchar(deathCauseLink$causeCode) == 1,]
-bigCode           <- bigList[,"causeCode"]
-names(bigCode)    <- bigList[,"causeList"]
-
-# Level 3 conditions
-cause_level3 <- setdiff(fullList, phCode)
-
-# Level 2 and 3 condition
-cause_level2_3 <- setdiff(fullList, bigCode)
-
-#-- Social Determinants of Health Measures and Names
 
 
+# CAUSES - FULL LIST, PUBLIC HEALTH LEVEL LIST, TOP LEVEL LIST
+fullList          <- deathCauseLink[, "causeCode"]
+names(fullList)   <- deathCauseLink[, "causeList" ]
+
+phList            <- deathCauseLink %>% filter(nchar(causeCode) <= 3)
+phCode            <- phList[, "causeCode"]
+names(phCode)     <- phList[, "causeList" ]
+
+bigList           <- deathCauseLink %>% filter(nchar(causeCode) <= 1)
+bigCode           <- bigList[, "causeCode"]
+names(bigCode)    <- bigList[, "causeList"]
+
+
+# SOCIAL DETERMINANTS OF HEALTH
 sdohVec  <- c("hpi2score", 
               "insured", 
               "est_edu",
@@ -436,25 +302,115 @@ sdohVecL <- c(
   "Percent of households with kitchen facilities and plumbing",
   "Percentage of the population living within a half-mile of a park, beach, or open space greater than 1 acre",
   "Percent with an Internet subscription" 
-  )
+)
 
 names(sdohVec) <- sdohVecL
 
-lList         <- sort(as.character(unique(datCounty$county)))
-lListNoState  <- lList[lList != STATE]
+
+# COUNTY LIST
+lList         <- sort(as.character(unique(datCounty$county))) # Used in input widgets
+# lListNoState  <- lList[lList != STATE] # Not used anywhere
 
 
-# ----- Query Parameter Linkage - Link to tabs, views -------------
-
-queryLink_tab <- readxl::read_xlsx(path(myPlace, 'myInfo/queryParameter_Linkage.xlsx'), sheet = 'tab')
-# queryLink_measure <- readxl::read_xlsx(path(myPlace, 'myInfo/queryParameter_Linkage.xlsx'), sheet = 'measure')
-
-# --- END ---------------------------------------------------------------------
-# ----------------------------------------------------------------------------
 
 
-library(fs)
-CBD     <- dir_info(recursive = TRUE,type="file")
-CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path)))
+
+# --- Older way of analysing OSHPD data - Michael and JASPO discuss soon !!!! Put in ClickUp --------------------------------
+# calculated_metrics <- readRDS(file = path(myPlace, "myData/",whichData,"countyOSHPD.rds"))
+# full_oshpd_summary <- readRDS(file = path(myPlace, "myData/", whichData, "full_oshpd_summary.rds"))
+# any_primary_diff   <-   readRDS(file = path(myPlace, "myData/", whichData, "any_primary_stackedbar.rds"))
+
+
+# MDC DRG ----------------------------------------------------------------------------------------------------
+
+#Saved OSHPD MDC_DRG file in myCBD/myInfo
+# hdCodes   <- read.delim(paste0(myPlace, "/myInfo/MDC_DRG.txt"), header = FALSE, sep = "=") 
+# hdCodes <- hdCodes %>% rename(mdc_drg_codes = V1, names = V2) %>% mutate(mdc_drg_codes = as.character(mdc_drg_codes), names = as.character(names))
+# full_CAUSE_mdcdrg_list <- read.csv(paste0(myPlace, "/myInfo/fullCAUSE_mdcdrgicd.csv"), header = TRUE, sep = ",")
+
+
+
+
+
+#----------------------------------- JC REASON FOR HAVING THIS?
+
+# death_age$MAINSTRATA <-  death_age$MAINSTRATA # JC
+
+# library(fs) # Is ths used anywhere? # JC
+# CBD     <- dir_info(recursive = TRUE,type="file") # JC
+# CBDinfo <- cbind(as.vector(path_dir(CBD$path)),as.vector(path_file(CBD$path))) # JC
+
+
+# ---- Not used anymore, but would like to get back -------------------------------------------------------------
+
+# #SUBSITE Constants
+# subSite     <- FALSE
+# #subsiteList <- c("Calaveras", "Fresno", "Kings", "Madera","Merced", "San Joaquin","Stanislaus","Tulare")
+# #subsiteName <- "San Joaquin Public Health Consortium Community Burden of Disease" 
+# subsiteList <- c("Butte")
+# subsiteName <- "Butte County CBD"
+# 
+# if (subSite){
+#   appTitle <- subsiteName  
+#   shape_County <- filter(shape_County, county %in% subsiteList)
+#   shape_Comm   <- filter(shape_Comm,   county %in% subsiteList)
+#   shape_Tract  <- filter(shape_Tract,  county %in% subsiteList)
+#   
+#   datCounty    <- filter(datCounty,    county %in% subsiteList)
+#   datComm      <- filter(datComm,      county %in% subsiteList)
+#   datTract     <- filter(datTract,     county %in% subsiteList)
+#   
+#   mdc_drg      <- filter(mdc_drg,      county %in% subsiteList)
+#   
+# }
+
+
+
+
+
+# -------------
+
+# deathMeasures <- c("Ndeaths", "cDeathRate", "aRate", "YLL", "YLLper", "YLL.adj.rate", "mean.age", "SMR")
+# 
+# deathMeasuresNames <- c(
+#   "Number of deaths",
+#   "Crude Death Rate per 100,000 population",
+#   "Age-Adjusted Death Rate",
+#   "Years of Life Lost (YLL)",
+#   "YLL Rate per 100,000 population",
+#   "Age-Adjusted YLL Rate",
+#   "Mean Age at Death",
+#   "Standard Mortality Ratio")
+# 
+# # Need this for shiny deathMeasure dropdowns
+# names(deathMeasures) <- deathMeasuresNames
+# 
+# # Need this for dMRevalue_short, used in rank by cause function for sorting a measure (facet chart)
+# names(deathMeasuresNames) <- deathMeasures
+# 
+# # MOST TABS
+# deathMeasures_Dropdown         <- deathMeasures[-8]  # drops SMR
+# # names(deathMeasures_Dropdown)  <- deathMeasuresNames[-8] # JC
+# 
+# # JC NOT SURE WHY THIS IS NEEDED.
+# # deathMeasures_Revalue          <- deathMeasuresNames # JC
+# # names(deathMeasures_Revalue)   <- deathMeasures # JC
+# 
+# # RANK BY CAUSE TAB
+# shortdeathList <- c(1,3,5,7,8)
+# dM_short       <- deathMeasures[shortdeathList]
+# dMNames_short  <- deathMeasuresNames[shortdeathList]
+# 
+# #dMDropdown_short <- deathMeasures_Dropdown[shortdeathList]
+# # dMRevalue_short  <- deathMeasures_Revalue[shortdeathList] # JC
+# # dMRevalue_short  <- deathMeasuresNames[shortdeathList] # JC
+# 
+# #This order is needed to label the variables within the oshpdPlot function--need to define a “data dictionary” vector, in the form:
+# #Labels <- c(facet_label1 = “New label1”, facet_label2 = “New label2”) etc. If defined the opposite way (eg “New label1” = facet_label1) it won’t work properly. 
+# deathMeasures_Dropdown_noADJ         <- deathMeasures_Dropdown[-c(3,6)]  # drops SMR
+
+
+
+
 
 

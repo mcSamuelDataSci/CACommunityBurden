@@ -4,10 +4,15 @@
 
 # Load and format data-----------------------------------------------------------------------
 
-endpoints <- read.csv(path(myPlace,"/myInfo/","IHME_API_endpoints.csv"), header = TRUE)
+if ( !exists("CCB") ) {
+  
+  endpoints <- read.csv(path(ccbInfo, "IHME_API_endpoints.csv"), header = TRUE)
+  
+  ihmeData <- readRDS(paste0(ccbData, "v2IHME.RDS")) %>%
+    subset(., year_id >= 1990)  
+  
+}
 
-data <- readRDS(paste0(myPlace, "/myData/v2IHME.RDS")) %>%
-  subset(., year_id >= 1990) 
 
 cause_groups <- c('Communicable, maternal, neonatal, and nutritional diseases',
                   'Non-communicable diseases',
@@ -53,14 +58,14 @@ RIGHT_X <- LEFT_X+350
 create_nodes <- function(level_in, measure_id_in, sex_id_in, metric_id_in,
                           year_from, year_to, display_in) {
 
-  right_nodes <- data %>%
+  right_nodes <- ihmeData %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_to,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
     arrange(id_num) %>%
     mutate(rank = rank(-val, ties.method = 'first')) %>%
     filter(rank <= MAX_NODES)
   
-  left_nodes <- data %>%
+  left_nodes <- ihmeData %>%
     filter(display == display_in, grepl(level_in, level), year_id == year_from,
            measure_id == measure_id_in, sex_id == sex_id_in, metric_id == metric_id_in) %>%
     arrange(id_num) %>%
