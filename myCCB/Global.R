@@ -116,7 +116,7 @@ ed_race     <- readRDS(path(focusData, "ed_race_stn.RDS"))
 oshpd_PDD_primary  <- readRDS(file = path(ccbData, whichData, "oshpd_PDD_primary.rds"))
 
 oshpd_PDD_any      <- readRDS(file=path(ccbData, whichData,"/oshpd_PDD_any.rds")) %>%
-  select(year, county, sex, causeCode = ccsCode, Nany = n_hosp_any)
+                       select(year, county, sex, causeCode = ccsCode, Nany = n_hosp_any)
 
 
 # POPULATION DATASETS - DEMOGRAPHICS TAB
