@@ -1,15 +1,15 @@
 
-server <- F
+server <- T
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 # --Global constants and settings-----------------------------------
 
-myYear   <-  2020 # used for deaths
-bestYear <- 2019  # used for hosp
+myYear_death   <-  2020 # used for deaths
+myYear_pdd <- 2020  # used for hosp
 
-ccbChangeYear <- myYear - 10
+ccbChangeYear <- myYear_death - 10
 
 mySex     <-  "Total"
 
@@ -20,7 +20,7 @@ ccbDataX     <- readRDS(paste0(ccbData,"real/datCounty.RDS")) %>%
                      filter(Level == "lev2", causeCode != "Z01") %>%
                      left_join(deathCauseLink ,by="causeCode")       
                      
-ccb         <- filter(ccbDataX,year==myYear,sex==mySex) 
+ccb         <- filter(ccbDataX,year==myYear_death,sex==mySex) 
 
 ccbDeaths   <- ccb %>%
                  mutate(measure = Ndeaths,
@@ -30,7 +30,7 @@ ccbYLL      <- ccb %>%
                  mutate(measure = YLLper,
                         mValues = causeNameShort)
 
-ccbChange   <- filter(ccbDataX,year %in% c(ccbChangeYear,myYear), sex==mySex) %>% 
+ccbChange   <- filter(ccbDataX,year %in% c(ccbChangeYear,myYear_death), sex==mySex) %>% 
                   select(county,year,causeNameShort,aRate) %>%
                   pivot_wider(names_from = year, values_from = aRate, names_prefix="rate")
 
@@ -66,16 +66,16 @@ cidData     <- cidData %>%
 
 
 
-edData  <- readRDS(paste0(ccbData,"real/hosp_ED_year.RDS")) %>%
+edData  <- readRDS(paste0(ccbData,"real/age_race_focus_data/Delete 12-2021/hosp_ED_year.RDS")) %>%
              left_join(hospCauseLink, by="causeCode") %>%
-             filter(year==bestYear) %>% 
+             filter(year==myYear_pdd) %>% 
              mutate(measure = n_ED,
                     mValues = causeNameShort)
 
 
-hospData <- readRDS(paste0(ccbData,"real/hosp_ED_year.RDS")) %>%
+hospData <- readRDS(paste0(ccbData,"real/age_race_focus_data/Delete 12-2021/hosp_ED_year.RDS")) %>%
              left_join(hospCauseLink, by="causeCode") %>%
-             filter(year==bestYear) %>% 
+             filter(year==myYear_pdd) %>% 
              mutate(measure = n_hosp,
                     mValues = causeNameShort)
 
@@ -234,7 +234,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
   
   # if (IDnum == 4) work.dat <- mutate(work.dat,xValues=paste0(xValues,"      (",raceCode,":",lowRace,")"))
   if (IDnum == 4) work.dat <- mutate(work.dat,xRaceValue=paste0("(",raceCode,":",lowRace,")"))
-  if (IDnum == 4) myYear <- "2017-2019"
+  if (IDnum == 4) myYear <- "2018-2020"
   if (IDnum == 3) myYear <- "2010 to 2020"
   
   plot_width <- max(work.dat$measure)*PLOT_WIDTH_MULTIPLIER
