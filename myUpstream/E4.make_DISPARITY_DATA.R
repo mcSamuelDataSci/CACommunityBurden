@@ -1,4 +1,4 @@
-server <- F
+server <- T
 
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -13,7 +13,7 @@ nCut      <- 20
 # RACE --------------------------------------------------------------------------------------------------------------------------
 
 raceTest <- datCounty_RE %>%  
-              filter(raceCode != "Multi-NH") %>% 
+              filter(raceCode != "Multi") %>% 
               filter(Ndeaths > nCut ) %>%
               select(-YLL,-mean.age,-YLLper,-cDeathRate,-rateLCI,-rateUCI,-YLL.adj.rate,LCI=aLCI,UCI=aUCI)
 

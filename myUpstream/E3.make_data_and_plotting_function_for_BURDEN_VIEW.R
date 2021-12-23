@@ -31,12 +31,13 @@ ccbYLL      <- ccb %>%
                         mValues = causeNameShort)
 
 ccbChange   <- filter(ccbDataX,year %in% c(ccbChangeYear,myYear_death), sex==mySex) %>% 
-                  select(county,year,causeNameShort,aRate) %>%
-                  pivot_wider(names_from = year, values_from = aRate, names_prefix="rate")
+                  select(county,year,causeNameShort,Ndeaths, aRate) %>%
+                  rename(rate = aRate) %>%
+                  pivot_wider(names_from = year, values_from = c("Ndeaths", "rate"), names_sep = "")
 
 ccbChange      <- ccbChange %>%
                      mutate(change = round(100*(rate2020-rate2010)/rate2010,1))%>%
-                     filter(!(is.na(rate2010) | is.na(rate2010))) %>% # exclude if either is 0 -- check
+                     filter(!(is.na(rate2020) | is.na(rate2010))) %>% # exclude if either is 0 -- check
                      mutate(measure=change,
                             mValues = causeNameShort) 
                     # mutate(mValues = ifelse(measure < 0,NA,mValues))
@@ -56,7 +57,10 @@ ccbRace <-  readRDS(paste0(ccbData,"real/ccbRaceDisparity.RDS")) %>%
 
 cidData     <- read_csv(paste0(ccbUpstream,"CID/dcdcData.csv")) 
 
+cid_minYear <- min(cidData$Year)
+
 cidData     <- cidData %>%
+                 filter(Year %in% cid_minYear) %>%
                  mutate(county = County,
                  measure=Cases,
                  mValues = Disease)
@@ -66,14 +70,14 @@ cidData     <- cidData %>%
 
 
 
-edData  <- readRDS(paste0(ccbData,"real/age_race_focus_data/Delete 12-2021/hosp_ED_year.RDS")) %>%
+edData  <- readRDS(paste0(ccbData,"real/age_race_focus_data/hosp_ED_year.RDS")) %>%
              left_join(hospCauseLink, by="causeCode") %>%
              filter(year==myYear_pdd) %>% 
              mutate(measure = n_ED,
                     mValues = causeNameShort)
 
 
-hospData <- readRDS(paste0(ccbData,"real/age_race_focus_data/Delete 12-2021/hosp_ED_year.RDS")) %>%
+hospData <- readRDS(paste0(ccbData,"real/age_race_focus_data/hosp_ED_year.RDS")) %>%
              left_join(hospCauseLink, by="causeCode") %>%
              filter(year==myYear_pdd) %>% 
              mutate(measure = n_hosp,
@@ -89,25 +93,45 @@ hospData <- readRDS(paste0(ccbData,"real/age_race_focus_data/Delete 12-2021/hosp
 myLevel <- c('2','2,3,4')
 #myLevel <- c(2, 3)
 
-dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
+# dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
+# 
+# dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD  
+#                                       year_id    == 2017,
+#                                       display    == "cause",
+#                                       level      %in% myLevel,
+#                                       sex_id     == 3,   # Both
+#                                       metric_id  == 3)  %>%    # Rate 
+#                                mutate(measure = val,
+#                                mValues = id_name)
+
+
+
+
+
+dataIHME     <- read_csv(paste0(ccbUpstream,"IHME/IHME_manual.csv"))
 
 dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD  
-                                      year_id    == 2017,
-                                      display    == "cause",
-                                      level      %in% myLevel,
+                                      year    == 2019,
+                                     display    == "cause",
+                                  #    level      %in% myLevel,
                                       sex_id     == 3,   # Both
                                       metric_id  == 3)  %>%    # Rate 
-                               mutate(measure = val,
-                               mValues = id_name)
+  mutate(measure = round(val, 3),
+         mValues = cause_name)
+
+
+
+#dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
+
 
 dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #YLD  
-                                      year_id    == 2017,
+                                      year    == 2019,
                                       display    == "risk",
-                                      level      %in% myLevel,
+                                   #   level      %in% myLevel,
                                       sex_id     == 3,   # Both
                                       metric_id  == 3)  %>%  # Rate
-                                mutate(measure = val,
-                                mValues = id_name)
+                                mutate(measure = round(val, 3),
+                                mValues = rei_name)
 
 
 # --APP Constants ------------------------------------------------------
@@ -135,7 +159,7 @@ metric <-     c("Number",
                 "Rate Ratio",
                 "Number",
                 "Number",
-                "Rate",
+                "Number",
                 "Rate",
                 "Number")
 

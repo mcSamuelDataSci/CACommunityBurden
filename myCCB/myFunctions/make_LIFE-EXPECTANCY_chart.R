@@ -58,7 +58,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
 
 
 
- tplot_bar <- ggplot(data=filter(dat.1, year== 2019, nyrs == myYearGrouping), aes(x=raceNameShort, y=ex, fill=sex)) + 
+ tplot_bar <- ggplot(data=filter(dat.1, year== 2020, nyrs == myYearGrouping), aes(x=raceNameShort, y=ex, fill=sex)) + 
                 geom_bar(stat = "identity",position="dodge")  +
                 scale_fill_manual(values = genderColors) + 
                 labs(x = "Race/Ethnicity", y = "Life Expectancy at Birth", x = "Year") +
@@ -67,7 +67,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
                             color="red",size=1.2) +
                geom_segment(aes(x = .3, y = 64.4, xend = .5, yend = 64.9),
                     color="red",size=1.2) +
-               geom_text(aes(label=round(ex,1)), position=position_dodge(width=0.9), vjust=2,fontface="bold")
+               geom_text(aes(label=format(round(ex, 1), nsmall = 1)), position=position_dodge(width=0.9), vjust=2,fontface="bold", color = 'white')
  
  # 
  # tplot_bar <- ggplot(data=filter(dat.1, year== 2019), aes(x=raceCode, y=ex, fill=sex)) + 

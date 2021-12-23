@@ -33,7 +33,7 @@ isRecent_multiYear <- T
 # JASPO - Specify the years for the quarterly data
 forQuarter_selectYears <- 2016:2021
 # Specify the years for RE_1year
-RE_1year_years <- 2010:2021
+RE_1year_years <- 2000:2021
 
 # == Designate locations and load packages  =======================================================
 

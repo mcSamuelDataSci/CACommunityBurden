@@ -4,18 +4,41 @@ output: html_document
 ---
 
 
+IHME data query system:
+http://ghdx.healthdata.org/gbd-results-tool
 
 
+# request download of data, like in this "permlink"
+# on the download selct both names and IDs
 
-http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2019-permalink/a8e5c5d836f9a5ddace131144273f892
-
-
-
-
-
-
-
+cause:
+http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2019-permalink/8127d29e45ddd636a5c1da72cc777dd0
+risk:
+http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2019-permalink/f62e5e5bd5d5198c68a32b7f055f1e06
 
 
+http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2019-permalink/49c7c2958c28f6e146603cc417e7a952
+
+
+```{r}
+
+
+server <- T
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+
+
+ihme_cause <- read_csv(paste0(ccbUpstream,"IHME/IHME-GBD_2019_DATA-ccc08525-1.csv")) %>% mutate(display = "cause")
+
+
+ihme_risk_full  <- read_csv(paste0(ccbUpstream,"IHME/IHME-GBD_2019_DATA_FULL_12_9_2021.csv"))
+ihme_risk       <- ihme_test %>% filter(cause_name == "All causes", rei_name != "All risk factors")
+# note: can NOT extract "cause" data from this file---the "CONTEXT" is risk not cause
+
+ihme_work <- bind_rows(ihme_cause,ihme_risk)
+write_csv(ihme_work,paste0(ccbUpstream,"IHME/IHME_manual.csv"))
+
+
+```
 
 

@@ -64,6 +64,14 @@ securePlace    <-  paste0(highPath,"FusionData/0.Secure.Data/")
 fusionPlace    <- paste0(highPath,"FusionData/")
 ccbUpstream    <-  paste0(highPath,"FusionData/0.CCB/myUpstream/")  
 
+
+
+#Jaspreet, I (Michael) moved this here from "F3" as a placeholder if we want to use it more broadly.  Used only in F3 for now...
+datPath <- "real/archive_2019Datasets/"
+datPath <- "real/"
+
+
+
 #myYearG3  <- "2017-2019" 
 STATE       <- "CALIFORNIA"
 
@@ -99,8 +107,7 @@ maxYear      <- currentYear
 # use this FOR ALL combine  hosp/ed/Death work
 # AND maybe add incRecent year type switch
 yearGrp3_hosp_ed     <- paste0(currentYear_hosp_ed-2, "-", currentYear_hosp_ed)
-
-
+yearGrp3_hosp_ed_num <- (currentYear_hosp_ed-2):(currentYear_hosp_ed)
 
 yF           <- 100000  # rate constant 
 

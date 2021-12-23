@@ -1,0 +1,352 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,rei_id,rei_name,metric_id,metric_name,year,val,upper,lower
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,1,Number,2019,34.90018665323418,79.43743683288137,10.663762439158507
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,2,Percent,2019,0.0001238626864764545,0.00027976915228620694,3.781677098724732e-05
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,3,Rate,2019,0.08753049209018426,0.19923096702752743,0.026744967959816686
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,1,Number,2019,58.114285983287054,107.92032352574648,26.352628457395845
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,2,Percent,2019,0.00020624027705612604,0.00037250316188381326,9.532641229083872e-05
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,3,Rate,2019,0.14575200127519786,0.27066671931008474,0.06609301433440616
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,88,Ambient ozone pollution,1,Number,2019,1794.1821508010137,2923.701152408214,771.299686684711
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,88,Ambient ozone pollution,2,Percent,2019,0.006369132140450992,0.010043918597191516,0.002849292513842137
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,88,Ambient ozone pollution,3,Rate,2019,4.499851193331227,7.332711516349875,1.9344378239381574
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,1,Number,2019,638.6674150596829,1982.7384133407502,45.727937282156184
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,2,Percent,2019,0.002267972373301345,0.007120531748802564,0.00016183524017563262
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,3,Rate,2019,1.6017929553668921,4.972754751434679,0.11468674630155039
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,1,Number,2019,2620.318022906622,4472.619869620986,999.379519427658
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,2,Percent,2019,0.009311243472575838,0.015863555128368366,0.0034955352845086707
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,3,Rate,2019,6.57181946494094,11.217436227779672,2.5064674292293114
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,1,Number,2019,6.016065394671555,8.337219483447795,4.153199826049057
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,2,Percent,2019,2.1442843043949177e-05,3.013409051575321e-05,1.4396366770952631e-05
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,3,Rate,2019,0.01508843404404926,0.02090994329918383,0.010416323217264345
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,1,Number,2019,9.30734527542731,16.40251996685608,3.3812945600175026
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,2,Percent,2019,3.301256672623071e-05,5.8453711072491745e-05,1.1821042012679948e-05
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,3,Rate,2019,0.02334304168931745,0.0411379073264911,0.008480366586027093
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,1,Number,2019,0.0035238785265690412,0.00828237783010145,0.00044761534507807045
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,2,Percent,2019,1.2573683261574106e-08,2.9033657918406614e-08,1.673200815519881e-09
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,3,Rate,2019,8.837970540425134e-06,2.0772399137826174e-05,1.1226298532753103e-06
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,1,Number,2019,0.0015266688351596015,0.005251726214206773,0.0
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,2,Percent,2019,5.438299794222503e-09,1.898046250396431e-08,0.0
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,3,Rate,2019,3.828921481939557e-06,1.3171453334042314e-05,0.0
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,99,Smoking,1,Number,2019,40375.45099542338,46614.82487556311,34592.03980679349
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,99,Smoking,2,Percent,2019,0.14322426932556917,0.1522069821261713,0.13514047028953752
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,99,Smoking,3,Rate,2019,101.26258432675293,116.91108132448053,86.75765252422495
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,1,Number,2019,2885.7213294976978,3742.8782889813024,2092.36646696626
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,2,Percent,2019,0.010237030145648973,0.01281290612346981,0.007664759288068609
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,3,Rate,2019,7.237457223818823,9.387227114954156,5.247704498153033
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,1,Number,2019,3042.3255344600407,4523.5218371072515,1744.7759818599604
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,2,Percent,2019,0.010794439056273333,0.015521376836898072,0.006176915929811803
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,3,Rate,2019,7.630224267157128,11.345099563987606,4.375939355189224
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,1,Number,2019,1569.2770938704125,2460.782748473761,682.7292758632624
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,2,Percent,2019,0.0055679782791898755,0.008666591807991722,0.002496801731977824
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,3,Rate,2019,3.9357840007312017,6.171701230170484,1.7123011425255166
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,1,Number,2019,9790.786232346292,13116.00120774787,4545.538896431865
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,2,Percent,2019,0.03473896932482258,0.04515736612705337,0.016412536093138735
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,3,Rate,2019,24.555523022902157,32.895240686720975,11.400318868577871
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,1,Number,2019,997.6643151273563,1805.10971427771,392.50659115367756
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,2,Percent,2019,0.0035467005701885494,0.006347361662767196,0.0013942092098588983
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,3,Rate,2019,2.5021656563496295,4.527257780521304,0.9844157973618879
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,1,Number,2019,639.9670917735206,1081.9095715476692,217.9495964918413
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,2,Percent,2019,0.0022688755069250302,0.0038142250428684424,0.0007976457682341158
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,3,Rate,2019,1.6050525752494618,2.71345474841099,0.5466227336070749
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,1,Number,2019,6229.2984655554865,9489.261751593565,3345.17524379215
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,2,Percent,2019,0.022099803425060214,0.03233068698723252,0.01225423677593157
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,3,Rate,2019,15.62322762007849,23.79929250643648,8.389778488187417
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,1,Number,2019,4922.174200927658,7573.067714429771,2027.3243573651578
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,2,Percent,2019,0.017465822455469057,0.026903925170499218,0.00712145289325483
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,3,Rate,2019,12.34492910429415,18.993432621510017,5.084577351684301
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,1,Number,2019,2108.881809000093,3313.9631413618176,1015.1865743726294
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,2,Percent,2019,0.007484848908703752,0.011461188351455842,0.0037577326591105493
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,3,Rate,2019,5.2891253658871396,8.311497798400818,2.54611189622249
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,1,Number,2019,3190.34320943778,5110.151441347948,1660.0528065567992
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,2,Percent,2019,0.011322045432325654,0.017748616446575098,0.005777115979568932
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,3,Rate,2019,8.001456090573347,12.816380461251798,4.1634516312864225
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,1,Number,2019,1481.1843520689506,1865.0237819070414,1056.878365539873
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,2,Percent,2019,0.005257462791323226,0.006350546845870915,0.0038773426274986726
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,3,Rate,2019,3.714845324498051,4.677523676656104,2.6506758927778447
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,1,Number,2019,187.98816736953438,358.82179506876685,113.87153845026323
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,2,Percent,2019,0.0006677417088220546,0.0012645623830802196,0.000415758966232603
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,3,Rate,2019,0.47147876200434236,0.8999335335114016,0.28559250684392096
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,1,Number,2019,6213.994891321246,8994.198039347399,335.72807131436593
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,2,Percent,2019,0.022051724326679425,0.03032756820637885,0.0011682624727788141
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,3,Rate,2019,15.584845894594556,22.557661028087786,0.8420139291120888
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,1,Number,2019,4657.406505593824,15194.931507568988,279.0389800184077
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,2,Percent,2019,0.016554825344657253,0.052798878345271416,0.0010130365376147886
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,3,Rate,2019,11.680885473455655,38.10924696045745,0.6998363497603527
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,1,Number,2019,3541.317171442583,4740.781053373311,2501.238211008269
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,2,Percent,2019,0.012555933898609387,0.015888897145074174,0.009306507538439838
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,3,Rate,2019,8.881707073479634,11.889990807689124,6.273164485326268
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,1,Number,2019,28.025161897716398,34.82304423899602,21.47727031688939
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,2,Percent,2019,9.931449717917831e-05,0.00011825782537081397,8.204139079894345e-05
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,3,Rate,2019,0.07028776768982925,0.08733701709400804,0.053865501014935986
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,1,Number,2019,101.13507123409326,161.74975699565266,49.879077853740505
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,2,Percent,2019,0.00035948586156634045,0.0005661195651592873,0.00017497226051985663
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,3,Rate,2019,0.25364914636855346,0.40567220931998127,0.12509790485999997
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,1,Number,2019,379.2612499489072,452.36496987888336,310.6188034459999
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,2,Percent,2019,0.0013472824085490448,0.001561399020459902,0.001107762622663414
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,3,Rate,2019,0.9511961689090275,1.1345420244103714,0.7790392924896609
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,1,Number,2019,75.27926357612711,119.25142603901298,43.132114804851035
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,2,Percent,2019,0.00026693930497916323,0.0004169863045664068,0.00015475081302207506
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,3,Rate,2019,0.1888021703286361,0.29908539193109873,0.10817636224329706
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,1,Number,2019,7359.633430049793,12398.513108002113,1873.2500363770848
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,2,Percent,2019,0.026141607477272205,0.043172579961509215,0.006659100761807424
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,3,Rate,2019,18.45813439728219,31.09576359327173,4.698155317081879
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,337,High temperature,1,Number,2019,564.0081073657047,818.4622698008584,327.45072696421335
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,337,High temperature,2,Percent,2019,0.0020017424214204484,0.002876971321314997,0.0011693251987005126
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,337,High temperature,3,Rate,2019,1.4145456490273198,2.0527226958621316,0.8212541540608108
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,338,Low temperature,1,Number,2019,12023.195973391961,14617.445112693003,9920.641731530402
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,338,Low temperature,2,Percent,2019,0.042668431701126636,0.04906918441052293,0.03612112345418822
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,338,Low temperature,3,Rate,2019,30.15445935874953,36.66089744814338,24.88120368063435
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,1,Number,2019,824.1784183747455,928.823406283566,725.8302096949636
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,2,Percent,2019,0.002937674750038256,0.003465393109278132,0.002449511889523371
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,3,Rate,2019,2.0670589314388708,2.3295110316938037,1.8203993021519977
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,1,Number,2019,6035.5657634027875,8686.672701311018,3818.3525493270204
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,2,Percent,2019,0.021426770523808196,0.02930533516898495,0.014031192939146364
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,3,Rate,2019,15.13734142921437,21.78638021987955,9.576518341784636
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",1,Number,2019,1399.2345403952245,1864.8465949612644,988.8933493980396
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",2,Percent,2019,0.004961893326937581,0.006290288191266108,0.0036739387659305233
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",3,Rate,2019,3.50931326205464,4.6770792876128615,2.4801678672254277
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,1,Number,2019,889.2589263882041,1299.4401793425925,579.5367579567206
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,2,Percent,2019,0.003152039996904497,0.004504438432734339,0.002119123774488911
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,3,Rate,2019,2.2302823820323465,3.259026648474227,1.4534918713278873
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,1,Number,2019,169.74427581872555,379.676326041616,22.41197690043474
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,2,Percent,2019,0.000602240125772406,0.0013600782472180997,8.118775096491702e-05
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,3,Rate,2019,0.42572265127207237,0.9522371895491358,0.05620976719409917
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,1,Number,2019,369.53672639965623,638.621379538036,179.45989595683483
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,2,Percent,2019,0.0013120724038868273,0.0022728920606588016,0.0006265100205942345
+1,Deaths,527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,3,Rate,2019,0.9268068342597349,1.601677497191742,0.45008965595602024
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,1,Number,2019,66854.73540104354,97144.6525931866,40723.71148055401
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,2,Percent,2019,0.0058993459034152014,0.008357533023730492,0.0035710822496027124
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,3,Rate,2019,167.67325476954554,243.64108220675269,102.13602984559574
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,1,Number,2019,20752.93801961714,33315.53137510355,9534.307726368677
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,2,Percent,2019,0.0018343249578202819,0.0028930401815146487,0.000821163835838846
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,3,Rate,2019,52.04885851250466,83.55613924026275,23.912268874669802
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,1,Number,2019,186177.85200424702,246688.22423220627,97620.03656092004
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,2,Percent,2019,0.016428020123840724,0.02132872495143146,0.008713107502995294
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,3,Rate,2019,466.9384483281872,618.6998904745915,244.8333564212413
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,1,Number,2019,14612.78566900223,25626.406566471007,6589.355875316069
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,2,Percent,2019,0.0012896700704206868,0.002239175753362967,0.0006169645963613658
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,3,Rate,2019,36.649211453361424,64.27163268648236,16.526260104408774
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,1,Number,2019,13703.162447411121,23457.442762882656,4751.665175333289
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,2,Percent,2019,0.0012105870292333856,0.0020849496158080656,0.00043866434170542574
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,3,Rate,2019,34.36785493817642,58.83182025968283,11.917288442529658
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,1,Number,2019,165447.96298179473,226155.2034208287,109063.22119666477
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,2,Percent,2019,0.014589951067134356,0.019538720003603724,0.009925694716421575
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,3,Rate,2019,414.9473972447395,567.202589512411,273.53313365159465
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,1,Number,2019,137989.86489789936,196628.86729010154,80627.34136474521
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,2,Percent,2019,0.012167448229944684,0.016980925922385207,0.0071290388695138505
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,3,Rate,2019,346.08183898787036,493.1498414047374,202.21527568608104
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,1,Number,2019,61333.327282284874,91190.33727330275,34620.01301994702
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,2,Percent,2019,0.0054010266616927325,0.007735149050685522,0.003165420856988023
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,3,Rate,2019,153.8254328519254,228.707518808138,86.82781000323789
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,1,Number,2019,58675.04818491694,93346.01664589798,32674.532069453642
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,2,Percent,2019,0.005180587898357334,0.008000495001858897,0.0027883206350127676
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,3,Rate,2019,147.1584061160066,234.11401356837248,81.9484978482416
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,1,Number,2019,24215.343923162687,30849.45117122335,17006.295090538944
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,2,Percent,2019,0.0021412027408479663,0.0027770403075781966,0.0015047564063819553
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,3,Rate,2019,60.732654263070145,77.3711518668645,42.65218959130745
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,1,Number,2019,2595.2642860815185,4468.540573358311,1691.2921449547741
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,2,Percent,2019,0.00022932054010030566,0.00038803338336860875,0.00015141924301651148
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,3,Rate,2019,6.508984101486044,11.207205256444151,4.241800629522887
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,1,Number,2019,103043.43218251661,149629.8782084367,5257.250537690331
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,2,Percent,2019,0.009104615594764385,0.013274681095136923,0.0004770962525865707
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,3,Rate,2019,258.435360681987,375.27526718156184,13.185308467763678
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,1,Number,2019,98646.53425594034,300869.6266413913,5778.990735226804
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,2,Percent,2019,0.008718824758540385,0.025978746028402413,0.0005083569428584125
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,3,Rate,2019,247.40783687509423,754.5881268938882,14.493845201029703
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,1,Number,2019,57162.620051583115,75912.41386159918,40680.5393003082
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,2,Percent,2019,0.005049893730446901,0.006731401127871852,0.003606122663923498
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,3,Rate,2019,143.36520065045713,190.39012619274231,102.02775299828059
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,1,Number,2019,6958.712406134022,12267.96178571801,3293.7807961903604
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,2,Percent,2019,0.0006147496363696491,0.0010672645844313781,0.0002874294358553116
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,3,Rate,2019,17.452615003895332,30.76833779477696,8.260880000222711
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,1,Number,2019,1406.319042418478,3164.416545701312,427.31857597210325
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,2,Percent,2019,0.00012364634283093705,0.0002768314015126154,3.987476870230478e-05
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,3,Rate,2019,3.52708136038806,7.936431405815697,1.071725077168002
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,1,Number,2019,1903.0837222408259,2804.9098976731007,1103.6141536385926
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,2,Percent,2019,0.0001679994984081178,0.00024471575726327396,0.00010048350328286926
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,3,Rate,2019,4.772978905576213,7.034780244913209,2.767890352721842
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,1,Number,2019,15257.064537228678,20409.33800765018,11224.358676587603
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,2,Percent,2019,0.0013423202534068217,0.0017157753271932967,0.0010554380218447204
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,3,Rate,2019,38.26507806575222,51.187101570385956,28.15095655849163
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,1,Number,2019,1611.6109708441745,2525.633637388355,923.607421576785
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,2,Percent,2019,0.00014231339774673277,0.0002230184993530831,8.220988743444026e-05
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,3,Rate,2019,4.04195836364841,6.3343487906428955,2.316429218904212
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,1,Number,2019,120896.92959465689,206575.44337926287,31034.38585654003
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,2,Percent,2019,0.010666796518805744,0.018098624095007874,0.0026093016424608585
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,3,Rate,2019,303.21235369760024,518.0960890665983,77.8349724237901
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,337,High temperature,1,Number,2019,9671.171176818641,13843.7494496397,5878.1263721632695
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,337,High temperature,2,Percent,2019,0.0008553945965288339,0.0012240720944451562,0.0005160606246911247
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,337,High temperature,3,Rate,2019,24.255525639628598,34.72045045890583,14.742479718974858
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,338,Low temperature,1,Number,2019,160564.50410332944,196040.15149812237,131004.58928438771
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,338,Low temperature,2,Percent,2019,0.014195994345325858,0.017382841651284717,0.011303384747314606
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,338,Low temperature,3,Rate,2019,402.6995670832174,491.6733282993719,328.56260283273673
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,1,Number,2019,121984.48985959784,138034.62394648572,107040.77008275372
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,2,Percent,2019,0.010796656299993516,0.012783261011267977,0.008978122020698472
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,3,Rate,2019,305.9399805184494,346.19409573844786,268.4607785095463
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,363,Bullying victimization,1,Number,2019,31371.835627915152,73114.0727236382,6573.4421112746395
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,363,Bullying victimization,2,Percent,2019,0.0027507578944501554,0.006198694757203212,0.0005793441508605722
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,363,Bullying victimization,3,Rate,2019,78.68130441730247,183.37182055226995,16.486348008482373
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,1,Number,2019,11975.517787148916,16839.260594842857,8154.337707981639
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,2,Percent,2019,0.0010503904651554669,0.0013521672640164145,0.0007785048173601466
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,3,Rate,2019,30.034881342010323,42.23326313255857,20.45127148863076
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",1,Number,2019,40010.745348026765,49651.2985727386,31442.088057977737
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",2,Percent,2019,0.0035363935765236826,0.0043820285399063024,0.0027525191116154948
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",3,Rate,2019,100.34789395269024,124.5266290455711,78.85749917049984
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,130,Occupational noise,1,Number,2019,27879.752418887285,39359.64151747929,19221.560456062572
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,130,Occupational noise,2,Percent,2019,0.002446251221321188,0.0031965250460147805,0.0018340378405311756
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,130,Occupational noise,3,Rate,2019,69.92307728393115,98.71491017366685,48.208127428581356
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,1,Number,2019,80423.5293041734,117018.53569650471,53563.429132298465
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,2,Percent,2019,0.007085792505101219,0.009979481703941936,0.004866436505681028
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,3,Rate,2019,201.7041102263364,293.4852502354366,134.33834485103915
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,132,Occupational ergonomic factors,1,Number,2019,99340.86385362464,131023.64082231534,69396.36705573292
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,132,Occupational ergonomic factors,2,Percent,2019,0.008719058981754853,0.01058779779206255,0.006810961978871019
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,132,Occupational ergonomic factors,3,Rate,2019,249.14923189862066,328.61038453965006,174.04772696527877
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,1,Number,2019,35285.823732312136,64009.591285171075,16097.523588100556
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,2,Percent,2019,0.003097383405039511,0.005477242687302437,0.0014658455216288737
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,3,Rate,2019,88.49767898907713,160.53756615549213,40.37296920786585
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,1,Number,2019,151714.12296708082,217298.51718411778,96935.88961836907
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,2,Percent,2019,0.013397658622983642,0.018544454850829794,0.008699119523093572
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,3,Rate,2019,380.5026022434964,544.9898113318728,243.11749973719301
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,1,Number,2019,2349.061266567926,4422.433910922574,1073.0083122657404
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,2,Percent,2019,0.00020616319761429172,0.00037353683391542336,9.764985436209786e-05
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,3,Rate,2019,5.891501115901003,11.091568658516035,2.6911301799807132
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,88,Ambient ozone pollution,1,Number,2019,26478.196669369867,43041.74385082782,11483.189924888484
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,88,Ambient ozone pollution,2,Percent,2019,0.00234166519996098,0.0037572633181875937,0.0010409921820971808
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,88,Ambient ozone pollution,3,Rate,2019,66.4079423745961,107.94970975702509,28.80011144001698
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,1,Number,2019,12268.943444838162,38455.11843694494,887.8873842577194
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,2,Percent,2019,0.0010849011926906845,0.0034335649415143245,8.052244796264582e-05
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,3,Rate,2019,30.770799819026433,96.44634493266216,2.2268425219881416
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,1,Number,2019,42683.640857962135,75603.79847516661,15187.197594841651
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,2,Percent,2019,0.003772471691644171,0.006621815581501608,0.0013361168573428107
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,3,Rate,2019,107.0515789964093,189.61611151742133,38.08985012474616
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,1,Number,2019,943.1340669062298,1252.4006448277514,666.8542303823265
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,2,Percent,2019,8.311687632458769e-05,0.00010830348738194282,6.088433788785198e-05
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,3,Rate,2019,2.3654025063980333,3.141050385347401,1.672486153662939
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,1,Number,2019,21034.687149323814,35603.806243193045,11836.044575535883
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,2,Percent,2019,0.0018443854399707808,0.0029138098182974735,0.0011455278412615172
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,3,Rate,2019,52.75549198166738,89.29518663366439,29.685079234440355
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,1,Number,2019,30.566739856001927,67.54623690581924,11.214377937875975
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,2,Percent,2019,2.6787440811283695e-06,5.7842268834947145e-06,1.0765273418954061e-06
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,3,Rate,2019,0.07666210521371424,0.1694075568692881,0.028125924630166065
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,1,Number,2019,3.2759865802087913,11.599490028067148,0.0
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,2,Percent,2019,2.8792847696949336e-07,1.0222417682043715e-06,0.0
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,3,Rate,2019,0.00821625168643456,0.02909179484453609,0.0
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,99,Smoking,1,Number,2019,1059645.8541497262,1199487.1985085614,923360.8318372867
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,99,Smoking,2,Percent,2019,0.09354989632867293,0.1041900738083225,0.08333458314803498
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,99,Smoking,3,Rate,2019,2657.616819549424,3008.3422127371823,2315.810766015776
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,1,Number,2019,81409.72608524284,105195.88244319908,60365.62768394574
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,2,Percent,2019,0.007185000199498481,0.009150430139117179,0.005426109816155235
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,3,Rate,2019,204.1775150365303,263.8337567533075,151.39841941272212
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,1,Number,2019,903.0440494628182,2070.709415148372,269.8187482698712
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,2,Percent,2019,0.00015095639558030432,0.00034790112284472773,4.843855887177125e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,83,Unsafe water source,3,Rate,2019,2.264855796158573,5.193388100889105,0.6767117908531536
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,1,Number,2019,1510.1737610098253,2908.7428781547196,642.658216435472
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,2,Percent,2019,0.0002515994025361227,0.00045739896608405843,0.000118582459162346
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,84,Unsafe sanitation,3,Rate,2019,3.78755144653718,7.29519581136991,1.6118019794368141
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,1,Number,2019,473.81003395721183,691.1747093543273,300.0837914305762
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,2,Percent,2019,7.918913080035685e-05,0.00010180907340938477,5.837869049307601e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,238,No access to handwashing facility,3,Rate,2019,1.1883267514186355,1.7334824891106457,0.7526172336322597
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,1,Number,2019,9460.92770854609,14529.856323748088,5638.967098952651
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,2,Percent,2019,0.001581718999310809,0.0022434944613916744,0.0010933912126116305
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,239,Child growth failure,3,Rate,2019,23.728230057530645,36.44122269757235,14.142662615414576
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,1,Number,2019,47634.216692547154,71382.84355470922,28894.3312677092
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,2,Percent,2019,0.007973141791070273,0.010958782490708618,0.005309573097938546
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,117,Diet high in processed meat,3,Rate,2019,119.46774006845473,179.02985692374045,72.46766499012453
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,1,Number,2019,22719.064382001285,35992.702478270636,11460.388809963046
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,2,Percent,2019,0.0037948947560424314,0.0055982561498829735,0.0021287696582476244
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,118,Diet high in sugar-sweetened beverages,3,Rate,2019,56.97994984794361,90.27054757275,28.742925705468952
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,1,Number,2019,12325.58143845152,20043.449887240924,6098.7002143471045
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,2,Percent,2019,0.002067687412189404,0.003212931242787915,0.0011309089175202728
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,119,Diet low in fiber,3,Rate,2019,30.91284924418382,50.269445526090614,15.29568412273367
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,1,Number,2019,766.7847667664824,1123.0092784734509,465.72700679565213
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,2,Percent,2019,0.00012856485970535293,0.00017135682443222846,8.800913004036414e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,3,Rate,2019,1.9231142981898015,2.8165337837101507,1.168054328464012
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,1,Number,2019,85.88670005942652,161.84452834437505,47.37311493787279
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,2,Percent,2019,1.436893389696192e-05,2.5786690401715625e-05,8.858240700435543e-06
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,122,Diet low in polyunsaturated fatty acids,3,Rate,2019,0.21540587146135015,0.40590989810004857,0.1188128907033399
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,1,Number,2019,3233.02351561175,5225.56681618135,151.72359876653218
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,2,Percent,2019,0.0005413030252880822,0.0008222956067309155,2.6798617779590372e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,123,Diet high in trans fatty acids,3,Rate,2019,8.108499306103571,13.105844946193304,0.380526367772236
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,1,Number,2019,13654.668810003206,41518.98539326901,833.7716309449418
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,2,Percent,2019,0.00229399052575187,0.006743312186702372,0.00014341703681848138
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,124,Diet high in sodium,3,Rate,2019,34.24623175066361,104.13059559442902,2.0911189350525543
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,1,Number,2019,1370.9530315273362,2040.754491222227,860.0663184374667
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,2,Percent,2019,0.00023014810477077464,0.0003175945826527486,0.0001567880017387921
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,127,Occupational carcinogens,3,Rate,2019,3.4383825701114916,5.118260444471928,2.1570666320791276
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,1,Number,2019,10844.157407552137,15739.936779538757,6988.9716328314225
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,2,Percent,2019,0.0018127597731891578,0.002345798670592557,0.0013484890540363694
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,128,Occupational asthmagens,3,Rate,2019,27.197402799520493,39.47613304967089,17.528505858847154
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",1,Number,2019,17389.87630982051,21416.33697722454,13515.638795411418
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",2,Percent,2019,0.0029515005919227093,0.0037951359720669476,0.0022048006370435306
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",3,Rate,2019,43.61422034529365,53.71267876047194,33.89754119168641
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,130,Occupational noise,1,Number,2019,27879.752418887285,39359.64151747929,19221.560456062572
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,130,Occupational noise,2,Percent,2019,0.0046690891084904245,0.005743257731347099,0.003746416205732681
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,130,Occupational noise,3,Rate,2019,69.92307728393115,98.71491017366685,48.208127428581356
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,1,Number,2019,37980.08871187362,60105.732983959,23028.020846564672
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,2,Percent,2019,0.0063624073545584855,0.00944768350130789,0.0042156774914029905
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,131,Occupational injuries,3,Rate,2019,95.2549591671336,150.74659736926137,57.75481995526925
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,132,Occupational ergonomic factors,1,Number,2019,99340.86385362464,131023.64082231534,69396.36705573292
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,132,Occupational ergonomic factors,2,Percent,2019,0.01664988508999023,0.019345365501378917,0.014004319170313122
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,132,Occupational ergonomic factors,3,Rate,2019,249.14923189862066,328.61038453965006,174.04772696527877
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,1,Number,2019,28986.19512332833,52981.28642270572,13807.72062572255
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,2,Percent,2019,0.004843642012187938,0.008127501557976296,0.002476506894770461
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,134,Childhood sexual abuse,3,Rate,2019,72.69806170884527,132.8783171914838,34.63008931791157
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,1,Number,2019,538.0093302140344,1027.521848719654,228.57874021118877
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,2,Percent,2019,9.015336204167235e-05,0.0001654078458197795,4.1122070226057456e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,147,Diet low in calcium,3,Rate,2019,1.3493401021218012,2.577049055510216,0.5732808770002866
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,1,Number,2019,20529.967691196824,34970.242616887816,11417.999596366652
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,2,Percent,2019,0.003434469623314723,0.005281571866863352,0.0021640473121388635
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,95,Iron deficiency,3,Rate,2019,51.48964366468576,87.70619410098985,28.636612556995725
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,1,Number,2019,30.259192084456142,67.26945422330175,11.024880056535196
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,2,Percent,2019,5.065176078548465e-06,1.0758435510576821e-05,2.0582848429844413e-06
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,96,Vitamin A deficiency,3,Rate,2019,0.07589076814173475,0.1687133793669293,0.02765065946987878
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,1,Number,2019,3.1446697091475784,11.229643402947758,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,2,Percent,2019,5.286321865390183e-07,1.9404802614202297e-06,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,97,Zinc deficiency,3,Rate,2019,0.00788690587353282,0.028164210776970816,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,99,Smoking,1,Number,2019,308894.23553216824,385140.58020251594,233544.3207979266
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,99,Smoking,2,Percent,2019,0.052021583662407035,0.060484819866607045,0.04401525802445801
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,99,Smoking,3,Rate,2019,774.7140354461825,965.9416679910894,585.7346703449808
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,1,Number,2019,22637.600754124578,33707.26194726488,12900.844537527515
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,2,Percent,2019,0.00380443517225534,0.005319064465045091,0.0022897200079473414
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,100,Secondhand smoke,3,Rate,2019,56.77563714594155,84.53860876367067,32.3556226781414
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,1,Number,2019,14104.720278500303,25327.778490252418,6725.055990860503
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,2,Percent,2019,0.0023632751077165316,0.003968133747499569,0.001218302965010387
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,111,Diet low in fruits,3,Rate,2019,35.37497145898867,63.52266642097,16.866599197959115
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,1,Number,2019,1677.469171552796,2873.205915119737,741.5035122004629
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,2,Percent,2019,0.0002818791958397296,0.00046941610038010495,0.00013079153905802673
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,112,Diet low in vegetables,3,Rate,2019,4.207132285882023,7.206068269080551,1.859708314869198
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,1,Number,2019,23877.034334303185,36453.819999362575,12381.413866194645
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,2,Percent,2019,0.003997407192739762,0.005447388327213851,0.002216373133284385
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,113,Diet low in whole grains,3,Rate,2019,59.884165827007585,91.42704120224305,31.052878291119974
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,1,Number,2019,2406.4649382929965,5027.762046176115,853.5262404890681
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,2,Percent,2019,0.0004027872421861378,0.0008254409795446111,0.00015451785243992557
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,114,Diet low in nuts and seeds,3,Rate,2019,6.035470879839597,12.609745913016944,2.1406639621788375
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,1,Number,2019,1022.7942731115603,1851.5611954539772,330.3190424121873
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,2,Percent,2019,0.00017151830046236463,0.00030385931585832985,5.710470376927212e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,115,Diet low in milk,3,Rate,2019,2.56519218427106,4.643759191991545,0.8284479569228298
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,1,Number,2019,48826.15633101956,69826.7718720011,31962.92445497379
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,2,Percent,2019,0.008183103319042873,0.010307393923213745,0.006212776189935458
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,116,Diet high in red meat,3,Rate,2019,122.45715282242966,175.12719240597286,80.16376915067254
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,1,Number,2019,9034.656442031222,15092.410560142021,4017.6164705798933
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,2,Percent,2019,0.0015157911070161477,0.0023662214608550928,0.0007311392342861712
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,91,Lead exposure,3,Rate,2019,22.659131657207492,37.852122003877795,10.0762769607394
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,1,Number,2019,410.9076852574096,652.7284455326018,227.6664124721033
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,2,Percent,2019,6.851361244551624e-05,9.855354644672407e-05,4.5423239828975976e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,93,Suboptimal breastfeeding,3,Rate,2019,1.0305661758083082,1.6370583517620034,0.5709927374913744
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,1,Number,2019,199.12885595282785,607.6983018489,14.022054013773156
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,2,Percent,2019,3.3443875685179606e-05,0.00010479364173840044,2.322996656690125e-06
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,90,Residential radon,3,Rate,2019,0.4994198719934721,1.5241216882796929,0.0351676425153724
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,1,Number,2019,62.27216144332805,107.2673193623087,32.83123290791099
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,2,Percent,2019,1.0418538082449832e-05,1.6994917482062627e-05,5.871207571504502e-06
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,332,Chewing tobacco,3,Rate,2019,0.15618005109290176,0.2690289694513071,0.0823415072506668
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,1,Number,2019,3811.77549339254,7164.489608568779,859.4555968017053
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,2,Percent,2019,0.0006360166001651058,0.0011307973238123016,0.00015622047377519788
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,333,Diet low in legumes,3,Rate,2019,9.56002293022225,17.968709085827324,2.155534927798017
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,1,Number,2019,48772.24897475105,63024.5079702869,36588.31141832941
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,2,Percent,2019,0.00827665577721797,0.011157606847852023,0.006158589423050864
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,339,Low birth weight and short gestation,3,Rate,2019,122.3219519002013,158.0669539447793,91.76434885624046
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,363,Bullying victimization,1,Number,2019,31371.835627915152,73114.0727236382,6573.4421112746395
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,363,Bullying victimization,2,Percent,2019,0.005251161209149811,0.011573753990971694,0.0011654457758510047
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,363,Bullying victimization,3,Rate,2019,78.68130441730247,183.37182055226995,16.486348008482373
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,1,Number,2019,40195.53866489322,63274.46130292265,22566.952911334538
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,2,Percent,2019,0.006760201276955638,0.0098906705998623,0.004107617922175695
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All Ages,294,All causes,380,Particulate matter pollution,3,Rate,2019,100.81135995420524,158.6938428042164,56.59845068828834

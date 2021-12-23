@@ -1,0 +1,4016 @@
+County,Year,Sex,Disease,Cases
+California,2018,Total,Chlamydia,232181
+Alameda,2018,Total,Chlamydia,9719
+Alpine,2018,Total,Chlamydia,12
+Amador,2018,Total,Chlamydia,63
+Butte,2018,Total,Chlamydia,1320
+Calaveras,2018,Total,Chlamydia,119
+Colusa,2018,Total,Chlamydia,56
+Contra Costa,2018,Total,Chlamydia,6146
+Del Norte,2018,Total,Chlamydia,89
+El Dorado,2018,Total,Chlamydia,447
+Fresno,2018,Total,Chlamydia,7140
+Glenn,2018,Total,Chlamydia,120
+Humboldt,2018,Total,Chlamydia,790
+Imperial,2018,Total,Chlamydia,1060
+Inyo,2018,Total,Chlamydia,68
+Kern,2018,Total,Chlamydia,6957
+Kings,2018,Total,Chlamydia,972
+Lake,2018,Total,Chlamydia,331
+Lassen,2018,Total,Chlamydia,117
+Los Angeles,2018,Total,Chlamydia,68021
+Madera,2018,Total,Chlamydia,920
+Marin,2018,Total,Chlamydia,815
+Mariposa,2018,Total,Chlamydia,32
+Mendocino,2018,Total,Chlamydia,434
+Merced,2018,Total,Chlamydia,1645
+Modoc,2018,Total,Chlamydia,19
+Mono,2018,Total,Chlamydia,22
+Monterey,2018,Total,Chlamydia,2239
+Napa,2018,Total,Chlamydia,584
+Nevada,2018,Total,Chlamydia,215
+Orange,2018,Total,Chlamydia,14338
+Placer,2018,Total,Chlamydia,1124
+Plumas,2018,Total,Chlamydia,61
+Riverside,2018,Total,Chlamydia,11487
+Sacramento,2018,Total,Chlamydia,11645
+San Benito,2018,Total,Chlamydia,238
+San Bernardino,2018,Total,Chlamydia,13379
+San Diego,2018,Total,Chlamydia,22101
+San Francisco,2018,Total,Chlamydia,9505
+San Joaquin,2018,Total,Chlamydia,4347
+San Luis Obispo,2018,Total,Chlamydia,1200
+San Mateo,2018,Total,Chlamydia,3103
+Santa Barbara,2018,Total,Chlamydia,2704
+Santa Clara,2018,Total,Chlamydia,8331
+Santa Cruz,2018,Total,Chlamydia,1244
+Shasta,2018,Total,Chlamydia,646
+Sierra,2018,Total,Chlamydia,6
+Siskiyou,2018,Total,Chlamydia,141
+Solano,2018,Total,Chlamydia,3139
+Sonoma,2018,Total,Chlamydia,2277
+Stanislaus,2018,Total,Chlamydia,2917
+Sutter,2018,Total,Chlamydia,352
+Tehama,2018,Total,Chlamydia,191
+Trinity,2018,Total,Chlamydia,21
+Tulare,2018,Total,Chlamydia,2610
+Tuolumne,2018,Total,Chlamydia,154
+Ventura,2018,Total,Chlamydia,3018
+Yolo,2018,Total,Chlamydia,1076
+Yuba,2018,Total,Chlamydia,354
+California,2018,Total,Early Syphilis,15368
+Alameda,2018,Total,Early Syphilis,438
+Alpine,2018,Total,Early Syphilis,0
+Amador,2018,Total,Early Syphilis,4
+Butte,2018,Total,Early Syphilis,100
+Calaveras,2018,Total,Early Syphilis,3
+Colusa,2018,Total,Early Syphilis,4
+Contra Costa,2018,Total,Early Syphilis,273
+Del Norte,2018,Total,Early Syphilis,6
+El Dorado,2018,Total,Early Syphilis,9
+Fresno,2018,Total,Early Syphilis,368
+Glenn,2018,Total,Early Syphilis,5
+Humboldt,2018,Total,Early Syphilis,28
+Imperial,2018,Total,Early Syphilis,31
+Inyo,2018,Total,Early Syphilis,0
+Kern,2018,Total,Early Syphilis,481
+Kings,2018,Total,Early Syphilis,68
+Lake,2018,Total,Early Syphilis,10
+Lassen,2018,Total,Early Syphilis,0
+Los Angeles,2018,Total,Early Syphilis,5627
+Madera,2018,Total,Early Syphilis,63
+Marin,2018,Total,Early Syphilis,27
+Mariposa,2018,Total,Early Syphilis,1
+Mendocino,2018,Total,Early Syphilis,14
+Merced,2018,Total,Early Syphilis,111
+Modoc,2018,Total,Early Syphilis,0
+Mono,2018,Total,Early Syphilis,1
+Monterey,2018,Total,Early Syphilis,70
+Napa,2018,Total,Early Syphilis,31
+Nevada,2018,Total,Early Syphilis,10
+Orange,2018,Total,Early Syphilis,772
+Placer,2018,Total,Early Syphilis,29
+Plumas,2018,Total,Early Syphilis,1
+Riverside,2018,Total,Early Syphilis,655
+Sacramento,2018,Total,Early Syphilis,633
+San Benito,2018,Total,Early Syphilis,6
+San Bernardino,2018,Total,Early Syphilis,571
+San Diego,2018,Total,Early Syphilis,1090
+San Francisco,2018,Total,Early Syphilis,1410
+San Joaquin,2018,Total,Early Syphilis,608
+San Luis Obispo,2018,Total,Early Syphilis,29
+San Mateo,2018,Total,Early Syphilis,151
+Santa Barbara,2018,Total,Early Syphilis,95
+Santa Clara,2018,Total,Early Syphilis,527
+Santa Cruz,2018,Total,Early Syphilis,63
+Shasta,2018,Total,Early Syphilis,76
+Sierra,2018,Total,Early Syphilis,0
+Siskiyou,2018,Total,Early Syphilis,6
+Solano,2018,Total,Early Syphilis,119
+Sonoma,2018,Total,Early Syphilis,198
+Stanislaus,2018,Total,Early Syphilis,251
+Sutter,2018,Total,Early Syphilis,18
+Tehama,2018,Total,Early Syphilis,9
+Trinity,2018,Total,Early Syphilis,2
+Tulare,2018,Total,Early Syphilis,45
+Tuolumne,2018,Total,Early Syphilis,11
+Ventura,2018,Total,Early Syphilis,141
+Yolo,2018,Total,Early Syphilis,49
+Yuba,2018,Total,Early Syphilis,20
+California,2018,Total,Gonorrhea,79397
+Alameda,2018,Total,Gonorrhea,3777
+Alpine,2018,Total,Gonorrhea,1
+Amador,2018,Total,Gonorrhea,17
+Butte,2018,Total,Gonorrhea,424
+Calaveras,2018,Total,Gonorrhea,40
+Colusa,2018,Total,Gonorrhea,14
+Contra Costa,2018,Total,Gonorrhea,2055
+Del Norte,2018,Total,Gonorrhea,64
+El Dorado,2018,Total,Gonorrhea,94
+Fresno,2018,Total,Gonorrhea,2250
+Glenn,2018,Total,Gonorrhea,16
+Humboldt,2018,Total,Gonorrhea,227
+Imperial,2018,Total,Gonorrhea,197
+Inyo,2018,Total,Gonorrhea,16
+Kern,2018,Total,Gonorrhea,2317
+Kings,2018,Total,Gonorrhea,266
+Lake,2018,Total,Gonorrhea,171
+Lassen,2018,Total,Gonorrhea,18
+Los Angeles,2018,Total,Gonorrhea,27333
+Madera,2018,Total,Gonorrhea,282
+Marin,2018,Total,Gonorrhea,200
+Mariposa,2018,Total,Gonorrhea,14
+Mendocino,2018,Total,Gonorrhea,115
+Merced,2018,Total,Gonorrhea,484
+Modoc,2018,Total,Gonorrhea,11
+Mono,2018,Total,Gonorrhea,2
+Monterey,2018,Total,Gonorrhea,429
+Napa,2018,Total,Gonorrhea,130
+Nevada,2018,Total,Gonorrhea,56
+Orange,2018,Total,Gonorrhea,3967
+Placer,2018,Total,Gonorrhea,235
+Plumas,2018,Total,Gonorrhea,8
+Riverside,2018,Total,Gonorrhea,4082
+Sacramento,2018,Total,Gonorrhea,3838
+San Benito,2018,Total,Gonorrhea,51
+San Bernardino,2018,Total,Gonorrhea,3904
+San Diego,2018,Total,Gonorrhea,6208
+San Francisco,2018,Total,Gonorrhea,5894
+San Joaquin,2018,Total,Gonorrhea,1409
+San Luis Obispo,2018,Total,Gonorrhea,188
+San Mateo,2018,Total,Gonorrhea,729
+Santa Barbara,2018,Total,Gonorrhea,501
+Santa Clara,2018,Total,Gonorrhea,2184
+Santa Cruz,2018,Total,Gonorrhea,301
+Shasta,2018,Total,Gonorrhea,304
+Sierra,2018,Total,Gonorrhea,1
+Siskiyou,2018,Total,Gonorrhea,23
+Solano,2018,Total,Gonorrhea,1009
+Sonoma,2018,Total,Gonorrhea,553
+Stanislaus,2018,Total,Gonorrhea,828
+Sutter,2018,Total,Gonorrhea,135
+Tehama,2018,Total,Gonorrhea,79
+Trinity,2018,Total,Gonorrhea,12
+Tulare,2018,Total,Gonorrhea,776
+Tuolumne,2018,Total,Gonorrhea,25
+Ventura,2018,Total,Gonorrhea,692
+Yolo,2018,Total,Gonorrhea,269
+Yuba,2018,Total,Gonorrhea,172
+Alameda,2018,Total,Diphtheria,0
+Alpine,2018,Total,Diphtheria,0
+Amador,2018,Total,Diphtheria,0
+Butte,2018,Total,Diphtheria,0
+Calaveras,2018,Total,Diphtheria,0
+California,2018,Total,Diphtheria,0
+Colusa,2018,Total,Diphtheria,0
+Contra Costa,2018,Total,Diphtheria,0
+Del Norte,2018,Total,Diphtheria,0
+El Dorado,2018,Total,Diphtheria,0
+Fresno,2018,Total,Diphtheria,0
+Glenn,2018,Total,Diphtheria,0
+Humboldt,2018,Total,Diphtheria,0
+Imperial,2018,Total,Diphtheria,0
+Inyo,2018,Total,Diphtheria,0
+Kern,2018,Total,Diphtheria,0
+Kings,2018,Total,Diphtheria,0
+Lake,2018,Total,Diphtheria,0
+Lassen,2018,Total,Diphtheria,0
+Los Angeles,2018,Total,Diphtheria,0
+Madera,2018,Total,Diphtheria,0
+Marin,2018,Total,Diphtheria,0
+Mariposa,2018,Total,Diphtheria,0
+Mendocino,2018,Total,Diphtheria,0
+Merced,2018,Total,Diphtheria,0
+Modoc,2018,Total,Diphtheria,0
+Mono,2018,Total,Diphtheria,0
+Monterey,2018,Total,Diphtheria,0
+Napa,2018,Total,Diphtheria,0
+Nevada,2018,Total,Diphtheria,0
+Orange,2018,Total,Diphtheria,0
+Placer,2018,Total,Diphtheria,0
+Plumas,2018,Total,Diphtheria,0
+Riverside,2018,Total,Diphtheria,0
+Sacramento,2018,Total,Diphtheria,0
+San Benito,2018,Total,Diphtheria,0
+San Bernardino,2018,Total,Diphtheria,0
+San Diego,2018,Total,Diphtheria,0
+San Francisco,2018,Total,Diphtheria,0
+San Joaquin,2018,Total,Diphtheria,0
+San Luis Obispo,2018,Total,Diphtheria,0
+San Mateo,2018,Total,Diphtheria,0
+Santa Barbara,2018,Total,Diphtheria,0
+Santa Clara,2018,Total,Diphtheria,0
+Santa Cruz,2018,Total,Diphtheria,0
+Shasta,2018,Total,Diphtheria,0
+Sierra,2018,Total,Diphtheria,0
+Siskiyou,2018,Total,Diphtheria,0
+Solano,2018,Total,Diphtheria,0
+Sonoma,2018,Total,Diphtheria,0
+Stanislaus,2018,Total,Diphtheria,0
+Sutter,2018,Total,Diphtheria,0
+Tehama,2018,Total,Diphtheria,0
+Trinity,2018,Total,Diphtheria,0
+Tulare,2018,Total,Diphtheria,0
+Tuolumne,2018,Total,Diphtheria,0
+Ventura,2018,Total,Diphtheria,0
+Yolo,2018,Total,Diphtheria,0
+Yuba,2018,Total,Diphtheria,0
+Alameda,2018,Total,Hepatitis A,11
+Alpine,2018,Total,Hepatitis A,0
+Amador,2018,Total,Hepatitis A,0
+Butte,2018,Total,Hepatitis A,0
+Calaveras,2018,Total,Hepatitis A,0
+California,2018,Total,Hepatitis A,188
+Colusa,2018,Total,Hepatitis A,0
+Contra Costa,2018,Total,Hepatitis A,6
+Del Norte,2018,Total,Hepatitis A,0
+El Dorado,2018,Total,Hepatitis A,0
+Fresno,2018,Total,Hepatitis A,2
+Glenn,2018,Total,Hepatitis A,1
+Humboldt,2018,Total,Hepatitis A,1
+Imperial,2018,Total,Hepatitis A,0
+Inyo,2018,Total,Hepatitis A,0
+Kern,2018,Total,Hepatitis A,2
+Kings,2018,Total,Hepatitis A,2
+Lake,2018,Total,Hepatitis A,1
+Lassen,2018,Total,Hepatitis A,0
+Los Angeles,2018,Total,Hepatitis A,41
+Madera,2018,Total,Hepatitis A,0
+Marin,2018,Total,Hepatitis A,3
+Mariposa,2018,Total,Hepatitis A,0
+Mendocino,2018,Total,Hepatitis A,2
+Merced,2018,Total,Hepatitis A,0
+Modoc,2018,Total,Hepatitis A,0
+Mono,2018,Total,Hepatitis A,0
+Monterey,2018,Total,Hepatitis A,7
+Napa,2018,Total,Hepatitis A,1
+Nevada,2018,Total,Hepatitis A,1
+Orange,2018,Total,Hepatitis A,11
+Placer,2018,Total,Hepatitis A,1
+Plumas,2018,Total,Hepatitis A,0
+Riverside,2018,Total,Hepatitis A,5
+Sacramento,2018,Total,Hepatitis A,13
+San Benito,2018,Total,Hepatitis A,0
+San Bernardino,2018,Total,Hepatitis A,3
+San Diego,2018,Total,Hepatitis A,35
+San Francisco,2018,Total,Hepatitis A,4
+San Joaquin,2018,Total,Hepatitis A,0
+San Luis Obispo,2018,Total,Hepatitis A,1
+San Mateo,2018,Total,Hepatitis A,4
+Santa Barbara,2018,Total,Hepatitis A,2
+Santa Clara,2018,Total,Hepatitis A,13
+Santa Cruz,2018,Total,Hepatitis A,0
+Shasta,2018,Total,Hepatitis A,0
+Sierra,2018,Total,Hepatitis A,0
+Siskiyou,2018,Total,Hepatitis A,1
+Solano,2018,Total,Hepatitis A,2
+Sonoma,2018,Total,Hepatitis A,0
+Stanislaus,2018,Total,Hepatitis A,3
+Sutter,2018,Total,Hepatitis A,0
+Tehama,2018,Total,Hepatitis A,0
+Trinity,2018,Total,Hepatitis A,0
+Tulare,2018,Total,Hepatitis A,2
+Tuolumne,2018,Total,Hepatitis A,0
+Ventura,2018,Total,Hepatitis A,5
+Yolo,2018,Total,Hepatitis A,1
+Yuba,2018,Total,Hepatitis A,1
+Alameda,2018,Total,"Hepatitis B, Acute",4
+Alpine,2018,Total,"Hepatitis B, Acute",0
+Amador,2018,Total,"Hepatitis B, Acute",1
+Butte,2018,Total,"Hepatitis B, Acute",5
+Calaveras,2018,Total,"Hepatitis B, Acute",0
+California,2018,Total,"Hepatitis B, Acute",105
+Colusa,2018,Total,"Hepatitis B, Acute",0
+Contra Costa,2018,Total,"Hepatitis B, Acute",3
+Del Norte,2018,Total,"Hepatitis B, Acute",0
+El Dorado,2018,Total,"Hepatitis B, Acute",0
+Fresno,2018,Total,"Hepatitis B, Acute",4
+Glenn,2018,Total,"Hepatitis B, Acute",0
+Humboldt,2018,Total,"Hepatitis B, Acute",0
+Imperial,2018,Total,"Hepatitis B, Acute",0
+Inyo,2018,Total,"Hepatitis B, Acute",0
+Kern,2018,Total,"Hepatitis B, Acute",6
+Kings,2018,Total,"Hepatitis B, Acute",0
+Lake,2018,Total,"Hepatitis B, Acute",1
+Lassen,2018,Total,"Hepatitis B, Acute",0
+Los Angeles,2018,Total,"Hepatitis B, Acute",38
+Madera,2018,Total,"Hepatitis B, Acute",0
+Marin,2018,Total,"Hepatitis B, Acute",0
+Mariposa,2018,Total,"Hepatitis B, Acute",0
+Mendocino,2018,Total,"Hepatitis B, Acute",0
+Merced,2018,Total,"Hepatitis B, Acute",0
+Modoc,2018,Total,"Hepatitis B, Acute",0
+Mono,2018,Total,"Hepatitis B, Acute",0
+Monterey,2018,Total,"Hepatitis B, Acute",1
+Napa,2018,Total,"Hepatitis B, Acute",0
+Nevada,2018,Total,"Hepatitis B, Acute",0
+Orange,2018,Total,"Hepatitis B, Acute",11
+Placer,2018,Total,"Hepatitis B, Acute",0
+Plumas,2018,Total,"Hepatitis B, Acute",0
+Riverside,2018,Total,"Hepatitis B, Acute",1
+Sacramento,2018,Total,"Hepatitis B, Acute",3
+San Benito,2018,Total,"Hepatitis B, Acute",0
+San Bernardino,2018,Total,"Hepatitis B, Acute",5
+San Diego,2018,Total,"Hepatitis B, Acute",8
+San Francisco,2018,Total,"Hepatitis B, Acute",4
+San Joaquin,2018,Total,"Hepatitis B, Acute",0
+San Luis Obispo,2018,Total,"Hepatitis B, Acute",0
+San Mateo,2018,Total,"Hepatitis B, Acute",1
+Santa Barbara,2018,Total,"Hepatitis B, Acute",0
+Santa Clara,2018,Total,"Hepatitis B, Acute",2
+Santa Cruz,2018,Total,"Hepatitis B, Acute",0
+Shasta,2018,Total,"Hepatitis B, Acute",2
+Sierra,2018,Total,"Hepatitis B, Acute",0
+Siskiyou,2018,Total,"Hepatitis B, Acute",0
+Solano,2018,Total,"Hepatitis B, Acute",0
+Sonoma,2018,Total,"Hepatitis B, Acute",3
+Stanislaus,2018,Total,"Hepatitis B, Acute",1
+Sutter,2018,Total,"Hepatitis B, Acute",0
+Tehama,2018,Total,"Hepatitis B, Acute",0
+Trinity,2018,Total,"Hepatitis B, Acute",0
+Tulare,2018,Total,"Hepatitis B, Acute",0
+Tuolumne,2018,Total,"Hepatitis B, Acute",0
+Ventura,2018,Total,"Hepatitis B, Acute",0
+Yolo,2018,Total,"Hepatitis B, Acute",1
+Yuba,2018,Total,"Hepatitis B, Acute",0
+Alameda,2018,Total,"Hepatitis C, Acute",2
+Alpine,2018,Total,"Hepatitis C, Acute",0
+Amador,2018,Total,"Hepatitis C, Acute",4
+Butte,2018,Total,"Hepatitis C, Acute",2
+Calaveras,2018,Total,"Hepatitis C, Acute",1
+California,2018,Total,"Hepatitis C, Acute",132
+Colusa,2018,Total,"Hepatitis C, Acute",0
+Contra Costa,2018,Total,"Hepatitis C, Acute",0
+Del Norte,2018,Total,"Hepatitis C, Acute",0
+El Dorado,2018,Total,"Hepatitis C, Acute",0
+Fresno,2018,Total,"Hepatitis C, Acute",18
+Glenn,2018,Total,"Hepatitis C, Acute",0
+Humboldt,2018,Total,"Hepatitis C, Acute",1
+Imperial,2018,Total,"Hepatitis C, Acute",5
+Inyo,2018,Total,"Hepatitis C, Acute",0
+Kern,2018,Total,"Hepatitis C, Acute",12
+Kings,2018,Total,"Hepatitis C, Acute",11
+Lake,2018,Total,"Hepatitis C, Acute",0
+Lassen,2018,Total,"Hepatitis C, Acute",0
+Los Angeles,2018,Total,"Hepatitis C, Acute",12
+Madera,2018,Total,"Hepatitis C, Acute",3
+Marin,2018,Total,"Hepatitis C, Acute",0
+Mariposa,2018,Total,"Hepatitis C, Acute",0
+Mendocino,2018,Total,"Hepatitis C, Acute",0
+Merced,2018,Total,"Hepatitis C, Acute",0
+Modoc,2018,Total,"Hepatitis C, Acute",0
+Mono,2018,Total,"Hepatitis C, Acute",0
+Monterey,2018,Total,"Hepatitis C, Acute",6
+Napa,2018,Total,"Hepatitis C, Acute",0
+Nevada,2018,Total,"Hepatitis C, Acute",1
+Orange,2018,Total,"Hepatitis C, Acute",8
+Placer,2018,Total,"Hepatitis C, Acute",0
+Plumas,2018,Total,"Hepatitis C, Acute",0
+Riverside,2018,Total,"Hepatitis C, Acute",0
+Sacramento,2018,Total,"Hepatitis C, Acute",9
+San Benito,2018,Total,"Hepatitis C, Acute",0
+San Bernardino,2018,Total,"Hepatitis C, Acute",2
+San Diego,2018,Total,"Hepatitis C, Acute",1
+San Francisco,2018,Total,"Hepatitis C, Acute",14
+San Joaquin,2018,Total,"Hepatitis C, Acute",2
+San Luis Obispo,2018,Total,"Hepatitis C, Acute",5
+San Mateo,2018,Total,"Hepatitis C, Acute",0
+Santa Barbara,2018,Total,"Hepatitis C, Acute",2
+Santa Clara,2018,Total,"Hepatitis C, Acute",1
+Santa Cruz,2018,Total,"Hepatitis C, Acute",1
+Shasta,2018,Total,"Hepatitis C, Acute",0
+Sierra,2018,Total,"Hepatitis C, Acute",0
+Siskiyou,2018,Total,"Hepatitis C, Acute",0
+Solano,2018,Total,"Hepatitis C, Acute",0
+Sonoma,2018,Total,"Hepatitis C, Acute",0
+Stanislaus,2018,Total,"Hepatitis C, Acute",3
+Sutter,2018,Total,"Hepatitis C, Acute",0
+Tehama,2018,Total,"Hepatitis C, Acute",0
+Trinity,2018,Total,"Hepatitis C, Acute",0
+Tulare,2018,Total,"Hepatitis C, Acute",1
+Tuolumne,2018,Total,"Hepatitis C, Acute",2
+Ventura,2018,Total,"Hepatitis C, Acute",2
+Yolo,2018,Total,"Hepatitis C, Acute",0
+Yuba,2018,Total,"Hepatitis C, Acute",1
+Alameda,2018,Total,Invasive Meningococcal Disease,3
+Alpine,2018,Total,Invasive Meningococcal Disease,0
+Amador,2018,Total,Invasive Meningococcal Disease,0
+Butte,2018,Total,Invasive Meningococcal Disease,0
+Calaveras,2018,Total,Invasive Meningococcal Disease,0
+California,2018,Total,Invasive Meningococcal Disease,43
+Colusa,2018,Total,Invasive Meningococcal Disease,0
+Contra Costa,2018,Total,Invasive Meningococcal Disease,2
+Del Norte,2018,Total,Invasive Meningococcal Disease,1
+El Dorado,2018,Total,Invasive Meningococcal Disease,0
+Fresno,2018,Total,Invasive Meningococcal Disease,1
+Glenn,2018,Total,Invasive Meningococcal Disease,0
+Humboldt,2018,Total,Invasive Meningococcal Disease,1
+Imperial,2018,Total,Invasive Meningococcal Disease,0
+Inyo,2018,Total,Invasive Meningococcal Disease,0
+Kern,2018,Total,Invasive Meningococcal Disease,1
+Kings,2018,Total,Invasive Meningococcal Disease,0
+Lake,2018,Total,Invasive Meningococcal Disease,0
+Lassen,2018,Total,Invasive Meningococcal Disease,0
+Los Angeles,2018,Total,Invasive Meningococcal Disease,11
+Madera,2018,Total,Invasive Meningococcal Disease,0
+Marin,2018,Total,Invasive Meningococcal Disease,0
+Mariposa,2018,Total,Invasive Meningococcal Disease,0
+Mendocino,2018,Total,Invasive Meningococcal Disease,0
+Merced,2018,Total,Invasive Meningococcal Disease,0
+Modoc,2018,Total,Invasive Meningococcal Disease,0
+Mono,2018,Total,Invasive Meningococcal Disease,0
+Monterey,2018,Total,Invasive Meningococcal Disease,0
+Napa,2018,Total,Invasive Meningococcal Disease,0
+Nevada,2018,Total,Invasive Meningococcal Disease,0
+Orange,2018,Total,Invasive Meningococcal Disease,2
+Placer,2018,Total,Invasive Meningococcal Disease,0
+Plumas,2018,Total,Invasive Meningococcal Disease,0
+Riverside,2018,Total,Invasive Meningococcal Disease,1
+Sacramento,2018,Total,Invasive Meningococcal Disease,1
+San Benito,2018,Total,Invasive Meningococcal Disease,0
+San Bernardino,2018,Total,Invasive Meningococcal Disease,1
+San Diego,2018,Total,Invasive Meningococcal Disease,11
+San Francisco,2018,Total,Invasive Meningococcal Disease,2
+San Joaquin,2018,Total,Invasive Meningococcal Disease,0
+San Luis Obispo,2018,Total,Invasive Meningococcal Disease,0
+San Mateo,2018,Total,Invasive Meningococcal Disease,1
+Santa Barbara,2018,Total,Invasive Meningococcal Disease,0
+Santa Clara,2018,Total,Invasive Meningococcal Disease,0
+Santa Cruz,2018,Total,Invasive Meningococcal Disease,1
+Shasta,2018,Total,Invasive Meningococcal Disease,1
+Sierra,2018,Total,Invasive Meningococcal Disease,0
+Siskiyou,2018,Total,Invasive Meningococcal Disease,1
+Solano,2018,Total,Invasive Meningococcal Disease,0
+Sonoma,2018,Total,Invasive Meningococcal Disease,0
+Stanislaus,2018,Total,Invasive Meningococcal Disease,1
+Sutter,2018,Total,Invasive Meningococcal Disease,0
+Tehama,2018,Total,Invasive Meningococcal Disease,0
+Trinity,2018,Total,Invasive Meningococcal Disease,0
+Tulare,2018,Total,Invasive Meningococcal Disease,0
+Tuolumne,2018,Total,Invasive Meningococcal Disease,0
+Ventura,2018,Total,Invasive Meningococcal Disease,0
+Yolo,2018,Total,Invasive Meningococcal Disease,0
+Yuba,2018,Total,Invasive Meningococcal Disease,0
+Alameda,2018,Total,Measles,1
+Alpine,2018,Total,Measles,0
+Amador,2018,Total,Measles,0
+Butte,2018,Total,Measles,0
+Calaveras,2018,Total,Measles,0
+California,2018,Total,Measles,23
+Colusa,2018,Total,Measles,0
+Contra Costa,2018,Total,Measles,1
+Del Norte,2018,Total,Measles,0
+El Dorado,2018,Total,Measles,0
+Fresno,2018,Total,Measles,1
+Glenn,2018,Total,Measles,0
+Humboldt,2018,Total,Measles,0
+Imperial,2018,Total,Measles,0
+Inyo,2018,Total,Measles,0
+Kern,2018,Total,Measles,0
+Kings,2018,Total,Measles,0
+Lake,2018,Total,Measles,0
+Lassen,2018,Total,Measles,0
+Los Angeles,2018,Total,Measles,6
+Madera,2018,Total,Measles,0
+Marin,2018,Total,Measles,0
+Mariposa,2018,Total,Measles,0
+Mendocino,2018,Total,Measles,0
+Merced,2018,Total,Measles,0
+Modoc,2018,Total,Measles,0
+Mono,2018,Total,Measles,0
+Monterey,2018,Total,Measles,0
+Napa,2018,Total,Measles,0
+Nevada,2018,Total,Measles,0
+Orange,2018,Total,Measles,1
+Placer,2018,Total,Measles,0
+Plumas,2018,Total,Measles,0
+Riverside,2018,Total,Measles,1
+Sacramento,2018,Total,Measles,1
+San Benito,2018,Total,Measles,0
+San Bernardino,2018,Total,Measles,0
+San Diego,2018,Total,Measles,0
+San Francisco,2018,Total,Measles,0
+San Joaquin,2018,Total,Measles,0
+San Luis Obispo,2018,Total,Measles,1
+San Mateo,2018,Total,Measles,1
+Santa Barbara,2018,Total,Measles,0
+Santa Clara,2018,Total,Measles,9
+Santa Cruz,2018,Total,Measles,0
+Shasta,2018,Total,Measles,0
+Sierra,2018,Total,Measles,0
+Siskiyou,2018,Total,Measles,0
+Solano,2018,Total,Measles,0
+Sonoma,2018,Total,Measles,0
+Stanislaus,2018,Total,Measles,0
+Sutter,2018,Total,Measles,0
+Tehama,2018,Total,Measles,0
+Trinity,2018,Total,Measles,0
+Tulare,2018,Total,Measles,0
+Tuolumne,2018,Total,Measles,0
+Ventura,2018,Total,Measles,0
+Yolo,2018,Total,Measles,0
+Yuba,2018,Total,Measles,0
+Alameda,2018,Total,Mumps,5
+Alpine,2018,Total,Mumps,0
+Amador,2018,Total,Mumps,0
+Butte,2018,Total,Mumps,0
+Calaveras,2018,Total,Mumps,0
+California,2018,Total,Mumps,140
+Colusa,2018,Total,Mumps,0
+Contra Costa,2018,Total,Mumps,2
+Del Norte,2018,Total,Mumps,0
+El Dorado,2018,Total,Mumps,1
+Fresno,2018,Total,Mumps,2
+Glenn,2018,Total,Mumps,0
+Humboldt,2018,Total,Mumps,0
+Imperial,2018,Total,Mumps,3
+Inyo,2018,Total,Mumps,0
+Kern,2018,Total,Mumps,0
+Kings,2018,Total,Mumps,0
+Lake,2018,Total,Mumps,0
+Lassen,2018,Total,Mumps,0
+Los Angeles,2018,Total,Mumps,56
+Madera,2018,Total,Mumps,0
+Marin,2018,Total,Mumps,0
+Mariposa,2018,Total,Mumps,0
+Mendocino,2018,Total,Mumps,0
+Merced,2018,Total,Mumps,0
+Modoc,2018,Total,Mumps,0
+Mono,2018,Total,Mumps,0
+Monterey,2018,Total,Mumps,0
+Napa,2018,Total,Mumps,1
+Nevada,2018,Total,Mumps,2
+Orange,2018,Total,Mumps,13
+Placer,2018,Total,Mumps,1
+Plumas,2018,Total,Mumps,0
+Riverside,2018,Total,Mumps,6
+Sacramento,2018,Total,Mumps,3
+San Benito,2018,Total,Mumps,0
+San Bernardino,2018,Total,Mumps,4
+San Diego,2018,Total,Mumps,9
+San Francisco,2018,Total,Mumps,15
+San Joaquin,2018,Total,Mumps,1
+San Luis Obispo,2018,Total,Mumps,1
+San Mateo,2018,Total,Mumps,0
+Santa Barbara,2018,Total,Mumps,0
+Santa Clara,2018,Total,Mumps,9
+Santa Cruz,2018,Total,Mumps,2
+Shasta,2018,Total,Mumps,0
+Sierra,2018,Total,Mumps,0
+Siskiyou,2018,Total,Mumps,0
+Solano,2018,Total,Mumps,1
+Sonoma,2018,Total,Mumps,1
+Stanislaus,2018,Total,Mumps,0
+Sutter,2018,Total,Mumps,0
+Tehama,2018,Total,Mumps,0
+Trinity,2018,Total,Mumps,0
+Tulare,2018,Total,Mumps,0
+Tuolumne,2018,Total,Mumps,0
+Ventura,2018,Total,Mumps,2
+Yolo,2018,Total,Mumps,0
+Yuba,2018,Total,Mumps,0
+Alameda,2018,Total,Pertussis,326
+Alpine,2018,Total,Pertussis,0
+Amador,2018,Total,Pertussis,0
+Butte,2018,Total,Pertussis,7
+Calaveras,2018,Total,Pertussis,0
+California,2018,Total,Pertussis,3364
+Colusa,2018,Total,Pertussis,0
+Contra Costa,2018,Total,Pertussis,110
+Del Norte,2018,Total,Pertussis,0
+El Dorado,2018,Total,Pertussis,1
+Fresno,2018,Total,Pertussis,84
+Glenn,2018,Total,Pertussis,0
+Humboldt,2018,Total,Pertussis,0
+Imperial,2018,Total,Pertussis,6
+Inyo,2018,Total,Pertussis,0
+Kern,2018,Total,Pertussis,35
+Kings,2018,Total,Pertussis,2
+Lake,2018,Total,Pertussis,1
+Lassen,2018,Total,Pertussis,0
+Los Angeles,2018,Total,Pertussis,509
+Madera,2018,Total,Pertussis,31
+Marin,2018,Total,Pertussis,245
+Mariposa,2018,Total,Pertussis,3
+Mendocino,2018,Total,Pertussis,2
+Merced,2018,Total,Pertussis,10
+Modoc,2018,Total,Pertussis,0
+Mono,2018,Total,Pertussis,0
+Monterey,2018,Total,Pertussis,35
+Napa,2018,Total,Pertussis,20
+Nevada,2018,Total,Pertussis,13
+Orange,2018,Total,Pertussis,172
+Placer,2018,Total,Pertussis,27
+Plumas,2018,Total,Pertussis,0
+Riverside,2018,Total,Pertussis,69
+Sacramento,2018,Total,Pertussis,95
+San Benito,2018,Total,Pertussis,3
+San Bernardino,2018,Total,Pertussis,31
+San Diego,2018,Total,Pertussis,649
+San Francisco,2018,Total,Pertussis,35
+San Joaquin,2018,Total,Pertussis,25
+San Luis Obispo,2018,Total,Pertussis,21
+San Mateo,2018,Total,Pertussis,113
+Santa Barbara,2018,Total,Pertussis,23
+Santa Clara,2018,Total,Pertussis,181
+Santa Cruz,2018,Total,Pertussis,169
+Shasta,2018,Total,Pertussis,0
+Sierra,2018,Total,Pertussis,0
+Siskiyou,2018,Total,Pertussis,0
+Solano,2018,Total,Pertussis,49
+Sonoma,2018,Total,Pertussis,149
+Stanislaus,2018,Total,Pertussis,11
+Sutter,2018,Total,Pertussis,0
+Tehama,2018,Total,Pertussis,0
+Trinity,2018,Total,Pertussis,0
+Tulare,2018,Total,Pertussis,8
+Tuolumne,2018,Total,Pertussis,1
+Ventura,2018,Total,Pertussis,66
+Yolo,2018,Total,Pertussis,24
+Yuba,2018,Total,Pertussis,3
+Alameda,2018,Total,Rubella,0
+Alpine,2018,Total,Rubella,0
+Amador,2018,Total,Rubella,0
+Butte,2018,Total,Rubella,0
+Calaveras,2018,Total,Rubella,0
+California,2018,Total,Rubella,0
+Colusa,2018,Total,Rubella,0
+Contra Costa,2018,Total,Rubella,0
+Del Norte,2018,Total,Rubella,0
+El Dorado,2018,Total,Rubella,0
+Fresno,2018,Total,Rubella,0
+Glenn,2018,Total,Rubella,0
+Humboldt,2018,Total,Rubella,0
+Imperial,2018,Total,Rubella,0
+Inyo,2018,Total,Rubella,0
+Kern,2018,Total,Rubella,0
+Kings,2018,Total,Rubella,0
+Lake,2018,Total,Rubella,0
+Lassen,2018,Total,Rubella,0
+Los Angeles,2018,Total,Rubella,0
+Madera,2018,Total,Rubella,0
+Marin,2018,Total,Rubella,0
+Mariposa,2018,Total,Rubella,0
+Mendocino,2018,Total,Rubella,0
+Merced,2018,Total,Rubella,0
+Modoc,2018,Total,Rubella,0
+Mono,2018,Total,Rubella,0
+Monterey,2018,Total,Rubella,0
+Napa,2018,Total,Rubella,0
+Nevada,2018,Total,Rubella,0
+Orange,2018,Total,Rubella,0
+Placer,2018,Total,Rubella,0
+Plumas,2018,Total,Rubella,0
+Riverside,2018,Total,Rubella,0
+Sacramento,2018,Total,Rubella,0
+San Benito,2018,Total,Rubella,0
+San Bernardino,2018,Total,Rubella,0
+San Diego,2018,Total,Rubella,0
+San Francisco,2018,Total,Rubella,0
+San Joaquin,2018,Total,Rubella,0
+San Luis Obispo,2018,Total,Rubella,0
+San Mateo,2018,Total,Rubella,0
+Santa Barbara,2018,Total,Rubella,0
+Santa Clara,2018,Total,Rubella,0
+Santa Cruz,2018,Total,Rubella,0
+Shasta,2018,Total,Rubella,0
+Sierra,2018,Total,Rubella,0
+Siskiyou,2018,Total,Rubella,0
+Solano,2018,Total,Rubella,0
+Sonoma,2018,Total,Rubella,0
+Stanislaus,2018,Total,Rubella,0
+Sutter,2018,Total,Rubella,0
+Tehama,2018,Total,Rubella,0
+Trinity,2018,Total,Rubella,0
+Tulare,2018,Total,Rubella,0
+Tuolumne,2018,Total,Rubella,0
+Ventura,2018,Total,Rubella,0
+Yolo,2018,Total,Rubella,0
+Yuba,2018,Total,Rubella,0
+Alameda,2018,Total,Tetanus,0
+Alpine,2018,Total,Tetanus,0
+Amador,2018,Total,Tetanus,0
+Butte,2018,Total,Tetanus,0
+Calaveras,2018,Total,Tetanus,0
+California,2018,Total,Tetanus,0
+Colusa,2018,Total,Tetanus,0
+Contra Costa,2018,Total,Tetanus,0
+Del Norte,2018,Total,Tetanus,0
+El Dorado,2018,Total,Tetanus,0
+Fresno,2018,Total,Tetanus,0
+Glenn,2018,Total,Tetanus,0
+Humboldt,2018,Total,Tetanus,0
+Imperial,2018,Total,Tetanus,0
+Inyo,2018,Total,Tetanus,0
+Kern,2018,Total,Tetanus,0
+Kings,2018,Total,Tetanus,0
+Lake,2018,Total,Tetanus,0
+Lassen,2018,Total,Tetanus,0
+Los Angeles,2018,Total,Tetanus,0
+Madera,2018,Total,Tetanus,0
+Marin,2018,Total,Tetanus,0
+Mariposa,2018,Total,Tetanus,0
+Mendocino,2018,Total,Tetanus,0
+Merced,2018,Total,Tetanus,0
+Modoc,2018,Total,Tetanus,0
+Mono,2018,Total,Tetanus,0
+Monterey,2018,Total,Tetanus,0
+Napa,2018,Total,Tetanus,0
+Nevada,2018,Total,Tetanus,0
+Orange,2018,Total,Tetanus,0
+Placer,2018,Total,Tetanus,0
+Plumas,2018,Total,Tetanus,0
+Riverside,2018,Total,Tetanus,0
+Sacramento,2018,Total,Tetanus,0
+San Benito,2018,Total,Tetanus,0
+San Bernardino,2018,Total,Tetanus,0
+San Diego,2018,Total,Tetanus,0
+San Francisco,2018,Total,Tetanus,0
+San Joaquin,2018,Total,Tetanus,0
+San Luis Obispo,2018,Total,Tetanus,0
+San Mateo,2018,Total,Tetanus,0
+Santa Barbara,2018,Total,Tetanus,0
+Santa Clara,2018,Total,Tetanus,0
+Santa Cruz,2018,Total,Tetanus,0
+Shasta,2018,Total,Tetanus,0
+Sierra,2018,Total,Tetanus,0
+Siskiyou,2018,Total,Tetanus,0
+Solano,2018,Total,Tetanus,0
+Sonoma,2018,Total,Tetanus,0
+Stanislaus,2018,Total,Tetanus,0
+Sutter,2018,Total,Tetanus,0
+Tehama,2018,Total,Tetanus,0
+Trinity,2018,Total,Tetanus,0
+Tulare,2018,Total,Tetanus,0
+Tuolumne,2018,Total,Tetanus,0
+Ventura,2018,Total,Tetanus,0
+Yolo,2018,Total,Tetanus,0
+Yuba,2018,Total,Tetanus,0
+Alameda,2018,Total,Varicella Hospitalizations,6
+Alpine,2018,Total,Varicella Hospitalizations,0
+Amador,2018,Total,Varicella Hospitalizations,0
+Butte,2018,Total,Varicella Hospitalizations,0
+Calaveras,2018,Total,Varicella Hospitalizations,0
+California,2018,Total,Varicella Hospitalizations,40
+Colusa,2018,Total,Varicella Hospitalizations,0
+Contra Costa,2018,Total,Varicella Hospitalizations,1
+Del Norte,2018,Total,Varicella Hospitalizations,0
+El Dorado,2018,Total,Varicella Hospitalizations,0
+Fresno,2018,Total,Varicella Hospitalizations,2
+Glenn,2018,Total,Varicella Hospitalizations,0
+Humboldt,2018,Total,Varicella Hospitalizations,0
+Imperial,2018,Total,Varicella Hospitalizations,0
+Inyo,2018,Total,Varicella Hospitalizations,0
+Kern,2018,Total,Varicella Hospitalizations,1
+Kings,2018,Total,Varicella Hospitalizations,0
+Lake,2018,Total,Varicella Hospitalizations,0
+Lassen,2018,Total,Varicella Hospitalizations,0
+Los Angeles,2018,Total,Varicella Hospitalizations,10
+Madera,2018,Total,Varicella Hospitalizations,0
+Marin,2018,Total,Varicella Hospitalizations,0
+Mariposa,2018,Total,Varicella Hospitalizations,0
+Mendocino,2018,Total,Varicella Hospitalizations,0
+Merced,2018,Total,Varicella Hospitalizations,0
+Modoc,2018,Total,Varicella Hospitalizations,0
+Mono,2018,Total,Varicella Hospitalizations,0
+Monterey,2018,Total,Varicella Hospitalizations,1
+Napa,2018,Total,Varicella Hospitalizations,0
+Nevada,2018,Total,Varicella Hospitalizations,0
+Orange,2018,Total,Varicella Hospitalizations,2
+Placer,2018,Total,Varicella Hospitalizations,0
+Plumas,2018,Total,Varicella Hospitalizations,0
+Riverside,2018,Total,Varicella Hospitalizations,0
+Sacramento,2018,Total,Varicella Hospitalizations,4
+San Benito,2018,Total,Varicella Hospitalizations,0
+San Bernardino,2018,Total,Varicella Hospitalizations,2
+San Diego,2018,Total,Varicella Hospitalizations,4
+San Francisco,2018,Total,Varicella Hospitalizations,1
+San Joaquin,2018,Total,Varicella Hospitalizations,0
+San Luis Obispo,2018,Total,Varicella Hospitalizations,0
+San Mateo,2018,Total,Varicella Hospitalizations,1
+Santa Barbara,2018,Total,Varicella Hospitalizations,0
+Santa Clara,2018,Total,Varicella Hospitalizations,3
+Santa Cruz,2018,Total,Varicella Hospitalizations,0
+Shasta,2018,Total,Varicella Hospitalizations,0
+Sierra,2018,Total,Varicella Hospitalizations,0
+Siskiyou,2018,Total,Varicella Hospitalizations,0
+Solano,2018,Total,Varicella Hospitalizations,0
+Sonoma,2018,Total,Varicella Hospitalizations,1
+Stanislaus,2018,Total,Varicella Hospitalizations,0
+Sutter,2018,Total,Varicella Hospitalizations,1
+Tehama,2018,Total,Varicella Hospitalizations,0
+Trinity,2018,Total,Varicella Hospitalizations,0
+Tulare,2018,Total,Varicella Hospitalizations,0
+Tuolumne,2018,Total,Varicella Hospitalizations,0
+Ventura,2018,Total,Varicella Hospitalizations,0
+Yolo,2018,Total,Varicella Hospitalizations,0
+Yuba,2018,Total,Varicella Hospitalizations,0
+California,2019,Total,TB,2115
+Alameda,2019,Total,TB,114
+Alpine,2019,Total,TB,0
+Amador,2019,Total,TB,0
+Berkeley,2019,Total,TB,4
+Butte,2019,Total,TB,3
+Calaveras,2019,Total,TB,0
+Colusa,2019,Total,TB,0
+Contra Costa,2019,Total,TB,58
+Del Norte,2019,Total,TB,0
+El Dorado,2019,Total,TB,0
+Fresno,2019,Total,TB,38
+Glenn,2019,Total,TB,0
+Humboldt,2019,Total,TB,0
+Imperial,2019,Total,TB,61
+Inyo,2019,Total,TB,0
+Kern,2019,Total,TB,26
+Kings,2019,Total,TB,2
+Lake,2019,Total,TB,1
+Lassen,2019,Total,TB,0
+Long Beach,2019,Total,TB,20
+Los Angeles,2019,Total,TB,537
+Madera,2019,Total,TB,5
+Marin,2019,Total,TB,8
+Mariposa,2019,Total,TB,0
+Mendocino,2019,Total,TB,2
+Merced,2019,Total,TB,11
+Modoc,2019,Total,TB,0
+Mono,2019,Total,TB,0
+Monterey,2019,Total,TB,12
+Napa,2019,Total,TB,3
+Nevada,2019,Total,TB,0
+Orange,2019,Total,TB,173
+Pasadena,2019,Total,TB,7
+Placer,2019,Total,TB,4
+Plumas,2019,Total,TB,0
+Riverside,2019,Total,TB,76
+Sacramento,2019,Total,TB,73
+San Benito,2019,Total,TB,1
+San Bernardino,2019,Total,TB,74
+San Diego,2019,Total,TB,265
+San Francisco,2019,Total,TB,105
+San Joaquin,2019,Total,TB,59
+San Luis Obispo,2019,Total,TB,6
+San Mateo,2019,Total,TB,66
+Santa Barbara,2019,Total,TB,24
+Santa Clara,2019,Total,TB,164
+Santa Cruz,2019,Total,TB,4
+Shasta,2019,Total,TB,2
+Sierra,2019,Total,TB,0
+Siskiyou,2019,Total,TB,0
+Solano,2019,Total,TB,31
+Sonoma,2019,Total,TB,6
+Stanislaus,2019,Total,TB,17
+Sutter,2019,Total,TB,4
+Tehama,2019,Total,TB,0
+Trinity,2019,Total,TB,0
+Tulare,2019,Total,TB,12
+Tuolumne,2019,Total,TB,1
+Ventura,2019,Total,TB,27
+Yolo,2019,Total,TB,9
+Yuba,2019,Total,TB,0
+Alameda,2017,Total,Amebiasis,56
+Alameda,2017,Total,Anaplasmosis,1
+Alameda,2017,Total,Anthrax,0
+Alameda,2017,Total,Babesiosis,0
+Alameda,2017,Total,"Botulism, Foodborne",0
+Alameda,2017,Total,"Botulism, Other",0
+Alameda,2017,Total,"Botulism, Wound",0
+Alameda,2017,Total,Brucellosis,2
+Alameda,2017,Total,Campylobacteriosis,537
+Alameda,2017,Total,Chikungunya Virus Infection,3
+Alameda,2017,Total,Cholera,0
+Alameda,2017,Total,Ciguatera Fish Poisoning,0
+Alameda,2017,Total,Coccidioidomycosis,67
+Alameda,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,2
+Alameda,2017,Total,Cryptosporidiosis,28
+Alameda,2017,Total,Cyclosporiasis,2
+Alameda,2017,Total,Cysticercosis or Taeniasis,2
+Alameda,2017,Total,Dengue,20
+Alameda,2017,Total,Domoic Acid Poisoning,0
+Alameda,2017,Total,E. coli O157,34
+Alameda,2017,Total,E. coli Other STEC (non-O157),72
+Alameda,2017,Total,Ehrlichiosis,1
+Alameda,2017,Total,Flavivirus Infection of Undetermined Species,0
+Alameda,2017,Total,Giardiasis,257
+Alameda,2017,Total,Hantavirus Infection,1
+Alameda,2017,Total,Hemolytic Uremic Syndrome,4
+Alameda,2017,Total,"Hepatitis E, acute infection",2
+Alameda,2017,Total,Legionellosis,18
+Alameda,2017,Total,Leprosy,0
+Alameda,2017,Total,Leptospirosis,0
+Alameda,2017,Total,Listeriosis,8
+Alameda,2017,Total,Lyme Disease,14
+Alameda,2017,Total,Malaria,16
+Alameda,2017,Total,Paralytic Shellfish Poisoning,0
+Alameda,2017,Total,"Plague, human",0
+Alameda,2017,Total,Psittacosis,0
+Alameda,2017,Total,Q Fever,1
+Alameda,2017,Total,"Rabies, human",0
+Alameda,2017,Total,Relapsing Fever,0
+Alameda,2017,Total,Salmonellosis,259
+Alameda,2017,Total,Scombroid Fish Poisoning,0
+Alameda,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),17
+Alameda,2017,Total,Shigellosis,144
+Alameda,2017,Total,Spotted Fever Rickettsiosis,4
+Alameda,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Alameda,2017,Total,Trichinosis,3
+Alameda,2017,Total,Tularemia,1
+Alameda,2017,Total,"Typhoid Fever, case",12
+Alameda,2017,Total,Typhus Fever,1
+Alameda,2017,Total,Vibrio Infection (non-Cholera),6
+Alameda,2017,Total,Yellow Fever,0
+Alameda,2017,Total,Yersiniosis,8
+Alameda,2017,Total,Zika Virus Infection,10
+Alpine,2017,Total,Amebiasis,0
+Alpine,2017,Total,Anaplasmosis,0
+Alpine,2017,Total,Anthrax,0
+Alpine,2017,Total,Babesiosis,0
+Alpine,2017,Total,"Botulism, Foodborne",0
+Alpine,2017,Total,"Botulism, Other",0
+Alpine,2017,Total,"Botulism, Wound",0
+Alpine,2017,Total,Brucellosis,0
+Alpine,2017,Total,Campylobacteriosis,0
+Alpine,2017,Total,Chikungunya Virus Infection,0
+Alpine,2017,Total,Cholera,0
+Alpine,2017,Total,Ciguatera Fish Poisoning,0
+Alpine,2017,Total,Coccidioidomycosis,0
+Alpine,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Alpine,2017,Total,Cryptosporidiosis,0
+Alpine,2017,Total,Cyclosporiasis,0
+Alpine,2017,Total,Cysticercosis or Taeniasis,0
+Alpine,2017,Total,Dengue,0
+Alpine,2017,Total,Domoic Acid Poisoning,0
+Alpine,2017,Total,E. coli O157,1
+Alpine,2017,Total,E. coli Other STEC (non-O157),0
+Alpine,2017,Total,Ehrlichiosis,0
+Alpine,2017,Total,Flavivirus Infection of Undetermined Species,0
+Alpine,2017,Total,Giardiasis,0
+Alpine,2017,Total,Hantavirus Infection,0
+Alpine,2017,Total,Hemolytic Uremic Syndrome,0
+Alpine,2017,Total,"Hepatitis E, acute infection",0
+Alpine,2017,Total,Legionellosis,0
+Alpine,2017,Total,Leprosy,0
+Alpine,2017,Total,Leptospirosis,0
+Alpine,2017,Total,Listeriosis,0
+Alpine,2017,Total,Lyme Disease,0
+Alpine,2017,Total,Malaria,0
+Alpine,2017,Total,Paralytic Shellfish Poisoning,0
+Alpine,2017,Total,"Plague, human",0
+Alpine,2017,Total,Psittacosis,0
+Alpine,2017,Total,Q Fever,0
+Alpine,2017,Total,"Rabies, human",0
+Alpine,2017,Total,Relapsing Fever,0
+Alpine,2017,Total,Salmonellosis,0
+Alpine,2017,Total,Scombroid Fish Poisoning,0
+Alpine,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Alpine,2017,Total,Shigellosis,0
+Alpine,2017,Total,Spotted Fever Rickettsiosis,0
+Alpine,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Alpine,2017,Total,Trichinosis,0
+Alpine,2017,Total,Tularemia,0
+Alpine,2017,Total,"Typhoid Fever, case",0
+Alpine,2017,Total,Typhus Fever,0
+Alpine,2017,Total,Vibrio Infection (non-Cholera),0
+Alpine,2017,Total,Yellow Fever,0
+Alpine,2017,Total,Yersiniosis,0
+Alpine,2017,Total,Zika Virus Infection,0
+Amador,2017,Total,Amebiasis,0
+Amador,2017,Total,Anaplasmosis,0
+Amador,2017,Total,Anthrax,0
+Amador,2017,Total,Babesiosis,0
+Amador,2017,Total,"Botulism, Foodborne",0
+Amador,2017,Total,"Botulism, Other",0
+Amador,2017,Total,"Botulism, Wound",0
+Amador,2017,Total,Brucellosis,0
+Amador,2017,Total,Campylobacteriosis,6
+Amador,2017,Total,Chikungunya Virus Infection,0
+Amador,2017,Total,Cholera,0
+Amador,2017,Total,Ciguatera Fish Poisoning,0
+Amador,2017,Total,Coccidioidomycosis,1
+Amador,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Amador,2017,Total,Cryptosporidiosis,1
+Amador,2017,Total,Cyclosporiasis,0
+Amador,2017,Total,Cysticercosis or Taeniasis,0
+Amador,2017,Total,Dengue,0
+Amador,2017,Total,Domoic Acid Poisoning,0
+Amador,2017,Total,E. coli O157,1
+Amador,2017,Total,E. coli Other STEC (non-O157),0
+Amador,2017,Total,Ehrlichiosis,0
+Amador,2017,Total,Flavivirus Infection of Undetermined Species,0
+Amador,2017,Total,Giardiasis,3
+Amador,2017,Total,Hantavirus Infection,0
+Amador,2017,Total,Hemolytic Uremic Syndrome,0
+Amador,2017,Total,"Hepatitis E, acute infection",0
+Amador,2017,Total,Legionellosis,0
+Amador,2017,Total,Leprosy,0
+Amador,2017,Total,Leptospirosis,0
+Amador,2017,Total,Listeriosis,0
+Amador,2017,Total,Lyme Disease,0
+Amador,2017,Total,Malaria,0
+Amador,2017,Total,Paralytic Shellfish Poisoning,0
+Amador,2017,Total,"Plague, human",0
+Amador,2017,Total,Psittacosis,0
+Amador,2017,Total,Q Fever,0
+Amador,2017,Total,"Rabies, human",0
+Amador,2017,Total,Relapsing Fever,0
+Amador,2017,Total,Salmonellosis,3
+Amador,2017,Total,Scombroid Fish Poisoning,0
+Amador,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Amador,2017,Total,Shigellosis,0
+Amador,2017,Total,Spotted Fever Rickettsiosis,0
+Amador,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Amador,2017,Total,Trichinosis,0
+Amador,2017,Total,Tularemia,0
+Amador,2017,Total,"Typhoid Fever, case",0
+Amador,2017,Total,Typhus Fever,0
+Amador,2017,Total,Vibrio Infection (non-Cholera),1
+Amador,2017,Total,Yellow Fever,0
+Amador,2017,Total,Yersiniosis,1
+Amador,2017,Total,Zika Virus Infection,0
+Butte,2017,Total,Amebiasis,0
+Butte,2017,Total,Anaplasmosis,0
+Butte,2017,Total,Anthrax,0
+Butte,2017,Total,Babesiosis,0
+Butte,2017,Total,"Botulism, Foodborne",0
+Butte,2017,Total,"Botulism, Other",0
+Butte,2017,Total,"Botulism, Wound",0
+Butte,2017,Total,Brucellosis,0
+Butte,2017,Total,Campylobacteriosis,97
+Butte,2017,Total,Chikungunya Virus Infection,0
+Butte,2017,Total,Cholera,0
+Butte,2017,Total,Ciguatera Fish Poisoning,0
+Butte,2017,Total,Coccidioidomycosis,4
+Butte,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+Butte,2017,Total,Cryptosporidiosis,9
+Butte,2017,Total,Cyclosporiasis,0
+Butte,2017,Total,Cysticercosis or Taeniasis,1
+Butte,2017,Total,Dengue,1
+Butte,2017,Total,Domoic Acid Poisoning,0
+Butte,2017,Total,E. coli O157,4
+Butte,2017,Total,E. coli Other STEC (non-O157),3
+Butte,2017,Total,Ehrlichiosis,0
+Butte,2017,Total,Flavivirus Infection of Undetermined Species,0
+Butte,2017,Total,Giardiasis,28
+Butte,2017,Total,Hantavirus Infection,0
+Butte,2017,Total,Hemolytic Uremic Syndrome,0
+Butte,2017,Total,"Hepatitis E, acute infection",0
+Butte,2017,Total,Legionellosis,1
+Butte,2017,Total,Leprosy,0
+Butte,2017,Total,Leptospirosis,0
+Butte,2017,Total,Listeriosis,0
+Butte,2017,Total,Lyme Disease,0
+Butte,2017,Total,Malaria,0
+Butte,2017,Total,Paralytic Shellfish Poisoning,0
+Butte,2017,Total,"Plague, human",0
+Butte,2017,Total,Psittacosis,0
+Butte,2017,Total,Q Fever,0
+Butte,2017,Total,"Rabies, human",0
+Butte,2017,Total,Relapsing Fever,0
+Butte,2017,Total,Salmonellosis,40
+Butte,2017,Total,Scombroid Fish Poisoning,0
+Butte,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Butte,2017,Total,Shigellosis,4
+Butte,2017,Total,Spotted Fever Rickettsiosis,0
+Butte,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Butte,2017,Total,Trichinosis,0
+Butte,2017,Total,Tularemia,0
+Butte,2017,Total,"Typhoid Fever, case",0
+Butte,2017,Total,Typhus Fever,0
+Butte,2017,Total,Vibrio Infection (non-Cholera),0
+Butte,2017,Total,Yellow Fever,0
+Butte,2017,Total,Yersiniosis,0
+Butte,2017,Total,Zika Virus Infection,0
+Calaveras,2017,Total,Amebiasis,0
+Calaveras,2017,Total,Anaplasmosis,0
+Calaveras,2017,Total,Anthrax,0
+Calaveras,2017,Total,Babesiosis,0
+Calaveras,2017,Total,"Botulism, Foodborne",0
+Calaveras,2017,Total,"Botulism, Other",0
+Calaveras,2017,Total,"Botulism, Wound",0
+Calaveras,2017,Total,Brucellosis,0
+Calaveras,2017,Total,Campylobacteriosis,14
+Calaveras,2017,Total,Chikungunya Virus Infection,0
+Calaveras,2017,Total,Cholera,0
+Calaveras,2017,Total,Ciguatera Fish Poisoning,0
+Calaveras,2017,Total,Coccidioidomycosis,0
+Calaveras,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Calaveras,2017,Total,Cryptosporidiosis,0
+Calaveras,2017,Total,Cyclosporiasis,0
+Calaveras,2017,Total,Cysticercosis or Taeniasis,0
+Calaveras,2017,Total,Dengue,0
+Calaveras,2017,Total,Domoic Acid Poisoning,0
+Calaveras,2017,Total,E. coli O157,1
+Calaveras,2017,Total,E. coli Other STEC (non-O157),0
+Calaveras,2017,Total,Ehrlichiosis,0
+Calaveras,2017,Total,Flavivirus Infection of Undetermined Species,0
+Calaveras,2017,Total,Giardiasis,3
+Calaveras,2017,Total,Hantavirus Infection,0
+Calaveras,2017,Total,Hemolytic Uremic Syndrome,1
+Calaveras,2017,Total,"Hepatitis E, acute infection",1
+Calaveras,2017,Total,Legionellosis,0
+Calaveras,2017,Total,Leprosy,0
+Calaveras,2017,Total,Leptospirosis,0
+Calaveras,2017,Total,Listeriosis,0
+Calaveras,2017,Total,Lyme Disease,1
+Calaveras,2017,Total,Malaria,0
+Calaveras,2017,Total,Paralytic Shellfish Poisoning,0
+Calaveras,2017,Total,"Plague, human",0
+Calaveras,2017,Total,Psittacosis,0
+Calaveras,2017,Total,Q Fever,0
+Calaveras,2017,Total,"Rabies, human",0
+Calaveras,2017,Total,Relapsing Fever,0
+Calaveras,2017,Total,Salmonellosis,7
+Calaveras,2017,Total,Scombroid Fish Poisoning,0
+Calaveras,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Calaveras,2017,Total,Shigellosis,2
+Calaveras,2017,Total,Spotted Fever Rickettsiosis,0
+Calaveras,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Calaveras,2017,Total,Trichinosis,0
+Calaveras,2017,Total,Tularemia,0
+Calaveras,2017,Total,"Typhoid Fever, case",0
+Calaveras,2017,Total,Typhus Fever,0
+Calaveras,2017,Total,Vibrio Infection (non-Cholera),0
+Calaveras,2017,Total,Yellow Fever,0
+Calaveras,2017,Total,Yersiniosis,0
+Calaveras,2017,Total,Zika Virus Infection,0
+CALIFORNIA,2017,Total,Amebiasis,270
+CALIFORNIA,2017,Total,Anaplasmosis,8
+CALIFORNIA,2017,Total,Anthrax,0
+CALIFORNIA,2017,Total,Babesiosis,6
+CALIFORNIA,2017,Total,"Botulism, Foodborne",15
+CALIFORNIA,2017,Total,"Botulism, Other",2
+CALIFORNIA,2017,Total,"Botulism, Wound",22
+CALIFORNIA,2017,Total,Brucellosis,29
+CALIFORNIA,2017,Total,Campylobacteriosis,9488
+CALIFORNIA,2017,Total,Chikungunya Virus Infection,36
+CALIFORNIA,2017,Total,Cholera,0
+CALIFORNIA,2017,Total,Ciguatera Fish Poisoning,3
+CALIFORNIA,2017,Total,Coccidioidomycosis,7658
+CALIFORNIA,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,36
+CALIFORNIA,2017,Total,Cryptosporidiosis,654
+CALIFORNIA,2017,Total,Cyclosporiasis,63
+CALIFORNIA,2017,Total,Cysticercosis or Taeniasis,27
+CALIFORNIA,2017,Total,Dengue,132
+CALIFORNIA,2017,Total,Domoic Acid Poisoning,0
+CALIFORNIA,2017,Total,E. coli O157,628
+CALIFORNIA,2017,Total,E. coli Other STEC (non-O157),679
+CALIFORNIA,2017,Total,Ehrlichiosis,3
+CALIFORNIA,2017,Total,Flavivirus Infection of Undetermined Species,0
+CALIFORNIA,2017,Total,Giardiasis,2582
+CALIFORNIA,2017,Total,Hantavirus Infection,5
+CALIFORNIA,2017,Total,Hemolytic Uremic Syndrome,61
+CALIFORNIA,2017,Total,"Hepatitis E, acute infection",38
+CALIFORNIA,2017,Total,Legionellosis,537
+CALIFORNIA,2017,Total,Leprosy,4
+CALIFORNIA,2017,Total,Leptospirosis,7
+CALIFORNIA,2017,Total,Listeriosis,133
+CALIFORNIA,2017,Total,Lyme Disease,173
+CALIFORNIA,2017,Total,Malaria,134
+CALIFORNIA,2017,Total,Paralytic Shellfish Poisoning,0
+CALIFORNIA,2017,Total,"Plague, human",0
+CALIFORNIA,2017,Total,Psittacosis,2
+CALIFORNIA,2017,Total,Q Fever,40
+CALIFORNIA,2017,Total,"Rabies, human",0
+CALIFORNIA,2017,Total,Relapsing Fever,4
+CALIFORNIA,2017,Total,Salmonellosis,5417
+CALIFORNIA,2017,Total,Scombroid Fish Poisoning,18
+CALIFORNIA,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),201
+CALIFORNIA,2017,Total,Shigellosis,2649
+CALIFORNIA,2017,Total,Spotted Fever Rickettsiosis,15
+CALIFORNIA,2017,Total,Streptococcal Infection (cases in food and dairy workers),22
+CALIFORNIA,2017,Total,Trichinosis,8
+CALIFORNIA,2017,Total,Tularemia,5
+CALIFORNIA,2017,Total,"Typhoid Fever, case",76
+CALIFORNIA,2017,Total,Typhus Fever,98
+CALIFORNIA,2017,Total,Vibrio Infection (non-Cholera),266
+CALIFORNIA,2017,Total,Yellow Fever,0
+CALIFORNIA,2017,Total,Yersiniosis,273
+CALIFORNIA,2017,Total,Zika Virus Infection,131
+Colusa,2017,Total,Amebiasis,0
+Colusa,2017,Total,Anaplasmosis,0
+Colusa,2017,Total,Anthrax,0
+Colusa,2017,Total,Babesiosis,0
+Colusa,2017,Total,"Botulism, Foodborne",1
+Colusa,2017,Total,"Botulism, Other",0
+Colusa,2017,Total,"Botulism, Wound",0
+Colusa,2017,Total,Brucellosis,0
+Colusa,2017,Total,Campylobacteriosis,9
+Colusa,2017,Total,Chikungunya Virus Infection,0
+Colusa,2017,Total,Cholera,0
+Colusa,2017,Total,Ciguatera Fish Poisoning,0
+Colusa,2017,Total,Coccidioidomycosis,0
+Colusa,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Colusa,2017,Total,Cryptosporidiosis,1
+Colusa,2017,Total,Cyclosporiasis,0
+Colusa,2017,Total,Cysticercosis or Taeniasis,0
+Colusa,2017,Total,Dengue,0
+Colusa,2017,Total,Domoic Acid Poisoning,0
+Colusa,2017,Total,E. coli O157,0
+Colusa,2017,Total,E. coli Other STEC (non-O157),0
+Colusa,2017,Total,Ehrlichiosis,0
+Colusa,2017,Total,Flavivirus Infection of Undetermined Species,0
+Colusa,2017,Total,Giardiasis,0
+Colusa,2017,Total,Hantavirus Infection,0
+Colusa,2017,Total,Hemolytic Uremic Syndrome,0
+Colusa,2017,Total,"Hepatitis E, acute infection",0
+Colusa,2017,Total,Legionellosis,0
+Colusa,2017,Total,Leprosy,0
+Colusa,2017,Total,Leptospirosis,0
+Colusa,2017,Total,Listeriosis,0
+Colusa,2017,Total,Lyme Disease,0
+Colusa,2017,Total,Malaria,0
+Colusa,2017,Total,Paralytic Shellfish Poisoning,0
+Colusa,2017,Total,"Plague, human",0
+Colusa,2017,Total,Psittacosis,0
+Colusa,2017,Total,Q Fever,0
+Colusa,2017,Total,"Rabies, human",0
+Colusa,2017,Total,Relapsing Fever,0
+Colusa,2017,Total,Salmonellosis,2
+Colusa,2017,Total,Scombroid Fish Poisoning,0
+Colusa,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Colusa,2017,Total,Shigellosis,1
+Colusa,2017,Total,Spotted Fever Rickettsiosis,0
+Colusa,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Colusa,2017,Total,Trichinosis,0
+Colusa,2017,Total,Tularemia,0
+Colusa,2017,Total,"Typhoid Fever, case",0
+Colusa,2017,Total,Typhus Fever,0
+Colusa,2017,Total,Vibrio Infection (non-Cholera),0
+Colusa,2017,Total,Yellow Fever,0
+Colusa,2017,Total,Yersiniosis,0
+Colusa,2017,Total,Zika Virus Infection,0
+Contra Costa,2017,Total,Amebiasis,12
+Contra Costa,2017,Total,Anaplasmosis,0
+Contra Costa,2017,Total,Anthrax,0
+Contra Costa,2017,Total,Babesiosis,0
+Contra Costa,2017,Total,"Botulism, Foodborne",1
+Contra Costa,2017,Total,"Botulism, Other",0
+Contra Costa,2017,Total,"Botulism, Wound",0
+Contra Costa,2017,Total,Brucellosis,0
+Contra Costa,2017,Total,Campylobacteriosis,308
+Contra Costa,2017,Total,Chikungunya Virus Infection,4
+Contra Costa,2017,Total,Cholera,0
+Contra Costa,2017,Total,Ciguatera Fish Poisoning,0
+Contra Costa,2017,Total,Coccidioidomycosis,89
+Contra Costa,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+Contra Costa,2017,Total,Cryptosporidiosis,6
+Contra Costa,2017,Total,Cyclosporiasis,0
+Contra Costa,2017,Total,Cysticercosis or Taeniasis,1
+Contra Costa,2017,Total,Dengue,4
+Contra Costa,2017,Total,Domoic Acid Poisoning,0
+Contra Costa,2017,Total,E. coli O157,13
+Contra Costa,2017,Total,E. coli Other STEC (non-O157),49
+Contra Costa,2017,Total,Ehrlichiosis,0
+Contra Costa,2017,Total,Flavivirus Infection of Undetermined Species,0
+Contra Costa,2017,Total,Giardiasis,105
+Contra Costa,2017,Total,Hantavirus Infection,0
+Contra Costa,2017,Total,Hemolytic Uremic Syndrome,3
+Contra Costa,2017,Total,"Hepatitis E, acute infection",2
+Contra Costa,2017,Total,Legionellosis,7
+Contra Costa,2017,Total,Leprosy,0
+Contra Costa,2017,Total,Leptospirosis,0
+Contra Costa,2017,Total,Listeriosis,5
+Contra Costa,2017,Total,Lyme Disease,11
+Contra Costa,2017,Total,Malaria,3
+Contra Costa,2017,Total,Paralytic Shellfish Poisoning,0
+Contra Costa,2017,Total,"Plague, human",0
+Contra Costa,2017,Total,Psittacosis,0
+Contra Costa,2017,Total,Q Fever,1
+Contra Costa,2017,Total,"Rabies, human",0
+Contra Costa,2017,Total,Relapsing Fever,0
+Contra Costa,2017,Total,Salmonellosis,177
+Contra Costa,2017,Total,Scombroid Fish Poisoning,0
+Contra Costa,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),6
+Contra Costa,2017,Total,Shigellosis,70
+Contra Costa,2017,Total,Spotted Fever Rickettsiosis,0
+Contra Costa,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Contra Costa,2017,Total,Trichinosis,0
+Contra Costa,2017,Total,Tularemia,0
+Contra Costa,2017,Total,"Typhoid Fever, case",0
+Contra Costa,2017,Total,Typhus Fever,0
+Contra Costa,2017,Total,Vibrio Infection (non-Cholera),4
+Contra Costa,2017,Total,Yellow Fever,0
+Contra Costa,2017,Total,Yersiniosis,0
+Contra Costa,2017,Total,Zika Virus Infection,4
+Del Norte,2017,Total,Amebiasis,0
+Del Norte,2017,Total,Anaplasmosis,0
+Del Norte,2017,Total,Anthrax,0
+Del Norte,2017,Total,Babesiosis,0
+Del Norte,2017,Total,"Botulism, Foodborne",0
+Del Norte,2017,Total,"Botulism, Other",0
+Del Norte,2017,Total,"Botulism, Wound",0
+Del Norte,2017,Total,Brucellosis,0
+Del Norte,2017,Total,Campylobacteriosis,3
+Del Norte,2017,Total,Chikungunya Virus Infection,0
+Del Norte,2017,Total,Cholera,0
+Del Norte,2017,Total,Ciguatera Fish Poisoning,0
+Del Norte,2017,Total,Coccidioidomycosis,0
+Del Norte,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Del Norte,2017,Total,Cryptosporidiosis,0
+Del Norte,2017,Total,Cyclosporiasis,0
+Del Norte,2017,Total,Cysticercosis or Taeniasis,0
+Del Norte,2017,Total,Dengue,0
+Del Norte,2017,Total,Domoic Acid Poisoning,0
+Del Norte,2017,Total,E. coli O157,0
+Del Norte,2017,Total,E. coli Other STEC (non-O157),0
+Del Norte,2017,Total,Ehrlichiosis,0
+Del Norte,2017,Total,Flavivirus Infection of Undetermined Species,0
+Del Norte,2017,Total,Giardiasis,1
+Del Norte,2017,Total,Hantavirus Infection,0
+Del Norte,2017,Total,Hemolytic Uremic Syndrome,0
+Del Norte,2017,Total,"Hepatitis E, acute infection",0
+Del Norte,2017,Total,Legionellosis,0
+Del Norte,2017,Total,Leprosy,0
+Del Norte,2017,Total,Leptospirosis,0
+Del Norte,2017,Total,Listeriosis,0
+Del Norte,2017,Total,Lyme Disease,0
+Del Norte,2017,Total,Malaria,0
+Del Norte,2017,Total,Paralytic Shellfish Poisoning,0
+Del Norte,2017,Total,"Plague, human",0
+Del Norte,2017,Total,Psittacosis,0
+Del Norte,2017,Total,Q Fever,0
+Del Norte,2017,Total,"Rabies, human",0
+Del Norte,2017,Total,Relapsing Fever,0
+Del Norte,2017,Total,Salmonellosis,1
+Del Norte,2017,Total,Scombroid Fish Poisoning,0
+Del Norte,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Del Norte,2017,Total,Shigellosis,0
+Del Norte,2017,Total,Spotted Fever Rickettsiosis,0
+Del Norte,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Del Norte,2017,Total,Trichinosis,0
+Del Norte,2017,Total,Tularemia,0
+Del Norte,2017,Total,"Typhoid Fever, case",0
+Del Norte,2017,Total,Typhus Fever,0
+Del Norte,2017,Total,Vibrio Infection (non-Cholera),0
+Del Norte,2017,Total,Yellow Fever,0
+Del Norte,2017,Total,Yersiniosis,0
+Del Norte,2017,Total,Zika Virus Infection,0
+El Dorado,2017,Total,Amebiasis,0
+El Dorado,2017,Total,Anaplasmosis,0
+El Dorado,2017,Total,Anthrax,0
+El Dorado,2017,Total,Babesiosis,0
+El Dorado,2017,Total,"Botulism, Foodborne",0
+El Dorado,2017,Total,"Botulism, Other",0
+El Dorado,2017,Total,"Botulism, Wound",0
+El Dorado,2017,Total,Brucellosis,0
+El Dorado,2017,Total,Campylobacteriosis,52
+El Dorado,2017,Total,Chikungunya Virus Infection,0
+El Dorado,2017,Total,Cholera,0
+El Dorado,2017,Total,Ciguatera Fish Poisoning,0
+El Dorado,2017,Total,Coccidioidomycosis,5
+El Dorado,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+El Dorado,2017,Total,Cryptosporidiosis,3
+El Dorado,2017,Total,Cyclosporiasis,0
+El Dorado,2017,Total,Cysticercosis or Taeniasis,0
+El Dorado,2017,Total,Dengue,2
+El Dorado,2017,Total,Domoic Acid Poisoning,0
+El Dorado,2017,Total,E. coli O157,3
+El Dorado,2017,Total,E. coli Other STEC (non-O157),6
+El Dorado,2017,Total,Ehrlichiosis,0
+El Dorado,2017,Total,Flavivirus Infection of Undetermined Species,0
+El Dorado,2017,Total,Giardiasis,19
+El Dorado,2017,Total,Hantavirus Infection,0
+El Dorado,2017,Total,Hemolytic Uremic Syndrome,1
+El Dorado,2017,Total,"Hepatitis E, acute infection",0
+El Dorado,2017,Total,Legionellosis,0
+El Dorado,2017,Total,Leprosy,0
+El Dorado,2017,Total,Leptospirosis,0
+El Dorado,2017,Total,Listeriosis,2
+El Dorado,2017,Total,Lyme Disease,1
+El Dorado,2017,Total,Malaria,0
+El Dorado,2017,Total,Paralytic Shellfish Poisoning,0
+El Dorado,2017,Total,"Plague, human",0
+El Dorado,2017,Total,Psittacosis,0
+El Dorado,2017,Total,Q Fever,0
+El Dorado,2017,Total,"Rabies, human",0
+El Dorado,2017,Total,Relapsing Fever,0
+El Dorado,2017,Total,Salmonellosis,41
+El Dorado,2017,Total,Scombroid Fish Poisoning,0
+El Dorado,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),3
+El Dorado,2017,Total,Shigellosis,8
+El Dorado,2017,Total,Spotted Fever Rickettsiosis,0
+El Dorado,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+El Dorado,2017,Total,Trichinosis,0
+El Dorado,2017,Total,Tularemia,0
+El Dorado,2017,Total,"Typhoid Fever, case",0
+El Dorado,2017,Total,Typhus Fever,0
+El Dorado,2017,Total,Vibrio Infection (non-Cholera),0
+El Dorado,2017,Total,Yellow Fever,0
+El Dorado,2017,Total,Yersiniosis,0
+El Dorado,2017,Total,Zika Virus Infection,0
+Fresno,2017,Total,Amebiasis,4
+Fresno,2017,Total,Anaplasmosis,0
+Fresno,2017,Total,Anthrax,0
+Fresno,2017,Total,Babesiosis,0
+Fresno,2017,Total,"Botulism, Foodborne",0
+Fresno,2017,Total,"Botulism, Other",0
+Fresno,2017,Total,"Botulism, Wound",2
+Fresno,2017,Total,Brucellosis,2
+Fresno,2017,Total,Campylobacteriosis,343
+Fresno,2017,Total,Chikungunya Virus Infection,0
+Fresno,2017,Total,Cholera,0
+Fresno,2017,Total,Ciguatera Fish Poisoning,0
+Fresno,2017,Total,Coccidioidomycosis,825
+Fresno,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Fresno,2017,Total,Cryptosporidiosis,13
+Fresno,2017,Total,Cyclosporiasis,0
+Fresno,2017,Total,Cysticercosis or Taeniasis,1
+Fresno,2017,Total,Dengue,2
+Fresno,2017,Total,Domoic Acid Poisoning,0
+Fresno,2017,Total,E. coli O157,23
+Fresno,2017,Total,E. coli Other STEC (non-O157),14
+Fresno,2017,Total,Ehrlichiosis,0
+Fresno,2017,Total,Flavivirus Infection of Undetermined Species,0
+Fresno,2017,Total,Giardiasis,34
+Fresno,2017,Total,Hantavirus Infection,0
+Fresno,2017,Total,Hemolytic Uremic Syndrome,4
+Fresno,2017,Total,"Hepatitis E, acute infection",0
+Fresno,2017,Total,Legionellosis,16
+Fresno,2017,Total,Leprosy,0
+Fresno,2017,Total,Leptospirosis,0
+Fresno,2017,Total,Listeriosis,1
+Fresno,2017,Total,Lyme Disease,0
+Fresno,2017,Total,Malaria,1
+Fresno,2017,Total,Paralytic Shellfish Poisoning,0
+Fresno,2017,Total,"Plague, human",0
+Fresno,2017,Total,Psittacosis,0
+Fresno,2017,Total,Q Fever,4
+Fresno,2017,Total,"Rabies, human",0
+Fresno,2017,Total,Relapsing Fever,0
+Fresno,2017,Total,Salmonellosis,133
+Fresno,2017,Total,Scombroid Fish Poisoning,0
+Fresno,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),8
+Fresno,2017,Total,Shigellosis,72
+Fresno,2017,Total,Spotted Fever Rickettsiosis,0
+Fresno,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Fresno,2017,Total,Trichinosis,0
+Fresno,2017,Total,Tularemia,0
+Fresno,2017,Total,"Typhoid Fever, case",1
+Fresno,2017,Total,Typhus Fever,0
+Fresno,2017,Total,Vibrio Infection (non-Cholera),2
+Fresno,2017,Total,Yellow Fever,0
+Fresno,2017,Total,Yersiniosis,8
+Fresno,2017,Total,Zika Virus Infection,2
+Glenn,2017,Total,Amebiasis,0
+Glenn,2017,Total,Anaplasmosis,0
+Glenn,2017,Total,Anthrax,0
+Glenn,2017,Total,Babesiosis,0
+Glenn,2017,Total,"Botulism, Foodborne",0
+Glenn,2017,Total,"Botulism, Other",0
+Glenn,2017,Total,"Botulism, Wound",0
+Glenn,2017,Total,Brucellosis,0
+Glenn,2017,Total,Campylobacteriosis,9
+Glenn,2017,Total,Chikungunya Virus Infection,0
+Glenn,2017,Total,Cholera,0
+Glenn,2017,Total,Ciguatera Fish Poisoning,0
+Glenn,2017,Total,Coccidioidomycosis,2
+Glenn,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Glenn,2017,Total,Cryptosporidiosis,2
+Glenn,2017,Total,Cyclosporiasis,0
+Glenn,2017,Total,Cysticercosis or Taeniasis,0
+Glenn,2017,Total,Dengue,0
+Glenn,2017,Total,Domoic Acid Poisoning,0
+Glenn,2017,Total,E. coli O157,0
+Glenn,2017,Total,E. coli Other STEC (non-O157),1
+Glenn,2017,Total,Ehrlichiosis,0
+Glenn,2017,Total,Flavivirus Infection of Undetermined Species,0
+Glenn,2017,Total,Giardiasis,0
+Glenn,2017,Total,Hantavirus Infection,0
+Glenn,2017,Total,Hemolytic Uremic Syndrome,0
+Glenn,2017,Total,"Hepatitis E, acute infection",0
+Glenn,2017,Total,Legionellosis,0
+Glenn,2017,Total,Leprosy,0
+Glenn,2017,Total,Leptospirosis,0
+Glenn,2017,Total,Listeriosis,1
+Glenn,2017,Total,Lyme Disease,1
+Glenn,2017,Total,Malaria,0
+Glenn,2017,Total,Paralytic Shellfish Poisoning,0
+Glenn,2017,Total,"Plague, human",0
+Glenn,2017,Total,Psittacosis,0
+Glenn,2017,Total,Q Fever,0
+Glenn,2017,Total,"Rabies, human",0
+Glenn,2017,Total,Relapsing Fever,0
+Glenn,2017,Total,Salmonellosis,1
+Glenn,2017,Total,Scombroid Fish Poisoning,0
+Glenn,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Glenn,2017,Total,Shigellosis,1
+Glenn,2017,Total,Spotted Fever Rickettsiosis,0
+Glenn,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Glenn,2017,Total,Trichinosis,0
+Glenn,2017,Total,Tularemia,0
+Glenn,2017,Total,"Typhoid Fever, case",0
+Glenn,2017,Total,Typhus Fever,0
+Glenn,2017,Total,Vibrio Infection (non-Cholera),0
+Glenn,2017,Total,Yellow Fever,0
+Glenn,2017,Total,Yersiniosis,0
+Glenn,2017,Total,Zika Virus Infection,0
+Humboldt,2017,Total,Amebiasis,1
+Humboldt,2017,Total,Anaplasmosis,1
+Humboldt,2017,Total,Anthrax,0
+Humboldt,2017,Total,Babesiosis,0
+Humboldt,2017,Total,"Botulism, Foodborne",0
+Humboldt,2017,Total,"Botulism, Other",0
+Humboldt,2017,Total,"Botulism, Wound",0
+Humboldt,2017,Total,Brucellosis,0
+Humboldt,2017,Total,Campylobacteriosis,17
+Humboldt,2017,Total,Chikungunya Virus Infection,0
+Humboldt,2017,Total,Cholera,0
+Humboldt,2017,Total,Ciguatera Fish Poisoning,0
+Humboldt,2017,Total,Coccidioidomycosis,2
+Humboldt,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Humboldt,2017,Total,Cryptosporidiosis,1
+Humboldt,2017,Total,Cyclosporiasis,0
+Humboldt,2017,Total,Cysticercosis or Taeniasis,0
+Humboldt,2017,Total,Dengue,1
+Humboldt,2017,Total,Domoic Acid Poisoning,0
+Humboldt,2017,Total,E. coli O157,1
+Humboldt,2017,Total,E. coli Other STEC (non-O157),4
+Humboldt,2017,Total,Ehrlichiosis,0
+Humboldt,2017,Total,Flavivirus Infection of Undetermined Species,0
+Humboldt,2017,Total,Giardiasis,9
+Humboldt,2017,Total,Hantavirus Infection,0
+Humboldt,2017,Total,Hemolytic Uremic Syndrome,0
+Humboldt,2017,Total,"Hepatitis E, acute infection",0
+Humboldt,2017,Total,Legionellosis,1
+Humboldt,2017,Total,Leprosy,0
+Humboldt,2017,Total,Leptospirosis,0
+Humboldt,2017,Total,Listeriosis,0
+Humboldt,2017,Total,Lyme Disease,3
+Humboldt,2017,Total,Malaria,1
+Humboldt,2017,Total,Paralytic Shellfish Poisoning,0
+Humboldt,2017,Total,"Plague, human",0
+Humboldt,2017,Total,Psittacosis,0
+Humboldt,2017,Total,Q Fever,0
+Humboldt,2017,Total,"Rabies, human",0
+Humboldt,2017,Total,Relapsing Fever,0
+Humboldt,2017,Total,Salmonellosis,9
+Humboldt,2017,Total,Scombroid Fish Poisoning,0
+Humboldt,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Humboldt,2017,Total,Shigellosis,1
+Humboldt,2017,Total,Spotted Fever Rickettsiosis,0
+Humboldt,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Humboldt,2017,Total,Trichinosis,0
+Humboldt,2017,Total,Tularemia,1
+Humboldt,2017,Total,"Typhoid Fever, case",0
+Humboldt,2017,Total,Typhus Fever,0
+Humboldt,2017,Total,Vibrio Infection (non-Cholera),0
+Humboldt,2017,Total,Yellow Fever,0
+Humboldt,2017,Total,Yersiniosis,1
+Humboldt,2017,Total,Zika Virus Infection,0
+Imperial,2017,Total,Amebiasis,4
+Imperial,2017,Total,Anaplasmosis,0
+Imperial,2017,Total,Anthrax,0
+Imperial,2017,Total,Babesiosis,0
+Imperial,2017,Total,"Botulism, Foodborne",0
+Imperial,2017,Total,"Botulism, Other",0
+Imperial,2017,Total,"Botulism, Wound",0
+Imperial,2017,Total,Brucellosis,0
+Imperial,2017,Total,Campylobacteriosis,38
+Imperial,2017,Total,Chikungunya Virus Infection,0
+Imperial,2017,Total,Cholera,0
+Imperial,2017,Total,Ciguatera Fish Poisoning,0
+Imperial,2017,Total,Coccidioidomycosis,15
+Imperial,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Imperial,2017,Total,Cryptosporidiosis,1
+Imperial,2017,Total,Cyclosporiasis,0
+Imperial,2017,Total,Cysticercosis or Taeniasis,0
+Imperial,2017,Total,Dengue,0
+Imperial,2017,Total,Domoic Acid Poisoning,0
+Imperial,2017,Total,E. coli O157,0
+Imperial,2017,Total,E. coli Other STEC (non-O157),0
+Imperial,2017,Total,Ehrlichiosis,0
+Imperial,2017,Total,Flavivirus Infection of Undetermined Species,0
+Imperial,2017,Total,Giardiasis,1
+Imperial,2017,Total,Hantavirus Infection,0
+Imperial,2017,Total,Hemolytic Uremic Syndrome,0
+Imperial,2017,Total,"Hepatitis E, acute infection",0
+Imperial,2017,Total,Legionellosis,0
+Imperial,2017,Total,Leprosy,0
+Imperial,2017,Total,Leptospirosis,0
+Imperial,2017,Total,Listeriosis,2
+Imperial,2017,Total,Lyme Disease,0
+Imperial,2017,Total,Malaria,0
+Imperial,2017,Total,Paralytic Shellfish Poisoning,0
+Imperial,2017,Total,"Plague, human",0
+Imperial,2017,Total,Psittacosis,0
+Imperial,2017,Total,Q Fever,0
+Imperial,2017,Total,"Rabies, human",0
+Imperial,2017,Total,Relapsing Fever,0
+Imperial,2017,Total,Salmonellosis,43
+Imperial,2017,Total,Scombroid Fish Poisoning,0
+Imperial,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+Imperial,2017,Total,Shigellosis,41
+Imperial,2017,Total,Spotted Fever Rickettsiosis,0
+Imperial,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Imperial,2017,Total,Trichinosis,0
+Imperial,2017,Total,Tularemia,0
+Imperial,2017,Total,"Typhoid Fever, case",0
+Imperial,2017,Total,Typhus Fever,0
+Imperial,2017,Total,Vibrio Infection (non-Cholera),0
+Imperial,2017,Total,Yellow Fever,0
+Imperial,2017,Total,Yersiniosis,0
+Imperial,2017,Total,Zika Virus Infection,1
+Inyo,2017,Total,Amebiasis,0
+Inyo,2017,Total,Anaplasmosis,0
+Inyo,2017,Total,Anthrax,0
+Inyo,2017,Total,Babesiosis,0
+Inyo,2017,Total,"Botulism, Foodborne",0
+Inyo,2017,Total,"Botulism, Other",0
+Inyo,2017,Total,"Botulism, Wound",0
+Inyo,2017,Total,Brucellosis,0
+Inyo,2017,Total,Campylobacteriosis,2
+Inyo,2017,Total,Chikungunya Virus Infection,0
+Inyo,2017,Total,Cholera,0
+Inyo,2017,Total,Ciguatera Fish Poisoning,0
+Inyo,2017,Total,Coccidioidomycosis,0
+Inyo,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Inyo,2017,Total,Cryptosporidiosis,2
+Inyo,2017,Total,Cyclosporiasis,0
+Inyo,2017,Total,Cysticercosis or Taeniasis,0
+Inyo,2017,Total,Dengue,0
+Inyo,2017,Total,Domoic Acid Poisoning,0
+Inyo,2017,Total,E. coli O157,0
+Inyo,2017,Total,E. coli Other STEC (non-O157),0
+Inyo,2017,Total,Ehrlichiosis,0
+Inyo,2017,Total,Flavivirus Infection of Undetermined Species,0
+Inyo,2017,Total,Giardiasis,2
+Inyo,2017,Total,Hantavirus Infection,0
+Inyo,2017,Total,Hemolytic Uremic Syndrome,0
+Inyo,2017,Total,"Hepatitis E, acute infection",0
+Inyo,2017,Total,Legionellosis,0
+Inyo,2017,Total,Leprosy,0
+Inyo,2017,Total,Leptospirosis,0
+Inyo,2017,Total,Listeriosis,0
+Inyo,2017,Total,Lyme Disease,0
+Inyo,2017,Total,Malaria,0
+Inyo,2017,Total,Paralytic Shellfish Poisoning,0
+Inyo,2017,Total,"Plague, human",0
+Inyo,2017,Total,Psittacosis,0
+Inyo,2017,Total,Q Fever,0
+Inyo,2017,Total,"Rabies, human",0
+Inyo,2017,Total,Relapsing Fever,1
+Inyo,2017,Total,Salmonellosis,6
+Inyo,2017,Total,Scombroid Fish Poisoning,0
+Inyo,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Inyo,2017,Total,Shigellosis,0
+Inyo,2017,Total,Spotted Fever Rickettsiosis,0
+Inyo,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Inyo,2017,Total,Trichinosis,0
+Inyo,2017,Total,Tularemia,0
+Inyo,2017,Total,"Typhoid Fever, case",0
+Inyo,2017,Total,Typhus Fever,0
+Inyo,2017,Total,Vibrio Infection (non-Cholera),0
+Inyo,2017,Total,Yellow Fever,0
+Inyo,2017,Total,Yersiniosis,0
+Inyo,2017,Total,Zika Virus Infection,0
+Kern,2017,Total,Amebiasis,6
+Kern,2017,Total,Anaplasmosis,0
+Kern,2017,Total,Anthrax,0
+Kern,2017,Total,Babesiosis,0
+Kern,2017,Total,"Botulism, Foodborne",0
+Kern,2017,Total,"Botulism, Other",0
+Kern,2017,Total,"Botulism, Wound",1
+Kern,2017,Total,Brucellosis,0
+Kern,2017,Total,Campylobacteriosis,336
+Kern,2017,Total,Chikungunya Virus Infection,0
+Kern,2017,Total,Cholera,0
+Kern,2017,Total,Ciguatera Fish Poisoning,0
+Kern,2017,Total,Coccidioidomycosis,2779
+Kern,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Kern,2017,Total,Cryptosporidiosis,6
+Kern,2017,Total,Cyclosporiasis,0
+Kern,2017,Total,Cysticercosis or Taeniasis,1
+Kern,2017,Total,Dengue,0
+Kern,2017,Total,Domoic Acid Poisoning,0
+Kern,2017,Total,E. coli O157,7
+Kern,2017,Total,E. coli Other STEC (non-O157),6
+Kern,2017,Total,Ehrlichiosis,0
+Kern,2017,Total,Flavivirus Infection of Undetermined Species,0
+Kern,2017,Total,Giardiasis,32
+Kern,2017,Total,Hantavirus Infection,0
+Kern,2017,Total,Hemolytic Uremic Syndrome,0
+Kern,2017,Total,"Hepatitis E, acute infection",0
+Kern,2017,Total,Legionellosis,4
+Kern,2017,Total,Leprosy,0
+Kern,2017,Total,Leptospirosis,0
+Kern,2017,Total,Listeriosis,2
+Kern,2017,Total,Lyme Disease,1
+Kern,2017,Total,Malaria,0
+Kern,2017,Total,Paralytic Shellfish Poisoning,0
+Kern,2017,Total,"Plague, human",0
+Kern,2017,Total,Psittacosis,0
+Kern,2017,Total,Q Fever,0
+Kern,2017,Total,"Rabies, human",0
+Kern,2017,Total,Relapsing Fever,0
+Kern,2017,Total,Salmonellosis,64
+Kern,2017,Total,Scombroid Fish Poisoning,0
+Kern,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Kern,2017,Total,Shigellosis,56
+Kern,2017,Total,Spotted Fever Rickettsiosis,0
+Kern,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Kern,2017,Total,Trichinosis,0
+Kern,2017,Total,Tularemia,0
+Kern,2017,Total,"Typhoid Fever, case",2
+Kern,2017,Total,Typhus Fever,0
+Kern,2017,Total,Vibrio Infection (non-Cholera),2
+Kern,2017,Total,Yellow Fever,0
+Kern,2017,Total,Yersiniosis,1
+Kern,2017,Total,Zika Virus Infection,1
+Kings,2017,Total,Amebiasis,0
+Kings,2017,Total,Anaplasmosis,0
+Kings,2017,Total,Anthrax,0
+Kings,2017,Total,Babesiosis,0
+Kings,2017,Total,"Botulism, Foodborne",0
+Kings,2017,Total,"Botulism, Other",0
+Kings,2017,Total,"Botulism, Wound",0
+Kings,2017,Total,Brucellosis,0
+Kings,2017,Total,Campylobacteriosis,38
+Kings,2017,Total,Chikungunya Virus Infection,0
+Kings,2017,Total,Cholera,0
+Kings,2017,Total,Ciguatera Fish Poisoning,0
+Kings,2017,Total,Coccidioidomycosis,273
+Kings,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Kings,2017,Total,Cryptosporidiosis,0
+Kings,2017,Total,Cyclosporiasis,0
+Kings,2017,Total,Cysticercosis or Taeniasis,0
+Kings,2017,Total,Dengue,0
+Kings,2017,Total,Domoic Acid Poisoning,0
+Kings,2017,Total,E. coli O157,3
+Kings,2017,Total,E. coli Other STEC (non-O157),1
+Kings,2017,Total,Ehrlichiosis,0
+Kings,2017,Total,Flavivirus Infection of Undetermined Species,0
+Kings,2017,Total,Giardiasis,3
+Kings,2017,Total,Hantavirus Infection,0
+Kings,2017,Total,Hemolytic Uremic Syndrome,0
+Kings,2017,Total,"Hepatitis E, acute infection",0
+Kings,2017,Total,Legionellosis,1
+Kings,2017,Total,Leprosy,0
+Kings,2017,Total,Leptospirosis,0
+Kings,2017,Total,Listeriosis,0
+Kings,2017,Total,Lyme Disease,1
+Kings,2017,Total,Malaria,0
+Kings,2017,Total,Paralytic Shellfish Poisoning,0
+Kings,2017,Total,"Plague, human",0
+Kings,2017,Total,Psittacosis,0
+Kings,2017,Total,Q Fever,1
+Kings,2017,Total,"Rabies, human",0
+Kings,2017,Total,Relapsing Fever,0
+Kings,2017,Total,Salmonellosis,48
+Kings,2017,Total,Scombroid Fish Poisoning,0
+Kings,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Kings,2017,Total,Shigellosis,0
+Kings,2017,Total,Spotted Fever Rickettsiosis,0
+Kings,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Kings,2017,Total,Trichinosis,0
+Kings,2017,Total,Tularemia,0
+Kings,2017,Total,"Typhoid Fever, case",0
+Kings,2017,Total,Typhus Fever,0
+Kings,2017,Total,Vibrio Infection (non-Cholera),0
+Kings,2017,Total,Yellow Fever,0
+Kings,2017,Total,Yersiniosis,0
+Kings,2017,Total,Zika Virus Infection,0
+Lake,2017,Total,Amebiasis,1
+Lake,2017,Total,Anaplasmosis,0
+Lake,2017,Total,Anthrax,0
+Lake,2017,Total,Babesiosis,0
+Lake,2017,Total,"Botulism, Foodborne",0
+Lake,2017,Total,"Botulism, Other",0
+Lake,2017,Total,"Botulism, Wound",0
+Lake,2017,Total,Brucellosis,0
+Lake,2017,Total,Campylobacteriosis,13
+Lake,2017,Total,Chikungunya Virus Infection,0
+Lake,2017,Total,Cholera,0
+Lake,2017,Total,Ciguatera Fish Poisoning,0
+Lake,2017,Total,Coccidioidomycosis,2
+Lake,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Lake,2017,Total,Cryptosporidiosis,1
+Lake,2017,Total,Cyclosporiasis,0
+Lake,2017,Total,Cysticercosis or Taeniasis,0
+Lake,2017,Total,Dengue,0
+Lake,2017,Total,Domoic Acid Poisoning,0
+Lake,2017,Total,E. coli O157,1
+Lake,2017,Total,E. coli Other STEC (non-O157),1
+Lake,2017,Total,Ehrlichiosis,0
+Lake,2017,Total,Flavivirus Infection of Undetermined Species,0
+Lake,2017,Total,Giardiasis,3
+Lake,2017,Total,Hantavirus Infection,0
+Lake,2017,Total,Hemolytic Uremic Syndrome,0
+Lake,2017,Total,"Hepatitis E, acute infection",0
+Lake,2017,Total,Legionellosis,0
+Lake,2017,Total,Leprosy,0
+Lake,2017,Total,Leptospirosis,0
+Lake,2017,Total,Listeriosis,0
+Lake,2017,Total,Lyme Disease,0
+Lake,2017,Total,Malaria,1
+Lake,2017,Total,Paralytic Shellfish Poisoning,0
+Lake,2017,Total,"Plague, human",0
+Lake,2017,Total,Psittacosis,0
+Lake,2017,Total,Q Fever,0
+Lake,2017,Total,"Rabies, human",0
+Lake,2017,Total,Relapsing Fever,0
+Lake,2017,Total,Salmonellosis,6
+Lake,2017,Total,Scombroid Fish Poisoning,0
+Lake,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Lake,2017,Total,Shigellosis,4
+Lake,2017,Total,Spotted Fever Rickettsiosis,0
+Lake,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Lake,2017,Total,Trichinosis,0
+Lake,2017,Total,Tularemia,1
+Lake,2017,Total,"Typhoid Fever, case",0
+Lake,2017,Total,Typhus Fever,0
+Lake,2017,Total,Vibrio Infection (non-Cholera),0
+Lake,2017,Total,Yellow Fever,0
+Lake,2017,Total,Yersiniosis,1
+Lake,2017,Total,Zika Virus Infection,0
+Lassen,2017,Total,Amebiasis,0
+Lassen,2017,Total,Anaplasmosis,0
+Lassen,2017,Total,Anthrax,0
+Lassen,2017,Total,Babesiosis,0
+Lassen,2017,Total,"Botulism, Foodborne",0
+Lassen,2017,Total,"Botulism, Other",0
+Lassen,2017,Total,"Botulism, Wound",0
+Lassen,2017,Total,Brucellosis,0
+Lassen,2017,Total,Campylobacteriosis,1
+Lassen,2017,Total,Chikungunya Virus Infection,0
+Lassen,2017,Total,Cholera,0
+Lassen,2017,Total,Ciguatera Fish Poisoning,0
+Lassen,2017,Total,Coccidioidomycosis,0
+Lassen,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Lassen,2017,Total,Cryptosporidiosis,0
+Lassen,2017,Total,Cyclosporiasis,0
+Lassen,2017,Total,Cysticercosis or Taeniasis,0
+Lassen,2017,Total,Dengue,0
+Lassen,2017,Total,Domoic Acid Poisoning,0
+Lassen,2017,Total,E. coli O157,0
+Lassen,2017,Total,E. coli Other STEC (non-O157),0
+Lassen,2017,Total,Ehrlichiosis,0
+Lassen,2017,Total,Flavivirus Infection of Undetermined Species,0
+Lassen,2017,Total,Giardiasis,1
+Lassen,2017,Total,Hantavirus Infection,0
+Lassen,2017,Total,Hemolytic Uremic Syndrome,0
+Lassen,2017,Total,"Hepatitis E, acute infection",0
+Lassen,2017,Total,Legionellosis,0
+Lassen,2017,Total,Leprosy,0
+Lassen,2017,Total,Leptospirosis,0
+Lassen,2017,Total,Listeriosis,0
+Lassen,2017,Total,Lyme Disease,0
+Lassen,2017,Total,Malaria,0
+Lassen,2017,Total,Paralytic Shellfish Poisoning,0
+Lassen,2017,Total,"Plague, human",0
+Lassen,2017,Total,Psittacosis,0
+Lassen,2017,Total,Q Fever,0
+Lassen,2017,Total,"Rabies, human",0
+Lassen,2017,Total,Relapsing Fever,0
+Lassen,2017,Total,Salmonellosis,4
+Lassen,2017,Total,Scombroid Fish Poisoning,0
+Lassen,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Lassen,2017,Total,Shigellosis,0
+Lassen,2017,Total,Spotted Fever Rickettsiosis,0
+Lassen,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Lassen,2017,Total,Trichinosis,0
+Lassen,2017,Total,Tularemia,0
+Lassen,2017,Total,"Typhoid Fever, case",0
+Lassen,2017,Total,Typhus Fever,0
+Lassen,2017,Total,Vibrio Infection (non-Cholera),0
+Lassen,2017,Total,Yellow Fever,0
+Lassen,2017,Total,Yersiniosis,0
+Lassen,2017,Total,Zika Virus Infection,0
+Los Angeles,2017,Total,Amebiasis,72
+Los Angeles,2017,Total,Anaplasmosis,0
+Los Angeles,2017,Total,Anthrax,0
+Los Angeles,2017,Total,Babesiosis,0
+Los Angeles,2017,Total,"Botulism, Foodborne",0
+Los Angeles,2017,Total,"Botulism, Other",1
+Los Angeles,2017,Total,"Botulism, Wound",1
+Los Angeles,2017,Total,Brucellosis,9
+Los Angeles,2017,Total,Campylobacteriosis,1862
+Los Angeles,2017,Total,Chikungunya Virus Infection,11
+Los Angeles,2017,Total,Cholera,0
+Los Angeles,2017,Total,Ciguatera Fish Poisoning,2
+Los Angeles,2017,Total,Coccidioidomycosis,932
+Los Angeles,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,9
+Los Angeles,2017,Total,Cryptosporidiosis,168
+Los Angeles,2017,Total,Cyclosporiasis,16
+Los Angeles,2017,Total,Cysticercosis or Taeniasis,8
+Los Angeles,2017,Total,Dengue,20
+Los Angeles,2017,Total,Domoic Acid Poisoning,0
+Los Angeles,2017,Total,E. coli O157,22
+Los Angeles,2017,Total,E. coli Other STEC (non-O157),108
+Los Angeles,2017,Total,Ehrlichiosis,0
+Los Angeles,2017,Total,Flavivirus Infection of Undetermined Species,0
+Los Angeles,2017,Total,Giardiasis,440
+Los Angeles,2017,Total,Hantavirus Infection,1
+Los Angeles,2017,Total,Hemolytic Uremic Syndrome,2
+Los Angeles,2017,Total,"Hepatitis E, acute infection",3
+Los Angeles,2017,Total,Legionellosis,185
+Los Angeles,2017,Total,Leprosy,1
+Los Angeles,2017,Total,Leptospirosis,1
+Los Angeles,2017,Total,Listeriosis,33
+Los Angeles,2017,Total,Lyme Disease,3
+Los Angeles,2017,Total,Malaria,35
+Los Angeles,2017,Total,Paralytic Shellfish Poisoning,0
+Los Angeles,2017,Total,"Plague, human",0
+Los Angeles,2017,Total,Psittacosis,0
+Los Angeles,2017,Total,Q Fever,3
+Los Angeles,2017,Total,"Rabies, human",0
+Los Angeles,2017,Total,Relapsing Fever,0
+Los Angeles,2017,Total,Salmonellosis,1154
+Los Angeles,2017,Total,Scombroid Fish Poisoning,5
+Los Angeles,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),50
+Los Angeles,2017,Total,Shigellosis,771
+Los Angeles,2017,Total,Spotted Fever Rickettsiosis,4
+Los Angeles,2017,Total,Streptococcal Infection (cases in food and dairy workers),5
+Los Angeles,2017,Total,Trichinosis,0
+Los Angeles,2017,Total,Tularemia,0
+Los Angeles,2017,Total,"Typhoid Fever, case",9
+Los Angeles,2017,Total,Typhus Fever,83
+Los Angeles,2017,Total,Vibrio Infection (non-Cholera),59
+Los Angeles,2017,Total,Yellow Fever,0
+Los Angeles,2017,Total,Yersiniosis,70
+Los Angeles,2017,Total,Zika Virus Infection,24
+Madera,2017,Total,Amebiasis,0
+Madera,2017,Total,Anaplasmosis,0
+Madera,2017,Total,Anthrax,0
+Madera,2017,Total,Babesiosis,0
+Madera,2017,Total,"Botulism, Foodborne",0
+Madera,2017,Total,"Botulism, Other",0
+Madera,2017,Total,"Botulism, Wound",0
+Madera,2017,Total,Brucellosis,0
+Madera,2017,Total,Campylobacteriosis,50
+Madera,2017,Total,Chikungunya Virus Infection,0
+Madera,2017,Total,Cholera,0
+Madera,2017,Total,Ciguatera Fish Poisoning,0
+Madera,2017,Total,Coccidioidomycosis,65
+Madera,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Madera,2017,Total,Cryptosporidiosis,2
+Madera,2017,Total,Cyclosporiasis,0
+Madera,2017,Total,Cysticercosis or Taeniasis,0
+Madera,2017,Total,Dengue,0
+Madera,2017,Total,Domoic Acid Poisoning,0
+Madera,2017,Total,E. coli O157,2
+Madera,2017,Total,E. coli Other STEC (non-O157),1
+Madera,2017,Total,Ehrlichiosis,0
+Madera,2017,Total,Flavivirus Infection of Undetermined Species,0
+Madera,2017,Total,Giardiasis,8
+Madera,2017,Total,Hantavirus Infection,0
+Madera,2017,Total,Hemolytic Uremic Syndrome,0
+Madera,2017,Total,"Hepatitis E, acute infection",1
+Madera,2017,Total,Legionellosis,2
+Madera,2017,Total,Leprosy,0
+Madera,2017,Total,Leptospirosis,0
+Madera,2017,Total,Listeriosis,0
+Madera,2017,Total,Lyme Disease,0
+Madera,2017,Total,Malaria,0
+Madera,2017,Total,Paralytic Shellfish Poisoning,0
+Madera,2017,Total,"Plague, human",0
+Madera,2017,Total,Psittacosis,0
+Madera,2017,Total,Q Fever,1
+Madera,2017,Total,"Rabies, human",0
+Madera,2017,Total,Relapsing Fever,0
+Madera,2017,Total,Salmonellosis,38
+Madera,2017,Total,Scombroid Fish Poisoning,0
+Madera,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+Madera,2017,Total,Shigellosis,5
+Madera,2017,Total,Spotted Fever Rickettsiosis,0
+Madera,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Madera,2017,Total,Trichinosis,0
+Madera,2017,Total,Tularemia,0
+Madera,2017,Total,"Typhoid Fever, case",2
+Madera,2017,Total,Typhus Fever,0
+Madera,2017,Total,Vibrio Infection (non-Cholera),0
+Madera,2017,Total,Yellow Fever,0
+Madera,2017,Total,Yersiniosis,0
+Madera,2017,Total,Zika Virus Infection,0
+Marin,2017,Total,Amebiasis,7
+Marin,2017,Total,Anaplasmosis,2
+Marin,2017,Total,Anthrax,0
+Marin,2017,Total,Babesiosis,0
+Marin,2017,Total,"Botulism, Foodborne",0
+Marin,2017,Total,"Botulism, Other",0
+Marin,2017,Total,"Botulism, Wound",0
+Marin,2017,Total,Brucellosis,0
+Marin,2017,Total,Campylobacteriosis,134
+Marin,2017,Total,Chikungunya Virus Infection,0
+Marin,2017,Total,Cholera,0
+Marin,2017,Total,Ciguatera Fish Poisoning,0
+Marin,2017,Total,Coccidioidomycosis,4
+Marin,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Marin,2017,Total,Cryptosporidiosis,39
+Marin,2017,Total,Cyclosporiasis,0
+Marin,2017,Total,Cysticercosis or Taeniasis,0
+Marin,2017,Total,Dengue,2
+Marin,2017,Total,Domoic Acid Poisoning,0
+Marin,2017,Total,E. coli O157,9
+Marin,2017,Total,E. coli Other STEC (non-O157),15
+Marin,2017,Total,Ehrlichiosis,0
+Marin,2017,Total,Flavivirus Infection of Undetermined Species,0
+Marin,2017,Total,Giardiasis,47
+Marin,2017,Total,Hantavirus Infection,0
+Marin,2017,Total,Hemolytic Uremic Syndrome,0
+Marin,2017,Total,"Hepatitis E, acute infection",1
+Marin,2017,Total,Legionellosis,1
+Marin,2017,Total,Leprosy,0
+Marin,2017,Total,Leptospirosis,0
+Marin,2017,Total,Listeriosis,0
+Marin,2017,Total,Lyme Disease,0
+Marin,2017,Total,Malaria,0
+Marin,2017,Total,Paralytic Shellfish Poisoning,0
+Marin,2017,Total,"Plague, human",0
+Marin,2017,Total,Psittacosis,0
+Marin,2017,Total,Q Fever,0
+Marin,2017,Total,"Rabies, human",0
+Marin,2017,Total,Relapsing Fever,0
+Marin,2017,Total,Salmonellosis,39
+Marin,2017,Total,Scombroid Fish Poisoning,0
+Marin,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),10
+Marin,2017,Total,Shigellosis,31
+Marin,2017,Total,Spotted Fever Rickettsiosis,0
+Marin,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Marin,2017,Total,Trichinosis,0
+Marin,2017,Total,Tularemia,0
+Marin,2017,Total,"Typhoid Fever, case",1
+Marin,2017,Total,Typhus Fever,0
+Marin,2017,Total,Vibrio Infection (non-Cholera),10
+Marin,2017,Total,Yellow Fever,0
+Marin,2017,Total,Yersiniosis,3
+Marin,2017,Total,Zika Virus Infection,1
+Mariposa,2017,Total,Amebiasis,0
+Mariposa,2017,Total,Anaplasmosis,0
+Mariposa,2017,Total,Anthrax,0
+Mariposa,2017,Total,Babesiosis,0
+Mariposa,2017,Total,"Botulism, Foodborne",0
+Mariposa,2017,Total,"Botulism, Other",0
+Mariposa,2017,Total,"Botulism, Wound",0
+Mariposa,2017,Total,Brucellosis,0
+Mariposa,2017,Total,Campylobacteriosis,1
+Mariposa,2017,Total,Chikungunya Virus Infection,0
+Mariposa,2017,Total,Cholera,0
+Mariposa,2017,Total,Ciguatera Fish Poisoning,0
+Mariposa,2017,Total,Coccidioidomycosis,3
+Mariposa,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Mariposa,2017,Total,Cryptosporidiosis,0
+Mariposa,2017,Total,Cyclosporiasis,0
+Mariposa,2017,Total,Cysticercosis or Taeniasis,0
+Mariposa,2017,Total,Dengue,0
+Mariposa,2017,Total,Domoic Acid Poisoning,0
+Mariposa,2017,Total,E. coli O157,1
+Mariposa,2017,Total,E. coli Other STEC (non-O157),0
+Mariposa,2017,Total,Ehrlichiosis,0
+Mariposa,2017,Total,Flavivirus Infection of Undetermined Species,0
+Mariposa,2017,Total,Giardiasis,2
+Mariposa,2017,Total,Hantavirus Infection,0
+Mariposa,2017,Total,Hemolytic Uremic Syndrome,0
+Mariposa,2017,Total,"Hepatitis E, acute infection",0
+Mariposa,2017,Total,Legionellosis,0
+Mariposa,2017,Total,Leprosy,0
+Mariposa,2017,Total,Leptospirosis,0
+Mariposa,2017,Total,Listeriosis,0
+Mariposa,2017,Total,Lyme Disease,0
+Mariposa,2017,Total,Malaria,0
+Mariposa,2017,Total,Paralytic Shellfish Poisoning,0
+Mariposa,2017,Total,"Plague, human",0
+Mariposa,2017,Total,Psittacosis,0
+Mariposa,2017,Total,Q Fever,0
+Mariposa,2017,Total,"Rabies, human",0
+Mariposa,2017,Total,Relapsing Fever,0
+Mariposa,2017,Total,Salmonellosis,1
+Mariposa,2017,Total,Scombroid Fish Poisoning,0
+Mariposa,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Mariposa,2017,Total,Shigellosis,0
+Mariposa,2017,Total,Spotted Fever Rickettsiosis,0
+Mariposa,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Mariposa,2017,Total,Trichinosis,0
+Mariposa,2017,Total,Tularemia,0
+Mariposa,2017,Total,"Typhoid Fever, case",0
+Mariposa,2017,Total,Typhus Fever,0
+Mariposa,2017,Total,Vibrio Infection (non-Cholera),0
+Mariposa,2017,Total,Yellow Fever,0
+Mariposa,2017,Total,Yersiniosis,0
+Mariposa,2017,Total,Zika Virus Infection,0
+Mendocino,2017,Total,Amebiasis,3
+Mendocino,2017,Total,Anaplasmosis,0
+Mendocino,2017,Total,Anthrax,0
+Mendocino,2017,Total,Babesiosis,0
+Mendocino,2017,Total,"Botulism, Foodborne",0
+Mendocino,2017,Total,"Botulism, Other",0
+Mendocino,2017,Total,"Botulism, Wound",1
+Mendocino,2017,Total,Brucellosis,0
+Mendocino,2017,Total,Campylobacteriosis,32
+Mendocino,2017,Total,Chikungunya Virus Infection,0
+Mendocino,2017,Total,Cholera,0
+Mendocino,2017,Total,Ciguatera Fish Poisoning,0
+Mendocino,2017,Total,Coccidioidomycosis,1
+Mendocino,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Mendocino,2017,Total,Cryptosporidiosis,1
+Mendocino,2017,Total,Cyclosporiasis,0
+Mendocino,2017,Total,Cysticercosis or Taeniasis,0
+Mendocino,2017,Total,Dengue,0
+Mendocino,2017,Total,Domoic Acid Poisoning,0
+Mendocino,2017,Total,E. coli O157,2
+Mendocino,2017,Total,E. coli Other STEC (non-O157),1
+Mendocino,2017,Total,Ehrlichiosis,0
+Mendocino,2017,Total,Flavivirus Infection of Undetermined Species,0
+Mendocino,2017,Total,Giardiasis,14
+Mendocino,2017,Total,Hantavirus Infection,0
+Mendocino,2017,Total,Hemolytic Uremic Syndrome,0
+Mendocino,2017,Total,"Hepatitis E, acute infection",0
+Mendocino,2017,Total,Legionellosis,2
+Mendocino,2017,Total,Leprosy,0
+Mendocino,2017,Total,Leptospirosis,0
+Mendocino,2017,Total,Listeriosis,0
+Mendocino,2017,Total,Lyme Disease,2
+Mendocino,2017,Total,Malaria,1
+Mendocino,2017,Total,Paralytic Shellfish Poisoning,0
+Mendocino,2017,Total,"Plague, human",0
+Mendocino,2017,Total,Psittacosis,0
+Mendocino,2017,Total,Q Fever,0
+Mendocino,2017,Total,"Rabies, human",0
+Mendocino,2017,Total,Relapsing Fever,0
+Mendocino,2017,Total,Salmonellosis,8
+Mendocino,2017,Total,Scombroid Fish Poisoning,0
+Mendocino,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Mendocino,2017,Total,Shigellosis,1
+Mendocino,2017,Total,Spotted Fever Rickettsiosis,0
+Mendocino,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Mendocino,2017,Total,Trichinosis,0
+Mendocino,2017,Total,Tularemia,0
+Mendocino,2017,Total,"Typhoid Fever, case",0
+Mendocino,2017,Total,Typhus Fever,0
+Mendocino,2017,Total,Vibrio Infection (non-Cholera),0
+Mendocino,2017,Total,Yellow Fever,0
+Mendocino,2017,Total,Yersiniosis,1
+Mendocino,2017,Total,Zika Virus Infection,1
+Merced,2017,Total,Amebiasis,3
+Merced,2017,Total,Anaplasmosis,0
+Merced,2017,Total,Anthrax,0
+Merced,2017,Total,Babesiosis,0
+Merced,2017,Total,"Botulism, Foodborne",0
+Merced,2017,Total,"Botulism, Other",0
+Merced,2017,Total,"Botulism, Wound",0
+Merced,2017,Total,Brucellosis,0
+Merced,2017,Total,Campylobacteriosis,54
+Merced,2017,Total,Chikungunya Virus Infection,0
+Merced,2017,Total,Cholera,0
+Merced,2017,Total,Ciguatera Fish Poisoning,0
+Merced,2017,Total,Coccidioidomycosis,104
+Merced,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Merced,2017,Total,Cryptosporidiosis,0
+Merced,2017,Total,Cyclosporiasis,0
+Merced,2017,Total,Cysticercosis or Taeniasis,0
+Merced,2017,Total,Dengue,0
+Merced,2017,Total,Domoic Acid Poisoning,0
+Merced,2017,Total,E. coli O157,2
+Merced,2017,Total,E. coli Other STEC (non-O157),1
+Merced,2017,Total,Ehrlichiosis,0
+Merced,2017,Total,Flavivirus Infection of Undetermined Species,0
+Merced,2017,Total,Giardiasis,6
+Merced,2017,Total,Hantavirus Infection,0
+Merced,2017,Total,Hemolytic Uremic Syndrome,0
+Merced,2017,Total,"Hepatitis E, acute infection",0
+Merced,2017,Total,Legionellosis,0
+Merced,2017,Total,Leprosy,0
+Merced,2017,Total,Leptospirosis,0
+Merced,2017,Total,Listeriosis,0
+Merced,2017,Total,Lyme Disease,0
+Merced,2017,Total,Malaria,0
+Merced,2017,Total,Paralytic Shellfish Poisoning,0
+Merced,2017,Total,"Plague, human",0
+Merced,2017,Total,Psittacosis,0
+Merced,2017,Total,Q Fever,0
+Merced,2017,Total,"Rabies, human",0
+Merced,2017,Total,Relapsing Fever,0
+Merced,2017,Total,Salmonellosis,19
+Merced,2017,Total,Scombroid Fish Poisoning,0
+Merced,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),3
+Merced,2017,Total,Shigellosis,7
+Merced,2017,Total,Spotted Fever Rickettsiosis,0
+Merced,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Merced,2017,Total,Trichinosis,0
+Merced,2017,Total,Tularemia,0
+Merced,2017,Total,"Typhoid Fever, case",0
+Merced,2017,Total,Typhus Fever,0
+Merced,2017,Total,Vibrio Infection (non-Cholera),0
+Merced,2017,Total,Yellow Fever,0
+Merced,2017,Total,Yersiniosis,0
+Merced,2017,Total,Zika Virus Infection,1
+Modoc,2017,Total,Amebiasis,0
+Modoc,2017,Total,Anaplasmosis,0
+Modoc,2017,Total,Anthrax,0
+Modoc,2017,Total,Babesiosis,0
+Modoc,2017,Total,"Botulism, Foodborne",0
+Modoc,2017,Total,"Botulism, Other",0
+Modoc,2017,Total,"Botulism, Wound",0
+Modoc,2017,Total,Brucellosis,0
+Modoc,2017,Total,Campylobacteriosis,1
+Modoc,2017,Total,Chikungunya Virus Infection,0
+Modoc,2017,Total,Cholera,0
+Modoc,2017,Total,Ciguatera Fish Poisoning,0
+Modoc,2017,Total,Coccidioidomycosis,0
+Modoc,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Modoc,2017,Total,Cryptosporidiosis,0
+Modoc,2017,Total,Cyclosporiasis,0
+Modoc,2017,Total,Cysticercosis or Taeniasis,0
+Modoc,2017,Total,Dengue,0
+Modoc,2017,Total,Domoic Acid Poisoning,0
+Modoc,2017,Total,E. coli O157,0
+Modoc,2017,Total,E. coli Other STEC (non-O157),0
+Modoc,2017,Total,Ehrlichiosis,0
+Modoc,2017,Total,Flavivirus Infection of Undetermined Species,0
+Modoc,2017,Total,Giardiasis,0
+Modoc,2017,Total,Hantavirus Infection,0
+Modoc,2017,Total,Hemolytic Uremic Syndrome,0
+Modoc,2017,Total,"Hepatitis E, acute infection",0
+Modoc,2017,Total,Legionellosis,0
+Modoc,2017,Total,Leprosy,0
+Modoc,2017,Total,Leptospirosis,0
+Modoc,2017,Total,Listeriosis,0
+Modoc,2017,Total,Lyme Disease,0
+Modoc,2017,Total,Malaria,0
+Modoc,2017,Total,Paralytic Shellfish Poisoning,0
+Modoc,2017,Total,"Plague, human",0
+Modoc,2017,Total,Psittacosis,0
+Modoc,2017,Total,Q Fever,0
+Modoc,2017,Total,"Rabies, human",0
+Modoc,2017,Total,Relapsing Fever,0
+Modoc,2017,Total,Salmonellosis,0
+Modoc,2017,Total,Scombroid Fish Poisoning,0
+Modoc,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Modoc,2017,Total,Shigellosis,0
+Modoc,2017,Total,Spotted Fever Rickettsiosis,0
+Modoc,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Modoc,2017,Total,Trichinosis,0
+Modoc,2017,Total,Tularemia,0
+Modoc,2017,Total,"Typhoid Fever, case",0
+Modoc,2017,Total,Typhus Fever,0
+Modoc,2017,Total,Vibrio Infection (non-Cholera),0
+Modoc,2017,Total,Yellow Fever,0
+Modoc,2017,Total,Yersiniosis,0
+Modoc,2017,Total,Zika Virus Infection,0
+Mono,2017,Total,Amebiasis,0
+Mono,2017,Total,Anaplasmosis,0
+Mono,2017,Total,Anthrax,0
+Mono,2017,Total,Babesiosis,0
+Mono,2017,Total,"Botulism, Foodborne",0
+Mono,2017,Total,"Botulism, Other",0
+Mono,2017,Total,"Botulism, Wound",0
+Mono,2017,Total,Brucellosis,0
+Mono,2017,Total,Campylobacteriosis,5
+Mono,2017,Total,Chikungunya Virus Infection,0
+Mono,2017,Total,Cholera,0
+Mono,2017,Total,Ciguatera Fish Poisoning,0
+Mono,2017,Total,Coccidioidomycosis,0
+Mono,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Mono,2017,Total,Cryptosporidiosis,1
+Mono,2017,Total,Cyclosporiasis,0
+Mono,2017,Total,Cysticercosis or Taeniasis,0
+Mono,2017,Total,Dengue,0
+Mono,2017,Total,Domoic Acid Poisoning,0
+Mono,2017,Total,E. coli O157,0
+Mono,2017,Total,E. coli Other STEC (non-O157),0
+Mono,2017,Total,Ehrlichiosis,0
+Mono,2017,Total,Flavivirus Infection of Undetermined Species,0
+Mono,2017,Total,Giardiasis,4
+Mono,2017,Total,Hantavirus Infection,1
+Mono,2017,Total,Hemolytic Uremic Syndrome,0
+Mono,2017,Total,"Hepatitis E, acute infection",0
+Mono,2017,Total,Legionellosis,0
+Mono,2017,Total,Leprosy,0
+Mono,2017,Total,Leptospirosis,0
+Mono,2017,Total,Listeriosis,0
+Mono,2017,Total,Lyme Disease,0
+Mono,2017,Total,Malaria,0
+Mono,2017,Total,Paralytic Shellfish Poisoning,0
+Mono,2017,Total,"Plague, human",0
+Mono,2017,Total,Psittacosis,0
+Mono,2017,Total,Q Fever,0
+Mono,2017,Total,"Rabies, human",0
+Mono,2017,Total,Relapsing Fever,0
+Mono,2017,Total,Salmonellosis,1
+Mono,2017,Total,Scombroid Fish Poisoning,0
+Mono,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Mono,2017,Total,Shigellosis,0
+Mono,2017,Total,Spotted Fever Rickettsiosis,0
+Mono,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Mono,2017,Total,Trichinosis,0
+Mono,2017,Total,Tularemia,0
+Mono,2017,Total,"Typhoid Fever, case",0
+Mono,2017,Total,Typhus Fever,0
+Mono,2017,Total,Vibrio Infection (non-Cholera),0
+Mono,2017,Total,Yellow Fever,0
+Mono,2017,Total,Yersiniosis,0
+Mono,2017,Total,Zika Virus Infection,0
+Monterey,2017,Total,Amebiasis,7
+Monterey,2017,Total,Anaplasmosis,0
+Monterey,2017,Total,Anthrax,0
+Monterey,2017,Total,Babesiosis,0
+Monterey,2017,Total,"Botulism, Foodborne",0
+Monterey,2017,Total,"Botulism, Other",0
+Monterey,2017,Total,"Botulism, Wound",0
+Monterey,2017,Total,Brucellosis,0
+Monterey,2017,Total,Campylobacteriosis,68
+Monterey,2017,Total,Chikungunya Virus Infection,0
+Monterey,2017,Total,Cholera,0
+Monterey,2017,Total,Ciguatera Fish Poisoning,0
+Monterey,2017,Total,Coccidioidomycosis,191
+Monterey,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Monterey,2017,Total,Cryptosporidiosis,3
+Monterey,2017,Total,Cyclosporiasis,0
+Monterey,2017,Total,Cysticercosis or Taeniasis,0
+Monterey,2017,Total,Dengue,3
+Monterey,2017,Total,Domoic Acid Poisoning,0
+Monterey,2017,Total,E. coli O157,5
+Monterey,2017,Total,E. coli Other STEC (non-O157),16
+Monterey,2017,Total,Ehrlichiosis,0
+Monterey,2017,Total,Flavivirus Infection of Undetermined Species,0
+Monterey,2017,Total,Giardiasis,19
+Monterey,2017,Total,Hantavirus Infection,0
+Monterey,2017,Total,Hemolytic Uremic Syndrome,0
+Monterey,2017,Total,"Hepatitis E, acute infection",0
+Monterey,2017,Total,Legionellosis,7
+Monterey,2017,Total,Leprosy,0
+Monterey,2017,Total,Leptospirosis,0
+Monterey,2017,Total,Listeriosis,1
+Monterey,2017,Total,Lyme Disease,0
+Monterey,2017,Total,Malaria,0
+Monterey,2017,Total,Paralytic Shellfish Poisoning,0
+Monterey,2017,Total,"Plague, human",0
+Monterey,2017,Total,Psittacosis,0
+Monterey,2017,Total,Q Fever,0
+Monterey,2017,Total,"Rabies, human",0
+Monterey,2017,Total,Relapsing Fever,0
+Monterey,2017,Total,Salmonellosis,39
+Monterey,2017,Total,Scombroid Fish Poisoning,0
+Monterey,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Monterey,2017,Total,Shigellosis,13
+Monterey,2017,Total,Spotted Fever Rickettsiosis,0
+Monterey,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Monterey,2017,Total,Trichinosis,0
+Monterey,2017,Total,Tularemia,1
+Monterey,2017,Total,"Typhoid Fever, case",0
+Monterey,2017,Total,Typhus Fever,0
+Monterey,2017,Total,Vibrio Infection (non-Cholera),4
+Monterey,2017,Total,Yellow Fever,0
+Monterey,2017,Total,Yersiniosis,2
+Monterey,2017,Total,Zika Virus Infection,1
+Napa,2017,Total,Amebiasis,0
+Napa,2017,Total,Anaplasmosis,1
+Napa,2017,Total,Anthrax,0
+Napa,2017,Total,Babesiosis,0
+Napa,2017,Total,"Botulism, Foodborne",1
+Napa,2017,Total,"Botulism, Other",0
+Napa,2017,Total,"Botulism, Wound",0
+Napa,2017,Total,Brucellosis,2
+Napa,2017,Total,Campylobacteriosis,34
+Napa,2017,Total,Chikungunya Virus Infection,0
+Napa,2017,Total,Cholera,0
+Napa,2017,Total,Ciguatera Fish Poisoning,0
+Napa,2017,Total,Coccidioidomycosis,1
+Napa,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Napa,2017,Total,Cryptosporidiosis,4
+Napa,2017,Total,Cyclosporiasis,0
+Napa,2017,Total,Cysticercosis or Taeniasis,0
+Napa,2017,Total,Dengue,0
+Napa,2017,Total,Domoic Acid Poisoning,0
+Napa,2017,Total,E. coli O157,2
+Napa,2017,Total,E. coli Other STEC (non-O157),5
+Napa,2017,Total,Ehrlichiosis,0
+Napa,2017,Total,Flavivirus Infection of Undetermined Species,0
+Napa,2017,Total,Giardiasis,14
+Napa,2017,Total,Hantavirus Infection,0
+Napa,2017,Total,Hemolytic Uremic Syndrome,0
+Napa,2017,Total,"Hepatitis E, acute infection",1
+Napa,2017,Total,Legionellosis,1
+Napa,2017,Total,Leprosy,0
+Napa,2017,Total,Leptospirosis,0
+Napa,2017,Total,Listeriosis,1
+Napa,2017,Total,Lyme Disease,1
+Napa,2017,Total,Malaria,1
+Napa,2017,Total,Paralytic Shellfish Poisoning,0
+Napa,2017,Total,"Plague, human",0
+Napa,2017,Total,Psittacosis,0
+Napa,2017,Total,Q Fever,0
+Napa,2017,Total,"Rabies, human",0
+Napa,2017,Total,Relapsing Fever,0
+Napa,2017,Total,Salmonellosis,23
+Napa,2017,Total,Scombroid Fish Poisoning,0
+Napa,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),4
+Napa,2017,Total,Shigellosis,12
+Napa,2017,Total,Spotted Fever Rickettsiosis,0
+Napa,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Napa,2017,Total,Trichinosis,0
+Napa,2017,Total,Tularemia,0
+Napa,2017,Total,"Typhoid Fever, case",0
+Napa,2017,Total,Typhus Fever,0
+Napa,2017,Total,Vibrio Infection (non-Cholera),0
+Napa,2017,Total,Yellow Fever,0
+Napa,2017,Total,Yersiniosis,4
+Napa,2017,Total,Zika Virus Infection,0
+Nevada,2017,Total,Amebiasis,1
+Nevada,2017,Total,Anaplasmosis,0
+Nevada,2017,Total,Anthrax,0
+Nevada,2017,Total,Babesiosis,0
+Nevada,2017,Total,"Botulism, Foodborne",0
+Nevada,2017,Total,"Botulism, Other",0
+Nevada,2017,Total,"Botulism, Wound",0
+Nevada,2017,Total,Brucellosis,0
+Nevada,2017,Total,Campylobacteriosis,14
+Nevada,2017,Total,Chikungunya Virus Infection,0
+Nevada,2017,Total,Cholera,0
+Nevada,2017,Total,Ciguatera Fish Poisoning,0
+Nevada,2017,Total,Coccidioidomycosis,0
+Nevada,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Nevada,2017,Total,Cryptosporidiosis,1
+Nevada,2017,Total,Cyclosporiasis,0
+Nevada,2017,Total,Cysticercosis or Taeniasis,0
+Nevada,2017,Total,Dengue,1
+Nevada,2017,Total,Domoic Acid Poisoning,0
+Nevada,2017,Total,E. coli O157,12
+Nevada,2017,Total,E. coli Other STEC (non-O157),2
+Nevada,2017,Total,Ehrlichiosis,0
+Nevada,2017,Total,Flavivirus Infection of Undetermined Species,0
+Nevada,2017,Total,Giardiasis,16
+Nevada,2017,Total,Hantavirus Infection,0
+Nevada,2017,Total,Hemolytic Uremic Syndrome,4
+Nevada,2017,Total,"Hepatitis E, acute infection",0
+Nevada,2017,Total,Legionellosis,2
+Nevada,2017,Total,Leprosy,0
+Nevada,2017,Total,Leptospirosis,0
+Nevada,2017,Total,Listeriosis,0
+Nevada,2017,Total,Lyme Disease,0
+Nevada,2017,Total,Malaria,0
+Nevada,2017,Total,Paralytic Shellfish Poisoning,0
+Nevada,2017,Total,"Plague, human",0
+Nevada,2017,Total,Psittacosis,0
+Nevada,2017,Total,Q Fever,0
+Nevada,2017,Total,"Rabies, human",0
+Nevada,2017,Total,Relapsing Fever,0
+Nevada,2017,Total,Salmonellosis,12
+Nevada,2017,Total,Scombroid Fish Poisoning,0
+Nevada,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Nevada,2017,Total,Shigellosis,2
+Nevada,2017,Total,Spotted Fever Rickettsiosis,0
+Nevada,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Nevada,2017,Total,Trichinosis,0
+Nevada,2017,Total,Tularemia,0
+Nevada,2017,Total,"Typhoid Fever, case",0
+Nevada,2017,Total,Typhus Fever,0
+Nevada,2017,Total,Vibrio Infection (non-Cholera),0
+Nevada,2017,Total,Yellow Fever,0
+Nevada,2017,Total,Yersiniosis,0
+Nevada,2017,Total,Zika Virus Infection,0
+Orange,2017,Total,Amebiasis,11
+Orange,2017,Total,Anaplasmosis,0
+Orange,2017,Total,Anthrax,0
+Orange,2017,Total,Babesiosis,1
+Orange,2017,Total,"Botulism, Foodborne",2
+Orange,2017,Total,"Botulism, Other",0
+Orange,2017,Total,"Botulism, Wound",1
+Orange,2017,Total,Brucellosis,2
+Orange,2017,Total,Campylobacteriosis,523
+Orange,2017,Total,Chikungunya Virus Infection,2
+Orange,2017,Total,Cholera,0
+Orange,2017,Total,Ciguatera Fish Poisoning,0
+Orange,2017,Total,Coccidioidomycosis,231
+Orange,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,2
+Orange,2017,Total,Cryptosporidiosis,34
+Orange,2017,Total,Cyclosporiasis,2
+Orange,2017,Total,Cysticercosis or Taeniasis,6
+Orange,2017,Total,Dengue,10
+Orange,2017,Total,Domoic Acid Poisoning,0
+Orange,2017,Total,E. coli O157,18
+Orange,2017,Total,E. coli Other STEC (non-O157),23
+Orange,2017,Total,Ehrlichiosis,0
+Orange,2017,Total,Flavivirus Infection of Undetermined Species,0
+Orange,2017,Total,Giardiasis,124
+Orange,2017,Total,Hantavirus Infection,1
+Orange,2017,Total,Hemolytic Uremic Syndrome,2
+Orange,2017,Total,"Hepatitis E, acute infection",1
+Orange,2017,Total,Legionellosis,58
+Orange,2017,Total,Leprosy,0
+Orange,2017,Total,Leptospirosis,0
+Orange,2017,Total,Listeriosis,16
+Orange,2017,Total,Lyme Disease,0
+Orange,2017,Total,Malaria,4
+Orange,2017,Total,Paralytic Shellfish Poisoning,0
+Orange,2017,Total,"Plague, human",0
+Orange,2017,Total,Psittacosis,0
+Orange,2017,Total,Q Fever,0
+Orange,2017,Total,"Rabies, human",0
+Orange,2017,Total,Relapsing Fever,0
+Orange,2017,Total,Salmonellosis,372
+Orange,2017,Total,Scombroid Fish Poisoning,4
+Orange,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),4
+Orange,2017,Total,Shigellosis,91
+Orange,2017,Total,Spotted Fever Rickettsiosis,0
+Orange,2017,Total,Streptococcal Infection (cases in food and dairy workers),2
+Orange,2017,Total,Trichinosis,0
+Orange,2017,Total,Tularemia,0
+Orange,2017,Total,"Typhoid Fever, case",7
+Orange,2017,Total,Typhus Fever,11
+Orange,2017,Total,Vibrio Infection (non-Cholera),20
+Orange,2017,Total,Yellow Fever,0
+Orange,2017,Total,Yersiniosis,15
+Orange,2017,Total,Zika Virus Infection,10
+Placer,2017,Total,Amebiasis,3
+Placer,2017,Total,Anaplasmosis,0
+Placer,2017,Total,Anthrax,0
+Placer,2017,Total,Babesiosis,0
+Placer,2017,Total,"Botulism, Foodborne",0
+Placer,2017,Total,"Botulism, Other",0
+Placer,2017,Total,"Botulism, Wound",0
+Placer,2017,Total,Brucellosis,0
+Placer,2017,Total,Campylobacteriosis,78
+Placer,2017,Total,Chikungunya Virus Infection,0
+Placer,2017,Total,Cholera,0
+Placer,2017,Total,Ciguatera Fish Poisoning,0
+Placer,2017,Total,Coccidioidomycosis,2
+Placer,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Placer,2017,Total,Cryptosporidiosis,2
+Placer,2017,Total,Cyclosporiasis,1
+Placer,2017,Total,Cysticercosis or Taeniasis,1
+Placer,2017,Total,Dengue,1
+Placer,2017,Total,Domoic Acid Poisoning,0
+Placer,2017,Total,E. coli O157,20
+Placer,2017,Total,E. coli Other STEC (non-O157),19
+Placer,2017,Total,Ehrlichiosis,0
+Placer,2017,Total,Flavivirus Infection of Undetermined Species,0
+Placer,2017,Total,Giardiasis,23
+Placer,2017,Total,Hantavirus Infection,0
+Placer,2017,Total,Hemolytic Uremic Syndrome,0
+Placer,2017,Total,"Hepatitis E, acute infection",0
+Placer,2017,Total,Legionellosis,2
+Placer,2017,Total,Leprosy,0
+Placer,2017,Total,Leptospirosis,0
+Placer,2017,Total,Listeriosis,2
+Placer,2017,Total,Lyme Disease,3
+Placer,2017,Total,Malaria,1
+Placer,2017,Total,Paralytic Shellfish Poisoning,0
+Placer,2017,Total,"Plague, human",0
+Placer,2017,Total,Psittacosis,0
+Placer,2017,Total,Q Fever,1
+Placer,2017,Total,"Rabies, human",0
+Placer,2017,Total,Relapsing Fever,0
+Placer,2017,Total,Salmonellosis,100
+Placer,2017,Total,Scombroid Fish Poisoning,0
+Placer,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Placer,2017,Total,Shigellosis,17
+Placer,2017,Total,Spotted Fever Rickettsiosis,0
+Placer,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Placer,2017,Total,Trichinosis,0
+Placer,2017,Total,Tularemia,0
+Placer,2017,Total,"Typhoid Fever, case",0
+Placer,2017,Total,Typhus Fever,0
+Placer,2017,Total,Vibrio Infection (non-Cholera),3
+Placer,2017,Total,Yellow Fever,0
+Placer,2017,Total,Yersiniosis,0
+Placer,2017,Total,Zika Virus Infection,1
+Plumas,2017,Total,Amebiasis,0
+Plumas,2017,Total,Anaplasmosis,0
+Plumas,2017,Total,Anthrax,0
+Plumas,2017,Total,Babesiosis,0
+Plumas,2017,Total,"Botulism, Foodborne",0
+Plumas,2017,Total,"Botulism, Other",0
+Plumas,2017,Total,"Botulism, Wound",0
+Plumas,2017,Total,Brucellosis,0
+Plumas,2017,Total,Campylobacteriosis,0
+Plumas,2017,Total,Chikungunya Virus Infection,0
+Plumas,2017,Total,Cholera,0
+Plumas,2017,Total,Ciguatera Fish Poisoning,0
+Plumas,2017,Total,Coccidioidomycosis,0
+Plumas,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Plumas,2017,Total,Cryptosporidiosis,1
+Plumas,2017,Total,Cyclosporiasis,0
+Plumas,2017,Total,Cysticercosis or Taeniasis,0
+Plumas,2017,Total,Dengue,0
+Plumas,2017,Total,Domoic Acid Poisoning,0
+Plumas,2017,Total,E. coli O157,1
+Plumas,2017,Total,E. coli Other STEC (non-O157),0
+Plumas,2017,Total,Ehrlichiosis,0
+Plumas,2017,Total,Flavivirus Infection of Undetermined Species,0
+Plumas,2017,Total,Giardiasis,4
+Plumas,2017,Total,Hantavirus Infection,0
+Plumas,2017,Total,Hemolytic Uremic Syndrome,0
+Plumas,2017,Total,"Hepatitis E, acute infection",0
+Plumas,2017,Total,Legionellosis,0
+Plumas,2017,Total,Leprosy,0
+Plumas,2017,Total,Leptospirosis,0
+Plumas,2017,Total,Listeriosis,0
+Plumas,2017,Total,Lyme Disease,0
+Plumas,2017,Total,Malaria,0
+Plumas,2017,Total,Paralytic Shellfish Poisoning,0
+Plumas,2017,Total,"Plague, human",0
+Plumas,2017,Total,Psittacosis,0
+Plumas,2017,Total,Q Fever,0
+Plumas,2017,Total,"Rabies, human",0
+Plumas,2017,Total,Relapsing Fever,0
+Plumas,2017,Total,Salmonellosis,1
+Plumas,2017,Total,Scombroid Fish Poisoning,0
+Plumas,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Plumas,2017,Total,Shigellosis,1
+Plumas,2017,Total,Spotted Fever Rickettsiosis,0
+Plumas,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Plumas,2017,Total,Trichinosis,0
+Plumas,2017,Total,Tularemia,0
+Plumas,2017,Total,"Typhoid Fever, case",0
+Plumas,2017,Total,Typhus Fever,0
+Plumas,2017,Total,Vibrio Infection (non-Cholera),0
+Plumas,2017,Total,Yellow Fever,0
+Plumas,2017,Total,Yersiniosis,0
+Plumas,2017,Total,Zika Virus Infection,0
+Riverside,2017,Total,Amebiasis,1
+Riverside,2017,Total,Anaplasmosis,0
+Riverside,2017,Total,Anthrax,0
+Riverside,2017,Total,Babesiosis,0
+Riverside,2017,Total,"Botulism, Foodborne",1
+Riverside,2017,Total,"Botulism, Other",0
+Riverside,2017,Total,"Botulism, Wound",3
+Riverside,2017,Total,Brucellosis,1
+Riverside,2017,Total,Campylobacteriosis,342
+Riverside,2017,Total,Chikungunya Virus Infection,0
+Riverside,2017,Total,Cholera,0
+Riverside,2017,Total,Ciguatera Fish Poisoning,0
+Riverside,2017,Total,Coccidioidomycosis,133
+Riverside,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+Riverside,2017,Total,Cryptosporidiosis,19
+Riverside,2017,Total,Cyclosporiasis,3
+Riverside,2017,Total,Cysticercosis or Taeniasis,0
+Riverside,2017,Total,Dengue,1
+Riverside,2017,Total,Domoic Acid Poisoning,0
+Riverside,2017,Total,E. coli O157,7
+Riverside,2017,Total,E. coli Other STEC (non-O157),12
+Riverside,2017,Total,Ehrlichiosis,0
+Riverside,2017,Total,Flavivirus Infection of Undetermined Species,0
+Riverside,2017,Total,Giardiasis,88
+Riverside,2017,Total,Hantavirus Infection,0
+Riverside,2017,Total,Hemolytic Uremic Syndrome,3
+Riverside,2017,Total,"Hepatitis E, acute infection",0
+Riverside,2017,Total,Legionellosis,44
+Riverside,2017,Total,Leprosy,0
+Riverside,2017,Total,Leptospirosis,0
+Riverside,2017,Total,Listeriosis,4
+Riverside,2017,Total,Lyme Disease,5
+Riverside,2017,Total,Malaria,10
+Riverside,2017,Total,Paralytic Shellfish Poisoning,0
+Riverside,2017,Total,"Plague, human",0
+Riverside,2017,Total,Psittacosis,0
+Riverside,2017,Total,Q Fever,11
+Riverside,2017,Total,"Rabies, human",0
+Riverside,2017,Total,Relapsing Fever,0
+Riverside,2017,Total,Salmonellosis,254
+Riverside,2017,Total,Scombroid Fish Poisoning,0
+Riverside,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),5
+Riverside,2017,Total,Shigellosis,116
+Riverside,2017,Total,Spotted Fever Rickettsiosis,2
+Riverside,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Riverside,2017,Total,Trichinosis,0
+Riverside,2017,Total,Tularemia,0
+Riverside,2017,Total,"Typhoid Fever, case",1
+Riverside,2017,Total,Typhus Fever,0
+Riverside,2017,Total,Vibrio Infection (non-Cholera),6
+Riverside,2017,Total,Yellow Fever,0
+Riverside,2017,Total,Yersiniosis,9
+Riverside,2017,Total,Zika Virus Infection,4
+Sacramento,2017,Total,Amebiasis,1
+Sacramento,2017,Total,Anaplasmosis,0
+Sacramento,2017,Total,Anthrax,0
+Sacramento,2017,Total,Babesiosis,0
+Sacramento,2017,Total,"Botulism, Foodborne",4
+Sacramento,2017,Total,"Botulism, Other",0
+Sacramento,2017,Total,"Botulism, Wound",1
+Sacramento,2017,Total,Brucellosis,1
+Sacramento,2017,Total,Campylobacteriosis,388
+Sacramento,2017,Total,Chikungunya Virus Infection,1
+Sacramento,2017,Total,Cholera,0
+Sacramento,2017,Total,Ciguatera Fish Poisoning,0
+Sacramento,2017,Total,Coccidioidomycosis,40
+Sacramento,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+Sacramento,2017,Total,Cryptosporidiosis,19
+Sacramento,2017,Total,Cyclosporiasis,0
+Sacramento,2017,Total,Cysticercosis or Taeniasis,2
+Sacramento,2017,Total,Dengue,6
+Sacramento,2017,Total,Domoic Acid Poisoning,0
+Sacramento,2017,Total,E. coli O157,22
+Sacramento,2017,Total,E. coli Other STEC (non-O157),36
+Sacramento,2017,Total,Ehrlichiosis,0
+Sacramento,2017,Total,Flavivirus Infection of Undetermined Species,0
+Sacramento,2017,Total,Giardiasis,9
+Sacramento,2017,Total,Hantavirus Infection,1
+Sacramento,2017,Total,Hemolytic Uremic Syndrome,1
+Sacramento,2017,Total,"Hepatitis E, acute infection",1
+Sacramento,2017,Total,Legionellosis,11
+Sacramento,2017,Total,Leprosy,0
+Sacramento,2017,Total,Leptospirosis,2
+Sacramento,2017,Total,Listeriosis,3
+Sacramento,2017,Total,Lyme Disease,1
+Sacramento,2017,Total,Malaria,12
+Sacramento,2017,Total,Paralytic Shellfish Poisoning,0
+Sacramento,2017,Total,"Plague, human",0
+Sacramento,2017,Total,Psittacosis,0
+Sacramento,2017,Total,Q Fever,2
+Sacramento,2017,Total,"Rabies, human",0
+Sacramento,2017,Total,Relapsing Fever,0
+Sacramento,2017,Total,Salmonellosis,289
+Sacramento,2017,Total,Scombroid Fish Poisoning,1
+Sacramento,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),5
+Sacramento,2017,Total,Shigellosis,91
+Sacramento,2017,Total,Spotted Fever Rickettsiosis,0
+Sacramento,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Sacramento,2017,Total,Trichinosis,5
+Sacramento,2017,Total,Tularemia,1
+Sacramento,2017,Total,"Typhoid Fever, case",4
+Sacramento,2017,Total,Typhus Fever,0
+Sacramento,2017,Total,Vibrio Infection (non-Cholera),4
+Sacramento,2017,Total,Yellow Fever,0
+Sacramento,2017,Total,Yersiniosis,1
+Sacramento,2017,Total,Zika Virus Infection,0
+San Benito,2017,Total,Amebiasis,1
+San Benito,2017,Total,Anaplasmosis,0
+San Benito,2017,Total,Anthrax,0
+San Benito,2017,Total,Babesiosis,0
+San Benito,2017,Total,"Botulism, Foodborne",0
+San Benito,2017,Total,"Botulism, Other",0
+San Benito,2017,Total,"Botulism, Wound",0
+San Benito,2017,Total,Brucellosis,0
+San Benito,2017,Total,Campylobacteriosis,7
+San Benito,2017,Total,Chikungunya Virus Infection,0
+San Benito,2017,Total,Cholera,0
+San Benito,2017,Total,Ciguatera Fish Poisoning,0
+San Benito,2017,Total,Coccidioidomycosis,4
+San Benito,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+San Benito,2017,Total,Cryptosporidiosis,0
+San Benito,2017,Total,Cyclosporiasis,0
+San Benito,2017,Total,Cysticercosis or Taeniasis,0
+San Benito,2017,Total,Dengue,0
+San Benito,2017,Total,Domoic Acid Poisoning,0
+San Benito,2017,Total,E. coli O157,2
+San Benito,2017,Total,E. coli Other STEC (non-O157),2
+San Benito,2017,Total,Ehrlichiosis,0
+San Benito,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Benito,2017,Total,Giardiasis,2
+San Benito,2017,Total,Hantavirus Infection,0
+San Benito,2017,Total,Hemolytic Uremic Syndrome,0
+San Benito,2017,Total,"Hepatitis E, acute infection",0
+San Benito,2017,Total,Legionellosis,0
+San Benito,2017,Total,Leprosy,0
+San Benito,2017,Total,Leptospirosis,0
+San Benito,2017,Total,Listeriosis,0
+San Benito,2017,Total,Lyme Disease,0
+San Benito,2017,Total,Malaria,0
+San Benito,2017,Total,Paralytic Shellfish Poisoning,0
+San Benito,2017,Total,"Plague, human",0
+San Benito,2017,Total,Psittacosis,0
+San Benito,2017,Total,Q Fever,1
+San Benito,2017,Total,"Rabies, human",0
+San Benito,2017,Total,Relapsing Fever,0
+San Benito,2017,Total,Salmonellosis,2
+San Benito,2017,Total,Scombroid Fish Poisoning,0
+San Benito,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+San Benito,2017,Total,Shigellosis,4
+San Benito,2017,Total,Spotted Fever Rickettsiosis,0
+San Benito,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+San Benito,2017,Total,Trichinosis,0
+San Benito,2017,Total,Tularemia,0
+San Benito,2017,Total,"Typhoid Fever, case",0
+San Benito,2017,Total,Typhus Fever,0
+San Benito,2017,Total,Vibrio Infection (non-Cholera),0
+San Benito,2017,Total,Yellow Fever,0
+San Benito,2017,Total,Yersiniosis,0
+San Benito,2017,Total,Zika Virus Infection,0
+San Bernardino,2017,Total,Amebiasis,3
+San Bernardino,2017,Total,Anaplasmosis,0
+San Bernardino,2017,Total,Anthrax,0
+San Bernardino,2017,Total,Babesiosis,0
+San Bernardino,2017,Total,"Botulism, Foodborne",0
+San Bernardino,2017,Total,"Botulism, Other",0
+San Bernardino,2017,Total,"Botulism, Wound",5
+San Bernardino,2017,Total,Brucellosis,2
+San Bernardino,2017,Total,Campylobacteriosis,265
+San Bernardino,2017,Total,Chikungunya Virus Infection,0
+San Bernardino,2017,Total,Cholera,0
+San Bernardino,2017,Total,Ciguatera Fish Poisoning,0
+San Bernardino,2017,Total,Coccidioidomycosis,88
+San Bernardino,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+San Bernardino,2017,Total,Cryptosporidiosis,8
+San Bernardino,2017,Total,Cyclosporiasis,2
+San Bernardino,2017,Total,Cysticercosis or Taeniasis,0
+San Bernardino,2017,Total,Dengue,3
+San Bernardino,2017,Total,Domoic Acid Poisoning,0
+San Bernardino,2017,Total,E. coli O157,2
+San Bernardino,2017,Total,E. coli Other STEC (non-O157),4
+San Bernardino,2017,Total,Ehrlichiosis,1
+San Bernardino,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Bernardino,2017,Total,Giardiasis,52
+San Bernardino,2017,Total,Hantavirus Infection,0
+San Bernardino,2017,Total,Hemolytic Uremic Syndrome,2
+San Bernardino,2017,Total,"Hepatitis E, acute infection",3
+San Bernardino,2017,Total,Legionellosis,30
+San Bernardino,2017,Total,Leprosy,0
+San Bernardino,2017,Total,Leptospirosis,0
+San Bernardino,2017,Total,Listeriosis,3
+San Bernardino,2017,Total,Lyme Disease,0
+San Bernardino,2017,Total,Malaria,5
+San Bernardino,2017,Total,Paralytic Shellfish Poisoning,0
+San Bernardino,2017,Total,"Plague, human",0
+San Bernardino,2017,Total,Psittacosis,0
+San Bernardino,2017,Total,Q Fever,3
+San Bernardino,2017,Total,"Rabies, human",0
+San Bernardino,2017,Total,Relapsing Fever,0
+San Bernardino,2017,Total,Salmonellosis,231
+San Bernardino,2017,Total,Scombroid Fish Poisoning,0
+San Bernardino,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),4
+San Bernardino,2017,Total,Shigellosis,72
+San Bernardino,2017,Total,Spotted Fever Rickettsiosis,1
+San Bernardino,2017,Total,Streptococcal Infection (cases in food and dairy workers),5
+San Bernardino,2017,Total,Trichinosis,0
+San Bernardino,2017,Total,Tularemia,0
+San Bernardino,2017,Total,"Typhoid Fever, case",2
+San Bernardino,2017,Total,Typhus Fever,0
+San Bernardino,2017,Total,Vibrio Infection (non-Cholera),5
+San Bernardino,2017,Total,Yellow Fever,0
+San Bernardino,2017,Total,Yersiniosis,2
+San Bernardino,2017,Total,Zika Virus Infection,7
+San Diego,2017,Total,Amebiasis,10
+San Diego,2017,Total,Anaplasmosis,0
+San Diego,2017,Total,Anthrax,0
+San Diego,2017,Total,Babesiosis,1
+San Diego,2017,Total,"Botulism, Foodborne",0
+San Diego,2017,Total,"Botulism, Other",1
+San Diego,2017,Total,"Botulism, Wound",4
+San Diego,2017,Total,Brucellosis,4
+San Diego,2017,Total,Campylobacteriosis,884
+San Diego,2017,Total,Chikungunya Virus Infection,3
+San Diego,2017,Total,Cholera,0
+San Diego,2017,Total,Ciguatera Fish Poisoning,0
+San Diego,2017,Total,Coccidioidomycosis,274
+San Diego,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,7
+San Diego,2017,Total,Cryptosporidiosis,55
+San Diego,2017,Total,Cyclosporiasis,5
+San Diego,2017,Total,Cysticercosis or Taeniasis,1
+San Diego,2017,Total,Dengue,9
+San Diego,2017,Total,Domoic Acid Poisoning,0
+San Diego,2017,Total,E. coli O157,257
+San Diego,2017,Total,E. coli Other STEC (non-O157),40
+San Diego,2017,Total,Ehrlichiosis,0
+San Diego,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Diego,2017,Total,Giardiasis,321
+San Diego,2017,Total,Hantavirus Infection,0
+San Diego,2017,Total,Hemolytic Uremic Syndrome,19
+San Diego,2017,Total,"Hepatitis E, acute infection",2
+San Diego,2017,Total,Legionellosis,63
+San Diego,2017,Total,Leprosy,0
+San Diego,2017,Total,Leptospirosis,1
+San Diego,2017,Total,Listeriosis,17
+San Diego,2017,Total,Lyme Disease,18
+San Diego,2017,Total,Malaria,7
+San Diego,2017,Total,Paralytic Shellfish Poisoning,0
+San Diego,2017,Total,"Plague, human",0
+San Diego,2017,Total,Psittacosis,2
+San Diego,2017,Total,Q Fever,2
+San Diego,2017,Total,"Rabies, human",0
+San Diego,2017,Total,Relapsing Fever,0
+San Diego,2017,Total,Salmonellosis,569
+San Diego,2017,Total,Scombroid Fish Poisoning,6
+San Diego,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),15
+San Diego,2017,Total,Shigellosis,334
+San Diego,2017,Total,Spotted Fever Rickettsiosis,3
+San Diego,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+San Diego,2017,Total,Trichinosis,0
+San Diego,2017,Total,Tularemia,0
+San Diego,2017,Total,"Typhoid Fever, case",2
+San Diego,2017,Total,Typhus Fever,2
+San Diego,2017,Total,Vibrio Infection (non-Cholera),50
+San Diego,2017,Total,Yellow Fever,0
+San Diego,2017,Total,Yersiniosis,61
+San Diego,2017,Total,Zika Virus Infection,22
+San Francisco,2017,Total,Amebiasis,0
+San Francisco,2017,Total,Anaplasmosis,0
+San Francisco,2017,Total,Anthrax,0
+San Francisco,2017,Total,Babesiosis,1
+San Francisco,2017,Total,"Botulism, Foodborne",0
+San Francisco,2017,Total,"Botulism, Other",0
+San Francisco,2017,Total,"Botulism, Wound",0
+San Francisco,2017,Total,Brucellosis,0
+San Francisco,2017,Total,Campylobacteriosis,422
+San Francisco,2017,Total,Chikungunya Virus Infection,0
+San Francisco,2017,Total,Cholera,0
+San Francisco,2017,Total,Ciguatera Fish Poisoning,0
+San Francisco,2017,Total,Coccidioidomycosis,14
+San Francisco,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+San Francisco,2017,Total,Cryptosporidiosis,25
+San Francisco,2017,Total,Cyclosporiasis,3
+San Francisco,2017,Total,Cysticercosis or Taeniasis,1
+San Francisco,2017,Total,Dengue,2
+San Francisco,2017,Total,Domoic Acid Poisoning,0
+San Francisco,2017,Total,E. coli O157,22
+San Francisco,2017,Total,E. coli Other STEC (non-O157),31
+San Francisco,2017,Total,Ehrlichiosis,0
+San Francisco,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Francisco,2017,Total,Giardiasis,244
+San Francisco,2017,Total,Hantavirus Infection,0
+San Francisco,2017,Total,Hemolytic Uremic Syndrome,1
+San Francisco,2017,Total,"Hepatitis E, acute infection",5
+San Francisco,2017,Total,Legionellosis,7
+San Francisco,2017,Total,Leprosy,0
+San Francisco,2017,Total,Leptospirosis,1
+San Francisco,2017,Total,Listeriosis,5
+San Francisco,2017,Total,Lyme Disease,20
+San Francisco,2017,Total,Malaria,6
+San Francisco,2017,Total,Paralytic Shellfish Poisoning,0
+San Francisco,2017,Total,"Plague, human",0
+San Francisco,2017,Total,Psittacosis,0
+San Francisco,2017,Total,Q Fever,0
+San Francisco,2017,Total,"Rabies, human",0
+San Francisco,2017,Total,Relapsing Fever,0
+San Francisco,2017,Total,Salmonellosis,163
+San Francisco,2017,Total,Scombroid Fish Poisoning,2
+San Francisco,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),5
+San Francisco,2017,Total,Shigellosis,183
+San Francisco,2017,Total,Spotted Fever Rickettsiosis,1
+San Francisco,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+San Francisco,2017,Total,Trichinosis,0
+San Francisco,2017,Total,Tularemia,0
+San Francisco,2017,Total,"Typhoid Fever, case",3
+San Francisco,2017,Total,Typhus Fever,0
+San Francisco,2017,Total,Vibrio Infection (non-Cholera),16
+San Francisco,2017,Total,Yellow Fever,0
+San Francisco,2017,Total,Yersiniosis,10
+San Francisco,2017,Total,Zika Virus Infection,9
+San Joaquin,2017,Total,Amebiasis,0
+San Joaquin,2017,Total,Anaplasmosis,0
+San Joaquin,2017,Total,Anthrax,0
+San Joaquin,2017,Total,Babesiosis,0
+San Joaquin,2017,Total,"Botulism, Foodborne",4
+San Joaquin,2017,Total,"Botulism, Other",0
+San Joaquin,2017,Total,"Botulism, Wound",1
+San Joaquin,2017,Total,Brucellosis,0
+San Joaquin,2017,Total,Campylobacteriosis,259
+San Joaquin,2017,Total,Chikungunya Virus Infection,1
+San Joaquin,2017,Total,Cholera,0
+San Joaquin,2017,Total,Ciguatera Fish Poisoning,0
+San Joaquin,2017,Total,Coccidioidomycosis,201
+San Joaquin,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+San Joaquin,2017,Total,Cryptosporidiosis,32
+San Joaquin,2017,Total,Cyclosporiasis,0
+San Joaquin,2017,Total,Cysticercosis or Taeniasis,0
+San Joaquin,2017,Total,Dengue,2
+San Joaquin,2017,Total,Domoic Acid Poisoning,0
+San Joaquin,2017,Total,E. coli O157,8
+San Joaquin,2017,Total,E. coli Other STEC (non-O157),20
+San Joaquin,2017,Total,Ehrlichiosis,0
+San Joaquin,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Joaquin,2017,Total,Giardiasis,41
+San Joaquin,2017,Total,Hantavirus Infection,0
+San Joaquin,2017,Total,Hemolytic Uremic Syndrome,0
+San Joaquin,2017,Total,"Hepatitis E, acute infection",0
+San Joaquin,2017,Total,Legionellosis,7
+San Joaquin,2017,Total,Leprosy,0
+San Joaquin,2017,Total,Leptospirosis,0
+San Joaquin,2017,Total,Listeriosis,2
+San Joaquin,2017,Total,Lyme Disease,0
+San Joaquin,2017,Total,Malaria,5
+San Joaquin,2017,Total,Paralytic Shellfish Poisoning,0
+San Joaquin,2017,Total,"Plague, human",0
+San Joaquin,2017,Total,Psittacosis,0
+San Joaquin,2017,Total,Q Fever,1
+San Joaquin,2017,Total,"Rabies, human",0
+San Joaquin,2017,Total,Relapsing Fever,0
+San Joaquin,2017,Total,Salmonellosis,111
+San Joaquin,2017,Total,Scombroid Fish Poisoning,0
+San Joaquin,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),4
+San Joaquin,2017,Total,Shigellosis,39
+San Joaquin,2017,Total,Spotted Fever Rickettsiosis,0
+San Joaquin,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+San Joaquin,2017,Total,Trichinosis,0
+San Joaquin,2017,Total,Tularemia,0
+San Joaquin,2017,Total,"Typhoid Fever, case",4
+San Joaquin,2017,Total,Typhus Fever,0
+San Joaquin,2017,Total,Vibrio Infection (non-Cholera),3
+San Joaquin,2017,Total,Yellow Fever,0
+San Joaquin,2017,Total,Yersiniosis,1
+San Joaquin,2017,Total,Zika Virus Infection,1
+San Luis Obispo,2017,Total,Amebiasis,0
+San Luis Obispo,2017,Total,Anaplasmosis,0
+San Luis Obispo,2017,Total,Anthrax,0
+San Luis Obispo,2017,Total,Babesiosis,0
+San Luis Obispo,2017,Total,"Botulism, Foodborne",0
+San Luis Obispo,2017,Total,"Botulism, Other",0
+San Luis Obispo,2017,Total,"Botulism, Wound",0
+San Luis Obispo,2017,Total,Brucellosis,0
+San Luis Obispo,2017,Total,Campylobacteriosis,70
+San Luis Obispo,2017,Total,Chikungunya Virus Infection,0
+San Luis Obispo,2017,Total,Cholera,0
+San Luis Obispo,2017,Total,Ciguatera Fish Poisoning,0
+San Luis Obispo,2017,Total,Coccidioidomycosis,434
+San Luis Obispo,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+San Luis Obispo,2017,Total,Cryptosporidiosis,9
+San Luis Obispo,2017,Total,Cyclosporiasis,0
+San Luis Obispo,2017,Total,Cysticercosis or Taeniasis,0
+San Luis Obispo,2017,Total,Dengue,1
+San Luis Obispo,2017,Total,Domoic Acid Poisoning,0
+San Luis Obispo,2017,Total,E. coli O157,5
+San Luis Obispo,2017,Total,E. coli Other STEC (non-O157),11
+San Luis Obispo,2017,Total,Ehrlichiosis,0
+San Luis Obispo,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Luis Obispo,2017,Total,Giardiasis,9
+San Luis Obispo,2017,Total,Hantavirus Infection,0
+San Luis Obispo,2017,Total,Hemolytic Uremic Syndrome,0
+San Luis Obispo,2017,Total,"Hepatitis E, acute infection",0
+San Luis Obispo,2017,Total,Legionellosis,1
+San Luis Obispo,2017,Total,Leprosy,0
+San Luis Obispo,2017,Total,Leptospirosis,0
+San Luis Obispo,2017,Total,Listeriosis,1
+San Luis Obispo,2017,Total,Lyme Disease,0
+San Luis Obispo,2017,Total,Malaria,0
+San Luis Obispo,2017,Total,Paralytic Shellfish Poisoning,0
+San Luis Obispo,2017,Total,"Plague, human",0
+San Luis Obispo,2017,Total,Psittacosis,0
+San Luis Obispo,2017,Total,Q Fever,0
+San Luis Obispo,2017,Total,"Rabies, human",0
+San Luis Obispo,2017,Total,Relapsing Fever,0
+San Luis Obispo,2017,Total,Salmonellosis,28
+San Luis Obispo,2017,Total,Scombroid Fish Poisoning,0
+San Luis Obispo,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+San Luis Obispo,2017,Total,Shigellosis,8
+San Luis Obispo,2017,Total,Spotted Fever Rickettsiosis,0
+San Luis Obispo,2017,Total,Streptococcal Infection (cases in food and dairy workers),3
+San Luis Obispo,2017,Total,Trichinosis,0
+San Luis Obispo,2017,Total,Tularemia,0
+San Luis Obispo,2017,Total,"Typhoid Fever, case",0
+San Luis Obispo,2017,Total,Typhus Fever,0
+San Luis Obispo,2017,Total,Vibrio Infection (non-Cholera),4
+San Luis Obispo,2017,Total,Yellow Fever,0
+San Luis Obispo,2017,Total,Yersiniosis,4
+San Luis Obispo,2017,Total,Zika Virus Infection,0
+San Mateo,2017,Total,Amebiasis,8
+San Mateo,2017,Total,Anaplasmosis,0
+San Mateo,2017,Total,Anthrax,0
+San Mateo,2017,Total,Babesiosis,0
+San Mateo,2017,Total,"Botulism, Foodborne",0
+San Mateo,2017,Total,"Botulism, Other",0
+San Mateo,2017,Total,"Botulism, Wound",0
+San Mateo,2017,Total,Brucellosis,0
+San Mateo,2017,Total,Campylobacteriosis,294
+San Mateo,2017,Total,Chikungunya Virus Infection,1
+San Mateo,2017,Total,Cholera,0
+San Mateo,2017,Total,Ciguatera Fish Poisoning,0
+San Mateo,2017,Total,Coccidioidomycosis,18
+San Mateo,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,3
+San Mateo,2017,Total,Cryptosporidiosis,30
+San Mateo,2017,Total,Cyclosporiasis,4
+San Mateo,2017,Total,Cysticercosis or Taeniasis,0
+San Mateo,2017,Total,Dengue,3
+San Mateo,2017,Total,Domoic Acid Poisoning,0
+San Mateo,2017,Total,E. coli O157,19
+San Mateo,2017,Total,E. coli Other STEC (non-O157),21
+San Mateo,2017,Total,Ehrlichiosis,0
+San Mateo,2017,Total,Flavivirus Infection of Undetermined Species,0
+San Mateo,2017,Total,Giardiasis,81
+San Mateo,2017,Total,Hantavirus Infection,0
+San Mateo,2017,Total,Hemolytic Uremic Syndrome,2
+San Mateo,2017,Total,"Hepatitis E, acute infection",2
+San Mateo,2017,Total,Legionellosis,8
+San Mateo,2017,Total,Leprosy,0
+San Mateo,2017,Total,Leptospirosis,0
+San Mateo,2017,Total,Listeriosis,9
+San Mateo,2017,Total,Lyme Disease,4
+San Mateo,2017,Total,Malaria,3
+San Mateo,2017,Total,Paralytic Shellfish Poisoning,0
+San Mateo,2017,Total,"Plague, human",0
+San Mateo,2017,Total,Psittacosis,0
+San Mateo,2017,Total,Q Fever,1
+San Mateo,2017,Total,"Rabies, human",0
+San Mateo,2017,Total,Relapsing Fever,1
+San Mateo,2017,Total,Salmonellosis,146
+San Mateo,2017,Total,Scombroid Fish Poisoning,0
+San Mateo,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),7
+San Mateo,2017,Total,Shigellosis,68
+San Mateo,2017,Total,Spotted Fever Rickettsiosis,0
+San Mateo,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+San Mateo,2017,Total,Trichinosis,0
+San Mateo,2017,Total,Tularemia,0
+San Mateo,2017,Total,"Typhoid Fever, case",1
+San Mateo,2017,Total,Typhus Fever,0
+San Mateo,2017,Total,Vibrio Infection (non-Cholera),3
+San Mateo,2017,Total,Yellow Fever,0
+San Mateo,2017,Total,Yersiniosis,15
+San Mateo,2017,Total,Zika Virus Infection,3
+Santa Barbara,2017,Total,Amebiasis,3
+Santa Barbara,2017,Total,Anaplasmosis,2
+Santa Barbara,2017,Total,Anthrax,0
+Santa Barbara,2017,Total,Babesiosis,0
+Santa Barbara,2017,Total,"Botulism, Foodborne",0
+Santa Barbara,2017,Total,"Botulism, Other",0
+Santa Barbara,2017,Total,"Botulism, Wound",1
+Santa Barbara,2017,Total,Brucellosis,0
+Santa Barbara,2017,Total,Campylobacteriosis,108
+Santa Barbara,2017,Total,Chikungunya Virus Infection,0
+Santa Barbara,2017,Total,Cholera,0
+Santa Barbara,2017,Total,Ciguatera Fish Poisoning,0
+Santa Barbara,2017,Total,Coccidioidomycosis,116
+Santa Barbara,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Santa Barbara,2017,Total,Cryptosporidiosis,19
+Santa Barbara,2017,Total,Cyclosporiasis,3
+Santa Barbara,2017,Total,Cysticercosis or Taeniasis,0
+Santa Barbara,2017,Total,Dengue,1
+Santa Barbara,2017,Total,Domoic Acid Poisoning,0
+Santa Barbara,2017,Total,E. coli O157,6
+Santa Barbara,2017,Total,E. coli Other STEC (non-O157),10
+Santa Barbara,2017,Total,Ehrlichiosis,1
+Santa Barbara,2017,Total,Flavivirus Infection of Undetermined Species,0
+Santa Barbara,2017,Total,Giardiasis,25
+Santa Barbara,2017,Total,Hantavirus Infection,0
+Santa Barbara,2017,Total,Hemolytic Uremic Syndrome,0
+Santa Barbara,2017,Total,"Hepatitis E, acute infection",1
+Santa Barbara,2017,Total,Legionellosis,7
+Santa Barbara,2017,Total,Leprosy,0
+Santa Barbara,2017,Total,Leptospirosis,1
+Santa Barbara,2017,Total,Listeriosis,0
+Santa Barbara,2017,Total,Lyme Disease,3
+Santa Barbara,2017,Total,Malaria,1
+Santa Barbara,2017,Total,Paralytic Shellfish Poisoning,0
+Santa Barbara,2017,Total,"Plague, human",0
+Santa Barbara,2017,Total,Psittacosis,0
+Santa Barbara,2017,Total,Q Fever,1
+Santa Barbara,2017,Total,"Rabies, human",0
+Santa Barbara,2017,Total,Relapsing Fever,0
+Santa Barbara,2017,Total,Salmonellosis,74
+Santa Barbara,2017,Total,Scombroid Fish Poisoning,0
+Santa Barbara,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+Santa Barbara,2017,Total,Shigellosis,17
+Santa Barbara,2017,Total,Spotted Fever Rickettsiosis,0
+Santa Barbara,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Santa Barbara,2017,Total,Trichinosis,0
+Santa Barbara,2017,Total,Tularemia,0
+Santa Barbara,2017,Total,"Typhoid Fever, case",0
+Santa Barbara,2017,Total,Typhus Fever,0
+Santa Barbara,2017,Total,Vibrio Infection (non-Cholera),12
+Santa Barbara,2017,Total,Yellow Fever,0
+Santa Barbara,2017,Total,Yersiniosis,6
+Santa Barbara,2017,Total,Zika Virus Infection,2
+Santa Clara,2017,Total,Amebiasis,2
+Santa Clara,2017,Total,Anaplasmosis,0
+Santa Clara,2017,Total,Anthrax,0
+Santa Clara,2017,Total,Babesiosis,1
+Santa Clara,2017,Total,"Botulism, Foodborne",0
+Santa Clara,2017,Total,"Botulism, Other",0
+Santa Clara,2017,Total,"Botulism, Wound",0
+Santa Clara,2017,Total,Brucellosis,1
+Santa Clara,2017,Total,Campylobacteriosis,569
+Santa Clara,2017,Total,Chikungunya Virus Infection,10
+Santa Clara,2017,Total,Cholera,0
+Santa Clara,2017,Total,Ciguatera Fish Poisoning,0
+Santa Clara,2017,Total,Coccidioidomycosis,39
+Santa Clara,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,4
+Santa Clara,2017,Total,Cryptosporidiosis,38
+Santa Clara,2017,Total,Cyclosporiasis,8
+Santa Clara,2017,Total,Cysticercosis or Taeniasis,0
+Santa Clara,2017,Total,Dengue,24
+Santa Clara,2017,Total,Domoic Acid Poisoning,0
+Santa Clara,2017,Total,E. coli O157,24
+Santa Clara,2017,Total,E. coli Other STEC (non-O157),74
+Santa Clara,2017,Total,Ehrlichiosis,0
+Santa Clara,2017,Total,Flavivirus Infection of Undetermined Species,0
+Santa Clara,2017,Total,Giardiasis,191
+Santa Clara,2017,Total,Hantavirus Infection,0
+Santa Clara,2017,Total,Hemolytic Uremic Syndrome,4
+Santa Clara,2017,Total,"Hepatitis E, acute infection",2
+Santa Clara,2017,Total,Legionellosis,10
+Santa Clara,2017,Total,Leprosy,1
+Santa Clara,2017,Total,Leptospirosis,0
+Santa Clara,2017,Total,Listeriosis,11
+Santa Clara,2017,Total,Lyme Disease,24
+Santa Clara,2017,Total,Malaria,12
+Santa Clara,2017,Total,Paralytic Shellfish Poisoning,0
+Santa Clara,2017,Total,"Plague, human",0
+Santa Clara,2017,Total,Psittacosis,0
+Santa Clara,2017,Total,Q Fever,2
+Santa Clara,2017,Total,"Rabies, human",0
+Santa Clara,2017,Total,Relapsing Fever,1
+Santa Clara,2017,Total,Salmonellosis,341
+Santa Clara,2017,Total,Scombroid Fish Poisoning,0
+Santa Clara,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),11
+Santa Clara,2017,Total,Shigellosis,153
+Santa Clara,2017,Total,Spotted Fever Rickettsiosis,0
+Santa Clara,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Santa Clara,2017,Total,Trichinosis,0
+Santa Clara,2017,Total,Tularemia,0
+Santa Clara,2017,Total,"Typhoid Fever, case",17
+Santa Clara,2017,Total,Typhus Fever,1
+Santa Clara,2017,Total,Vibrio Infection (non-Cholera),22
+Santa Clara,2017,Total,Yellow Fever,0
+Santa Clara,2017,Total,Yersiniosis,21
+Santa Clara,2017,Total,Zika Virus Infection,14
+Santa Cruz,2017,Total,Amebiasis,5
+Santa Cruz,2017,Total,Anaplasmosis,0
+Santa Cruz,2017,Total,Anthrax,0
+Santa Cruz,2017,Total,Babesiosis,0
+Santa Cruz,2017,Total,"Botulism, Foodborne",0
+Santa Cruz,2017,Total,"Botulism, Other",0
+Santa Cruz,2017,Total,"Botulism, Wound",0
+Santa Cruz,2017,Total,Brucellosis,0
+Santa Cruz,2017,Total,Campylobacteriosis,87
+Santa Cruz,2017,Total,Chikungunya Virus Infection,0
+Santa Cruz,2017,Total,Cholera,0
+Santa Cruz,2017,Total,Ciguatera Fish Poisoning,0
+Santa Cruz,2017,Total,Coccidioidomycosis,8
+Santa Cruz,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Santa Cruz,2017,Total,Cryptosporidiosis,12
+Santa Cruz,2017,Total,Cyclosporiasis,0
+Santa Cruz,2017,Total,Cysticercosis or Taeniasis,0
+Santa Cruz,2017,Total,Dengue,2
+Santa Cruz,2017,Total,Domoic Acid Poisoning,0
+Santa Cruz,2017,Total,E. coli O157,2
+Santa Cruz,2017,Total,E. coli Other STEC (non-O157),3
+Santa Cruz,2017,Total,Ehrlichiosis,0
+Santa Cruz,2017,Total,Flavivirus Infection of Undetermined Species,0
+Santa Cruz,2017,Total,Giardiasis,29
+Santa Cruz,2017,Total,Hantavirus Infection,0
+Santa Cruz,2017,Total,Hemolytic Uremic Syndrome,0
+Santa Cruz,2017,Total,"Hepatitis E, acute infection",1
+Santa Cruz,2017,Total,Legionellosis,3
+Santa Cruz,2017,Total,Leprosy,0
+Santa Cruz,2017,Total,Leptospirosis,0
+Santa Cruz,2017,Total,Listeriosis,0
+Santa Cruz,2017,Total,Lyme Disease,21
+Santa Cruz,2017,Total,Malaria,0
+Santa Cruz,2017,Total,Paralytic Shellfish Poisoning,0
+Santa Cruz,2017,Total,"Plague, human",0
+Santa Cruz,2017,Total,Psittacosis,0
+Santa Cruz,2017,Total,Q Fever,0
+Santa Cruz,2017,Total,"Rabies, human",0
+Santa Cruz,2017,Total,Relapsing Fever,0
+Santa Cruz,2017,Total,Salmonellosis,31
+Santa Cruz,2017,Total,Scombroid Fish Poisoning,0
+Santa Cruz,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Santa Cruz,2017,Total,Shigellosis,12
+Santa Cruz,2017,Total,Spotted Fever Rickettsiosis,0
+Santa Cruz,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Santa Cruz,2017,Total,Trichinosis,0
+Santa Cruz,2017,Total,Tularemia,0
+Santa Cruz,2017,Total,"Typhoid Fever, case",0
+Santa Cruz,2017,Total,Typhus Fever,0
+Santa Cruz,2017,Total,Vibrio Infection (non-Cholera),2
+Santa Cruz,2017,Total,Yellow Fever,0
+Santa Cruz,2017,Total,Yersiniosis,0
+Santa Cruz,2017,Total,Zika Virus Infection,0
+Shasta,2017,Total,Amebiasis,0
+Shasta,2017,Total,Anaplasmosis,0
+Shasta,2017,Total,Anthrax,0
+Shasta,2017,Total,Babesiosis,1
+Shasta,2017,Total,"Botulism, Foodborne",0
+Shasta,2017,Total,"Botulism, Other",0
+Shasta,2017,Total,"Botulism, Wound",0
+Shasta,2017,Total,Brucellosis,0
+Shasta,2017,Total,Campylobacteriosis,29
+Shasta,2017,Total,Chikungunya Virus Infection,0
+Shasta,2017,Total,Cholera,0
+Shasta,2017,Total,Ciguatera Fish Poisoning,0
+Shasta,2017,Total,Coccidioidomycosis,0
+Shasta,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Shasta,2017,Total,Cryptosporidiosis,3
+Shasta,2017,Total,Cyclosporiasis,0
+Shasta,2017,Total,Cysticercosis or Taeniasis,0
+Shasta,2017,Total,Dengue,0
+Shasta,2017,Total,Domoic Acid Poisoning,0
+Shasta,2017,Total,E. coli O157,4
+Shasta,2017,Total,E. coli Other STEC (non-O157),0
+Shasta,2017,Total,Ehrlichiosis,0
+Shasta,2017,Total,Flavivirus Infection of Undetermined Species,0
+Shasta,2017,Total,Giardiasis,8
+Shasta,2017,Total,Hantavirus Infection,0
+Shasta,2017,Total,Hemolytic Uremic Syndrome,4
+Shasta,2017,Total,"Hepatitis E, acute infection",0
+Shasta,2017,Total,Legionellosis,2
+Shasta,2017,Total,Leprosy,0
+Shasta,2017,Total,Leptospirosis,0
+Shasta,2017,Total,Listeriosis,0
+Shasta,2017,Total,Lyme Disease,1
+Shasta,2017,Total,Malaria,0
+Shasta,2017,Total,Paralytic Shellfish Poisoning,0
+Shasta,2017,Total,"Plague, human",0
+Shasta,2017,Total,Psittacosis,0
+Shasta,2017,Total,Q Fever,0
+Shasta,2017,Total,"Rabies, human",0
+Shasta,2017,Total,Relapsing Fever,0
+Shasta,2017,Total,Salmonellosis,35
+Shasta,2017,Total,Scombroid Fish Poisoning,0
+Shasta,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+Shasta,2017,Total,Shigellosis,0
+Shasta,2017,Total,Spotted Fever Rickettsiosis,0
+Shasta,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Shasta,2017,Total,Trichinosis,0
+Shasta,2017,Total,Tularemia,0
+Shasta,2017,Total,"Typhoid Fever, case",0
+Shasta,2017,Total,Typhus Fever,0
+Shasta,2017,Total,Vibrio Infection (non-Cholera),1
+Shasta,2017,Total,Yellow Fever,0
+Shasta,2017,Total,Yersiniosis,3
+Shasta,2017,Total,Zika Virus Infection,0
+Sierra,2017,Total,Amebiasis,0
+Sierra,2017,Total,Anaplasmosis,0
+Sierra,2017,Total,Anthrax,0
+Sierra,2017,Total,Babesiosis,0
+Sierra,2017,Total,"Botulism, Foodborne",0
+Sierra,2017,Total,"Botulism, Other",0
+Sierra,2017,Total,"Botulism, Wound",0
+Sierra,2017,Total,Brucellosis,0
+Sierra,2017,Total,Campylobacteriosis,0
+Sierra,2017,Total,Chikungunya Virus Infection,0
+Sierra,2017,Total,Cholera,0
+Sierra,2017,Total,Ciguatera Fish Poisoning,0
+Sierra,2017,Total,Coccidioidomycosis,0
+Sierra,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Sierra,2017,Total,Cryptosporidiosis,0
+Sierra,2017,Total,Cyclosporiasis,0
+Sierra,2017,Total,Cysticercosis or Taeniasis,0
+Sierra,2017,Total,Dengue,0
+Sierra,2017,Total,Domoic Acid Poisoning,0
+Sierra,2017,Total,E. coli O157,0
+Sierra,2017,Total,E. coli Other STEC (non-O157),0
+Sierra,2017,Total,Ehrlichiosis,0
+Sierra,2017,Total,Flavivirus Infection of Undetermined Species,0
+Sierra,2017,Total,Giardiasis,0
+Sierra,2017,Total,Hantavirus Infection,0
+Sierra,2017,Total,Hemolytic Uremic Syndrome,0
+Sierra,2017,Total,"Hepatitis E, acute infection",0
+Sierra,2017,Total,Legionellosis,0
+Sierra,2017,Total,Leprosy,0
+Sierra,2017,Total,Leptospirosis,0
+Sierra,2017,Total,Listeriosis,0
+Sierra,2017,Total,Lyme Disease,0
+Sierra,2017,Total,Malaria,0
+Sierra,2017,Total,Paralytic Shellfish Poisoning,0
+Sierra,2017,Total,"Plague, human",0
+Sierra,2017,Total,Psittacosis,0
+Sierra,2017,Total,Q Fever,0
+Sierra,2017,Total,"Rabies, human",0
+Sierra,2017,Total,Relapsing Fever,0
+Sierra,2017,Total,Salmonellosis,2
+Sierra,2017,Total,Scombroid Fish Poisoning,0
+Sierra,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Sierra,2017,Total,Shigellosis,0
+Sierra,2017,Total,Spotted Fever Rickettsiosis,0
+Sierra,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Sierra,2017,Total,Trichinosis,0
+Sierra,2017,Total,Tularemia,0
+Sierra,2017,Total,"Typhoid Fever, case",0
+Sierra,2017,Total,Typhus Fever,0
+Sierra,2017,Total,Vibrio Infection (non-Cholera),0
+Sierra,2017,Total,Yellow Fever,0
+Sierra,2017,Total,Yersiniosis,0
+Sierra,2017,Total,Zika Virus Infection,0
+Siskiyou,2017,Total,Amebiasis,0
+Siskiyou,2017,Total,Anaplasmosis,0
+Siskiyou,2017,Total,Anthrax,0
+Siskiyou,2017,Total,Babesiosis,0
+Siskiyou,2017,Total,"Botulism, Foodborne",0
+Siskiyou,2017,Total,"Botulism, Other",0
+Siskiyou,2017,Total,"Botulism, Wound",0
+Siskiyou,2017,Total,Brucellosis,0
+Siskiyou,2017,Total,Campylobacteriosis,5
+Siskiyou,2017,Total,Chikungunya Virus Infection,0
+Siskiyou,2017,Total,Cholera,0
+Siskiyou,2017,Total,Ciguatera Fish Poisoning,0
+Siskiyou,2017,Total,Coccidioidomycosis,2
+Siskiyou,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Siskiyou,2017,Total,Cryptosporidiosis,0
+Siskiyou,2017,Total,Cyclosporiasis,0
+Siskiyou,2017,Total,Cysticercosis or Taeniasis,0
+Siskiyou,2017,Total,Dengue,0
+Siskiyou,2017,Total,Domoic Acid Poisoning,0
+Siskiyou,2017,Total,E. coli O157,2
+Siskiyou,2017,Total,E. coli Other STEC (non-O157),0
+Siskiyou,2017,Total,Ehrlichiosis,0
+Siskiyou,2017,Total,Flavivirus Infection of Undetermined Species,0
+Siskiyou,2017,Total,Giardiasis,3
+Siskiyou,2017,Total,Hantavirus Infection,0
+Siskiyou,2017,Total,Hemolytic Uremic Syndrome,1
+Siskiyou,2017,Total,"Hepatitis E, acute infection",0
+Siskiyou,2017,Total,Legionellosis,0
+Siskiyou,2017,Total,Leprosy,0
+Siskiyou,2017,Total,Leptospirosis,0
+Siskiyou,2017,Total,Listeriosis,0
+Siskiyou,2017,Total,Lyme Disease,1
+Siskiyou,2017,Total,Malaria,0
+Siskiyou,2017,Total,Paralytic Shellfish Poisoning,0
+Siskiyou,2017,Total,"Plague, human",0
+Siskiyou,2017,Total,Psittacosis,0
+Siskiyou,2017,Total,Q Fever,0
+Siskiyou,2017,Total,"Rabies, human",0
+Siskiyou,2017,Total,Relapsing Fever,0
+Siskiyou,2017,Total,Salmonellosis,3
+Siskiyou,2017,Total,Scombroid Fish Poisoning,0
+Siskiyou,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Siskiyou,2017,Total,Shigellosis,1
+Siskiyou,2017,Total,Spotted Fever Rickettsiosis,0
+Siskiyou,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Siskiyou,2017,Total,Trichinosis,0
+Siskiyou,2017,Total,Tularemia,0
+Siskiyou,2017,Total,"Typhoid Fever, case",0
+Siskiyou,2017,Total,Typhus Fever,0
+Siskiyou,2017,Total,Vibrio Infection (non-Cholera),0
+Siskiyou,2017,Total,Yellow Fever,0
+Siskiyou,2017,Total,Yersiniosis,1
+Siskiyou,2017,Total,Zika Virus Infection,0
+Solano,2017,Total,Amebiasis,4
+Solano,2017,Total,Anaplasmosis,0
+Solano,2017,Total,Anthrax,0
+Solano,2017,Total,Babesiosis,0
+Solano,2017,Total,"Botulism, Foodborne",1
+Solano,2017,Total,"Botulism, Other",0
+Solano,2017,Total,"Botulism, Wound",0
+Solano,2017,Total,Brucellosis,0
+Solano,2017,Total,Campylobacteriosis,136
+Solano,2017,Total,Chikungunya Virus Infection,0
+Solano,2017,Total,Cholera,0
+Solano,2017,Total,Ciguatera Fish Poisoning,1
+Solano,2017,Total,Coccidioidomycosis,18
+Solano,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Solano,2017,Total,Cryptosporidiosis,5
+Solano,2017,Total,Cyclosporiasis,0
+Solano,2017,Total,Cysticercosis or Taeniasis,0
+Solano,2017,Total,Dengue,4
+Solano,2017,Total,Domoic Acid Poisoning,0
+Solano,2017,Total,E. coli O157,7
+Solano,2017,Total,E. coli Other STEC (non-O157),13
+Solano,2017,Total,Ehrlichiosis,0
+Solano,2017,Total,Flavivirus Infection of Undetermined Species,0
+Solano,2017,Total,Giardiasis,40
+Solano,2017,Total,Hantavirus Infection,0
+Solano,2017,Total,Hemolytic Uremic Syndrome,2
+Solano,2017,Total,"Hepatitis E, acute infection",1
+Solano,2017,Total,Legionellosis,4
+Solano,2017,Total,Leprosy,0
+Solano,2017,Total,Leptospirosis,0
+Solano,2017,Total,Listeriosis,0
+Solano,2017,Total,Lyme Disease,2
+Solano,2017,Total,Malaria,0
+Solano,2017,Total,Paralytic Shellfish Poisoning,0
+Solano,2017,Total,"Plague, human",0
+Solano,2017,Total,Psittacosis,0
+Solano,2017,Total,Q Fever,1
+Solano,2017,Total,"Rabies, human",0
+Solano,2017,Total,Relapsing Fever,0
+Solano,2017,Total,Salmonellosis,56
+Solano,2017,Total,Scombroid Fish Poisoning,0
+Solano,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),5
+Solano,2017,Total,Shigellosis,31
+Solano,2017,Total,Spotted Fever Rickettsiosis,0
+Solano,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Solano,2017,Total,Trichinosis,0
+Solano,2017,Total,Tularemia,0
+Solano,2017,Total,"Typhoid Fever, case",1
+Solano,2017,Total,Typhus Fever,0
+Solano,2017,Total,Vibrio Infection (non-Cholera),2
+Solano,2017,Total,Yellow Fever,0
+Solano,2017,Total,Yersiniosis,0
+Solano,2017,Total,Zika Virus Infection,2
+Sonoma,2017,Total,Amebiasis,9
+Sonoma,2017,Total,Anaplasmosis,1
+Sonoma,2017,Total,Anthrax,0
+Sonoma,2017,Total,Babesiosis,0
+Sonoma,2017,Total,"Botulism, Foodborne",0
+Sonoma,2017,Total,"Botulism, Other",0
+Sonoma,2017,Total,"Botulism, Wound",0
+Sonoma,2017,Total,Brucellosis,1
+Sonoma,2017,Total,Campylobacteriosis,184
+Sonoma,2017,Total,Chikungunya Virus Infection,0
+Sonoma,2017,Total,Cholera,0
+Sonoma,2017,Total,Ciguatera Fish Poisoning,0
+Sonoma,2017,Total,Coccidioidomycosis,3
+Sonoma,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+Sonoma,2017,Total,Cryptosporidiosis,7
+Sonoma,2017,Total,Cyclosporiasis,0
+Sonoma,2017,Total,Cysticercosis or Taeniasis,0
+Sonoma,2017,Total,Dengue,1
+Sonoma,2017,Total,Domoic Acid Poisoning,0
+Sonoma,2017,Total,E. coli O157,18
+Sonoma,2017,Total,E. coli Other STEC (non-O157),17
+Sonoma,2017,Total,Ehrlichiosis,0
+Sonoma,2017,Total,Flavivirus Infection of Undetermined Species,0
+Sonoma,2017,Total,Giardiasis,43
+Sonoma,2017,Total,Hantavirus Infection,0
+Sonoma,2017,Total,Hemolytic Uremic Syndrome,0
+Sonoma,2017,Total,"Hepatitis E, acute infection",3
+Sonoma,2017,Total,Legionellosis,6
+Sonoma,2017,Total,Leprosy,0
+Sonoma,2017,Total,Leptospirosis,1
+Sonoma,2017,Total,Listeriosis,1
+Sonoma,2017,Total,Lyme Disease,18
+Sonoma,2017,Total,Malaria,3
+Sonoma,2017,Total,Paralytic Shellfish Poisoning,0
+Sonoma,2017,Total,"Plague, human",0
+Sonoma,2017,Total,Psittacosis,0
+Sonoma,2017,Total,Q Fever,0
+Sonoma,2017,Total,"Rabies, human",0
+Sonoma,2017,Total,Relapsing Fever,1
+Sonoma,2017,Total,Salmonellosis,80
+Sonoma,2017,Total,Scombroid Fish Poisoning,0
+Sonoma,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),4
+Sonoma,2017,Total,Shigellosis,35
+Sonoma,2017,Total,Spotted Fever Rickettsiosis,0
+Sonoma,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Sonoma,2017,Total,Trichinosis,0
+Sonoma,2017,Total,Tularemia,0
+Sonoma,2017,Total,"Typhoid Fever, case",1
+Sonoma,2017,Total,Typhus Fever,0
+Sonoma,2017,Total,Vibrio Infection (non-Cholera),4
+Sonoma,2017,Total,Yellow Fever,0
+Sonoma,2017,Total,Yersiniosis,0
+Sonoma,2017,Total,Zika Virus Infection,7
+Stanislaus,2017,Total,Amebiasis,13
+Stanislaus,2017,Total,Anaplasmosis,0
+Stanislaus,2017,Total,Anthrax,0
+Stanislaus,2017,Total,Babesiosis,0
+Stanislaus,2017,Total,"Botulism, Foodborne",0
+Stanislaus,2017,Total,"Botulism, Other",0
+Stanislaus,2017,Total,"Botulism, Wound",0
+Stanislaus,2017,Total,Brucellosis,0
+Stanislaus,2017,Total,Campylobacteriosis,229
+Stanislaus,2017,Total,Chikungunya Virus Infection,0
+Stanislaus,2017,Total,Cholera,0
+Stanislaus,2017,Total,Ciguatera Fish Poisoning,0
+Stanislaus,2017,Total,Coccidioidomycosis,122
+Stanislaus,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,1
+Stanislaus,2017,Total,Cryptosporidiosis,4
+Stanislaus,2017,Total,Cyclosporiasis,0
+Stanislaus,2017,Total,Cysticercosis or Taeniasis,0
+Stanislaus,2017,Total,Dengue,2
+Stanislaus,2017,Total,Domoic Acid Poisoning,0
+Stanislaus,2017,Total,E. coli O157,6
+Stanislaus,2017,Total,E. coli Other STEC (non-O157),12
+Stanislaus,2017,Total,Ehrlichiosis,0
+Stanislaus,2017,Total,Flavivirus Infection of Undetermined Species,0
+Stanislaus,2017,Total,Giardiasis,77
+Stanislaus,2017,Total,Hantavirus Infection,0
+Stanislaus,2017,Total,Hemolytic Uremic Syndrome,1
+Stanislaus,2017,Total,"Hepatitis E, acute infection",3
+Stanislaus,2017,Total,Legionellosis,9
+Stanislaus,2017,Total,Leprosy,0
+Stanislaus,2017,Total,Leptospirosis,0
+Stanislaus,2017,Total,Listeriosis,0
+Stanislaus,2017,Total,Lyme Disease,3
+Stanislaus,2017,Total,Malaria,2
+Stanislaus,2017,Total,Paralytic Shellfish Poisoning,0
+Stanislaus,2017,Total,"Plague, human",0
+Stanislaus,2017,Total,Psittacosis,0
+Stanislaus,2017,Total,Q Fever,1
+Stanislaus,2017,Total,"Rabies, human",0
+Stanislaus,2017,Total,Relapsing Fever,0
+Stanislaus,2017,Total,Salmonellosis,77
+Stanislaus,2017,Total,Scombroid Fish Poisoning,0
+Stanislaus,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),5
+Stanislaus,2017,Total,Shigellosis,53
+Stanislaus,2017,Total,Spotted Fever Rickettsiosis,0
+Stanislaus,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Stanislaus,2017,Total,Trichinosis,0
+Stanislaus,2017,Total,Tularemia,0
+Stanislaus,2017,Total,"Typhoid Fever, case",0
+Stanislaus,2017,Total,Typhus Fever,0
+Stanislaus,2017,Total,Vibrio Infection (non-Cholera),2
+Stanislaus,2017,Total,Yellow Fever,0
+Stanislaus,2017,Total,Yersiniosis,1
+Stanislaus,2017,Total,Zika Virus Infection,0
+Sutter,2017,Total,Amebiasis,3
+Sutter,2017,Total,Anaplasmosis,0
+Sutter,2017,Total,Anthrax,0
+Sutter,2017,Total,Babesiosis,0
+Sutter,2017,Total,"Botulism, Foodborne",0
+Sutter,2017,Total,"Botulism, Other",0
+Sutter,2017,Total,"Botulism, Wound",0
+Sutter,2017,Total,Brucellosis,0
+Sutter,2017,Total,Campylobacteriosis,15
+Sutter,2017,Total,Chikungunya Virus Infection,0
+Sutter,2017,Total,Cholera,0
+Sutter,2017,Total,Ciguatera Fish Poisoning,0
+Sutter,2017,Total,Coccidioidomycosis,3
+Sutter,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Sutter,2017,Total,Cryptosporidiosis,0
+Sutter,2017,Total,Cyclosporiasis,0
+Sutter,2017,Total,Cysticercosis or Taeniasis,0
+Sutter,2017,Total,Dengue,0
+Sutter,2017,Total,Domoic Acid Poisoning,0
+Sutter,2017,Total,E. coli O157,2
+Sutter,2017,Total,E. coli Other STEC (non-O157),0
+Sutter,2017,Total,Ehrlichiosis,0
+Sutter,2017,Total,Flavivirus Infection of Undetermined Species,0
+Sutter,2017,Total,Giardiasis,4
+Sutter,2017,Total,Hantavirus Infection,0
+Sutter,2017,Total,Hemolytic Uremic Syndrome,0
+Sutter,2017,Total,"Hepatitis E, acute infection",0
+Sutter,2017,Total,Legionellosis,0
+Sutter,2017,Total,Leprosy,0
+Sutter,2017,Total,Leptospirosis,0
+Sutter,2017,Total,Listeriosis,0
+Sutter,2017,Total,Lyme Disease,0
+Sutter,2017,Total,Malaria,0
+Sutter,2017,Total,Paralytic Shellfish Poisoning,0
+Sutter,2017,Total,"Plague, human",0
+Sutter,2017,Total,Psittacosis,0
+Sutter,2017,Total,Q Fever,0
+Sutter,2017,Total,"Rabies, human",0
+Sutter,2017,Total,Relapsing Fever,0
+Sutter,2017,Total,Salmonellosis,11
+Sutter,2017,Total,Scombroid Fish Poisoning,0
+Sutter,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+Sutter,2017,Total,Shigellosis,1
+Sutter,2017,Total,Spotted Fever Rickettsiosis,0
+Sutter,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Sutter,2017,Total,Trichinosis,0
+Sutter,2017,Total,Tularemia,0
+Sutter,2017,Total,"Typhoid Fever, case",0
+Sutter,2017,Total,Typhus Fever,0
+Sutter,2017,Total,Vibrio Infection (non-Cholera),1
+Sutter,2017,Total,Yellow Fever,0
+Sutter,2017,Total,Yersiniosis,0
+Sutter,2017,Total,Zika Virus Infection,0
+Tehama,2017,Total,Amebiasis,1
+Tehama,2017,Total,Anaplasmosis,0
+Tehama,2017,Total,Anthrax,0
+Tehama,2017,Total,Babesiosis,0
+Tehama,2017,Total,"Botulism, Foodborne",0
+Tehama,2017,Total,"Botulism, Other",0
+Tehama,2017,Total,"Botulism, Wound",0
+Tehama,2017,Total,Brucellosis,0
+Tehama,2017,Total,Campylobacteriosis,15
+Tehama,2017,Total,Chikungunya Virus Infection,0
+Tehama,2017,Total,Cholera,0
+Tehama,2017,Total,Ciguatera Fish Poisoning,0
+Tehama,2017,Total,Coccidioidomycosis,0
+Tehama,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Tehama,2017,Total,Cryptosporidiosis,2
+Tehama,2017,Total,Cyclosporiasis,0
+Tehama,2017,Total,Cysticercosis or Taeniasis,0
+Tehama,2017,Total,Dengue,0
+Tehama,2017,Total,Domoic Acid Poisoning,0
+Tehama,2017,Total,E. coli O157,1
+Tehama,2017,Total,E. coli Other STEC (non-O157),0
+Tehama,2017,Total,Ehrlichiosis,0
+Tehama,2017,Total,Flavivirus Infection of Undetermined Species,0
+Tehama,2017,Total,Giardiasis,3
+Tehama,2017,Total,Hantavirus Infection,0
+Tehama,2017,Total,Hemolytic Uremic Syndrome,0
+Tehama,2017,Total,"Hepatitis E, acute infection",0
+Tehama,2017,Total,Legionellosis,1
+Tehama,2017,Total,Leprosy,0
+Tehama,2017,Total,Leptospirosis,0
+Tehama,2017,Total,Listeriosis,0
+Tehama,2017,Total,Lyme Disease,0
+Tehama,2017,Total,Malaria,0
+Tehama,2017,Total,Paralytic Shellfish Poisoning,0
+Tehama,2017,Total,"Plague, human",0
+Tehama,2017,Total,Psittacosis,0
+Tehama,2017,Total,Q Fever,0
+Tehama,2017,Total,"Rabies, human",0
+Tehama,2017,Total,Relapsing Fever,0
+Tehama,2017,Total,Salmonellosis,14
+Tehama,2017,Total,Scombroid Fish Poisoning,0
+Tehama,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),3
+Tehama,2017,Total,Shigellosis,0
+Tehama,2017,Total,Spotted Fever Rickettsiosis,0
+Tehama,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Tehama,2017,Total,Trichinosis,0
+Tehama,2017,Total,Tularemia,0
+Tehama,2017,Total,"Typhoid Fever, case",0
+Tehama,2017,Total,Typhus Fever,0
+Tehama,2017,Total,Vibrio Infection (non-Cholera),0
+Tehama,2017,Total,Yellow Fever,0
+Tehama,2017,Total,Yersiniosis,0
+Tehama,2017,Total,Zika Virus Infection,0
+Trinity,2017,Total,Amebiasis,0
+Trinity,2017,Total,Anaplasmosis,0
+Trinity,2017,Total,Anthrax,0
+Trinity,2017,Total,Babesiosis,0
+Trinity,2017,Total,"Botulism, Foodborne",0
+Trinity,2017,Total,"Botulism, Other",0
+Trinity,2017,Total,"Botulism, Wound",0
+Trinity,2017,Total,Brucellosis,0
+Trinity,2017,Total,Campylobacteriosis,0
+Trinity,2017,Total,Chikungunya Virus Infection,0
+Trinity,2017,Total,Cholera,0
+Trinity,2017,Total,Ciguatera Fish Poisoning,0
+Trinity,2017,Total,Coccidioidomycosis,0
+Trinity,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Trinity,2017,Total,Cryptosporidiosis,0
+Trinity,2017,Total,Cyclosporiasis,0
+Trinity,2017,Total,Cysticercosis or Taeniasis,0
+Trinity,2017,Total,Dengue,0
+Trinity,2017,Total,Domoic Acid Poisoning,0
+Trinity,2017,Total,E. coli O157,0
+Trinity,2017,Total,E. coli Other STEC (non-O157),0
+Trinity,2017,Total,Ehrlichiosis,0
+Trinity,2017,Total,Flavivirus Infection of Undetermined Species,0
+Trinity,2017,Total,Giardiasis,0
+Trinity,2017,Total,Hantavirus Infection,0
+Trinity,2017,Total,Hemolytic Uremic Syndrome,0
+Trinity,2017,Total,"Hepatitis E, acute infection",0
+Trinity,2017,Total,Legionellosis,0
+Trinity,2017,Total,Leprosy,0
+Trinity,2017,Total,Leptospirosis,0
+Trinity,2017,Total,Listeriosis,0
+Trinity,2017,Total,Lyme Disease,0
+Trinity,2017,Total,Malaria,0
+Trinity,2017,Total,Paralytic Shellfish Poisoning,0
+Trinity,2017,Total,"Plague, human",0
+Trinity,2017,Total,Psittacosis,0
+Trinity,2017,Total,Q Fever,0
+Trinity,2017,Total,"Rabies, human",0
+Trinity,2017,Total,Relapsing Fever,0
+Trinity,2017,Total,Salmonellosis,2
+Trinity,2017,Total,Scombroid Fish Poisoning,0
+Trinity,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Trinity,2017,Total,Shigellosis,0
+Trinity,2017,Total,Spotted Fever Rickettsiosis,0
+Trinity,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Trinity,2017,Total,Trichinosis,0
+Trinity,2017,Total,Tularemia,0
+Trinity,2017,Total,"Typhoid Fever, case",0
+Trinity,2017,Total,Typhus Fever,0
+Trinity,2017,Total,Vibrio Infection (non-Cholera),0
+Trinity,2017,Total,Yellow Fever,0
+Trinity,2017,Total,Yersiniosis,0
+Trinity,2017,Total,Zika Virus Infection,0
+Tulare,2017,Total,Amebiasis,0
+Tulare,2017,Total,Anaplasmosis,0
+Tulare,2017,Total,Anthrax,0
+Tulare,2017,Total,Babesiosis,0
+Tulare,2017,Total,"Botulism, Foodborne",0
+Tulare,2017,Total,"Botulism, Other",0
+Tulare,2017,Total,"Botulism, Wound",0
+Tulare,2017,Total,Brucellosis,1
+Tulare,2017,Total,Campylobacteriosis,158
+Tulare,2017,Total,Chikungunya Virus Infection,0
+Tulare,2017,Total,Cholera,0
+Tulare,2017,Total,Ciguatera Fish Poisoning,0
+Tulare,2017,Total,Coccidioidomycosis,281
+Tulare,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Tulare,2017,Total,Cryptosporidiosis,12
+Tulare,2017,Total,Cyclosporiasis,5
+Tulare,2017,Total,Cysticercosis or Taeniasis,2
+Tulare,2017,Total,Dengue,0
+Tulare,2017,Total,Domoic Acid Poisoning,0
+Tulare,2017,Total,E. coli O157,12
+Tulare,2017,Total,E. coli Other STEC (non-O157),6
+Tulare,2017,Total,Ehrlichiosis,0
+Tulare,2017,Total,Flavivirus Infection of Undetermined Species,0
+Tulare,2017,Total,Giardiasis,15
+Tulare,2017,Total,Hantavirus Infection,0
+Tulare,2017,Total,Hemolytic Uremic Syndrome,0
+Tulare,2017,Total,"Hepatitis E, acute infection",1
+Tulare,2017,Total,Legionellosis,1
+Tulare,2017,Total,Leprosy,0
+Tulare,2017,Total,Leptospirosis,0
+Tulare,2017,Total,Listeriosis,0
+Tulare,2017,Total,Lyme Disease,2
+Tulare,2017,Total,Malaria,0
+Tulare,2017,Total,Paralytic Shellfish Poisoning,0
+Tulare,2017,Total,"Plague, human",0
+Tulare,2017,Total,Psittacosis,0
+Tulare,2017,Total,Q Fever,0
+Tulare,2017,Total,"Rabies, human",0
+Tulare,2017,Total,Relapsing Fever,0
+Tulare,2017,Total,Salmonellosis,72
+Tulare,2017,Total,Scombroid Fish Poisoning,0
+Tulare,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Tulare,2017,Total,Shigellosis,9
+Tulare,2017,Total,Spotted Fever Rickettsiosis,0
+Tulare,2017,Total,Streptococcal Infection (cases in food and dairy workers),1
+Tulare,2017,Total,Trichinosis,0
+Tulare,2017,Total,Tularemia,0
+Tulare,2017,Total,"Typhoid Fever, case",1
+Tulare,2017,Total,Typhus Fever,0
+Tulare,2017,Total,Vibrio Infection (non-Cholera),2
+Tulare,2017,Total,Yellow Fever,0
+Tulare,2017,Total,Yersiniosis,2
+Tulare,2017,Total,Zika Virus Infection,2
+Tuolumne,2017,Total,Amebiasis,1
+Tuolumne,2017,Total,Anaplasmosis,0
+Tuolumne,2017,Total,Anthrax,0
+Tuolumne,2017,Total,Babesiosis,0
+Tuolumne,2017,Total,"Botulism, Foodborne",0
+Tuolumne,2017,Total,"Botulism, Other",0
+Tuolumne,2017,Total,"Botulism, Wound",0
+Tuolumne,2017,Total,Brucellosis,0
+Tuolumne,2017,Total,Campylobacteriosis,7
+Tuolumne,2017,Total,Chikungunya Virus Infection,0
+Tuolumne,2017,Total,Cholera,0
+Tuolumne,2017,Total,Ciguatera Fish Poisoning,0
+Tuolumne,2017,Total,Coccidioidomycosis,6
+Tuolumne,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Tuolumne,2017,Total,Cryptosporidiosis,1
+Tuolumne,2017,Total,Cyclosporiasis,0
+Tuolumne,2017,Total,Cysticercosis or Taeniasis,0
+Tuolumne,2017,Total,Dengue,0
+Tuolumne,2017,Total,Domoic Acid Poisoning,0
+Tuolumne,2017,Total,E. coli O157,3
+Tuolumne,2017,Total,E. coli Other STEC (non-O157),0
+Tuolumne,2017,Total,Ehrlichiosis,0
+Tuolumne,2017,Total,Flavivirus Infection of Undetermined Species,0
+Tuolumne,2017,Total,Giardiasis,1
+Tuolumne,2017,Total,Hantavirus Infection,0
+Tuolumne,2017,Total,Hemolytic Uremic Syndrome,0
+Tuolumne,2017,Total,"Hepatitis E, acute infection",0
+Tuolumne,2017,Total,Legionellosis,0
+Tuolumne,2017,Total,Leprosy,0
+Tuolumne,2017,Total,Leptospirosis,0
+Tuolumne,2017,Total,Listeriosis,0
+Tuolumne,2017,Total,Lyme Disease,0
+Tuolumne,2017,Total,Malaria,0
+Tuolumne,2017,Total,Paralytic Shellfish Poisoning,0
+Tuolumne,2017,Total,"Plague, human",0
+Tuolumne,2017,Total,Psittacosis,0
+Tuolumne,2017,Total,Q Fever,0
+Tuolumne,2017,Total,"Rabies, human",0
+Tuolumne,2017,Total,Relapsing Fever,0
+Tuolumne,2017,Total,Salmonellosis,7
+Tuolumne,2017,Total,Scombroid Fish Poisoning,0
+Tuolumne,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Tuolumne,2017,Total,Shigellosis,3
+Tuolumne,2017,Total,Spotted Fever Rickettsiosis,0
+Tuolumne,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Tuolumne,2017,Total,Trichinosis,0
+Tuolumne,2017,Total,Tularemia,0
+Tuolumne,2017,Total,"Typhoid Fever, case",0
+Tuolumne,2017,Total,Typhus Fever,0
+Tuolumne,2017,Total,Vibrio Infection (non-Cholera),0
+Tuolumne,2017,Total,Yellow Fever,0
+Tuolumne,2017,Total,Yersiniosis,0
+Tuolumne,2017,Total,Zika Virus Infection,0
+Ventura,2017,Total,Amebiasis,7
+Ventura,2017,Total,Anaplasmosis,0
+Ventura,2017,Total,Anthrax,0
+Ventura,2017,Total,Babesiosis,1
+Ventura,2017,Total,"Botulism, Foodborne",0
+Ventura,2017,Total,"Botulism, Other",0
+Ventura,2017,Total,"Botulism, Wound",1
+Ventura,2017,Total,Brucellosis,1
+Ventura,2017,Total,Campylobacteriosis,260
+Ventura,2017,Total,Chikungunya Virus Infection,0
+Ventura,2017,Total,Cholera,0
+Ventura,2017,Total,Ciguatera Fish Poisoning,0
+Ventura,2017,Total,Coccidioidomycosis,249
+Ventura,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,2
+Ventura,2017,Total,Cryptosporidiosis,17
+Ventura,2017,Total,Cyclosporiasis,9
+Ventura,2017,Total,Cysticercosis or Taeniasis,0
+Ventura,2017,Total,Dengue,3
+Ventura,2017,Total,Domoic Acid Poisoning,0
+Ventura,2017,Total,E. coli O157,6
+Ventura,2017,Total,E. coli Other STEC (non-O157),7
+Ventura,2017,Total,Ehrlichiosis,0
+Ventura,2017,Total,Flavivirus Infection of Undetermined Species,0
+Ventura,2017,Total,Giardiasis,49
+Ventura,2017,Total,Hantavirus Infection,0
+Ventura,2017,Total,Hemolytic Uremic Syndrome,0
+Ventura,2017,Total,"Hepatitis E, acute infection",1
+Ventura,2017,Total,Legionellosis,12
+Ventura,2017,Total,Leprosy,2
+Ventura,2017,Total,Leptospirosis,0
+Ventura,2017,Total,Listeriosis,3
+Ventura,2017,Total,Lyme Disease,5
+Ventura,2017,Total,Malaria,3
+Ventura,2017,Total,Paralytic Shellfish Poisoning,0
+Ventura,2017,Total,"Plague, human",0
+Ventura,2017,Total,Psittacosis,0
+Ventura,2017,Total,Q Fever,2
+Ventura,2017,Total,"Rabies, human",0
+Ventura,2017,Total,Relapsing Fever,0
+Ventura,2017,Total,Salmonellosis,114
+Ventura,2017,Total,Scombroid Fish Poisoning,0
+Ventura,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),1
+Ventura,2017,Total,Shigellosis,57
+Ventura,2017,Total,Spotted Fever Rickettsiosis,0
+Ventura,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Ventura,2017,Total,Trichinosis,0
+Ventura,2017,Total,Tularemia,0
+Ventura,2017,Total,"Typhoid Fever, case",4
+Ventura,2017,Total,Typhus Fever,0
+Ventura,2017,Total,Vibrio Infection (non-Cholera),14
+Ventura,2017,Total,Yellow Fever,0
+Ventura,2017,Total,Yersiniosis,21
+Ventura,2017,Total,Zika Virus Infection,0
+Yolo,2017,Total,Amebiasis,5
+Yolo,2017,Total,Anaplasmosis,0
+Yolo,2017,Total,Anthrax,0
+Yolo,2017,Total,Babesiosis,0
+Yolo,2017,Total,"Botulism, Foodborne",0
+Yolo,2017,Total,"Botulism, Other",0
+Yolo,2017,Total,"Botulism, Wound",0
+Yolo,2017,Total,Brucellosis,0
+Yolo,2017,Total,Campylobacteriosis,57
+Yolo,2017,Total,Chikungunya Virus Infection,0
+Yolo,2017,Total,Cholera,0
+Yolo,2017,Total,Ciguatera Fish Poisoning,0
+Yolo,2017,Total,Coccidioidomycosis,4
+Yolo,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Yolo,2017,Total,Cryptosporidiosis,7
+Yolo,2017,Total,Cyclosporiasis,0
+Yolo,2017,Total,Cysticercosis or Taeniasis,0
+Yolo,2017,Total,Dengue,1
+Yolo,2017,Total,Domoic Acid Poisoning,0
+Yolo,2017,Total,E. coli O157,0
+Yolo,2017,Total,E. coli Other STEC (non-O157),12
+Yolo,2017,Total,Ehrlichiosis,0
+Yolo,2017,Total,Flavivirus Infection of Undetermined Species,0
+Yolo,2017,Total,Giardiasis,23
+Yolo,2017,Total,Hantavirus Infection,0
+Yolo,2017,Total,Hemolytic Uremic Syndrome,0
+Yolo,2017,Total,"Hepatitis E, acute infection",0
+Yolo,2017,Total,Legionellosis,2
+Yolo,2017,Total,Leprosy,0
+Yolo,2017,Total,Leptospirosis,0
+Yolo,2017,Total,Listeriosis,0
+Yolo,2017,Total,Lyme Disease,3
+Yolo,2017,Total,Malaria,1
+Yolo,2017,Total,Paralytic Shellfish Poisoning,0
+Yolo,2017,Total,"Plague, human",0
+Yolo,2017,Total,Psittacosis,0
+Yolo,2017,Total,Q Fever,0
+Yolo,2017,Total,"Rabies, human",0
+Yolo,2017,Total,Relapsing Fever,0
+Yolo,2017,Total,Salmonellosis,32
+Yolo,2017,Total,Scombroid Fish Poisoning,0
+Yolo,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),0
+Yolo,2017,Total,Shigellosis,7
+Yolo,2017,Total,Spotted Fever Rickettsiosis,0
+Yolo,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Yolo,2017,Total,Trichinosis,0
+Yolo,2017,Total,Tularemia,0
+Yolo,2017,Total,"Typhoid Fever, case",1
+Yolo,2017,Total,Typhus Fever,0
+Yolo,2017,Total,Vibrio Infection (non-Cholera),1
+Yolo,2017,Total,Yellow Fever,0
+Yolo,2017,Total,Yersiniosis,0
+Yolo,2017,Total,Zika Virus Infection,1
+Yuba,2017,Total,Amebiasis,2
+Yuba,2017,Total,Anaplasmosis,0
+Yuba,2017,Total,Anthrax,0
+Yuba,2017,Total,Babesiosis,0
+Yuba,2017,Total,"Botulism, Foodborne",0
+Yuba,2017,Total,"Botulism, Other",0
+Yuba,2017,Total,"Botulism, Wound",0
+Yuba,2017,Total,Brucellosis,0
+Yuba,2017,Total,Campylobacteriosis,19
+Yuba,2017,Total,Chikungunya Virus Infection,0
+Yuba,2017,Total,Cholera,0
+Yuba,2017,Total,Ciguatera Fish Poisoning,0
+Yuba,2017,Total,Coccidioidomycosis,3
+Yuba,2017,Total,Creutzfeldt-Jakob Disease and other Transmissible Spongiform Encephalopathies,0
+Yuba,2017,Total,Cryptosporidiosis,0
+Yuba,2017,Total,Cyclosporiasis,0
+Yuba,2017,Total,Cysticercosis or Taeniasis,0
+Yuba,2017,Total,Dengue,0
+Yuba,2017,Total,Domoic Acid Poisoning,0
+Yuba,2017,Total,E. coli O157,3
+Yuba,2017,Total,E. coli Other STEC (non-O157),0
+Yuba,2017,Total,Ehrlichiosis,0
+Yuba,2017,Total,Flavivirus Infection of Undetermined Species,0
+Yuba,2017,Total,Giardiasis,2
+Yuba,2017,Total,Hantavirus Infection,0
+Yuba,2017,Total,Hemolytic Uremic Syndrome,0
+Yuba,2017,Total,"Hepatitis E, acute infection",0
+Yuba,2017,Total,Legionellosis,1
+Yuba,2017,Total,Leprosy,0
+Yuba,2017,Total,Leptospirosis,0
+Yuba,2017,Total,Listeriosis,0
+Yuba,2017,Total,Lyme Disease,0
+Yuba,2017,Total,Malaria,0
+Yuba,2017,Total,Paralytic Shellfish Poisoning,0
+Yuba,2017,Total,"Plague, human",0
+Yuba,2017,Total,Psittacosis,0
+Yuba,2017,Total,Q Fever,0
+Yuba,2017,Total,"Rabies, human",0
+Yuba,2017,Total,Relapsing Fever,0
+Yuba,2017,Total,Salmonellosis,22
+Yuba,2017,Total,Scombroid Fish Poisoning,0
+Yuba,2017,Total,Shiga Toxin Positive Feces (without culture confirmation),2
+Yuba,2017,Total,Shigellosis,0
+Yuba,2017,Total,Spotted Fever Rickettsiosis,0
+Yuba,2017,Total,Streptococcal Infection (cases in food and dairy workers),0
+Yuba,2017,Total,Trichinosis,0
+Yuba,2017,Total,Tularemia,0
+Yuba,2017,Total,"Typhoid Fever, case",0
+Yuba,2017,Total,Typhus Fever,0
+Yuba,2017,Total,Vibrio Infection (non-Cholera),1
+Yuba,2017,Total,Yellow Fever,0
+Yuba,2017,Total,Yersiniosis,0
+Yuba,2017,Total,Zika Virus Infection,0

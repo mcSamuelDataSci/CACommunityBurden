@@ -14,7 +14,7 @@
 
 
 raceSort <- raceLink %>%
-  filter(!raceCode %in% c("Other", "Unknown", "Total")) %>%
+  filter(!raceCode %in% c("Other", "Unknown", "Total", "Multi-Race")) %>%
   pull(raceNameShort)
   #pull(raceCode)
 
@@ -80,7 +80,7 @@ makePlotRank <- function(myDataSet     = NA,
   
   
    tDat <- myDataSet %>%
-    filter(county == myCounty, !MAINSTRATA %in% c("Unknown", "Other")) %>%
+    filter(county == myCounty, !MAINSTRATA %in% c("Unknown", "Other", NA, "Multi-Race")) %>%
       mutate(measure = get(myMeasure))
    
    # Return message if no rows exist
@@ -155,7 +155,7 @@ makePlotRank <- function(myDataSet     = NA,
   # 
   if(myFillManual) {
     #topLevColors <- topLevColors[names(topLevColors) %in% unique(tDat$topLevName)]
-    plotX <- plotX + scale_fill_manual(values = topLevColors)
+    plotX <- plotX + scale_fill_manual(values = topLevColors, drop = T, limits = force)
   } else {
     plotX <- plotX + geom_bar(stat = "identity", fill = "blue")
   }
@@ -218,7 +218,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
             axis.title   = element_text(size = myAxisTitleSize, face="bold"),
             axis.text.y  = element_text(size = myAxisTextSize),
             axis.text.x  = element_text(size = myAxisTextSize, angle = 90, vjust = 0.5, hjust=1)) + 
-      scale_fill_manual(values = topLevColors) 
+      scale_fill_manual(values = topLevColors, drop = T, limits = force) 
     
     if(!legend) tPlot <- tPlot + theme(legend.position = "none")
     
