@@ -61,7 +61,7 @@ myDrive   <- getwd()
 myPlace   <- paste0(myDrive,"/myCCB") 
 ccbUpstream   <- paste0(myDrive,"/myUpstream") 
 
-server <- T
+server <- F
 if (server) {
   source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 } else {

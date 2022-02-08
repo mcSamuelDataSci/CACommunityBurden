@@ -332,7 +332,7 @@ observeEvent(current$tab,{
 
 # Trend ----------------------------------------------------------------------------------------------------
 
-trendStep        <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping, input$myLogTrans,input$myMultiRace))
+trendStep        <- reactive(trendGeneric(input$myLHJ, input$myCAUSE, input$myMeasure, input$trendsID, input$myYearGrouping, input$myLogTrans, input$myMultiRace))
 output$trendSex  <- renderPlot(trendStep()$plotL)
 output$trendAge  <- renderPlot(trendStep()$plotL)
 output$trendRace <- renderPlot(trendStep()$plotL)

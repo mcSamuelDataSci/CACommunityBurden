@@ -171,6 +171,10 @@ shinyUI(
                       "
                       )
                  )),
+    
+    
+    # Browser tab icon
+    tags$head(HTML("<link rel='icon' href='Fusion Center Knot.png'>")),
       
       
       
@@ -290,9 +294,10 @@ shinyUI(
                            
                            
                            HTML("<div id='sophDropdown' class='dropdown'>
-                             <button class='dropbtn'>STATE OF PUBLIC HEALTH<br/>REPORTS</button>
+                             <button class='dropbtn'>STATE OF PUBLIC HEALTH<br/>UPDATES</button>
                              <div id = 'sophDropdownContent' class='dropdown-content'>
-                               <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Full Report</a>
+                               <a href='SOPH/2022/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2022 Full Update</a>
+                               <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Full Update</a>
                                <a href='SOPH/2020/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2020 Handout</a>
                                <a href='SOPH/2019/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2019 Handout</a>
                              </div>

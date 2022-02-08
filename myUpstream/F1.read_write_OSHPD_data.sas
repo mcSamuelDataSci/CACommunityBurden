@@ -40,9 +40,17 @@ run;
 
 
 
+*-----------------------------------------------------------------------------------------------------------------------------------------;
 
 
+data pdd.pdd_2020_ecode; set pdd.cdph_pdd_rln2020; year = 2020;keep ecm1-ecm12            patcnty sex agyrdsch race_grp year; run;
+data pdd.pdd_2019_ecode; set pdd.cdph_pdd_rln2019; year = 2019;keep ecm1-ecm12            patcnty sex agyrdsch race_grp year; run;
+data pdd.pdd_2018_ecode; set pdd.cdph_pdd_ssn2018; year = 2018;keep ecode_p ecode1-ecode4 patcnty sex agyrdsch race_grp year; run;
+data pdd.pdd_2017_ecode; set pdd.cdph_pdd_ssn2017; year = 2017;keep ecode_p ecode1-ecode4 patcnty sex agyrdsch race_grp year; run;
+data pdd.pdd_2016_ecode; set pdd.cdph_pdd_rln2016; year = 2016;keep ecode_p ecode1-ecode4 patcnty sex agyrdsch race_grp year; run;
 
+
+*===========================================================================================================================================;
 
 data ed.ed_2016; set ed.cdph_ed_rln2016; year = 2016;keep year dx_prin ccs_dx_prin patco sex race_grp agyrserv dispn payer; run;
 data ed.ed_2017; set ed.cdph_ed_ssn2017; year = 2017;keep year dx_prin ccs_dx_prin patco sex race_grp agyrserv dispn payer; run;
@@ -60,6 +68,16 @@ data ed.ed_2020(rename =(diag_p=dx_prin  patcnty=patco disp=dispn)
  year = 2020;
  run;
 
+
+*-----------------------------------------------------------------------------------------------------------------------------------------;
+
+data ed.ed_2020_ecode(keep = ecm1-ecm12      year patcnty sex race_grp agyrserv); set ed.cdph_ed_rln2020; year = 2020; run;
+data ed.ed_2019_ecode(keep = ecm1-ecm12      year patcnty sex race_grp agyrserv); set ed.cdph_ed_rln2019; year = 2019; run;
+data ed.ed_2018_ecode(keep = ec_prin ec1-ec4 year patco sex race_grp agyrserv); set ed.cdph_ed_ssn2018; year = 2018; run;
+data ed.ed_2017_ecode(keep = ec_prin ec1-ec4 year patco sex race_grp agyrserv); set ed.cdph_ed_ssn2017; year = 2017; run;
+data ed.ed_2016_ecode(keep = ec_prin ec1-ec4 year patco sex race_grp agyrserv); set ed.cdph_ed_rln2016; year = 2016; run;
+
+
 /*
 data ed.ed_work; set ed.ed_2017 ed.ed_2018 ed.ed_2019; run;
 
@@ -69,6 +87,8 @@ WARNING: Multiple lengths were specified for the variable ccs_dx_prin by input d
          can cause truncation of data.
 */
 
+
+*-----------------------------------------------------------------------------------------------------------------------------------------;
 
 
 data pdd.pdd_2019_ALL_diag; set pdd.cdph_pdd_rln2019; 
@@ -87,7 +107,7 @@ run;
 
 
 
-proc contents data=pdd.cdph_pdd_rln2019;run;
+proc contents data=ed.cdph_ed_ssn2018;run;
 
 
 proc freq; table ccs_dx_prin;run;

@@ -1,7 +1,7 @@
 if(1==2){
   myLHJ="CALIFORNIA" 
-  myCause="D05"
-  myMeasure = "aRate"
+  myCause="0"
+  myMeasure = "Ndeaths"
   mySex   = "Total"
   myYearGrouping ="One"
 }
@@ -50,6 +50,9 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
                              " in ",myLHJ,", ",myLabels[1]," to ",myLabels[length(myLabels)])
     
         myLineLabel <- myVARIABLE
+        
+        myTrans    <- ifelse(myLogTrans,'log2','identity')
+        myMin      <- ifelse(myLogTrans,NA,0)   
     
     
         if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
@@ -66,7 +69,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
      myVARIABLE <- "ageGroup"
     
-      dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,causeCode == myCause, sex=="Total") %>%
+      dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,causeCode == myCause, sex=="Total", !is.na(ageGroup)) %>%
         left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
         mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
       
@@ -166,7 +169,7 @@ tplot <-  ggplot(data=dat.1,
                              # expand=c(0,3), 
                              labels=myLabels, 
                              expand = expansion(mult = c(0, 0), add = c(1, 3))) +
-          scale_y_continuous(limits = c(0, NA)) +
+          scale_y_continuous(trans = myTrans, limits = c(myMin, NA)) +
 
           geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex = myLineLabelCex, 'last.bumpup',font="bold")) +
           # geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x - 0.2), "first.points",size = myLineLabelSize,'first.bumpup' ,font="bold"))  +
@@ -185,6 +188,8 @@ tplot <-  ggplot(data=dat.1,
 
 
 if (myTab == "raceTrendTab") tplot <- tplot + scale_color_manual(values = raceNameShortColors)
+
+# if (myTab %in% c("raceTrendTab", "ageTrendTab") & myLogTrans) tplot <- tplot + scale_y_continuous(trans='log2') # JASPO - USE THIS, OR myTrans + myMin variables in ggplot?
 
  list(plotL = tplot, dataL = tabDat)
 

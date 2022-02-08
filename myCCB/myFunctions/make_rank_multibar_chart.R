@@ -136,7 +136,7 @@ makePlotRank <- function(myDataSet     = NA,
   # Plot --------------------------------------------------------------------------------------------
   
  plotX  <-   ggplot(data=tDat_topN, aes(x = causeNameShort, y = measure, fill=topLevName)) +   #
-    geom_bar(stat = "identity")   +
+    geom_bar(stat = "identity", colour = 'black')   +
     coord_flip() + 
     facet_grid(~ MAINSTRATA, scales = myScale, labeller=labeller(type = label_wrap_gen(5)))  +
     theme_bw() + 
@@ -157,7 +157,7 @@ makePlotRank <- function(myDataSet     = NA,
     #topLevColors <- topLevColors[names(topLevColors) %in% unique(tDat$topLevName)]
     plotX <- plotX + scale_fill_manual(values = topLevColors, drop = T, limits = force)
   } else {
-    plotX <- plotX + geom_bar(stat = "identity", fill = "blue")
+    plotX <- plotX + geom_bar(stat = "identity", fill = "blue", colour = 'black')
   }
   
   #ggplotly(plotX, height = 750) %>% layout(autosize = TRUE, margin = list(l = 0, r = 0, b = 0, t = 100, pad = 0))
@@ -208,7 +208,7 @@ deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = 
     if (myMeasure != "cRate") myYTitle <- myMeasure
     
     tPlot <- ggplot(data=t.dat, aes(x=reorder(causeNameShort,measure), y=measure, fill=topLevName)) + 
-      geom_bar(stat="identity") + coord_flip() + 
+      geom_bar(stat="identity", colour = 'black') + coord_flip() + 
       labs(title=source,x="",y = str_wrap(myYTitle, width = 15)) +  
       scale_x_discrete(labels = wrap_format(20)) +
       # scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +

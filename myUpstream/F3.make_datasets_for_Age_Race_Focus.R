@@ -27,13 +27,11 @@ popAge3Year     <-  popCounty %>% filter(year %in% yearGrp3_hosp_ed_num, ageGrou
 
 
 deathAge <- readRDS(file= paste0(ccbData,datPath,"datCounty_AGE_3year.RDS")) %>%
-      ######        filter(sex == "Total", yearG3 == yearG3, Level == "lev2")       year filter does not work!!!!         
-       filter(sex == "Total", yearG3 == yearGrp3_hosp_ed, Level == "lev2")        %>%  
+             filter(sex == "Total", yearG3 == yearGrp3_hosp_ed, Level == "lev2")        %>%  
              select(yearG3, county, sex, ageGroup, causeCode, N = Ndeaths, cRate = cDeathRate ) 
   
 deathRace <- readRDS(file= path(ccbData,datPath,"/datCounty_RE.RDS")) %>%
-  ######        filter(sex == "Total", yearG3 == yearG3, Level == "lev2")       year filter does not work!!!!         
-                filter(sex == "Total", yearG3 == yearGrp3_hosp_ed, Level == "lev2") %>%  
+              filter(sex == "Total", yearG3 == yearGrp3_hosp_ed, Level == "lev2") %>%  
               left_join(raceLink,by="raceCode") %>%
               select(yearG3, county, sex, raceNameShort, causeCode, N =  Ndeaths, aRate, cRate = cDeathRate ) 
 

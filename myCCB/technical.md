@@ -72,6 +72,82 @@ The following labeling is used for these race/ethnic groups:
 
 <hr>
 
+**Condition List:**
+
+<br>
+
+-   The "California Community Burden of Disease Condition List" is the hierarchical list of grouped causes of death, or "conditions", that can be examined and explored in the CCB.
+
+-   Conditions in the Condition List are based on aggregations of individual International Classification of Diseases version 10 (ICD-10) cause of death codes. The Condition List aggregation system was developed sequentially based on:
+
+    -   1) The starting point was the ICD10-to-condition mapping from the ["WHO methods and data sources for global burden of disease estimates 2000-2015, January 2017"](https://www.who.int/healthinfo/global_burden_disease/GlobalDALYmethods_2000_2015.pdf), pages 24-29 "Annex Table A GHE cause categories and ICD-10 codes".
+
+    -   2) Then, refinements were made based on comparing the mapping of all California deaths (about 4 million) from 2000 to 2015 using this original WHO system to a more recent and more detailed mapping system developed by the Institute for Health Metrics and Evaluation (IHME) at the University of Washington. IHME shared this mapping system with the CCB team in the form of an Excel spreadsheet with over 41,000 rows, each with a unique individual ICD-10 code mapped to a hierarchal list of cause codes. (For reference, a similar IHME mapping, but with row-based summary lists of ICD-10 codes can be found on the "Files (2)" tab of the IHME webpage [here](http://ghdx.healthdata.org/record/ihme-data/gbd-2019-cause-icd-code-mappings>). For many ICD-10 codes and/or categories, the IHME system appeared to be more accurate, more detailed, or otherwise more useful for California than the WHO system, in which case such changes were made to the CCB Condition List mapping.
+
+        -   We could not use this IHME system as the primary basis for the CCB Condition List because the IHME spreadsheet mapping resulted in 721,783 (19.2%) of California deaths from 2000 to 2015 being mapped to "garbage codes", for which more sophisticated methods would need to be employed. The possibility of redistributing these "garbage codes" to valid categories could be explored with additional resources.
+
+        -   Relevant recent IHME publications include: include:
+
+            -   Latest IHME/GBD results and methods: [Global burden of 369 diseases and injuries in 204 countries and territories, 1990--2019: a systematic analysis for the Global Burden of Disease Study 2019](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30925-9/fulltext)
+
+            -   US Burden of Disease: [The State of US Health, 1990-2016 Burden of Diseases, Injuries, and Risk Factors Among US States, JAMA 2018](https://jamanetwork.com/journals/jama/fullarticle/2678018)
+
+            -   US County Level Trends: [US County-Level Trends in Mortality Rates for Major Causes of Death, 1980-2014, JAMA 2016](https://jamanetwork.com/journals/jama/fullarticle/2592499).
+
+    -   3) The Condition List was then further modified for several conditions, with input from CDPH subject matter experts, to make the conditions more consistent with California public health programmatic areas and/or priority or emerging public health conditions. Some of these modification include:
+
+        -   Elevating "Congestive Health Failure" from "Other Cardiovascular disease" to a unique condition within the "Cardiovascular Disease" group
+
+        -   Defining "Drug overdose (poisoning/substance use disorders)" in a manner largely consistent with the CDPH Substance and Addition Prevention Branch (SAPB) and the National "Poisoning Surveillance" [recommendations](https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf).
+
+        -   Defining "Alcohol-related conditions" in a manner largely consistent with the CDPH Injury and Violence Prevention Branch (IVPB) and the CDC [Alcohol-Related Disease Impact (ARDI)](https://www.cdc.gov/alcohol/ardi/alcohol-related-icd-codes.html) ICD-10 codes (using 100% Alcohol-attributable code only).
+
+        -   Eliminating the whole "Respiratory infections" category, with its two subcategories of "Lower respiratory infections" and "Upper respiratory infections"; in favor of the unique conditions of "influenza", "Pneumonia", and, as of 2020, "COVID-19", with the very few remaining respiratory infections included in the catch-all "Other Infectious Diseases/Nutritional Deficiencies" condition.
+
+    -   4) The hierarchical "outline" structure was further modified and rearranged in other ways to enhance useability/readability including by, for example, removing infrequently occurring "high level" categories in the list (e.g. "Intestinal nematode infections"; "sense organ diseases") and moving any of their contents to corresponding general/generic categories (e.g., respectively, "Other infectious diseases", "Other Chronic Conditions")
+
+-   The resultant Condition List from this process has three "levels": The "Top Level", the "Public Health Level", and the "Detail Level"
+
+    -   The "Top Level" of the Condition list includes 5 broad mutually exclusive and exhaustive groups:
+
+        -  1) Communicable, maternal, perinatal and nutritional conditions
+
+        -  2) Cancer/Malignant neoplasms,
+
+        -  3) Cardiovascular diseases
+
+        -  4) Other Chronic Conditions
+
+        -  5) Injuries
+
+        -   For data displayed at the census tract level, only the Top Level is included due to sample size and statistical reliability limitations.
+
+    -   The next level, the "Public Health" level, splits the top level into around 60 mutually exclusive and exhaustive conditions. These conditions are based on meaningful public health programmatic groupings and all have large enough numbers for useful exploration.
+
+        -   this is the default level for most charts in the CCB and for data/maps displayed at the community level.
+
+    -   The final "Detail Level" includes several conditions of special interest or significance, but for which the numbers are insufficient or inappropriate to include as a unique "Public Health Level" category
+
+        -   Detailed Level conditions are available for the State and for counties, but not for communities or census tracts.
+
+    -   All three levels combined include about 75 categories.
+    
+-   For some conditions for some charts an abbreviated label is used. For most this is unambiguous, but for a couple additional detail may be useful:
+
+    -   "Alzheimer's disease" = "Alzheimer disease and other dementias"
+
+    -   "Lung Cancer" = "Trachea, bronchus and lung cancers""
+
+-   A diagram of the Conditions List is [here](icd10_to_condition_IMAGE.pdf), and shows the current structure, the levels, and all the conditions therein.
+
+-   Documentation of the mapping of all ICD-10 codes to this Condition List and notation of all modifications to the original WHO system are documented and described in the CCB resource [here](icd10_to_CAUSE.xlsx).
+
+-   The Condition List is regularly updated and refined based on input from partners and on emerging priority conditions. We welcome your input on the condition list by emailing [ccb@cdph.ca.gov](mailto:ccb@cdph.ca.gov)
+
+<br>
+
+<hr>
+
 **Data and other Key Inputs:**
 
 <br>
@@ -122,21 +198,7 @@ The following labeling is used for these race/ethnic groups:
 
     -   In the current version of the CCB project, only the single underlying cause of death ICD-10 code is used. A future release of the CCB will incorporate "multiple cause of death" codes for some conditions.
 
-    -   We based the hierarchical list of about 70 disease/injury conditions used in the CCB on a variant of the World Health Organization (WHO) global burden of disease condition list, modified to enhance the usefulness and applicability for U.S. public health priorities and programs. The hierarchy has three levels. The "Top Level" includes "Communicable, maternal, perinatal and nutritional conditions", "Cancer/Malignant neoplasms", "Cardiovascular diseases", "Other Chronic Conditions", and "Injuries" as well as all causes combined. For data displayed at the census tract level, only this level of the hierarchy is included due to sample size and statistical reliability limitations. The next "Public Health" level splits each of these top levels into around 50 subcategories, and this is the default level for data/maps displayed at the community level. The final detailed level breaks a few of these Public Health level conditions down further, for the total of about 70 categories. All the levels are shown for data/maps displayed at the county level.
-
-        -   County: Top Level, Public Health Level, Detail Level
-        -   Community: Top Level, Public Health Level
-        -   Census Tract: Top Level
-
-    -   Categorization of deaths was extracted from death certificates based on the International Classification of Diseases version 10 (ICD-10). The primary basis for the ICD10-to-condition mapping was the WHO Annex Table A from "<a target="_blank" rel="noopener noreferrer" href="http://www.who.int/healthinfo/global_burden_disease/GlobalDALYmethods_2000_2015.pdf">WHO methods and data sources for global burden of disease estimates 2000-2015, January 2017</a>". We did not use a similar, more recent and more detailed, system developed by the Institute for Health Metrics and Evaluation (IHME) at the University of Washington (recent relevant publications include <a target="_blank" rel="noopener noreferrer" href="https://jamanetwork.com/journals/jama/fullarticle/2678018">The State of US Health, 1990-2016 Burden of Diseases, Injuries, and Risk Factors Among US States, JAMA 2018</a> and <a target="_blank" rel="noopener noreferrer" href="https://jamanetwork.com/journals/jama/fullarticle/2592499">US County-Level Trends in Mortality Rates for Major Causes of Death, 1980-2014, JAMA 2016</a>) in this version of the CCB because that system resulted in 721,783 (19.2%) of California deaths from 2000 to 2015 being mapped to "garbage codes", for which more sophisticated methods would need to be employed. The possibility of redistributing these "garbage codes" to valid categories at the census tract level and otherwise using the IHME system is being explored and may be implemented in future versions of the CCB. However, to enhance our use of the WHO system we compared the mapping of 3,758,856 deaths based on the WHO and IHME systems and changed the WHO mapping of ICD codes for several categories wherein the IHME classification was considered more appropriate (e.g., specific cancer sites rather than "other malignant neoplasms."). All of these modifications are carefully described in a key resources tool for the CCB, available <a target="_blank" rel="noopener noreferrer" href="https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCBD/myInfo/gbd.ICD.Map.xlsx">here</a> on our GitHub site. In addition, because our focus was on the "Public health" list of conditions, we remapped a number of ICD-10 codes from the WHO mapping to our own CCB system. All of these modifications are documented in a "key resources" tab for the CCB available noted above. The latest IHME/GBD results and methods can be found <a target="_blank" rel="noopener noreferrer" href="https://www.thelancet.com/journals/lancet/issue/vol396no10258/PIIS0140-6736(20)X0042-0">here</a>.
-
-    -   For some conditions for some charts an abbreviated label is used. For most this is unambiguous, but for a couple additional detail may be useful:
-
-        -   "Alzheimer's disease" = "Alzheimer disease and other dementias"
-
-        -   "Lung Cancer" = "Trachea, bronchus and lung cancers""
-
-    -   **NOTE:** In order make **drug- and poisoning-related conditions** in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on consensus with colleagues and on <a target="_blank" rel="noopener noreferrer" href="https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf">"Consensus Recommendations for National and State Poisoning Surveillance -- ISW7 2012"</a>.
+    -   **NOTE:** In order make **drug- and poisoning-related conditions** in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on discussion with the CDPH Substance and Addition Prevention Branch (SAPB) and on the CDC <a target="_blank" rel="noopener noreferrer" href="https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf">"Consensus Recommendations for National and State Poisoning Surveillance -- ISW7 2012"</a>.
 
         -   The "**Drug overdose (poisoning/substance use disorders)**" condition includes "accidental poisonings by drugs" codes (X40-X44) **and** "substance use disorder codes" (F11-F16, F18, F19), but not alcohol use disorder (F10) which is included in the separate detailed level "Alcohol use disorders" condition. This conditions also includes "newborn (suspected to be) affected by maternal use of drugs of addiction" (P044).
 
@@ -149,6 +211,41 @@ The following labeling is used for these race/ethnic groups:
             -   "Drug poisoning of undermined intent" (Y10-Y16), which is included in the "Injuries of unknown intent" condition
 
         -   The separate **"Poisonings (non-drug)"** conditions includes poisoning with non-drug-related substances (X46-X49).
+
+    -   **NOTE:** In order make **alcohol-related conditions** in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on discussion with the CDPH Injury and Violence Prevention Branch (IVPB) and on the CDC [Alcohol-Related Disease Impact (ARDI)](https://www.cdc.gov/alcohol/ardi/alcohol-related-icd-codes.html) ICD-10 codes (using 100% Alcohol-attributable code only).
+    
+        -   "Alcohol-related conditions" is under the broad "Injury" condition group, and includes alcoholic liver disease codes, Alcoholic psychosis, Alcohol abuse, Alcohol dependence syndrome, Alcohol poisoning, and a number of other infrequent conditions included in the list below.
+    
+        -   Because the majority of alcohol-related deaths are due to “alcoholic liver disease”, and because of the utility of looking at “alcoholic liver disease” in relation to other liver disease deaths, there are two detail level causes listed under Alcohol-related deaths:
+    
+            -   Alcoholic liver disease
+    
+            -   Other alcohol-related
+    
+        -   The table below shows the full list of causes (and their corresponding ICD-10 codes) that make up "alcohol-related conditions":
+
+<center>
+
+| Cause                                                               | ICD-10             |
+|---------------------------------------------------------------------|--------------------|
+| Alcoholic psychosis                                                 | F10.3-F10.9        |
+| Alcohol abuse                                                       | F10.0, F10.1       |
+| Alcohol dependence syndrome                                         | F10.2              |
+| Alcohol polyneuropathy                                              | G62.1              |
+| Degeneration of nervous system due to alcohol                       | G31.2              |
+| Alcoholic myopathy                                                  | G72.1              |
+| Alcohol cardiomyopathy                                              | I42.6              |
+| Alcoholic gastritis                                                 | K29.2              |
+| Alcoholic liver disease                                             | K70.0-K70.4, K70.9 |
+| Alcohol-induced acute pancreatitis                                  | K85.2              |
+| Alcohol-induced chronic pancreatitis                                | K86.0              |
+| Fetal alcohol syndrome                                              | Q86.0              |
+| Fetus and newborn affected by maternal use of alcohol               | P04.3              |
+| Alcohol poisoning                                                   | X45, Y15           |
+| Evidence of alcohol involvement determined by level of intoxication | Y91                |
+
+</center>
+
 
 <br>
 
