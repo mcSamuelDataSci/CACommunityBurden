@@ -5,8 +5,8 @@ account: MSamuel
 server: skylab.dev.cdph.ca.gov
 hostUrl: https://skylab.dev.cdph.ca.gov/__api__
 appId: 143
-bundleId: 1211
-url: https://skylab.dev.cdph.ca.gov/content/143/
-when: 1614379059.87026
+bundleId: 1377
+url: https://skylab.dev.cdph.ca.gov/content/99a75abb-e05b-4f84-ba8a-6ddc50b9f8fa/
+when: 1620748729.95212
 asMultiple: FALSE
 asStatic: TRUE

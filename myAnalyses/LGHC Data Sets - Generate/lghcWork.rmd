@@ -15,6 +15,11 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE)
 
 ```{r}
 
+# -- Source Standards --------------------------------------------------------
+server <- T
+if (server) source('/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R')
+if (!server) source('G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R')
+
 #-- Load Packages ------------------------------------------------------------
  library(ggplot2)
  library(dplyr)
@@ -32,46 +37,50 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE)
  
  
  
- datCounty       <- readRDS(path(myPlace,myDat,"datCounty.RDS"))       %>%  filter(year != 2020)
- datCounty_RE    <- readRDS(path(myPlace,myDat,"datCounty_RE.RDS"))    %>% rename(year = yearG3)  %>%  filter(year != "2000-2001")
- datCounty_3year <- readRDS(path(myPlace,myDat,"datCounty_3year.RDS")) %>% rename(year = yearG3)  %>%  filter(year != "2000-2001", ! is.na(year))
- raceLink        <-  read_excel(paste0(myPlace,"/myCBD/myInfo/raceLink.xlsx"))  %>% select(raceCode,raceName)
+ datCounty       <- readRDS(path(ccbData,"real/datCounty.RDS"))       %>%  filter(year != 2021)
+ datCounty_RE    <- readRDS(path(ccbData, "real/datCounty_RE.RDS"))    %>% rename(year = yearG3)
+ datCounty_3year <- readRDS(path(ccbData, "real/datCounty_3year.RDS")) %>% rename(year = yearG3)  
+ raceLink        <-  raceLink  %>% select(raceCode, raceName)
+ 
+ # - Suicide, Homicide Cause Codes
+ SUICIDE <- deathCauseLink %>% filter(causeNameShort == 'Suicide/Self-harm') %>% pull(causeCode)
+ HOMICIDE <- deathCauseLink %>% filter(causeName == 'Homicide/Interpersonal violence') %>% pull(causeCode)
 
 ```
 
 ```{r}
 
-lghc0 <- filter(datCounty, CAUSE %in% c("E07","E08")) %>%
+lghc0 <- filter(datCounty, causeCode %in% c(SUICIDE, HOMICIDE)) %>%
            mutate(`Strata`="Sex",Year=as.character(year)) %>% 
-           select(CAUSE, Geography=county, Year , `Strata`,
+           select(CAUSE = causeCode, Geography=county, Year , `Strata`,
                   `Strata Name`= sex, Numerator=Ndeaths, Denominator=population, Rate=cDeathRate, aRate, aSE) 
 
-lghc1 <- filter(datCounty_RE,CAUSE %in% c("E07","E08"), sex=="Total")  %>%
+lghc1 <- filter(datCounty_RE,causeCode %in% c(SUICIDE, HOMICIDE), sex=="Total")  %>%
            mutate(`Strata`="Race/Ethnicity") %>%
            left_join(raceLink,by="raceCode") %>%
-           select(CAUSE,Geography=county, Year = year,`Strata`,
+           select(CAUSE = causeCode,Geography=county, Year = year,`Strata`,
                   `Strata Name` = raceName, Numerator=Ndeaths, Denominator=population, Rate=cDeathRate, aRate, aSE) 
 
-lghc2 <- filter(datCounty_3year,   CAUSE %in% c("E07","E08")) %>%
+lghc2 <- filter(datCounty_3year,   causeCode %in% c(SUICIDE, HOMICIDE)) %>%
            mutate(`Strata`="Sex", Year = year) %>%
-           select(CAUSE,Geography=county,Year,`Strata`,
+           select(CAUSE = causeCode,Geography=county,Year,`Strata`,
                   `Strata Name`=sex, Numerator=Ndeaths, Denominator=population, Rate=cDeathRate, aRate, aSE) 
 
 lghc3 <- bind_rows(lghc0,lghc1,lghc2) %>%
            mutate(`Strata Name` = ifelse(Strata=="Total","Total",`Strata Name`))   
 
 
-lghcSuicide <- filter(lghc3,CAUSE=="E07") %>%
+lghcSuicide <- filter(lghc3,CAUSE == SUICIDE) %>%
                 mutate(Indicator="Suicide") %>%
                 select(Indicator,Geography,Year,Strata,`Strata Name`,Numerator,Denominator,Rate,`Age Adjusted Rate`=aRate, `SE Adjusted Rate`=aSE)
-write_csv(lghcSuicide,path(myPlace, myOut, "lghcSuicide.csv"))
+write_csv(lghcSuicide,path(fusionPlace, "0.CCB/myAnalyses/LGHC Data Sets - Generate/lghcSuicide_2020.csv"))
 
 
-lghcHomicide <- filter(lghc3,CAUSE=="E08") %>%
+lghcHomicide <- filter(lghc3,CAUSE== HOMICIDE) %>%
                 mutate(Indicator="Homicide") %>%
                 select(Indicator,Geography,Year,Strata,`Strata Name`,Numerator,Denominator,Rate, `Age Adjusted Rate`=aRate, `SE Adjusted Rate`=aSE)
 
-write_csv(lghcHomicide,path(myPlace, myOut, "lghcHomicide.csv"))
+write_csv(lghcHomicide,path(fusionPlace, "0.CCB/myAnalyses/LGHC Data Sets - Generate/lghcHomicide_2020.csv"))
 
 
 ```

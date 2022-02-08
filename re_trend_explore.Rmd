@@ -1,0 +1,148 @@
+---
+title: "Race trend stuff"
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, fig.align = "center")
+
+```
+
+
+
+
+```{r}
+server <- T
+
+if (!server) { source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R") }
+if (server) { source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R") }
+
+myLineLabelCex <- 1.5
+
+
+sophPlace <- paste0(fusionPlace, 'State of Public Health/')
+
+sophPlace_data   <- paste0(sophPlace, 'Datasets/SOPH 2022/')
+
+datRace <- readRDS( paste0(sophPlace_data, "Mortality/datRegion_RE_1year.RDS")) %>%
+  filter(region == "CALIFORNIA", sex == "Total", year != 2021, causeCode == "0") %>%
+ filter(raceCode %in% c("AIAN", "Asian", "Black", "Hisp", "NHPI", "White")) %>%
+ # filter(raceCode %in% c("Asian", "Black", "Hisp", "White")) %>%
+  left_join(select(raceLink, raceCode, raceNameShort), by = "raceCode")
+
+
+dat0 <- datRace %>% filter(year %in% c(2000,2010,2015,2019,2020)) %>% select(year, raceCode, aRate)
+
+```
+
+
+### line plot, same as in CoMule (Core Module), showing "selected" years
+
+```{r}
+ggplot(datRace, aes(x=year,y=aRate, col=raceCode)) + geom_line() + 
+   geom_vline(xintercept = c(2000,2010,2015,2019,2020),col="gray")
+
+
+
+
+       
+```
+
+
+```{r}
+
+datX <- dat0 %>% mutate(year=as.character(year))
+
+
+ggplot(datX, aes(x=year,y=aRate, fill=year)) + geom_bar(stat="identity",position="dodge", show.legend = FALSE) +
+  labs(y="aa death rate",x="year, very colorful") + facet_grid(cols=vars(raceCode)) + 
+  theme(axis.text.x = element_text(angle = 90))
+
+
+ggplot(datX, aes(x=raceCode,y=aRate, fill=raceCode)) + geom_bar(stat="identity",position="dodge", show.legend = FALSE) +
+  labs(y="aa death rate",x="year, very colorful") + facet_grid(cols=vars(year)) + 
+  theme(axis.text.x = element_text(angle = 90))
+
+
+datX <- datX %>% filter(! (year %in% c("2010","2015")) )
+
+
+
+```
+
+
+
+<br>
+
+### percent change at....selected years
+
+
+```{r}
+dat1 <-       dat0 %>%
+               pivot_wider(names_from = year, values_from = aRate, names_prefix = "r") %>%
+               mutate(`2000 -> 2019` = 100*(r2019-r2000)/r2000,
+                      `2010 -> 2019` = 100*(r2019-r2010)/r2010,
+                      `2015 -> 2019` = 100*(r2019-r2015)/r2015,
+                      `2019 -> 2020` = 100*(r2020-r2019)/r2019
+                      
+                      )
+
+dat2 <- dat1 %>% select(-(r2000:r2020)) %>%
+         pivot_longer(cols=`2000 -> 2019`:`2019 -> 2020`) %>%
+         mutate(decrease=value)
+
+
+# ggplot(dat2, aes(x=name,y=decrease, fill=name)) + geom_bar(stat="identity",position="dodge", show.legend = FALSE) +
+#   labs(y="percent change in aa death rate",x="change between these years") + facet_grid(cols=vars(raceCode)) + 
+#   theme(axis.text.x = element_text(angle = 90))
+
+ggplot(dat2, aes(x=raceCode, y=decrease, fill=raceCode)) + geom_bar(stat="identity",position="dodge", show.legend = FALSE) +
+  labs(y="percent change in aa death rate",x="change between these years") + facet_grid(cols=vars(name)) + 
+  theme(axis.text.x = element_text(angle = 90))
+
+  
+```
+
+<br>
+       
+### ABSOLUTE change at....selected years
+
+
+```{r}
+
+dat3 <-       dat0 %>%
+               pivot_wider(names_from = year, values_from = aRate, names_prefix = "r") %>%
+               mutate(`2000 -> 2019` = 100*(r2019-r2000),
+                      `2010 -> 2019` = 100*(r2019-r2010),
+                      `2015 -> 2019` = 100*(r2019-r2015),
+                      `2019 -> 2020` = 100*(r2020-r2019)
+                      
+                      )
+
+
+
+dat4 <- dat3 %>% select(-(r2000:r2020)) %>%
+         pivot_longer(cols=`2000 -> 2019`:`2019 -> 2020`) %>%
+         mutate(decrease=-value)
+
+
+ggplot(dat4, aes(x=name,y=decrease, fill=name)) + geom_bar(stat="identity",position="dodge", show.legend = FALSE) +
+  labs(y="ABSOLUTE change in aa death rate",x="change between these years") + facet_grid(cols=vars(raceCode)) + 
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+
+
+
+
+
+  
+
+
+
+  
+
+

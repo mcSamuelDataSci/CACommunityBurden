@@ -1,0 +1,12 @@
+name: re_trend_explore
+title: re_trend_explore
+username: MSamuel
+account: MSamuel
+server: skylab.dev.cdph.ca.gov
+hostUrl: https://skylab.dev.cdph.ca.gov/__api__
+appId: 212
+bundleId: 1569
+url: https://skylab.dev.cdph.ca.gov/content/4b8f1f34-303c-4245-8c48-1604fb96271e/
+when: 1639713831.17698
+asMultiple: FALSE
+asStatic: TRUE
