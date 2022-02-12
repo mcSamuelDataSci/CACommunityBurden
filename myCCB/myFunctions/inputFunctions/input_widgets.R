@@ -35,6 +35,9 @@ hidden(
       radioButtons("myLev", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    choices=c("Top" = "lev1","Public Health" = "lev2","Detail" = "lev3"), inline=TRUE, selected = 'lev2'),
       
+      radioButtons("myLevShort", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
+                   choices=c("Top" = "lev1","Public Health" = "lev2"), inline=TRUE, selected = 'lev2'),
+      
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....
       checkboxInput("myStateCut", label=list("State-based cutpoints", actionButton("stateCutHelp", label=helpIcon, style=myInputHelpButtonSty)),
@@ -155,6 +158,11 @@ hidden(
       
       # myPosition ======================
       selectInput( "myPosition", "Sort Order:", choices = listPosition),
+      
+      # Broad groups - top Trends ========================
+      checkboxGroupButtons( "myBroadGroups", "Which Broad Condition Groups",
+                            choices = c("All" = "0", "Communicable" = "A", "Cancer" = "B", "Cardiovascular" = "C", "Other Chronic" = "D", "Injury" = "E"),
+                            selected = "0", individual=TRUE, size="sm"),
       
       
       

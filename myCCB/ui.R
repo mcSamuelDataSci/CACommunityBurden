@@ -441,6 +441,10 @@ shinyUI(
                                         tabPanel(title = "LIFE EXPECTANCY", value = "lifeExpectancyTab",
                                                  br(),
                                                  plotOutput("lifeTable", width="100%",height = 700)
+                                        ), 
+                                        tabPanel(title = "TOP TRENDS", value = "topTrendsTab",
+                                                 br(),
+                                                 plotOutput("trendTop", width="100%",height = 900)
                                         )
                             )
                    ),

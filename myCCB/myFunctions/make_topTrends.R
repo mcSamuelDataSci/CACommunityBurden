@@ -1,0 +1,141 @@
+if (1 == 2) {
+  myLHJ = "CALIFORNIA"
+  myMeasure = "aRate"
+  myLogTrans = FALSE
+  myN = 5
+  myLev = "lev2" 
+  myBroad = c("0")
+}
+
+
+topCauses_trends <- function(
+  myLHJ = "CALIFORNIA", 
+  myMeasure = "aRate", 
+  myLogTrans = FALSE,
+  myN = 5,
+  myLev = "lev2", 
+  myBroad = c("0")
+) {
+  
+  # Parameters: County, How many, Log scale, Measure, Level, Broad group
+  
+  # If top level, remove how many, broad group
+  
+  
+  # PREPARE DATASET ------------------------------------------------------------------------------------
+  plot_df <- datCounty %>%
+    filter(county == myLHJ, Level == myLev, sex == "Total") %>%
+    left_join(select(deathCauseLink, causeCode, causeName, causeNameShort, topLevCode, topLevName), by = "causeCode") %>%
+    filter(topLevCode != "Z") %>%
+    mutate(measure = !!sym(myMeasure), 
+           causeNameShort_left_dl = ifelse(causeNameShort == "COVID-19", NA, causeNameShort)) %>%
+    select(year, Level, county, causeNameShort, causeNameShort_left_dl, topLevCode, topLevName, measure)
+  
+
+  # If top level is chosen - one trend chart
+  if (myLev == "lev1") {
+    
+    tPlot <- ggplot(plot_df, aes(x = year, y = measure, color = topLevName)) +
+      scale_color_manual(values = topLevColors, drop = T, limits = force) +
+      geom_line(size = 1) +
+      labs(x = "Year", y = myMeasure, color = "Cause", title = "Broad Groups")
+    
+    if (myLogTrans) tPlot <- tPlot + scale_y_continuous(trans = 'log2')
+    
+  } else if (myLev == "lev2" & length(myBroad) > 1) {
+    
+    
+    plotList <- lapply(myBroad, function(x) {
+      
+      if (x == "0") tDat <- plot_df else tDat <- plot_df %>% filter(topLevCode == x)
+      
+      topCauses <- tDat %>%
+        filter(year == maxYear) %>%
+        arrange( desc(measure) ) %>%
+        dplyr::slice(1:myN) %>%
+        pull(causeNameShort)
+      
+      tDat <- tDat %>% filter(causeNameShort %in% topCauses)
+      
+      if (x == "0") plot_title <- "All Groups" else plot_title <- unique(tDat$topLevName)
+      
+      
+      tPlot0 <- ggplot(tDat, aes(x = year, y = measure, color = causeNameShort)) +
+        geom_line(size = 1) +
+        geom_point() +
+        labs(x = "Year", y = myMeasure, color = "Cause", title = plot_title) +
+        scale_colour_discrete(labels = function(x) str_wrap(x, width = 20)) +
+        theme(axis.text = element_text(size = myTextSize3),
+              axis.title = element_text(size = myAxisTitleSize - 4, face = "bold"),
+              legend.text = element_text(size = 12), 
+              legend.title = element_blank())
+      
+      if (myLogTrans) tPlot0 <- tPlot0 + scale_y_continuous(trans='log2')
+      
+      tPlot0
+      
+    })
+    
+    tPlot <- cowplot::plot_grid(plotlist = plotList, ncol = 2)
+    
+    
+  } else {
+    
+    if (myBroad == "0") tDat <- plot_df else tDat <- plot_df %>% filter(topLevCode == myBroad)
+    
+    topCauses <- tDat %>%
+      filter(year == maxYear) %>%
+      arrange( desc(measure) ) %>%
+      dplyr::slice(1:myN) %>%
+      pull(causeNameShort)
+    
+    tDat <- tDat %>% filter(causeNameShort %in% topCauses)
+    
+    if (myBroad == "0") plot_title <- "All Groups" else plot_title <- unique(tDat$topLevName)
+    
+    tPlot <- ggplot(tDat, aes(x = year, y = measure, color = causeNameShort) )  +
+      geom_line(size = 1) +
+      geom_point() +
+      labs(x = "Year", y = myMeasure, color = "Cause", title = plot_title) +
+      scale_x_continuous(minor_breaks = 2000:maxYear, breaks = 2000:maxYear, expand = c(0,10), labels = 2000:maxYear) +
+      scale_colour_discrete(guide = 'none') +   # removed legend
+      geom_dl(aes(label = causeNameShort), method = list(dl.trans(x = x + .1), "last.points", cex = .8, 'last.bumpup')) +   # , 'last.bumpup'
+      geom_dl(aes(label = causeNameShort_left_dl), method = list(dl.trans(x = x - .1), "first.points", cex = .8, 'last.bumpup', hjust = 1)) +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+    
+    if (myLogTrans) tPlot <- tPlot + scale_y_continuous(trans='log2')
+    
+    
+  }
+  
+
+
+  # PREPARE PLOT FEATURES ------------------------------------------------
+  # level_title <- ifelse(myLev == "lev2", "Top Public Health Level Conditions", "Broad Condition Groups")
+  # measure_title <- deathMeasuresNames[deathMeasures == myMeasure]
+  # if (myLogTrans) measure_title <- paste0(measure_title, " (log-scaled) ")
+  # 
+  # plot_title <- paste0( "Trends in ", level_title, " - ", 
+  #                       measure_title, 
+  #                       ", 2000-", maxYear)
+  
+  
+
+  
+  
+  
+  list(plotL = tPlot)
+  
+  
+}
+
+
+# topCauses_trends(
+#   myLHJ = "CALIFORNIA", 
+#   myMeasure = "aRate", 
+#   myLogTrans = FALSE,
+#   myN = 15,
+#   myLev = "lev1", 
+#   myBroad = c("0")
+# )
+

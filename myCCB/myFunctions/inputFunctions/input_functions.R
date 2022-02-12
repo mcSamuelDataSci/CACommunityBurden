@@ -9,7 +9,7 @@
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
 INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear", "myYearDemo", "mySex",
             "myRace", "mySexMult",
-            "myLev","myStateCut","myN","myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine",
+            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN","myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine",
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
             "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload")
@@ -33,6 +33,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "raceTrendTab"=c("ourDownloads","myCAUSE", "myLHJ", "myMeasure","myLogTrans", "myMultiRace", "suppressionNote"),
                    "disparitiesTab"=c("ourDownloads","myCAUSE", "myLHJ", "myCompare","myAddN","myAddRate","myAddRR","suppressionNote"),
                    "educationTrendTab"=c("ourDownloads", "myCAUSE", "myLHJ", "mySex", "myMeasure", "suppressionNote"),
+                   "topTrendsTab"=c("myLHJ", "myMeasure", "myLevShort", "myN", "myBroadGroups", "myLogTrans", "suppressionNote"),
                    "dataTableTab"=c("myLHJ", "suppressionNote"),
                    "sdohTab"=c("myCAUSE", "myGeo", "mySex", "myMeasure", "myX", "suppressionNote"),
                    "hospitalDischargeTab"=c("ourDownloads", "myLHJ", "mySex", "myN", "myOSHPDtype","myLiveborn"),
