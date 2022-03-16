@@ -741,7 +741,7 @@ observeEvent(input$tableButton_demoPop_Trend,{
 
 
 # Top Trends -------------------------------------------------------------------------------
-topTrendsStep <- reactive(topCauses_trends(myLHJ = input$myLHJ, myMeasure = input$myMeasure, myLogTrans = input$myLogTrans, myN = input$myN, myLev = input$myLevShort, myBroad = input$myBroadGroups))
+topTrendsStep <- reactive(topCauses_trends(myLHJ = input$myLHJ, myMeasure = input$myMeasure, myLogTrans = input$myLogTrans, myN = input$myN, myLev = input$myLevShort, myBroad = input$myBroadGroups, myYearRange = input$myYearRange))
 output$trendTop <- renderPlot(topTrendsStep()$plotL)
 
 observeEvent(input$myLevShort, {
@@ -751,7 +751,6 @@ observeEvent(input$myLevShort, {
   if (input$myLevShort == "lev2" & current$tab %in% c("topTrendsTab")) { show("myBroadGroups"); show("myN") }
   
 })
-
 
 
 # IHME ----------------------------------------------------------------------------------------------------

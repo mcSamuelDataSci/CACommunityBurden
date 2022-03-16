@@ -38,6 +38,9 @@ hidden(
       radioButtons("myLevShort", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    choices=c("Top" = "lev1","Public Health" = "lev2"), inline=TRUE, selected = 'lev2'),
       
+      # Year range - top Trends ================================
+      sliderInput( "myYearRange", label = "Year Range:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
+      
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....
       checkboxInput("myStateCut", label=list("State-based cutpoints", actionButton("stateCutHelp", label=helpIcon, style=myInputHelpButtonSty)),
@@ -163,8 +166,6 @@ hidden(
       checkboxGroupButtons( "myBroadGroups", "Which Broad Condition Groups",
                             choices = c("All" = "0", "Communicable" = "A", "Cancer" = "B", "Cardiovascular" = "C", "Other Chronic" = "D", "Injury" = "E"),
                             selected = "0", individual=TRUE, size="sm"),
-      
-      
       
       
       # myVar(ICD/MDC/DRG) ======================

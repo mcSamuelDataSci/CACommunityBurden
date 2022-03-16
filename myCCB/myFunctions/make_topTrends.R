@@ -14,7 +14,8 @@ topCauses_trends <- function(
   myLogTrans = FALSE,
   myN = 5,
   myLev = "lev2", 
-  myBroad = c("0")
+  myBroad = c("0"), 
+  myYearRange = c(2000, 2020)
 ) {
   
   # Parameters: County, How many, Log scale, Measure, Level, Broad group
@@ -31,14 +32,32 @@ topCauses_trends <- function(
            causeNameShort_left_dl = ifelse(causeNameShort == "COVID-19", NA, causeNameShort)) %>%
     select(year, Level, county, causeNameShort, causeNameShort_left_dl, topLevCode, topLevName, measure)
   
+  
+  # Year Range ==========================================================================================
+  yearRange <- min(myYearRange):max(myYearRange)
+  
+  # Expand (for Top PH trends - one group selected) =====================================================
+  myExpand <- min(6, length(yearRange) / 2)
+  
+  # Y-Axis Measure Labels -------------------------------------------------------------------------------
+  y_title <- names(deathMeasures_Dropdown[deathMeasures_Dropdown == myMeasure])
+  
+  deathMeasures_Dropdown_short <- setNames(
+    c("Ndeaths", "cDeathRate", "aRate", "YLL", "YLLper", "YLL.adj.rate", "mean.age"), 
+    c("N deaths", "Crude Rate", "Adj. Rate", "YLL", "YLL Rate", "Adj. YLL Rate", "Mean Age")
+  )
+  
+  y_title_short <- names(deathMeasures_Dropdown_short[deathMeasures_Dropdown_short == myMeasure])
 
   # If top level is chosen - one trend chart
   if (myLev == "lev1") {
     
-    tPlot <- ggplot(plot_df, aes(x = year, y = measure, color = topLevName)) +
+    tPlot <- ggplot(filter(plot_df, year %in% yearRange), aes(x = year, y = measure, color = topLevName)) +
       scale_color_manual(values = topLevColors, drop = T, limits = force) +
+      scale_x_continuous(minor_breaks = yearRange, breaks = yearRange, labels = yearRange) +
       geom_line(size = 1) +
-      labs(x = "Year", y = myMeasure, color = "Cause", title = "Broad Groups")
+      labs(x = "Year", y = y_title, color = "Cause", title = "Trends in Broad Condition Groups") +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
     
     if (myLogTrans) tPlot <- tPlot + scale_y_continuous(trans = 'log2')
     
@@ -55,7 +74,7 @@ topCauses_trends <- function(
         dplyr::slice(1:myN) %>%
         pull(causeNameShort)
       
-      tDat <- tDat %>% filter(causeNameShort %in% topCauses)
+      tDat <- tDat %>% filter(causeNameShort %in% topCauses, year %in% yearRange)
       
       if (x == "0") plot_title <- "All Groups" else plot_title <- unique(tDat$topLevName)
       
@@ -63,9 +82,10 @@ topCauses_trends <- function(
       tPlot0 <- ggplot(tDat, aes(x = year, y = measure, color = causeNameShort)) +
         geom_line(size = 1) +
         geom_point() +
-        labs(x = "Year", y = myMeasure, color = "Cause", title = plot_title) +
+        labs(x = "Year", y = y_title_short, color = "Cause", title = plot_title) +
         scale_colour_discrete(labels = function(x) str_wrap(x, width = 20)) +
         theme(axis.text = element_text(size = myTextSize3),
+              axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
               axis.title = element_text(size = myAxisTitleSize - 4, face = "bold"),
               legend.text = element_text(size = 12), 
               legend.title = element_blank())
@@ -89,18 +109,18 @@ topCauses_trends <- function(
       dplyr::slice(1:myN) %>%
       pull(causeNameShort)
     
-    tDat <- tDat %>% filter(causeNameShort %in% topCauses)
+    tDat <- tDat %>% filter(causeNameShort %in% topCauses, year %in% yearRange)
     
-    if (myBroad == "0") plot_title <- "All Groups" else plot_title <- unique(tDat$topLevName)
+    if (myBroad == "0") plot_title <- "Trends in Top Public Health Level Conditions within All Broad Groups" else plot_title <- paste0("Trends in Top Public Health Level Conditions within ", unique(tDat$topLevName), " Broad Group")
     
     tPlot <- ggplot(tDat, aes(x = year, y = measure, color = causeNameShort) )  +
       geom_line(size = 1) +
       geom_point() +
-      labs(x = "Year", y = myMeasure, color = "Cause", title = plot_title) +
-      scale_x_continuous(minor_breaks = 2000:maxYear, breaks = 2000:maxYear, expand = c(0,10), labels = 2000:maxYear) +
+      labs(x = "Year", y = y_title, color = "Cause", title = plot_title) +
+      scale_x_continuous(minor_breaks = yearRange, breaks = yearRange, expand = c(0, myExpand), labels = yearRange) +
       scale_colour_discrete(guide = 'none') +   # removed legend
-      geom_dl(aes(label = causeNameShort), method = list(dl.trans(x = x + .1), "last.points", cex = .8, 'last.bumpup')) +   # , 'last.bumpup'
-      geom_dl(aes(label = causeNameShort_left_dl), method = list(dl.trans(x = x - .1), "first.points", cex = .8, 'last.bumpup', hjust = 1)) +
+      geom_dl(aes(label = causeNameShort), method = list(dl.trans(x = x + .1), "last.points", cex = 1, 'last.bumpup')) +   # , 'last.bumpup'
+      geom_dl(aes(label = causeNameShort_left_dl), method = list(dl.trans(x = x - .1), "first.points", cex = 1, 'first.bumpup', hjust = 1)) +
       theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
     
     if (myLogTrans) tPlot <- tPlot + scale_y_continuous(trans='log2')

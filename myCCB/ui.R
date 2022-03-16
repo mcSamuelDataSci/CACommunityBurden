@@ -444,7 +444,7 @@ shinyUI(
                                         ), 
                                         tabPanel(title = "TOP TRENDS", value = "topTrendsTab",
                                                  br(),
-                                                 plotOutput("trendTop", width="100%",height = 900)
+                                                 plotOutput("trendTop", width="100%",height = 800)
                                         )
                             )
                    ),
