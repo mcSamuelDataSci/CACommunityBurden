@@ -442,7 +442,7 @@ shinyUI(
                                                  br(),
                                                  plotOutput("lifeTable", width="100%",height = 700)
                                         ), 
-                                        tabPanel(title = "TOP TRENDS", value = "topTrendsTab",
+                                        tabPanel(title = "Leading Causes Trend", value = "topTrendsTab",
                                                  br(),
                                                  plotOutput("trendTop", width="100%",height = 800)
                                         )

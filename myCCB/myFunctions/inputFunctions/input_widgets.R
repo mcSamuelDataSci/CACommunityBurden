@@ -43,7 +43,7 @@ hidden(
                    round = TRUE, sep = "", step = 1),
       
       # Year range - top Trends ================================
-      sliderInput( "myYearRange", label = "Year Range To Plot:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
+      sliderInput( "myYearRange", label = "Year Range To Display:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
       
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....

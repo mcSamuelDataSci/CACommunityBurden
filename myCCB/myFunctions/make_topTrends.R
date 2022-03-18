@@ -19,9 +19,7 @@ topCauses_trends <- function(
   myYearRank = 2020
 ) {
   
-  # Parameters: County, How many, Log scale, Measure, Level, Broad group
-  
-  # If top level, remove how many, broad group
+  if (myLev == "lev2" & is.null(myBroad)) stop("Please select at least one Broad Condition Group")
   
   
   # PREPARE DATASET ------------------------------------------------------------------------------------
@@ -115,7 +113,7 @@ topCauses_trends <- function(
     tDat <- tDat %>% filter(causeNameShort %in% topCauses, year %in% yearRange)
     
     if (nrow(tDat)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
-    "2000-2020 Trends in Top 10 Public Health Level Conditions (based on Number of Deaths in 2020), California"
+
     if (myBroad == "0") plot_title <- paste0(min(myYearRange), "-", max(myYearRange), " Trends in Top ", myN, " Public Health Level Conditions (based on ", y_title, " in ", myYearRank, "), ", myLHJ)
     if (myBroad != "0") plot_title <- paste0(min(myYearRange), "-", max(myYearRange), " Trends in Top ", myN, " ", unique(tDat$topLevName), " Conditions (based on ", y_title, " in ", myYearRank, "), ", myLHJ)
     

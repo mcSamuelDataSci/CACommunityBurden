@@ -760,6 +760,10 @@ observe({
   
 })
 
+observe({
+  print(input$myBroadGroups)
+})
+
 
 # IHME ----------------------------------------------------------------------------------------------------
 # Arrows Data and plot
