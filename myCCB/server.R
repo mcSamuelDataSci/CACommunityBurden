@@ -741,14 +741,22 @@ observeEvent(input$tableButton_demoPop_Trend,{
 
 
 # Top Trends -------------------------------------------------------------------------------
-topTrendsStep <- reactive(topCauses_trends(myLHJ = input$myLHJ, myMeasure = input$myMeasure, myLogTrans = input$myLogTrans, myN = input$myN, myLev = input$myLevShort, myBroad = input$myBroadGroups, myYearRange = input$myYearRange))
+topTrendsStep <- reactive(topCauses_trends(myLHJ = input$myLHJ, myMeasure = input$myMeasure, myLogTrans = input$myLogTrans, myN = input$myN, myLev = input$myLevShort, myBroad = input$myBroadGroups, myYearRange = input$myYearRange, myYearRank = input$myYearRank))
 output$trendTop <- renderPlot(topTrendsStep()$plotL)
 
-observeEvent(input$myLevShort, {
+# observeEvent(input$myLevShort, {
+#   
+#   if (input$myLevShort == "lev1" & current$tab %in% c("topTrendsTab")) { hide("myBroadGroups"); hide("myN"); hide("myYearRank") }
+#   
+#   if (input$myLevShort == "lev2" & current$tab %in% c("topTrendsTab")) { show("myBroadGroups"); show("myN"); show("myYearRank") }
+#   
+# })
+
+observe({
   
-  if (input$myLevShort == "lev1" & current$tab %in% c("topTrendsTab")) { hide("myBroadGroups"); hide("myN") }
+  if (input$myLevShort == "lev1" & current$tab %in% c("topTrendsTab")) { hide("myBroadGroups"); hide("myN"); hide("myYearRank") }
   
-  if (input$myLevShort == "lev2" & current$tab %in% c("topTrendsTab")) { show("myBroadGroups"); show("myN") }
+  if (input$myLevShort == "lev2" & current$tab %in% c("topTrendsTab")) { show("myBroadGroups"); show("myN"); show("myYearRank") }
   
 })
 

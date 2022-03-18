@@ -38,8 +38,12 @@ hidden(
       radioButtons("myLevShort", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    choices=c("Top" = "lev1","Public Health" = "lev2"), inline=TRUE, selected = 'lev2'),
       
+      # Year to rank by - top Trends ================================
+      sliderInput( "myYearRank", label = "Leading Causes in Which Year?:", value = maxYear, min = minYear, max = maxYear,
+                   round = TRUE, sep = "", step = 1),
+      
       # Year range - top Trends ================================
-      sliderInput( "myYearRange", label = "Year Range:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
+      sliderInput( "myYearRange", label = "Year Range To Plot:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
       
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....
