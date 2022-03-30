@@ -35,15 +35,14 @@ hidden(
       radioButtons("myLev", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    choices=c("Top" = "lev1","Public Health" = "lev2","Detail" = "lev3"), inline=TRUE, selected = 'lev2'),
       
-      radioButtons("myLevShort", label=list("Levels to show:", actionButton("levelHelp", label=helpIcon, style=myInputHelpButtonSty)),
+      radioButtons("myLevShort", label=list("Levels to show:", actionButton("levelShortHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    choices=c("Top" = "lev1","Public Health" = "lev2"), inline=TRUE, selected = 'lev2'),
       
-      # Year to rank by - top Trends ================================
-      sliderInput( "myYearRank", label = "Leading Causes in Which Year?:", value = maxYear, min = minYear, max = maxYear,
-                   round = TRUE, sep = "", step = 1),
-      
-      # Year range - top Trends ================================
-      sliderInput( "myYearRange", label = "Year Range To Display:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
+      # Broad groups - top Trends ========================
+      checkboxGroupButtons( "myBroadGroups",
+                            label = list("Select one or more broad condition group:", actionButton(inputId="broadGroupHelp", label=helpIcon, style=myInputHelpButtonSty_broadGroup)),
+                            choices = c("All" = "0", "Communicable" = "A", "Cancer" = "B", "Cardiovascular" = "C", "Other Chronic" = "D", "Injury" = "E"),
+                            selected = c("A", "B", "C", "D", "E"), individual=TRUE, size="sm"),
       
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....
@@ -52,6 +51,9 @@ hidden(
       
       # myN ======================
       numericInput( "myN",  "How Many:", value=10,min=1,max= 50),
+      
+      # myN Broad - Top Trends ======================
+      numericInput( "myN_topTrends",  "How many conditions:", value=5,min=1,max= 50),
       
       # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?)
       selectInput("myMeasure",  label=list("Measure:", actionButton( "measureHelp", label=helpIcon,style=myInputHelpButtonSty)),
@@ -119,6 +121,13 @@ hidden(
       # myLogTrans ======================
       checkboxInput("myLogTrans",  "Log Transform of Y Axis", value=FALSE),
       
+      # Year to rank by - top Trends ================================
+      sliderInput( "myYearRank", label = "Leading causes in which year?:", value = maxYear, min = minYear, max = maxYear,
+                   round = TRUE, sep = "", step = 1),
+      
+      # Year range - top Trends ================================
+      sliderInput( "myYearRange", label = "Year range To display:", min = minYear, max = maxYear, value = c(minYear, maxYear), sep = "", step = 1),
+      
       # myMultiRace ======================
       checkboxInput("myMultiRace",  "Include Multirace Line", value=FALSE),
       # helpText
@@ -165,12 +174,6 @@ hidden(
       
       # myPosition ======================
       selectInput( "myPosition", "Sort Order:", choices = listPosition),
-      
-      # Broad groups - top Trends ========================
-      checkboxGroupButtons( "myBroadGroups", "Which Broad Condition Groups",
-                            choices = c("All" = "0", "Communicable" = "A", "Cancer" = "B", "Cardiovascular" = "C", "Other Chronic" = "D", "Injury" = "E"),
-                            selected = "0", individual=TRUE, size="sm"),
-      
       
       # myVar(ICD/MDC/DRG) ======================
       # selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),

@@ -60,6 +60,14 @@ myInputHelpButtonSty <- paste0("width:20px;  color:#fff; background-color:#337ab
                                "float:right;"
 )   #2e6da4
 helpIcon <- "?"
+
+# Used for broad group input in leading causes tab - Replaced float right with display inline block. 
+myInputHelpButtonSty_broadGroup <- paste0("width:20px;  color:#fff; background-color:#337ab7; border-color:white; padding:0px; font-size: 18px;",
+                               "margin:0px;",
+                               "margin-left:10px;",
+                               "display:inline-block;"
+) 
+
 #helpIcon <- icon("question-circle-o") # or: HTML('<i class="fa fa-question-circle-o"></i>')
 #helpIcon <- icon("question-circle")   # or: HTML('<i class="fa fa-question-circle"></i>')  
 #helpIcon <- icon("question") 
@@ -442,7 +450,7 @@ shinyUI(
                                                  br(),
                                                  plotOutput("lifeTable", width="100%",height = 700)
                                         ), 
-                                        tabPanel(title = "Leading Causes Trend", value = "topTrendsTab",
+                                        tabPanel(title = "Leading Causes", value = "topTrendsTab",
                                                  br(),
                                                  plotOutput("trendTop", width="100%",height = 800)
                                         )

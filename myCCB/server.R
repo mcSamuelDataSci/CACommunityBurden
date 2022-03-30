@@ -151,11 +151,13 @@ observeEvent(input$cutmethodHelp, {myModal(appTextL$cutmethodHelp)})
 observeEvent(input$stateCutHelp,  {myModal(appTextL$stateCutHelp)})
 observeEvent(input$measureHelp,   {myModal(appTextL$measureHelp)})
 observeEvent(input$levelHelp,     {myModal(appTextL$levelHelp)})
+observeEvent(input$levelShortHelp,     {myModal(appTextL$levelShortHelp)})
 observeEvent(input$dxGroupsHelp,  {myModal(appTextL$dxGroupsHelp)})
 observeEvent(input$axisScaleHelp,  {myModal(appTextL$axisScaleHelp)})
 observeEvent(input$measureAgeRaceFocusHelp, {myModal(appTextL$measureAgeRaceFocusHelp)})
 observeEvent(input$includeBirthsHelp, {myModal(appTextL$includeBirthsHelp)})
 observeEvent(input$disparityCompareHelp, {myModal(appTextL$disparityCompareHelp)})
+observeEvent(input$broadGroupHelp, {myModal(appTextL$broadGroupHelp)})
 
 
 
@@ -174,7 +176,8 @@ tabHelpList <- list("dataTableTab"           = appTextL$conditionTableTab,
                     "disparitiesTab"         = appTextL$disparitiesTab,
                     "ageRaceFocusTab"        = appTextL$ageRaceFocusTab,
                     "deathHospEDTab"         = appTextL$deathHospEDTab,
-                    "demographicsTab"        = appTextL$demographicsTab
+                    "demographicsTab"        = appTextL$demographicsTab,
+                    "topTrendsTab"           = appTextL$topTrendsTab
                     )
 
 whoNeedsHelp <- reactive({
@@ -741,7 +744,7 @@ observeEvent(input$tableButton_demoPop_Trend,{
 
 
 # Top Trends -------------------------------------------------------------------------------
-topTrendsStep <- reactive(topCauses_trends(myLHJ = input$myLHJ, myMeasure = input$myMeasure, myLogTrans = input$myLogTrans, myN = input$myN, myLev = input$myLevShort, myBroad = input$myBroadGroups, myYearRange = input$myYearRange, myYearRank = input$myYearRank))
+topTrendsStep <- reactive(topCauses_trends(myLHJ = input$myLHJ, myMeasure = input$myMeasure, myLogTrans = input$myLogTrans, myN = input$myN_topTrends, myLev = input$myLevShort, myBroad = input$myBroadGroups, myYearRange = input$myYearRange, myYearRank = input$myYearRank))
 output$trendTop <- renderPlot(topTrendsStep()$plotL)
 
 # observeEvent(input$myLevShort, {
@@ -754,9 +757,9 @@ output$trendTop <- renderPlot(topTrendsStep()$plotL)
 
 observe({
   
-  if (input$myLevShort == "lev1" & current$tab %in% c("topTrendsTab")) { hide("myBroadGroups"); hide("myN"); hide("myYearRank") }
+  if (input$myLevShort == "lev1" & current$tab %in% c("topTrendsTab")) { hide("myBroadGroups"); hide("myN_topTrends"); hide("myYearRank") }
   
-  if (input$myLevShort == "lev2" & current$tab %in% c("topTrendsTab")) { show("myBroadGroups"); show("myN"); show("myYearRank") }
+  if (input$myLevShort == "lev2" & current$tab %in% c("topTrendsTab")) { show("myBroadGroups"); show("myN_topTrends"); show("myYearRank") }
   
 })
 

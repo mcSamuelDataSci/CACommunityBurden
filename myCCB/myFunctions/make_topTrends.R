@@ -123,8 +123,8 @@ topCauses_trends <- function(
       labs(x = "Year", y = y_title, color = "Cause", title = plot_title) +
       scale_x_continuous(minor_breaks = yearRange, breaks = yearRange, expand = c(0, myExpand), labels = yearRange) +
       scale_colour_discrete(guide = 'none') +   # removed legend
-      geom_dl(aes(label = causeNameShort), method = list(dl.trans(x = x + .1), "last.points", cex = 1.4, 'last.bumpup')) +   # , 'last.bumpup'
-      geom_dl(aes(label = causeNameShort_left_dl), method = list(dl.trans(x = x - .1), "first.points", cex = 1.4, 'first.bumpup', hjust = 1)) +
+      geom_dl(aes(label = causeNameShort), method = list(dl.trans(x = x + .1), "last.points", cex = 1.3, 'last.bumpup')) +   # , 'last.bumpup'
+      geom_dl(aes(label = causeNameShort_left_dl), method = list(dl.trans(x = x - .1), "first.points", cex = 1.3, 'first.bumpup', hjust = 1)) +
       theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
     
     if (myLogTrans) tPlot <- tPlot + scale_y_continuous(trans='log2')
