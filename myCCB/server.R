@@ -476,6 +476,9 @@ observeEvent(current$tab,{
 
     } } )
   
+  
+  
+
 # ---------------------------------------------------------------------------------------------------------
 
 disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
@@ -847,7 +850,17 @@ observeEvent(current$tab,{
 # output$any_primary <- renderPlot(anyprimary1(input$myLHJ,input$myPosition))
 
 
-output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
+
+   #    <- renderPlot(junkPlot())
+
+
+
+
+scatterStep  <- reactive(scatterSDOH(input$myCAUSE, input$myMeasure, input$mySex, input$myGeo,input$myX))
+output$scatter      <- renderPlotly(scatterStep()$p)
+output$junk1        <- renderPlot(scatterStep()$hist1)
+
+
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::

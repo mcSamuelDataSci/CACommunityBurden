@@ -13,6 +13,11 @@ pal <- c("red", "blue", "green")
 # t.y <- 5
 
 
+junkPlot <- function() plot(1:5)
+
+
+
+
 # https://plotly-book.cpsievert.me/scatter-traces.html
          
 
@@ -171,7 +176,21 @@ p <-plot_ly(
 # layout(title=paste('Association of',sdohVecL[xL],"and",lMeasuresC[xM],"for",deathCauseLink[deathCauseLink[,1]==myCause,2],"by",myGeo),
 #        xaxis = list(title=sdohVecL[xL],      titlefont = f, showline = TRUE,linewidth = 2),
 #        yaxis=  list(title=lMeasuresC[xM],titlefont = f, showline = TRUE,linewidth = 2))
-p
+
+
+
+hist1 <- ggplot(data= sdohWork, aes(x=myMeasure)) + geom_histogram()
+
+
+list(p = p, hist1 = hist1)
+
+
+
+
+
+
+
+
 }
 
 

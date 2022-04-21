@@ -468,17 +468,59 @@ shinyUI(
                    
                    
                    
-                   tabPanel(title = strong("SDOH"), value = "sdoh",
-                            tabsetPanel(type = "tab", id = "sdohID",
-                                        
-                                        tabPanel(title = "SOCIAL DETERMINANTS", value = "sdohTab",
-                                                 br(),
-                                                 plotlyOutput("scatter", height=700)
-                                        )
-                            )
-                   ),
+ 
+         
                    
-                   
+ 
+ 
+ #new SDOH
+ 
+ 
+ tabPanel(title = strong("SDOH"), value = "sdoh",
+          tabsetPanel(type = "tab", id = "sdohID",
+                      
+                      tabPanel(title = "SOCIAL DETERMINANTS", value = "sdohTab",
+                               br(),
+                               
+                               fluidRow(
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotlyOutput("scatter")
+                                        )),
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("junk1")
+                                        ))
+                               )
+                               )
+                      )),
+ 
+ 
+ 
+ 
+ 
+ # ##################################                                 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
                    
                    tabPanel(title = strong("HOSPITALIZATIONS"), value = "hospitalizations",
                             tabsetPanel(type = "tab", id = "hospitalizationsID",
@@ -494,7 +536,22 @@ shinyUI(
                                         )
                             )
                    ),
-                    
+                   
+ 
+ 
+ 
+
+                                 
+                                 
+                                 
+                                 
+                                 
+ 
+ 
+ 
+ 
+ 
+  
                     # JASPO - Demographics
                    tabPanel(strong("DEMOGRAPHICS"), value = "demographics",
                             
