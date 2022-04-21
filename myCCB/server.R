@@ -858,8 +858,10 @@ observeEvent(current$tab,{
 
 scatterStep  <- reactive(scatterSDOH(input$myCAUSE, input$myMeasure, input$mySex, input$myGeo,input$myX))
 output$scatter      <- renderPlotly(scatterStep()$p)
-output$junk1        <- renderPlot(scatterStep()$hist1)
-
+output$hist1        <- renderPlot(scatterStep()$hist1)
+output$sdohMap1      <- renderPlot(scatterStep()$map1)
+output$hist2        <- renderPlot(scatterStep()$hist2)
+output$sdohMap2      <- renderPlot(scatterStep()$map2)
 
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),

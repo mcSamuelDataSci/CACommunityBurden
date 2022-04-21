@@ -483,7 +483,8 @@ shinyUI(
                                br(),
                                
                                fluidRow(
-                                 column(width = 6,
+                                 
+                                 column(width = 12,
                                         shinydashboard::box(
                                           title = NULL,
                                           status = "primary",
@@ -491,6 +492,18 @@ shinyUI(
                                           solidHeader = F,
                                           collapsible = F,
                                           plotlyOutput("scatter")
+                                        ))
+                               ),
+                               
+                               fluidRow(
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("sdohMap1")
                                         )),
                                  column(width = 6,
                                         shinydashboard::box(
@@ -499,9 +512,33 @@ shinyUI(
                                           width = NULL,
                                           solidHeader = F,
                                           collapsible = F,
-                                          plotOutput("junk1")
+                                          plotOutput("hist1")
+                                        ))
+                               ),
+                               
+                               
+                               fluidRow(
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("sdohMap2")
+                                        )),
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("hist2")
                                         ))
                                )
+                               
+                               
                                )
                       )),
  
