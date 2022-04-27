@@ -1,9 +1,9 @@
-eduCode,eduName,,,,,
-1,"""8th grade or less""",,,,,Sometimes used with good reason:
-2,"""9th through 12th grade - no diploma""",,,,,< HS grad
-3,"""High School Graduate or GED Completed""",,,,,High School Grad or equivalent
-4,"""Some college credit - no degree""",,,,,some college or AA
-5,"""Associate Degree""",,,,,Bachelors or higher
-6,"""Bachelors Degree""",,,,,
-7,"""Graduate or professional degree""",,,,,
-9,"""Unknown""",,,,,
+eduCode,eduName,eduNameShort,,,,
+1,8th grade or less,8th Grade or Less,,,,Sometimes used with good reason:
+2,9th through 12th grade - no diploma,9th to 12th No Diploma,,,,< HS grad
+3,High School Graduate or GED Completed,High School Grad/GED,,,,High School Grad or equivalent
+4,Some college credit - no degree,Some College No Degree,,,,some college or AA
+5,Associate Degree,Associate Degree,,,,Bachelors or higher
+6,Bachelors Degree,Bachelors Degree,,,,
+7,Graduate or professional degree,Graduate Degree,,,,
+9,Unknown,Unknown,,,,

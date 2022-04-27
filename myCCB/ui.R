@@ -484,7 +484,7 @@ shinyUI(
                                
                                fluidRow(
                                  
-                                 column(width = 12,
+                                 column(width = 12, 
                                         shinydashboard::box(
                                           title = NULL,
                                           status = "primary",
@@ -494,6 +494,22 @@ shinyUI(
                                           plotlyOutput("scatter")
                                         ))
                                ),
+                               
+                               
+                               fluidRow(
+                                 
+                                 column(width = 12, 
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotlyOutput("violin1")
+                                        ))
+                               ), 
+                               
+                               
                                
                                fluidRow(
                                  column(width = 6,
@@ -547,13 +563,6 @@ shinyUI(
  
  
  # ##################################                                 
- 
- 
- 
- 
- 
- 
- 
  
  
  

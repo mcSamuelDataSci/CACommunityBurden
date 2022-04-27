@@ -115,8 +115,23 @@ p <-plot_ly(
 
 
 
-hist1 <- ggplot(data= sdohWork, aes(x=myMeasure)) + geom_histogram()
-hist2 <- ggplot(data= sdohWork, aes(x=mySDOH)) + geom_histogram()
+sdohWork$sdoh5 <- cut_number(sdohWork$myMeasure,5)
+
+# temp <- sdohWork %>% mutate(sdoh5 = cut_number(myMeasure,5))
+
+
+vio1 <- ggplot(sdohWork,  aes(x=sdoh5, y=myMeasure)) + 
+  geom_violin(adjust = 0.5) +
+  geom_boxplot(width=0.1, fill = "red") 
+
+
+
+myBinN <- 100
+
+
+
+hist1 <- ggplot(data= sdohWork, aes(x=myMeasure)) + geom_histogram(aes(y=..density..), col="blue",fill="lightblue", bins=myBinN)  + geom_density(col="red", size=1) + labs(x=myMeasure) 
+hist2 <- ggplot(data= sdohWork, aes(x=mySDOH))    + geom_histogram(aes(y=..density..), col="blue",fill="lightblue", bins=myBinN) + geom_density(col="red", size=1) + labs(x=t.x) 
 
 
 map.1      <- left_join(shape_Comm, sdohWork_Comm, by=c("county","comID")) 
@@ -138,7 +153,7 @@ map2 <-  tm_shape(map.1) +
 
 #, map1 = mapX
 
-list(p = p, hist1 = hist1, hist2 = hist2, map1 = map1, map2 = map2)
+list(p = p, violin1 = vio1, hist1 = hist1, hist2 = hist2, map1 = map1, map2 = map2)
 
 
 
