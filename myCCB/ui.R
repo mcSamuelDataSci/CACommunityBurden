@@ -484,7 +484,7 @@ shinyUI(
                                
                                fluidRow(
                                  
-                                 column(width = 12, 
+                                 column(width = 8, height = 200,
                                         shinydashboard::box(
                                           title = NULL,
                                           status = "primary",
@@ -492,13 +492,8 @@ shinyUI(
                                           solidHeader = F,
                                           collapsible = F,
                                           plotlyOutput("scatter")
-                                        ))
-                               ),
-                               
-                               
-                               fluidRow(
-                                 
-                                 column(width = 12, 
+                                        )),
+                                 column(width = 4, 
                                         shinydashboard::box(
                                           title = NULL,
                                           status = "primary",
