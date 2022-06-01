@@ -99,6 +99,31 @@ topCauses_trends <- function(
     
     tPlot <- cowplot::plot_grid(plotlist = plotList, ncol = 2)
     
+    myLHJ_title <- ifelse(myLHJ == "CALIFORNIA", myLHJ, paste0(myLHJ, " County"))
+    myTitle <- paste0("Trends In Top Public Health Conditions (by Broad Condition Groups) in ",
+                      myLHJ_title, ", ", myYearRange[1], "-", myYearRange[2])
+    
+    tPlot_title <- ggdraw() + 
+      draw_label(
+        myTitle,
+        fontface = 'bold',
+        x = 0.5,
+        #hjust = 0, 
+        size = 20
+      ) +
+      theme(
+        # add margin on the left of the drawing canvas,
+        # so title is aligned with left edge of first plot
+        plot.margin = margin(0, 0, 0, 7)
+      )
+    
+    tPlot <- cowplot::plot_grid(
+      tPlot_title, tPlot,
+      ncol = 1,
+      # rel_heights values control vertical title margins
+      rel_heights = c(0.1, 1)
+    )
+    
     
   } else {
     
