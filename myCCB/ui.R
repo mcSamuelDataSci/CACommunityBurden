@@ -481,7 +481,7 @@ shinyUI(
                       
                       tabPanel(title = "SOCIAL DETERMINANTS", value = "sdohTab",
                                br(),
-                               
+                               htmlOutput("sdoh_title"), # Search for "sdoh_title" in server.R to see how the title is generated
                                fluidRow(
                                  
                                  column(width = 8, height = 200,

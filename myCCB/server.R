@@ -872,7 +872,7 @@ output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, i
 
 
 
-# Generate labels and titles for maps and charts --------------------------------
+# Generate labels and titles for maps and sdoh charts --------------------------------
 
 sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
 geoLabel   <- renderText({if (input$myLHJ==STATE)      geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
@@ -887,7 +887,7 @@ timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp5 els
 #                                    sexLabel(), geoLabel(),
 #                                    sep = " ")))) })
 
-
+# MAP TITLE
 output$map_title <- renderUI({h4(strong(
   HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
                  " from ",
@@ -897,6 +897,17 @@ output$map_title <- renderUI({h4(strong(
                  " by ",input$myGeo,
                  sexLabel(), geoLabel(),
                  sep = " ")))) })
+
+
+# SDOH TITLE - uses custom function timeLabel() ~20 lines above to set year label to 2020 if county, or 2016-2020 if comm/tract
+output$sdoh_title <- renderUI({h4(strong(
+  HTML(paste0("Association of ", sdohVecL[sdohVec == input$myX], " and ", deathMeasuresNames[deathMeasures == input$myMeasure],
+                 " for ",
+                 deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE],
+                 " by ", input$myGeo,
+              " in ", span(timeLabel(),style="color:blue"),
+              sexLabel(),
+                 sep = " "))), align = "center") })
 
 
 
