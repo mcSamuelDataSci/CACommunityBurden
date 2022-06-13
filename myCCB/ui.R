@@ -500,7 +500,7 @@ shinyUI(
                                           width = NULL,
                                           solidHeader = F,
                                           collapsible = F,
-                                          plotlyOutput("violin1")
+                                          plotOutput("violin1")
                                         ))
                                ), 
                                

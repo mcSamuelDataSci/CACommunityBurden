@@ -73,6 +73,7 @@
 | RACE TREND                                    | racetrend              |
 | EDUCATION TREND                               | educationtrend         |
 | LIFE EXPECTANCY                               | lifeexpectancy         |
+| LEADING CAUSES                                | leadingcausestrend     |
 | DISPARITIES                                   | disparities            |
 | SOCIAL DETERMINANTS                           | sdoh                   |
 | HOSPITAL DISCHARGE                            | hospitaldischarge      |
