@@ -856,7 +856,7 @@ observeEvent(current$tab,{
 
 
 
-scatterStep  <- reactive(scatterSDOH(input$myCAUSE, input$myMeasure, input$mySex, input$myGeo,input$myX))
+scatterStep  <- reactive(scatterSDOH(input$myCAUSE, input$myMeasure, input$myGeo,input$myX))
 output$scatter      <- renderPlotly(scatterStep()$p)
 output$violin1      <- renderPlot(scatterStep()$violin1)
 output$hist1        <- renderPlot(scatterStep()$hist1)
@@ -906,8 +906,25 @@ output$sdoh_title <- renderUI({h4(strong(
                  deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE],
                  " by ", input$myGeo,
               " in ", span(timeLabel(),style="color:blue"),
-              sexLabel(),
-                 sep = " "))), align = "center") })
+                              sep = " "))), align = "center") })
+
+output$sdoh_title2 <- renderUI({h4(strong(
+  HTML(paste0("Geographic and Overal Distribution of ", deathMeasuresNames[deathMeasures == input$myMeasure],
+              " for ",
+              deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE],
+              " by ", input$myGeo,
+              " in ", span(timeLabel(),style="color:blue"),
+              sep = " "))), align = "center") })
+
+output$sdoh_title3 <- renderUI({h4(strong(
+  HTML(paste0("Geographic and Overal Distribution of ", sdohVecL[sdohVec == input$myX],
+              " by ", input$myGeo,
+              " in ", span(timeLabel(),style="color:blue"),
+              sep = " "))), align = "center") })
+
+
+
+
 
 
 

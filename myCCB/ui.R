@@ -503,9 +503,8 @@ shinyUI(
                                           plotOutput("violin1")
                                         ))
                                ), 
-                               
-                               
-                               
+                               br(),
+                               htmlOutput("sdoh_title2"),
                                fluidRow(
                                  column(width = 6,
                                         shinydashboard::box(
@@ -526,7 +525,8 @@ shinyUI(
                                           plotOutput("hist1")
                                         ))
                                ),
-                               
+                               br(),
+                               htmlOutput("sdoh_title3"),
                                
                                fluidRow(
                                  column(width = 6,

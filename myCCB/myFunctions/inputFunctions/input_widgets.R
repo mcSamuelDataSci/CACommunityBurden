@@ -164,7 +164,7 @@ hidden(
       
       
       # myX ======================
-      selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec),
+      selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec, selected="est_pov"),
       
       # myOSHPDtype ======================
       selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hMNames_short),
