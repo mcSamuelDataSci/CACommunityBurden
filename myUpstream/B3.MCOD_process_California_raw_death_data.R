@@ -226,11 +226,11 @@ hmm <- covid %>%
 # For xMDA text
 
 covid_mcod <- tdat_Lev2 %>%
-  filter(lev2 == "A10") %>%
+  filter(lev2 == "A11") %>%
   select(primaryCount = 2, last_col())
 
 alc <- tDat_lev3 %>%
-  filter(lev3 == "D99a") %>%
+  filter(lev3 == "E03b") %>%
   select(primaryCount = 2, last_col())
   
 

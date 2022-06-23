@@ -11,7 +11,7 @@ if (1 == 2) {
 }
 
 
-rankCause <- function(myCounty = "Los Angeles", myMeasure = "Ndeaths", myYear = 2018, mySex = "Total", myLev = "lev2", myN = 10){ 
+rankCause <- function(myCounty = "Los Angeles", myMeasure = "Ndeaths", myYear = 2018, mySex = "Total", myLev = "lev2", myN = 10, myMeanAge_sort = "Youngest to Oldest"){ 
   
   
   if(myLev == "lev3") myLev <- c("lev2", "lev3")
@@ -29,11 +29,20 @@ rankCause <- function(myCounty = "Los Angeles", myMeasure = "Ndeaths", myYear = 
     select(year, sex, Level, causeNameShort, county, measure, value)
   
   # Pull top N causes for user-specified measure
-  top_N_causes <- tDat %>%
-    filter(measure == myMeasure) %>%
-    arrange(desc(value)) %>%
-    dplyr::slice(1:myN) %>%
-    pull(causeNameShort)
+  if (myMeasure == "mean.age" & myMeanAge_sort == "Youngest to Oldest") {
+    top_N_causes <- tDat %>%
+      filter(measure == myMeasure) %>%
+      arrange(value) %>%
+      dplyr::slice(1:myN) %>%
+      pull(causeNameShort)
+  } else {
+    top_N_causes <- tDat %>%
+      filter(measure == myMeasure) %>%
+      arrange(desc(value)) %>%
+      dplyr::slice(1:myN) %>%
+      pull(causeNameShort)
+  }
+  
   
   # Filter on top N causes to create final plot dataset
   plotData <- tDat %>%

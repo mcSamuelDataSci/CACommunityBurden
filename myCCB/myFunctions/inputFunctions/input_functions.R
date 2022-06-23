@@ -7,9 +7,9 @@
 # Constants =========================================================================
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
-INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo","myYear", "myYearRank", "myYearRange", "myYearDemo", "mySex",
+INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo", "myGeo_sdoh", "myYear", "myYearRank", "myYearRange", "myYearDemo", "mySex",
             "myRace", "mySexMult",
-            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_topTrends", "myMeasure","myMeasureShort","myYearGrouping","myCutSystem","myLabName","myCI","myRefLine",
+            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_topTrends", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping","myCutSystem","myLabName","myCI","myRefLine",
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
             "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload")
@@ -23,7 +23,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "lifeExpectancyTab"=c("ourDownloads","myLHJ","mySexMult","myRace","myYearGrouping","myCI"),
                    "interactiveMapTab"=c("ourDownloads","myCAUSE","myLHJ","myGeo","mySex","myStateCut","myMeasure","myCutSystem", "suppressionNote", "recentYearNote"),   # "tabHelp", -- REMOVED FROM ALL
                    "staticMapTab"=c("tabHelp", "myCAUSE", "myLHJ", "myGeo", "myMeasure", "myCutSystem", "myLabName", "mySex", "myStateCut"),
-                   "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "suppressionNote", "recentYearNote"),
+                   "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "myMeanAge_sort", "suppressionNote", "recentYearNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
                    "rankByGeographyTab"=c("ourDownloads","myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "recentYearNote"),
                    "ageRaceFocusTab" = c("ourDownloads", "myLHJ", "myData", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","myOlderFocus","myScale", "suppressionNote"),
@@ -35,7 +35,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "educationTrendTab"=c("ourDownloads", "myCAUSE", "myLHJ", "mySex", "myMeasure", "suppressionNote"),
                    "topTrendsTab"=c("myLHJ", "myYearRank", "myYearRange", "myMeasure", "myLevShort", "myN_topTrends", "myBroadGroups", "myLogTrans", "suppressionNote"),
                    "dataTableTab"=c("myLHJ", "suppressionNote"),
-                   "sdohTab"=c("myCAUSE", "myGeo", "myMeasure", "myX", "suppressionNote"),
+                   "sdohTab"=c("myCAUSE", "myGeo_sdoh", "myMeasure", "myX", "suppressionNote"),
                    "hospitalDischargeTab"=c("ourDownloads", "myLHJ", "mySex", "myN", "myOSHPDtype","myLiveborn"),
                  # "MDC/DRGTab"=c("myLHJ", "mySex", "myN","myVar"),
                    "hospitalPrimaryAnyTab"=c("ourDownloads", "myLHJ", "myPosition"),
