@@ -79,42 +79,41 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   # }
   
   
-  if (myGeo == "Community") {
-    
-    sdohGeo <- sdohComm %>%
-      filter(sdohCode == mySDOH)
-    
-    sdohGeo$sdoh5 <- cut_number(sdohGeo$est, 5)
-    
-    dat.1 <- datComm %>%
-      filter(sex %in% mySex, causeCode == myCause, county != "CALIFORNIA", yearG5 == my5Year)
-    
-    sdohWork  <- sdohGeo %>%
-      left_join(dat.1[,c("comID", "sex", myMeasure)], by="comID")  %>%
-      select(sdohCode, est, myMeasure = {{ myMeasure }}, population, county, region, sex, comName, comID, sdoh5) %>%
-      mutate(sdohText = if(mySDOH == "hpi3score") round(est, 2) else scales::percent(est, accuracy = 0.1),
-             plotText = paste('Community:', comName,  
-                              '<br>County:',county,
-                              '<br>Region:', region,
-                              '<br>Population:',format(population, big.mark = ","), 
-                              '<br>',SDOH_long_label,":", sdohText,
-                              '<br>',!!death_measure_label,":",round(myMeasure, 1)))
+  
+  
+  deaths_Comm <- filter(datComm, sex %in% mySex, causeCode == myCause, county != "CALIFORNIA", yearG5 == my5Year)  
+  # temp        <- deaths_Comm[,c("comID", "comName", myMeasure)]  # SELECT BELOW
+  
+  sdohWork_Comm  <- sdohComm %>%
+    filter(sdohCode == mySDOH) %>%
+    left_join(deaths_Comm[,c("comID", "sex", myMeasure)], by="comID")  %>%
+    select(sdohCode, est, myMeasure = {{ myMeasure }}, population, county, region, sex, comName, comID) %>%
+    mutate(sdohText = if(mySDOH == "hpi3score") round(est, 2) else scales::percent(est, accuracy = 0.1),
+           plotText = paste('Community:', comName,  
+                            '<br>County:',county,
+                            '<br>Region:', region,
+                            '<br>Population:',format(population, big.mark = ","), 
+                            '<br>',SDOH_long_label,":", sdohText,
+                            '<br>',!!death_measure_label,":",round(myMeasure, 1)))
+  
+  
+  if (myGeo=="Community") {
+    sdohWork <- sdohWork_Comm
+    dat.1    <- deaths_Comm  
   }
   
   
+  
+  
+  
   if (myGeo=="County") {
-    
-    sdohGeo <- sdohCounty %>%
-      filter(sdohCode == mySDOH)
-    
-    sdohGeo$sdoh5 <- cut_number(sdohGeo$est, 5)
-
-    dat.1 <- datCounty %>%
-      filter(sex %in% mySex, causeCode == myCause, county != "CALIFORNIA", year == myYear)
-
-    sdohWork <- sdohGeo %>%
-      left_join(dat.1[,c("county","sex",myMeasure)],by="county") %>%
-      select(sdohCode, est, myMeasure = {{ myMeasure }}, population, county, region, sex, sdoh5) %>%
+    sdohWork <- sdohCounty
+    dat.1 <- filter(datCounty,year==myYear,sex %in% mySex,causeCode==myCause,county != "CALIFORNIA")  
+    temp  <- dat.1[,c("county","sex",myMeasure)]
+    sdohWork <- sdohWork %>%
+      filter(sdohCode == mySDOH) %>%
+      left_join(temp,by="county") %>%
+      select(sdohCode, est, myMeasure = {{ myMeasure }}, population, county, region, sex) %>%
       mutate(sdohText = if(mySDOH == "hpi3score") round(est, 2) else scales::percent(est, accuracy = 0.1),
              plotText = paste('<br>County:',county,
                               '<br>Region:', region,
@@ -124,26 +123,19 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
     
   }
   
- 
-  
   sdohWorkList <- as.list(sdohWork) 
   
   # Used for scatterplot, violin plot, density plot (mortality)
   sdohWork_both  <- filter(sdohWork, sex %in% c("Male","Female"))
   
-  # Used for mortality map
+  # Used for maps and density plot (sdoh)
   sdohWork_total <- filter(sdohWork, sex == "Total")
   
-  # sdohGeo used for sdoh map and density plot (sdoh)
-  
-  
+
   # If not male or female data available, then stop
   if (nrow(sdohWork_both)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
   
   # if (nrow(sdohWork)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
-  
-  
-  # SCATTER PLOT ===================================================================================================================
   
   t1 <- list(
     family = "Arial",
@@ -157,7 +149,7 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   t_sdohWork <- sdohWork_both %>%
     complete(sex, region, fill = list(est = 0, myMeasure = 0))
   
-  
+
   sexes <- unique(t_sdohWork$sex)
   if (length(sexes) == 2){
     sex_legend <- "Male"
@@ -180,7 +172,7 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
             showlegend = (~unique(sex) == sex_legend), 
             legendgroup = ~region) %>%
     layout(xaxis = list(title=list(text=paste("<b>",SDOH_short_label, "- CONTINUOUS","</b>"), font =t1), showline = TRUE, linewidth = 2),
-           yaxis=  list(title=list(text=""), showline = TRUE, linewidth = 2, rangemode = "tozero"),
+           yaxis=  list(title=list(text=paste("<b>",death_measure_label,"</b>"), font =t1), showline = TRUE, linewidth = 2),
            legend = list(y = 0.5)) %>%
     add_annotations(
       text = ~unique(sex),
@@ -198,13 +190,11 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   p <- t_sdohWork %>%
     group_by(sex) %>%
     do(p = my_plot(.)) %>%
-    subplot(nrows = plot_rows, shareX = TRUE, shareY = TRUE) %>%
-    layout(margin = list(l = 100), 
-           annotations = list(
-             list(x = -0.15, y = 0.5, text=paste("<b>",death_measure_label,"</b>"), font = t1, textangle = 270, showarrow = F, xref = 'paper', yref='paper')
-           ))
+    subplot(nrows = plot_rows, shareX = TRUE, shareY = TRUE)
+
   
   
+    
   
   # 
   # p <-plot_ly(
@@ -221,6 +211,11 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   #   text   = ~plotText ) %>%
   #   layout(xaxis = list(title=list(text=paste("<b>",SDOH_short_label, "- CONTINUOUS","</b>"), font =t1), showline = TRUE, linewidth = 2),
   #          yaxis=  list(title=list(text=paste("<b>",death_measure_label,"</b>"), font =t1), showline = TRUE, linewidth = 2))
+  
+  
+  
+  
+  sdohWork$sdoh5 <- cut_number(sdohWork$est,5)
   
   
   tempSize <- 16
@@ -251,7 +246,7 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   #, axis.line = element_line(color = 'black'))                 
   
   
-  # VIOLIN PLOT ==============================================================================================================
+  
   
   vio1 <- ggplot(sdohWork_both,  aes(x=sdoh5, y=myMeasure)) + 
     labs(x=paste(SDOH_short_label, "- QUINTILES"), y=death_measure_label) +
@@ -260,9 +255,6 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
     sdoh_theme() + theme(axis.text.x = element_text(angle = 90,vjust = 0.5, hjust=1)) + facet_grid(rows=vars(sex))
   
   
-  
-  # DENSITY PLOTS ==========================================================================================================
-  
   myBinN <- 100
   
   
@@ -270,33 +262,28 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   hist_part2 <- geom_density(col="red", size=1) 
   
   
-  hist1 <- ggplot(data= sdohWork_both, aes(x=myMeasure)) + hist_part1 + hist_part2 + labs(x=death_measure_label) + sdoh_theme() + facet_grid(rows=vars(sex))
+  hist1 <- ggplot(data= sdohWork_both, aes(x=myMeasure))    + hist_part1 + hist_part2 + labs(x=death_measure_label) + sdoh_theme() + facet_grid(rows=vars(sex))
+  hist2 <- ggplot(data= sdohWork_total, aes(x=est)) + hist_part1 + hist_part2 + labs(x="Percent")       +   sdoh_theme()
   
-  x_title <- ifelse(mySDOH == "hpi3score", "HPI Score", "Percent")
-  
-  hist2 <- ggplot(data= sdohGeo, aes(x=est)) + hist_part1 + hist_part2 + labs(x=x_title)       +   sdoh_theme()
-  
-  
-  # MAPS ===================================================================================================================
   
   if (myGeo %in% c("Community")) {
-    map.1_mortality      <- left_join(shape_Comm, sdohWork_total, by=c("county","comID"))
-    map.1_sdoh <- left_join(shape_Comm, sdohGeo, by = c("county", "comID"))
+    map.1      <- left_join(shape_Comm, sdohWork_Comm, by=c("county","comID")) 
   }
   
   if(myGeo == "County")  {
-    map.1_mortality <- left_join(shape_County, sdohWork_total, by = "county")
-    map.1_sdoh     <- left_join(shape_County, sdohGeo, by=c("county")) 
+    map.1      <- left_join(shape_County, sdohWork, by=c("county")) 
   }
   
   
-  map1 <-  tm_shape(map.1_mortality) + 
+  
+  
+  map1 <-  tm_shape(map.1) + 
     tm_borders() + 
     tm_fill("myMeasure", title=death_measure_label) +
     tm_layout(frame=F) 
   
   
-  map2 <-  tm_shape(map.1_sdoh) + 
+  map2 <-  tm_shape(map.1) + 
     tm_borders() + 
     tm_fill("est", title=SDOH_short_label) +
     tm_layout(frame=F) 
@@ -308,3 +295,4 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   
   
 }
+

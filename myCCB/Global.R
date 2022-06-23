@@ -227,6 +227,10 @@ deathMeasures_Dropdown_noADJ   <- deathMeasures[!deathMeasures %in% c("aRate", "
 # RANK BY CAUSE TAB
 deathMeasuresShort_Dropdown    <- deathMeasures[deathMeasures %in% c("Ndeaths", "aRate", "YLLper", "mean.age", "SMR")]
 
+# SDOH TAB
+deathMeasures_Dropdown_SDOH    <- deathMeasures[deathMeasures %in% c("Ndeaths", "cDeathRate", "aRate")]
+mean_age_sort <- c("Youngest to Oldest", "Oldest to Youngest")
+
 
 
 # HOSPITALIZATION INPUTS
@@ -281,31 +285,38 @@ names(bigCode)    <- bigList[, "causeList"]
 
 
 # SOCIAL DETERMINANTS OF HEALTH
-sdohVec  <- c("hpi2score", 
-              "insured", 
-              "est_edu",
-              "inpreschool",
-              "est_pov",
-              "est_rent30up",
-              "est_rent50up",
-              "houserepair", 
-              "parkaccess",
-              "est_net")
 
-sdohVecL <- c(
-  "Healthy Places Index score",                                   
-  "Percentage of adults aged 18 to 64 years currently insured",
-  "Percent of the Population over 25 with a Bachelor's degree or greater",
-  "Percentage of 3 and 4 year olds enrolled in school",                    
-  "Percent of the population with an income below federal poverty level", # ORexceeding 200% of federal poverty level",
-  "Percentage of renters paying more that 30% of household income for rent",
-  "Percentage of renters paying more that 50% of household income for rent",
-  "Percent of households with kitchen facilities and plumbing",
-  "Percentage of the population living within a half-mile of a park, beach, or open space greater than 1 acre",
-  "Percent with an Internet subscription" 
-)
+sdohLink <- readxl::read_excel(paste0(standardsPlace, "sdohLink.xlsx")) %>%
+  filter(inCCB == "x")
 
-names(sdohVec) <- sdohVecL
+sdohVec <- setNames(sdohLink$sdohCode, sdohLink$sdohName)
+
+# sdohVec  <- c("hpi2score", 
+#               "insured", 
+#               "est_edu",
+#               "inpreschool",
+#               "est_pov",
+#               "est_rent30up",
+#               "est_rent50up",
+#               "houserepair", 
+#               "parkaccess",
+#               "est_net")
+# 
+# sdohVecL <- c(
+#   "Healthy Places Index score",                                   
+#   "Percentage of adults aged 18 to 64 years currently insured",
+#   "Percent of the Population over 25 with a Bachelor's degree or greater",
+#   "Percentage of 3 and 4 year olds enrolled in school",                    
+#   "Percent of the population with an income below federal poverty level", # ORexceeding 200% of federal poverty level",
+#   "Percentage of renters paying more that 30% of household income for rent",
+#   "Percentage of renters paying more that 50% of household income for rent",
+#   "Percent of households with kitchen facilities and plumbing",
+#   "Percentage of the population living within a half-mile of a park, beach, or open space greater than 1 acre",
+#   "Percent with an Internet subscription" 
+# )
+# 
+# names(sdohVec) <- sdohVecL
+
 
 
 # COUNTY LIST

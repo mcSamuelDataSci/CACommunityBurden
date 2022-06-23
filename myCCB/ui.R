@@ -468,17 +468,100 @@ shinyUI(
                    
                    
                    
-                   tabPanel(title = strong("SDOH"), value = "sdoh",
-                            tabsetPanel(type = "tab", id = "sdohID",
-                                        
-                                        tabPanel(title = "SOCIAL DETERMINANTS", value = "sdohTab",
-                                                 br(),
-                                                 plotlyOutput("scatter", height=700)
-                                        )
-                            )
-                   ),
+ 
+         
                    
-                   
+ 
+ 
+ #new SDOH
+ 
+ 
+ tabPanel(title = strong("SDOH"), value = "sdoh",
+          tabsetPanel(type = "tab", id = "sdohID",
+                      
+                      tabPanel(title = "SOCIAL DETERMINANTS", value = "sdohTab",
+                               br(),
+                               htmlOutput("sdoh_title"), # Search for "sdoh_title" in server.R to see how the title is generated
+                               fluidRow(
+                                 
+                                 column(width = 8, height = 200,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotlyOutput("scatter")
+                                        )),
+                                 column(width = 4, 
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("violin1")
+                                        ))
+                               ), 
+                               br(),
+                               htmlOutput("sdoh_title2"),
+                               fluidRow(
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("sdohMap1")
+                                        )),
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("hist1")
+                                        ))
+                               ),
+                               br(),
+                               htmlOutput("sdoh_title3"),
+                               
+                               fluidRow(
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("sdohMap2")
+                                        )),
+                                 column(width = 6,
+                                        shinydashboard::box(
+                                          title = NULL,
+                                          status = "primary",
+                                          width = NULL,
+                                          solidHeader = F,
+                                          collapsible = F,
+                                          plotOutput("hist2")
+                                        ))
+                               )
+                               
+                               
+                               )
+                      )),
+ 
+ 
+ 
+ 
+ 
+ # ##################################                                 
+ 
+ 
+ 
+ 
                    
                    tabPanel(title = strong("HOSPITALIZATIONS"), value = "hospitalizations",
                             tabsetPanel(type = "tab", id = "hospitalizationsID",
@@ -494,7 +577,22 @@ shinyUI(
                                         )
                             )
                    ),
-                    
+                   
+ 
+ 
+ 
+
+                                 
+                                 
+                                 
+                                 
+                                 
+ 
+ 
+ 
+ 
+ 
+  
                     # JASPO - Demographics
                    tabPanel(strong("DEMOGRAPHICS"), value = "demographics",
                             

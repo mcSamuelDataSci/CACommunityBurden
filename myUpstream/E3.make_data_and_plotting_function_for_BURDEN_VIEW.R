@@ -17,39 +17,39 @@ mySex     <-  "Total"
 
 
 ccbDataX     <- readRDS(paste0(ccbData,"real/datCounty.RDS")) %>%
-                     filter(Level == "lev2", causeCode != "Z01") %>%
-                     left_join(deathCauseLink ,by="causeCode")       
-                     
+  filter(Level == "lev2", causeCode != "Z01") %>%
+  left_join(deathCauseLink ,by="causeCode")       
+
 ccb         <- filter(ccbDataX,year==myYear_death,sex==mySex) 
 
 ccbDeaths   <- ccb %>%
-                 mutate(measure = Ndeaths,
-                        mValues = causeNameShort)
+  mutate(measure = Ndeaths,
+         mValues = causeNameShort)
 
 ccbYLL      <- ccb %>%
-                 mutate(measure = YLLper,
-                        mValues = causeNameShort)
+  mutate(measure = YLLper,
+         mValues = causeNameShort)
 
 ccbChange   <- filter(ccbDataX,year %in% c(ccbChangeYear,myYear_death), sex==mySex) %>% 
-                  select(county,year,causeNameShort,Ndeaths, aRate) %>%
-                  rename(rate = aRate) %>%
-                  pivot_wider(names_from = year, values_from = c("Ndeaths", "rate"), names_sep = "")
+  select(county,year,causeNameShort,Ndeaths, aRate) %>%
+  rename(rate = aRate) %>%
+  pivot_wider(names_from = year, values_from = c("Ndeaths", "rate"), names_sep = "")
 
 ccbChange      <- ccbChange %>%
-                     mutate(change = round(100*(rate2020-rate2010)/rate2010,1))%>%
-                     filter(!(is.na(rate2020) | is.na(rate2010))) %>% # exclude if either is 0 -- check
-                     mutate(measure=change,
-                            mValues = causeNameShort) 
-                    # mutate(mValues = ifelse(measure < 0,NA,mValues))
+  mutate(change = round(100*(rate2020-rate2010)/rate2010,1))%>%
+  filter(!(is.na(rate2020) | is.na(rate2010))) %>% # exclude if either is 0 -- check
+  mutate(measure=change,
+         mValues = causeNameShort) 
+# mutate(mValues = ifelse(measure < 0,NA,mValues))
 
 
 # --CCB RACE DATA ---------------------------------------------------
 
 
 ccbRace <-  readRDS(paste0(ccbData,"real/ccbRaceDisparity.RDS")) %>%
-                left_join(select(deathCauseLink, -causeName, -causeNameShort) ,by="causeCode")   %>%
-                  mutate(measure=round(rateRatio,1),
-                  mValues = causeNameShort)
+  left_join(select(deathCauseLink, -causeName, -causeNameShort) ,by="causeCode")   %>%
+  mutate(measure=round(rateRatio,1),
+         mValues = causeNameShort)
 
 
 # -- CID DATA ------------------------------------------------
@@ -60,10 +60,10 @@ cidData     <- read_csv(paste0(ccbUpstream,"CID/dcdcData.csv"))
 cid_minYear <- min(cidData$Year)
 
 cidData     <- cidData %>%
-                 filter(Year %in% cid_minYear) %>%
-                 mutate(county = County,
-                 measure=Cases,
-                 mValues = Disease)
+  filter(Year %in% cid_minYear) %>%
+  mutate(county = County,
+         measure=Cases,
+         mValues = Disease)
 
 
 # -- HOSPITALZATION DATA -----------------------------------------------
@@ -71,17 +71,17 @@ cidData     <- cidData %>%
 
 
 edData  <- readRDS(paste0(ccbData,"real/age_race_focus_data/hosp_ED_year.RDS")) %>%
-             left_join(hospCauseLink, by="causeCode") %>%
-             filter(year==myYear_pdd) %>% 
-             mutate(measure = n_ED,
-                    mValues = causeNameShort)
+  left_join(hospCauseLink, by="causeCode") %>%
+  filter(year==myYear_pdd) %>% 
+  mutate(measure = n_ED,
+         mValues = causeNameShort)
 
 
 hospData <- readRDS(paste0(ccbData,"real/age_race_focus_data/hosp_ED_year.RDS")) %>%
-             left_join(hospCauseLink, by="causeCode") %>%
-             filter(year==myYear_pdd) %>% 
-             mutate(measure = n_hosp,
-                    mValues = causeNameShort)
+  left_join(hospCauseLink, by="causeCode") %>%
+  filter(year==myYear_pdd) %>% 
+  mutate(measure = n_hosp,
+         mValues = causeNameShort)
 
 
 
@@ -112,8 +112,8 @@ dataIHME     <- read_csv(paste0(ccbUpstream,"IHME/IHME_manual.csv"))
 
 dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD  
                                       year    == 2019,
-                                     display    == "cause",
-                                  #    level      %in% myLevel,
+                                      display    == "cause",
+                                      #    level      %in% myLevel,
                                       sex_id     == 3,   # Both
                                       metric_id  == 3)  %>%    # Rate 
   mutate(measure = round(val, 3),
@@ -127,11 +127,11 @@ dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD
 dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #YLD  
                                       year    == 2019,
                                       display    == "risk",
-                                   #   level      %in% myLevel,
+                                      #   level      %in% myLevel,
                                       sex_id     == 3,   # Both
                                       metric_id  == 3)  %>%  # Rate
-                                mutate(measure = round(val, 3),
-                                mValues = rei_name)
+  mutate(measure = round(val, 3),
+         mValues = rei_name)
 
 
 # --APP Constants ------------------------------------------------------
@@ -151,7 +151,7 @@ plot_title <- c("Deaths",
                 "Reportable Disease Cases",
                 "Years Lived with Disability",
                 "Risk Factors" 
-                )
+)
 
 metric <-     c("Number",
                 "Rate",
@@ -206,7 +206,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
     myObserv = 10
   }  
   
-
+  
   SHOW_TOP <- myObserv  
   tSize1   <- #round(((2e-07)*(myObserv^4))-((6e-05)*(myObserv^3))+
     #        0.007*(myObserv^2)-(0.3276*myObserv)+8.4091)
@@ -265,6 +265,9 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
   # Jaspo
   if (decrease) plot_width <- max(abs(work.dat$measure))*PLOT_WIDTH_MULTIPLIER
   
+  # Rounding, commas
+  if (IDnum %in% c(1, 5, 6, 7)) work.dat <- mutate(work.dat, measureText = scales::comma(measure, accuracy = 1)) else work.dat <- mutate(work.dat, measureText = scales::comma(measure, accuracy = 0.1))
+  
   # tPlot <-  
   #   ggplot(data=work.dat, aes(x=reorder(xValues, -xrow),y=measure)) +
   #   coord_flip() +
@@ -303,7 +306,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
     annotate(geom="text", 
              hjust= if (decrease) 0 else 1, x=work.dat$xValues, 
              y= if (decrease) -plot_width else plot_width, 
-             label=work.dat$measure,size=work.dat$xSize2) +
+             label=work.dat$measureText,size=work.dat$xSize2) +
     theme(panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),
           panel.background=element_blank(),
@@ -329,7 +332,6 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
   
 }
 
-
 #==========================================================================================================================
 
 
@@ -340,4 +342,4 @@ save(dataSets, ourColors, plot_title, metric, plotMeasures, file = paste0(ccbDat
 
 
 
-  
+

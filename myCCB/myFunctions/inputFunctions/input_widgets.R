@@ -20,6 +20,8 @@ hidden(
       # helpText
       div(id = "myGeoHelpText", helpText(h6(appTextL$tractWarning,style="color:red; float:left; margin: 20px;"))),
       
+      selectInput("myGeo_sdoh","Geographic Level:", choices=c("County","Community")),
+      
       # myYear ======================
       sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,
                   round=TRUE,sep="",step=1),  #can use value=c(2017,2017)
@@ -65,6 +67,9 @@ hidden(
       
       selectInput("myMeasureShort",  "Measure Sort Order:",  
                   choices=deathMeasuresShort_Dropdown, selected= "aRate"),
+      
+      radioButtons("myMeanAge_sort",  'Sort "Mean Age at Death" from:',  
+                  choices=mean_age_sort),
       
       # selectInput("myMeasureShort",  list(label="Measure Sort Order:", actionButton("measureHelp", label=helpIcon,style=myInputHelpButtonSty)),  
       #             choices=dMNames_short, selected="Age-Adjusted Death Rate"),
@@ -164,7 +169,7 @@ hidden(
       
       
       # myX ======================
-      selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec),
+      selectInput("myX", "Social Determinant of Health Variable:", choices=sdohVec, selected="est_pov"),
       
       # myOSHPDtype ======================
       selectInput( "myOSHPDtype", "Measure Sort Order:", choices = hMNames_short),

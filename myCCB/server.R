@@ -74,11 +74,14 @@ shinyServer(function(input, output,session) {
   observeEvent(current$tab,{
     if(current$tab %in% c("ageTrendTab") )
     {updateSelectInput(session, "myMeasure", choices = deathMeasures_Dropdown_noADJ )}
+    
+    if(current$tab %in% c("sdohTab") )
+    {updateSelectInput(session, "myMeasure", choices = deathMeasures_Dropdown_SDOH, selected = 'aRate')}
   })
   
   
   observeEvent(current$tab,{
-    if(!(current$tab %in% c("ageTrendTab")) )
+    if(!(current$tab %in% c("ageTrendTab", "sdohTab")) )
     {updateSelectInput(session, "myMeasure", choices = deathMeasures_Dropdown,selected = "aRate" )}
   })
   
@@ -436,8 +439,13 @@ observeEvent(current$tab,{
   
   # ---------------------------------------------------------------------------------------------------------
   
+  observe({
+    if (input$myMeasureShort == "mean.age" & current$tab == "rankByCauseTab") shinyjs::show("myMeanAge_sort") else shinyjs::hide("myMeanAge_sort")
+  })
+  
+  
   # CAUSE
-  rankCauseStep      <- reactive(rankCause(input$myLHJ,input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN))
+  rankCauseStep      <- reactive(rankCause(input$myLHJ,input$myMeasureShort, input$myYear, input$mySex, input$myLev, input$myN, myMeanAge_sort = input$myMeanAge_sort))
   output$rankCause   <- renderPlot(rankCauseStep()$plotL)
   
   observeEvent(current$tab,{
@@ -476,6 +484,9 @@ observeEvent(current$tab,{
 
     } } )
   
+  
+  
+
 # ---------------------------------------------------------------------------------------------------------
 
 disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
@@ -847,7 +858,20 @@ observeEvent(current$tab,{
 # output$any_primary <- renderPlot(anyprimary1(input$myLHJ,input$myPosition))
 
 
-output$scatter      <- renderPlotly( scatterSDOH(             input$myCAUSE, input$myMeasure,                    input$mySex,                  input$myGeo,input$myX))
+
+   #    <- renderPlot(junkPlot())
+
+
+
+
+scatterStep  <- reactive(scatterSDOH(input$myCAUSE, input$myMeasure, input$myGeo_sdoh,input$myX))
+output$scatter      <- renderPlotly(scatterStep()$p)
+output$violin1      <- renderPlot(scatterStep()$violin1)
+output$hist1        <- renderPlot(scatterStep()$hist1)
+output$sdohMap1      <- renderPlot(scatterStep()$map1)
+output$hist2        <- renderPlot(scatterStep()$hist2)
+output$sdohMap2      <- renderPlot(scatterStep()$map2)
+
 
 output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, input$mySex),
                                      option=list(columnDefs=list(list(targets=3:5, class="dt-right")), pageLength = 60)) #DT::
@@ -856,11 +880,12 @@ output$rankCauseT   <- renderDataTable(rankCauseTab(input$myLHJ, input$myYear, i
 
 
 
-# Generate labels and titles for maps and charts --------------------------------
+# Generate labels and titles for maps and sdoh charts --------------------------------
 
 sexLabel   <- renderText({if (input$mySex == "Total")  sexLabel  <- ""      else sexLabel  <- paste0(", among ",input$mySex,"s")})
 geoLabel   <- renderText({if (input$myLHJ==STATE)      geoLab    <- ""      else geoLab    <- paste0(" in ",input$myLHJ)})
 timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp5 else timeLabel <- paste(input$myYear)})
+timeLabel_sdoh  <- renderText({if (input$myGeo_sdoh != "County") timeLabel <- yearGrp5 else timeLabel <- paste(currentYear)})
 
 # output$map_title <- renderUI({h4(strong(
 #                     HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
@@ -871,7 +896,7 @@ timeLabel  <- renderText({if (input$myGeo != "County") timeLabel <- yearGrp5 els
 #                                    sexLabel(), geoLabel(),
 #                                    sep = " ")))) })
 
-
+# MAP TITLE
 output$map_title <- renderUI({h4(strong(
   HTML(paste0(   deathMeasuresNames[deathMeasures == input$myMeasure],
                  " from ",
@@ -881,6 +906,34 @@ output$map_title <- renderUI({h4(strong(
                  " by ",input$myGeo,
                  sexLabel(), geoLabel(),
                  sep = " ")))) })
+
+
+# SDOH TITLE - uses custom function timeLabel() ~20 lines above to set year label to 2020 if county, or 2016-2020 if comm/tract
+output$sdoh_title <- renderUI({h4(strong(
+  HTML(paste0("Association of ", names(sdohVec[sdohVec == input$myX]), " and ", deathMeasuresNames[deathMeasures == input$myMeasure],
+                 " for ",
+                 deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE],
+                 " by ", input$myGeo_sdoh,
+              " in ", span(timeLabel_sdoh(),style="color:blue"),
+                              sep = " "))), align = "center") })
+
+output$sdoh_title2 <- renderUI({h4(strong(
+  HTML(paste0("Geographic and Overall Distribution of ", deathMeasuresNames[deathMeasures == input$myMeasure],
+              " for ",
+              deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE],
+              " by ", input$myGeo_sdoh,
+              " in ", span(timeLabel_sdoh(),style="color:blue"),
+              sep = " "))), align = "center") })
+
+output$sdoh_title3 <- renderUI({h4(strong(
+  HTML(paste0("Geographic and Overall Distribution of ", names(sdohVec[sdohVec == input$myX]),
+              " by ", input$myGeo_sdoh,
+              " in ", span(timeLabel_sdoh(),style="color:blue"),
+              sep = " "))), align = "center") })
+
+
+
+
 
 
 
