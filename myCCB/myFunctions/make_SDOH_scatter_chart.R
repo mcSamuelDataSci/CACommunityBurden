@@ -155,6 +155,7 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   
   # Ensures all regions in the dataset are shown in the legend
   t_sdohWork <- sdohWork_both %>%
+    filter(!is.na(myMeasure)) %>% # Prevents NA values from showing on scatterplot
     complete(sex, region, fill = list(est = 0, myMeasure = 0))
   
   
@@ -191,6 +192,7 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
       xanchor = "middle",
       yanchor = "top",
       showarrow = FALSE,
+      yshift = 20,
       font = list(size = 18)
     )
   
@@ -198,7 +200,7 @@ scatterSDOH <- function(myCause="0", myMeasure = "aRate",  myGeo="Community", my
   p <- t_sdohWork %>%
     group_by(sex) %>%
     do(p = my_plot(.)) %>%
-    subplot(nrows = plot_rows, shareX = TRUE, shareY = TRUE) %>%
+    subplot(nrows = plot_rows, shareX = TRUE, shareY = TRUE, margin = 0.06) %>%
     layout(margin = list(l = 100), 
            annotations = list(
              list(x = -0.15, y = 0.5, text=paste("<b>",death_measure_label,"</b>"), font = t1, textangle = 270, showarrow = F, xref = 'paper', yref='paper')
