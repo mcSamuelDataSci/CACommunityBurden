@@ -89,6 +89,8 @@ datCounty_3year     <- readRDS(path(ccbData, whichData, "datCounty_3year.RDS"))
 datCounty_AGE_3year <- readRDS(path(ccbData, whichData, "datCounty_AGE_3year.RDS")) 
 datCounty_5year     <- readRDS(path(ccbData, whichData, "datCounty_5year.RDS")) 
 datCounty_EDU       <- readRDS(path(ccbData, whichData, "datCounty_EDU.RDS")) 
+datState_AGE        <- readRDS(path(ccbData, whichData, "datState_AGE.RDS"))
+datState_RE       <- readRDS(path(ccbData, whichData, "datState_RE.RDS")) 
 
 eduMap        <- as.data.frame(read_csv(paste0(ccbInfo, "/Education Codes and Names.csv")))
 datCounty_EDU <- left_join(datCounty_EDU, eduMap, by="eduCode")

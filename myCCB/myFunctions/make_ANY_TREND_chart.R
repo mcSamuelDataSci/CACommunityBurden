@@ -7,7 +7,7 @@ if(1==2){
 }
 
 
-trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping=1, myLogTrans=FALSE, myMultiRace=FALSE) {
+trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab, myYearGrouping=1, myYearGrouping_race_age=3, myLogTrans=FALSE, myMultiRace=FALSE) {
 
   # ----- sexTrendTab ---------------------------------------------------------
   
@@ -67,26 +67,47 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
   
   if (myTab == "ageTrendTab") {
     
+    if (myLHJ != "CALIFORNIA") myYearGrouping_race_age <- 3
+    
+    if (myYearGrouping_race_age == 1) {
+      inDat    <- datState_AGE 
+      myBreaks <- minYear:maxYear
+      myLabels <- myBreaks                                   }
+    
+    if (myYearGrouping_race_age == 3)  {
+      inDat <- datCounty_AGE_3year
+      chartYearMap  <-  chartYearMap %>%
+        select(yearGroup3,midYear3)   %>%
+        filter(!is.na(midYear3))      %>%   unique()
+      myLabels   <- chartYearMap$yearGroup3
+      myBreaks   <- chartYearMap$midYear3
+      inDat$year <- myBreaks[match(inDat$yearG3,myLabels)]   }
+    
      myVARIABLE <- "ageGroup"
     
-      dat.1 <- filter(datCounty_AGE_3year,county == myLHJ,causeCode == myCause, sex=="Total", !is.na(ageGroup)) %>%
+      dat.1 <- filter(inDat,county == myLHJ,causeCode == myCause, sex=="Total", !is.na(ageGroup)) %>%
         left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
         mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
       
       if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
   
-      yRange     <- chartYearMap$yearGroup3
-      yMid       <- chartYearMap$midYear3
-      myLabels   <- yRange
-      myBreaks   <- yMid
-      dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
-
-      yearBit <- dat.1 %>% filter(!is.na(year)) %>% pull(yearG3)  
-      yearBit <- paste(min(yearBit),"to",max(yearBit))
-   
       myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
-                         " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO
-                         " in ",myLHJ," by AGE GROUP, ",yearBit)
+                        " of ",dat.1[1,"causeNameShort"], # JASPO
+                        " in ",myLHJ," by AGE GROUP, ",myLabels[1]," to ",myLabels[length(myLabels)])
+      
+      # yRange     <- chartYearMap$yearGroup3
+      # yMid       <- chartYearMap$midYear3
+      # myLabels   <- yRange
+      # myBreaks   <- yMid
+      # dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
+      # 
+      # yearBit <- dat.1 %>% filter(!is.na(year)) %>% pull(yearG3)  
+      # yearBit <- paste(min(yearBit),"to",max(yearBit))
+      # 
+      # myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
+      #                    " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO
+      #                    " in ",myLHJ," by AGE GROUP, ",yearBit)
+      
       myTitle <-  wrap.labels(myTitle,myWrapNumber)
       
       myLineLabel <- myVARIABLE
@@ -97,7 +118,7 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
       dat.1 <- mutate(dat.1,ageGroup = ifelse(ageGroup == "85 - 999","85+",ageGroup))  ###FIX THIS A TTTTOP LEVEL!
       
       
-      varsIn  <- c("causeNameShort","county","yearG3","ageGroup",myMeasure) 
+      varsIn  <- c("causeNameShort","county","year","ageGroup",myMeasure) 
       tabDat  <- dat.1 %>% select(varsIn)
       
   }
@@ -108,7 +129,24 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     myVARIABLE <- "raceNameShort"
     
-     dat.1 <- filter(datCounty_RE,county == myLHJ,causeCode == myCause, sex=="Total")  %>%
+    if (myLHJ != "CALIFORNIA") myYearGrouping_race_age <- 3
+    
+    if (myYearGrouping_race_age == 1) {
+      inDat    <- datState_RE 
+      myBreaks <- minYear:maxYear
+      myLabels <- myBreaks                                   }
+    
+    if (myYearGrouping_race_age == 3)  {
+      inDat <- datCounty_RE
+      chartYearMap  <-  chartYearMap %>%
+        select(yearGroup3,midYear3)   %>%
+        filter(!is.na(midYear3))      %>%   unique()
+      myLabels   <- chartYearMap$yearGroup3
+      myBreaks   <- chartYearMap$midYear3
+      inDat$year <- myBreaks[match(inDat$yearG3,myLabels)]   }
+    
+    
+     dat.1 <- filter(inDat,county == myLHJ,causeCode == myCause, sex=="Total")  %>%
                left_join(  select(deathCauseLink,causeCode,causeName, causeNameShort),by="causeCode") %>% # JASPO
        mutate(causeNameShort = ifelse(!is.na(causeNameShort), causeNameShort, causeName))
      dat.1 <- left_join(dat.1,raceLink,by="raceCode")
@@ -117,14 +155,11 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
     
-    yRange     <- chartYearMap$yearGroup3
-    yMid       <- chartYearMap$midYear3
-    myLabels   <- yRange
-    myBreaks   <- yMid
-    dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
-    
-    
-    
+    # yRange     <- chartYearMap$yearGroup3
+    # yMid       <- chartYearMap$midYear3
+    # myLabels   <- yRange
+    # myBreaks   <- yMid
+    # dat.1$year <- yMid[match(dat.1$yearG3,yRange)]
     
     
     myLineLabel <- "raceNameShort" # Changed to raceCode
@@ -134,16 +169,21 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
     
     tabDat <- dat.1
     
-    yearBit <- dat.1 %>% filter(!is.na(year)) %>% pull(yearG3)  
-    yearBit <- paste(min(yearBit),"to",max(yearBit))
-    
+    # yearBit <- dat.1 %>% filter(!is.na(year)) %>% pull(yearG3)  
+    # yearBit <- paste(min(yearBit),"to",max(yearBit))
     
     myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
-                      " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO 
-                      " in ",myLHJ," by RACE/ETHNIC Group*, ",yearBit)
+                      " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO
+                      " in ",myLHJ," by RACE/ETHNIC Group*, ",myLabels[1]," to ",myLabels[length(myLabels)])
+    
+    
+    # myTitle <- paste0("Trend in ",deathMeasuresNames[deathMeasures == myMeasure],
+    #                   " of ",deathCauseLink$causeName[deathCauseLink$causeCode== myCause], # JASPO 
+    #                   " in ",myLHJ," by RACE/ETHNIC Group*, ",yearBit)
+    
     myTitle <-  wrap.labels(myTitle,myWrapNumber)
     
-    varsIn  <- c("causeNameShort","county","yearG3","raceCode",myMeasure) # JASPO
+    varsIn  <- c("causeNameShort","county","year","raceCode",myMeasure) # JASPO
     tabDat  <- dat.1 %>% select(varsIn)
     
     

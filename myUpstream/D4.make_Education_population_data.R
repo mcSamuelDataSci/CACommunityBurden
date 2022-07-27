@@ -51,6 +51,7 @@ a.ed1_2017 <- getEd(2017,"acs1")
 a.ed1_2018 <- getEd(2018,"acs1")   
 a.ed1_2019 <- getEd(2019,"acs1")  
 a.ed1_2020 <- getEd(2019,"acs1") # Using 2019 ACS for 2020. UPDATE when 2020 ACS1 becomes available  
+a.ed1_2021 <- getEd(2019,"acs1") # Using 2019 ACS for 2020. UPDATE when 2020 ACS1 becomes available 
 
 #a.ed5_2005.09 <- getEd(2009,"acs5")   # generates ERROR
 # a.ed5_2006.10 <- getEd(2010,"acs5")

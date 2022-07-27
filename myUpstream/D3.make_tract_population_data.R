@@ -13,9 +13,9 @@
 
 # 0 ACS years
 
-myACS_year1 <- 2010 # For 2006-2010
-myACS_year2 <- 2015 # For 2011-2015
-myACS_year3 <- 2019 # Temporarily use this for 2016-2020... 2020 5-year ACS scheduled to release in December 2021
+myACS_year1 <- 2011 # For 2007-2011
+myACS_year2 <- 2016 # For 2012-2016
+myACS_year3 <- 2019 # Temporarily use this for 2017-2021... 2020 5-year ACS scheduled to release in December 2021
 
 # 1 Setting Paths, and Packages
 .packages	  <- c("tidycensus",    #load_variables, get_acs
@@ -57,10 +57,10 @@ LabelsUsed  <- filter(Labels,grepl("B01001_",name)) %>%
 
 
 # `a.pop5_2008-2012` <- getPop(2012) 
-`a.pop5_2006-2010` <- getPop(myACS_year1) %>% mutate(GEOID = ifelse(GEOID == "06037930401", 
+`a.pop5_2007-2011` <- getPop(myACS_year1) %>% mutate(GEOID = ifelse(GEOID == "06037930401", 
                                                                     "06037137000", GEOID))
-`a.pop5_2011-2015` <- getPop(myACS_year2)
-`a.pop5_2016-2020` <- getPop(myACS_year3)
+`a.pop5_2012-2016` <- getPop(myACS_year2)
+`a.pop5_2017-2021` <- getPop(myACS_year3)
 
 
 # 5 Combining and cleaning

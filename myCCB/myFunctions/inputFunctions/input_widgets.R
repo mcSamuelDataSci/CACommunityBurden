@@ -79,6 +79,8 @@ hidden(
       # myYearGrouping ======================
       radioButtons("myYearGrouping", "Years to Group:", choices=c(1,3,5), inline = TRUE),
       
+      radioButtons("myYearGrouping_race_age", "Years to Group:", choices=c(1,3), inline = TRUE),
+      
    
       # myData ======================
       selectInput("myData","Data Type:", choices=c("Deaths", "Hospitalizations","Emergency Department")),  
