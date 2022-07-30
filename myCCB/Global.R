@@ -47,6 +47,7 @@ figureAttribution <- "California Department of Public Health" # Used in make_MAP
 # eliminates "Rplots.pdf" error generated only on CDPH Shiny Server, from tmap leaflet map
 pdf(NULL) 
 
+
 # USE consistent map projection system throughout all app code !
 proj1 <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 proj2 <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
@@ -71,6 +72,9 @@ library(visNetwork) # used in IHME tab
 library(DT)
 library(cowplot)
 library(docxtractr)
+
+# This resolves the error message for creating a map: "Error: Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
+tmap_options(check.and.fix = TRUE)
 
 # - 4. READ DATASETS & INFO ------------------------------------------------------------------------------------------------------
 

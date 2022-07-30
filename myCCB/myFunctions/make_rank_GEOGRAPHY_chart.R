@@ -146,7 +146,9 @@ rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="To
     arrange(!is.na(plotter),plotter) %>%
     mutate(lab =wrap.labels(comName,30))
   tit       <- paste0("Community Ranking of ",deathMeasuresNames[deathMeasures == myMeasure]," for ",causeLab," in ",myLHJ," in ",yearGrp5,sexLab)
-  sMeasure  <- datCounty$plotter[datCounty$county==myLHJ]
+  sMeasure  <- datCounty_5year %>% 
+    filter(county == myLHJ, yearG5 == yearGrp5, sex == mySex, causeCode == myCause) %>% 
+    pull ( {{ myMeasure }})
   }
 
 

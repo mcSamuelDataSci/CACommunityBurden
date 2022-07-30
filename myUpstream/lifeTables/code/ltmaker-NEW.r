@@ -45,7 +45,7 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, require, character.only=TRUE)           
 
 ## 1.2  options
-myYear <- 2020
+myYear <- 2021
 controlPop  <-  F  # whether to control ACS to DOF pop totals
 whichDeaths <- "real" # source of deaths data (real,fake,dof)
 whichPop    <- "pep"  # source of population data (dof,pep)
