@@ -74,7 +74,7 @@ library(cowplot)
 library(docxtractr)
 
 # This resolves the error message for creating a map: "Error: Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
-tmap_options(check.and.fix = TRUE)
+# tmap_options(check.and.fix = TRUE)
 
 # - 4. READ DATASETS & INFO ------------------------------------------------------------------------------------------------------
 
@@ -197,7 +197,7 @@ HospitalPrimaryAnyTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospC)
 news_and_updates <- read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
 news_and_updates <- docx_extract_tbl(news_and_updates, 1) %>%
   mutate(Text = paste("<li>", Date, Update, "</li>"))
-news_and_updates <- paste("\n<li>Welcome to the CCB!</li>\n<br>", (paste(news_and_updates$Text, collapse = "\n")), sep = "\n")
+news_and_updates <- paste('\n<li>Welcome to the CCB! App updates are listed below. If you have any questions, please contact <a href = "mailto: CCB@cdph.ca.gov">CCB@cdph.ca.gov</a></li>\n<br>', (paste(news_and_updates$Text, collapse = "\n")), sep = "\n")
 
 
 # WARNING MESSAGES

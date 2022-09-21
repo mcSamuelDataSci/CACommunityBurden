@@ -371,17 +371,17 @@ output$trendEducation <- renderPlot(trendEducationStep()$plotL)
 
 observeEvent(current$tab,{
   if(current$tab %in% c("educationTrendTab") ) {
-    
+
     output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(),".png")},
                                      content = function(file) {
                                        png(file,width=1000, height=600)
                                        print(trendEducationStep()$plotL)
                                        dev.off()  }  )
-    
+
     output$ourData <- downloadHandler(filename = function() {paste0(current$tab,"-",input$myCAUSE,"-",input$myLHJ,"-",Sys.Date(), ".csv")},
                                       content = function(file) {
                                         write.csv(trendEducationStep()$dataL, file,row.names = FALSE) } )
-    
+
   } } )
 
 

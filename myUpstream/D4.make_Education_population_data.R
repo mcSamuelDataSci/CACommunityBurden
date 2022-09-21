@@ -5,7 +5,7 @@
 # Apr 24 2019
 ##############
 
-server <- F
+server <- T
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
@@ -16,7 +16,10 @@ if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 .inst       <- .packages %in% installed.packages() 
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst]) 
 lapply(.packages, require, character.only=TRUE)           
-.ckey 	<- "e3e74296ba28071ea63579af4b3c744b47012138"
+# .ckey 	<- "e3e74296ba28071ea63579af4b3c744b47012138"
+.ckey <- read_file(paste0(ccbUpstream,"upstreamInfo/census.api.key.txt"))
+
+census_api_key(.ckey)
 
 
 #2 User Input Variables
@@ -32,8 +35,7 @@ getEd <- function(ACSYear=2012,ACSSurvey="acs1",ACSLabels=LabelsUsed$name)
           year = ACSYear, variables = ACSLabels,
           key=.ckey, moe_level=90),
   get_acs(state = 06, geography = "state", survey = ACSSurvey,
-          year = ACSYear, variables = ACSLabels,
-          key=.ckey, moe_level=90)
+          year = ACSYear, variables = ACSLabels, moe_level=90)
 )}
 
 
@@ -41,6 +43,7 @@ getEd <- function(ACSYear=2012,ACSSurvey="acs1",ACSLabels=LabelsUsed$name)
 # ACS Table B15001	SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER
 
 LabelsUsed  <- filter(Labels,grepl("B15001_",name))
+
 
 a.ed1_2012 <- getEd(2012,"acs1")
 a.ed1_2013 <- getEd(2013,"acs1")
@@ -106,7 +109,7 @@ EdGroups <- data.frame(label=c( "Less than 9th grade_1",
 AgeGroups <- data.frame(label=c( "18 to 24 years_18 - 24",
                                  "25 to 34 years_25 - 34",
                                  "35 to 44 years_35 - 44",
-                                 "45 to 64 years_45 - 65",
+                                 "45 to 64 years_45 - 64",
                                  "65 years and over_65 - 999")) %>%
                              separate(label,sep="_",c("age","ageG_EDU"))
 

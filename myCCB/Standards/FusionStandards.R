@@ -332,6 +332,21 @@ myTheme <- theme_bw() +
 theme_set(myTheme)
 
 
+
+cdph1 <- 
+  theme_bw() + 
+  theme(panel.grid.minor = element_blank(), 
+        plot.title       = element_text(size = 16, color="darkblue"),
+        axis.title       = element_text(size = 14), 
+        axis.text  = element_text(size = 14)
+  ) 
+
+
+
+
+
+
+
 # Highcharter standards + theme
 
 hc_myTitleSize <- '20px'
