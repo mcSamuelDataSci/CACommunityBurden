@@ -28,11 +28,11 @@
 # datComm             | CCB               5           MSSA                    sex (inc. Total); No level 3 causes
 # datTract            | CCB               5           Tract                   sex (inc. Total); Only level 1 causes
 # datRegion           | Exploratory       1           Region, State           sex (inc. Total)
-# datCounty_RE_1year  | Exploratory       1           County, State           sex (inc. Total); race/ethnicity (inc. Total)
-# datRegion_RE_1year  | Exploratory       1           Region, State           sex (inc. Total); race/ethnicity (inc. Total)
-# datCounty_Q         | Exploratory     Quarter       County, State           sex (inc. Total); race/ethnicity (inc. Total)
-# datCounty_M         | Exploratory     Month         County, State           sex (inc. Total)
-# datRegion_Q         | Exploratory     Quarter       Region, State           sex (inc. Total); race/ethnicity (inc. Total)
+# datCounty_RE_1year  | Preliminary       1           County, State           sex (inc. Total); race/ethnicity (inc. Total)
+# datRegion_RE_1year  | Preliminary       1           Region, State           sex (inc. Total); race/ethnicity (inc. Total)
+# datCounty_Q         | Preliminary     Quarter       County, State           sex (inc. Total); race/ethnicity (inc. Total)
+# datCounty_M         | Preliminary     Month         County, State           sex (inc. Total)
+# datRegion_Q         | Preliminary     Quarter       Region, State           sex (inc. Total); race/ethnicity (inc. Total)
 # datCounty65         | Exploratory       1           County, State           sex (inc. Total); restricted to ages < 65
 # datCounty65_RE      | Exploratory       3           County, State           sex (inc. Total); restricted to ages < 65
 
@@ -40,10 +40,10 @@
 # Intermediate Datasets produced: non-suppressed race/ethnicity by age group (5) datasets used for exploratory purposes only
 
 # datCounty_RACE_AGE
-# datCounty_RACE_AGE_1year
-# datCounty_RACE_AGE_Q
-# datRegion_RACE_AGE_1year
-# datRegion_RACE_AGE_Q
+# datCounty_RACE_AGE_1year (Preliminary)
+# datCounty_RACE_AGE_Q (Preliminary)
+# datRegion_RACE_AGE_1year (Preliminary)
+# datRegion_RACE_AGE_Q (Preliminary)
 
 
 # Other Datasets produced:
@@ -91,14 +91,17 @@ library(sqldf)
 library(readxl)
 library(fs)
 
+# Year to exclude from non-preliminary datasets
+excludeYear <- 2022 
+
 # T if using recent multi-year groupings; F if not
 isRecent_multiYear <- T
 
 # Specify the years for the quarterly data
-forQuarter_selectYears <- 2016:2021
+forQuarter_selectYears <- 2017:2022
 
 # Specify the years for RE_1year
-RE_1year_years <- 2000:2021
+RE_1year_years <- 2000:2022
 
 whichDat <- "real"
 subSite  <- FALSE
@@ -333,6 +336,9 @@ cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 record
 
 codeDoesntMap  <- filter(cbdDat0,is.na(icdCODE))
 table(codeDoesntMap$ICD10,useNA = "ifany") # These codes are not assigned in the CCB
+
+# Run if there are any codes that do not map
+cbdDat0$icdCODE[cbdDat0$ICD10 %in% unique(codeDoesntMap$ICD10)] <- "cZ03"
 
 codeLast4      <- str_sub(cbdDat0$icdCODE,2,5)
 nLast4         <- nchar(codeLast4)
@@ -1945,24 +1951,24 @@ datTract  <- filter(datTract,population>0)
 
 # == SAVE DATA SETS FOR APPLICATION ===============================================================
 
-saveRDS(filter(datCounty, !is.na(year)),             file= path(ccbData,whichDat,"datCounty.RDS"))
-saveRDS(filter(datRegion, !is.na(year)),             file= path(ccbData,whichDat,"datRegion.RDS"))
+saveRDS(filter(datCounty, year != excludeYear),      file= path(ccbData,whichDat,"datCounty.RDS"))
+saveRDS(filter(datRegion, year != excludeYear),      file= path(ccbData,whichDat,"datRegion.RDS"))
 saveRDS(datCounty_RE_1year,                          file= path(ccbData,whichDat,"datCounty_RE_1year.RDS"))
 saveRDS(datRegion_RE_1year,                          file= path(ccbData,whichDat,"datRegion_RE_1year.RDS"))
 saveRDS(datCounty_Q,                                 file= path(ccbData,whichDat,"datCounty_Q.RDS"))
 saveRDS(datRegion_Q,                                 file= path(ccbData,whichDat,"datRegion_Q.RDS"))
 saveRDS(datCounty_M,                                 file= path(ccbData,whichDat,"datCounty_M.RDS"))
-saveRDS(filter(datCounty65, !is.na(year)),           file= path(ccbData,whichDat,"datCounty65.RDS"))
+saveRDS(filter(datCounty65, year != excludeYear),    file= path(ccbData,whichDat,"datCounty65.RDS"))
 saveRDS(filter(datCounty65_RE, !is.na(yearG3)),      file= path(ccbData,whichDat,"datCounty65_RE.RDS"))
 saveRDS(filter(datCounty_3year, !is.na(yearG3)),     file= path(ccbData,whichDat,"datCounty_3year.RDS"))
 saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(ccbData,whichDat,"datCounty_AGE_3year.RDS"))
 saveRDS(filter(datCounty_5year, !is.na(yearG5)),     file= path(ccbData,whichDat,"datCounty_5year.RDS"))
 saveRDS(filter(datCounty_RE, !is.na(yearG3)),        file= path(ccbData,whichDat,"datCounty_RE.RDS"))
-saveRDS(datCounty_EDU,                               file= path(ccbData,whichDat,"datCounty_EDU.RDS"))
+saveRDS(filter(datCounty_EDU, year != excludeYear),  file= path(ccbData,whichDat,"datCounty_EDU.RDS"))
 saveRDS(filter(datComm, !is.na(yearG5)),             file= path(ccbData,whichDat,"datComm.RDS"))
 saveRDS(filter(datTract, !is.na(yearG5)),            file= path(ccbData,whichDat,"datTract.RDS"))
-saveRDS(filter(datState_AGE, !is.na(year)),          file= path(ccbData,whichDat,"datState_AGE.RDS"))
-saveRDS(filter(datState_RE, !is.na(year)),           file= path(ccbData,whichDat,"datState_RE.RDS"))
+saveRDS(filter(datState_AGE, year != excludeYear),   file= path(ccbData,whichDat,"datState_AGE.RDS"))
+saveRDS(filter(datState_RE, year != excludeYear),    file= path(ccbData,whichDat,"datState_RE.RDS"))
 
 
 # == SAVE AS .CSV FILES FOR AD HOC ANALYSIS =======================================================

@@ -1,12 +1,12 @@
 
-server <- T
+server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 # --Global constants and settings-----------------------------------
 
-myYear_death   <-  2020 # used for deaths
+myYear_death   <-  2021 # used for deaths
 myYear_pdd <- 2020  # used for hosp
 
 ccbChangeYear <- myYear_death - 10
@@ -30,14 +30,21 @@ ccbYLL      <- ccb %>%
   mutate(measure = YLLper,
          mValues = causeNameShort)
 
+
+
+ndeathsCols <- paste0("Ndeaths", c(ccbChangeYear, myYear_death))
+rateCols <- paste0("rate", c(ccbChangeYear, myYear_death))
+
 ccbChange   <- filter(ccbDataX,year %in% c(ccbChangeYear,myYear_death), sex==mySex) %>% 
   select(county,year,causeNameShort,Ndeaths, aRate) %>%
   rename(rate = aRate) %>%
-  pivot_wider(names_from = year, values_from = c("Ndeaths", "rate"), names_sep = "")
+  pivot_wider(names_from = year, values_from = c("Ndeaths", "rate"), names_sep = "") %>%
+  rename(rate10 = !!as.symbol(rateCols[1]), rate0 = !!as.symbol(rateCols[2]), 
+         Ndeaths10 = !!as.symbol(ndeathsCols[1]), Ndeaths0 = !!as.symbol(ndeathsCols[2]))
 
 ccbChange      <- ccbChange %>%
-  mutate(change = round(100*(rate2020-rate2010)/rate2010,1))%>%
-  filter(!(is.na(rate2020) | is.na(rate2010))) %>% # exclude if either is 0 -- check
+  mutate(change = round(100*(rate0-rate10)/rate10,1))%>%
+  filter(!(is.na(rate0) | is.na(rate10))) %>% # exclude if either is 0 -- check
   mutate(measure=change,
          mValues = causeNameShort) 
 # mutate(mValues = ifelse(measure < 0,NA,mValues))

@@ -35,7 +35,7 @@ populationExtract <- function(County = F, # all uppercase in arguments; explain 
                               CA    = T, 
                               Total = T,
                               multiYear = F, 
-                              popData = NA, 
+                              popData = NULL, # Previously NA, now NULL since NA (all of a sudden) starting causing an error in if-else
                               server = TRUE) { 
   
   
@@ -49,7 +49,7 @@ populationExtract <- function(County = F, # all uppercase in arguments; explain 
   
   
   
-  if(is.na(popData)) {
+  if(is.null(popData)) {
     popRaw <- data.table::fread(paste0(fusionPlace, "Population Data/P3_Complete.csv")) %>%
       mutate(sex = str_to_title(sex)) %>%
       rename(age = agerc, population = perwt)

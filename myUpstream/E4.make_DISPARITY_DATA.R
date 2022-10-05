@@ -10,6 +10,8 @@ datCounty_3year <- readRDS(path(ccbData, "real/datCounty_3year.RDS"))
 
 nCut      <- 20
 
+mainYearG3 <- "2019-2021"
+
 # RACE --------------------------------------------------------------------------------------------------------------------------
 
 raceTest <- datCounty_RE %>%  
@@ -40,7 +42,7 @@ if (1==2) {
    raceViewWork  <- raceTest_LOW %>%            
       filter(Level == "lev2" ) %>%
       #  filter(!(causeCode %in% c("A02","D04","E03") ) & Level %in% c("lev2","lev3") )
-      filter(yearG3 == "2018-2020",sex=="Total")
+      filter(yearG3 == mainYearG3,sex=="Total")
    
    
    raceDisparityUnique   <- raceViewWork %>%

@@ -195,9 +195,22 @@ HospitalPrimaryAnyTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospC)
 
 # NEWS AND UPDATES
 news_and_updates <- read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
+
 news_and_updates <- docx_extract_tbl(news_and_updates, 1) %>%
   mutate(Text = paste("<li>", Date, Update, "</li>"))
 news_and_updates <- paste('\n<li>Welcome to the CCB! App updates are listed below. If you have any questions, please contact <a href = "mailto: CCB@cdph.ca.gov">CCB@cdph.ca.gov</a></li>\n<br>', (paste(news_and_updates$Text, collapse = "\n")), sep = "\n")
+
+# library(kableExtra)
+# news_and_updates <- docxtractr::docx_extract_tbl(news_and_updates, 1) %>%
+#   mutate(Date = paste0("<b>", Date, "</b>"),
+#          temp = paste(Date, Update)) %>%
+#   select(`<center>If you have any questions, please contact CCB@cdph.ca.gov</center>` = temp) %>%
+#   kbl(escape = F) %>%
+#   kable_styling(full_width = F) %>%
+#   add_header_above(header = "Welcome to the CCB! App updates are listed below.", 
+#                    bold = T, color = "white", background = "#0F79BF", font_size = 20) %>%
+#   column_spec(1, background = c("#CFE4F2", "#BBD8EC"))
+
 
 
 # WARNING MESSAGES

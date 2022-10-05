@@ -10,7 +10,7 @@
 
 # -- Set most recent year --------------------------------------------------------------------------------------------------------------
 
-myYear <- 2021
+myYear <- 2022
 isRecent_multiYear <- T # T if using recent multi-year groups; F if not
 
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------
@@ -99,7 +99,8 @@ popCounty <- populationExtract(County    = T,
                                CA        = T, 
                                Total     = T,
                                multiYear = F, 
-                               popData   = dof_pop_2000_myYear)
+                               popData   = dof_pop_2000_myYear, 
+                               server = server)
 
 
 popCounty_RE_3year  <- popCounty %>% 
@@ -121,7 +122,8 @@ popCounty65 <- populationExtract(County  = T,
                                CA        = T, 
                                Total     = T,
                                multiYear = F, 
-                               popData   = filter(dof_pop_2000_myYear, age < 65))  # <---!
+                               popData   = filter(dof_pop_2000_myYear, age < 65), 
+                               server = server)  
 
 
 

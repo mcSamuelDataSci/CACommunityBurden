@@ -210,6 +210,7 @@ countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","sex","aRate","aLCI","aUC
 
 # == MERGE CRUDE AND AGJECT RATES AND CLEAN UP ====================================================
 
+
 datCounty <- merge(datCounty,countyAA ,by = c("county","sex"),all=TRUE)
 
 # SMR Calculations --------
@@ -234,5 +235,8 @@ source(paste0("Info/","suppressionFunction.R"))
 
 gBy       <-  c("county")         # FOR MAIN
 datCounty <- mutate(datCounty, supIndicator = mySuppress(datCounty,gBy,"Ndeaths"))
+
+
+
 datCounty <- filter(datCounty, 
                     supIndicator != 1)  # %>%   select(-supIndicator)

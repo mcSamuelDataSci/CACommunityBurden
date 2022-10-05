@@ -75,7 +75,7 @@ if (state.installation) {
   
  
   
-  
+ ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_063022.csv"), colClasses = "character") %>% filter(F24 == "2022") 
  ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2021.csv"), colClasses = "character") %>% filter(F24 == "2021")
  ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")    
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
@@ -119,7 +119,7 @@ if (state.installation) {
 
 #----------------------------
 
-death.datA  <- bind_rows(ca21, ca20, ca19, ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
+death.datA  <- bind_rows(ca22, ca21, ca20, ca19, ca18,ca17,ca16,ca15,ca14,ca13,ca12,ca11,ca10,ca09,ca08,ca07,ca06,ca05)
 
 
 #death.datA  <- bind_rows(ca20, ca19)
@@ -206,31 +206,87 @@ death.datA$age  <- as.numeric(death.datA$age) # missing values generated from
                                                   #   non-numeric values # consider fixes
 death.datA$age[!death.datA$age %in% 0:120] <- NA
 
-# STATE -----
-# Consider investigation/comparison with State based on gecoding
-# HARMONIZE with CHSI: OKAY
-# select Califonia cases only
-# "state" here based on "F71" only -- use additional variables?
-#   10 blank, 4593 XX (not US or Canada), 6685 ZZ (unknown) 
-death.datA <- subset(death.datA, state=="CA")   # NOTE: subset function excludes NAs 
-death.datA$stateFIPS  <-"06" 
 
-# 2005-2013 & 2015 data DOES NOT include reallocates (deaths of California residents that occured out-of-state)
-# 2014             data DOES     include reallocates
-# what about 2001-2004?
-# is this correct?
-# can we fix it?
+# State and county methodology updated based on CHSI's recommendations --------------------------------------------------
 
-# COUNTY -----
-# County name based strictly on (mapping to) FIPS code (F62)
-# HARMONISE with CHSI: OKAY
-fipsCounty          <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) 
-death.datA$county   <- fipsCounty$countyName[match(death.datA$countyFIPS,fipsCounty$FIPSCounty)]        
+# New method: The VSB Assessment and Policy Section (VSB-APS) is considering transitioning to the following new methodology:
+# CCB Team: Using this method as of 09/28/2022
 
-# code no longer needed since FIPS code is read in as character, but valuable "snipit" for similar purposes:
-# death.datA$countyFIPS  <- str_pad(death.datA$countyFIPS,3,pad="0")  
+# 1. For records assigned a Census Tract from a geocoded residence address (F192 is not blank), F192 will be used for both 
+# residence state and county. A California resident will have “06” for F192 positions 1-2 and F192 positions 3-5 will be used for the county FIPS code.
 
-# -----------------------------------------------------------------------------------------------------------------------
+# 2. For records where F192 is blank, California residents will be identified as records where F71 is CA.
+#   a. For records where F62 is not blank, F62 will be used.
+#   b. For records where F62 is blank, F61 will be used (out-of-state records).
+
+fipsCounty <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
+
+# Step 1
+death.datA_1 <- death.datA %>%
+  filter(!is.na(GEOID), GEOID != "") %>%
+  mutate(stateFIPS = substr(GEOID, 1, 2), 
+         tempCountyFIPS = substr(GEOID, 3, 5)) %>%
+  filter(stateFIPS == "06") %>%
+  left_join(select(fipsCounty, countyName, FIPSCounty), by = c("tempCountyFIPS" = "FIPSCounty")) %>%
+  rename(county = countyName) %>%
+  select(-tempCountyFIPS)
+
+# Step 2
+death.datA_2 <- death.datA %>%
+  filter(GEOID == "" | is.na(GEOID), state == "CA") %>%
+  mutate(stateFIPS = "06") %>%
+  left_join(select(fipsCounty, countyName, FIPSCounty), by = c("countyFIPS" = "FIPSCounty")) %>%
+  rename(county = countyName)
+
+# Data check - All NA counties should have a corresponding "999" (unknown) value
+# Should be 59 rows (58 counties + 1 NA county)
+count(death.datA_2, county, countyFIPS)
+
+# Data check - Check NA counties. FIPS for both countyFIPS and backup column should be "999"
+death.datA_2 %>%
+  filter(is.na(county)) %>%
+  count(countyFIPS, countyFIPS_backup) %>%
+  rename(Ndeaths = n)
+
+death.datA <- bind_rows(death.datA_1, death.datA_2)
+  
+# Alpine check
+death.datA %>%
+  filter(county == "Alpine") %>%
+  count(county)
+
+# Old method for filtering on CA residents and assigning county of residence - no longer in use as of 09/28/2022 ---------
+# Steps: 
+# 1. Filter on "CA" in state column (F71)
+# 2. Link countyFips column (F62) to get county names
+
+# # [BEGIN COMMENT OUT]
+# # STATE -----
+# # Consider investigation/comparison with State based on gecoding
+# # HARMONIZE with CHSI: OKAY
+# # select Califonia cases only
+# # "state" here based on "F71" only -- use additional variables?
+# #   10 blank, 4593 XX (not US or Canada), 6685 ZZ (unknown) 
+# death.datA <- subset(death.datA, state=="CA")   # NOTE: subset function excludes NAs 
+# death.datA$stateFIPS  <-"06" 
+# 
+# # 2005-2013 & 2015 data DOES NOT include reallocates (deaths of California residents that occured out-of-state)
+# # 2014             data DOES     include reallocates
+# # what about 2001-2004?
+# # is this correct?
+# # can we fix it?
+# 
+# # COUNTY -----
+# # County name based strictly on (mapping to) FIPS code (F62)
+# # HARMONISE with CHSI: OKAY
+# fipsCounty          <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) 
+# death.datA$county   <- fipsCounty$countyName[match(death.datA$countyFIPS,fipsCounty$FIPSCounty)]        
+# 
+# # code no longer needed since FIPS code is read in as character, but valuable "snipit" for similar purposes:
+# # death.datA$countyFIPS  <- str_pad(death.datA$countyFIPS,3,pad="0")  
+# # [END COMMENT OUT]
+
+# -------------------------------------------------------------------------------------------------------------------------------
 
 # ******************
 # ADD/FIX  IF 192 is missing and 73 is not missing, use that (and talk to Matt Beyers about this) 
