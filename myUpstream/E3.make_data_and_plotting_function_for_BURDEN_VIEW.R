@@ -7,7 +7,7 @@ if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandar
 # --Global constants and settings-----------------------------------
 
 myYear_death   <-  2021 # used for deaths
-myYear_pdd <- 2020  # used for hosp
+myYear_pdd <- 2021  # used for hosp
 
 ccbChangeYear <- myYear_death - 10
 
@@ -131,7 +131,7 @@ dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD
 #dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
 
 
-dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #YLD  
+dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #DALY  
                                       year    == 2019,
                                       display    == "risk",
                                       #   level      %in% myLevel,

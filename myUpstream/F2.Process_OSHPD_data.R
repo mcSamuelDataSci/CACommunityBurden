@@ -26,12 +26,6 @@ whichData <- "real"   # "fake"
 if (!server) source           ("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if  (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
-# # per Standards, currentYear is "currentYear  <- 2019"; edit here as needed
-# currentYear <- currentYear
-# currentYear <- 2020
-# yearGrp_hosp_ed_deaths     <- yearGrp_hosp_ed_deaths   # hack to check and fix....
-# currentYear_hosp_ed
-
 
 raceLink   <-  raceLink %>%
                  select(raceCode, OSHPD, raceNameShort) %>%
@@ -44,19 +38,15 @@ source(paste0(standardsPlace,"ageChop.R"))
 source(paste0(standardsPlace,"populationExtract.R"))
 
 
-ccsMap <- read_excel(paste0(ccbUpstream,"upstreamInfo/ccs_dx_icd10cm_2019_1-BETA.xlsx"))  %>%
+ccsMap <- read_excel(paste0(ccbUpstream,"upstreamInfo/Fusion-ccs_dx_icd10cm_2019_1-BETA.xlsx"))  %>%
                        select(icd10    = "'ICD-10-CM CODE'",
                               ccscode  = "'CCS CATEGORY'", 
                               ccsname  =  "'CCS CATEGORY DESCRIPTION'") %>%
                        mutate(icd10    = str_remove_all(icd10,"'"),
                               ccscode  = str_remove_all(ccscode,"'")
                             )
-  
-  ccsMap    <- ccsMap %>% select(-ccsname)
+ccsMap    <- ccsMap %>% select(-ccsname)
 
-  
-  
-  
 # B ------   
 #--- READ RAW ANNUAL SAS FILES, TIDY UP, JOIN YEARS, OUTPUT R DATA SETS ---------------------------------------------------------------
 
@@ -67,7 +57,31 @@ library(haven)
   
   
 # Hospital Discharge --------------------------------  
+
+# 2021 processing -- 'back calculate' ICD10-CM to CSS
   
+  pdd.2021         <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2021.sas7bdat") )
+  
+  pdd.2021.work   <- pdd.2021  %>% rename(icd10 = diag_p) %>%
+    left_join(ccsMap, by="icd10") %>% 
+  #  mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+    rename(ccs_diagP = ccscode) %>%
+    rename(diag_p = icd10)
+  
+  # Map ICD-10-CM to css in odiag1 - odiag24 
+  for (i in 1:24) {
+    column_name <- paste0("odiag", i)
+    ccs_column_name <- paste0("ccs_odiag", i)
+    
+    pdd.2021.work <- pdd.2021.work %>%
+      mutate(icd10 = !!sym(column_name)) %>%
+      left_join(ccsMap, by="icd10") %>% 
+      mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+      rename(!!sym(ccs_column_name) := ccscode) %>%
+      select(-icd10)
+  }
+  
+  pdd.2021.work <- pdd.2021.work %>% select(-(odiag1:odiag24))    
   
 # 2020 processing -- 'back calculate' ICD10-CM to CSS
 
@@ -94,6 +108,7 @@ for (i in 1:24) {
   
 pdd.2020.work <- pdd.2020.work %>% select(-(odiag1:odiag24))                   
   
+#---------------------------------------
 
 pdd.2017       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
   mutate(year = 2017)
@@ -112,8 +127,8 @@ pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") 
  
 ######## THINK about issue here, where three most recent years are hardwired together
 
- pdd.work <- bind_rows(pdd.2018, pdd.2019, pdd.2020.work)
- pdd.work <- bind_rows(pdd.2018, pdd.2019, pdd.2017)
+ pdd.work <- bind_rows(pdd.2019, pdd.2020.work, pdd.2021.work)
+ #pdd.work <- bind_rows(pdd.2018, pdd.2019, pdd.2017)
  
 
   ###---------------------------------------------------------
@@ -154,37 +169,40 @@ pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") 
   
 # Emergency Department --------------------------------------------------------------------------  
 
-  
-  
-ed.2020         <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2020.sas7bdat") )
-
-ed.2020.work   <- ed.2020  %>% rename(icd10 = dx_prin) %>%
+  ed.2021         <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2021.sas7bdat") )
+  ed.2021.work    <- ed.2021  %>% rename(icd10 = dx_prin) %>%
     left_join(ccsMap, by="icd10") %>% 
-    mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+   # mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+    rename(ccs_dx_prin = ccscode) %>%
+    rename(dx_prin = icd10) %>%
+    mutate(year=2021)  
+  
+  # temp <- ed.2021.work %>% group_by(year,ccs_dx_prin) %>% summarise(N = n()) %>% pivot_wider(values_from = N, names_from = year)
+  
+  
+  
+  ed.2020         <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2020.sas7bdat") )
+  ed.2020.work    <- ed.2020  %>% rename(icd10 = dx_prin) %>%
+    left_join(ccsMap, by="icd10") %>% 
+  #  mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
     rename(ccs_dx_prin = ccscode) %>%
     rename(dx_prin = icd10) %>%
     mutate(year=2020)
 
-  ed.2017       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2017.sas7bdat") ) 
-  ed.2018       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2018.sas7bdat") ) 
+ # ed.2017       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2017.sas7bdat") ) 
+ # ed.2018       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2018.sas7bdat") ) 
   ed.2019       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2019.sas7bdat") ) 
   
   
   #ed.work <- bind_rows(ed.2017, ed.2018, ed.2019)
-  ed.work <- bind_rows(ed.2018, ed.2019, ed.2020.work)
+  #ed.work <- bind_rows(ed.2018, ed.2019, ed.2020.work)
+  ed.work <- bind_rows(ed.2019, ed.2020.work, ed.2021.work)
+  
   
   # Full ED data
   # oshpd.ed.work    <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_work.sas7bdat") )
   # saveRDS(oshpd.ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
   saveRDS(ed.work, file = path(securePlace, "myData/oshpd_ed.RDS"))
-  
-  
-  
-  
-  
-  
-  
-  
   
 #------------------------------------------------------------------------------------------
 

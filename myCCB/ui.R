@@ -228,7 +228,9 @@ shinyUI(
     dashboardPage(
       # https://stackoverflow.com/questions/31440564/adding-a-company-logo-to-shinydashboard-header
       dashboardHeader(title = appTitle, titleWidth = 500,
-                      tags$li(a(href = 'http://www.company.com',
+                      tags$li(a(href = 'https://www.cdph.ca.gov/Programs/FCSD/Pages/FusionCenter.aspx',
+                                target = "_blank", 
+                                rel = "noopener noreferrer",
                                 img(src = 'Fusion Center Knot.png',
                                     title = "Company Home", height = "30px"),
                                 style = "padding-top:10px; padding-bottom:10px;"),

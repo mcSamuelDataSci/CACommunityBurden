@@ -82,7 +82,7 @@ STATE       <- "CALIFORNIA"
 
 
 currentYear          <- 2021
-currentYear_hosp_ed  <- 2020
+currentYear_hosp_ed  <- 2021
 
 incRecentYearData <- T 
 currentYear <- ifelse(incRecentYearData, currentYear, currentYear - 1)
