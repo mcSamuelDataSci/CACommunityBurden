@@ -171,6 +171,7 @@ tabHelpList <- list("dataTableTab"           = appTextL$conditionTableTab,
                     "trendTab"               = appTextL$trendTab,
                     "rankByCauseTab"         = appTextL$conditionTab,
                     "rankByGeographyTab"     = appTextL$rankGeoTab,
+                    # "mcodTab"                = appTextL$mcodTab,
                     "rankByCauseAndSexTab"   = appTextL$conditionSexTab,
                     "lifeExpectancyTab"      = appTextL$lifeExpectancyTab,
                     "hospitalDischargeTab"   = HospitalizationsTab, # created in Global.R
@@ -490,8 +491,28 @@ observeEvent(current$tab,{
 
     } } )
   
+
+# MCOD ----------------------------------------------------------------------------------------------------------
   
-  
+mcodStep <- reactive(mcodRanking(myCounty = input$myLHJ, mySex = input$mySex, mySort = input$myMcodSort, topN = input$myN))  
+output$mcodPrimarySecondary <- renderPlot(mcodStep()$plot)
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("mcodTab") ) {
+    
+    output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".png")},
+                                     content = function(file) {
+                                       png(file, width = 18, height = 10, units = "in", pointsize = 10,res=100)
+                                       print(mcodStep()$plot)
+                                       dev.off() }, contentType = "png" )
+    
+    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",input$myLHJ,"-",Sys.Date(),".csv")  },
+                                      content = function(file) {
+                                        write.csv(mcodStep()$data, file,row.names = FALSE) } )
+    
+  } } )
+ 
 
 # ---------------------------------------------------------------------------------------------------------
 

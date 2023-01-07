@@ -402,7 +402,10 @@ shinyUI(
                                         tabPanel(title = "RANK BY GEOGRAPHY - Deaths", value = "rankByGeographyTab",
                                                  plotOutput("rankGeo", width="100%", height=1700)
                                         ),
-                                  
+                                        tabPanel(title = "MULTIPLE CAUSES OF DEATH", value = "mcodTab", 
+                                                 plotOutput("mcodPrimarySecondary", width = "100%", height = 700)
+                                                 ),
+                                        
                                         tabPanel(title = "AGE RACE FOCUS", value = "ageRaceFocusTab",
                                                  plotOutput("ageRaceFocus", width="100%", height=1700)
                                         ),

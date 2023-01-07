@@ -1,13 +1,3 @@
-# server <- TRUE
-# source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
-# 
-# mcod <- readRDS("/mnt/projects/FusionData/JaspreetMisc/MCOD/data/datCounty_MCOD.RDS") %>%
-#   filter(!grepl("Z", causeCode)) %>%
-#   mutate(Ndeaths_total = Ndeaths_primary + Ndeaths_other,
-#          pPrimary = Ndeaths_primary / Ndeaths_total,
-#          pOther = Ndeaths_other / Ndeaths_total)
-
-
 if (FALSE) {
   myCounty <- "Alameda"
   mySex <- "Total"
@@ -51,7 +41,7 @@ mcodRanking <- function(myCounty = "CALIFORNIA",
   myLabelSize <- 4
   
   
-  tDat_download <- mcod %>%
+  tDat_download <- datCounty_mcod %>%
     filter(year == myYear, county == myCounty, sex == mySex) %>%
     arrange(-!!as.symbol(mySort)) %>%
     slice(1:topN) %>%

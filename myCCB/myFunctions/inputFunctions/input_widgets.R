@@ -182,6 +182,13 @@ hidden(
       # myPosition ======================
       selectInput( "myPosition", "Sort Order:", choices = listPosition),
       
+      # MCOD Sort Order
+      selectInput( "myMcodSort", "Sort Order:", choices = c("Primary Number of Deaths" = "Ndeaths_primary", 
+                                                            "Secondary Number of Deaths" = "Ndeaths_other", 
+                                                            "Total Number of Deaths" = "Ndeaths_total", 
+                                                            "Percent Primary" = "pPrimary", 
+                                                            "Percent Secondary" = "pOther")),
+      
       # myVar(ICD/MDC/DRG) ======================
       # selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),
       #            choice = MDC_DRG_ICD_Dropdown),
