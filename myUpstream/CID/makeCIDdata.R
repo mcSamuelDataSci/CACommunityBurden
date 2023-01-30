@@ -47,6 +47,12 @@ tb.dat  <- read_excel(tb.url) %>%
                mutate(Branch = "TB")
 
 
+tb.url  <- path(ccbUpstream,"CID","OPD TB 2005_2021.xlsx")
+tb.dat  <- read_excel(tb.url) 
+
+
+
+
 
 # Sexually Transmitted Diseases ------------------------------------------------------------------------------------------------------------------------------------
 std.url <- "https://data.chhs.ca.gov/dataset/4de76cd0-0ac9-4260-8ac3-0637acb444fb/resource/563ba92b-8ac5-48ec-9afd-2f515bbbad66/download/stds-by-disease-county-year-sex.csv"

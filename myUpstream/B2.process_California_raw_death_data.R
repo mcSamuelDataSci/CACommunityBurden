@@ -75,7 +75,7 @@ if (state.installation) {
   
  
   
- ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_093022.csv"), colClasses = "character") %>% filter(F24 == "2022") 
+ ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_123122.csv"), colClasses = "character") %>% filter(F24 == "2022") 
  ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2021.csv"), colClasses = "character") %>% filter(F24 == "2021")
  ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")    
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       

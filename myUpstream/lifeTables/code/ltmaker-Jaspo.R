@@ -120,7 +120,7 @@ range_5year <- 2002:(myYear - 2) # Used for 5-year estimates
 ## 1.3 Set Paths ----------------------------------------------------------
 
 CCB         <- TRUE
-server      <- TRUE
+server      <- FALSE
 myDrive     <- getwd()
 myPlace     <- paste0(myDrive,"/myCCB/") 
 
@@ -243,8 +243,8 @@ dxCounty <- dx %>%
                          my_uAge = ageUpperLimit,
                          my_ageName = ageUpperLimit, 
                          ourServer = server)) %>% 
-  left_join(countycfips, by = "county") %>% # Bring in county fips code
-  mutate(GEOID = sprintf("%05d000000", cfips)) %>% # Overwrite GEOID column to only include county fips
+  left_join(fipsCounty, by = "county") %>% # Bring in county fips code
+  mutate(GEOID = sprintf("%05d000000", FIPSCounty)) %>% # Overwrite GEOID column to only include county fips
   bind_rows(mutate(., sex = "Total")) %>% # Add total sex to data frame
   bind_rows(mutate(., raceCode = "Total")) %>% # Add total race to data frame
   group_by(year,GEOID,sex, raceCode, agell,ageul) %>%
@@ -486,7 +486,7 @@ calcLT <- function(myData, groupByCols = c("GEOID", "year", "nyrs", "sex", "race
     group_by(across({{ groupByCols }})) %>% 
     nest() %>% 
     mutate(
-      data = map(data, ~ doLTChiangCI(x = .x$agell, Nx = .x$Nx, Dx = .$Dx, sex = .x$tSex, dt = F)) # Call Chiang function defined above; Calculates life expectancy per nyrs-year-GEOID-sex-race strata
+      data = map(data, ~ doLTChiangCI(x = .x$agell, Nx = .x$Nx, Dx = .$Dx, sex = .x$tSex)) # Call Chiang function defined above; Calculates life expectancy per nyrs-year-GEOID-sex-race strata
     ) %>% 
     unnest(data) %>% 
     ungroup()

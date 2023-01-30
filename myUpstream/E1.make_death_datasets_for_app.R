@@ -141,23 +141,23 @@ if (isRecent_multiYear) yearMap <- as.data.frame(read_excel(paste0(ccbInfo,"Year
 if (!isRecent_multiYear) yearMap <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "old"))
 
 # Rural
-ruca <- read_xlsx(paste0(fusionPlace,
-                         "SHIP/SHEP/Food_Access_&_mRFI_SHEP_Revisions/Rural_Urban_Community_Area_(RUCA)_Codes_CA_2010/RUCA_Codes_CA_2010.xlsx")) %>%
-  filter(`Select State`=="CA") %>%
-  rename (GEOID =`State-County-Tract FIPS Code (lookup by address at http://www.ffiec.gov/Geocode/)`) %>%
-  mutate(GEOID = ifelse(GEOID == "06037930401", "06037137000", GEOID)) %>%
-  rename (Secondary_RUCA_Code =`Secondary RUCA Code, 2010 (see errata)`) %>%
-  mutate(ruca = case_when(
-    `Secondary_RUCA_Code` ==  1 ~ "Urban 1.0",
-    `Secondary_RUCA_Code` == 1.1 ~ "Urban 1.1",
-    `Primary RUCA Code 2010` == 2 ~ "Urban 2.0",
-    `Primary RUCA Code 2010` == 3 ~ "Urban 3.0",
-    `Primary RUCA Code 2010` %in% 4:6 ~ "Large Rural",
-    `Primary RUCA Code 2010` %in% 7:9 ~ "Small Rural",
-    `Primary RUCA Code 2010`  == 10 ~ "Isolated Rural",
-    `Primary RUCA Code 2010` == 99 ~ "Unknown"
-  )) %>%
-  select(GEOID, ruca)
+# ruca <- read_xlsx(paste0(fusionPlace,
+#                          "SHIP/SHEP/Food_Access_&_mRFI_SHEP_Revisions/Rural_Urban_Community_Area_(RUCA)_Codes_CA_2010/RUCA_Codes_CA_2010.xlsx")) %>%
+#   filter(`Select State`=="CA") %>%
+#   rename (GEOID =`State-County-Tract FIPS Code (lookup by address at http://www.ffiec.gov/Geocode/)`) %>%
+#   mutate(GEOID = ifelse(GEOID == "06037930401", "06037137000", GEOID)) %>%
+#   rename (Secondary_RUCA_Code =`Secondary RUCA Code, 2010 (see errata)`) %>%
+#   mutate(ruca = case_when(
+#     `Secondary_RUCA_Code` ==  1 ~ "Urban 1.0",
+#     `Secondary_RUCA_Code` == 1.1 ~ "Urban 1.1",
+#     `Primary RUCA Code 2010` == 2 ~ "Urban 2.0",
+#     `Primary RUCA Code 2010` == 3 ~ "Urban 3.0",
+#     `Primary RUCA Code 2010` %in% 4:6 ~ "Large Rural",
+#     `Primary RUCA Code 2010` %in% 7:9 ~ "Small Rural",
+#     `Primary RUCA Code 2010`  == 10 ~ "Isolated Rural",
+#     `Primary RUCA Code 2010` == 99 ~ "Unknown"
+#   )) %>%
+#   select(GEOID, ruca)
 
 
 #== LOAD AND PROCESS POPULATION DATA ==============================================================
@@ -238,17 +238,17 @@ popCommSex       <- popTractSex     %>% group_by(yearG5,county,comID,sex)      %
 popCommSexAgeG   <- popTractSexAgeG %>% group_by(yearG5,county,comID,sex,ageGroup) %>% summarise(population=sum(population))  %>% ungroup() 
 
 # For Rural
-popRuralSex <- popTractSex %>%
-  full_join(ruca, by = "GEOID") %>%
-  group_by(yearG5, ruca, sex) %>%
-  summarise(population=sum(population)) %>% 
-  ungroup() 
-
-popRuralSexAgeG <- popTractSexAgeG %>%
-  full_join(ruca, by = "GEOID") %>%
-  group_by(yearG5, ruca, sex, ageGroup) %>%
-  summarise(population=sum(population)) %>% 
-  ungroup() 
+# popRuralSex <- popTractSex %>%
+#   full_join(ruca, by = "GEOID") %>%
+#   group_by(yearG5, ruca, sex) %>%
+#   summarise(population=sum(population)) %>% 
+#   ungroup() 
+# 
+# popRuralSexAgeG <- popTractSexAgeG %>%
+#   full_join(ruca, by = "GEOID") %>%
+#   group_by(yearG5, ruca, sex, ageGroup) %>%
+#   summarise(population=sum(population)) %>% 
+#   ungroup() 
 
 # Standard 2000 Age Group Pop - Used for age-adjustment
 popStandard         <- ageMap    %>% mutate(ageGroup = ageLabel)
@@ -401,8 +401,8 @@ if (1 == 2) {
   cbdDat0 <- readRDS(file= path(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS"))
   
   # Add Rural
-  cbdDat0 <- cbdDat0 %>%
-    left_join(ruca, by = "GEOID")
+  # cbdDat0 <- cbdDat0 %>%
+  #   left_join(ruca, by = "GEOID")
   
 }
 
@@ -877,15 +877,15 @@ cbdDat0 <- cbdDat0_SAVE
 
 # -- RURAL -----------------------------------------------------------------
 
-c.t1      <- calculateYLLmeasures(c("ruca","yearG5","sex","lev0"),"lev0")  
-c.t2      <- calculateYLLmeasures(c("ruca","yearG5","sex","lev1"),"lev1")
-c.t3      <- calculateYLLmeasures(c("ruca","yearG5","sex","lev2"),"lev2")
-datRural   <- bind_rows(c.t1,c.t2,c.t3)     %>%
-  filter(yearG5  %in%  yearGrp)  %>%   
-  arrange(ruca,yearG5,causeCode)
-
-datRural  <- merge(datRural,popRuralSex,by = c("yearG5","ruca","sex"),all=TRUE)
-datRural  <- calculateRates(datRural,5)
+# c.t1      <- calculateYLLmeasures(c("ruca","yearG5","sex","lev0"),"lev0")  
+# c.t2      <- calculateYLLmeasures(c("ruca","yearG5","sex","lev1"),"lev1")
+# c.t3      <- calculateYLLmeasures(c("ruca","yearG5","sex","lev2"),"lev2")
+# datRural   <- bind_rows(c.t1,c.t2,c.t3)     %>%
+#   filter(yearG5  %in%  yearGrp)  %>%   
+#   arrange(ruca,yearG5,causeCode)
+# 
+# datRural  <- merge(datRural,popRuralSex,by = c("yearG5","ruca","sex"),all=TRUE)
+# datRural  <- calculateRates(datRural,5)
 
 # -- COMMUNITY -----------------------------------------------------------------
 
@@ -945,7 +945,7 @@ region   <- data.frame(region   = c(unique(regionLink$region),STATE),           
 comID    <- data.frame(comID    = unique(mssaLink[,"comID"]),                    stringsAsFactors = FALSE)
 GEOID    <- data.frame(GEOID    = mssaLink[,"GEOID"],                            stringsAsFactors = FALSE)
 raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)),                 stringsAsFactors = FALSE)
-rural <- data.frame(ruca = unique(popRuralSex$ruca), stringsAsFactors = FALSE)
+# rural <- data.frame(ruca = unique(popRuralSex$ruca), stringsAsFactors = FALSE)
 
 yearForQuarterly <- data.frame(year = forQuarter_selectYears) # forQuarter_selectYears assigned at the top of script. Run into memory issues when too many years are selected
 yearForRE1 <- data.frame(year = RE_1year_years)
@@ -960,7 +960,7 @@ fullMatCounty_5year    <- sqldf(" select * from  county cross join yearG5 cross 
 fullMatComm            <- sqldf(" select * from  comID  cross join yearG5 cross join CAUSE2 cross join sex cross join ageGroup")  %>% mutate(tester=0)
 fullMatTract           <- sqldf(" select * from  GEOID  cross join yearG5 cross join CAUSE3 cross join sex cross join ageGroup")  %>% mutate(tester=0)
 fullMatCounty_RE_3year <- sqldf(" select * from  county cross join yearG3 cross join CAUSE1 cross join sex cross join ageGroup join raceCode") %>% mutate(tester=0)
-fullMatRural            <- sqldf(" select * from  rural  cross join yearG5 cross join CAUSE2 cross join sex cross join ageGroup")  %>% mutate(tester=0)
+# fullMatRural            <- sqldf(" select * from  rural  cross join yearG5 cross join CAUSE2 cross join sex cross join ageGroup")  %>% mutate(tester=0)
 
 # For quarterly data
 fullMatCounty_RE_Q     <- sqldf(" select * from  county cross join yearForQuarterly cross join quarter cross join CAUSE1 cross join sex cross join ageGroup cross join raceCodeForQuarterly") %>% mutate(tester=0)
@@ -1571,36 +1571,36 @@ cbdDat0 <- cbdDat0_SAVE
 
 
 # -- RURAL (age-adjusted) --------------------------------------------------
-
-tA1      <- cbdDat0 %>% group_by(ruca, yearG5, sex, ageGroup,causeCode=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )   
-tA2      <- cbdDat0 %>% group_by(ruca, yearG5, sex, ageGroup,causeCode=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
-tA3      <- cbdDat0 %>% group_by(ruca, yearG5, sex, ageGroup,causeCode=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
-
-datAA1 <- bind_rows(tA1,tA2,tA3)  %>% filter(ruca != "")  
-
-ageRural   <- full_join(fullMatRural,datAA1,by = c("ruca","yearG5","sex","ageGroup","causeCode"))  %>% 
-  filter(yearG5  %in%  yearGrp)                                                     %>%
-  full_join(popRuralSexAgeG, by = c("ruca","yearG5","sex","ageGroup"))             %>%
-  full_join(popStandard[,c("ageGroup","US2000POP")],by="ageGroup")                     
-
-ageRural$Ndeaths[is.na(ageRural$Ndeaths)] <- 0    
-ageRural$YLL[is.na(ageRural$YLL)]         <- 0    
-
-### LINE BELOW ADDED 7/2/2018
-ageRural <- filter(ageRural,!is.na(ageGroup))
-
-ruralAA <- ageRural %>% group_by(ruca,yearG5,sex,causeCode) %>%
-  summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
-            aRate   = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
-            aLCI    = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
-            aUCI    = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            aSE     = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
-            YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
-ruralAA <- ruralAA[!(ruralAA$oDeaths==0),c("ruca","yearG5","sex","causeCode","oDeaths","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
-
-# removes rows with aRate = inf HERE 
-ruralAA  <- ruralAA[!(ruralAA$aRate > 10000),]
-
+# 
+# tA1      <- cbdDat0 %>% group_by(ruca, yearG5, sex, ageGroup,causeCode=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) )   
+# tA2      <- cbdDat0 %>% group_by(ruca, yearG5, sex, ageGroup,causeCode=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+# tA3      <- cbdDat0 %>% group_by(ruca, yearG5, sex, ageGroup,causeCode=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
+# 
+# datAA1 <- bind_rows(tA1,tA2,tA3)  %>% filter(ruca != "")  
+# 
+# ageRural   <- full_join(fullMatRural,datAA1,by = c("ruca","yearG5","sex","ageGroup","causeCode"))  %>% 
+#   filter(yearG5  %in%  yearGrp)                                                     %>%
+#   full_join(popRuralSexAgeG, by = c("ruca","yearG5","sex","ageGroup"))             %>%
+#   full_join(popStandard[,c("ageGroup","US2000POP")],by="ageGroup")                     
+# 
+# ageRural$Ndeaths[is.na(ageRural$Ndeaths)] <- 0    
+# ageRural$YLL[is.na(ageRural$YLL)]         <- 0    
+# 
+# ### LINE BELOW ADDED 7/2/2018
+# ageRural <- filter(ageRural,!is.na(ageGroup))
+# 
+# ruralAA <- ageRural %>% group_by(ruca,yearG5,sex,causeCode) %>%
+#   summarize(oDeaths = sum(Ndeaths,na.rm=TRUE),
+#             aRate   = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
+#             aLCI    = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
+#             aUCI    = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
+#             aSE     = ageadjust.direct.SAM(count=Ndeaths, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
+#             YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, population=population*pop5, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) 
+# ruralAA <- ruralAA[!(ruralAA$oDeaths==0),c("ruca","yearG5","sex","causeCode","oDeaths","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  
+# 
+# # removes rows with aRate = inf HERE 
+# ruralAA  <- ruralAA[!(ruralAA$aRate > 10000),]
+# 
 
 
 # -- COMMUNITY (age-adjusted) --------------------------------------------------
@@ -1885,8 +1885,8 @@ datCounty_EDU <- datCounty_EDU                                  %>%
 
 # -- RURAL ----------------------------------------------------------------
 
-datRural   <- merge(datRural,    ruralAA ,by = c("ruca","yearG5","sex","causeCode"),all=TRUE) %>%
-  mutate_if(is.numeric, signif,digits = myDigits) 
+# datRural   <- merge(datRural,    ruralAA ,by = c("ruca","yearG5","sex","causeCode"),all=TRUE) %>%
+#   mutate_if(is.numeric, signif,digits = myDigits) 
 
 # -- COMMUNITY ----------------------------------------------------------------
 
@@ -2058,7 +2058,7 @@ saveRDS(filter(datTract, !is.na(yearG5)),            file= path(ccbData,whichDat
 saveRDS(filter(datState_AGE, year != excludeYear),   file= path(ccbData,whichDat,"datState_AGE.RDS"))
 saveRDS(filter(datState_RE, year != excludeYear),    file= path(ccbData,whichDat,"datState_RE.RDS"))
 
-saveRDS(datRural, file = path(ccbData, whichDat, "datRural.RDS"))
+# saveRDS(datRural, file = path(ccbData, whichDat, "datRural.RDS"))
 
 
 # == SAVE AS .CSV FILES FOR AD HOC ANALYSIS =======================================================

@@ -54,7 +54,8 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
   
 
  dat.1 <- lifeTableSet %>% filter(county==myLHJ, sex %in% mySexMult, raceNameShort %in% myRace) %>% 
-             mutate(lineLabel = ifelse(sex == "Total", raceNameShort, paste(raceNameShort,"-",sex)))
+             mutate(lineLabel = ifelse(sex == "Total", raceNameShort, paste(raceNameShort,"-",sex)), 
+                    lineLabel = ifelse(lineLabel == "Latino - Female", "Latina - Female", lineLabel))
 
 
 
