@@ -1,5 +1,5 @@
 
-server <- F
+server <- T
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
@@ -62,12 +62,12 @@ ccbRace <-  readRDS(paste0(ccbData,"real/ccbRaceDisparity.RDS")) %>%
 # -- CID DATA ------------------------------------------------
 
 
-cidData     <- read_csv(paste0(ccbUpstream,"CID/dcdcData.csv")) 
+cidData     <- read_csv(paste0(ccbUpstream,"CID/dcdcData.csv"))
 
-cid_minYear <- min(cidData$Year)
-
-cidData     <- cidData %>%
-  filter(Year %in% cid_minYear) %>%
+cidData <- cidData %>%
+  group_by(Branch) %>%
+  filter(Year == max(Year)) %>%
+  ungroup() %>%
   mutate(county = County,
          measure=Cases,
          mValues = Disease)
