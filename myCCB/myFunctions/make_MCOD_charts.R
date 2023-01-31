@@ -46,7 +46,7 @@ mcodRanking <- function(myCounty = "CALIFORNIA",
     arrange(-!!as.symbol(mySort)) %>%
     slice(1:topN) %>%
     left_join(select(deathCauseLink, causeCode, causeNameShort)) %>%
-    select(-causeCode, -data)
+    select(-causeCode, !starts_with("data"))
   
   
   tDat <- tDat_download %>% 
