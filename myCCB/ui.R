@@ -277,6 +277,20 @@ shinyUI(
                        div(id = "textHomeTab", style = mySidebarTextSty,
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
                            br(),br(), br(),
+                           
+                           HTML("<div id='sophDropdown' class='dropdown'>
+                             <button class='dropbtn'>STATE OF PUBLIC HEALTH<br/>UPDATES</button>
+                             <div id = 'sophDropdownContent' class='dropdown-content'>
+                               <a href='SOPH/2023/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2023 Full Update</a>
+                               <a href='SOPH/2022/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2022 Full Update</a>
+                               <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Full Update</a>
+                               <a href='SOPH/2020/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2020 Handout</a>
+                               <a href='SOPH/2019/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2019 Handout</a>
+                             </div>
+                             </div>"
+                           ),
+                           
+                           br(), br(),
 
                            tags$a(href = "xMDA/2020_Excess_Mortality.html", 
                                   target = "_blank", 
@@ -301,20 +315,6 @@ shinyUI(
                            if (whichData == "real") { helpText(appTextL$textNote.real,style="color:black")},
                            if (whichData == "fake") { helpText(appTextL$textNote.fake,style="color:red")},
                            br(),br(),
-                           
-                           
-                           HTML("<div id='sophDropdown' class='dropdown'>
-                             <button class='dropbtn'>STATE OF PUBLIC HEALTH<br/>UPDATES</button>
-                             <div id = 'sophDropdownContent' class='dropdown-content'>
-                               <a href='SOPH/2022/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2022 Full Update</a>
-                               <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Full Update</a>
-                               <a href='SOPH/2020/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2020 Handout</a>
-                               <a href='SOPH/2019/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2019 Handout</a>
-                             </div>
-                             </div>"
-                             ),
-                           
-                           br(), br(), br(), 
                            
                            actionButton("multipleMeasures", 
                                         HTML("<center>See Multiple Measures of<br/>Health in Your County</center>"), 
