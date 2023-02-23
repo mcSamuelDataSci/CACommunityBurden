@@ -6974,6 +6974,19 @@ button.btn.checkbtn.btn-default.active {
   background-color: #694D75;
 }
 
+/* MCOD inputs in boxes: Have the options not wrap */
+
+/*
+[data-value="mcodTab"] .selectize-input {
+  white-space: nowrap;
+}
+*/
+
+[data-value="mcodTab"] .selectize-dropdown .optgroup-header {
+    font-size: 18px;
+    color: rgb(23,78,134);
+    font-weight: bold;
+}
 
 /*
 .box-header {

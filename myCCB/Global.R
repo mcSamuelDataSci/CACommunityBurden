@@ -180,6 +180,7 @@ source(path(ccbFunctions, "make_MCOD_charts.R"))
 # HELPER FUNCTIONS
 source(paste0(ccbFunctions, "helperFunctions/wrapLabels.R"))
 source(paste0(ccbFunctions, "helperFunctions/dottedSelectInput.R"))
+source(paste0(ccbFunctions, "helperFunctions/stopQuietly.R"))
 
 # IHME FUNCTIONS
 source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
@@ -309,6 +310,22 @@ bigList           <- deathCauseLink %>% filter(nchar(causeCode) <= 1)
 bigCode           <- bigList[, "causeCode"]
 names(bigCode)    <- bigList[, "causeList"]
 
+
+# CAUSES - MCOD TAB
+ph <- function(myBroad) { 
+  tDat <- deathCauseLink %>% 
+    filter(nchar(causeCode) == 3, grepl(myBroad, causeCode)) %>% 
+    mutate(causeList = sub("^.{3}", "  ", causeList))
+  
+  split(tDat$causeCode, tDat$causeList) 
+  }
+
+causeList_mcod <- list(`A. - Communicable, maternal, perinatal and nutritional conditions` = ph("A"), 
+                       `B. - Cancer/Malignant neoplasms` = ph("B"), 
+                       `C. - Cardiovascular diseases` = ph("C"), 
+                       `D. - Other Chronic` = ph("D"), 
+                       `E. - Injuries` = ph("E"), 
+                       `Z. - Unknown/Missing Value` = ph("Z"))
 
 # SOCIAL DETERMINANTS OF HEALTH
 

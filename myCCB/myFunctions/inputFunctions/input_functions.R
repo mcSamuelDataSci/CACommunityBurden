@@ -7,10 +7,10 @@
 # Constants =========================================================================
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
-INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo", "myGeo_sdoh", "myYear", "myYearRank", "myYearRange", "myYearDemo", "mySex",
+INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo", "myGeo_sdoh", "myYear", "myYear_mcod", "myYearRank", "myYearRange", "myYearDemo", "mySex",
             "myRace", "mySexMult",
             "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_topTrends", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping", "myYearGrouping_race_age", "myCutSystem","myLabName","myCI","myRefLine",
-            "myData", "myStrata", "mySort", "myMcodSort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
+            "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
             "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload")
 
@@ -26,7 +26,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "myMeanAge_sort", "suppressionNote", "recentYearNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
                    "rankByGeographyTab"=c("ourDownloads","myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "recentYearNote"),
-                   "mcodTab" = c("ourDownloads", "myLHJ", "mySex", "myMcodSort", "myN"),
+                   "mcodTab" = c("myLHJ", "myYear_mcod"),
                    "ageRaceFocusTab" = c("ourDownloads", "myLHJ", "myData", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","myOlderFocus","myScale", "suppressionNote"),
                    "deathHospEDTab" = c("ourDownloads", "myLHJ", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","suppressionNote"),
                    "sexTrendTab"=c("ourDownloads", "myCAUSE", "myLHJ", "myMeasure", "myYearGrouping", "myLogTrans", "suppressionNote", "recentYearNote"),

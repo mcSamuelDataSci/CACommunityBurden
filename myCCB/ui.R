@@ -232,7 +232,7 @@ shinyUI(
                                 target = "_blank", 
                                 rel = "noopener noreferrer",
                                 img(src = 'Fusion Center Knot.png',
-                                    title = "Company Home", height = "30px"),
+                                    title = "Fusion Center", height = "30px"),
                                 style = "padding-top:10px; padding-bottom:10px;"),
                               class = "dropdown")),
       dashboardSidebar(width=300,
@@ -402,9 +402,36 @@ shinyUI(
                                         tabPanel(title = "RANK BY GEOGRAPHY - Deaths", value = "rankByGeographyTab",
                                                  plotOutput("rankGeo", width="100%", height=1700)
                                         ),
-                                        tabPanel(title = "MULTIPLE CAUSES OF DEATH", value = "mcodTab", 
-                                                 plotOutput("mcodPrimarySecondary", width = "100%", height = 700)
-                                                 ),
+                                        tabPanel(title = "MULTIPLE CAUSES OF DEATH", value = "mcodTab",
+                                                 br(),
+                                                 fluidRow(
+                                                   column(width = 6, 
+                                                          shinydashboard::box(
+                                                            status = "primary",
+                                                            width = NULL,
+                                                            fluidRow(
+                                                              column(width = 6, 
+                                                                     selectInput("myMcodMeasure", "Sort Order:", 
+                                                                                 choices = c("Primary Number of Deaths" = "Ndeaths_primary", 
+                                                                                             "Secondary Number of Deaths" = "Ndeaths_other", 
+                                                                                             "Total Number of Deaths" = "Ndeaths_total", 
+                                                                                             "Percent Primary" = "pPrimary", 
+                                                                                             "Percent Secondary" = "pOther"))),
+                                                              column(width = 6, 
+                                                                     numericInput("myN_mcod", "How Many:", value=10,min=1,max=30))
+                                                              ),
+                                                            plotOutput("mcodRankMeasure", width = "100%", height = 900)
+                                                          )),
+                                                   column(width = 6, 
+                                                          shinydashboard::box(
+                                                            status = "primary",
+                                                            width = NULL,
+                                                            selectizeInput("myCAUSE_mcod", "Cause of Death:", choices=causeList_mcod),
+                                                            plotOutput("mcodRankSecondaryPerPrimary", width = "100%", height = 450),
+                                                            plotOutput("mcodRankPrimaryPerSecondary", width = "100%", height = 450)
+                                                            # plotOutput("mcodRankCause", width = "100%", height = 900)
+                                                          )
+                                                 ))),
                                         
                                         tabPanel(title = "AGE RACE FOCUS", value = "ageRaceFocusTab",
                                                  plotOutput("ageRaceFocus", width="100%", height=1700)

@@ -26,6 +26,10 @@ hidden(
       sliderInput("myYear","Year:",value=maxYear,min=2001,max=maxYear,animate = TRUE,
                   round=TRUE,sep="",step=1),  #can use value=c(2017,2017)
       
+      # myYear ======================
+      sliderInput("myYear_mcod","Year:",value=maxYear,min=2019,max=maxYear,animate = TRUE,
+                  round=TRUE,sep="",step=1),
+      
       # myYearDemo ======================
       sliderInput("myYearDemo","Year:",value=maxYear,min=2000,max=maxYear,animate = TRUE,
                   round=TRUE,sep="",step=1),
@@ -181,13 +185,6 @@ hidden(
       
       # myPosition ======================
       selectInput( "myPosition", "Sort Order:", choices = listPosition),
-      
-      # MCOD Sort Order
-      selectInput( "myMcodSort", "Sort Order:", choices = c("Primary Number of Deaths" = "Ndeaths_primary", 
-                                                            "Secondary Number of Deaths" = "Ndeaths_other", 
-                                                            "Total Number of Deaths" = "Ndeaths_total", 
-                                                            "Percent Primary" = "pPrimary", 
-                                                            "Percent Secondary" = "pOther")),
       
       # myVar(ICD/MDC/DRG) ======================
       # selectInput("myVar", label=list("Variable:",  actionButton( "dxGroupsHelp", label=helpIcon,style=myInputHelpButtonSty)),
