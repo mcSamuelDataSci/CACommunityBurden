@@ -420,6 +420,7 @@ shinyUI(
                                                               column(width = 6, 
                                                                      numericInput("myN_mcod", "How Many:", value=10,min=1,max=30))
                                                               ),
+                                                            htmlOutput("mcod_title1"),
                                                             plotOutput("mcodRankMeasure", width = "100%", height = 900)
                                                           )),
                                                    column(width = 6, 
@@ -427,7 +428,9 @@ shinyUI(
                                                             status = "primary",
                                                             width = NULL,
                                                             selectizeInput("myCAUSE_mcod", "Cause of Death:", choices=causeList_mcod),
+                                                            htmlOutput("mcod_title2"),
                                                             plotOutput("mcodRankSecondaryPerPrimary", width = "100%", height = 450),
+                                                            htmlOutput("mcod_title3"),
                                                             plotOutput("mcodRankPrimaryPerSecondary", width = "100%", height = 450)
                                                             # plotOutput("mcodRankCause", width = "100%", height = 900)
                                                           )

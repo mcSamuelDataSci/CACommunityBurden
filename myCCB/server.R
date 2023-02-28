@@ -495,16 +495,46 @@ observeEvent(current$tab,{
 # MCOD ----------------------------------------------------------------------------------------------------------
   
 mcodRankMeasureStep <- reactive(mcodRankMeasure(myCounty = input$myLHJ, myYear = input$myYear_mcod, mySort = input$myMcodMeasure, topN = input$myN_mcod, myCause = input$myCAUSE_mcod))  
-output$mcodRankMeasure <- renderPlot(mcodRankMeasureStep()$plotL)
+output$mcodRankMeasure <- renderPlot({ mcodRankMeasureStep()$plotL + theme(plot.title = element_blank(), plot.subtitle = element_blank()) })
 
 # mcodRankCauseStep <- reactive(mcodRankCause(myCounty = input$myLHJ, myYear = input$myYear_mcod, myCause = input$myCAUSE_mcod))
 # output$mcodRankCause <- renderPlot(mcodRankCauseStep()$plotL)
 
 mcodRankSecondaryPerPrimaryStep <- reactive(mcodRankCause(myCounty = input$myLHJ, myYear = input$myYear_mcod, myCause = input$myCAUSE_mcod, leadingPrimary = FALSE))
-output$mcodRankSecondaryPerPrimary <- renderPlot(mcodRankSecondaryPerPrimaryStep()$plotL)
+output$mcodRankSecondaryPerPrimary <- renderPlot({ mcodRankSecondaryPerPrimaryStep()$plotL + theme(plot.title = element_blank(), plot.subtitle = element_blank()) })
 
 mcodRankPrimaryPerSecondaryStep <- reactive(mcodRankCause(myCounty = input$myLHJ, myYear = input$myYear_mcod, myCause = input$myCAUSE_mcod, leadingPrimary = TRUE))
-output$mcodRankPrimaryPerSecondary <- renderPlot(mcodRankPrimaryPerSecondaryStep()$plotL)
+output$mcodRankPrimaryPerSecondary <- renderPlot({ mcodRankPrimaryPerSecondaryStep()$plotL + theme(plot.title = element_blank(), plot.subtitle = element_blank()) })
+
+
+output$mcod_title1 <- renderUI({
+  HTML(paste(
+    h4(strong(paste0("Rankings of Primary and Secondary Causes of Death, Sorted by ", input$myMcodMeasure))),
+    h5(paste0(input$myLHJ, ", ", input$myYear_mcod))
+  )
+  )
+  })
+
+
+output$mcod_title2 <- renderUI({
+  HTML(paste(
+    h4(strong(paste0("Leading Secondary Causes of Death where ", 
+                        deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE_mcod],
+                        " was the Primary Cause."))),
+    h5(paste0(input$myLHJ, ", ", input$myYear_mcod))
+  )
+  )
+})
+
+output$mcod_title3 <- renderUI({
+  HTML(paste(
+    h4(strong(paste0("Leading Primary Causes of Death where ", 
+                        deathCauseLink$causeName[deathCauseLink$causeCode==input$myCAUSE_mcod],
+                        " was the Secondary Cause."))),
+    h5(paste0(input$myLHJ, ", ", input$myYear_mcod))
+  )
+  )
+})
 
 # ---------------------------------------------------------------------------------------------------------
 
