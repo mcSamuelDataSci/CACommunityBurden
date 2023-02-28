@@ -412,11 +412,7 @@ shinyUI(
                                                             fluidRow(
                                                               column(width = 6, 
                                                                      selectInput("myMcodMeasure", "Sort Order:", 
-                                                                                 choices = c("Primary Number of Deaths" = "Ndeaths_primary", 
-                                                                                             "Secondary Number of Deaths" = "Ndeaths_other", 
-                                                                                             "Total Number of Deaths" = "Ndeaths_total", 
-                                                                                             "Percent Primary" = "pPrimary", 
-                                                                                             "Percent Secondary" = "pOther"))),
+                                                                                 choices = mcodMeasures)),
                                                               column(width = 6, 
                                                                      numericInput("myN_mcod", "How Many:", value=10,min=1,max=30))
                                                               ),

@@ -509,7 +509,7 @@ output$mcodRankPrimaryPerSecondary <- renderPlot({ mcodRankPrimaryPerSecondarySt
 
 output$mcod_title1 <- renderUI({
   HTML(paste(
-    h4(strong(paste0("Rankings of Primary and Secondary Causes of Death, Sorted by ", input$myMcodMeasure))),
+    h4(strong(paste0("Rankings of Primary and Secondary Causes of Death, Sorted by ", names(mcodMeasures)[mcodMeasures == input$myMcodMeasure]))),
     h5(paste0(input$myLHJ, ", ", input$myYear_mcod))
   )
   )

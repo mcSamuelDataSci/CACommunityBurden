@@ -310,6 +310,7 @@ bigList           <- deathCauseLink %>% filter(nchar(causeCode) <= 1)
 bigCode           <- bigList[, "causeCode"]
 names(bigCode)    <- bigList[, "causeList"]
 
+## MCOD LIST --------------------------------------------------------------------------
 
 # CAUSES - MCOD TAB
 ph <- function(myBroad) { 
@@ -326,6 +327,22 @@ causeList_mcod <- list(`A. - Communicable, maternal, perinatal and nutritional c
                        `D. - Other Chronic` = ph("D"), 
                        `E. - Injuries` = ph("E"), 
                        `Z. - Unknown/Missing Value` = ph("Z"))
+
+# MCOD Measures
+c("Primary Number of Deaths" = "Ndeaths_primary", 
+  "Secondary Number of Deaths" = "Ndeaths_other", 
+  "Total Number of Deaths" = "Ndeaths_total", 
+  "Percent Primary" = "pPrimary", 
+  "Percent Secondary" = "pOther")
+
+mcodMeasures <- c("Primary Number of Deaths" = "Ndeaths_primary", 
+                  "Secondary Number of Deaths" = "Ndeaths_other", 
+                  "Total Number of Deaths" = "Ndeaths_total", 
+                  "Percent Primary" = "pPrimary", 
+                  "Percent Secondary" = "pOther")
+
+
+
 
 # SOCIAL DETERMINANTS OF HEALTH
 
