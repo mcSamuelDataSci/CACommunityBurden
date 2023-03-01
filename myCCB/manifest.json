@@ -906,26 +906,28 @@
         "Type": "Package",
         "Package": "dplyr",
         "Title": "A Grammar of Data Manipulation",
-        "Version": "1.0.0",
+        "Version": "1.0.10",
         "Authors@R": "\n    c(person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = c(\"aut\", \"cre\"),\n             email = \"hadley@rstudio.com\",\n             comment = c(ORCID = \"0000-0003-4757-117X\")),\n      person(given = \"Romain\",\n             family = \"François\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0002-2444-4226\")),\n      person(given = \"Lionel\",\n             family = \"Henry\",\n             role = \"aut\"),\n      person(given = \"Kirill\",\n             family = \"Müller\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0002-1416-3412\")),\n      person(given = \"RStudio\",\n             role = c(\"cph\", \"fnd\")))",
         "Description": "A fast, consistent tool for working with data frame\n    like objects, both in memory and out of memory.",
         "License": "MIT + file LICENSE",
         "URL": "https://dplyr.tidyverse.org, https://github.com/tidyverse/dplyr",
         "BugReports": "https://github.com/tidyverse/dplyr/issues",
-        "Depends": "R (>= 3.2.0)",
-        "Imports": "ellipsis, generics, glue (>= 1.3.2), lifecycle (>= 0.2.0),\nmagrittr (>= 1.5), methods, R6, rlang (>= 0.4.6), tibble (>=\n2.1.3), tidyselect (>= 1.1.0), utils, vctrs (>= 0.3.0)",
-        "Suggests": "bench, broom, callr, covr, DBI, dbplyr (>= 1.4.3), knitr,\nLahman, lobstr, microbenchmark, nycflights13, purrr, rmarkdown,\nRMySQL, RPostgreSQL, RSQLite, testthat (>= 2.1.0), withr",
+        "Depends": "R (>= 3.4.0)",
+        "Imports": "generics, glue (>= 1.3.2), lifecycle (>= 1.0.1), magrittr (>=\n1.5), methods, R6, rlang (>= 1.0.2), tibble (>= 2.1.3),\ntidyselect (>= 1.1.1), utils, vctrs (>= 0.4.1), pillar (>=\n1.5.1)",
+        "Suggests": "bench, broom, callr, covr, DBI, dbplyr (>= 1.4.3), ggplot2,\nknitr, Lahman, lobstr, microbenchmark, nycflights13, purrr,\nrmarkdown, RMySQL, RPostgreSQL, RSQLite, testthat (>= 3.1.1),\ntidyr, withr",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
-        "LazyData": "yes",
-        "RoxygenNote": "7.1.0",
+        "LazyData": "true",
+        "RoxygenNote": "7.2.1",
+        "Config/testthat/edition": "3",
+        "Config/Needs/website": "tidyverse, shiny, pkgdown, tidyverse/tidytemplate",
         "NeedsCompilation": "yes",
-        "Packaged": "2020-05-28 23:53:24 UTC; hadley",
+        "Packaged": "2022-08-31 18:31:04 UTC; hadleywickham",
         "Author": "Hadley Wickham [aut, cre] (<https://orcid.org/0000-0003-4757-117X>),\n  Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>),\n  Lionel Henry [aut],\n  Kirill Müller [aut] (<https://orcid.org/0000-0002-1416-3412>),\n  RStudio [cph, fnd]",
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2020-05-29 15:00:03 UTC",
-        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2020-07-07 18:50:14 UTC; unix"
+        "Repository": "RSPM",
+        "Date/Publication": "2022-09-01 09:20:06 UTC",
+        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-09-15 00:59:15 UTC; unix"
       }
     },
     "e1071": {
@@ -2085,6 +2087,38 @@
         "Repository": "RSPM",
         "Date/Publication": "2022-05-24 19:10:12 UTC",
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-26 23:35:41 UTC; unix"
+      }
+    },
+    "openxlsx": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "openxlsx",
+        "Title": "Read, Write and Edit xlsx Files",
+        "Version": "4.2.5",
+        "Date": "2021-12-13",
+        "Authors@R": "\n    c(person(given = \"Philipp\",\n             family = \"Schauberger\",\n             role = c(\"aut\", \"cre\"),\n             email = \"philipp@schauberger.co.at\"),\n      person(given = \"Alexander\",\n             family = \"Walker\",\n             role = \"aut\",\n             email = \"Alexander.Walker1989@gmail.com\"),\n      person(given = \"Luca\",\n             family = \"Braglia\",\n             role = \"ctb\"),\n      person(given = \"Joshua\",\n             family = \"Sturm\",\n             role = \"ctb\"),\n      person(given = \"Jan Marvin\",\n             family = \"Garbuszus\",\n             role = \"ctb\",\n             email = \"jan.garbuszus@ruhr-uni-bochum.de\"),\n      person(given = \"Jordan Mark\",\n             family = \"Barbone\",\n             role = \"ctb\",\n             email = \"jmbarbone@gmail.com\",\n             comment = c(ORCID = \"0000-0001-9788-3628\")))",
+        "Description": "Simplifies the creation of Excel .xlsx files by providing a\n    high level interface to writing, styling and editing worksheets.\n    Through the use of 'Rcpp', read/write times are comparable to the\n    'xlsx' and 'XLConnect' packages with the added benefit of removing the\n    dependency on Java.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://ycphs.github.io/openxlsx/index.html,\nhttps://github.com/ycphs/openxlsx",
+        "BugReports": "https://github.com/ycphs/openxlsx/issues",
+        "Depends": "R (>= 3.3.0)",
+        "Imports": "grDevices, methods, Rcpp, stats, stringi, utils, zip",
+        "Suggests": "knitr, rmarkdown, roxygen2, testthat",
+        "LinkingTo": "Rcpp",
+        "VignetteBuilder": "knitr",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.1.2",
+        "Collate": "'CommentClass.R' 'HyperlinkClass.R' 'RcppExports.R'\n'class_definitions.R' 'StyleClass.R' 'WorkbookClass.R'\n'asserts.R' 'baseXML.R' 'borderFunctions.R' 'build_workbook.R'\n'chartsheet_class.R' 'conditional_formatting.R'\n'data-fontSizeLookupTables.R' 'helperFunctions.R'\n'loadWorkbook.R' 'onUnload.R' 'openXL.R' 'openxlsx-package.R'\n'openxlsx.R' 'openxlsxCoerce.R' 'readWorkbook.R'\n'sheet_data_class.R' 'utils.R' 'workbook_column_widths.R'\n'workbook_read_workbook.R' 'workbook_write_data.R'\n'worksheet_class.R' 'wrappers.R' 'writeData.R'\n'writeDataTable.R' 'writexlsx.R' 'zzz.R'",
+        "NeedsCompilation": "yes",
+        "Packaged": "2021-12-13 22:06:56 UTC; PhilippSchauberger",
+        "Author": "Philipp Schauberger [aut, cre],\n  Alexander Walker [aut],\n  Luca Braglia [ctb],\n  Joshua Sturm [ctb],\n  Jan Marvin Garbuszus [ctb],\n  Jordan Mark Barbone [ctb] (<https://orcid.org/0000-0001-9788-3628>)",
+        "Maintainer": "Philipp Schauberger <philipp@schauberger.co.at>",
+        "Repository": "RSPM",
+        "Date/Publication": "2021-12-14 14:20:06 UTC",
+        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-01-06 18:57:24 UTC; unix"
       }
     },
     "pillar": {
@@ -3515,6 +3549,30 @@
         "Encoding": "UTF-8",
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-26 23:47:51 UTC; unix"
       }
+    },
+    "zip": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "zip",
+        "Title": "Cross-Platform 'zip' Compression",
+        "Version": "2.2.0",
+        "Author": "Gábor Csárdi, Kuba Podgórski, Rich Geldreich",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Description": "Cross-Platform 'zip' Compression Library. A replacement\n    for the 'zip' function, that does not require any additional\n    external tools on any platform.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/zip#readme",
+        "BugReports": "https://github.com/r-lib/zip/issues",
+        "RoxygenNote": "7.1.1.9001",
+        "Config/testthat/edition": "3",
+        "Suggests": "covr, processx, R6, testthat, withr",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "yes",
+        "Packaged": "2021-05-30 21:43:42 UTC; gaborcsardi",
+        "Repository": "RSPM",
+        "Date/Publication": "2021-05-31 04:30:02 UTC",
+        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-01-06 18:54:27 UTC; unix"
+      }
     }
   },
   "files": {
@@ -3531,7 +3589,7 @@
       "checksum": "e96a205f7ece80f0be97bffcba2d25ba"
     },
     "Global.R": {
-      "checksum": "a4755a9498ad21b00d54f0db776c1586"
+      "checksum": "4218be9713b24d1a7aee9f6492e6cccd"
     },
     "googleAnalyticsEXTRA_INFO.js": {
       "checksum": "b5dc2ea38cae4eeecf6ae4574a1ccdbb"
@@ -3554,8 +3612,11 @@
     "myData/appText/~$pTextWord.docx": {
       "checksum": "b4949b07d37619573b92c8ce8036cc3b"
     },
+    "myData/appText/~$wsUseCCB_Word.docx": {
+      "checksum": "4678d4081de362827a16cedeee7a9594"
+    },
     "myData/appText/appText.docx": {
-      "checksum": "cb5afe560a49ff10d44d819d82e21fe3"
+      "checksum": "f5a1e620e81bd0e4d752acac43d3ef82"
     },
     "myData/appText/archive/AppText - Copy.txt": {
       "checksum": "0029447c1a7574f8f72df026a1b82c9a"
@@ -3600,61 +3661,40 @@
       "checksum": "268c32a58f401af5ad5cf93c98e49d1e"
     },
     "myData/appText/newsUseCCB_Word.docx": {
-      "checksum": "ca8a8595467c884fea43fe86e242fc8d"
+      "checksum": "be221c792b6407281d355e2cde7c361b"
     },
     "myData/appText/newsUseText.txt": {
       "checksum": "0cd273c913d6b936746fda1f8005e825"
-    },
-    "myData/Archive/Life Tables/Final2020/e0ciCounty.RDS": {
-      "checksum": "d0a5c2c71ee3d1406973bf09180ad85f"
-    },
-    "myData/Archive/Life Tables/Final2020/e0ciMSSA.RDS": {
-      "checksum": "1efb3caee8c5cf2d73c9986176d9fcfe"
-    },
-    "myData/Archive/Life Tables/Final2020/e0ciMSSA1.RDS": {
-      "checksum": "f4485d95d0fb167f3856e6c1e395afad"
-    },
-    "myData/Archive/Life Tables/Final2020/e0ciState.RDS": {
-      "checksum": "b46bae4c9aaacd77f77c83bb0f322c5f"
-    },
-    "myData/Archive/Life Tables/Final2020/e0ciState1.RDS": {
-      "checksum": "cd44983dbc74025715400333238b517a"
-    },
-    "myData/Archive/sdohComm.RDS": {
-      "checksum": "f7cb88f69639053618eaa3127ec7124d"
-    },
-    "myData/Archive/sdohCounty.RDS": {
-      "checksum": "39dad75559202dfd3acaf0d529120866"
-    },
-    "myData/Archive/sdohTract.RDS": {
-      "checksum": "e85363f3bcee69640ebbcd86194f637b"
     },
     "myData/cause_data.rds": {
       "checksum": "a79c154caa902c45caacaa530444ef58"
     },
     "myData/datState_3yr.RDS": {
-      "checksum": "5c70d8ae81112d7d8756ae5d26d04038"
+      "checksum": "528872ba375bff69066be191009664a2"
     },
     "myData/datState_5yr.RDS": {
-      "checksum": "33b365fa954d4f9938c218ae3879b927"
+      "checksum": "7f59e1665094cffaa3e14d1cc5b74258"
     },
     "myData/datState.RDS": {
-      "checksum": "5f3ecc4ede6e11c9005e5028cf295e0e"
+      "checksum": "522bacafe09392ae0bf46a4048d98be3"
     },
     "myData/e0ciCounty.RDS": {
-      "checksum": "ee0e48d70d770de08140a78c9485cdb0"
+      "checksum": "7d30ee258400ff7aae63eafcb9c987db"
     },
     "myData/e0ciMSSA.RDS": {
-      "checksum": "2d51ba5d6035d688c13e5608b12da7c1"
+      "checksum": "f3ea2ff7be6f5270692b8c62a2902974"
     },
     "myData/e0ciMSSA1.RDS": {
       "checksum": "f4485d95d0fb167f3856e6c1e395afad"
     },
     "myData/e0ciState.RDS": {
-      "checksum": "ba28ddccacfe9f40a890fc0a4155bc28"
+      "checksum": "537dd94225162687cee487401bebf501"
     },
     "myData/e0ciState1.RDS": {
       "checksum": "cd44983dbc74025715400333238b517a"
+    },
+    "myData/enhancementIHME.RDS": {
+      "checksum": "4abcb81a12c831bbcd90f127edfb8fef"
     },
     "myData/fake/ageadj_hospratesOSHPD.rds": {
       "checksum": "b23a3d3fa3b6e719a5240b43cd1d28ed"
@@ -3719,33 +3759,6 @@
     "myData/lt_e0_all.rds": {
       "checksum": "099334f8ccedaf189d80f3329b34400d"
     },
-    "myData/ltArchive/2020/e0ciCounty.rds": {
-      "checksum": "97a817db8556df75e2b42935e3f9da22"
-    },
-    "myData/ltArchive/2020/e0ciMSSA.rds": {
-      "checksum": "5e87e6153b04e82bbc40598520f65bf0"
-    },
-    "myData/ltArchive/2020/e0ciState.rds": {
-      "checksum": "7a56812f54ecc91fbca926c3d1d54dba"
-    },
-    "myData/ltArchive/2021June/e0ciCounty.RDS": {
-      "checksum": "9f0d24f26721aa1a53a250445478b939"
-    },
-    "myData/ltArchive/2021June/e0ciMSSA.RDS": {
-      "checksum": "3724715cae94491a67a2710bd4a96260"
-    },
-    "myData/ltArchive/2021June/e0ciState.RDS": {
-      "checksum": "5772089a47ec0b357f410f04be43b05d"
-    },
-    "myData/ltArchive/20220119/e0ciCounty.RDS": {
-      "checksum": "4dea5a9781fba879f1670078e27a8d72"
-    },
-    "myData/ltArchive/20220119/e0ciCounty1.RDS": {
-      "checksum": "ae75ecea26e2a4ffea398833975715cf"
-    },
-    "myData/ltArchive/20220119/e0ciMSSA.RDS": {
-      "checksum": "4ce35a97266ed9140e11df8265eb0f9e"
-    },
     "myData/popData_AgePyramid.RDS": {
       "checksum": "0b9049f47316cf557b9a9631a422b435"
     },
@@ -3758,332 +3771,98 @@
     "myData/popData_SexRaceAge_Trends.RDS": {
       "checksum": "fae4b53b1d4c3e3cff31837907daa4d0"
     },
-    "myData/real/age_race_focus_data_2019_Archive/deaths_age_stn.RDS": {
-      "checksum": "50ed4f969ba6aca4e5aae92374f9f6a8"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/deaths_race_stn.RDS": {
-      "checksum": "91b10911c57e247a38b0ee93f477aceb"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/ed_age_stn.RDS": {
-      "checksum": "41056d5d435af4381ba58aab49503f7c"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/ed_race_stn.RDS": {
-      "checksum": "d508960c9f0805b0bdc08d05acd1f0e9"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/hosp_ED_year.RDS": {
-      "checksum": "b8378f2e87a4b39f50a70e1019e7e413"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/hospital_age_stn.RDS": {
-      "checksum": "6871e03f57e9df6b8005f8116b08ddee"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/hospital_race_stn.RDS": {
-      "checksum": "331501a0c7f19a5d395733ded7521524"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/inData/edAge.RDS": {
-      "checksum": "6b3eb4c90acd30374c719e7cc612b429"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/inData/edRace.RDS": {
-      "checksum": "7dcaad600bd62969ebd5803e1270cebe"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/inData/hospAge.RDS": {
-      "checksum": "f7e6c57da4e7982824bfb7279d396099"
-    },
-    "myData/real/age_race_focus_data_2019_Archive/inData/hospRace.RDS": {
-      "checksum": "92b32243294f8ed2a70ad1989f1cb1e8"
-    },
-    "myData/real/age_race_focus_data_2020/deaths_age_stn.RDS": {
-      "checksum": "22f578d501d38d5055d79889a02c2c1f"
-    },
-    "myData/real/age_race_focus_data_2020/deaths_race_stn.RDS": {
-      "checksum": "bc0d7cf153e45ea902296f691e693f00"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/deaths_age_stn.RDS": {
-      "checksum": "4eb0c89beaf4d4f81605d15956d9a885"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/deaths_race_stn.RDS": {
-      "checksum": "4f8203264c6d25b5c0804c1cbc027e99"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/ed_age_stn.RDS": {
-      "checksum": "f1c5d6cbf7a34ac84105d985e3dc8d8b"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/ed_race_stn.RDS": {
-      "checksum": "02bf4ea03a8b1bdd44f5d4e52f972a53"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/edAge.RDS": {
-      "checksum": "423ec2f1ecd3b569c28ad2396e49c891"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/edRace.RDS": {
-      "checksum": "73aa0d6780a1ef507be2bc06469a52b9"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/hosp_ED_year.RDS": {
-      "checksum": "c77500fc47f657fa9de3817cce5df89d"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/hospAge.RDS": {
-      "checksum": "be2d800fdd135612115f559a816ffeac"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/hospital_age_stn.RDS": {
-      "checksum": "4eb65204edad291d9539dc2a2c052cb9"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/hospital_race_stn.RDS": {
-      "checksum": "ed91823ce5b08ecd231308c7e9c25c0a"
-    },
-    "myData/real/age_race_focus_data_2020/Delete 12-2021/hospRace.RDS": {
-      "checksum": "9d920d3fe45258cb6731606bd6602ff8"
-    },
-    "myData/real/age_race_focus_data_2020/ed_age_stn.RDS": {
-      "checksum": "a4fade28edf4c7062dc70d07dd63340d"
-    },
-    "myData/real/age_race_focus_data_2020/ed_race_stn.RDS": {
-      "checksum": "b83fec4fffc945502d79aa09ff5cd6d6"
-    },
-    "myData/real/age_race_focus_data_2020/hospital_age_stn.RDS": {
-      "checksum": "4f4aa4349ddc7d1030bc1e09bf188ca4"
-    },
-    "myData/real/age_race_focus_data_2020/hospital_race_stn.RDS": {
-      "checksum": "51a15fe5e8a5cf401baa0dfd366dfb8e"
-    },
-    "myData/real/age_race_focus_data_2020/inData/edAge.RDS": {
-      "checksum": "941ea73f3e5e2293d8bbbe1d96f6da94"
-    },
-    "myData/real/age_race_focus_data_2020/inData/edRace.RDS": {
-      "checksum": "ca84def97d2573df00e2587aef41346d"
-    },
-    "myData/real/age_race_focus_data_2020/inData/hospAge.RDS": {
-      "checksum": "6c6dfc1d5813d6958ac03a8496ac133f"
-    },
-    "myData/real/age_race_focus_data_2020/inData/hospRace.RDS": {
-      "checksum": "1994b4288f024d3fa4a91485bc63c7c2"
-    },
-    "myData/real/age_race_focus_data-SAVE/deaths_age_stn.RDS": {
-      "checksum": "22f578d501d38d5055d79889a02c2c1f"
-    },
-    "myData/real/age_race_focus_data-SAVE/deaths_race_stn.RDS": {
-      "checksum": "bc0d7cf153e45ea902296f691e693f00"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/deaths_age_stn.RDS": {
-      "checksum": "4eb0c89beaf4d4f81605d15956d9a885"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/deaths_race_stn.RDS": {
-      "checksum": "4f8203264c6d25b5c0804c1cbc027e99"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/ed_age_stn.RDS": {
-      "checksum": "f1c5d6cbf7a34ac84105d985e3dc8d8b"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/ed_race_stn.RDS": {
-      "checksum": "02bf4ea03a8b1bdd44f5d4e52f972a53"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/edAge.RDS": {
-      "checksum": "423ec2f1ecd3b569c28ad2396e49c891"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/edRace.RDS": {
-      "checksum": "73aa0d6780a1ef507be2bc06469a52b9"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/hosp_ED_year.RDS": {
-      "checksum": "c77500fc47f657fa9de3817cce5df89d"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/hospAge.RDS": {
-      "checksum": "be2d800fdd135612115f559a816ffeac"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/hospital_age_stn.RDS": {
-      "checksum": "4eb65204edad291d9539dc2a2c052cb9"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/hospital_race_stn.RDS": {
-      "checksum": "ed91823ce5b08ecd231308c7e9c25c0a"
-    },
-    "myData/real/age_race_focus_data-SAVE/Delete 12-2021/hospRace.RDS": {
-      "checksum": "9d920d3fe45258cb6731606bd6602ff8"
-    },
-    "myData/real/age_race_focus_data-SAVE/ed_age_stn.RDS": {
-      "checksum": "a4fade28edf4c7062dc70d07dd63340d"
-    },
-    "myData/real/age_race_focus_data-SAVE/ed_race_stn.RDS": {
-      "checksum": "b83fec4fffc945502d79aa09ff5cd6d6"
-    },
-    "myData/real/age_race_focus_data-SAVE/hospital_age_stn.RDS": {
-      "checksum": "4f4aa4349ddc7d1030bc1e09bf188ca4"
-    },
-    "myData/real/age_race_focus_data-SAVE/hospital_race_stn.RDS": {
-      "checksum": "51a15fe5e8a5cf401baa0dfd366dfb8e"
-    },
-    "myData/real/age_race_focus_data-SAVE/inData/edAge.RDS": {
-      "checksum": "941ea73f3e5e2293d8bbbe1d96f6da94"
-    },
-    "myData/real/age_race_focus_data-SAVE/inData/edRace.RDS": {
-      "checksum": "ca84def97d2573df00e2587aef41346d"
-    },
-    "myData/real/age_race_focus_data-SAVE/inData/hospAge.RDS": {
-      "checksum": "6c6dfc1d5813d6958ac03a8496ac133f"
-    },
-    "myData/real/age_race_focus_data-SAVE/inData/hospRace.RDS": {
-      "checksum": "1994b4288f024d3fa4a91485bc63c7c2"
-    },
     "myData/real/age_race_focus_data/deaths_age_stn.RDS": {
-      "checksum": "ebfe18ed4895093de82d9b4b23b331d3"
+      "checksum": "a829fcdea388b0c085a33841f191849b"
     },
     "myData/real/age_race_focus_data/deaths_race_stn.RDS": {
-      "checksum": "498000e322b20a32d2ad2a4818d53213"
+      "checksum": "9580c83357a9e362cdd9fd021d58b3d6"
     },
     "myData/real/age_race_focus_data/ed_age_stn.RDS": {
-      "checksum": "bdb9180e8e466191a78bcc20ff0b474a"
+      "checksum": "fe8701b228cf37f4b665d8ffcf3d704c"
     },
     "myData/real/age_race_focus_data/ed_race_stn.RDS": {
-      "checksum": "81fe6998a6c518b399237e1822782639"
+      "checksum": "926d3bffca07a930300f8c0d7dea18d5"
     },
     "myData/real/age_race_focus_data/hosp_ED_year.RDS": {
-      "checksum": "d98ae3c8c2e1add84e8a6facb3985b59"
+      "checksum": "a1e991a9add218a962c065e01febe74e"
     },
     "myData/real/age_race_focus_data/hospital_age_stn.RDS": {
-      "checksum": "5526da9c31a82c1f2e39f9ff1e9c26cb"
+      "checksum": "182ae6b60bbc6a47d2b5e2a753c568fc"
     },
     "myData/real/age_race_focus_data/hospital_race_stn.RDS": {
-      "checksum": "1f81d6f6324e6962d58492fcccc4e431"
+      "checksum": "93024c6ddf90c2794a715ca3c1a639c4"
     },
     "myData/real/age_race_focus_data/inData/edAge.RDS": {
-      "checksum": "b7bd5d5e7743a8cdc1e55b7da0469fbb"
+      "checksum": "8a945cb3efc32bdebbe92d1385a91bed"
     },
     "myData/real/age_race_focus_data/inData/edRace.RDS": {
-      "checksum": "af890dca0bb788e8ee5b385cb543b156"
+      "checksum": "674add2946ce3b689e4bfbbc9e8808d4"
     },
     "myData/real/age_race_focus_data/inData/hospAge.RDS": {
-      "checksum": "6c6dfc1d5813d6958ac03a8496ac133f"
+      "checksum": "4713874168ea620e75f4115d97546b7c"
     },
     "myData/real/age_race_focus_data/inData/hospRace.RDS": {
-      "checksum": "1994b4288f024d3fa4a91485bc63c7c2"
+      "checksum": "93393a4f7a411e2191efc6e7027a2398"
     },
-    "myData/real/analysisDatasets/Community.csv": {
-      "checksum": "4ff8eec69d1598c04781173cd2c73ff6"
-    },
-    "myData/real/analysisDatasets/County_3year.csv": {
-      "checksum": "1b434bfa5cb5e7aba320bf8f836d099b"
-    },
-    "myData/real/analysisDatasets/County_RE.csv": {
-      "checksum": "41ecb19ab4fee163730053a8f65e83f9"
-    },
-    "myData/real/analysisDatasets/County.csv": {
-      "checksum": "c06e3aee3f4c4f771bc6e7d7e80fa02b"
-    },
-    "myData/real/analysisDatasets/datCounty_EDU.csv": {
-      "checksum": "237308b49d7c00cb9aa73278f4a0fb70"
-    },
-    "myData/real/analysisDatasets/Tract.csv": {
-      "checksum": "e9ea012c7c614f68986fae37091c5e64"
-    },
-    "myData/real/burdenViewData.RData": {
-      "checksum": "8a188b96a0e17ec5e9cd7eb948bbd478"
+    "myData/real/ccbRaceDisparity.RDS": {
+      "checksum": "1e7028c347ecaec90a9336fff9d7d81d"
     },
     "myData/real/datComm.RDS": {
-      "checksum": "81e25ca6d7395bbbffb81be366913ec9"
+      "checksum": "587b02f45b6b3c031056faf2721c6806"
     },
     "myData/real/datCounty_3year.RDS": {
-      "checksum": "892400daa63be44f253fdd7d77053fe0"
+      "checksum": "737b1dcac36760d3ef26ee5fe84fc703"
     },
     "myData/real/datCounty_5year.RDS": {
-      "checksum": "5e239248792de13e54338fd4686b0f01"
+      "checksum": "0e98a6b0939a3aca60031068ea4e719e"
     },
     "myData/real/datCounty_AGE_3year.RDS": {
-      "checksum": "55b52afa526feb2fd6a1e6aed09012b5"
+      "checksum": "60e99b84b45ae5b1de4a55d898e3a924"
     },
     "myData/real/datCounty_EDU.RDS": {
-      "checksum": "3d1311dd5d469ac21b85e3cee5fd0c08"
+      "checksum": "6bed58be1c192eec2bc1403e7b18084c"
     },
-    "myData/real/datCounty_M.RDS": {
-      "checksum": "677256401ab6b02edf9fb825f30706c9"
-    },
-    "myData/real/datCounty_Q.RDS": {
-      "checksum": "6755b486a0c937201bdc616d547d0586"
-    },
-    "myData/real/datCounty_RACE_AGE_1year.RDS": {
-      "checksum": "3e3ed9036bc2c146ee8c0c26dcdc60ed"
-    },
-    "myData/real/datCounty_RACE_AGE_Q.RDS": {
-      "checksum": "651087bc8f1d7b6db61926d93ae16410"
-    },
-    "myData/real/datCounty_RACE_AGE_TEMP.RDS": {
-      "checksum": "d6a8d7262fd995ba2706858c1d1689ba"
-    },
-    "myData/real/datCounty_RACE_AGE.RDS": {
-      "checksum": "68f57a432921a48e80a68ad5d4a8a016"
-    },
-    "myData/real/datCounty_RE_1year.RDS": {
-      "checksum": "38daa0badae9eb7dfc56cbc978c8903b"
+    "myData/real/datCounty_MCOD.RDS": {
+      "checksum": "2bf424c90dfe62e1a1f209c62bfc2c40"
     },
     "myData/real/datCounty_RE.RDS": {
-      "checksum": "5ed81b686e577085eb64e9020d1e38b0"
+      "checksum": "ef85394dea8e6e9ad384dff05a7f7f9b"
     },
     "myData/real/datCounty.RDS": {
-      "checksum": "643f620fcdc41ede225a018820143778"
-    },
-    "myData/real/datCounty65_RE.RDS": {
-      "checksum": "d64e97bc55f748585a6d54c82e6d2caf"
-    },
-    "myData/real/datCounty65.RDS": {
-      "checksum": "98c8d36609ef150bd03b649ca0bfb269"
-    },
-    "myData/real/datRegion_Q.RDS": {
-      "checksum": "48f0003f7db4a50df2f5660c6a839a07"
-    },
-    "myData/real/datRegion_RACE_AGE_1year.RDS": {
-      "checksum": "be2981e8ff395fa1433124b940aa22bb"
-    },
-    "myData/real/datRegion_RACE_AGE_Q.RDS": {
-      "checksum": "68880c2d121c5410f9c694c4ae4ed699"
-    },
-    "myData/real/datRegion_RE_1year.RDS": {
-      "checksum": "43cc319287e1c2d923ee661c45578157"
-    },
-    "myData/real/datRegion.RDS": {
-      "checksum": "658b43680987806d40d498e80237289d"
+      "checksum": "ffc4df30613d0a8c83a7313747b97b5e"
     },
     "myData/real/datState_AGE.RDS": {
-      "checksum": "5a83f86a9f2b608bac620ee643f39999"
+      "checksum": "549676cf991a77b6cb9b61002a937ca0"
     },
     "myData/real/datState_RE.RDS": {
-      "checksum": "f720d36d2bcfb9903e04980763cd2ca6"
+      "checksum": "45b92ac33e396774fedefe2098907d39"
     },
     "myData/real/datTract.RDS": {
-      "checksum": "4d38f676a758ea8f62822f4e7fdf4589"
+      "checksum": "bf0012da30458eabff6f055dde6ac513"
     },
     "myData/real/disparity_ageHigh.RDS": {
-      "checksum": "b777f65368a575adfa95a80d653b91dc"
+      "checksum": "a80a4f8911ac16aaa7daa84637276771"
     },
     "myData/real/disparity_ageLow.RDS": {
-      "checksum": "a3ad9930d8a71b6b2b39da7504fd37e5"
+      "checksum": "573a6893354a3066eab20e981fd02dd7"
     },
     "myData/real/disparity_raceHigh.RDS": {
-      "checksum": "73254141b3c15baeb37610de18728f16"
+      "checksum": "6d9c00063cc7c0e2cdf61b663b7a54bb"
     },
     "myData/real/disparity_raceLow.RDS": {
-      "checksum": "f3096a4d09f9d5c271d74a847c53a47a"
+      "checksum": "62d778693303963635f1b9de17a6aea9"
     },
     "myData/real/disparity_sexHigh.RDS": {
-      "checksum": "27ccc2c1b10bf9393ccea1e1a6e1df8d"
+      "checksum": "05cd539ba74bdb11342f176a3135d894"
     },
     "myData/real/disparity_sexLow.RDS": {
-      "checksum": "1e27467acd94f013c8fb35ed919c9c1d"
-    },
-    "myData/real/oshpd_ED_AGE.rds": {
-      "checksum": "bb687a5eb61da991dbbb8e3ddc57e364"
-    },
-    "myData/real/oshpd_PDD_AGE.rds": {
-      "checksum": "9a21a87e2596c07383b0557ec3318076"
+      "checksum": "de8235bf4999e07f9e1f1415f1860a49"
     },
     "myData/real/oshpd_PDD_any.rds": {
-      "checksum": "31094fcd67cb586aa654524503ba7da3"
+      "checksum": "d405731a11832d6fa82a0c3997e08406"
     },
     "myData/real/oshpd_PDD_primary.rds": {
-      "checksum": "cf298b22ec2961e7a48147a400a927df"
-    },
-    "myData/real/oshpd_PDD.rds": {
-      "checksum": "3525132da5e2e0e48ba410fb594724ff"
-    },
-    "myData/real/SAVE - oshpd_PDD_any.rds": {
-      "checksum": "c03babe93933017f20c66040876eebeb"
-    },
-    "myData/real/sdoh/datCounty_pov_TEMP.RDS": {
-      "checksum": "42f1669d77074033aa22f50fb75aaf62"
-    },
-    "myData/real/sdoh/datCounty_pov.RDS": {
-      "checksum": "9ca6ae43968973e4560fe6fb8a61b24e"
+      "checksum": "3eeff332f2773e0c8a1f63e135cbad48"
     },
     "myData/risk_data.rds": {
       "checksum": "0fc08a1b53d1f5305228c6313ed30778"
@@ -4092,13 +3871,13 @@
       "checksum": "ce6f8590dda17cda7beaa64e407cd38f"
     },
     "myData/sdohComm.RDS": {
-      "checksum": "bec057d726132f07244dd313ec3a5216"
+      "checksum": "e17a48c0ff656789e4500ae443e8ccbf"
     },
     "myData/sdohCounty.RDS": {
-      "checksum": "c6c261018ec460e6dedaeb9b7224f994"
+      "checksum": "d357ad53dde24a0b9ca9c90aac23f608"
     },
     "myData/sdohTract.RDS": {
-      "checksum": "becf6cb1702557f926016c6c0fd3004d"
+      "checksum": "5ad2f5e1c73e497b19557c0fc21133ce"
     },
     "myData/shape_Comm.dbf": {
       "checksum": "29c13e786ad69c02900ecd94ca0295c2"
@@ -4175,14 +3954,17 @@
     "myFunctions/helperFunctions/dottedSelectInput.R": {
       "checksum": "b6b0ecbdab68c12ed417ecce73c1dfa2"
     },
+    "myFunctions/helperFunctions/stopQuietly.R": {
+      "checksum": "762b13b1e12bc31094aee8d70c5213bc"
+    },
     "myFunctions/helperFunctions/wrapLabels.R": {
       "checksum": "792bb93cc45de0e3a90e59f995c30986"
     },
     "myFunctions/inputFunctions/input_functions.R": {
-      "checksum": "f5747b9449ecfcf2968db8695b1eb6ac"
+      "checksum": "61aa938008e4129d875dbc5c7bedb190"
     },
     "myFunctions/inputFunctions/input_widgets.R": {
-      "checksum": "c99fa8472a13affad5573784afcbffbf"
+      "checksum": "42b95e44631f5ce5116756c30f64235d"
     },
     "myFunctions/make_ANY_TREND_chart.R": {
       "checksum": "60c260e63f44f8340d1749e0d3fed93d"
@@ -4197,10 +3979,13 @@
       "checksum": "ad92975584cd22e9ab5381157ae4a97a"
     },
     "myFunctions/make_LIFE-EXPECTANCY_chart.R": {
-      "checksum": "2a60c806b09c14901c0934bd696ae4db"
+      "checksum": "8b11fb730a6602272ad24cd7ee9c826f"
     },
     "myFunctions/make_MAPS.R": {
       "checksum": "3619cee26064b152f75b1da7d355941e"
+    },
+    "myFunctions/make_MCOD_charts.R": {
+      "checksum": "7aa0c83b695080613d363e4dfc8aaad1"
     },
     "myFunctions/make_OSHPD_ANY_PRIMARY_chart.R": {
       "checksum": "dac21b4a93a9be538e2afd0668fa779c"
@@ -4239,7 +4024,7 @@
       "checksum": "35a3b9ead58df87b3d1d2a441bb4a352"
     },
     "myInfo/Age Group Standard and US Standard 2000 Population.xlsx": {
-      "checksum": "5474a0b58faf533c7196ddcebd439ac8"
+      "checksum": "7e223680bf4e446bedc427658d763365"
     },
     "myInfo/Age to Life-Expectancy Linkage.xlsx": {
       "checksum": "f6dc23494e2bd0199df4f88632616eb1"
@@ -4247,8 +4032,11 @@
     "myInfo/B01001_labels.csv": {
       "checksum": "9c50a5805ae0fba7069ece483d293b88"
     },
+    "myInfo/birthCountryLink.csv": {
+      "checksum": "92033a7a22f4cb15bb8b271a5946f1d8"
+    },
     "myInfo/CCS Code and Names Linkage.xlsx": {
-      "checksum": "6b0a3aaae78d045e9a7b64fd92a16821"
+      "checksum": "78cdf9eba85c989a94bfa2944de77479"
     },
     "myInfo/comName.csv": {
       "checksum": "6dc96a90aa42d33321901692a725ff8e"
@@ -4269,7 +4057,7 @@
       "checksum": "2306c169e0c9733bbc17917a689c1003"
     },
     "myInfo/icd10_to_CAUSE.xlsx": {
-      "checksum": "4b551dc2b3f1ebedb1784c42709ad2e7"
+      "checksum": "2c5e9a351f30d267d67bed0466c3e664"
     },
     "myInfo/IHME_API_endpoints.csv": {
       "checksum": "7ed8d4d1760fa5b99dc3d626ef706f7c"
@@ -4284,10 +4072,13 @@
       "checksum": "f028368d9fa893a375a96a85f6da9c6c"
     },
     "myInfo/Thumbs.db": {
-      "checksum": "f9c1d6ed62d03420c31153f1fc30359f"
+      "checksum": "ed2bcff2afe98150ff12f90de2c32e2c"
     },
     "myInfo/Tract to Community Linkage.csv": {
       "checksum": "fb6060381903993a3d4ddfdf5e32813d"
+    },
+    "myInfo/tract10_to_tract20.txt": {
+      "checksum": "e3263cf3e8555eafa7fa27c9ab0a4941"
     },
     "myInfo/Year to Year-Group Linkage.xlsx": {
       "checksum": "5f8a33adadb93afac817c6c4827e5ceb"
@@ -4371,7 +4162,7 @@
       "checksum": "53b0e4462d19171ae69970724b135fc2"
     },
     "packrat/desc/dplyr": {
-      "checksum": "58ecf41a01ff65e536a605b8a4b54dd9"
+      "checksum": "b9b1cab412944a72bcbb0bbcc4192c1b"
     },
     "packrat/desc/DT": {
       "checksum": "dd04952ce5f98e1ec132ee26900bd027"
@@ -4510,6 +4301,9 @@
     },
     "packrat/desc/openssl": {
       "checksum": "990c8d4da195733ab831d04a5aaaa0d7"
+    },
+    "packrat/desc/openxlsx": {
+      "checksum": "aad767f5652863bf48787e87c87d6952"
     },
     "packrat/desc/pillar": {
       "checksum": "a6f55c123ed4609f79a6742a40dc5cd0"
@@ -4676,14 +4470,17 @@
     "packrat/desc/yaml": {
       "checksum": "4093e604c9f91d1a11d46cd5ef5440d1"
     },
+    "packrat/desc/zip": {
+      "checksum": "a14a02455dd825eef950e688ffd023d9"
+    },
     "packrat/packrat.lock": {
-      "checksum": "0a9752a607b6031c4aee5b42cc3b6aa0"
+      "checksum": "0074e611de14d6c6622034865838baf0"
     },
     "READ ME.docx": {
       "checksum": "32fe85b75049af10873b47e699794e3e"
     },
     "server.R": {
-      "checksum": "fc61dee00adc21fe2903f65b889a8882"
+      "checksum": "178074334fda6386d1112733bb829da9"
     },
     "Standards/.Rhistory": {
       "checksum": "d41d8cd98f00b204e9800998ecf8427e"
@@ -4692,7 +4489,7 @@
       "checksum": "b7d8ae165e4b192ddb93185ea1c32266"
     },
     "Standards/ageLink.xlsx": {
-      "checksum": "2c3563d9d6dd3e30b0c832fa42112111"
+      "checksum": "8eac2c390db3ccfd01d309f9f915a5a4"
     },
     "Standards/CCB Visualizations and Measures.xlsx": {
       "checksum": "efba00bde910c3fa18f995a36afac295"
@@ -4704,7 +4501,7 @@
       "checksum": "999d2f620338bbc2a41cf35bb95d4137"
     },
     "Standards/FusionStandards.R": {
-      "checksum": "9a6267a1edd4e1ce5904c82a8af5b714"
+      "checksum": "899801c95423a1ca0709c32b93b19b29"
     },
     "Standards/headerStyle/branding.css": {
       "checksum": "af9a064fb5085a2b8679d21250fcdda3"
@@ -4725,10 +4522,13 @@
       "checksum": "d036164245293553c38d7914e75a26eb"
     },
     "Standards/populationExtract.R": {
-      "checksum": "e1add24d0a1ed38bd19fb5add804c83a"
+      "checksum": "60d4b60b06585648cd521876279017ee"
     },
     "Standards/raceLink.xlsx": {
       "checksum": "03a7a6904cefd9dc07a8c6c87540863f"
+    },
+    "Standards/raincloud_plot.R": {
+      "checksum": "6bdf98b0f761fd7346ecf08f49ed9b70"
     },
     "Standards/rmdStyle.css": {
       "checksum": "abc545288d2d902bddef2b82bc86c926"
@@ -4737,7 +4537,7 @@
       "checksum": "56029ed15f3351241e1e9bcf8e474c82"
     },
     "Standards/sdohLink.xlsx": {
-      "checksum": "868021b3225f49b323e6670e75ba7fea"
+      "checksum": "100f6e08c734beaf696efaac5bf3311f"
     },
     "Standards/Tract to Community Linkage.csv": {
       "checksum": "fb6060381903993a3d4ddfdf5e32813d"
@@ -4752,7 +4552,7 @@
       "checksum": "c6ed7071e9bf29a5398add5b60cf3c5c"
     },
     "ui.R": {
-      "checksum": "38f38a0fd35a6a75bb267aea02519084"
+      "checksum": "e6e8405fcebc57729220ce68d896280d"
     },
     "url_parameters.md": {
       "checksum": "7e68675bf7eccc7489b0098bfb34af54"
@@ -4761,7 +4561,7 @@
       "checksum": "35a3b9ead58df87b3d1d2a441bb4a352"
     },
     "www/bootstrap.css": {
-      "checksum": "a1ff6a9e2948a1260c96492546afcebb"
+      "checksum": "b34bb2e05f3be9a735a15c3a847e3cdc"
     },
     "www/CDPH.gif": {
       "checksum": "8fe5320426bd80d1e0f0e2bdbad9e162"
@@ -4918,6 +4718,9 @@
     },
     "www/SOPH/2022/Full Report.html": {
       "checksum": "40f05bd0f956d815a3ef97c5372c75b5"
+    },
+    "www/SOPH/2023/Full Report.html": {
+      "checksum": "72e730cb5639d0c88e5897d1db31ca8f"
     },
     "www/trends.png": {
       "checksum": "cc9080c4db097d956134dca16bcc3ee8"
