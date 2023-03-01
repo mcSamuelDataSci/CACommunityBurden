@@ -497,9 +497,6 @@ observeEvent(current$tab,{
 mcodRankMeasureStep <- reactive(mcodRankMeasure(myCounty = input$myLHJ, myYear = input$myYear_mcod, mySort = input$myMcodMeasure, topN = input$myN_mcod, myCause = input$myCAUSE_mcod))  
 output$mcodRankMeasure <- renderPlot({ mcodRankMeasureStep()$plotL + theme(plot.title = element_blank(), plot.subtitle = element_blank()) })
 
-# mcodRankCauseStep <- reactive(mcodRankCause(myCounty = input$myLHJ, myYear = input$myYear_mcod, myCause = input$myCAUSE_mcod))
-# output$mcodRankCause <- renderPlot(mcodRankCauseStep()$plotL)
-
 mcodRankSecondaryPerPrimaryStep <- reactive(mcodRankCause(myCounty = input$myLHJ, myYear = input$myYear_mcod, myCause = input$myCAUSE_mcod, leadingPrimary = FALSE))
 output$mcodRankSecondaryPerPrimary <- renderPlot({ mcodRankSecondaryPerPrimaryStep()$plotL + theme(plot.title = element_blank(), plot.subtitle = element_blank()) })
 
@@ -535,6 +532,86 @@ output$mcod_title3 <- renderUI({
   )
   )
 })
+
+
+
+observeEvent(current$tab,{
+  if(current$tab %in% c("mcodTab") ) {
+    
+    output$ourPNG = downloadHandler(
+      filename = function(){paste0(current$tab," Plots-", input$myYear_mcod, " Data-", input$myLHJ, "-", Sys.Date(),".zip") },
+      content = function(file){
+        
+        # Set temporary working directory
+        owd <- setwd( tempdir())
+        on.exit( setwd( owd))
+        
+        fileName1 <- paste0('Rankings Sorted by ', names(mcodMeasures)[mcodMeasures == input$myMcodMeasure], '.png')
+        fileName2 <- paste0('Leading Secondary where ', deathCauseLink$causeNameShort[deathCauseLink$causeCode == input$myCAUSE_mcod], ' is Primary.png')
+        fileName3 <- paste0('Leading Primary where ', deathCauseLink$causeNameShort[deathCauseLink$causeCode == input$myCAUSE_mcod], ' is Secondary.png')
+        
+        # Save plots
+        ggsave(fileName1, 
+               plot = mcodRankMeasureStep()$plotL + theme(plot.caption = element_blank()),
+               width = 10, height = 10, units = "in",
+               device = "png")
+        
+        ggsave(fileName2, 
+               plot = mcodRankSecondaryPerPrimaryStep()$plotL,
+               width = 10, height = 10, units = "in",
+               device = "png")
+        
+        ggsave(fileName3, 
+               plot = mcodRankPrimaryPerSecondaryStep()$plotL,
+               width = 10, height = 10, units = "in",
+               device = "png")
+        
+        # Zip them up
+        zip(file, c(fileName1, fileName2, fileName3))
+      }
+    )
+    
+    output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-", input$myYear_mcod, " Data-", input$myLHJ, "-", Sys.Date(),".xlsx")  },
+                                      content = function(file) {
+                                        
+                                        plot1 <- mcodRankMeasureStep()$dataL
+
+                                        class(plot1$pPrimary) <- "percentage"
+                                        class(plot1$pOther) <- "percentage"
+                                        
+                                        wb <- createWorkbook()
+                                        addWorksheet(wb, sheetName = "About", gridLines = F)
+                                        addWorksheet(wb, sheetName = paste0("Sorted by ", input$myMcodMeasure))
+                                        addWorksheet(wb, sheetName = "Leading Secondary per Primary")
+                                        addWorksheet(wb, sheetName = "Leading Primary per Secondary")
+                                        
+                                        aboutMCOD <- paste0('This spreadsheet contains the data behind all three charts in the “Multiple Cause of Death” tab on the California Community Burden of Disease Engine (CCB). Data are restricted to whatever was displayed in the charts at the time of download. Please email ccb@cdph.ca.gov if you are interested in the complete dataset for any county, or for California.\n
+The “Sorted by ', input$myMcodMeasure, '” sheet shows the top causes based on ', names(mcodMeasures)[mcodMeasures == input$myMcodMeasure], '. Primary Number of Deaths, Secondary Number of Deaths, Total Number of Deaths (Primary + Secondary), Percent Primary, and Percent Secondary are shown for each cause.\n
+The “Leading Secondary per Primary” sheet shows the top secondary causes of death where ', deathCauseLink$causeNameShort[deathCauseLink$causeCode == input$myCAUSE_mcod], ' was the primary cause. The maximum number of causes that can appear here is 20.\n
+The “Leading Primary per Secondary” sheet shows the top primary causes of death where ', deathCauseLink$causeNameShort[deathCauseLink$causeCode == input$myCAUSE_mcod], ' was the secondary cause. The maximum number of causes that can appear here is 20.')
+                                        
+                                        writeData(wb, sheet = 1, aboutMCOD, startCol = 1, startRow = 1)
+                                        addStyle(wb, 
+                                                 sheet = 1, 
+                                                 style = createStyle(wrapText = TRUE, border = "TopBottomLeftRight", valign = "top"),
+                                                 rows = 1, 
+                                                 cols = "A")
+                                        setColWidths(wb, sheet = 1, cols = "A", widths = 130)
+                                        setRowHeights(wb, sheet = 1, rows = 1, heights = 250)
+                                        
+                                        writeDataTable(wb, sheet = 2, x = plot1, colNames = TRUE, tableStyle = "TableStyleLight9")
+                                        setColWidths(wb, sheet = 2, cols = 1:9, widths = c(rep(18, 8), 40))
+                                        
+                                        writeDataTable(wb, sheet = 3, x = mcodRankSecondaryPerPrimaryStep()$dataL, colNames = TRUE, tableStyle = "TableStyleLight9")
+                                        setColWidths(wb, sheet = 3, cols = 1:2, widths = c(18, 40))
+                                        
+                                        writeDataTable(wb, sheet = 4, x = mcodRankPrimaryPerSecondaryStep()$dataL, colNames = TRUE, tableStyle = "TableStyleLight9")
+                                        setColWidths(wb, sheet = 4, cols = 1:2, widths = c(18, 40))
+                                        
+                                        saveWorkbook(wb, file = file) ## save to working directory
+                                        } )
+    
+  } } )
 
 # ---------------------------------------------------------------------------------------------------------
 

@@ -72,6 +72,7 @@ library(visNetwork) # used in IHME tab
 library(DT)
 library(cowplot)
 library(docxtractr)
+library(openxlsx)
 
 # This resolves the error message for creating a map: "Error: Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
 # tmap_options(check.and.fix = TRUE)
@@ -329,12 +330,6 @@ causeList_mcod <- list(`A. - Communicable, maternal, perinatal and nutritional c
                        `Z. - Unknown/Missing Value` = ph("Z"))
 
 # MCOD Measures
-c("Primary Number of Deaths" = "Ndeaths_primary", 
-  "Secondary Number of Deaths" = "Ndeaths_other", 
-  "Total Number of Deaths" = "Ndeaths_total", 
-  "Percent Primary" = "pPrimary", 
-  "Percent Secondary" = "pOther")
-
 mcodMeasures <- c("Primary Number of Deaths" = "Ndeaths_primary", 
                   "Secondary Number of Deaths" = "Ndeaths_other", 
                   "Total Number of Deaths" = "Ndeaths_total", 

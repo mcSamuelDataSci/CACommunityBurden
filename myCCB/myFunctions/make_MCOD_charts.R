@@ -55,7 +55,7 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
   tDat_download <- tDat_download %>%
     slice(1:topN) %>%
     left_join(select(deathCauseLink, causeCode, causeNameShort), by = "causeCode") %>%
-    select(-causeCode, !starts_with("data"))
+    select(-causeCode, -starts_with("data"))
   
   
   tDat <- tDat_download %>% 
@@ -78,7 +78,7 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
   tPlot <- ggplot(tDat, aes(x = value, y = causeNameShort, fill = measure)) +
     geom_bar(stat = "identity", color = "black") +
     scale_fill_manual(values = c("Primary" = "#AED6F1", "Secondary" = "#ABB2B9")) +
-    scale_x_continuous(labels = if (grepl("Ndeaths", mySort)) scales::comma else scales::percent) +
+    scale_x_continuous(labels = if (grepl("Ndeaths", mySort)) scales::comma_format(accuracy=1) else scales::percent) +
     scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
     labs(x = titleX, y = "Cause of Death", title = str_wrap(myTitle, 35), subtitle = mySubTitle) +
     theme(legend.title = element_blank(), 
@@ -109,65 +109,6 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
 }
 
 
-
-# mcodRankCause <- function(myCounty = "CALIFORNIA", 
-#                          myYear = 2021,
-#                          myCause = "C01") {
-#   
-#   tDat <- datCounty_mcod %>% 
-#     filter(sex == "Total", year == myYear, county == myCounty, causeCode == myCause)
-#   
-#   if (nrow(tDat)==0 | is.null(tDat$dataOther[[1]]) | is.null(tDat$dataPrimary[[1]])) stop("Sorry friend, there are no cases that meet this criteria.")
-#   
-#   # Titles
-#   myCauseTitle <- deathCauseLink %>% filter(causeCode == myCause) %>% pull(causeNameShort)
-#   titleCounty <- ifelse(myCounty == "CALIFORNIA", myCounty, paste(myCounty, "County"))
-#   mySubTitle <- paste0(titleCounty, ", ", myYear)
-#   
-#   
-#   makePlot <- function(myData = tDat, causeTitle = myCauseTitle, subTitle = mySubTitle, leadingPrimary = T) {
-#     myYTitle <- ifelse(leadingPrimary, "Primary Causes of Death", "Secondary Causes of Death")
-#     myTitle <- ifelse(leadingPrimary, 
-#                       paste0("Leading Primary Causes of Death when ", causeTitle, " was the Secondary Cause"),
-#                       paste0("Leading Secondary Causes of Death when ", causeTitle, " was the Primary Cause")
-#                       )
-#     myNdeathsCol <- ifelse(leadingPrimary, "Ndeaths_primary", "Ndeaths_other")
-#     myBarColor <- ifelse(leadingPrimary, "#ABB2B9", "#AED6F1")
-#     myData <- if(leadingPrimary) myData$dataPrimary[[1]] else myData$dataOther[[1]]
-#     
-#     
-#     myData <- myData %>% 
-#       rename(Ndeaths = !!as.symbol(myNdeathsCol)) %>% 
-#       arrange(desc(Ndeaths)) %>% 
-#       slice(1:20) %>% 
-#       left_join(select(deathCauseLink, causeCode, causeNameShort), by = "causeCode")
-#     
-#     ggplot(myData, aes(x = Ndeaths, y = reorder(causeNameShort, Ndeaths))) +
-#       geom_bar(stat = "identity", color = "black", fill = myBarColor, width = 1) +
-#       scale_x_continuous(labels = scales::comma) +
-#       # scale_y_discrete(labels = function(x) str_wrap(x, width = 30)) +
-#       labs(x = "Number of Deaths", y = myYTitle, title = str_wrap(myTitle, 35), subtitle = subTitle) +
-#       theme(legend.title = element_blank(), 
-#             axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5),
-#             axis.text.y = element_text(size = 14),
-#             axis.title.y = element_text(size = 14),
-#             axis.title.x = element_text(size = 14),
-#             plot.title = element_text(size = 16),
-#             plot.subtitle = element_text(size = 14), 
-#             legend.text = element_text(size = 12), 
-#             legend.position = "bottom")
-#     
-#     
-#   }
-#   
-#   
-#   
-#   # list(plotL = cowplot::plot_grid(makePlot(leadingPrimary = TRUE), makePlot(leadingPrimary = FALSE), nrow = 2, rel_heights = 1))
-#   
-#   
-# }
-
-
 mcodRankCause <- function(myCounty = "CALIFORNIA", 
                           myYear = 2021,
                           myCause = "C01", 
@@ -182,7 +123,7 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
   
   # Error messages
   if (leadingPrimary) {
-    if (nrow(tDat)==0) stop_quietly()
+    if (nrow(tDat)==0) stop(paste0("There are no cases where ", myCauseNameShort, " appears as a primary or secondary cause of death in ", titleCounty, " in ", myYear, ". Please select a new cause."))
     if (is.null(tDat$dataPrimary[[1]])) stop(paste0("There are no cases where ", myCauseNameShort, " appears as a secondary cause of death in ", titleCounty, " in ", myYear))
     
   } else {
@@ -190,10 +131,6 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
     if (is.null(tDat$dataOther[[1]]) & tDat$Ndeaths_primary == 0) stop(paste0("There are no cases where ", myCauseNameShort, " appears as a primary cause of death in ", titleCounty, " in ", myYear))
     if (is.null(tDat$dataOther[[1]]) & tDat$Ndeaths_primary > 0) stop(paste0("There are no secondary causes of death where ", myCauseNameShort, " is listed as a primary cause of death in ", titleCounty, " in ", myYear))
   }
-  
-  
-  
-  
   
   tDat <- if(leadingPrimary) tDat$dataPrimary[[1]] else tDat$dataOther[[1]]
   
@@ -214,12 +151,13 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
     rename(Ndeaths = !!as.symbol(myNdeathsCol)) %>% 
     arrange(desc(Ndeaths)) %>% 
     slice(1:20) %>% 
-    left_join(select(deathCauseLink, causeCode, causeNameShort), by = "causeCode")
+    left_join(select(deathCauseLink, causeCode, causeNameShort), by = "causeCode") %>% 
+    select(-causeCode)
   
   # Plot
   tPlot <- ggplot(tDat, aes(x = Ndeaths, y = reorder(causeNameShort, Ndeaths))) +
     geom_bar(stat = "identity", color = "black", fill = myBarColor, width = 1) +
-    scale_x_continuous(labels = scales::comma) +
+    scale_x_continuous(labels = scales::comma_format(accuracy=1)) +
     # scale_y_discrete(labels = function(x) str_wrap(x, width = 30)) +
     labs(x = "Number of Deaths", y = myYTitle, title = str_wrap(myTitle, 35), subtitle = mySubTitle) +
     theme(legend.title = element_blank(), 
@@ -232,7 +170,7 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
           legend.text = element_text(size = 12), 
           legend.position = "bottom")
   
-  list(plotL = tPlot)
+  list(plotL = tPlot, dataL = tDat)
     
 }
 
