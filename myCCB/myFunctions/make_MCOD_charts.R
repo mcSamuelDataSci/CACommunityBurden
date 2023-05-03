@@ -78,7 +78,7 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
   tPlot <- ggplot(tDat, aes(x = value, y = causeNameShort, fill = measure)) +
     geom_bar(stat = "identity", color = "black") +
     scale_fill_manual(values = c("Primary" = "#AED6F1", "Secondary" = "#ABB2B9")) +
-    scale_x_continuous(labels = if (grepl("Ndeaths", mySort)) scales::comma_format(accuracy=1) else scales::percent) +
+    scale_x_continuous(labels = if (grepl("Ndeaths", mySort)) scales::comma else scales::percent) +
     scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
     labs(x = titleX, y = "Cause of Death", title = str_wrap(myTitle, 35), subtitle = mySubTitle) +
     theme(legend.title = element_blank(), 
@@ -157,7 +157,7 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
   # Plot
   tPlot <- ggplot(tDat, aes(x = Ndeaths, y = reorder(causeNameShort, Ndeaths))) +
     geom_bar(stat = "identity", color = "black", fill = myBarColor, width = 1) +
-    scale_x_continuous(labels = scales::comma_format(accuracy=1)) +
+    scale_x_continuous(labels = scales::comma) +
     # scale_y_discrete(labels = function(x) str_wrap(x, width = 30)) +
     labs(x = "Number of Deaths", y = myYTitle, title = str_wrap(myTitle, 35), subtitle = mySubTitle) +
     theme(legend.title = element_blank(), 
@@ -169,6 +169,13 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
           plot.subtitle = element_text(size = 14), 
           legend.text = element_text(size = 12), 
           legend.position = "bottom")
+  
+  tDat <- tDat %>% 
+    mutate(county = myCounty, year = myYear, causeNameShort2 = myCauseNameShort) %>% 
+    select(county, year, causeNameShort2, causeNameShort, Ndeaths)
+  
+  if (leadingPrimary) tDat <- tDat %>% rename(primary_cause = causeNameShort, secondary_cause = causeNameShort2)
+  if (!leadingPrimary) tDat <- tDat %>% rename(primary_cause = causeNameShort2, secondary_cause = causeNameShort)
   
   list(plotL = tPlot, dataL = tDat)
     

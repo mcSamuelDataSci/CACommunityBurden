@@ -92,7 +92,7 @@ library(readxl)
 library(fs)
 
 # Year to exclude from non-preliminary datasets
-excludeYear <- 2022 
+excludeYear <- 2023 
 
 # T if using recent multi-year groupings; F if not
 isRecent_multiYear <- T
@@ -112,8 +112,8 @@ yF   <- 100000  # rate constant
 pop5 <- 5       # 5 years
 pop1 <- 1       # 1 year
 
-if(isRecent_multiYear) yearGrp <- c("2007-2011","2012-2016","2017-2021")
-if(!isRecent_multiYear) yearGrp <- c("2006-2010","2011-2015","2016-2020")
+if(isRecent_multiYear) yearGrp <- c("2008-2012","2013-2017","2018-2022")
+if(!isRecent_multiYear) yearGrp <- c("2007-2011","2012-2016","2017-2021")
 
 myDigits= 6
   
@@ -185,10 +185,10 @@ popRegionSexRACE    <- filter(popRegion,ageGroup == "Total", year %in% forQuarte
 popRegionSexAgeGRACE <- filter(popRegion, ageGroup != "Total", year %in% forQuarter_selectYears)
 
 # For R/E 1 year - County and Region
-popCountySexRACE_1year <- filter(popCounty, ageGroup == "Total")
-popCountySexAgeGRACE_1year <- filter(popCounty, ageGroup != "Total")
-popRegionSexRACE_1year <- filter(popRegion, ageGroup == "Total")
-popRegionSexAgeGRACE_1year <- filter(popRegion, ageGroup != "Total")
+popCountySexRACE_1year <- filter(popCounty, ageGroup == "Total", year %in% RE_1year_years)
+popCountySexAgeGRACE_1year <- filter(popCounty, ageGroup != "Total", year %in% RE_1year_years)
+popRegionSexRACE_1year <- filter(popRegion, ageGroup == "Total", year %in% RE_1year_years)
+popRegionSexAgeGRACE_1year <- filter(popRegion, ageGroup != "Total", year %in% RE_1year_years)
 
 # For R/E and Age - State 1-year
 popStateSexRACE_1year <- filter(popCounty, ageGroup == "Total", county == "CALIFORNIA")
@@ -2040,14 +2040,6 @@ datTract  <- filter(datTract,population>0)
 # == SAVE DATA SETS FOR APPLICATION ===============================================================
 
 saveRDS(filter(datCounty, year != excludeYear),      file= path(ccbData,whichDat,"datCounty.RDS"))
-saveRDS(filter(datRegion, year != excludeYear),      file= path(ccbData,whichDat,"datRegion.RDS"))
-saveRDS(datCounty_RE_1year,                          file= path(ccbData,whichDat,"datCounty_RE_1year.RDS"))
-saveRDS(datRegion_RE_1year,                          file= path(ccbData,whichDat,"datRegion_RE_1year.RDS"))
-saveRDS(datCounty_Q,                                 file= path(ccbData,whichDat,"datCounty_Q.RDS"))
-saveRDS(datRegion_Q,                                 file= path(ccbData,whichDat,"datRegion_Q.RDS"))
-saveRDS(datCounty_M,                                 file= path(ccbData,whichDat,"datCounty_M.RDS"))
-saveRDS(filter(datCounty65, year != excludeYear),    file= path(ccbData,whichDat,"datCounty65.RDS"))
-saveRDS(filter(datCounty65_RE, !is.na(yearG3)),      file= path(ccbData,whichDat,"datCounty65_RE.RDS"))
 saveRDS(filter(datCounty_3year, !is.na(yearG3)),     file= path(ccbData,whichDat,"datCounty_3year.RDS"))
 saveRDS(filter(datCounty_AGE_3year, !is.na(yearG3)), file= path(ccbData,whichDat,"datCounty_AGE_3year.RDS"))
 saveRDS(filter(datCounty_5year, !is.na(yearG5)),     file= path(ccbData,whichDat,"datCounty_5year.RDS"))
@@ -2057,6 +2049,17 @@ saveRDS(filter(datComm, !is.na(yearG5)),             file= path(ccbData,whichDat
 saveRDS(filter(datTract, !is.na(yearG5)),            file= path(ccbData,whichDat,"datTract.RDS"))
 saveRDS(filter(datState_AGE, year != excludeYear),   file= path(ccbData,whichDat,"datState_AGE.RDS"))
 saveRDS(filter(datState_RE, year != excludeYear),    file= path(ccbData,whichDat,"datState_RE.RDS"))
+
+
+saveRDS(filter(datRegion, year != excludeYear),      file= path(ccbData,whichDat,"datRegion.RDS"))
+saveRDS(datCounty_RE_1year,                          file= path(ccbData,whichDat,"datCounty_RE_1year.RDS"))
+saveRDS(datRegion_RE_1year,                          file= path(ccbData,whichDat,"datRegion_RE_1year.RDS"))
+saveRDS(datCounty_Q,                                 file= path(ccbData,whichDat,"datCounty_Q.RDS"))
+saveRDS(datRegion_Q,                                 file= path(ccbData,whichDat,"datRegion_Q.RDS"))
+saveRDS(datCounty_M,                                 file= path(ccbData,whichDat,"datCounty_M.RDS"))
+saveRDS(filter(datCounty65, year != excludeYear),    file= path(ccbData,whichDat,"datCounty65.RDS"))
+saveRDS(filter(datCounty65_RE, !is.na(yearG3)),      file= path(ccbData,whichDat,"datCounty65_RE.RDS"))
+
 
 # saveRDS(datRural, file = path(ccbData, whichDat, "datRural.RDS"))
 

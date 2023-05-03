@@ -144,6 +144,14 @@ observe({
   }
 })
 
+observeEvent(input$myCAUSE, {
+  if (substr(input$myCAUSE, 1, 1) == "E") {
+    if (current$nav == "trends") {
+      myModal("Due to delays in the final coding of cause of death in the preliminary 2022 data, 2022 trend data are not included at this time for any individual causes in the Injury category or the overall Injury category. This is due to injury-related conditions being particularly susceptible to delays in final coding. These trend points will be added as soon as possible.")
+    }
+  }
+})
+
 
 
 # generates help "objects" used for "drop down" help buttons
@@ -603,10 +611,10 @@ The “Leading Primary per Secondary” sheet shows the top primary causes of de
                                         setColWidths(wb, sheet = 2, cols = 1:9, widths = c(rep(18, 8), 40))
                                         
                                         writeDataTable(wb, sheet = 3, x = mcodRankSecondaryPerPrimaryStep()$dataL, colNames = TRUE, tableStyle = "TableStyleLight9")
-                                        setColWidths(wb, sheet = 3, cols = 1:2, widths = c(18, 40))
+                                        setColWidths(wb, sheet = 3, cols = 1:5, widths = c(18, 18, 40, 40, 18))
                                         
                                         writeDataTable(wb, sheet = 4, x = mcodRankPrimaryPerSecondaryStep()$dataL, colNames = TRUE, tableStyle = "TableStyleLight9")
-                                        setColWidths(wb, sheet = 4, cols = 1:2, widths = c(18, 40))
+                                        setColWidths(wb, sheet = 4, cols = 1:5, widths = c(18, 18, 40, 40, 18))
                                         
                                         saveWorkbook(wb, file = file) ## save to working directory
                                         } )

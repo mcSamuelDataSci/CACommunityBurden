@@ -16,6 +16,14 @@ minYear <- 2012
 
 dat.1 <- filter(datCounty_EDU,county == myLHJ,causeCode == myCause, sex==mySex) 
 
+# REMOVES ALL INJURY CAUSES 2022 DATA POINTS SINCE MANY ARE CLASSIFIED AS Z01. REMOVE CODE BELOW WHEN READY TO SHOW 
+if (substr(myCause, 1, 1) == "E") {
+  
+    dat.1 <- dat.1 %>% 
+      filter(year != 2022)
+
+}
+
 
 if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
 

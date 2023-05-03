@@ -27,7 +27,7 @@ hidden(
                   round=TRUE,sep="",step=1),  #can use value=c(2017,2017)
       
       # myYear ======================
-      sliderInput("myYear_mcod","Year:",value=maxYear,min=2019,max=maxYear,animate = TRUE,
+      sliderInput("myYear_mcod","Year:",value=maxYear,min=2019,max=2021,animate = TRUE,
                   round=TRUE,sep="",step=1),
       
       # myYearDemo ======================

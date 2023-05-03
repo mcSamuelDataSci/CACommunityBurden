@@ -81,7 +81,7 @@ STATE       <- "CALIFORNIA"
 
 
 
-currentYear          <- 2021
+currentYear          <- 2022
 currentYear_hosp_ed  <- 2021
 
 incRecentYearData <- T 

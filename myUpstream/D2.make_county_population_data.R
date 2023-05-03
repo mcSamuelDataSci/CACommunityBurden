@@ -10,7 +10,7 @@
 
 # -- Set most recent year --------------------------------------------------------------------------------------------------------------
 
-myYear <- 2022
+myYear <- 2023
 isRecent_multiYear <- T # T if using recent multi-year groups; F if not
 
 # -- Set locations and load packages ---------------------------------------------------------------------------------------------------

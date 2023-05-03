@@ -105,10 +105,9 @@ pacman::p_load("readr", "readstata13", "stringr", "tidyr", "dplyr", "readxl", "p
 
 ## 1.2 Set Global Options -------------------------------------------------
 
-myYear      <- 2021   # Most recent year of death data available
+myYear      <- 2022   # Most recent year of death data available
 controlPop  <-  F     # whether to control ACS to DOF pop totals
 whichDeaths <- "real" # source of deaths data (real,fake,dof) - REMOVE
-whichPop    <- "pep"  # source of population data (dof,pep) - REMOVE
 critNx      <- 10000 # ADD COMMENT
 critDx      <-   700 # ADD COMMENT
 
@@ -132,19 +131,16 @@ source(paste0(standardsPlace, "ageChop.R")) # Loads in function for cutting age 
 ## 1.5 Read in geography linkages files -----------------------------------
 
 ## 2.1	load tract to MSSA maps
-# trt00mssa <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/trt00mssa13.dta")) # 2009 TIGER/LINE census tracts to 2013 MSSAs - NOT USED ANYWHERE
-trt10mssa <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/trt10mssa13.dta")) # 2010 TIGER/LINE census tracts to 2013 MSSAs
-# mssacfips <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/mssa13cfips.dta")) # 2013 MSSA to county - NOT USED ANYWHERE
-# REPLACE ABOVE WITH OUR STANDARD MSSA LINKAGE FILE
+
+trt10mssa <- read_csv(paste0(standardsPlace, "Tract to Community Linkage.csv")) %>% 
+  select(GEOID, comID) %>% 
+  add_row(GEOID = "06037930401", comID = "78.2xx")
 
 ## 2.2 	load county name to county FIPS code maps
 
-# OR USE OUR STANDARD COUNTY LINK FILE?
-fipsCounty <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx"))) %>% 
+fipsCounty <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
   select(county = countyName, FIPSCounty) %>% 
   mutate(FIPSCounty = as.numeric( paste0("6", FIPSCounty) ))
-
-
 
 # 2 Read in and Prepare Population Data -----------------------------------------------------------------------------------------------------------------------
 
@@ -155,8 +151,7 @@ nxState <-  readRDS(paste0(ccbUpstream, "/lifeTables/dataIn/nxState.RDS")) # Con
 
 ## 2.2 MSSA Population Data ------------------------------------------------
 
-
-if (controlPop) { # IGNORE THIS - KEEP AS FALSE (NOTE UP TOP)
+if (controlPop) { 
   
   # load ACS 2005-2015 five-year samples from NHGIS, rolled up to MSSA level
   nxMSSA <- read.dta13(paste0(ccbUpstream,"/lifeTables/dataIn/acs5_mssa_adj.dta")) %>% # ACS tract pop, collapsed to MSSA and controlled to DOF county

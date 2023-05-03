@@ -1,69 +1,92 @@
-##### ----------------------------------------------------------------------------------------------------
+# 0 Script Documentation ------------------------------------------------------------------------------------------------------------------------------
 
-# Creating population files (nxCounty & nxState) for life expectancy calculation
+# Authors: Michael Samuel, DrPH, Jaspreet Kang (Fusion Center/Office of Policy and Planning, CDPH)
+# Contact information for any questions: ccb@cdph.ca.gov
 
-#### ----------------------------------------------------------------------------------------------------
+# About this script:
+# This script produces the necessary state, county, and MSSA-level population data which are then used in "ltmaker.R" to calculate life tables
 
-library(readxl)
-library(dplyr)
-library(stringr)
-library(readstata13)
+# Script dependencies:
+# R packages:
+# - pacman
+# - readxl
+# - stringr
+# - readstata13
 
-# --- Set most recent year ------------------------------------------------------------------------------
+# Inputs:
+# FusionStandards.R - loads in standard paths and objects
+# countyLink.xlsx - standard linkage file which links county names to county fips
+# dof_pop_2000plus.RDS - DOF population data dating back to 2000
+# populationExtract.R - standard custom function for processing population data into desired output
+# nxMSSA.RDS - Last year's MSSA-level population data file
 
-myYear <- 2021
+# Outputs:
+# 1. nxCounty.RDS - County-level population data - Contains every year(2000-)-county-sex(including total)-race(including total)-ageGroup combination
+# 2. nxState.RDS - State-level population data - Contains every year(2000-)-state-sex(including total)-race(including total)-ageGroup combination
+# 3. nxMSSA.RDS - MSSA-level population data - Contains every year(2007-)-MSSA-sex-race(including total)-ageGroup combination
 
-# --- Set necessary paths ---------------------------------------------------------------------------------
+# Script structure:
+# 1. Setup - Load required R packages, set global constants, source standard and geography linkage files
+# 2. Read in and prepare state, county-level population data
+# 3. Read in and prepare MSSA-level population data
+# 4. Save data
 
-server <- F
-if (server) {
-  source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
-} else {
-  source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
-}
+# Notes:
+# - State and county population data are from the California Department Department of Finance (DOF). 
+#   - 2000-2009 data are California and Counties Population by Age, Race/Hispanics, and Gender: 2000-2010 - https://dof.ca.gov/forecasting/Demographics/estimates/
+#   - 2010- data are Complete State and County Projections (Table P-3) - https://dof.ca.gov/forecasting/demographics/Projections/
+# - MSSA population data are aggregations of Census Tract pop data pulled from ACS 5-year surveys, using Table B01001 - https://data.census.gov/cedsci/table?q=b01001&tid=ACSDT5Y2019.B01001
+#   - Medical Service Study Areas (MSSAs) is a unique California geographic designation based on aggregation of census tracts, constructed by the California Health Care Access and Information (HCAI)
+#   - There are 542 MSSAs in California
+#   - 2010 Census Tract boundaries are used for all years; Therefore, 2019 ACS 5-Year estimates are used for 2020-
+
+
+
+# 1 Setup -----------------------------------------------------------------------------------------------------------------------------------
+
+## 1.1 Load packages -------------------------------------
+
+# install.packages("pacman") # Uncomment line if pacman is not installed on your system
+pacman::p_load("readxl", "stringr", "readstata13")
+
+
+## 1.2 Set global constant - most recent year -------------
+
+myYear <- 2022
+
+## 1.3 Set paths, source standards, read in linkage file -------------
+
+CCB         <- TRUE
+server      <- FALSE
+myDrive     <- getwd()
+myPlace     <- paste0(myDrive,"/myCCB/") 
+
+source(paste0(myPlace,"/Standards/FusionStandards.R")) # Loads in standard paths and objects
 
 countyLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
   select(countyName, FIPSCounty) %>%
-  # mutate(GEOID = paste0("06", FIPSCounty, "000000"))
   mutate(fips = as.numeric(paste0("6", FIPSCounty)))
 
-# raceLink <- read_xlsx(paste0(myStandards, "raceLink.xlsx")) 
 
-# 1) Read in DCDC population file since it goes back to 2000. Cleaning up data frame to prepare it for populationExtract standard function.
+# 2 Read in and process state, county population data ------------------------------------------------------
 
-tDat0 <- readRDS(paste0(fusionPlace, "Population Data/dof_pop_2000plus.RDS"))
+## 2.1 Read in 2000- DOF's county-level population data -----------------
 
-# tDat0 <- readRDS(file= paste0(myPath, "Population Data/Archive DCDC-STD Data and Documentation/tDat_2000_2020.rds")) %>%
-#   filter(!(COUNTY %in% c("California", "Alameda HD", "Berkeley", "Pasadena", "Long Beach", "Los Angeles HD"))) %>%  # NOTE: California totals already included with county = "California
-#   rename(year=YEAR, county= COUNTY, sex = SEX, agerc = AGE, raceE = RE, perwt = POP) %>%
-#   mutate(sex = c("MALE","FEMALE")[match(sex,c("M","F"))]) %>%
-#   filter(year %in% 2000:2020) %>%
-#   left_join(select(raceLink, race7, DCDC), by = c("raceE" = "DCDC")) %>% # JASPO EDIT - TAKE OUT, AND UNCOMMENT BELOW IF NEW RACECODES CAUSES MAJOR ISSUES
-#   select(-raceE)
-# 
-# # 1a) FIPS is required in populationExtract standard function
-# 
-# countyLink <- readxl::read_xlsx(paste0(myPath, "Standards/countyLink.xlsx")) %>%
-#   select(countyName, FIPSCounty) %>%
-#   # mutate(GEOID = paste0("06", FIPSCounty, "000000"))
-#   mutate(fips = as.numeric(paste0("6", FIPSCounty)))
-# 
-# tDat0  <- tDat0 %>%  left_join(countyLink, by = c("county" = "countyName"))
+dofData <- readRDS(paste0(fusionPlace, "Population Data/dof_pop_2000plus.RDS")) %>% # File created further upstream
+  select(-county) # Data file has county fips, so county names are not needed here
 
 
-# -----------------------------------------------------------------------------
+## 2.2 Process state, county-level population by passing through standard custom populationExtract function ----------
+
+
+# Add comments about the function (JASPO - CLEAN UP POP EXTRACT)
 source(paste0(standardsPlace,"populationExtract.R"))
 
-# For the function, we can't have county column since the function links fips code to county
-tDat0 <- select(tDat0, -county)
-
-
-# 2) Run tDat0 through populationExtract standard function:
 # - Grabbing county + California
 # - Grabbing race (using raceCode naming standard) + Total
 # - Grabbing sex + Total
 # - Using life expectancy age groups which can be found in ageLink.xlsx + grabbing Total (which will be filtered out)
-# - Grabbing years 2000-2020
+# - Grabbing years 2000-myYear
 popCounty <- populationExtract(County = T, 
                                Race   = T,
                                Sex    = T, 
@@ -75,235 +98,81 @@ popCounty <- populationExtract(County = T,
                                CA    = T, 
                                Total = T,
                                multiYear = F, 
-                               popData = tDat0, 
-                               server = F)
+                               popData = dofData, 
+                               server = server)
 
-
-# 2a) Preparing popCounty in the desired format to make it easy to create nxCounty & nxState
-# - Filtering out Total ageGroup
-# - Replacing countyName with GEOID using countyFIPS
-# - ageGroups are formatted, for example, 5 - 9. Splitting up this column into agell, and ageul
-
+# Further processing
 popCounty1 <- popCounty %>%
   ungroup() %>%
   filter(ageGroup != "Total") %>%
   left_join(countyLink, by = c("county" = "countyName")) %>%
   mutate(GEOID = ifelse(county == "CALIFORNIA", "06000000000", 
-         paste0("0", fips, "000000")), 
+                        paste0("0", fips, "000000")), 
          agell = as.integer(sub("\\-.*", "", ageGroup)), 
          ageul = as.integer(sub(".*-", "", ageGroup))) %>%
-  select(GEOID, sex, year, agell, ageul, Nx = population, raceCode)
+  select(GEOID, year, sex, raceCode, agell, ageul, Nx = population)
 
-# 2b) Create nxCounty
+## 2.3 Finalize county-level population data ------------
 nxCounty <- popCounty1 %>%
-  filter(GEOID != "06000000000")
+  filter(GEOID != "06000000000") 
 
-# Data Check --- 
+# Data Quality check: Ensure all combinations exist
 
-table(nxCounty$GEOID, nxCounty$agell)
+dqCheck <- c(table(nxCounty$year, nxCounty$sex, nxCounty$agell, nxCounty$raceCode) == 58)
 
-nxCounty1 <- complete(nxCounty, GEOID, year, sex, raceCode, agell) %>%
-  mutate(ageul = ifelse(is.na(ageul) & agell == 0, 0, ageul)) %>%
-  replace_na(list(Nx = 0))
+print(paste0("Data Quality Check: There are population data for all 58 counties per year-sex-ageGroup-race combination: ", all(dqCheck)))
 
-table(nxCounty1$GEOID, nxCounty1$agell)
-
-# 2c) Create nxState
+## 2.4 Finalize state-level population data ---------------
 nxState <- popCounty1 %>%
-  filter(GEOID == "06000000000")
-
-# --- MSSA --------------------------------------------------------------------------
-
-# 0.CCB/myUpstream/lifeTables/dataIn/nxMSSA.RDS is the MSSA pop data (dating back to 2007) used for LE estimates, containing:
-
-# 1) 2007-2017 MSSA Pop pulled by Ethan (0.CCB/myUpstream/lifeTables/dataIn/acs5_mssa.dta)
-# 2) 2018- pulled by CCB Data Team using the standard pullACS function
+  filter(GEOID == "06000000000") 
 
 
-# 2020 ACS-5 year is released in December 2021, so will use 2019 MSSA as 2020
+# 3 Read in and process MSSA population data ------------------------------------------------------
+
+# Notes about nxMSSA.RDS:
+# 1. 2007-2017 MSSA Pop pulled by Ethan (0.CCB/myUpstream/lifeTables/dataIn/acs5_mssa.dta)
+# 2. 2018-2019 pulled by CCB Data Team using the standard pullACS function
+# 3. 2020- data are actually 2019 ACS 5Y estimates since we have not yet switched to the new 2020 census tract boundaries
+# - Because of this, the code below simply reads in nxMSSA.RDS and uses the prior year's pop estimates (which are 2019 ACS 5Y estimates) for current year
+
 
 nxMSSA <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))
 
+# Uses last year's pop estimates for current year
 t_nxMSSA <- nxMSSA %>%
   filter(year == (myYear - 1)) %>%
   mutate(year = myYear)
 
+# Bind current year to nxMSSA
 nxMSSA_final <- bind_rows(nxMSSA, t_nxMSSA)
 
 
-# SAVE
+# Checks
+unique(nxMSSA_final$year)
+unique(nxCounty$year)
+unique(nxState$year)
 
-saveRDS(nxCounty1, paste0(ccbUpstream, "lifeTables/dataIn/nxCounty.RDS"))
+checkCounty <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxCounty.RDS")) %>% 
+  select(GEOID, year, sex, raceCode, agell, ageul, Nx) %>% 
+  arrange(GEOID, year, sex, raceCode, agell)
+checkCounty2 <- nxCounty %>% 
+  filter(year != myYear) %>% 
+  arrange(GEOID, year, sex, raceCode, agell)
+identical(checkCounty, checkCounty2)
+all.equal(checkCounty, checkCounty2)
+
+
+checkState <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxState.RDS")) %>% 
+  select(GEOID, year, sex, raceCode, agell, ageul, Nx) %>% 
+  arrange(GEOID, year, sex, raceCode, agell)
+checkState2 <- nxState %>% 
+  filter(year != myYear) %>% 
+  arrange(GEOID, year, sex, raceCode, agell)
+identical(checkState, checkState2)
+all.equal(checkState, checkState2)
+
+# 4 Save data ------------------------------------------------------------------------------------
+
+saveRDS(nxCounty, paste0(ccbUpstream, "lifeTables/dataIn/nxCounty.RDS"))
 saveRDS(nxState, paste0(ccbUpstream, "lifeTables/dataIn/nxState.RDS"))
 saveRDS(nxMSSA_final, paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))
-
-
-
-
-
-
-
-
-# NEED TO AUTOMATE # JASPO - DONT RUN CODE BELOW
-
-
-# Read in nxMSSA.RDS
-nxMSSA <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))
-
-
-if (isRecent_acsSurvey) {
-  
-  source(paste0(fusionPlace, "SDOH/pullACS_function.R")) # Standard pullACS function
-  
-  # ACS IDs: 5 year age groups
-  sdohVars <- readxl::read_xlsx(path = paste0(fusionPlace, "SDOH/linkageSDOH.xlsx"), 
-                                sheet = "Age 5 Year Groups") %>%
-    pull(measureLabel)
-  
-  # Pull ACS data
-  mssaPop <- pullACS(State=06, # 06 = California
-                      Geography="mssa", # Options: county, mssa, tract, zcta... for acs1, puma
-                      Survey="acs5", # Options: "acs1", "acs5"
-                      Year=myYear,
-                      moeLevel=95, # margin of error level
-                      asList = F, # Want as a list, or as one data frame?
-                      server = server, # Set to T if in R Studio Pro; otherwise set to F
-                      sdohVars = sdohVars) %>% # Character value or vector of sdoh variables (measureLabel)
-    mutate(year = myYear) 
-  
-  # Prepare data frame to bind with nxMSSA
-  t_nxMSSA <- mssaPop %>%
-    mutate(raceCode = "Total",
-           sex = str_to_title(sub("\\ .*", "", measure)), 
-           ageGroup = sub(".*ale", "", measureLabel), 
-           agell = as.numeric(sub("\\-.*", "", ageGroup)), 
-           ageul = as.numeric(sub(".*-", "", ageGroup))) %>%
-    select(year, agell, ageul, sex, comID, nx = numerator, raceCode)
-  
-  nxMSSA_final <- bind_rows(nxMSSA, t_nxMSSA)
-  
-  
-}
-
-
-if (!isRecent_acsSurvey) {
-  
-  previousYear <- myYear - 1
-  
-  nxMSSA
-  
-  
-}
-
-year1 <- 2018
-year2 <- 2019
-year3 <- 2020
-
-mssaPop1 <- pullACS(State=06, # 06 = California
-                    Geography="mssa", # Options: county, mssa, tract, zcta... for acs1, puma
-                    Survey="acs5", # Options: "acs1", "acs5"
-                    Year=year1,
-                    moeLevel=95, # margin of error level
-                    asList = F, # Want as a list, or as one data frame?
-                    server = server, # Set to T if in R Studio Pro; otherwise set to F
-                    sdohVars = sdohVars) %>% # Character value or vector of sdoh variables (measureLabel)
-  mutate(year = year1)  
-
-mssaPop2 <- pullACS(State=06, # 06 = California
-                    Geography="mssa", # Options: county, mssa, tract, zcta... for acs1, puma
-                    Survey="acs5", # Options: "acs1", "acs5"
-                    Year=year2,
-                    moeLevel=95, # margin of error level
-                    asList = F, # Want as a list, or as one data frame?
-                    server = server, # Set to T if in R Studio Pro; otherwise set to F
-                    sdohVars = sdohVars) %>% # Character value or vector of sdoh variables (measureLabel)
-  mutate(year = year2) 
-
-
-# TEMP - Using 2019 ACS for 2020 data since 2020 ACS is not out yet
-
-mssaPopTemp <- mssaPop2 %>% mutate(year = year3)
-
-
-mssaPop <- bind_rows(mssaPop1, mssaPop2)
-
-# commLinkage <- read.csv("/mnt/projects/FusionData/Standards/Tract to Community Linkage.csv", header = T) %>%
-#   select(-year) %>%
-#   mutate(GEOID = paste0("0", GEOID))
-
-# not-controlled
-
-nxMSSA <- mssaPop %>%
-  mutate(raceCode = "Total",
-         sex = str_to_title(sub("\\ .*", "", measure)), 
-         ageGroup = sub(".*ale", "", measureLabel), 
-         agell = as.numeric(sub("\\-.*", "", ageGroup)), 
-         ageul = as.numeric(sub(".*-", "", ageGroup))) %>%
-  select(year, agell, ageul, sex, comID, nx = numerator, raceCode)
-
-nxMSSA <- commLinkage %>%
-  left_join(mssaPop, by = "GEOID") %>%
-  group_by(year, comID, comName, county, Variable, Indicator, Group) %>%
-  summarise(Numerator = sum(Numerator, na.rm = T), 
-            Denominator = sum(Denominator, na.rm = T)) %>%
-  mutate(estimate = Numerator/Denominator) %>%
-  ungroup() %>%
-  mutate(raceCode = "Total",
-         sex = str_to_title(sub("\\ .*", "", Variable)), 
-         ageGroup = sub(".*ale", "", Indicator), 
-         agell = as.numeric(sub("\\-.*", "", ageGroup)), 
-         ageul = as.numeric(sub(".*-", "", ageGroup))) %>%
-  select(year, agell, ageul, sex, comID, nx = Numerator, raceCode)
-
-nxACS <- read.dta13(paste0(myPath,"0.CCB/myUpstream/lifeTables/dataIn/acs5_mssa.dta")) %>% # ACS tract pop collapsed to MSSA
-  rename(Ethan = race7) %>%
-  left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
-  select(-Ethan) %>%
-  filter(year != 2018) %>%
-  bind_rows(nxMSSA)
-
-# Controlled
-
-# popCounty_forMSSA <- populationExtract(County = T, 
-#                                Race   = F,
-#                                Sex    = T, 
-#                                Age    = T,
-#                                Year      = 2017,
-#                                ageGroups = c(-1, seq(4, 84, by = 5), 199), 
-#                                ageLabels = seq(0, 85, by = 5),
-#                                raceLabel = "raceCode", 
-#                                CA    = F, 
-#                                Total = F,
-#                                multiYear = F, 
-#                                popData = tDat0, 
-#                                path = "mnt")
-# 
-# popCounty_forMSSA <- popCounty_forMSSA %>%
-#   ungroup() %>%
-#   mutate(agell = as.numeric(ageGroup), 
-#          ageul = ifelse(agell < 85, agell + 4, 199))  %>%
-#   select(year, county = countyName, sex, agell, population)
-# 
-# 
-# popControl <- check %>%
-#   left_join(popCounty_forMSSA, by = c("year", "county", "sex", "agell")) %>%
-#   group_by(agell, sex, county) %>%
-#   mutate(countyNx = sum(nx)) %>%
-#   ungroup() %>%
-#   mutate(mult = population/countyNx)
-# 
-# 
-# nxACS_c <- read.dta13(paste0(upPlace,"/lifeTables/dataIn/acs5_mssa_adj.dta")) %>% # ACS tract pop, collapsed to MSSA and controlled to DOF county
-#     rename(Ethan = race7) %>%
-#     left_join(select(raceLink, raceCode, Ethan), by = "Ethan") %>%
-#     select(-Ethan) %>%
-#   filter(year == 2017)
-
-
-
-# 4) Save nxCounty & nxState
-saveRDS(nxCounty1, paste0(myPath, "0.CCB/myUpstream/lifeTables/dataIn/nxCounty.RDS"))
-saveRDS(nxState, paste0(myPath, "0.CCB/myUpstream/lifeTables/dataIn/nxState.RDS"))
-saveRDS(nxACS, paste0(myPath, "0.CCB/myUpstream/lifeTables/dataIn/nxMSSA.RDS"))
-
-check <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxCounty.RDS"))

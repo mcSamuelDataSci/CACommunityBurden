@@ -8,7 +8,7 @@
 
 
 
-myYear <- 2021
+myYear <- 2022
 
 server <- F
 #CCB <- F
@@ -58,7 +58,7 @@ popData <- populationExtract(County = T, # all uppercase in arguments; explain t
                              Total = F,
                              multiYear = F, 
                              popData = dof_pop_2000_myYear, 
-                             server = T)
+                             server = server)
 
 
 popData2 <- populationExtract(County = T, # all uppercase in arguments; explain the ageGroups better; raceCode; 
@@ -73,7 +73,7 @@ popData2 <- populationExtract(County = T, # all uppercase in arguments; explain 
                               Total = F,
                               multiYear = F, 
                               popData = dof_pop_2000_myYear, 
-                              server = T)
+                              server = server)
 
 popDataTrend <- populationExtract(County = T, # all uppercase in arguments; explain the ageGroups better; raceCode; 
                               Race   = T,
@@ -87,7 +87,7 @@ popDataTrend <- populationExtract(County = T, # all uppercase in arguments; expl
                               Total = T,
                               multiYear = F, 
                               popData = dof_pop_2000_myYear, 
-                              server = T)
+                              server = server)
 
 
 # ----- Step 2: Prepare data frames for Demographics tab, save in myCCB/myData/ ----------------------

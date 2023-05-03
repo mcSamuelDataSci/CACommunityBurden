@@ -423,7 +423,7 @@ shinyUI(
                                                           shinydashboard::box(
                                                             status = "primary",
                                                             width = NULL,
-                                                            selectizeInput("myCAUSE_mcod", "Cause of Death:", choices=causeList_mcod),
+                                                            selectizeInput("myCAUSE_mcod", "Cause of Death:", choices=causeList_mcod, selected = "A11"),
                                                             htmlOutput("mcod_title2"),
                                                             plotOutput("mcodRankSecondaryPerPrimary", width = "100%", height = 450),
                                                             htmlOutput("mcod_title3"),

@@ -45,7 +45,7 @@ if(length(.pkg[!.inst]) > 0) install.packages(.pkg[!.inst])
 lapply(.pkg, require, character.only=TRUE)           
 
 ## 1.2  options
-myYear <- 2021
+myYear <- 2022
 controlPop  <-  F  # whether to control ACS to DOF pop totals
 whichDeaths <- "real" # source of deaths data (real,fake,dof)
 whichPop    <- "pep"  # source of population data (dof,pep)
@@ -176,6 +176,9 @@ if (whichDeaths=="real") {
   cbdDeaths		<- readRDS(paste0(securePlace,"myData/ccb_processed_deaths.RDS")) %>%
     filter(year <= myYear) %>%
     left_join(select(raceLink, raceCode, CHSI), by = "CHSI") %>%
+    mutate(sex = case_when(sex == "F" ~ "Female", 
+                           sex == "M" ~ "Male",
+                           TRUE ~ sex)) %>% 
     select(-CHSI)
   
 } 
@@ -185,11 +188,11 @@ if (whichDeaths=="dof")  cbdDeaths 		<- read.dta13(paste0(dofSecure,"/dof_deaths
 if (whichDeaths %in% c("real","fake")) {
   ## MSSA
   dxMssa <- cbdDeaths %>%
-    filter(sex %in% c("M", "F"), !is.na(age), !is.na(year), as.numeric(substring(GEOID,1,5)) %in% 6001:6115) %>%
+    filter(!is.na(age), !is.na(year), as.numeric(substring(GEOID,1,5)) %in% 6001:6115) %>%
     mutate(agell = 5*floor(age/5), # create lower ageGroup by cutting into 5 years
            agell = ifelse(agell > 85, 85, agell), # set lower ageGroup > 85 to 85
-           ageul = ifelse(age < 85, agell + 4, 199), # create upper ageGroup; if age > 85, then set to 199
-           sex = ifelse(sex == "F", "Female", "Male")) %>%
+           ageul = ifelse(age < 85, agell + 4, 199) # create upper ageGroup; if age > 85, then set to 199
+    ) %>%
     left_join(trt10mssa, by = "GEOID") %>%
     group_by(year,comID,sex, agell,ageul) %>%
     summarise(Dx = n()) %>%
@@ -201,13 +204,14 @@ if (whichDeaths %in% c("real","fake")) {
     summarise(Dx = sum(Dx)) %>%
     mutate(sex = "Total")
     
-  dxMssa <- bind_rows(dxMssa, dxMssa_totalSex)
+  dxMssa <- bind_rows(dxMssa, dxMssa_totalSex) %>% 
+    filter(sex %in% c("Female", "Male", "Total")) # Removes Unknown/missing sex
   
 
   
   ## county - age Groups: 0, 1-4, 5-84 (5), 85-199
   dxCounty <- cbdDeaths %>%
-    filter(sex %in% c("M", "F"), !is.na(age), !is.na(year), !is.na(county)) %>%
+    filter(!is.na(age), !is.na(year), !is.na(county)) %>%
     mutate(agell = ageChop(INAGE = age,
                            myCuts = TRUE,
                            my_lAge = c(0, 1, seq(5, 85, by = 5)),
@@ -219,8 +223,7 @@ if (whichDeaths %in% c("real","fake")) {
                            my_lAge = c(0, 1, seq(5, 85, by = 5)),
                            my_uAge = c(0, seq(4, 84, by = 5), 199),
                            my_ageName = c(0, seq(4, 84, by = 5), 199), 
-                           ourServer = server),
-           sex = ifelse(sex == "F", "Female", "Male")) %>%
+                           ourServer = server)) %>%
     left_join(countycfips, by = "county") %>%
     mutate(GEOID = sprintf("%05d000000",cfips)) %>%
     group_by(year,GEOID,sex, raceCode, agell,ageul) %>%
@@ -240,7 +243,8 @@ if (whichDeaths %in% c("real","fake")) {
     summarise(Dx = sum(Dx)) %>%
     mutate(raceCode = "Total")
   
-  dxCounty <- bind_rows(dxCounty, dxCounty_totalRace)
+  dxCounty <- bind_rows(dxCounty, dxCounty_totalRace) %>% 
+    filter(sex %in% c("Female", "Male", "Total")) # Removes Unknown/missing sex
   
   ## State
   dxState <- dxCounty %>%
@@ -294,7 +298,7 @@ doExtract <- function(dx=NULL, nx=NULL, nyrs=NA, y=NA, level=NA) {
   
   tmp <- setDT(tmp)
   
-  tmp<-tmp[,.(Nx=sum(Nx),Dx=sum(Dx)),by=c('GEOID','sex','agell','ageul','raceCode')] # collapse
+  tmp<-tmp[,.(Nx=sum(Nx, na.rm = TRUE),Dx=sum(Dx, na.rm = TRUE)),by=c('GEOID','sex','agell','ageul','raceCode')] # collapse
 
   tmp <- as.data.frame(complete(tmp, GEOID,sex,raceCode,agell)) %>%
     replace_na(list(Dx = 0)) %>%
@@ -510,9 +514,25 @@ if (whichDeaths %in% c("real","fake")) {
 
 ## 7	REVIEW/EXPORT ----------------------------------------------------------------------
 
-# checkState <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciState.rds"))
-# checkCounty <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciCounty.rds"))
-# checkMssa <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciMSSA.rds"))
+checkState <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciState.rds")) %>% 
+  filter(x == 0, nyrs == 3, sex == "Total") %>% 
+  select(year, raceCode, ex, exlow, exhigh) %>% 
+  arrange(year, raceCode) %>% 
+  as.data.frame()
+
+cState <- ltState %>% 
+  filter(x == 0, nyrs == 3, sex == "Total", year != 2021) %>% 
+  select(year, raceCode, ex1 = ex, exlow1 = exlow, exhigh1 = exhigh) %>% 
+  arrange(year, raceCode) %>% 
+  as.data.frame()
+
+full_join(checkState, cState) %>% 
+  mutate(diff = ex1 - ex) %>% 
+  View()
+
+checkCounty <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciCounty.rds")) 
+checkMssa <- readRDS(paste0(ccbUpstream,"/lifeTables/dataOut/LTciMSSA.rds"))
+
 
 ## 7.1	EXPORT
 ## full LT
@@ -541,8 +561,8 @@ if (whichDeaths %in% c("real","fake")) {
 }
 
 ## 7.2	Review
-mx.state[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("GEOID","sex","year","CHSI")] # state sum
-lt.state[x==0 & sex=="TOTAL" & CHSI=="TOTAL",c("GEOID","sex","year","CHSI","ex","exlow","exhigh")] 
+mxState1[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("GEOID","sex","year","CHSI")] # state sum
+ltState[x==0 & sex=="TOTAL" & CHSI=="TOTAL",c("GEOID","sex","year","CHSI","ex","exlow","exhigh")] 
 mx.county[sex=="TOTAL" & CHSI=="TOTAL",.(Nx=sum(Nx),Dx=sum(Dx)),by=c("nyrs","sex","year","CHSI")] # state sum
 lt.county[x==0 & sex=="TOTAL" & CHSI=="TOTAL" & year==2017,
           c("nyrs","GEOID","sex","year","CHSI","ex","exlow","exhigh")] 

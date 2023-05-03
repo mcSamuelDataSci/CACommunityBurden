@@ -14,8 +14,8 @@
 #                                                                                     |   
 # =====================================================================================
 
-myYear <- 2021
-my5Year <- "2017-2021"
+myYear <- maxYear
+my5Year <- yearGrp5
 
 f      <- list(family = "Arial", size = 18, color = "blue")  # not used          
 pal    <- c("red", "blue", "green")

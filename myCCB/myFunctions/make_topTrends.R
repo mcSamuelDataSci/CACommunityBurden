@@ -29,7 +29,7 @@ topCauses_trends <- function(
     filter(topLevCode != "Z") %>%
     mutate(measure = !!sym(myMeasure), 
            causeNameShort_left_dl = ifelse(causeNameShort == "COVID-19", NA, causeNameShort)) %>%
-    select(year, Level, county, causeNameShort, causeNameShort_left_dl, topLevCode, topLevName, measure)
+    select(year, Level, county, causeCode, causeNameShort, causeNameShort_left_dl, topLevCode, topLevName, measure)
   
   
   # Year Range ==========================================================================================
@@ -52,6 +52,10 @@ topCauses_trends <- function(
   if (myLev == "lev1") {
     
     if (nrow(plot_df)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
+    
+    # REMOVES INJURY TOP LEV 2022 DATA POINT SINCE MANY ARE CLASSIFIED AS Z01. REMOVE CODE BELOW WHEN READY TO SHOW 
+    plot_df <- plot_df %>% 
+      mutate(measure = ifelse(year == 2022 & topLevCode == "E", NA, measure))
     
     tPlot <- ggplot(filter(plot_df, year %in% yearRange), aes(x = year, y = measure, color = topLevName)) +
       scale_color_manual(values = topLevColors, drop = T, limits = force) +
@@ -79,6 +83,10 @@ topCauses_trends <- function(
       
       if (x == "0") plot_title <- "All Groups" else plot_title <- unique(tDat$topLevName)
       
+      # REMOVES SOME INJURY CAUSES 2022 DATA POINTS SINCE MANY ARE CLASSIFIED AS Z01. REMOVE CODE BELOW WHEN READY TO SHOW 
+      tDat <- tDat %>% 
+        mutate(measure = ifelse(year == 2022 & substr(causeCode, 1, 1) == "E", 
+                                NA, measure))
       
       tPlot0 <- ggplot(tDat, aes(x = year, y = measure, color = causeNameShort)) +
         geom_line(size = 1) +
@@ -141,6 +149,11 @@ topCauses_trends <- function(
 
     if (myBroad == "0") plot_title <- paste0(min(myYearRange), "-", max(myYearRange), " Trends in Top ", myN, " Public Health Level Conditions (based on ", y_title, " in ", myYearRank, "), ", myLHJ)
     if (myBroad != "0") plot_title <- paste0(min(myYearRange), "-", max(myYearRange), " Trends in Top ", myN, " ", unique(tDat$topLevName), " Conditions (based on ", y_title, " in ", myYearRank, "), ", myLHJ)
+    
+    # REMOVES SOME INJURY CAUSES 2022 DATA POINTS SINCE MANY ARE CLASSIFIED AS Z01. REMOVE CODE BELOW WHEN READY TO SHOW 
+    tDat <- tDat %>% 
+      mutate(measure = ifelse(year == 2022 & substr(causeCode, 1, 1) == "E", 
+                              NA, measure))
     
     tPlot <- ggplot(tDat, aes(x = year, y = measure, color = causeNameShort) )  +
       geom_line(size = 1) +

@@ -5,7 +5,7 @@
 # Apr 24 2019
 ##############
 
-server <- T
+server <- F
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
@@ -53,8 +53,9 @@ a.ed1_2016 <- getEd(2016,"acs1")
 a.ed1_2017 <- getEd(2017,"acs1")
 a.ed1_2018 <- getEd(2018,"acs1")   
 a.ed1_2019 <- getEd(2019,"acs1")  
-a.ed1_2020 <- getEd(2019,"acs1") # Using 2019 ACS for 2020. UPDATE when 2020 ACS1 becomes available  
-a.ed1_2021 <- getEd(2019,"acs1") # Using 2019 ACS for 2020. UPDATE when 2020 ACS1 becomes available 
+a.ed1_2020 <- getEd(2019,"acs1") # Using 2019 ACS for 2020. 2020 ACS1 not available  
+a.ed1_2021 <- getEd(2021,"acs1")
+a.ed1_2022 <- getEd(2021,"acs1") # Using 2021 ACS for 2022 since 2022 ACS1 not available yet.
 
 #a.ed5_2005.09 <- getEd(2009,"acs5")   # generates ERROR
 # a.ed5_2006.10 <- getEd(2010,"acs5")

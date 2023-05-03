@@ -29,7 +29,7 @@ populationExtract <- function(County = F, # all uppercase in arguments; explain 
                               Sex    = F, 
                               Age    = F,
                               Year      = 2016:2018,
-                              ageGroups = "age4", # Add NA to not include ageGroups
+                              ageGroups = "age4", # Add NULL to not include ageGroups
                               ageLabels,
                               raceLabel = "raceName", 
                               CA    = T, 
@@ -67,10 +67,13 @@ populationExtract <- function(County = F, # all uppercase in arguments; explain 
     mutate(FIPSCounty = as.numeric(paste0("6", FIPSCounty))) %>%
     rename(county = countyName)
   
-  if ((length(ageGroups) == 1) & (!is.na(ageGroups))){
-    ageLink    <- read_excel(paste0(standardsPlace, "ageLink.xlsx"),sheet=ageGroups)
-    ageBreaks  <- c(-1, ageLink$uAge)  
-    ageLabels  <- ageLink$ageName
+  if (length(ageGroups) == 1){
+    if (!is.null(ageGroups)) {
+      ageLink    <- read_excel(paste0(standardsPlace, "ageLink.xlsx"),sheet=ageGroups)
+      ageBreaks  <- c(-1, ageLink$uAge)  
+      ageLabels  <- ageLink$ageName
+    }
+    
   } else {
     
     ageBreaks <- ageGroups
@@ -81,7 +84,7 @@ populationExtract <- function(County = F, # all uppercase in arguments; explain 
   
   popDenoms <- popRaw %>%
     filter(year %in% Year) %>%
-    mutate(ageGroup = if(!is.na(ageGroups)) cut(age, breaks = ageBreaks, labels = ageLabels, right = TRUE) else as.character(age)) %>%
+    mutate(ageGroup = if(!is.null(ageGroups)) cut(age, breaks = ageBreaks, labels = ageLabels, right = TRUE) else as.character(age)) %>%
     full_join(raceLink, by = "race7") %>%
     full_join(countyLink, by = c("fips" = "FIPSCounty")) %>%
     #group_by(year, countyName, raceLabel, ageGroup, sex) %>% # what if we want raceCode?
