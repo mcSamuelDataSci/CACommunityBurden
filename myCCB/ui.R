@@ -176,7 +176,15 @@ shinyUI(
                       .tabbable > .nav > .active > a:focus,
                       .tabbable > .nav > .active > a:hover
                       {color: black;}
+                      ",
+                      
                       "
+                      .tab-pane.active[data-value='causeOfDeathTab'],
+                      .tab-pane.active[data-value='nonFatalMeasuresTab'],
+                      .tab-pane.active[data-value='stateMeasuresTab']
+                      {background-color: white;}
+                      "
+                      
                       )
                  )),
     
@@ -269,6 +277,10 @@ shinyUI(
                          # ),
                          div(id = "ourOnlyPNGDownload", style = "margin: 10px;",
                              downloadButton('ourOnlyPNG', 'Download Figure', style = paste0("float: left;", myDownloadButtonSty))
+                         ),
+                         
+                         div(id = "ourBurdenViewDownload", style = "margin: 10px;",
+                             downloadButton('ourBurdenView', 'Download Report', style = paste0("float: left;", myDownloadButtonSty))
                          )
                        ),
 
@@ -488,6 +500,59 @@ shinyUI(
                                         )
                             )
                    ),
+ 
+                   # Multiple Lenses (Burden View) ------------------------------------------------------------------------------------
+                   tabPanel(title = strong("MULTIPLE LENSES"), value = "multipleLenses", 
+                            tabsetPanel(
+                              type = "tab", id = "multipleLensesID",
+                              tabPanel(title = "Cause of Death", value = "causeOfDeathTab",
+                                       br(),
+                                       tags$head(tags$style("#causeOfDeathHeader{text-align: center;}")),
+                                       h3(textOutput("causeOfDeathHeader")),
+                                       fluidRow(
+                                         tags$head(tags$style("#DEATHS1{height:40vh !important;}")),
+                                         tags$head(tags$style("#YLL1{height:40vh !important;}")),
+                                         column(6, id = "deathTest", plotOutput("DEATHS1")),
+                                         column(6, plotOutput("YLL1"))),
+                                       fluidRow(
+                                         tags$head(tags$style("#CHANGE1{height:40vh !important;}")),
+                                         tags$head(tags$style("#CHANGE2{height:40vh !important;}")), # Jaspo
+                                         column(6, plotOutput("CHANGE1")),
+                                         column(6, plotOutput("CHANGE2")), # Jaspo
+                                       ), 
+                                       fluidRow( # Jaspo
+                                         tags$head(tags$style("#DISPARITY1{height:40vh !important;}")),
+                                         column(6, plotOutput("DISPARITY1")), 
+                                         column(6)
+                                       )),
+                              tabPanel(title = "Non-fatal Measures", value = "nonFatalMeasuresTab", 
+                                       br(),
+                                       tags$head(tags$style("#nonFatalMeasuresHeader{text-align: center;}")),
+                                       h3(textOutput("nonFatalMeasuresHeader")),
+                                       fluidRow(
+                                         tags$head(tags$style("#HOSP1{height:40vh !important;}")),
+                                         tags$head(tags$style("#ED1{height:40vh !important;}")),
+                                         column(6, plotOutput("HOSP1")),
+                                         column(6, plotOutput("ED1"))
+                                       ), 
+                                       
+                                       fluidRow(
+                                         tags$head(tags$style("#CASES1{height:40vh !important;}")),
+                                         column(6, plotOutput("CASES1")),
+                                         column(6)
+                                       ), 
+                                       
+                                       h5(cidFootnote)),
+                              tabPanel(title = "State Measures", value = "stateMeasuresTab", 
+                                       br(),
+                                       tags$head(tags$style("#StateMeasuresHeader{text-align: center;}")),
+                                       h3(textOutput("StateMeasuresHeader")),
+                                       fluidRow(
+                                         tags$head(tags$style("#YLD1{height:80vh !important;}")),
+                                         tags$head(tags$style("#RISK1{height:80vh !important;}")),
+                                         column(6, plotOutput("YLD1")),
+                                         column(6, plotOutput("RISK1")) ))
+                            )),
                    
                    tabPanel(title = strong("DISPARITIES"), value = "disparities",
                             tabsetPanel(type = "tab", id = "disparitiesID",

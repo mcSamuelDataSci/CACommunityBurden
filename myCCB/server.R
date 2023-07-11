@@ -31,6 +31,7 @@ shinyServer(function(input, output,session) {
                           "hospitalizations" = input$hospitalizationsID,
                           "sdoh"             = input$sdohID,
                           "demographics"     = input$demographicsID, # JASPO added demographics
+                          "multipleLenses"   = input$multipleLensesID,
                           current$nav)
     print(current$tab) # For debugging only
     print(current$nav) # For debugging only
@@ -144,6 +145,7 @@ observe({
   }
 })
 
+# 2022 Injuries Modal warning message ----------------------------------------
 observeEvent(input$myCAUSE, {
   if (substr(input$myCAUSE, 1, 1) == "E") {
     if (current$nav == "trends") {
@@ -189,7 +191,10 @@ tabHelpList <- list("dataTableTab"           = appTextL$conditionTableTab,
                     "ageRaceFocusTab"        = appTextL$ageRaceFocusTab,
                     "deathHospEDTab"         = appTextL$deathHospEDTab,
                     "demographicsTab"        = appTextL$demographicsTab,
-                    "topTrendsTab"           = appTextL$topTrendsTab
+                    "topTrendsTab"           = appTextL$topTrendsTab,
+                    "causeOfDeathTab"        = appTextL$causeOfDeathTab,
+                    "nonFatalMeasuresTab"    = appTextL$nonFatalMeasuresTab,
+                    "stateMeasuresTab"       = appTextL$stateMeasuresTab
                     )
 
 whoNeedsHelp <- reactive({
@@ -499,6 +504,85 @@ observeEvent(current$tab,{
 
     } } )
   
+  
+# Multiple Lenses (Burden View) ----------------------------------------------------------------------------
+
+  output$causeOfDeathHeader <- renderText({
+    paste0("Cause of Death Measures in ", input$myLHJ) })
+  
+  output$nonFatalMeasuresHeader <- renderText({
+    paste0("Non-Fatal Measures in ", input$myLHJ) })
+  
+  output$StateMeasuresHeader <- renderText({
+    paste0("State Measures in ", input$myLHJ) })
+  
+  output$DEATHS1     <- renderPlot({createBurdenView(myIdNum=1, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  output$YLL1        <- renderPlot({createBurdenView(myIdNum=2, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  output$CHANGE1     <- renderPlot({createBurdenView(myIdNum=3, myCounty=input$myLHJ, myObserv=input$myObserv, myCustomTitle = paste0("Increase in Death Rates, ", currentYear-10, "-", currentYear))})
+  output$CHANGE2     <- renderPlot({createBurdenView(myIdNum=3, myCounty=input$myLHJ, myObserv=input$myObserv, decrease = T, myCustomTitle = paste0("Decrease in Death Rates, ", currentYear-10, "-", currentYear))})
+  output$DISPARITY1  <- renderPlot({createBurdenView(myIdNum=4, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  
+  output$CASES1      <- renderPlot({createBurdenView(myIdNum=7, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  output$HOSP1       <- renderPlot({createBurdenView(myIdNum=5, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  output$ED1         <- renderPlot({createBurdenView(myIdNum=6, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  
+  output$YLD1        <- renderPlot({createBurdenView(myIdNum=8, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  output$RISK1       <- renderPlot({createBurdenView(myIdNum=9, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  
+  output$mainTitle <- renderUI({h3(strong(
+    HTML(paste0("Measures for ",input$myLHJ," in ", currentYear))))})
+
+  output$ourBurdenView <- downloadHandler(
+    filename = function() {paste0(input$myLHJ,"_Measures_Snapshot_Report_",Sys.Date(),".docx")},
+    content = function(file){
+      
+      #flpath<-paste0(getwd(), "/")
+      flpath<-paste0(tempdir(),"/") #LIVE=tempdir TESTING=getwd
+      #tempStyle <- file.path(getwd(), "County_Snapshot_Report.docx")
+      tempStyle <- file.path(tempdir(), "County_Snapshot_Report.docx")
+      file.copy("County_Snapshot_Report.docx", tempStyle, overwrite = TRUE)
+      
+      #Height and Width of plot (text and spacing) scaled to download document dimensions. Landscape#Portait
+      h<-4.55
+      #w<-6.7  #landscape
+      w<-6.5    #portrait
+      ggsave(paste0(flpath,"1.png"), plot = createBurdenView(myIdNum=1,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"2.png"), plot = createBurdenView(myIdNum=2,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"3.png"), plot = createBurdenView(myIdNum=3,myCounty = input$myLHJ,myObserv=input$myObserv, myCustomTitle = paste0("Increase in Death Rates, ", currentYear-10, "-", currentYear)),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"4.png"), plot = createBurdenView(myIdNum=3,myCounty = input$myLHJ,myObserv=input$myObserv, decrease = T, myCustomTitle = paste0("Decrease in Death Rates, ", currentYear-10, "-", currentYear)),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"5.png"), plot = createBurdenView(myIdNum=4,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"6.png"), plot = createBurdenView(myIdNum=5,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"7.png"), plot = createBurdenView(myIdNum=6,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"8.png"), plot = createBurdenView(myIdNum=7,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"9.png"), plot = createBurdenView(myIdNum=8,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      ggsave(paste0(flpath,"10.png"), plot = createBurdenView(myIdNum=9,myCounty = input$myLHJ,myObserv=input$myObserv),
+             device = "png", width = w, height = h, units = 'in')
+      Texttest<-list(
+        AppText(SummaryText,1),
+        AppText(SummaryText,2))
+      my_doc<-Summary_doc(input$myLHJ,
+                          paste0(flpath,"1.png"),
+                          paste0(flpath,"2.png"),
+                          paste0(flpath,"3.png"),
+                          paste0(flpath,"4.png"),
+                          paste0(flpath,"5.png"),
+                          paste0(flpath,"6.png"),
+                          paste0(flpath,"7.png"),
+                          paste0(flpath,"8.png"), 
+                          paste0(flpath,"9.png"), 
+                          paste0(flpath,"10.png"))
+      print(my_doc,target=file)
+    }
+  )
 
 # MCOD ----------------------------------------------------------------------------------------------------------
   

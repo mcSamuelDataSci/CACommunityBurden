@@ -61,6 +61,9 @@ hidden(
       # myN Broad - Top Trends ======================
       numericInput( "myN_topTrends",  "How many conditions:", value=5,min=1,max= 50),
       
+      # Multiple Lenses (Burden) - How Many Shown? ======================
+      selectInput("myObserv",NULL,choices = list("How many shown?" = c(5,10,15,20)), selected=10),
+      
       # myMeasure--uses deathMeasures_Dropdown because the function uses short names in it (?)
       selectInput("myMeasure",  label=list("Measure:", actionButton( "measureHelp", label=helpIcon,style=myInputHelpButtonSty)),
                   choices=deathMeasures_Dropdown, selected = "aRate"), 

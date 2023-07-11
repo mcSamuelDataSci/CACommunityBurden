@@ -9,10 +9,10 @@
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
 INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo", "myGeo_sdoh", "myYear", "myYear_mcod", "myYearRank", "myYearRange", "myYearDemo", "mySex",
             "myRace", "mySexMult",
-            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_topTrends", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping", "myYearGrouping_race_age", "myCutSystem","myLabName","myCI","myRefLine",
+            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_topTrends", "myObserv", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping", "myYearGrouping_race_age", "myCutSystem","myLabName","myCI","myRefLine",
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
-            "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload")
+            "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload", "ourBurdenViewDownload")
 
 # Tab to inputs mapping: Associates each tab with it's input widgets
 TAB_INPUTS <- list("homeTab"=c(),
@@ -43,7 +43,10 @@ TAB_INPUTS <- list("homeTab"=c(),
                  # "hospitalMapTab"=c("myCAUSE", "myLHJ", "mySex"),
                    "arrowsTab"=c("display", "level", "measure", "yearRange", "sex", "metric"),
                    "riskByCauseTab"=c("level", "year", "sex", "metric", "measure"), 
-                   "demographicsTab" = c("myLHJ", "myYearDemo")
+                   "demographicsTab" = c("myLHJ", "myYearDemo"),
+                   "causeOfDeathTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv"),
+                   "nonFatalMeasuresTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv"),
+                   "stateMeasuresTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv")
 )
 
 # Functions =========================================================================

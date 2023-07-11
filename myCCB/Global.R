@@ -59,6 +59,7 @@ library(shiny)
 library(shinyjs)
 library(shinyWidgets)
 library(shinydashboard)
+library(shinyBS)
 library(magrittr)
 library(leaflet)
 library(tmap)
@@ -71,8 +72,10 @@ library(scales)
 library(visNetwork) # used in IHME tab
 library(DT)
 library(cowplot)
+library(officer)
 library(docxtractr)
 library(openxlsx)
+library(purrr)
 
 # This resolves the error message for creating a map: "Error: Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
 # tmap_options(check.and.fix = TRUE)
@@ -152,6 +155,33 @@ endpoints <- read.csv(path(ccbInfo, "IHME_API_endpoints.csv"), header = TRUE)
 ihmeData <- readRDS(paste0(ccbData, "v2IHME.RDS")) %>%
   subset(., year_id >= 1990)
 
+# BURDEN VIEW
+load(path(ccbData, whichData, "burdenViewData.RData"))
+
+dataSets <- dataSets %>%
+  map(~rename_with(.x, .cols = starts_with("year"), .fn = ~str_to_lower(gsub("G.*", "", .))))
+
+plot_title[3] <- "Increase in Death Rates"
+plot_title[7] <- "Reportable Disease Cases*"
+
+# CID
+dcdcData <- read_csv(path(ccbData, whichData, "CID/dcdcData.csv"))
+cidRecentYear <- function(myBranch) {
+  tDat <- dcdcData %>% group_by(Branch) %>% summarise(year = max(Year))
+  filter(tDat, Branch == myBranch) %>% pull(year)
+  
+}
+
+cidFootnote <- paste0("*The most recent year of data for STDs is ", cidRecentYear("STD") ,
+                      ", for TB ", cidRecentYear("TB"), 
+                      ", for vaccine preventable diseases ", cidRecentYear("VPD"), 
+                      ", and for other reportable infectious diseases ", cidRecentYear("IDB"))
+
+SummaryText     <- read.csv("myData/Burden View Report/SummaryText.csv",    
+                            colClasses = "character", na.strings = "NA")
+
+
+
 
 # URL PARAMETER LINKAGE
 queryLink_tab <- readxl::read_xlsx(path(myPlace, 'myInfo/queryParameter_Linkage.xlsx'), sheet = 'tab')
@@ -177,6 +207,7 @@ source(path(ccbFunctions, "make_rank_multibar_chart.R"))
 source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V2.R"))
 source(path(ccbFunctions, "make_topTrends.R"))
 source(path(ccbFunctions, "make_MCOD_charts.R"))
+source(path(ccbFunctions, "make_burdenView.R"))
 
 # HELPER FUNCTIONS
 source(paste0(ccbFunctions, "helperFunctions/wrapLabels.R"))
@@ -190,7 +221,7 @@ source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
 
 # - 6. APP TEXT ---------------------------------------------------------------------------------------------------------------------------------------
 
-appText         <- read_docx(path(ccbData, "appText/appText.docx")) # Read in appText Word Doc
+appText         <- docxtractr::read_docx(path(ccbData, "appText/appText.docx")) # Read in appText Word Doc
 appText         <- docx_extract_tbl(appText, 1) # Extract table
 appTextL        <- split(appText$Text, seq(nrow(appText))) # Convert data frame into a list
 names(appTextL) <- appText$varName # Add varNames to list
@@ -203,7 +234,7 @@ HospitalPrimaryAnyTab <- paste(appTextL$hospA,"<br><br>", appTextL$hospC)
 
 
 # NEWS AND UPDATES
-news_and_updates <- read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
+news_and_updates <- docxtractr::read_docx(paste0(ccbData, "/appText/newsUseCCB_Word.docx"))
 
 news_and_updates <- docx_extract_tbl(news_and_updates, 1) %>%
   mutate(Text = paste("<li>", Date, Update, "</li>"))
