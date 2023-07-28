@@ -46,7 +46,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "demographicsTab" = c("myLHJ", "myYearDemo"),
                    "causeOfDeathTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv"),
                    "nonFatalMeasuresTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv"),
-                   "stateMeasuresTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv")
+                   "stateMeasuresTab" = c("ourBurdenViewDownload", "myObserv")
 )
 
 # Functions =========================================================================

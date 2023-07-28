@@ -46,7 +46,7 @@ Summary_doc <- function (Title,Figure1,Figure2,Figure3,Figure4,Figure5,Figure6,F
     #   cursor_reach("WordSummaryText1") %>%
     # body_add_par(value = paste0(MeasureText$GeneralText[1]), style="Subtitle",pos="on") %>%
     cursor_reach("WordTitle1") %>%
-    body_add_par(value = paste0(capwords_burdenView(Title)," Cause of Death Measures"), style = "heading 1", pos="on") %>%
+    body_add_par(value = paste0(capwords_burdenView(Title)," Mortality Measures"), style = "heading 1", pos="on") %>%
     cursor_reach("WordFigure1") %>%
     body_add_img(src = Figure1, width = wdth, height = hght , style = "Normal", pos="on") %>%
     cursor_reach("WordFigure2") %>%
@@ -59,7 +59,7 @@ Summary_doc <- function (Title,Figure1,Figure2,Figure3,Figure4,Figure5,Figure6,F
     body_add_img(src = Figure5, width = wdth, height = hght , style = "Normal", pos="on") %>%
     
     cursor_reach("WordTitle2") %>%
-    body_add_par(value = paste0(capwords_burdenView(Title)," Non-fatal Measures"), style = "heading 1", pos="on") %>%
+    body_add_par(value = paste0(capwords_burdenView(Title)," Morbidity Measures"), style = "heading 1", pos="on") %>%
     cursor_reach("WordFigure6") %>%
     body_add_img(src = Figure6, width = wdth, height = hght , style = "Normal", pos="on") %>%
     cursor_reach("WordFigure7") %>%

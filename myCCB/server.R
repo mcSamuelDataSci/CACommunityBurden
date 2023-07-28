@@ -508,13 +508,13 @@ observeEvent(current$tab,{
 # Multiple Lenses (Burden View) ----------------------------------------------------------------------------
 
   output$causeOfDeathHeader <- renderText({
-    paste0("Cause of Death Measures in ", input$myLHJ) })
+    paste0("Mortality Measures in ", input$myLHJ) })
   
   output$nonFatalMeasuresHeader <- renderText({
-    paste0("Non-Fatal Measures in ", input$myLHJ) })
+    paste0("Morbidity Measures in ", input$myLHJ) })
   
   output$StateMeasuresHeader <- renderText({
-    paste0("State Measures in ", input$myLHJ) })
+    paste0("YLD and Risk Measures in CALIFORNIA*") })
   
   output$DEATHS1     <- renderPlot({createBurdenView(myIdNum=1, myCounty=input$myLHJ, myObserv=input$myObserv)})
   output$YLL1        <- renderPlot({createBurdenView(myIdNum=2, myCounty=input$myLHJ, myObserv=input$myObserv)})
@@ -526,8 +526,8 @@ observeEvent(current$tab,{
   output$HOSP1       <- renderPlot({createBurdenView(myIdNum=5, myCounty=input$myLHJ, myObserv=input$myObserv)})
   output$ED1         <- renderPlot({createBurdenView(myIdNum=6, myCounty=input$myLHJ, myObserv=input$myObserv)})
   
-  output$YLD1        <- renderPlot({createBurdenView(myIdNum=8, myCounty=input$myLHJ, myObserv=input$myObserv)})
-  output$RISK1       <- renderPlot({createBurdenView(myIdNum=9, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  output$YLD1        <- renderPlot({createBurdenView(myIdNum=8, myCounty=STATE, myObserv=input$myObserv)})
+  output$RISK1       <- renderPlot({createBurdenView(myIdNum=9, myCounty=STATE, myObserv=input$myObserv)})
   
   output$mainTitle <- renderUI({h3(strong(
     HTML(paste0("Measures for ",input$myLHJ," in ", currentYear))))})
@@ -562,9 +562,9 @@ observeEvent(current$tab,{
              device = "png", width = w, height = h, units = 'in')
       ggsave(paste0(flpath,"8.png"), plot = createBurdenView(myIdNum=7,myCounty = input$myLHJ,myObserv=input$myObserv),
              device = "png", width = w, height = h, units = 'in')
-      ggsave(paste0(flpath,"9.png"), plot = createBurdenView(myIdNum=8,myCounty = input$myLHJ,myObserv=input$myObserv),
+      ggsave(paste0(flpath,"9.png"), plot = createBurdenView(myIdNum=8,myCounty = STATE,myObserv=input$myObserv),
              device = "png", width = w, height = h, units = 'in')
-      ggsave(paste0(flpath,"10.png"), plot = createBurdenView(myIdNum=9,myCounty = input$myLHJ,myObserv=input$myObserv),
+      ggsave(paste0(flpath,"10.png"), plot = createBurdenView(myIdNum=9,myCounty = STATE,myObserv=input$myObserv),
              device = "png", width = w, height = h, units = 'in')
       Texttest<-list(
         AppText(SummaryText,1),

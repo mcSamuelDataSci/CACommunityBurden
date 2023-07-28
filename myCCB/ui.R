@@ -328,13 +328,14 @@ shinyUI(
                            if (whichData == "fake") { helpText(appTextL$textNote.fake,style="color:red")},
                            br(),br(),
                            
-                           actionButton("multipleMeasures", 
-                                        HTML("<center>See Multiple Measures of<br/>Health in Your County</center>"), 
-                                        style=myMeasuresButtonSty,
-                                        onclick = "window.open('https://skylab.cdph.ca.gov/lghcBurdenView/', '_blank')"
-                                        ), 
-                           
-                           br(), br(),
+                           # RETIRED - Multiple Lenses now in CCB App
+                           # actionButton("multipleMeasures", 
+                           #              HTML("<center>See Multiple Measures of<br/>Health in Your County</center>"), 
+                           #              style=myMeasuresButtonSty,
+                           #              onclick = "window.open('https://skylab.cdph.ca.gov/lghcBurdenView/', '_blank')"
+                           #              ), 
+                           # 
+                           # br(), br(),
                            
                            actionButton("newsUse","News and Updates",style=myTabHelpButtonSty), br(),
                            h5(tags$a(href="https://www.surveymonkey.com/r/2N2JSTV",target="_blank","Report 'bugs' HERE!")),
@@ -505,7 +506,7 @@ shinyUI(
                    tabPanel(title = strong("MULTIPLE LENSES"), value = "multipleLenses", 
                             tabsetPanel(
                               type = "tab", id = "multipleLensesID",
-                              tabPanel(title = "Cause of Death", value = "causeOfDeathTab",
+                              tabPanel(title = "Mortality", value = "causeOfDeathTab",
                                        br(),
                                        tags$head(tags$style("#causeOfDeathHeader{text-align: center;}")),
                                        h3(textOutput("causeOfDeathHeader")),
@@ -525,7 +526,7 @@ shinyUI(
                                          column(6, plotOutput("DISPARITY1")), 
                                          column(6)
                                        )),
-                              tabPanel(title = "Non-fatal Measures", value = "nonFatalMeasuresTab", 
+                              tabPanel(title = "Morbidity", value = "nonFatalMeasuresTab", 
                                        br(),
                                        tags$head(tags$style("#nonFatalMeasuresHeader{text-align: center;}")),
                                        h3(textOutput("nonFatalMeasuresHeader")),
@@ -543,7 +544,7 @@ shinyUI(
                                        ), 
                                        
                                        h5(cidFootnote)),
-                              tabPanel(title = "State Measures", value = "stateMeasuresTab", 
+                              tabPanel(title = "YLD and Risk", value = "stateMeasuresTab", 
                                        br(),
                                        tags$head(tags$style("#StateMeasuresHeader{text-align: center;}")),
                                        h3(textOutput("StateMeasuresHeader")),
@@ -551,7 +552,9 @@ shinyUI(
                                          tags$head(tags$style("#YLD1{height:80vh !important;}")),
                                          tags$head(tags$style("#RISK1{height:80vh !important;}")),
                                          column(6, plotOutput("YLD1")),
-                                         column(6, plotOutput("RISK1")) ))
+                                         column(6, plotOutput("RISK1")) ), 
+                                       h5("* Not currently available at the county level.")
+                                       )
                             )),
                    
                    tabPanel(title = strong("DISPARITIES"), value = "disparities",
