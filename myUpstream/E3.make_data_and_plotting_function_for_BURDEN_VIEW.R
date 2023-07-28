@@ -1,12 +1,12 @@
 
-server <- T
+server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
 # --Global constants and settings-----------------------------------
 
-myYear_death   <-  2021 # used for deaths
+myYear_death   <-  2022 # used for deaths
 myYear_pdd <- 2021  # used for hosp
 
 ccbChangeYear <- myYear_death - 10
@@ -53,7 +53,7 @@ ccbChange      <- ccbChange %>%
 # --CCB RACE DATA ---------------------------------------------------
 
 
-ccbRace <-  readRDS(paste0(ccbData,"real/ccbRaceDisparity.RDS")) %>%
+ccbRace <-  readRDS(paste0(securePlace,"myData/Exploratory/ccbRaceDisparity.RDS")) %>%
   left_join(select(deathCauseLink, -causeName, -causeNameShort) ,by="causeCode")   %>%
   mutate(measure=round(rateRatio,1),
          mValues = causeNameShort)

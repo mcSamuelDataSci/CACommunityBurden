@@ -73,10 +73,45 @@ raw.death.variable.info <- as.data.frame(read_excel(
 
 if (state.installation) {
   
- 
+  # Check
+  if (F) {
+    # Read in quarterly
+    ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_063023.csv"), colClasses = "character") 
+    
+    # On most recent quarterly data, filter on prior year
+    ca23_22 <- ca23 %>%
+      filter(F24 == "2022") %>% 
+      arrange(F1)
+    
+    # Read recent year
+    ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2022.csv"), colClasses = "character") %>% filter(F24 == "2022")
+    
+    # Get SFNs in recentYear CCDF that are not in recent quarterly data with 2022 records
+    xNotInY <- setdiff(ca22$F1, ca23_22$F1)
+    
+    xInY <- ca22 %>% 
+      filter(!F1 %in% xNotInY) %>% 
+      arrange(F1)
+    
+    identical(xInY, ca23_22)
+    all.equal(xInY, ca23_22)
+    setdiff(xInY$F1, ca23_22$F1)
+    setdiff(ca23_22$F1, xInY$F1)
+    nrow(xInY) - nrow(ca23_22)
+    
+    compareF144 <- xInY %>% 
+      select(F1, F144_recentYear = F144) %>% 
+      full_join(select(ca23_22, F1, F144_quarter = F144)) %>% 
+      mutate(check = F144_recentYear == F144_quarter) %>% 
+      filter(!check)
+  }
   
- ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010121_033123.csv"), colClasses = "character") %>% filter(F24 == "2023") 
+ # Read in quarterly
+ ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_063023.csv"), colClasses = "character") %>% filter(F24 == "2023")
+ 
+ # Read in 2022 CCDF
  ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2022.csv"), colClasses = "character") %>% filter(F24 == "2022")
+ 
  ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2021.csv"), colClasses = "character") %>% filter(F24 == "2021")
  ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")    
  ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
