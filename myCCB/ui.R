@@ -286,6 +286,7 @@ shinyUI(
 
                        # Side bar text -------------------------------------------------------------
                        
+                      # State Health Assessment Core Modules -------------------------------------
                        div(id = "textHomeTab", style = mySidebarTextSty,
                            HTML('<left><img src="CDPH.gif" height="125" width="150"></left>'),  # 85  100
                            br(),br(), br(),
@@ -303,18 +304,28 @@ shinyUI(
                            ),
                            
                            br(), br(),
+                            
+                           # Excess Mortality Data Briefs -----------------------------------------------
+                           HTML("<div id='xmdaDropdown' class='dropdown'>
+                             <button class='dropbtn'>EXCESS MORTALITY<br/>DATA BRIEF UPDATES</button>
+                             <div id = 'xmdaDropdownContent' class='dropdown-content'>
+                               <a href='xMDA/2022_Excess_Mortality.html' target = '_blank' rel = 'noopener noreferrer'>2022 Data Brief</a>
+                               <a href='xMDA/2020_Excess_Mortality.html' target = '_blank' rel = 'noopener noreferrer'>2020/2021 Data Brief</a>
+                             </div>
+                             </div>"
+                           ),
 
-                           tags$a(href = "xMDA/2020_Excess_Mortality.html", 
-                                  target = "_blank", 
-                                  rel = "noopener noreferrer", 
-                                  img(
-                                    src = "xMDA/backgroundLight_xMDA.png", 
-                                    width = "100%",
-                                    onmouseout = "this.src='xMDA/backgroundLight_xMDA.png'",
-                                    onmouseover = "this.src='xMDA/backgroundDark_xMDA.png'",
-                                    style = myBoxSty_side
-                                  )
-                                  ), 
+                           # tags$a(href = "xMDA/2020_Excess_Mortality.html", 
+                           #        target = "_blank", 
+                           #        rel = "noopener noreferrer", 
+                           #        img(
+                           #          src = "xMDA/backgroundLight_xMDA.png", 
+                           #          width = "100%",
+                           #          onmouseout = "this.src='xMDA/backgroundLight_xMDA.png'",
+                           #          onmouseover = "this.src='xMDA/backgroundDark_xMDA.png'",
+                           #          style = myBoxSty_side
+                           #        )
+                           #        ), 
                            
                            br(), br(), br(),
                            

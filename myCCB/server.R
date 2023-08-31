@@ -149,7 +149,7 @@ observe({
 observeEvent(input$myCAUSE, {
   if (substr(input$myCAUSE, 1, 1) == "E") {
     if (current$nav == "trends") {
-      myModal("Due to delays in the final coding of cause of death in the preliminary 2022 data, 2022 trend data are not included at this time for any individual causes in the Injury category or the overall Injury category. This is due to injury-related conditions being particularly susceptible to delays in final coding. These trend points will be added as soon as possible.")
+      myModal("Please note that the 2022 data are not yet final. Number of deaths are likely to increase slightly, particularly in the Injury category due to injury-related conditions being particularly susceptible to delays in the final coding of cause of death.")
     }
   }
 })
