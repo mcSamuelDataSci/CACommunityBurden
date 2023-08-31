@@ -1,0 +1,1 @@
+xcopy G:\FusionData\Standards\*.*  G:\FusionData\0.CCB\myCCB\Standards\*.*
