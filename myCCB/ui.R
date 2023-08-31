@@ -309,7 +309,7 @@ shinyUI(
                            HTML("<div id='xmdaDropdown' class='dropdown'>
                              <button class='dropbtn'>EXCESS MORTALITY<br/>DATA BRIEF UPDATES</button>
                              <div id = 'xmdaDropdownContent' class='dropdown-content'>
-                               <a href='xMDA/2022_Excess_Mortality.html' target = '_blank' rel = 'noopener noreferrer'>2022 Data Brief</a>
+                               <a href='xMDA/2022_Excess_Mortality_SUPPLEMENT.html' target = '_blank' rel = 'noopener noreferrer'>2022 Data Brief Supplement</a>
                                <a href='xMDA/2020_Excess_Mortality.html' target = '_blank' rel = 'noopener noreferrer'>2020/2021 Data Brief</a>
                              </div>
                              </div>"
