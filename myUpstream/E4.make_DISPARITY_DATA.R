@@ -61,7 +61,7 @@ if (1==2) {
    
    whichData <- "real"
 
-   saveRDS(ccbRaceDisparity , file= path(myPlace,"/myData/",whichData,"ccbRaceDisparity.RDS"))
+   saveRDS(ccbRaceDisparity , file= path(ccbData, whichData,"ccbRaceDisparity.RDS"))
    
       
 }

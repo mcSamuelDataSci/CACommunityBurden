@@ -5,6 +5,9 @@
 #            Process and save shape_Tract, _Community, and _County files              |
 #                                                                                     |   
 # =====================================================================================
+server <- F
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 myDrive  <- "f:"                            
 myPlace  <- paste0(myDrive,"/0.CBD/myCBD")  

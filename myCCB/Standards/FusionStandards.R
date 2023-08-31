@@ -47,7 +47,6 @@ if(!exists("CCB"))  CCB     <- FALSE
 if (!CCB & !server) myPlace <- "g:/FusionData/0.CCB/myCCB"
 if (!CCB & server)  myPlace <- "/mnt/projects/FusionData/0.CCB/myCCB"
 
-
 # if (CCB) {
 standardsPlace <-  paste0(myPlace,"/Standards/")
 ccbInfo        <-  paste0(myPlace,"/myInfo/")

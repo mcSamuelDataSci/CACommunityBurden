@@ -86,24 +86,17 @@ if (state.installation) {
     # Read recent year
     ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2022.csv"), colClasses = "character") %>% filter(F24 == "2022")
     
-    # Get SFNs in recentYear CCDF that are not in recent quarterly data with 2022 records
-    xNotInY <- setdiff(ca22$F1, ca23_22$F1)
-    
-    xInY <- ca22 %>% 
-      filter(!F1 %in% xNotInY) %>% 
+    # Filter on same records
+    ca22_subset <- ca22 %>% 
+      right_join(select(ca23_22, F1), by = "F1") %>% 
       arrange(F1)
     
-    identical(xInY, ca23_22)
-    all.equal(xInY, ca23_22)
-    setdiff(xInY$F1, ca23_22$F1)
-    setdiff(ca23_22$F1, xInY$F1)
-    nrow(xInY) - nrow(ca23_22)
+    if (identical(ca22_subset, ca23_22)) {
+      print("Records are identical")
+    } else {
+        print("Not identical. Need to investigate")
+      }
     
-    compareF144 <- xInY %>% 
-      select(F1, F144_recentYear = F144) %>% 
-      full_join(select(ca23_22, F1, F144_quarter = F144)) %>% 
-      mutate(check = F144_recentYear == F144_quarter) %>% 
-      filter(!check)
   }
   
  # Read in quarterly

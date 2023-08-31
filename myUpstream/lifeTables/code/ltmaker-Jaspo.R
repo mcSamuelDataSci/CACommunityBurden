@@ -119,7 +119,7 @@ range_5year <- 2002:(myYear - 2) # Used for 5-year estimates
 ## 1.3 Set Paths ----------------------------------------------------------
 
 CCB         <- TRUE
-server      <- FALSE
+server      <- TRUE
 myDrive     <- getwd()
 myPlace     <- paste0(myDrive,"/myCCB/") 
 

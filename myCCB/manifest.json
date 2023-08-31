@@ -96,8 +96,8 @@
       }
     },
     "MASS": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "Source": "RSPM",
+      "Repository": null,
       "description": {
         "Package": "MASS",
         "Priority": "recommended",
@@ -1654,8 +1654,8 @@
       }
     },
     "lattice": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "Source": "RSPM",
+      "Repository": null,
       "description": {
         "Package": "lattice",
         "Version": "0.20-45",
@@ -2059,6 +2059,32 @@
         "Repository": "RSPM",
         "Date/Publication": "2022-06-15 14:13:28 UTC",
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-27 00:05:03 UTC; unix"
+      }
+    },
+    "officer": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "officer",
+        "Type": "Package",
+        "Title": "Manipulation of Microsoft Word and PowerPoint Documents",
+        "Version": "0.4.3",
+        "Authors@R": "c(\n    person(\"David\", \"Gohel\", role = c(\"aut\", \"cre\"),\n    email = \"david.gohel@ardata.fr\"),\n    person(\"Frank\", \"Hangler\", role = \"ctb\", email = \"frank@plotandscatter.com\", comment = \"function body_replace_all_text\"),\n    person(\"Liz\", \"Sander\", role = \"ctb\", email = 'lsander@civisanalytics.com', comment = \"several documentation fixes\"),\n    person(\"Anton\", \"Victorson\", role = \"ctb\", email = 'anton@victorson.se',comment = \"fixes xml structures\"),\n    person(\"Jon\", \"Calder\", role = \"ctb\", email = 'jonmcalder@gmail.com', comment = \"update vignettes\"),\n    person(\"John\", \"Harrold\", role = \"ctb\", email = 'john.m.harrold@gmail.com', comment = \"function annotate_base\"),\n    person(\"John\", \"Muschelli\", role = \"ctb\", email = 'muschellij2@gmail.com', comment = \"google doc compatibility\"),\n    person(\"Bill\", \"Denney\", email=\"wdenney@humanpredictions.com\", role=\"ctb\", comment=c(ORCID=\"0000-0002-5759-428X\", \"function as.matrix.rpptx\")),\n    person(\"Nikolai\", \"Beck\", role = \"ctb\", email = 'beck.nikolai@gmail.com', comment = \"set speaker notes for .pptx documents\"),\n    person(\"Stefan\", \"Moog\", role = \"ctb\", email = 'moogs@gmx.de', comment = \"added functionality to set shape geometry and outline\"),\n    person(\"Greg\", \"Leleu\", role = \"ctb\", email = 'gregoire.leleu@gmail.com', comment = \"fields functionality in ppt\")\n    )",
+        "Description": "Access and manipulate 'Microsoft Word' and 'Microsoft PowerPoint' documents from R. \n  The package focuses on tabular and graphical reporting from R; it also provides two functions\n  that let users get document content into data objects. A set of functions \n  lets add and remove images, tables and paragraphs of text in new or existing documents. \n  The package does not require any installation of Microsoft products to be able to write Microsoft \n  files.",
+        "License": "GPL-3",
+        "Imports": "R6, grDevices, stats, graphics, utils, zip (>= 2.1.0), uuid\n(>= 0.1-4), xml2 (>= 1.1.0)",
+        "URL": "https://ardata-fr.github.io/officeverse/,\nhttps://davidgohel.github.io/officer/",
+        "Encoding": "UTF-8",
+        "BugReports": "https://github.com/davidgohel/officer/discussions",
+        "RoxygenNote": "7.2.0",
+        "Suggests": "testthat, devEMF, ggplot2, rmarkdown, base64enc, knitr, rsvg",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-06-12 21:36:17 UTC; davidgohel",
+        "Author": "David Gohel [aut, cre],\n  Frank Hangler [ctb] (function body_replace_all_text),\n  Liz Sander [ctb] (several documentation fixes),\n  Anton Victorson [ctb] (fixes xml structures),\n  Jon Calder [ctb] (update vignettes),\n  John Harrold [ctb] (function annotate_base),\n  John Muschelli [ctb] (google doc compatibility),\n  Bill Denney [ctb] (<https://orcid.org/0000-0002-5759-428X>, function\n    as.matrix.rpptx),\n  Nikolai Beck [ctb] (set speaker notes for .pptx documents),\n  Stefan Moog [ctb] (added functionality to set shape geometry and\n    outline),\n  Greg Leleu [ctb] (fields functionality in ppt)",
+        "Maintainer": "David Gohel <david.gohel@ardata.fr>",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-06-12 22:20:02 UTC",
+        "Built": "R 3.6.0; ; 2022-07-27 00:05:27 UTC; unix"
       }
     },
     "openssl": {
@@ -2758,6 +2784,29 @@
         "Built": "R 3.6.0; ; 2022-07-27 00:42:24 UTC; unix"
       }
     },
+    "shinyBS": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "shinyBS",
+        "Type": "Package",
+        "Title": "Twitter Bootstrap Components for Shiny",
+        "Version": "0.61",
+        "Date": "2015-03-30",
+        "Author": "Eric Bailey",
+        "Maintainer": "Eric Bailey <ebailey@idem.in.gov>",
+        "Description": "Adds additional Twitter Bootstrap components to Shiny. ",
+        "Imports": "shiny (>= 0.11), htmltools",
+        "URL": "https://ebailey78.github.io/shinyBS",
+        "BugReports": "https://github.com/ebailey78/shinyBS/issues",
+        "License": "GPL-3",
+        "Packaged": "2015-03-30 12:16:24 UTC; ebailey",
+        "NeedsCompilation": "no",
+        "Repository": "CRAN",
+        "Date/Publication": "2015-03-31 07:52:38",
+        "Built": "R 3.6.0; ; 2019-10-04 14:44:10 UTC; unix"
+      }
+    },
     "shinyWidgets": {
       "Source": "CRAN",
       "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
@@ -3239,6 +3288,28 @@
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2021-10-07 05:10:10 UTC; unix"
       }
     },
+    "uuid": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "uuid",
+        "Version": "1.1-0",
+        "Title": "Tools for Generating and Handling of UUIDs",
+        "Author": "Simon Urbanek <Simon.Urbanek@r-project.org> (R package), Theodore Ts'o <tytso@thunk.org> (libuuid)",
+        "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
+        "Depends": "R (>= 2.9.0)",
+        "Description": "Tools for generating and handling of UUIDs (Universally Unique Identifiers).",
+        "License": "MIT + file LICENSE",
+        "URL": "https://www.rforge.net/uuid",
+        "BugReports": "https://github.com/s-u/uuid",
+        "NeedsCompilation": "yes",
+        "Packaged": "2022-04-19 04:03:46 UTC; rforge",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-04-19 06:11:27 UTC",
+        "Encoding": "UTF-8",
+        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-26 23:47:24 UTC; unix"
+      }
+    },
     "vctrs": {
       "Source": "CRAN",
       "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
@@ -3589,7 +3660,7 @@
       "checksum": "e96a205f7ece80f0be97bffcba2d25ba"
     },
     "Global.R": {
-      "checksum": "4218be9713b24d1a7aee9f6492e6cccd"
+      "checksum": "a8607b684aeb2b17d8b1680153e3bd43"
     },
     "googleAnalyticsEXTRA_INFO.js": {
       "checksum": "b5dc2ea38cae4eeecf6ae4574a1ccdbb"
@@ -3616,7 +3687,7 @@
       "checksum": "4678d4081de362827a16cedeee7a9594"
     },
     "myData/appText/appText.docx": {
-      "checksum": "f5a1e620e81bd0e4d752acac43d3ef82"
+      "checksum": "ee54b5769d822a1e0e37bf3e15b7e937"
     },
     "myData/appText/archive/AppText - Copy.txt": {
       "checksum": "0029447c1a7574f8f72df026a1b82c9a"
@@ -3661,34 +3732,40 @@
       "checksum": "268c32a58f401af5ad5cf93c98e49d1e"
     },
     "myData/appText/newsUseCCB_Word.docx": {
-      "checksum": "be221c792b6407281d355e2cde7c361b"
+      "checksum": "e2a2bea8f94786d572e746ac2d4ec83c"
     },
     "myData/appText/newsUseText.txt": {
       "checksum": "0cd273c913d6b936746fda1f8005e825"
+    },
+    "myData/Burden View Report/County_Snapshot_Report.docx": {
+      "checksum": "6b95f90cf12772a556f9366954a40300"
+    },
+    "myData/Burden View Report/SummaryText.csv": {
+      "checksum": "58d6708bbf6355b70b60bde7ca8c9085"
     },
     "myData/cause_data.rds": {
       "checksum": "a79c154caa902c45caacaa530444ef58"
     },
     "myData/datState_3yr.RDS": {
-      "checksum": "528872ba375bff69066be191009664a2"
+      "checksum": "e5c0a0ee60b800e214a1970fe42e95a5"
     },
     "myData/datState_5yr.RDS": {
-      "checksum": "7f59e1665094cffaa3e14d1cc5b74258"
+      "checksum": "e26c6c1a5f4be84226ff22ca0938577a"
     },
     "myData/datState.RDS": {
-      "checksum": "522bacafe09392ae0bf46a4048d98be3"
+      "checksum": "2d005d20fb49a2d3ac1c53226f4f10ae"
     },
     "myData/e0ciCounty.RDS": {
-      "checksum": "7d30ee258400ff7aae63eafcb9c987db"
+      "checksum": "f50e32d272739a725b4ec139c6155d9e"
     },
     "myData/e0ciMSSA.RDS": {
-      "checksum": "f3ea2ff7be6f5270692b8c62a2902974"
+      "checksum": "3c287f5f23807de9f6cc7916ecd00f08"
     },
     "myData/e0ciMSSA1.RDS": {
       "checksum": "f4485d95d0fb167f3856e6c1e395afad"
     },
     "myData/e0ciState.RDS": {
-      "checksum": "537dd94225162687cee487401bebf501"
+      "checksum": "f544093129ee8026f78e3dde78db6f17"
     },
     "myData/e0ciState1.RDS": {
       "checksum": "cd44983dbc74025715400333238b517a"
@@ -3760,16 +3837,16 @@
       "checksum": "099334f8ccedaf189d80f3329b34400d"
     },
     "myData/popData_AgePyramid.RDS": {
-      "checksum": "0b9049f47316cf557b9a9631a422b435"
+      "checksum": "889e8a0615056ae42b3e95e197f05e74"
     },
     "myData/popData_RaceAge.RDS": {
-      "checksum": "5b81e76f46d3c31c2f9a74b75526885a"
+      "checksum": "295d26f91223513591bf167753ce7ffd"
     },
     "myData/popData_RacePie.RDS": {
-      "checksum": "b0eb55badf0350ce37656e4e2730fea4"
+      "checksum": "6cbd25d1e574f84ce3bd9bbcf00feda5"
     },
     "myData/popData_SexRaceAge_Trends.RDS": {
-      "checksum": "fae4b53b1d4c3e3cff31837907daa4d0"
+      "checksum": "fb8849caa9c5d1517d73203055847a9a"
     },
     "myData/real/age_race_focus_data/deaths_age_stn.RDS": {
       "checksum": "a829fcdea388b0c085a33841f191849b"
@@ -3804,59 +3881,65 @@
     "myData/real/age_race_focus_data/inData/hospRace.RDS": {
       "checksum": "93393a4f7a411e2191efc6e7027a2398"
     },
-    "myData/real/ccbRaceDisparity.RDS": {
-      "checksum": "1e7028c347ecaec90a9336fff9d7d81d"
+    "myData/real/burdenViewData.RData": {
+      "checksum": "4dcbfff989e805b0fd7f85460d2a4125"
+    },
+    "myData/real/CID/dcdcData.csv": {
+      "checksum": "169d095e222bd9cb46f256b5a2f6eb9a"
     },
     "myData/real/datComm.RDS": {
-      "checksum": "587b02f45b6b3c031056faf2721c6806"
+      "checksum": "bf0cecc9e973ebc1e2add85dae2926f7"
     },
     "myData/real/datCounty_3year.RDS": {
-      "checksum": "737b1dcac36760d3ef26ee5fe84fc703"
+      "checksum": "297aa6e3da3b72323150a52a1663791d"
     },
     "myData/real/datCounty_5year.RDS": {
-      "checksum": "0e98a6b0939a3aca60031068ea4e719e"
+      "checksum": "24c5bf784a448745460c6dd4bd762cd9"
     },
     "myData/real/datCounty_AGE_3year.RDS": {
-      "checksum": "60e99b84b45ae5b1de4a55d898e3a924"
+      "checksum": "1fae622e78bad3e843a8c8a8bab7c694"
     },
     "myData/real/datCounty_EDU.RDS": {
-      "checksum": "6bed58be1c192eec2bc1403e7b18084c"
+      "checksum": "237e90f117e345fae81b19a6bf6157e0"
     },
     "myData/real/datCounty_MCOD.RDS": {
       "checksum": "2bf424c90dfe62e1a1f209c62bfc2c40"
     },
+    "myData/real/datCounty_RACE_AGE.RDS": {
+      "checksum": "d49421ea91e8dfb93b78c0f1113040c1"
+    },
     "myData/real/datCounty_RE.RDS": {
-      "checksum": "ef85394dea8e6e9ad384dff05a7f7f9b"
+      "checksum": "ca1cb4ff5e175168661d6cd419af2a9a"
     },
     "myData/real/datCounty.RDS": {
-      "checksum": "ffc4df30613d0a8c83a7313747b97b5e"
+      "checksum": "d8cf8013a028187032e49fc3c22dd576"
     },
     "myData/real/datState_AGE.RDS": {
-      "checksum": "549676cf991a77b6cb9b61002a937ca0"
+      "checksum": "506d89be6d18236630397dfb8820de9d"
     },
     "myData/real/datState_RE.RDS": {
-      "checksum": "45b92ac33e396774fedefe2098907d39"
+      "checksum": "4ccaa11cd5cc105a5b7305021428e83f"
     },
     "myData/real/datTract.RDS": {
-      "checksum": "bf0012da30458eabff6f055dde6ac513"
+      "checksum": "1dc54e979d3f000e2278810f9b19690a"
     },
     "myData/real/disparity_ageHigh.RDS": {
-      "checksum": "a80a4f8911ac16aaa7daa84637276771"
+      "checksum": "42a946b4a5fc2f088c52f5dd39e51155"
     },
     "myData/real/disparity_ageLow.RDS": {
-      "checksum": "573a6893354a3066eab20e981fd02dd7"
+      "checksum": "77703b534c6e0d05d141d6f182ae1f10"
     },
     "myData/real/disparity_raceHigh.RDS": {
-      "checksum": "6d9c00063cc7c0e2cdf61b663b7a54bb"
+      "checksum": "df92633c9edd0d13be18c2d796484296"
     },
     "myData/real/disparity_raceLow.RDS": {
-      "checksum": "62d778693303963635f1b9de17a6aea9"
+      "checksum": "b1f214e4133f4624b143651b62dca377"
     },
     "myData/real/disparity_sexHigh.RDS": {
-      "checksum": "05cd539ba74bdb11342f176a3135d894"
+      "checksum": "260eec516e3bf8b70876dfed22b8e8f5"
     },
     "myData/real/disparity_sexLow.RDS": {
-      "checksum": "de8235bf4999e07f9e1f1415f1860a49"
+      "checksum": "c8ed52104fc4c91414de30c38b997b7e"
     },
     "myData/real/oshpd_PDD_any.rds": {
       "checksum": "d405731a11832d6fa82a0c3997e08406"
@@ -3961,13 +4044,16 @@
       "checksum": "792bb93cc45de0e3a90e59f995c30986"
     },
     "myFunctions/inputFunctions/input_functions.R": {
-      "checksum": "61aa938008e4129d875dbc5c7bedb190"
+      "checksum": "934023d4f4313a634a5e288425605279"
     },
     "myFunctions/inputFunctions/input_widgets.R": {
-      "checksum": "42b95e44631f5ce5116756c30f64235d"
+      "checksum": "de909ec55a79fb926535bc0bd767d39b"
     },
     "myFunctions/make_ANY_TREND_chart.R": {
-      "checksum": "60c260e63f44f8340d1749e0d3fed93d"
+      "checksum": "ed901ea8d6c576352dcd7c8d3f6999ae"
+    },
+    "myFunctions/make_burdenView.R": {
+      "checksum": "5d59abc3a9b18ceb049f97688bad81b0"
     },
     "myFunctions/make_cause_TABLE.R": {
       "checksum": "4d49594237e2e1ff072e8dcb20d322b6"
@@ -3985,7 +4071,7 @@
       "checksum": "3619cee26064b152f75b1da7d355941e"
     },
     "myFunctions/make_MCOD_charts.R": {
-      "checksum": "7aa0c83b695080613d363e4dfc8aaad1"
+      "checksum": "a6eeb12921f5a778ae27f80252c0ef27"
     },
     "myFunctions/make_OSHPD_ANY_PRIMARY_chart.R": {
       "checksum": "dac21b4a93a9be538e2afd0668fa779c"
@@ -4009,16 +4095,16 @@
       "checksum": "1dd63d1531e8441e466863dc60e16851"
     },
     "myFunctions/make_SDOH_scatter_chart.R": {
-      "checksum": "7a82f1fd20c8a74e657a7f648741deae"
+      "checksum": "623e5fd672417fb21f2b53e714246a08"
     },
     "myFunctions/make_topTrends.R": {
-      "checksum": "c19c614f576613ed8f5a6abbfff99ce5"
+      "checksum": "5b383b074dd6a54cdbb2b2efd0a0c299"
     },
     "myFunctions/make_TREE_chart.R": {
       "checksum": "5918b518b6e95c458c2418cc66215415"
     },
     "myFunctions/make_TREND-EDUCATION_chart.R": {
-      "checksum": "622c1e4f1669fb3dd4c04c5d44d9a7cf"
+      "checksum": "ea141205c2fd52a1c9690caefb70dc9d"
     },
     "myInfo/.gitignore": {
       "checksum": "35a3b9ead58df87b3d1d2a441bb4a352"
@@ -4033,7 +4119,10 @@
       "checksum": "9c50a5805ae0fba7069ece483d293b88"
     },
     "myInfo/birthCountryLink.csv": {
-      "checksum": "92033a7a22f4cb15bb8b271a5946f1d8"
+      "checksum": "4ba04d47f84a78291b4e3d3fc4438985"
+    },
+    "myInfo/CCB - icd10_to_CAUSE.xlsx": {
+      "checksum": "83521416414845b1505f035b81877d31"
     },
     "myInfo/CCS Code and Names Linkage.xlsx": {
       "checksum": "78cdf9eba85c989a94bfa2944de77479"
@@ -4066,7 +4155,7 @@
       "checksum": "0ca4b38aef18ae728b80efa78e3afab5"
     },
     "myInfo/queryParameter_Linkage.xlsx": {
-      "checksum": "b38a1fab22ac98150d4c94239dda47f9"
+      "checksum": "d36d4e7af8cf2f832e775b86609177e8"
     },
     "myInfo/TEMP - INJURY - icd10_to_CAUSE.xlsx": {
       "checksum": "f028368d9fa893a375a96a85f6da9c6c"
@@ -4077,11 +4166,14 @@
     "myInfo/Tract to Community Linkage.csv": {
       "checksum": "fb6060381903993a3d4ddfdf5e32813d"
     },
+    "myInfo/tract10_to_tract20.csv": {
+      "checksum": "c1fc0efd575c7ff3fade3a8230a5362a"
+    },
     "myInfo/tract10_to_tract20.txt": {
       "checksum": "e3263cf3e8555eafa7fa27c9ab0a4941"
     },
     "myInfo/Year to Year-Group Linkage.xlsx": {
-      "checksum": "5f8a33adadb93afac817c6c4827e5ceb"
+      "checksum": "32bace727159b72b9fbcfc7f47b4f860"
     },
     "ourLinks.md": {
       "checksum": "8cb6c0d4b49d525e0d0c8a16cb410b91"
@@ -4299,6 +4391,9 @@
     "packrat/desc/nlme": {
       "checksum": "17994093b8a5d1829fdf151e2a50db9c"
     },
+    "packrat/desc/officer": {
+      "checksum": "392793a52c13f6f37ceac9ccebfb4657"
+    },
     "packrat/desc/openssl": {
       "checksum": "990c8d4da195733ab831d04a5aaaa0d7"
     },
@@ -4383,6 +4478,9 @@
     "packrat/desc/shiny": {
       "checksum": "af9c0a65640d4666d5874477d40b1fe7"
     },
+    "packrat/desc/shinyBS": {
+      "checksum": "e735df9f1ab8994fc40917d66454d2b1"
+    },
     "packrat/desc/shinydashboard": {
       "checksum": "237867607cb88db8c737447cafd2cf0b"
     },
@@ -4434,6 +4532,9 @@
     "packrat/desc/utf8": {
       "checksum": "d6c8a67f570b41e16b73dcb2a2bf22f1"
     },
+    "packrat/desc/uuid": {
+      "checksum": "1965e55bc8a1062f4c2aff74b147e314"
+    },
     "packrat/desc/vctrs": {
       "checksum": "d4d65818af1e4731c98a1c507829610f"
     },
@@ -4474,13 +4575,13 @@
       "checksum": "a14a02455dd825eef950e688ffd023d9"
     },
     "packrat/packrat.lock": {
-      "checksum": "0074e611de14d6c6622034865838baf0"
+      "checksum": "0b0f907e0da8f89ada5af199c97e882e"
     },
     "READ ME.docx": {
       "checksum": "32fe85b75049af10873b47e699794e3e"
     },
     "server.R": {
-      "checksum": "178074334fda6386d1112733bb829da9"
+      "checksum": "1e3b527655084d935dc097fb0d4cb96c"
     },
     "Standards/.Rhistory": {
       "checksum": "d41d8cd98f00b204e9800998ecf8427e"
@@ -4495,13 +4596,13 @@
       "checksum": "efba00bde910c3fa18f995a36afac295"
     },
     "Standards/countyLink.xlsx": {
-      "checksum": "32886151be8b80dab30a2f50b238ce5f"
+      "checksum": "448b08afe6c787b8b84ef25712ee7e17"
     },
     "Standards/deathCauseLink.csv": {
       "checksum": "999d2f620338bbc2a41cf35bb95d4137"
     },
     "Standards/FusionStandards.R": {
-      "checksum": "899801c95423a1ca0709c32b93b19b29"
+      "checksum": "ea2a84a969bb2eaa17bfd636c555c288"
     },
     "Standards/headerStyle/branding.css": {
       "checksum": "af9a064fb5085a2b8679d21250fcdda3"
@@ -4522,7 +4623,7 @@
       "checksum": "d036164245293553c38d7914e75a26eb"
     },
     "Standards/populationExtract.R": {
-      "checksum": "60d4b60b06585648cd521876279017ee"
+      "checksum": "4cfe44246c7ec0a7946f03bac76cf204"
     },
     "Standards/raceLink.xlsx": {
       "checksum": "03a7a6904cefd9dc07a8c6c87540863f"
@@ -4537,10 +4638,16 @@
       "checksum": "56029ed15f3351241e1e9bcf8e474c82"
     },
     "Standards/sdohLink.xlsx": {
-      "checksum": "100f6e08c734beaf696efaac5bf3311f"
+      "checksum": "f8542c575ba6aabe73f994dce6ef81a8"
     },
     "Standards/Tract to Community Linkage.csv": {
       "checksum": "fb6060381903993a3d4ddfdf5e32813d"
+    },
+    "Standards/tract_characteristics.csv": {
+      "checksum": "1d34858b89512c88f223a472a055945b"
+    },
+    "Standards/tract_characteristics.xlsx": {
+      "checksum": "b768f7bea0dbad4451eb041bf071c1a1"
     },
     "Standards/Word_Template.docx": {
       "checksum": "6424c4e69dc88a4b814de08cc8332d46"
@@ -4552,10 +4659,10 @@
       "checksum": "c6ed7071e9bf29a5398add5b60cf3c5c"
     },
     "ui.R": {
-      "checksum": "e6e8405fcebc57729220ce68d896280d"
+      "checksum": "16d127954cf52ed12183029f534b5bf7"
     },
     "url_parameters.md": {
-      "checksum": "7e68675bf7eccc7489b0098bfb34af54"
+      "checksum": "7357a849793705506d349ae43d5d177a"
     },
     "www/.gitignore": {
       "checksum": "35a3b9ead58df87b3d1d2a441bb4a352"
@@ -4720,7 +4827,7 @@
       "checksum": "40f05bd0f956d815a3ef97c5372c75b5"
     },
     "www/SOPH/2023/Full Report.html": {
-      "checksum": "72e730cb5639d0c88e5897d1db31ca8f"
+      "checksum": "80c596d9b983060f03d07668ace70388"
     },
     "www/trends.png": {
       "checksum": "cc9080c4db097d956134dca16bcc3ee8"

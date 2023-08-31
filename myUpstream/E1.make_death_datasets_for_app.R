@@ -1679,8 +1679,8 @@ datState  <- datCounty  %>%
                stateAdjustedRate = aRate) %>%
                select(year,sex,Level,causeCode,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") saveRDS(datState, path(myCCBPlace,"myData/datState.RDS"))
-if ( subSite)                      datState <- readRDS(path(myCCBPlace,"myData/datState.RDS"))
+if (!subSite & whichDat == "real") saveRDS(datState, path(ccbData,"datState.RDS"))
+if ( subSite)                      datState <- readRDS(path(ccbData,"datState.RDS"))
 
 datCounty  <- merge(datCounty,datState,by = c("year","sex","Level","causeCode")) %>%
                 mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -1790,8 +1790,8 @@ datState_3year  <- datCounty_3year  %>%
                           stateAdjustedRate = aRate) %>%
                    select(yearG3,sex,Level,causeCode,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") saveRDS(datState_3year, path(myCCBPlace,"myData/datState_3yr.RDS"))
-if ( subSite)                      datState_3yr <- readRDS( path(myCCBPlace,"myData/datState_3yr.RDS"))
+if (!subSite & whichDat == "real") saveRDS(datState_3year, path(ccbData,"datState_3yr.RDS"))
+if ( subSite)                      datState_3yr <- readRDS( path(ccbData,"datState_3yr.RDS"))
 
 datCounty_3year  <- merge(datCounty_3year,datState_3year,by = c("yearG3","sex","Level","causeCode")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
@@ -1835,8 +1835,8 @@ datState_5year  <- datCounty_5year  %>%
          stateAdjustedRate = aRate) %>%
   select(yearG5,sex,Level,causeCode,stateCrudeRate,stateAdjustedRate)
 
-if (!subSite & whichDat == "real") saveRDS(datState_5year, path(myCCBPlace,"myData/datState_5yr.RDS"))
-if ( subSite)                      datState_5yr <- readRDS( path(myCCBPlace,"myData/datState_5yr.RDS"))
+if (!subSite & whichDat == "real") saveRDS(datState_5year, path(ccbData,"datState_5yr.RDS"))
+if ( subSite)                      datState_5yr <- readRDS( path(ccbData,"datState_5yr.RDS"))
 
 datCounty_5year  <- merge(datCounty_5year,datState_5year,by = c("yearG5","sex","Level","causeCode")) %>%
   mutate(SMRcrude = cDeathRate / stateCrudeRate,
