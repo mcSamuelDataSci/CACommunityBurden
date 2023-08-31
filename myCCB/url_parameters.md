@@ -75,6 +75,9 @@
 | EDUCATION TREND                               | educationtrend         |
 | LIFE EXPECTANCY                               | lifeexpectancy         |
 | LEADING CAUSES                                | leadingcausestrend     |
+| MORTALITY (MULTIPLE LENSES)                   | mortalitylens          |
+| MORBIDITY (MULTIPLE LENSES)                   | morbiditylens          |
+| YLD AND RISK (MULTIPLE LENSES)                | risklens               |
 | DISPARITIES                                   | disparities            |
 | SOCIAL DETERMINANTS                           | sdoh                   |
 | HOSPITAL DISCHARGE                            | hospitaldischarge      |

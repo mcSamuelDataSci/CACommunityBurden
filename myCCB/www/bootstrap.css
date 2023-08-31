@@ -6974,6 +6974,47 @@ button.btn.checkbtn.btn-default.active {
   background-color: #694D75;
 }
 
+/* --------------------------------------------------- */
+
+#xmdaDropdown.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+#xmdaDropdownContent.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+#xmdaDropdownContent.dropdown-content a {
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+#xmdaDropdownContent.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+#xmdaDropdown.dropdown:hover #xmdaDropdownContent.dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+#xmdaDropdown.dropdown:hover .dropbtn {
+  background-color: #694D75;
+}
+
+
+
 /* MCOD inputs in boxes: Have the options not wrap */
 
 /*

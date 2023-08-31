@@ -196,16 +196,16 @@ trendGeneric <- function(myLHJ="CALIFORNIA",myCause="A",myMeasure = "YLL", myTab
  
 #### Generic Part Here =====================================================================================
 
-  # REMOVES ALL INJURY CAUSES 2022 DATA POINTS SINCE MANY ARE CLASSIFIED AS Z01. REMOVE CODE BELOW WHEN READY TO SHOW 
-  if (substr(myCause, 1, 1) == "E") {
-    if (myYearGrouping == 1) {
-      dat.1 <- dat.1 %>% 
-        filter(year != 2022)
-      
-      tabDat <- tabDat %>% 
-        filter(year != 2022)
-    }
-  }
+  # REMOVES ALL INJURY CAUSES 2022 DATA POINTS SINCE MANY ARE CLASSIFIED AS Z01. COMMENT CODE BELOW WHEN READY TO SHOW 
+  # if (substr(myCause, 1, 1) == "E") {
+  #   if (myYearGrouping == 1) {
+  #     dat.1 <- dat.1 %>% 
+  #       filter(year != 2022)
+  #     
+  #     tabDat <- tabDat %>% 
+  #       filter(year != 2022)
+  #   }
+  # }
   
 myTitle <-  wrap.labels(myTitle,myWrapNumber)
 
