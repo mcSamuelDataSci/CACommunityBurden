@@ -45,8 +45,19 @@ data pdd.pdd_2021; set pdd.cdph_pdd_ssn2021;
       mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
 run;
 
-*-----------------------------------------------------------------------------------------------------------------------------------------;
+data pdd.pdd_2022; set pdd.cdph_pdd_rln2022; 
+ year = 2022;
+ keep diag_p odiag1-odiag24      
+      ccsr_diagp  
+      mdc msdrg charge pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
+run;
 
+
+
+
+
+*-----------------------------------------------------------------------------------------------------------------------------------------;
+data pdd.pdd_2022_ecode; set pdd.cdph_pdd_rln2022; year = 2022;keep ecm1-ecm12            patcnty sex agyrdsch race_grp year; run;
 data pdd.pdd_2021_ecode; set pdd.cdph_pdd_ssn2021; year = 2021;keep ecm1-ecm12            patcnty sex agyrdsch race_grp year; run;
 data pdd.pdd_2020_ecode; set pdd.cdph_pdd_rln2020; year = 2020;keep ecm1-ecm12            patcnty sex agyrdsch race_grp year; run;
 data pdd.pdd_2019_ecode; set pdd.cdph_pdd_rln2019; year = 2019;keep ecm1-ecm12            patcnty sex agyrdsch race_grp year; run;
@@ -78,7 +89,17 @@ data ed.ed_2021(rename =(diag_p=dx_prin  patcnty=patco disp=dispn)
  set ed.cdph_ed_ssn2021; 
  year = 2021;
  run;
+
+data ed.ed_2022(rename =(diag_p=dx_prin  patcnty=patco disp=dispn) 
+      keep = year     diag_p        patcnty       disp sex race_grp agyrserv  payer ); ; 
+ set ed.cdph_ed_rln2022; 
+ year = 2022;
+ run;
+
+
+
 *-----------------------------------------------------------------------------------------------------------------------------------------;
+data ed.ed_2022_ecode(keep = ecm1-ecm12      year patcnty sex race_grp agyrserv); set ed.cdph_ed_rln2022; year = 2022; run;
 data ed.ed_2021_ecode(keep = ecm1-ecm12      year patcnty sex race_grp agyrserv); set ed.cdph_ed_ssn2021; year = 2021; run;
 data ed.ed_2020_ecode(keep = ecm1-ecm12      year patcnty sex race_grp agyrserv); set ed.cdph_ed_rln2020; year = 2020; run;
 data ed.ed_2019_ecode(keep = ecm1-ecm12      year patcnty sex race_grp agyrserv); set ed.cdph_ed_rln2019; year = 2019; run;
@@ -118,9 +139,12 @@ data pdd.pdd_2021_ALL_diag; set pdd.cdph_pdd_ssn2021;
       pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
 run;
 
+data pdd.pdd_2022_ALL_diag; set pdd.cdph_pdd_rln2022; 
+ year = 2022;
+ keep diag_p  odiag1-odiag24      
+      pay_cat pay_type admtyr patcnty patzip sex agyrdsch race_grp oshpd_id los_adj los year; 
+run;
 
 
 proc contents data=ed.cdph_ed_ssn2018;run;
-
-
 proc freq; table ccs_dx_prin;run;

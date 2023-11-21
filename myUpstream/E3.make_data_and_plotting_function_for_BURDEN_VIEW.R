@@ -7,7 +7,7 @@ if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandar
 # --Global constants and settings-----------------------------------
 
 myYear_death   <-  2022 # used for deaths
-myYear_pdd <- 2021  # used for hosp
+myYear_pdd <- 2022  # used for hosp
 
 ccbChangeYear <- myYear_death - 10
 
@@ -15,12 +15,26 @@ mySex     <-  "Total"
 
 # --CCB DEATH DATA ------------------------------------------------
 
-
 ccbDataX     <- readRDS(paste0(ccbData,"real/datCounty.RDS")) %>%
   filter(Level == "lev2", causeCode != "Z01") %>%
   left_join(deathCauseLink ,by="causeCode")       
 
-ccb         <- filter(ccbDataX,year==myYear_death,sex==mySex) 
+# Sex-specific cancers
+# Need to change to datCounty_RE_1year
+# ccbDataX_cancer_male <- ccbDataX %>% 
+#   filter(causeNameShort %in% cancer_male, sex == "Male") %>% 
+#   mutate(sex == "Total")
+# 
+# ccbDataX_cancer_female <- ccbDataX %>% 
+#   filter(causeNameShort %in% cancer_female, sex == "Female") %>% 
+#   mutate(sex == "Total")
+# 
+# ccbDataX <- ccbDataX %>% 
+#   filter(!causeNameShort %in% c(cancer_female, cancer_male)) %>% 
+#   bind_rows(ccbDataX_cancer_female, ccbDataX_cancer_male)
+
+
+ccb         <- filter(ccbDataX,year==myYear_death,sex==mySex)
 
 ccbDeaths   <- ccb %>%
   mutate(measure = Ndeaths,

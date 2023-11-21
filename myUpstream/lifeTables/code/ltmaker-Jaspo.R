@@ -119,7 +119,7 @@ range_5year <- 2002:(myYear - 2) # Used for 5-year estimates
 ## 1.3 Set Paths ----------------------------------------------------------
 
 CCB         <- TRUE
-server      <- TRUE
+server      <- FALSE
 myDrive     <- getwd()
 myPlace     <- paste0(myDrive,"/myCCB/") 
 
@@ -378,9 +378,9 @@ dqCheck <- mxState %>%
          eqNx = Nx == Nx1, 
          eqRate = rate == rate1)
 
-print(paste0("Data Quality Check: 2000-2021 Statewide number of deaths from 'mxState' are quivalent to the corresponding numbers in the raw death file ('dx'): ", all(c(dqCheck$eqDx))))
-print(paste0("Data Quality Check: 2000-2021 Statewide populations from 'mxState' are equivalent to the corresponding numbers in 'nxState': ", all(c(dqCheck$eqNx))))
-print(paste0("Data Quality Check: 2000-2021 Statewide crude death rates computed from 'mxState' are equivalent to the corresponding rates calculated from the raw death file ('dx') and 'nxState': ", all(c(dqCheck$eqNx))))
+print(paste0("Data Quality Check: 2000-2022 Statewide number of deaths from 'mxState' are quivalent to the corresponding numbers in the raw death file ('dx'): ", all(c(dqCheck$eqDx))))
+print(paste0("Data Quality Check: 2000-2022 Statewide populations from 'mxState' are equivalent to the corresponding numbers in 'nxState': ", all(c(dqCheck$eqNx))))
+print(paste0("Data Quality Check: 2000-2022 Statewide crude death rates computed from 'mxState' are equivalent to the corresponding rates calculated from the raw death file ('dx') and 'nxState': ", all(c(dqCheck$eqNx))))
 
 
 mxState %>% 
@@ -393,6 +393,11 @@ mxState %>%
   facet_grid(vars(agell), scales = "free_y") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 
+
+# For testing out different critNx and critDx values
+# saveRDS(mxMSSA, paste0(ccbUpstream, "/lifeTables/code/thresholds/mxMSSA.RDS"))
+# saveRDS(mxCounty, paste0(ccbUpstream, "/lifeTables/code/thresholds/mxCounty.RDS"))
+# saveRDS(mxState, paste0(ccbUpstream, "/lifeTables/code/thresholds/mxState.RDS"))
 
 # 5	Calculating Life Expectancy ----------------------------------------------------------------------------------------------------------
 

@@ -58,7 +58,42 @@ library(haven)
   
 # Hospital Discharge --------------------------------  
 
-# 2021 processing -- 'back calculate' ICD10-CM to CSS
+
+# 2022 processing -- 'back calculate' ICD10-CM to CSS------------------------------
+
+pdd.2022         <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2022.sas7bdat") )
+
+
+
+
+# Check year
+table(pdd.2022$year, useNA = "ifany")
+
+pdd.2022.work   <- pdd.2022  %>% rename(icd10 = diag_p) %>%
+  left_join(ccsMap, by="icd10") %>% 
+  #  mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+  rename(ccs_diagP = ccscode) %>%
+  rename(diag_p = icd10)
+
+# Map ICD-10-CM to css in odiag1 - odiag24 
+for (i in 1:24) {
+  column_name <- paste0("odiag", i)
+  ccs_column_name <- paste0("ccs_odiag", i)
+  
+  pdd.2022.work <- pdd.2022.work %>%
+    mutate(icd10 = !!sym(column_name)) %>%
+    left_join(ccsMap, by="icd10") %>% 
+    mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+    rename(!!sym(ccs_column_name) := ccscode) %>%
+    select(-icd10)
+}
+
+pdd.2022.work <- pdd.2022.work %>% select(-(odiag1:odiag24))    
+
+
+
+
+# 2021 processing -- 'back calculate' ICD10-CM to CSS-------------------------------
   
   pdd.2021         <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2021.sas7bdat") )
   
@@ -83,7 +118,7 @@ library(haven)
   
   pdd.2021.work <- pdd.2021.work %>% select(-(odiag1:odiag24))    
   
-# 2020 processing -- 'back calculate' ICD10-CM to CSS
+# 2020 processing -- 'back calculate' ICD10-CM to CSS-----------------------------
 
 pdd.2020         <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2020.sas7bdat") )
   
@@ -110,14 +145,14 @@ pdd.2020.work <- pdd.2020.work %>% select(-(odiag1:odiag24))
   
 #---------------------------------------
 
-pdd.2017       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
-  mutate(year = 2017)
-
-pdd.2018       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
-  mutate(year = 2018)
-
-pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") ) %>%
-  mutate(year = 2019) %>% rename(ccs_diagP = ccs_diagp)
+# pdd.2017       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
+#   mutate(year = 2017)
+# 
+# pdd.2018       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2018.sas7bdat") ) %>%
+#   mutate(year = 2018)
+# 
+# pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") ) %>%
+#   mutate(year = 2019) %>% rename(ccs_diagP = ccs_diagp)
 
 
 ## error in CCS code from OSHPD  -- there is no CCS cod 261, but occurs for the 363 records -- likely should have been 2617
@@ -127,7 +162,8 @@ pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") 
  
 ######## THINK about issue here, where three most recent years are hardwired together
 
- pdd.work <- bind_rows(pdd.2019, pdd.2020.work, pdd.2021.work)
+pdd.work <- bind_rows(pdd.2020.work, pdd.2021.work, pdd.2022.work)
+ # pdd.work <- bind_rows(pdd.2019, pdd.2020.work, pdd.2021.work)
  #pdd.work <- bind_rows(pdd.2018, pdd.2019, pdd.2017)
  
 
@@ -148,13 +184,13 @@ pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") 
   saveRDS(pdd.work, file = paste0(securePlace, "myData/oshpd_pdd.RDS"))
   
   # Current year PDD data
-  pdd.currentYear <- pdd.work %>% filter(year==currentYear_hosp_ed)
+  pdd.currentYear <- pdd.work %>% filter(year==currentYear_hosp_ed) # UPDATE currentYear_hosp_ed IN FusionStandards.R
   
-  saveRDS(pdd.currentYear, file = paste0(securePlace, "myData/oshpd_pdd_currentYear.RDS"))
+  saveRDS(pdd.currentYear, file = paste0(securePlace, "myData/oshpd_pdd_currentYear.RDS")) 
   
   # Tiny sample of current year data
   pdd.currentYear_sample  <- sample_frac(pdd.currentYear, 0.001)
-  saveRDS(pdd.currentYear_sample, file = paste0(securePlace, "myData/oshpd_pdd_currentYear_sample.RDS"))
+  saveRDS(pdd.currentYear_sample, file = paste0(securePlace, "myData/oshpd_pdd_currentYear_sample.RDS")) 
   
   # Primary diagnosis only PDD data
   pdd.small <- pdd.work %>% select(-c(oshpd_id,los:msdrg,CCS:ccs_odiag24))
@@ -169,6 +205,16 @@ pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") 
   
 # Emergency Department --------------------------------------------------------------------------  
 
+  ed.2022         <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2022.sas7bdat") )
+  ed.2022.work    <- ed.2022  %>% rename(icd10 = dx_prin) %>%
+    left_join(ccsMap, by="icd10") %>% 
+    # mutate(ccscode = ifelse(icd10 == "U071", 3000, ccscode)) %>%
+    rename(ccs_dx_prin = ccscode) %>%
+    rename(dx_prin = icd10) %>%
+    mutate(year=2022)  
+  
+  
+  
   ed.2021         <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2021.sas7bdat") )
   ed.2021.work    <- ed.2021  %>% rename(icd10 = dx_prin) %>%
     left_join(ccsMap, by="icd10") %>% 
@@ -191,12 +237,13 @@ pdd.2019       <- read_sas(paste0(securePlace,"rawOSHPD/PDD/pdd_2019.sas7bdat") 
 
  # ed.2017       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2017.sas7bdat") ) 
  # ed.2018       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2018.sas7bdat") ) 
-  ed.2019       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2019.sas7bdat") ) 
+ # ed.2019       <- read_sas(paste0(securePlace,"rawOSHPD/ED/ed_2019.sas7bdat") ) 
   
   
   #ed.work <- bind_rows(ed.2017, ed.2018, ed.2019)
   #ed.work <- bind_rows(ed.2018, ed.2019, ed.2020.work)
-  ed.work <- bind_rows(ed.2019, ed.2020.work, ed.2021.work)
+  # ed.work <- bind_rows(ed.2019, ed.2020.work, ed.2021.work)
+  ed.work <- bind_rows(ed.2020.work, ed.2021.work, ed.2022.work)
   
   
   # Full ED data
@@ -239,7 +286,7 @@ hospYear <-  pdd1 %>%
   ungroup()
 
 #yearGrp3_hosp_ed <- "2017-2019"
-
+# UPDATE yearGrp3_hosp_ed IN FusionStandards.R
 
 hospAge  <- pdd1 %>%
   mutate(ageGroup = ageChop(age,"standard", ourServer = server)) %>%

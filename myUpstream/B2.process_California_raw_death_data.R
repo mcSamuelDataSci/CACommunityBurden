@@ -76,7 +76,7 @@ if (state.installation) {
   # Check
   if (F) {
     # Read in quarterly
-    ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_063023.csv"), colClasses = "character") 
+    ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_093023.csv"), colClasses = "character") 
     
     # On most recent quarterly data, filter on prior year
     ca23_22 <- ca23 %>%
@@ -100,7 +100,7 @@ if (state.installation) {
   }
   
  # Read in quarterly
- ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_063023.csv"), colClasses = "character") %>% filter(F24 == "2023")
+ ca23    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_093023.csv"), colClasses = "character") %>% filter(F24 == "2023")
  
  # Read in 2022 CCDF
  ca22    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2022.csv"), colClasses = "character") %>% filter(F24 == "2022")

@@ -5,7 +5,7 @@ if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 
-raceLink <- raceLink %>% select(raceCode, raceNameShort)
+raceLink <- raceLink %>% distinct(raceCode, raceNameShort)
 
 
 #==========================================================================================================

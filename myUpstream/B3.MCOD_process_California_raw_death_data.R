@@ -1,10 +1,17 @@
-#
+# Documentation ===================================================================
 
+# Global constants ================================================================
+years <- 2005:2022
+
+# Load standards ==================================================================
 server <- T
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
+# Set paths =======================================================================
+.sl <- securePlace
 
+# Load packages ===================================================================
 library(stringr)
 library(readxl)
 library(dplyr)
@@ -14,47 +21,78 @@ library(purrr)
 library(sqldf)
 
 
-
+# Load info files =====================================================================
 raw.death.variable.info <- as.data.frame(read_excel(
   paste0(ccbUpstream,"/upstreamInfo/death.File.Vars.xlsx"), 
   sheet="variableNames")
 )   
 
-# PROVIDE PATH FOR SECURE DATA HERE
-.sl <- securePlace
+fipsCounty <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
+ageMap     <- as.data.frame(read_excel(paste0(ccbInfo,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+raceLink <- as.data.frame(read_excel(paste0(standardsPlace,"raceLink.xlsx")))  %>% select(raceCode,CHSI)
+regionLink <- as.data.frame(readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx"))) %>% select(county = countyName, region = FUSION)
 
-# === Process Raw Death Data Files ==============================================================
+# Read in Raw Death Data ==========================================================
 
-ca21    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2021.csv"), colClasses = "character")
-ca20    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2020.csv"), colClasses = "character")    
-ca19    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2019.csv"), colClasses = "character")       
-ca18    <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2018.csv"), colClasses = "character")        
-ca17    <- read.csv(paste0(.sl,"rawDeathData/Samuel_2017.csv"), colClasses = "character")
+rawDeathData_list <- lapply(years, function(year) {
+  
+  fileName <- ifelse(year %in% 2005:2017, 
+                     paste0(.sl, "rawDeathData/Samuel_", year, ".csv"), 
+                     paste0(.sl, "rawDeathData/Samuel_CCDF_", year, ".csv"))
+  
+  read.csv(fileName, colClasses = "character") %>% filter(F24 == as.character(year))
+  
+})
 
+death.datA  <- bind_rows(rawDeathData_list)
 
-death.datA  <- bind_rows(ca21, ca20, ca19, ca18,ca17)
-
+# Select and rename needed columns =================================================
 varNames <- filter(raw.death.variable.info, CCDF == 1, seqID1 != "F125")
 
 death.datA <- death.datA %>%
-  select(all_of(varNames$seqID1), F221:F240)
+  select(all_of(varNames$seqID1), F221:F240, immediate_cod = F135, a_due_to_b = F137, b_due_to_c = F139, c_due_to_d = F141)
 names(death.datA)
 varNames$seqID1
 
 names(death.datA)[1:nrow(varNames)] <- varNames$varName
 names(death.datA)
 
-
+# Re-assign sex values; Change classes =============================================================
 death.datA <- death.datA %>%
   mutate(sex = case_when(sex == "M" ~ "Male", 
                          sex == "F" ~ "Female",
                          TRUE ~ sex), 
-         year = as.numeric(year))
+         year = as.numeric(year), 
+         multiraceStatus = as.numeric(multiraceStatus), 
+         age = as.numeric(age))
+
+# Cut age into age groups ===========================================================================
+death.datA$age[!death.datA$age %in% 0:120] <- NA
+
+aL            <-      ageMap$lAge     # lower age ranges
+aU            <- c(-1,ageMap$uAge)    # upper age ranges, plus inital value of "-1" for lower limit
+aLabs         <- ageMap$ageLabel 
+aMark         <- findInterval(death.datA$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+death.datA$ageGroup  <- aLabs[aMark]  
+
+# Get race/ethnicity groups ========================================================================
+rCode <- c(1:7,9,8)
+vLab  <- c("White-NH","Black-NH","AIAN-NH","Asian-NH","NHPI-NH","Other-NH","Multi-NH","Unk-NH","Hisp")
+
+death.datA          <- mutate(death.datA,
+                              CHSI    = ifelse(hispanicOrigin == "Y","Hisp",vLab[match(multiraceStatus,rCode)]),
+                              hispanicOrigin  = NULL,
+                              multiraceStatus = NULL)
+
+death.datA$CHSI[is.na(death.datA$CHSI)] <-"-missing"
+
+death.datA <- death.datA %>% 
+  left_join(raceLink, by = "CHSI") %>% 
+  select(-CHSI)
+
+
 
 # === Filter on CA Residents; Assign county of residence ==============================================================
-
-
-fipsCounty <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
 
 # Step 1
 death.datA_1 <- death.datA %>%
@@ -90,11 +128,23 @@ death.datA %>%
   filter(county == "Alpine") %>%
   count(county)
 
+
+# Link county to region ============================================================================
+death.datA <- left_join(death.datA, regionLink, by = "county")
+
+
+# Select needed columns ===========================================================================
 names(death.datA)
 
-
 death.datB <- death.datA %>%
-  select(SFN, year, county, sex, ICD10, F222:F240)
+  select(SFN, year, county, region, sex, ageGroup, raceCode, ICD10, F222:F240, immediate_cod, a_due_to_b, b_due_to_c, c_due_to_d)
+
+# For malnutrition analysis - intern work -------
+if (FALSE) {
+  tDat <- death.datB %>% select(-SFN)
+  
+  saveRDS(tDat, paste0(.sl, "myData/Malnutrition Analysis/processed_deaths.RDS"))
+}
 
 if (FALSE) {
   

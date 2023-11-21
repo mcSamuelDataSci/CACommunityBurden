@@ -1,5 +1,54 @@
 library(readxl)
 library(dplyr)
+library(epitools)
+
+
+dat1    <- as.data.frame(read_excel(paste0("exploreAge.xlsx"),sheet = "data1"))
+
+myPath  <- "Info/"
+ageMap  <- as.data.frame(read_excel(paste0(myPath,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+ageMap  <- ageMap %>% select(ageGroup = ageLabel, standard = US2000POP)
+ageWork <- dat1 %>% full_join(ageMap)
+
+tDat    <- filter(ageWork, var1 == "a") 
+tResult <- ageadjust.direct(count  = tDat$Ndeaths, 
+                            pop    = tDat$population, 
+                            stdpop = tDat$standard) 
+tResult
+sum(tDat$Ndeaths) / sum(tDat$population)
+
+
+tDat    <- filter(ageWork, var1 == "b") 
+tResult <- ageadjust.direct(count  = tDat$Ndeaths, 
+                            pop    = tDat$population, 
+                            stdpop = tDat$standard) 
+tResult
+sum(tDat$Ndeaths) / sum(tDat$population)
+
+
+
+tDatFrame <- ageWork %>% group_by(var1) %>%
+  summarize(Deaths        = sum(Ndeaths,na.rm=TRUE),
+            tPop          = sum(population),
+            crudeRate     = round(100000*Deaths/tPop,3),
+            aRate         = ageadjust.direct(count=Ndeaths, pop=population, rate = NULL, stdpop=standard, conf.level = 0.95)[2]*100000,
+            aLCI          = ageadjust.direct(count=Ndeaths, pop=population, rate = NULL, stdpop=standard, conf.level = 0.95)[3]*100000,
+            aUCI          = ageadjust.direct(count=Ndeaths, pop=population, rate = NULL, stdpop=standard, conf.level = 0.95)[4]*100000)
+
+
+
+
+# =======================================================================================================================================
+
+
+
+ageMap       <- as.data.frame(read_excel(paste0(myPath,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+popStandard      <- ageMap  %>% mutate(ageGroup = ageLabel)
+
+ageWork <- dat1 %>% full_join(popStandard[,c("ageGroup","US2000POP")],  by="ageGroup")
+
+ageWork$Ndeaths[is.na(ageWork$Ndeaths)] <- 0    # if NA deaths in strata change to "0"   NEED THIS
+ageWork$population[is.na(ageWork$population)] <- 0    # if NA deaths in strata change to "0"  #### JUST ADDED
 
  ageadjust.direct <- function (count, pop, rate = NULL, stdpop, conf.level = 0.95) {
 
@@ -58,18 +107,7 @@ ageadjust.direct.SAM <- function (count, population, rate = NULL, stdpop, conf.l
 }
 
 
-myPath   <- "Info/"
-ageMap   <- as.data.frame(read_excel(paste0(myPath,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
-popStandard      <- ageMap  %>% mutate(ageGroup = ageLabel)
 
-#dat1     <- as.data.frame(read_excel(paste0("exploreAge.xlsx"),sheet = "data1"))
-dat1     <- as.data.frame(read_excel(paste0("exploreAge.xlsx"),sheet = "data2"))
-
-ageWork <- dat1 %>% full_join(popStandard[,c("ageGroup","US2000POP")],  by="ageGroup")
-
-
-ageWork$Ndeaths[is.na(ageWork$Ndeaths)] <- 0    # if NA deaths in strata change to "0"   NEED THIS
-ageWork$population[is.na(ageWork$population)] <- 0    # if NA deaths in strata change to "0"  #### JUST ADDED
 
 
 

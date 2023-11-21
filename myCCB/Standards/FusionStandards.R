@@ -81,7 +81,7 @@ STATE       <- "CALIFORNIA"
 
 
 currentYear          <- 2022
-currentYear_hosp_ed  <- 2021
+currentYear_hosp_ed  <- 2022
 
 incRecentYearData <- T 
 currentYear <- ifelse(incRecentYearData, currentYear, currentYear - 1)
@@ -120,6 +120,13 @@ yF           <- 100000  # rate constant
 
 raceLink    <-  read_excel(paste0(standardsPlace,"raceLink.xlsx"))
 ageLink     <-  read_excel(paste0(standardsPlace,"ageLink.xlsx"),sheet = "standard")
+
+
+# Sex-specific cancers ============================================
+
+# Breast cancer (F), Uterine Cancer
+cancer_female <- c("Breast cancer", "Uterine cancer", "Ovary cancer")
+cancer_male <- c("Prostate cancer")
 
 
 ## COLORS==========================================================
