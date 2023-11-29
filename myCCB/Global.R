@@ -76,6 +76,9 @@ library(officer)
 library(docxtractr)
 library(openxlsx)
 library(purrr)
+library(reactable)
+library(reactablefmtr, pos = length(search()))
+library(tidyselect)
 
 # This resolves the error message for creating a map: "Error: Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
 # tmap_options(check.and.fix = TRUE)
@@ -206,6 +209,7 @@ source(paste0(ccbFunctions, "make_OSHPD_ANY_PRIMARY_chart.R"))
 source(path(ccbFunctions, "make_rank_multibar_chart.R"))
 source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V2.R"))
 source(path(ccbFunctions, "make_topTrends.R"))
+source(path(ccbFunctions, "make_lifeCourse_viz.R"))
 source(path(ccbFunctions, "make_MCOD_charts.R"))
 source(path(ccbFunctions, "make_burdenView.R"))
 
