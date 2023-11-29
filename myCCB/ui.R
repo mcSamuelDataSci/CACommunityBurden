@@ -426,6 +426,13 @@ shinyUI(
                                         tabPanel(title = "RANK BY GEOGRAPHY - Deaths", value = "rankByGeographyTab",
                                                  plotOutput("rankGeo", width="100%", height=1700)
                                         ),
+                                        tabPanel(title = "LIFE COURSE - Deaths", value = "lifeCourseTab",
+                                                 br(),
+                                                 fluidRow(style = "background-color: white;margin-left: 10px; margin-right: 10px;",
+                                                   htmlOutput("lifeCourse_info"),
+                                                   reactableOutput("lifeCourse")
+                                                 )
+                                        ),
                                         tabPanel(title = "MULTIPLE CAUSES OF DEATH", value = "mcodTab",
                                                  br(),
                                                  fluidRow(

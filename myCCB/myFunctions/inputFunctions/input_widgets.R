@@ -34,6 +34,9 @@ hidden(
       sliderInput("myYearDemo","Year:",value=maxYear,min=2000,max=maxYear,animate = TRUE,
                   round=TRUE,sep="",step=1),
       
+      # myYear - Life Course ==============
+      sliderTextInput(inputId = "myYear_lifeCourse", label = "Year(s):", choices = as.character(minYear:maxYear), selected = as.character(maxYear)),
+      
       # mySex ======================
       radioButtons("mySex", "Sex:", choices=c("Total","Female","Male"), inline=TRUE),
       
@@ -60,6 +63,9 @@ hidden(
       
       # myN Broad - Top Trends ======================
       numericInput( "myN_topTrends",  "How many conditions:", value=5,min=1,max= 50),
+      
+      # myN - Life Course ==========================
+      selectInput("myN_lifeCourse", "How many conditions:", c(5, 10, 15), selected = 5),
       
       # Multiple Lenses (Burden) - How Many Shown? ======================
       selectInput("myObserv", "How Many:", choices = list("How many shown?" = c(5,10,15,20)), selected=10),
@@ -88,6 +94,7 @@ hidden(
       
       radioButtons("myYearGrouping_race_age", "Years to Group:", choices=c(1,3), inline = TRUE),
       
+      radioButtons("myYearGrouping_lifeCourse", "Years to Group:", choices=c(1,3), inline = TRUE),
    
       # myData ======================
       selectInput("myData","Data Type:", choices=c("Deaths", "Hospitalizations","Emergency Department")),  
@@ -215,6 +222,16 @@ hidden(
                                                               "Disability Adjusted Life Years (DALYs)" = 2,
                                                               "Years Lived with Disability (YLDs)" = 3,
                                                               "Years of Life Lost (YLLs)" = 4), selected = 1),
+      
+      actionBttn(
+        inputId = "updateLifeCourse",
+        label = "Update Table",
+        style = "material-flat", 
+        color = "primary",
+        icon = icon("table")), 
+      
+      
+      
       div(id="suppressionNote",
           paste('Note: All measures associated with counts <',criticalNumber,', as well as necessary complementrary counts/measures are excluded for data de-identification purposes'),style="color:blue;font-size:12px;padding-left:5px;"
       ),

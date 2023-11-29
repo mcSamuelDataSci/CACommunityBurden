@@ -7029,6 +7029,12 @@ button.btn.checkbtn.btn-default.active {
     font-weight: bold;
 }
 
+/* Centers action button in life course tab */
+button#updateLifeCourse {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /*
 .box-header {
   color: white;

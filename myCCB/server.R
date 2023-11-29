@@ -181,6 +181,7 @@ tabHelpList <- list("dataTableTab"           = appTextL$conditionTableTab,
                     "trendTab"               = appTextL$trendTab,
                     "rankByCauseTab"         = appTextL$conditionTab,
                     "rankByGeographyTab"     = appTextL$rankGeoTab,
+                    "lifeCourseTab"          = appTextL$lifeCourseTab,
                     "mcodTab"                = appTextL$mcodTab,
                     "rankByCauseAndSexTab"   = appTextL$conditionSexTab,
                     "lifeExpectancyTab"      = appTextL$lifeExpectancyTab,
@@ -583,6 +584,76 @@ observeEvent(current$tab,{
       print(my_doc,target=file)
     }
   )
+  
+  
+# Life Course ---------------------------------------------------------------------------------------------------
+
+  # If State is selected:
+  # Update myYear_lifeCourse to as.character(minYear:maxYear)
+  # Update radio button such that 1 is enabled
+  
+  # If County is selected:
+  # Updated myYear_lifeCourse to year groupings
+  # Update radio button to select 3, and disable 1
+  
+observe({
+  if (current$tab == "lifeCourseTab") {
+    if (input$myLHJ == "CALIFORNIA") {
+      shinyjs::show("myYearGrouping_lifeCourse")
+      if (input$myYearGrouping_lifeCourse == 1) {
+        updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = as.character(minYear:maxYear), selected = as.character(maxYear))
+      } else {
+        updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = distinct( filter(chartYearMap, !is.na(midYear3)), yearGroup3 )$yearGroup3, selected = yearGrp3)
+      }
+      
+      
+    } else {
+      updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = distinct( filter(chartYearMap, !is.na(midYear3)), yearGroup3 )$yearGroup3, selected = yearGrp3)
+      shinyjs::hide("myYearGrouping_lifeCourse")
+    }
+  }
+  
+})
+  
+## Text/titles ----------
+lifeCourseInfoStep <- reactive(
+  HTML(paste0(
+    "<h1 style='color:#000;background:#FFFFFF;text-align:center;font-size:26px;font-style:normal;font-weight:bold;margin-top:0px;margin-right:0px;margin-bottom:0px;margin-left:0px'>
+    Leading Causes of Death Across the Life Course in ", input$myLHJ, ", ", input$myYear_lifeCourse, "</h1> 
+    <h2 style='color:#000;background:#FFFFFF;text-align:center;font-size:18px;font-style:normal;font-weight:normal;text-decoration:;letter-spacing:px;word-spacing:px;text-transform:;text-shadow:;margin-top:12px;margin-right:0px;margin-bottom:6px;margin-left:0px'>
+         <div>
+         <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #0072B2; font-size: 18px'></i>
+         Communicable
+       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #4A4A4A; font-size: 18px'></i>
+         Cancer
+       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #D55E00; font-size: 18px'></i>
+         Cardiovascular
+       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #117733; font-size: 18px'></i>
+         Other Chronic
+       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #56B4E9; font-size: 18px'></i>
+         Injury
+       </div>
+         </h2>
+    "
+  ))
+) %>% 
+    bindCache(input$myLHJ, input$myYear_lifeCourse) %>% 
+    bindEvent(input$updateLifeCourse, ignoreInit = F, ignoreNULL = F)
+    
+    
+  output$lifeCourse_info <- renderUI(lifeCourseInfoStep())  
+  
+
+
+# Life Course table ---------
+lifeCourseStep <- reactive(makeLifeCourse(myLHJ = input$myLHJ, 
+                                          myYearGrouping = input$myYearGrouping_lifeCourse, 
+                                          myYear = input$myYear_lifeCourse, 
+                                          myN = input$myN_lifeCourse)) %>% 
+  bindCache(input$myLHJ, input$myYearGrouping_lifeCourse, input$myYear_lifeCourse, input$myN_lifeCourse) %>% 
+  bindEvent(input$updateLifeCourse, ignoreInit = F, ignoreNULL = F)
+
+output$lifeCourse <- renderReactable(lifeCourseStep())
 
 # MCOD ----------------------------------------------------------------------------------------------------------
   
