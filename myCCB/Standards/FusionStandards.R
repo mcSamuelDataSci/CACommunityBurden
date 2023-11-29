@@ -268,7 +268,7 @@ commInfo <- read.csv(paste0(ccbInfo, "/comName.csv"), header = T)
 
 
 deathCauseLink   <-
-  read_excel(path(ccbInfo,"icd10_to_CAUSE.xlsx"), sheet="main") %>%
+  read_excel(path(ccbInfo,"icd10_to_CAUSE.xlsx"), sheet="main")%>%
    filter(!is.na(causeList)) %>%
    mutate(causeNameShort = ifelse(is.na(causeNameShort), causeName, causeNameShort),
           topLevName     = case_when(topLevCode  == "0" ~ "All Causes",
@@ -277,6 +277,7 @@ deathCauseLink   <-
                                      topLevCode  == "C" ~ "Cardiovascular",
                                      topLevCode  == "D" ~ "Other Chronic",
                                      topLevCode  == "E" ~ "Injury", 
+                                     topLevCode  == "P" ~ "Perinatal",
                                     TRUE ~ "Ill-Defined")) %>%
   select(causeCode, causeName, causeNameShort, causeList, topLevCode, topLevName) %>%
   arrange(causeCode) %>%

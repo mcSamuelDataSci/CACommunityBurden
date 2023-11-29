@@ -345,23 +345,68 @@ allCauseCodes <- sort(gbdMap0$causeCode[!is.na(gbdMap0$causeCode)])
 
 mapICD    <- gbdMap0[!is.na(gbdMap0$CODE),c("CODE","regEx10")]
 
-# Old method
+# Data quality check - mapping
+if (F) {
+  
+  # Old method
+  
+  icdToGroup <- function(inputVectorICD10) {
+    Cause   <- rep(NA,length(inputVectorICD10))
+    for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],inputVectorICD10)] <- mapICD[i,"CODE"] }
+    Cause}
+  
+  cbdDat0$icdCODE  <- icdToGroup(inputVectorICD10=cbdDat0$ICD10)
+  
+  
+  # New method - Performs a regex left join
+  # For comparison purposes - Helps identify duplicate ICD-causeCode matching
+  library(fuzzyjoin)
+  
+  cbdDat0_compare <- cbdDat0 %>%
+    regex_left_join(mapICD, by = c("ICD10" = "regEx10")) %>%
+    select(-regEx10) %>%
+    rename(icdCODE_compare = CODE)
+  
+  # Compare nrows
+  nrow(cbdDat0_compare) - nrow(cbdDat0)
+  
+  # Count SFN
+  dup_sfns <- cbdDat0_compare %>% 
+    filter(sex == "Total", !year %in% 2000:2004) %>% 
+    count(SFN) %>% 
+    filter(n > 1) %>% 
+    pull(SFN)
+  
+  check_dup_sfns <- cbdDat0_compare %>% 
+    filter(sex == "Total", SFN %in% unique(dup_sfns)) %>% 
+    arrange(SFN)
+  
+  table(check_dup_sfns$icdCODE, useNA = "ifany")
+  table(check_dup_sfns$icdCODE_compare, useNA = "ifany")
 
-icdToGroup <- function(inputVectorICD10) {
-  Cause   <- rep(NA,length(inputVectorICD10))
-  for (i in 1:nrow(mapICD)) {Cause[grepl(mapICD[i,"regEx10"],inputVectorICD10)] <- mapICD[i,"CODE"] }
-  Cause}
-
-cbdDat0$icdCODE  <- icdToGroup(inputVectorICD10=cbdDat0$ICD10)
+  
+}
 
 # New method - Performs a regex left join
-# 
-# library(fuzzyjoin)
-# 
-# cbdDat0 <- cbdDat0 %>%
-#   regex_left_join(mapICD, by = c("ICD10" = "regEx10")) %>%
-#   select(-regEx10) %>%
-#   rename(icdCODE = CODE)
+library(fuzzyjoin)
+
+nRows_preMapping <- nrow(cbdDat0)
+
+cbdDat0 <- cbdDat0 %>%
+  regex_left_join(mapICD, by = c("ICD10" = "regEx10")) %>%
+  select(-regEx10) %>%
+  rename(icdCODE = CODE)
+
+# Data quality checks
+nrow(cbdDat0) - nRows_preMapping # Should be zero
+
+# Should return an empty vector
+cbdDat0 %>% 
+  filter(sex == "Total", !year %in% 2000:2004) %>% 
+  count(SFN) %>% 
+  filter(n > 1) %>% 
+  pull(SFN) 
+
 
 table(cbdDat0$icdCODE,useNA = "ifany")
 cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
@@ -1666,10 +1711,36 @@ tractAA  <- tractAA[!(is.na(tractAA$aRate)),]
 
 # == MERGE CRUDE AND AGJECT RATES AND CLEAN UP ====================================================
 
+# For sex-specific cancers =================================
+sexCauseList <- list("Female" = c("B09", "B10", "B11"), 
+                     "Male" = c("B12"))
+
+sexCause <- function(myData, myCauseCodes = sexCauseList) {
+  
+  femaleCause <- myData %>% 
+    filter(sex == "Female", causeCode %in% myCauseCodes$Female) %>% 
+    bind_rows(mutate(., sex = "Total"))
+  
+  
+  maleCause <- myData %>% 
+    filter(sex == "Male", causeCode %in% myCauseCodes$Male) %>% 
+    bind_rows(mutate(., sex = "Total"))
+
+  
+  tDat <- myData %>% 
+    filter(!causeCode %in% c(myCauseCodes$Female, myCauseCodes$Male)) %>% 
+    bind_rows(femaleCause, maleCause)
+  
+  return(tDat)
+  
+}
+
+
 # COUNTY ----------------------------------------------------------------------
 
 datCounty <- merge(datCounty,countyAA ,by = c("county","year","sex","causeCode"),all=TRUE)
 
+datCounty <- sexCause(datCounty)
 
 # SMR Calculations START
 
@@ -1698,6 +1769,8 @@ datCounty <-  datCounty %>%
 # REGION ----------------------------------------------------------------------
 
 datRegion <- merge(datRegion,regionAA ,by = c("region","year","sex","causeCode"),all=TRUE)
+
+datRegion <- sexCause(datRegion)
 
 datRegion <-  datRegion %>% 
   filter(!(is.na(causeCode)))                                       %>% # removes "Level3" NA (most 'causes' are NA on Level3) 
@@ -1730,6 +1803,8 @@ datCounty65_RE <- datCounty65_RE                                    %>%
 
 datCounty_M <- merge(datCounty_M,countyAA_M, by = c("county","year", "month", "sex","causeCode"),all=TRUE)
 
+datCounty_M <- sexCause(datCounty_M)
+
 datCounty_M <- datCounty_M                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
   # select(-ageGroup)                                                 %>%
@@ -1739,6 +1814,8 @@ datCounty_M <- datCounty_M                                    %>%
 # -- Quarter  ---------------------------------------------------------------------
 
 datCounty_Q <- merge(datCounty_Q,countyAA_Q, by = c("county","year", "quarter", "sex","raceCode","causeCode"),all=TRUE)
+
+datCounty_Q <- sexCause(datCounty_Q)
 
 datCounty_Q <- datCounty_Q                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
@@ -1750,6 +1827,8 @@ datCounty_Q <- datCounty_Q                                    %>%
 
 datRegion_Q <- merge(datRegion_Q,regionAA_Q, by = c("region","year", "quarter", "sex","raceCode","causeCode"),all=TRUE)
 
+datRegion_Q <- sexCause(datRegion_Q)
+
 datRegion_Q <- datRegion_Q                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
   select(-ageGroup)                                                 %>%
@@ -1760,6 +1839,9 @@ datRegion_Q <- datRegion_Q                                    %>%
 
 datCounty_RE_1year <- merge(datCounty_RE_1year,countyAA.RE_1year, by = c("county","year","sex","raceCode","causeCode"),all=TRUE)
 
+datCounty_RE_1year <- sexCause(datCounty_RE_1year)
+
+
 datCounty_RE_1year <- datCounty_RE_1year                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
   select(-ageGroup)                                                 %>%
@@ -1769,6 +1851,8 @@ datCounty_RE_1year <- datCounty_RE_1year                                    %>%
 # -- REGION - RACE 1 year  ---------------------------------------------------------------------
 
 datRegion_RE_1year <- merge(datRegion_RE_1year,regionAA.RE_1year, by = c("region","year","sex","raceCode","causeCode"),all=TRUE)
+
+datRegion_RE_1year <- sexCause(datRegion_RE_1year)
 
 datRegion_RE_1year <- datRegion_RE_1year                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
@@ -1781,6 +1865,8 @@ datRegion_RE_1year <- datRegion_RE_1year                                    %>%
 
 
 datCounty_3year <- merge(datCounty_3year,countyAA_3year ,by = c("county","yearG3","sex","causeCode"),all=TRUE)
+
+datCounty_3year <- sexCause(datCounty_3year)
 
 # SMR Calculations START
 
@@ -1814,6 +1900,8 @@ datCounty_AGE_3year <-  datCounty_AGE_3year %>%
   mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
 
+datCounty_AGE_3year <- sexCause(datCounty_AGE_3year)
+
 
 # -- STATE 1-YEAR AGE SPECIFIC ------------------------------------------------------------
 
@@ -1822,10 +1910,12 @@ datState_AGE <-  datState_AGE %>%
   mutate_if(is.numeric, signif,digits = myDigits)                        %>%  # much smaller file and easier to read
   mutate(county = ifelse(county==STATE, toupper(STATE),county))      # e.g. California --> CALIFORNIA
 
-
+datState_AGE <- sexCause(datState_AGE)
 
 # -- COUNTY 5-YEAR ------------------------------------------------------------
 datCounty_5year <- merge(datCounty_5year,countyAA_5year ,by = c("county","yearG5","sex","causeCode"),all=TRUE)
+
+datCounty_5year <- sexCause(datCounty_5year)
 
 # SMR Calculations START
 
@@ -1855,6 +1945,9 @@ datCounty_5year <-  datCounty_5year %>%
 
 datCounty_RE <- merge(datCounty_RE,countyAA.RE, by = c("county","yearG3","sex","raceCode","causeCode"),all=TRUE)
 
+datCounty_RE <- sexCause(datCounty_RE)
+
+
 datCounty_RE <- datCounty_RE                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
   select(-ageGroup)                                                 %>%
@@ -1864,6 +1957,8 @@ datCounty_RE <- datCounty_RE                                    %>%
 # -- STATE RACE 1 YEAR ---------------------------------------------------------------------
 
 datState_RE <- merge(datState_RE,stateAA.RE, by = c("county","year","sex","raceCode","causeCode"),all=TRUE)
+
+datState_RE <- sexCause(datState_RE)
 
 datState_RE <- datState_RE                                    %>% 
   filter(!(is.na(causeCode)))                                       %>%  
@@ -1876,6 +1971,8 @@ datState_RE <- datState_RE                                    %>%
 # -- EDUCATION ------------------------------------------------------------------
 
 datCounty_EDU <- merge(datCounty_EDU,countyAA.EDU, by = c("county","year","sex","eduCode","causeCode"),all=TRUE)
+
+datCounty_EDU <- sexCause(datCounty_EDU)
 
 datCounty_EDU <- datCounty_EDU                                  %>% 
   filter(!(is.na(causeCode)))                                       %>%  
@@ -1894,6 +1991,8 @@ datComm   <- merge(datComm,    commAA ,by = c("comID","yearG5","sex","causeCode"
   mutate_if(is.numeric, signif,digits = myDigits) %>%
   filter(!is.na(county)) #  as above
 
+datComm <- sexCause(datComm)
+
 
 # -- TRACT --------------------------------------------------------------------
 
@@ -1902,7 +2001,7 @@ datTract  <- merge(datTract,  tractAA ,by = c("GEOID","yearG5","sex","causeCode"
   filter(!is.na(county))  %>%  # REMOVE ALL out-of-state GEOID and missing GEOID
   filter(!is.na(causeCode)) # removes about 130 records with bad/no GEOID and/or wrong County based on GEOID
 
-
+datTract <- sexCause(datTract)
 
 # == CELL SUPRESSION WITH COMPLEMENTARY CELL SUPRESSION==============================================
 
@@ -2063,6 +2162,44 @@ saveRDS(filter(datCounty65_RE, !is.na(yearG3)),      file= path(ccbData,whichDat
 
 # saveRDS(datRural, file = path(ccbData, whichDat, "datRural.RDS"))
 
+# == Data Quality Check ===============================================================
+archivePath <- paste0(securePlace, "Archived Data/Death/20231128/")
+datCounty_old <- readRDS(paste0(archivePath, "datCounty.RDS"))
+datCounty <- readRDS(paste0(ccbData, "real/datCounty.RDS"))
+
+checkNew <- datCounty %>% 
+  filter(!(sex == "Total" & causeCode %in% c(sexCauseList$Female, sexCauseList$Male)), 
+         !year %in% c(currentYear, excludeYear)) %>% 
+  arrange(year, sex, county, causeCode)
+
+checkOld <- datCounty_old %>% 
+  filter(!(sex == "Total" & causeCode %in% c(sexCauseList$Female, sexCauseList$Male)), 
+         !year %in% c(currentYear, excludeYear)) %>% 
+  arrange(year, sex, county, causeCode)
+
+identical(checkOld, checkNew)
+
+checkNew <- datCounty %>% 
+  filter(sex %in% c("Female", "Male"), !year %in% c(currentYear, excludeYear)) %>% 
+  arrange(year, sex, county, causeCode)
+
+checkOld <- datCounty_old %>% 
+  filter(sex %in% c("Female", "Male"), !year %in% c(currentYear, excludeYear)) %>% 
+  arrange(year, sex, county, causeCode)
+
+identical(checkOld, checkNew)
+
+checkNew <- datCounty %>% 
+  filter(sex %in% c("Total", "Female"), causeCode %in% c(sexCauseList$Female)) %>% 
+  select(year, county, sex, causeCode, Ndeaths) %>%
+  pivot_wider(names_from = sex, values_from = Ndeaths) %>% 
+  mutate(eq = Female == Total)
+
+checkNew <- datCounty %>% 
+  filter(sex %in% c("Total", "Male"), causeCode %in% c(sexCauseList$Male)) %>% 
+  select(year, county, sex, causeCode, Ndeaths) %>%
+  pivot_wider(names_from = sex, values_from = Ndeaths) %>% 
+  mutate(eq = Male == Total)
 
 # == SAVE AS .CSV FILES FOR AD HOC ANALYSIS =======================================================
 
