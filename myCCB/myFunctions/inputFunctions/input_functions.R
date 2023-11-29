@@ -7,12 +7,13 @@
 # Constants =========================================================================
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
-INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo", "myGeo_sdoh", "myYear", "myYear_mcod", "myYearRank", "myYearRange", "myYearDemo", "mySex",
+INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ","myGeo", "myGeo_sdoh", "myYear", "myYear_lifeCourse", "myYear_mcod", "myYearRank", "myYearRange", "myYearDemo", "mySex",
             "myRace", "mySexMult",
-            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_topTrends", "myObserv", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping", "myYearGrouping_race_age", "myCutSystem","myLabName","myCI","myRefLine",
+            "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_lifeCourse", "myN_topTrends", "myObserv", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping", "myYearGrouping_race_age", "myYearGrouping_lifeCourse", "myCutSystem","myLabName","myCI","myRefLine",
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
-            "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload", "ourBurdenViewDownload")
+            "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload", "ourBurdenViewDownload", 
+            "updateLifeCourse")
 
 # Tab to inputs mapping: Associates each tab with it's input widgets
 TAB_INPUTS <- list("homeTab"=c(),
@@ -26,6 +27,7 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "myMeanAge_sort", "suppressionNote", "recentYearNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
                    "rankByGeographyTab"=c("ourDownloads","myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "recentYearNote"),
+                   "lifeCourseTab" = c("ourDownloads", "myLHJ", "myYear_lifeCourse", "myYearGrouping_lifeCourse", "myN_lifeCourse", "updateLifeCourse", "suppressionNote", "recentYearNote"),
                    "mcodTab" = c("ourDownloads", "myLHJ", "myYear_mcod"),
                    "ageRaceFocusTab" = c("ourDownloads", "myLHJ", "myData", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","myOlderFocus","myScale", "suppressionNote"),
                    "deathHospEDTab" = c("ourDownloads", "myLHJ", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","suppressionNote"),
