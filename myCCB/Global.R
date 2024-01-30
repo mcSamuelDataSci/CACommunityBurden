@@ -410,7 +410,10 @@ sdohVec <- setNames(sdohLink$sdohCode, sdohLink$sdohName)
 
 
 # COUNTY LIST
+# cityLHJs <- c("Alameda HD", "Berkeley", "Los Angeles HD", "Long Beach", "Pasadena")
+
 lList         <- sort(as.character(unique(datCounty$county))) # Used in input widgets
+# lList <- lList_lhj <- lList_lhj[!lList_lhj %in% cityLHJs]
 # lListNoState  <- lList[lList != STATE] # Not used anywhere
 
 

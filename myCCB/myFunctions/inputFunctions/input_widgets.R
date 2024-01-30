@@ -15,6 +15,9 @@ hidden(
       # myLHJ ======================
       selectInput("myLHJ","County/State:",choices=lList,selected=STATE),
       
+      # myLHJ w/ cities and HDs ======================
+      # selectInput("myLHJplus","LHJ/State:",choices=lList_lhj,selected=STATE),
+      
       # myGeo ======================
       selectInput("myGeo","Geographic Level:", choices=c("County","Community","Census Tract")),
       # helpText
