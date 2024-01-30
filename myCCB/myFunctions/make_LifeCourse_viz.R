@@ -34,7 +34,7 @@ makeLifeCourse <- function(
   
   # Assign colors to broad condition groups ----------------------------
   topLevColorsDF <- data.frame(topLevName = names(topLevColors), topLevColor = unname(topLevColors), stringsAsFactors = F) %>% 
-    filter(topLevName %in% c("Communicable", "Cancer", "Cardiovascular", "Other Chronic", "Injury"))
+    filter(topLevName %in% c("Communicable", "Cancer", "Cardiovascular", "Other Chronic", "Injury", "Perinatal"))
   
   # Set data ------------------------------------
   if (myLHJ == STATE & myYearGrouping == 1) {

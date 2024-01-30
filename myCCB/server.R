@@ -146,13 +146,13 @@ observe({
 })
 
 # 2022 Injuries Modal warning message ----------------------------------------
-observeEvent(input$myCAUSE, {
-  if (substr(input$myCAUSE, 1, 1) == "E") {
-    if (current$nav == "trends") {
-      myModal("Please note that the 2022 data are not yet final. Number of deaths are likely to increase slightly, particularly in the Injury category due to injury-related conditions being particularly susceptible to delays in the final coding of cause of death.")
-    }
-  }
-})
+# observeEvent(input$myCAUSE, {
+#   if (substr(input$myCAUSE, 1, 1) == "E") {
+#     if (current$nav == "trends") {
+#       myModal("Please note that the 2022 data are not yet final. Number of deaths are likely to increase slightly, particularly in the Injury category due to injury-related conditions being particularly susceptible to delays in the final coding of cause of death.")
+#     }
+#   }
+# })
 
 
 
@@ -632,6 +632,8 @@ lifeCourseInfoStep <- reactive(
          Other Chronic
        <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #56B4E9; font-size: 18px'></i>
          Injury
+       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #E69F00; font-size: 18px'></i>
+       Perinatal
        </div>
          </h2>
     "

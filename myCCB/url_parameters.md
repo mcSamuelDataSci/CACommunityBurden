@@ -64,6 +64,7 @@
 | INTERACTIVE MAP                               | interactivemap         |
 | RANK BY CAUSE - DEATHS                        | rankbycause            |
 | RANK BY GEOGRAPHY - DEATHS                    | rankbygeography        |
+| LIFE COURSE - DEATHS                          | lifecourse             |
 | MULTIPLE CAUSES OF DEATH                      | mcod                   |
 | AGE RACE FOCUS                                | ageracefocus           |
 | DEATH HOSP ED                                 | deathhosped            |

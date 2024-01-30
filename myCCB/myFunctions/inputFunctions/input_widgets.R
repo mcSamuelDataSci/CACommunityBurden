@@ -50,8 +50,8 @@ hidden(
       # Broad groups - top Trends ========================
       checkboxGroupButtons( "myBroadGroups",
                             label = list("Select one or more broad condition group:", actionButton(inputId="broadGroupHelp", label=helpIcon, style=myInputHelpButtonSty_broadGroup)),
-                            choices = c("All" = "0", "Communicable" = "A", "Cancer" = "B", "Cardiovascular" = "C", "Other Chronic" = "D", "Injury" = "E"),
-                            selected = c("A", "B", "C", "D", "E"), individual=TRUE, size="sm"),
+                            choices = c("All" = "0", "Communicable" = "A", "Cancer" = "B", "Cardiovascular" = "C", "Other Chronic" = "D", "Injury" = "E", "Perinatal" = "P"),
+                            selected = c("A", "B", "C", "D", "E", "P"), individual=TRUE, size="sm"),
       
       # myStateCut ======================
       # add br(), here to fix spacing, but does not yet....

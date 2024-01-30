@@ -235,7 +235,7 @@
       }
     },
     "XML": {
-      "Source": null,
+      "Source": "RSPM",
       "Repository": null,
       "description": {
         "Package": "XML",
@@ -439,6 +439,35 @@
         "Repository": "RSPM",
         "Date/Publication": "2021-08-19 21:30:02 UTC",
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-26 23:58:49 UTC; unix"
+      }
+    },
+    "callr": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "callr",
+        "Title": "Call R from R",
+        "Version": "3.7.1",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\", \"cph\"),\n           comment = c(ORCID = \"0000-0001-7098-9676\")),\n    person(\"Winston\", \"Chang\", role = \"aut\"),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\")),\n    person(\"Mango Solutions\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "It is sometimes useful to perform a computation in a separate\n    R process, without affecting the current R process at all.  This\n    packages does exactly that.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://callr.r-lib.org, https://github.com/r-lib/callr#readme",
+        "BugReports": "https://github.com/r-lib/callr/issues",
+        "Depends": "R (>= 3.4)",
+        "Imports": "processx (>= 3.6.1), R6, utils",
+        "Suggests": "cli (>= 1.1.0), covr, mockery, ps, rprojroot, spelling,\ntestthat (>= 3.0.0), withr (>= 2.3.0)",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.2.0",
+        "Config/testthat/edition": "3",
+        "Config/Needs/website": "r-lib/asciicast, glue, htmlwidgets, tibble,\ntidyverse/tidytemplate",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-07-13 09:38:30 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre, cph] (<https://orcid.org/0000-0001-7098-9676>),\n  Winston Chang [aut],\n  RStudio [cph, fnd],\n  Mango Solutions [cph, fnd]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-07-13 10:30:02 UTC",
+        "Built": "R 3.6.0; ; 2022-07-27 00:14:04 UTC; unix"
       }
     },
     "cellranger": {
@@ -2303,6 +2332,34 @@
         "Built": "R 3.6.0; ; 2020-06-07 19:15:45 UTC; unix"
       }
     },
+    "processx": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "processx",
+        "Title": "Execute and Control System Processes",
+        "Version": "3.7.0",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\", \"cph\"),\n           comment = c(ORCID = \"0000-0001-7098-9676\")),\n    person(\"Winston\", \"Chang\", role = \"aut\"),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\")),\n    person(\"Mango Solutions\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Tools to run system processes in the background.  It can\n    check if a background process is running; wait on a background process\n    to finish; get the exit status of finished processes; kill background\n    processes. It can read the standard output and error of the processes,\n    using non-blocking connections. 'processx' can poll a process for\n    standard output or error, with a timeout. It can also poll several\n    processes at once.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://processx.r-lib.org,\nhttps://github.com/r-lib/processx#readme",
+        "BugReports": "https://github.com/r-lib/processx/issues",
+        "Depends": "R (>= 3.4.0)",
+        "Imports": "ps (>= 1.2.0), R6, utils",
+        "Suggests": "callr (>= 3.7.0), cli (>= 3.3.0), codetools, covr, curl,\ndebugme, parallel, rlang (>= 1.0.2), testthat (>= 3.0.0), withr",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.0",
+        "Config/testthat/edition": "3",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "NeedsCompilation": "yes",
+        "Packaged": "2022-07-07 13:41:45 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre, cph] (<https://orcid.org/0000-0001-7098-9676>),\n  Winston Chang [aut],\n  RStudio [cph, fnd],\n  Mango Solutions [cph, fnd]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-07-07 14:20:02 UTC",
+        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-27 00:05:55 UTC; unix"
+      }
+    },
     "progress": {
       "Source": "CRAN",
       "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
@@ -2381,6 +2438,35 @@
         "Date/Publication": "2022-06-09 06:15:32 UTC",
         "Encoding": "UTF-8",
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-26 23:36:28 UTC; unix"
+      }
+    },
+    "ps": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "ps",
+        "Title": "List, Query, Manipulate System Processes",
+        "Version": "1.7.1",
+        "Authors@R": "c(\n    person(\"Jay\", \"Loden\", role = \"aut\"),\n    person(\"Dave\", \"Daeschler\", role = \"aut\"),\n    person(\"Giampaolo\", \"Rodola'\", role = \"aut\"),\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "List, query and manipulate all system processes, on\n    'Windows', 'Linux' and 'macOS'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/ps#readme, https://ps.r-lib.org/",
+        "BugReports": "https://github.com/r-lib/ps/issues",
+        "Depends": "R (>= 3.4)",
+        "Imports": "utils",
+        "Suggests": "callr, covr, curl, pillar, pingr, processx (>= 3.1.0), R6,\nrlang, testthat (>= 3.0.0),",
+        "Biarch": "true",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.0",
+        "Config/testthat/edition": "3",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "NeedsCompilation": "yes",
+        "Packaged": "2022-06-18 06:35:51 UTC; gaborcsardi",
+        "Author": "Jay Loden [aut],\n  Dave Daeschler [aut],\n  Giampaolo Rodola' [aut],\n  Gábor Csárdi [aut, cre],\n  RStudio [cph, fnd]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-06-18 07:10:02 UTC",
+        "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-07-26 23:36:34 UTC; unix"
       }
     },
     "purrr": {
@@ -2512,6 +2598,91 @@
         "Date/Publication": "2020-11-14 15:30:02 UTC",
         "Encoding": "UTF-8",
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-08-01 21:27:57 UTC; unix"
+      }
+    },
+    "reactR": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "reactR",
+        "Type": "Package",
+        "Title": "React Helpers",
+        "Version": "0.4.4",
+        "Date": "2021-02-20",
+        "Authors@R": "c(\n      person(\n        \"Facebook\", \"Inc\"\n        , role = c(\"aut\", \"cph\")\n        , comment = \"React library in lib, https://reactjs.org/; see AUTHORS for full list of contributors\"\n      ),\n      person(\n        \"Michel\",\"Weststrate\",\n        , role = c(\"aut\", \"cph\")\n        , comment = \"mobx library in lib, https://github.com/mobxjs\"\n      ),\n      person(\n        \"Kent\", \"Russell\"\n        , role = c(\"aut\", \"cre\")\n        , comment = \"R interface\"\n        , email = \"kent.russell@timelyportfolio.com\"\n      ),\n      person(\n        \"Alan\", \"Dipert\"\n        , role = c(\"aut\")\n        , comment = \"R interface\"\n        , email = \"alan@rstudio.com\"\n      )\n    )",
+        "Maintainer": "Kent Russell <kent.russell@timelyportfolio.com>",
+        "Description": "Make it easy to use 'React' in R with 'htmlwidget' scaffolds,\n              helper dependency functions, an embedded 'Babel' 'transpiler',\n              and examples.",
+        "URL": "https://github.com/react-R/reactR",
+        "BugReports": "https://github.com/react-R/reactR/issues",
+        "License": "MIT + file LICENSE",
+        "LazyData": "TRUE",
+        "Encoding": "UTF-8",
+        "Imports": "htmltools",
+        "Suggests": "htmlwidgets (>= 1.5.3), rmarkdown, shiny, V8, knitr, usethis,\njsonlite",
+        "RoxygenNote": "7.1.1",
+        "VignetteBuilder": "knitr",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-02-21 15:11:04 UTC; kentr",
+        "Author": "Facebook Inc [aut, cph] (React library in lib, https://reactjs.org/;\n    see AUTHORS for full list of contributors),\n  Michel Weststrate [aut, cph] (mobx library in lib,\n    https://github.com/mobxjs),\n  Kent Russell [aut, cre] (R interface),\n  Alan Dipert [aut] (R interface)",
+        "Repository": "RSPM",
+        "Date/Publication": "2021-02-22 14:50:06 UTC",
+        "Built": "R 3.6.0; ; 2021-04-06 16:55:38 UTC; unix"
+      }
+    },
+    "reactable": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "reactable",
+        "Type": "Package",
+        "Title": "Interactive Data Tables Based on 'React Table'",
+        "Version": "0.3.0",
+        "Authors@R": "c(\n    person(\"Greg\", \"Lin\", email = \"glin@glin.io\", role = c(\"aut\", \"cre\")),\n    person(\"Tanner\", \"Linsley\", role = c(\"ctb\", \"cph\"), comment = \"React Table library\"),\n    person(family = \"Emotion team and other contributors\", role = c(\"ctb\", \"cph\"),\n           comment = \"Emotion library\")\n    )",
+        "Description": "Interactive data tables for R, based on the 'React Table'\n    JavaScript library. Provides an HTML widget that can be used in 'R Markdown'\n    documents and 'Shiny' applications, or viewed from an R console.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://glin.github.io/reactable/,\nhttps://github.com/glin/reactable",
+        "BugReports": "https://github.com/glin/reactable/issues",
+        "Depends": "R (>= 3.1)",
+        "Imports": "digest, htmltools, htmlwidgets, jsonlite, reactR",
+        "Suggests": "covr, crosstalk, dplyr, fontawesome, leaflet, MASS,\nrmarkdown, shiny, sparkline, testthat, tippy",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.1.2",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-05-26 19:29:28 UTC; greg",
+        "Author": "Greg Lin [aut, cre],\n  Tanner Linsley [ctb, cph] (React Table library),\n  Emotion team and other contributors [ctb, cph] (Emotion library)",
+        "Maintainer": "Greg Lin <glin@glin.io>",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-05-26 19:50:02 UTC",
+        "Built": "R 3.6.0; ; 2022-07-27 00:26:57 UTC; unix"
+      }
+    },
+    "reactablefmtr": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "reactablefmtr",
+        "Type": "Package",
+        "Title": "Streamlined Table Styling and Formatting for Reactable",
+        "Version": "2.0.0",
+        "Authors@R": "c(\n    person(\"Kyle\", \"Cuilla\", role = c(\"aut\", \"cre\", \"cph\"), email = \"kyle.cuilla@gmail.com\"),\n    person(\"Greg\", \"Lin\", role = c(\"ctb\")),\n    person(\"June\", \"Choe\", role = c(\"ctb\")),\n    person(\"Kent\", \"Russell\", role = c(\"ctb\"))\n    )",
+        "Maintainer": "Kyle Cuilla <kyle.cuilla@gmail.com>",
+        "Description": "Provides various features to streamline and enhance the styling of interactive \n    reactable tables with easy-to-use and highly-customizable functions and themes. \n    Apply conditional formatting to cells with data bars, color scales, color tiles,\n    and icon sets. Utilize custom table themes inspired by popular websites such \n    and bootstrap themes. Apply sparkline line & bar charts \n    (note this feature requires the 'dataui' package which can be downloaded from\n    <https://github.com/timelyportfolio/dataui>).\n    Increase the portability and reproducibility of reactable tables by embedding images \n    from the web directly into cells. Save the final table output as a static image or \n    interactive file.",
+        "URL": "https://kcuilla.github.io/reactablefmtr/,\nhttps://github.com/kcuilla/reactablefmtr",
+        "BugReports": "https://github.com/kcuilla/reactablefmtr/issues",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "Depends": "R (>= 3.5.0), reactable (>= 0.2.0)",
+        "Imports": "dplyr, grDevices, htmltools, htmlwidgets (>= 1.5.3), magrittr,\npurrr, sass (>= 0.4.0), shiny, stats, stringr (>= 1.4.0), tippy\n(>= 0.1.0), tools, webshot",
+        "Suggests": "dataui (>= 0.0.1), MASS, scales",
+        "Additional_repositories": "https://kcuilla.github.io/drat/",
+        "RoxygenNote": "7.1.1",
+        "Language": "en-US",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-03-15 23:10:26 UTC; Kyle",
+        "Author": "Kyle Cuilla [aut, cre, cph],\n  Greg Lin [ctb],\n  June Choe [ctb],\n  Kent Russell [ctb]",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-03-16 07:50:02 UTC",
+        "Built": "R 3.6.0; ; 2023-11-22 00:08:53 UTC; unix"
       }
     },
     "readr": {
@@ -3143,6 +3314,32 @@
         "Built": "R 3.6.0; ; 2022-07-27 00:38:14 UTC; unix"
       }
     },
+    "tippy": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "tippy",
+        "Title": "Add Tooltips to 'R markdown' Documents or 'Shiny' Apps",
+        "Version": "0.1.0",
+        "Authors@R": "person(\"John\", \"Coene\", email = \"jcoenep@gmail.com\", role = c(\"aut\", \"cre\"))",
+        "Description": "'Htmlwidget' of 'Tippyjs' to add tooltips to 'Shiny' apps and 'R markdown' documents.",
+        "Depends": "R (>= 3.4.0)",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "Imports": "htmlwidgets, htmltools, shiny, jsonlite",
+        "RoxygenNote": "7.1.1",
+        "URL": "https://tippy.john-coene.com/",
+        "BugReports": "https://github.com/JohnCoene/tippy/issues",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-01-11 20:42:47 UTC; jp",
+        "Author": "John Coene [aut, cre]",
+        "Maintainer": "John Coene <jcoenep@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2021-01-11 21:10:02 UTC",
+        "Built": "R 3.6.0; ; 2023-11-22 00:08:51 UTC; unix"
+      }
+    },
     "tmap": {
       "Source": "CRAN",
       "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
@@ -3457,6 +3654,33 @@
         "Built": "R 3.6.0; x86_64-redhat-linux-gnu; 2022-01-26 20:47:14 UTC; unix"
       }
     },
+    "webshot": {
+      "Source": "CRAN",
+      "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
+      "description": {
+        "Package": "webshot",
+        "Title": "Take Screenshots of Web Pages",
+        "Version": "0.5.3",
+        "Authors@R": "c(\n    person(\"Winston\", \"Chang\", email = \"winston@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(\"Yihui\", \"Xie\", role = \"ctb\"),\n    person(\"Francois\", \"Guillem\", role = \"ctb\"),\n    person(\"Barret\", \"Schloerke\", role = \"ctb\"),\n    person(\"Nicolas\", \"Perriault\", role = \"ctb\", comment = \"The CasperJS library\")\n    )",
+        "Description": "Takes screenshots of web pages, including Shiny applications and R\n    Markdown documents.",
+        "Depends": "R (>= 3.0)",
+        "Imports": "magrittr, jsonlite, callr",
+        "Suggests": "httpuv, knitr, rmarkdown, shiny",
+        "License": "GPL-2",
+        "SystemRequirements": "PhantomJS for taking screenshots, ImageMagick or\nGraphicsMagick and OptiPNG for manipulating images.",
+        "RoxygenNote": "7.1.2",
+        "Encoding": "UTF-8",
+        "URL": "http://wch.github.io/webshot/, https://github.com/wch/webshot/",
+        "BugReports": "https://github.com/wch/webshot/issues",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-04-12 16:29:58 UTC; winston",
+        "Author": "Winston Chang [aut, cre],\n  Yihui Xie [ctb],\n  Francois Guillem [ctb],\n  Barret Schloerke [ctb],\n  Nicolas Perriault [ctb] (The CasperJS library)",
+        "Maintainer": "Winston Chang <winston@rstudio.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-04-14 12:40:02 UTC",
+        "Built": "R 3.6.0; ; 2022-07-27 00:39:18 UTC; unix"
+      }
+    },
     "widgetframe": {
       "Source": "CRAN",
       "Repository": "https://rspm.cdph.ca.gov/prod-cran/latest",
@@ -3660,7 +3884,7 @@
       "checksum": "e96a205f7ece80f0be97bffcba2d25ba"
     },
     "Global.R": {
-      "checksum": "a8607b684aeb2b17d8b1680153e3bd43"
+      "checksum": "de68813b8f9c932d34f0291bd5f61f0d"
     },
     "googleAnalyticsEXTRA_INFO.js": {
       "checksum": "b5dc2ea38cae4eeecf6ae4574a1ccdbb"
@@ -3687,7 +3911,7 @@
       "checksum": "4678d4081de362827a16cedeee7a9594"
     },
     "myData/appText/appText.docx": {
-      "checksum": "ee54b5769d822a1e0e37bf3e15b7e937"
+      "checksum": "7985a05a31946bf0d638d69ec91900db"
     },
     "myData/appText/archive/AppText - Copy.txt": {
       "checksum": "0029447c1a7574f8f72df026a1b82c9a"
@@ -3732,7 +3956,7 @@
       "checksum": "268c32a58f401af5ad5cf93c98e49d1e"
     },
     "myData/appText/newsUseCCB_Word.docx": {
-      "checksum": "e2a2bea8f94786d572e746ac2d4ec83c"
+      "checksum": "551fd13919080f2596fbe3bb22340da9"
     },
     "myData/appText/newsUseText.txt": {
       "checksum": "0cd273c913d6b936746fda1f8005e825"
@@ -3747,25 +3971,25 @@
       "checksum": "a79c154caa902c45caacaa530444ef58"
     },
     "myData/datState_3yr.RDS": {
-      "checksum": "e5c0a0ee60b800e214a1970fe42e95a5"
+      "checksum": "c406c83d33f6c3bbecfb65e96632b028"
     },
     "myData/datState_5yr.RDS": {
-      "checksum": "e26c6c1a5f4be84226ff22ca0938577a"
+      "checksum": "81409d547e10c47dec7c0705d3828f65"
     },
     "myData/datState.RDS": {
-      "checksum": "2d005d20fb49a2d3ac1c53226f4f10ae"
+      "checksum": "ffd0ba4f0a09615536b6c7ad2f492b7c"
     },
     "myData/e0ciCounty.RDS": {
-      "checksum": "f50e32d272739a725b4ec139c6155d9e"
+      "checksum": "0c4265af83c34a0a3aee0cd5b5cf9ac5"
     },
     "myData/e0ciMSSA.RDS": {
-      "checksum": "3c287f5f23807de9f6cc7916ecd00f08"
+      "checksum": "80645373142bf1b1ad86a7e062942592"
     },
     "myData/e0ciMSSA1.RDS": {
       "checksum": "f4485d95d0fb167f3856e6c1e395afad"
     },
     "myData/e0ciState.RDS": {
-      "checksum": "f544093129ee8026f78e3dde78db6f17"
+      "checksum": "7a743e089a7bea851279b65ab07c6b9a"
     },
     "myData/e0ciState1.RDS": {
       "checksum": "cd44983dbc74025715400333238b517a"
@@ -3849,103 +4073,100 @@
       "checksum": "fb8849caa9c5d1517d73203055847a9a"
     },
     "myData/real/age_race_focus_data/deaths_age_stn.RDS": {
-      "checksum": "a829fcdea388b0c085a33841f191849b"
+      "checksum": "104ef40289283988d559dcc9f446e092"
     },
     "myData/real/age_race_focus_data/deaths_race_stn.RDS": {
-      "checksum": "9580c83357a9e362cdd9fd021d58b3d6"
+      "checksum": "320a4b31661d5384a0a278f487485da9"
     },
     "myData/real/age_race_focus_data/ed_age_stn.RDS": {
-      "checksum": "fe8701b228cf37f4b665d8ffcf3d704c"
+      "checksum": "b5aff9a261d61e11cbc3ea6173369604"
     },
     "myData/real/age_race_focus_data/ed_race_stn.RDS": {
-      "checksum": "926d3bffca07a930300f8c0d7dea18d5"
+      "checksum": "f312618f80626b48396a646903865f98"
     },
     "myData/real/age_race_focus_data/hosp_ED_year.RDS": {
-      "checksum": "a1e991a9add218a962c065e01febe74e"
+      "checksum": "db63854e5419b3a3d101c05180516bdf"
     },
     "myData/real/age_race_focus_data/hospital_age_stn.RDS": {
-      "checksum": "182ae6b60bbc6a47d2b5e2a753c568fc"
+      "checksum": "108536ea6fe0a2d899b95238c3921cc1"
     },
     "myData/real/age_race_focus_data/hospital_race_stn.RDS": {
-      "checksum": "93024c6ddf90c2794a715ca3c1a639c4"
+      "checksum": "d2c656e55fc47ce4f181667ec2e26485"
     },
     "myData/real/age_race_focus_data/inData/edAge.RDS": {
-      "checksum": "8a945cb3efc32bdebbe92d1385a91bed"
+      "checksum": "1f04dfeed4c6862ddf9eb0648409fc1f"
     },
     "myData/real/age_race_focus_data/inData/edRace.RDS": {
-      "checksum": "674add2946ce3b689e4bfbbc9e8808d4"
+      "checksum": "fb928af09ead4bd885f3d1913dd8ae44"
     },
     "myData/real/age_race_focus_data/inData/hospAge.RDS": {
-      "checksum": "4713874168ea620e75f4115d97546b7c"
+      "checksum": "be0b542dd0faa9bc1bc5673b7ea5611c"
     },
     "myData/real/age_race_focus_data/inData/hospRace.RDS": {
-      "checksum": "93393a4f7a411e2191efc6e7027a2398"
+      "checksum": "76f883b3dd2f7a35b033487d38e658c8"
     },
     "myData/real/burdenViewData.RData": {
-      "checksum": "4dcbfff989e805b0fd7f85460d2a4125"
+      "checksum": "7de2168e4a6ce16f1e2993771558e52f"
     },
     "myData/real/CID/dcdcData.csv": {
       "checksum": "169d095e222bd9cb46f256b5a2f6eb9a"
     },
     "myData/real/datComm.RDS": {
-      "checksum": "bf0cecc9e973ebc1e2add85dae2926f7"
+      "checksum": "f06dfe453cc885dbcb30d4cba4fd00b0"
     },
     "myData/real/datCounty_3year.RDS": {
-      "checksum": "297aa6e3da3b72323150a52a1663791d"
+      "checksum": "8c108a660051de6e35abdc72424f419e"
     },
     "myData/real/datCounty_5year.RDS": {
-      "checksum": "24c5bf784a448745460c6dd4bd762cd9"
+      "checksum": "dc60261bfc10c47c1750952d34e26ca2"
     },
     "myData/real/datCounty_AGE_3year.RDS": {
-      "checksum": "1fae622e78bad3e843a8c8a8bab7c694"
+      "checksum": "c24c244a41c689dd85e55810ff128ec2"
     },
     "myData/real/datCounty_EDU.RDS": {
-      "checksum": "237e90f117e345fae81b19a6bf6157e0"
+      "checksum": "eec17ee0fbbab7ac42070eb6c43ab2ec"
     },
     "myData/real/datCounty_MCOD.RDS": {
       "checksum": "2bf424c90dfe62e1a1f209c62bfc2c40"
     },
-    "myData/real/datCounty_RACE_AGE.RDS": {
-      "checksum": "d49421ea91e8dfb93b78c0f1113040c1"
-    },
     "myData/real/datCounty_RE.RDS": {
-      "checksum": "ca1cb4ff5e175168661d6cd419af2a9a"
+      "checksum": "a01dc9259050bd5fa78be920b14b5d58"
     },
     "myData/real/datCounty.RDS": {
-      "checksum": "d8cf8013a028187032e49fc3c22dd576"
+      "checksum": "4da3f7c247a5eafda76dc7217c04ea1b"
     },
     "myData/real/datState_AGE.RDS": {
-      "checksum": "506d89be6d18236630397dfb8820de9d"
+      "checksum": "1b1935beb8b7a8bf18020005de4d4466"
     },
     "myData/real/datState_RE.RDS": {
-      "checksum": "4ccaa11cd5cc105a5b7305021428e83f"
+      "checksum": "68a6d8e0b1da32e78b854a2c1bdb652b"
     },
     "myData/real/datTract.RDS": {
-      "checksum": "1dc54e979d3f000e2278810f9b19690a"
+      "checksum": "f0fac0ca3ab61a476778e52147a13365"
     },
     "myData/real/disparity_ageHigh.RDS": {
-      "checksum": "42a946b4a5fc2f088c52f5dd39e51155"
+      "checksum": "b2c5d21588c57eeb127d1ab0130246d6"
     },
     "myData/real/disparity_ageLow.RDS": {
-      "checksum": "77703b534c6e0d05d141d6f182ae1f10"
+      "checksum": "d6fc600d356b5a980da9bd1cd9d48825"
     },
     "myData/real/disparity_raceHigh.RDS": {
-      "checksum": "df92633c9edd0d13be18c2d796484296"
+      "checksum": "5a12a242308b26486f33e32f520ca366"
     },
     "myData/real/disparity_raceLow.RDS": {
-      "checksum": "b1f214e4133f4624b143651b62dca377"
+      "checksum": "736adfed6a8c3c60afaa60b79b8a256b"
     },
     "myData/real/disparity_sexHigh.RDS": {
-      "checksum": "260eec516e3bf8b70876dfed22b8e8f5"
+      "checksum": "fd6980e5c459493112f3c3b044bc73a6"
     },
     "myData/real/disparity_sexLow.RDS": {
-      "checksum": "c8ed52104fc4c91414de30c38b997b7e"
+      "checksum": "4a2c66fe23fa9699b3b1c66cbbc7b54d"
     },
     "myData/real/oshpd_PDD_any.rds": {
-      "checksum": "d405731a11832d6fa82a0c3997e08406"
+      "checksum": "24569327d22934dde294f52781b34af2"
     },
     "myData/real/oshpd_PDD_primary.rds": {
-      "checksum": "3eeff332f2773e0c8a1f63e135cbad48"
+      "checksum": "b29b52454769832b3352cc9d730b1123"
     },
     "myData/risk_data.rds": {
       "checksum": "0fc08a1b53d1f5305228c6313ed30778"
@@ -4044,13 +4265,13 @@
       "checksum": "792bb93cc45de0e3a90e59f995c30986"
     },
     "myFunctions/inputFunctions/input_functions.R": {
-      "checksum": "934023d4f4313a634a5e288425605279"
+      "checksum": "533767a1ae7b300ea9c8a4ac3ef91e3f"
     },
     "myFunctions/inputFunctions/input_widgets.R": {
-      "checksum": "de909ec55a79fb926535bc0bd767d39b"
+      "checksum": "2074ecc50d0f55a0b87a05b8ba7822d6"
     },
     "myFunctions/make_ANY_TREND_chart.R": {
-      "checksum": "ed901ea8d6c576352dcd7c8d3f6999ae"
+      "checksum": "c28af2df1374c009e5bae773a650ab44"
     },
     "myFunctions/make_burdenView.R": {
       "checksum": "5d59abc3a9b18ceb049f97688bad81b0"
@@ -4066,6 +4287,9 @@
     },
     "myFunctions/make_LIFE-EXPECTANCY_chart.R": {
       "checksum": "8b11fb730a6602272ad24cd7ee9c826f"
+    },
+    "myFunctions/make_LifeCourse_viz.R": {
+      "checksum": "4897d57dfaff2d6d23e6599135775276"
     },
     "myFunctions/make_MAPS.R": {
       "checksum": "3619cee26064b152f75b1da7d355941e"
@@ -4104,7 +4328,7 @@
       "checksum": "5918b518b6e95c458c2418cc66215415"
     },
     "myFunctions/make_TREND-EDUCATION_chart.R": {
-      "checksum": "ea141205c2fd52a1c9690caefb70dc9d"
+      "checksum": "ecd2557c44495fd9b0c2082ed5d53730"
     },
     "myInfo/.gitignore": {
       "checksum": "35a3b9ead58df87b3d1d2a441bb4a352"
@@ -4125,7 +4349,7 @@
       "checksum": "83521416414845b1505f035b81877d31"
     },
     "myInfo/CCS Code and Names Linkage.xlsx": {
-      "checksum": "78cdf9eba85c989a94bfa2944de77479"
+      "checksum": "de33c3e52943261a06243c4773c075b5"
     },
     "myInfo/comName.csv": {
       "checksum": "6dc96a90aa42d33321901692a725ff8e"
@@ -4146,7 +4370,7 @@
       "checksum": "2306c169e0c9733bbc17917a689c1003"
     },
     "myInfo/icd10_to_CAUSE.xlsx": {
-      "checksum": "2c5e9a351f30d267d67bed0466c3e664"
+      "checksum": "d8fcced4f381f2e0195562bf0c26f3b4"
     },
     "myInfo/IHME_API_endpoints.csv": {
       "checksum": "7ed8d4d1760fa5b99dc3d626ef706f7c"
@@ -4155,7 +4379,10 @@
       "checksum": "0ca4b38aef18ae728b80efa78e3afab5"
     },
     "myInfo/queryParameter_Linkage.xlsx": {
-      "checksum": "d36d4e7af8cf2f832e775b86609177e8"
+      "checksum": "c421967b5f2ee0bb07afd2c7055be4f9"
+    },
+    "myInfo/SUICIDE-TEMP-icd10_to_CAUSE.xlsx": {
+      "checksum": "c081fa47b7f61d9a0dc2991b075f72b7"
     },
     "myInfo/TEMP - INJURY - icd10_to_CAUSE.xlsx": {
       "checksum": "f028368d9fa893a375a96a85f6da9c6c"
@@ -4198,6 +4425,9 @@
     },
     "packrat/desc/cachem": {
       "checksum": "710c8508fe8a2df8b424f0fb1e9f7538"
+    },
+    "packrat/desc/callr": {
+      "checksum": "cb6b5804cf5e0dce83c254c791b459d0"
     },
     "packrat/desc/cellranger": {
       "checksum": "8fff5fda1588d0c1261b7b34119fe324"
@@ -4418,6 +4648,9 @@
     "packrat/desc/prettyunits": {
       "checksum": "ec5f61f8bbe681b6f504c510cda69105"
     },
+    "packrat/desc/processx": {
+      "checksum": "d6a22f1e606a205fb2f329f3f5d7f654"
+    },
     "packrat/desc/progress": {
       "checksum": "b0b341c8cf7fd3deb06cc9242da9c4eb"
     },
@@ -4426,6 +4659,9 @@
     },
     "packrat/desc/proxy": {
       "checksum": "e8b3ecb6a83968f05b1c0d5a2bb5c83f"
+    },
+    "packrat/desc/ps": {
+      "checksum": "ec0581565e01d3ffcec7e0c249a1210e"
     },
     "packrat/desc/purrr": {
       "checksum": "2cbc7e4d4f622aef3861af8202b384a2"
@@ -4450,6 +4686,15 @@
     },
     "packrat/desc/Rcpp": {
       "checksum": "51061f9d9e1ea03189c095baa7deb925"
+    },
+    "packrat/desc/reactable": {
+      "checksum": "cd7bda4eded41100a896feb8d4c53f9a"
+    },
+    "packrat/desc/reactablefmtr": {
+      "checksum": "3564451ef08eebdf9fe6505b1a97bcb3"
+    },
+    "packrat/desc/reactR": {
+      "checksum": "95966135a6c469128e1befce02114e7d"
     },
     "packrat/desc/readr": {
       "checksum": "6128576a1117299c06559c3179778585"
@@ -4517,6 +4762,9 @@
     "packrat/desc/tidyselect": {
       "checksum": "ff91af224aedcb0dfd87549049a38593"
     },
+    "packrat/desc/tippy": {
+      "checksum": "4c7fc6ac2762876a80d73e269161cf32"
+    },
     "packrat/desc/tmap": {
       "checksum": "22a641e1c9367cc374711a2530b5f611"
     },
@@ -4550,6 +4798,9 @@
     "packrat/desc/vroom": {
       "checksum": "272dabe6d2450d8ad3955e576c058574"
     },
+    "packrat/desc/webshot": {
+      "checksum": "46b07861c55d9a71ed5c2f08f8a93d42"
+    },
     "packrat/desc/widgetframe": {
       "checksum": "1834a93fcee0afe077862b8e8480ebcb"
     },
@@ -4575,13 +4826,13 @@
       "checksum": "a14a02455dd825eef950e688ffd023d9"
     },
     "packrat/packrat.lock": {
-      "checksum": "0b0f907e0da8f89ada5af199c97e882e"
+      "checksum": "eb471cb050fe7ce4e3f64b0aa6f2e494"
     },
     "READ ME.docx": {
       "checksum": "32fe85b75049af10873b47e699794e3e"
     },
     "server.R": {
-      "checksum": "1e3b527655084d935dc097fb0d4cb96c"
+      "checksum": "adb893f642645171de8af3fe7111799d"
     },
     "Standards/.Rhistory": {
       "checksum": "d41d8cd98f00b204e9800998ecf8427e"
@@ -4602,7 +4853,7 @@
       "checksum": "999d2f620338bbc2a41cf35bb95d4137"
     },
     "Standards/FusionStandards.R": {
-      "checksum": "ea2a84a969bb2eaa17bfd636c555c288"
+      "checksum": "357d467b73637d039f86350976dc5977"
     },
     "Standards/headerStyle/branding.css": {
       "checksum": "af9a064fb5085a2b8679d21250fcdda3"
@@ -4638,7 +4889,7 @@
       "checksum": "56029ed15f3351241e1e9bcf8e474c82"
     },
     "Standards/sdohLink.xlsx": {
-      "checksum": "f8542c575ba6aabe73f994dce6ef81a8"
+      "checksum": "2058f52368c7d44ce1839ebf3dc00cfb"
     },
     "Standards/Tract to Community Linkage.csv": {
       "checksum": "fb6060381903993a3d4ddfdf5e32813d"
@@ -4656,19 +4907,19 @@
       "checksum": "0d8deb22849fe744d91f6b2f8e2fa82a"
     },
     "technical.md": {
-      "checksum": "c6ed7071e9bf29a5398add5b60cf3c5c"
+      "checksum": "9af37c9cb5d26bf5f5fa985ad27d34a5"
     },
     "ui.R": {
-      "checksum": "16d127954cf52ed12183029f534b5bf7"
+      "checksum": "c8b6df90402a96f7b9676baeb7daab25"
     },
     "url_parameters.md": {
-      "checksum": "7357a849793705506d349ae43d5d177a"
+      "checksum": "8f6afa63a9b4d21951a261395e6affad"
     },
     "www/.gitignore": {
       "checksum": "35a3b9ead58df87b3d1d2a441bb4a352"
     },
     "www/bootstrap.css": {
-      "checksum": "b34bb2e05f3be9a735a15c3a847e3cdc"
+      "checksum": "0d3e65a6d0d6b2de5794280922099562"
     },
     "www/CDPH.gif": {
       "checksum": "8fe5320426bd80d1e0f0e2bdbad9e162"
@@ -4855,6 +5106,9 @@
     },
     "www/xMDA/2020_Excess_Mortality.html": {
       "checksum": "a95e4fc8b72dad5fba39fd4ae89c177b"
+    },
+    "www/xMDA/2022_Excess_Mortality_SUPPLEMENT.html": {
+      "checksum": "38c60c0655cdab9068211d38b8068a7a"
     },
     "www/xMDA/backgroundDark_xMDA_old.png": {
       "checksum": "6c8ff2d0cbd2f9e5f0e96d8cb4efe405"

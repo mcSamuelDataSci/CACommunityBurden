@@ -1,3 +1,5 @@
+# note: WE NEED TO APPLY THIS: Life tables were estimated for communities (MSSAs) in counties where at least 95% of deaths could be accurately geocoded to the tract level. 
+
 # 0 Script Documentation ------------------------------------------------------------------------------------------------------------------------------
 
 # Authors: Originally created by Ethan Sharygin (Github: sharygin), revised by Michael Samuel, DrPH and Jaspreet Kang (Fusion Center/Office of Policy and Planning, CDPH)
@@ -119,7 +121,7 @@ range_5year <- 2002:(myYear - 2) # Used for 5-year estimates
 ## 1.3 Set Paths ----------------------------------------------------------
 
 CCB         <- TRUE
-server      <- FALSE
+server      <- TRUE
 myDrive     <- getwd()
 myPlace     <- paste0(myDrive,"/myCCB/") 
 
@@ -146,7 +148,7 @@ fipsCounty <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
 
 ## 2.1 State and County Population -----------------------------------------
 
-nxCounty <- readRDS(paste0(ccbUpstream, "/lifeTables/dataIn/nxCounty.RDS")) # Contains every year(2000-)-county-sex(including total)-race(including total)-ageGroup combination
+nxCounty <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxCounty.RDS")) # Contains every year(2000-)-county-sex(including total)-race(including total)-ageGroup combination
 nxState <-  readRDS(paste0(ccbUpstream, "/lifeTables/dataIn/nxState.RDS")) # Contains every year(2000-)-state-sex(including total)-race(including total)-ageGroup combination
 
 ## 2.2 MSSA Population Data ------------------------------------------------
