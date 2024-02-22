@@ -17,13 +17,15 @@ highColor <- "tomato"
 
 # ------------------------------------------------------------------------------------
 
-disparity <- function(myLHJ="CALIFORNIA",myCause="A",myCompare="lowest rate",myAddN,myAddRR,myAddRate) {
+disparity <- function(myLHJ="CALIFORNIA",myCause="A", myYearGrouping=3, myCompare="lowest rate",myAddN,myAddRR,myAddRate) {
 
 mySmaller <- 0.8   
 myAxisSize <- myAxisSize  * mySmaller
 myTextSize3 <-  myTextSize3 * mySmaller
 myLegendSize <- myLegendSize * mySmaller
 
+# 1 Year (Statewide) or 3-Year (County + Statewide)
+yearGrp3 <- ifelse(myLHJ == "CALIFORNIA" & myYearGrouping == 1, as.character(maxYear), yearGrp3)
 
 #--RACE ------------------------------------------------------------------------------------------------------------------------
 
@@ -40,6 +42,7 @@ fillColor <- c("Lowest" = lowColor, "Sig. Higher (p<.01)" = highColor, "No Diffe
 myMeasureRace <- "aRate"
 
 dat.1 <- filter(raceTest,county == myLHJ,causeCode == myCause, yearG3==yearGrp3, sex == "Total")
+
 dat.1 <- left_join(dat.1,raceLink,by="raceCode")
 
 raceDF <- dat.1 %>%
@@ -67,7 +70,7 @@ racePlot <- ggplot(data=dat.1, aes(x=raceNameShort, y=aRate,fill=pMark)) +
    theme_grey() +   #base_size = myBaseSize
     scale_fill_manual("legend", values = fillColor) +
     geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") + 
-   labs(title="Race/Ethnicity",y = "rate per 100,000 (age-adjusted)") +
+   labs(title="Race/Ethnicity",y = "Rate per 100,000 (Age-Adjusted)") +
       theme(legend.position="bottom",
             legend.spacing.x = unit(10.0, 'points'),  ### EXPLORE THIS for optimal look  - unit(10.0, 'px')
             plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
@@ -128,7 +131,7 @@ agePlot <- ggplot(data=dat.1, aes(x=ageGroup, y= cDeathRate, fill=pMark)) +
    scale_fill_manual("legend", values = fillColor) +
    geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") +
    
-   labs(title = "Age Groups", y = "rate per 100,000 (age-specific)") +
+   labs(title = "Age Groups", y = "Rate per 100,000 (Age-Specific)") +
    
    theme(legend.position="bottom",
          plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
@@ -180,7 +183,7 @@ placeLabels3 <- tMax/20
 
 if (nrow(dat.1)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
 
-myTit <-  "Sex (age-adjusted rate)"
+myTit <-  "Sex (Age-Adjusted Rate)"
 
 sexPlot <- ggplot(data=dat.1, aes(x=sex, y=eval(parse(text=paste0(myMeasureRace))),fill=pMark)) +
    geom_bar(stat="identity") +
@@ -190,7 +193,7 @@ sexPlot <- ggplot(data=dat.1, aes(x=sex, y=eval(parse(text=paste0(myMeasureRace)
    geom_errorbar(aes(ymin=LCI, ymax=UCI), width=.1, size=1, position=position_dodge(.9), color="gray") + 
    labs(y = deathMeasuresNames[deathMeasures == myMeasureRace], x="Sex") +
    
-labs(title = "Sex", y = "rate per 100,000 (age-adjusted)") +
+labs(title = "Sex", y = "Rate per 100,000 (Age-Adjusted)") +
    
    theme(legend.position="bottom",
          plot.title=element_text(family='', face='bold', colour=myTitleColor, size=myTitleSize),
@@ -219,7 +222,7 @@ library(cowplot)
 # https://wilkelab.org/cowplot/articles/plot_grid.html
 
 mainTitle <- ggdraw() + 
-   draw_label(paste0("Disparities in Deaths Rates, ", deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ,", ",yearGrp3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
+   draw_label(paste0("Disparities in Death Rates, ", deathCauseLink$causeName[deathCauseLink$causeCode== myCause]," in ",myLHJ,", ",yearGrp3), colour=myTitleColor, size=myTitleSize,fontface = "bold")
 
 
 topRow <- cowplot::plot_grid(racePlot,sexPlot,rel_widths = c(6,3))

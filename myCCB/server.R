@@ -354,7 +354,7 @@ observeEvent(current$tab,{
 # Trend ----------------------------------------------------------------------------------------------------
 
 observe({
-  if (input$myLHJ == "CALIFORNIA" & current$tab %in% c("ageTrendTab", "raceTrendTab")) shinyjs::show("myYearGrouping_race_age") else shinyjs::hide("myYearGrouping_race_age")
+  if (input$myLHJ == "CALIFORNIA" & current$tab %in% c("ageTrendTab", "raceTrendTab", "disparitiesTab")) shinyjs::show("myYearGrouping_race_age") else shinyjs::hide("myYearGrouping_race_age")
 })
 
 
@@ -780,7 +780,7 @@ The “Leading Primary per Secondary” sheet shows the top primary causes of de
 
 # ---------------------------------------------------------------------------------------------------------
 
-disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
+disparityStep <- reactive(disparity(input$myLHJ, input$myCAUSE, input$myYearGrouping_race_age, input$myCompare, input$myAddN,input$myAddRR,input$myAddRate))
 output$disparityRace  <- renderPlot(disparityStep()$plot)
 
 observeEvent(current$tab,{
