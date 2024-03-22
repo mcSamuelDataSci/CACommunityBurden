@@ -3,6 +3,10 @@ PLOT_WIDTH_MULTIPLIER <- 1
 
 createBurdenView <- function(myIdNum, myCounty, myObserv, decrease = FALSE, myCustomTitle = "") {
   
+  # if (myCounty %in% cityLHJs) {
+  #   stop(cityMessage)
+  # }
+  
   myCountyTitle <- ifelse(myCounty == STATE, STATE, 
                           paste0(myCounty, " County"))
   

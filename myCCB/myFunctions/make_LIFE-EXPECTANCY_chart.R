@@ -8,12 +8,14 @@ geoMap          <- as.data.frame(read_excel(paste0(ccbInfo,"/County Codes to Cou
                      select(FIPSCounty,county=countyName)
 
 lifeTableCounty <- readRDS(paste0(ccbData,"/e0ciCounty.RDS")) %>%
-                     mutate(FIPSCounty=substr(GEOID,3,5))  %>%
-                     left_join(geoMap,by="FIPSCounty") %>%
+  rename(county = GEOID) %>% 
+                     # mutate(FIPSCounty=substr(GEOID,3,5))  %>%
+                     # left_join(geoMap,by="FIPSCounty") %>%
                      mutate(sex = str_to_title(sex))
 
 lifeTableState  <- readRDS(paste0(ccbData,"/e0ciState.RDS")) %>%
-                     mutate(county = "CALIFORNIA") %>%
+  rename(county = GEOID) %>% 
+                     # mutate(county = "CALIFORNIA") %>%
                      mutate(sex = str_to_title(sex))
 
 lifeTableSet   <- bind_rows(lifeTableCounty, lifeTableState) %>%
@@ -27,6 +29,10 @@ lifeTableSet   <- bind_rows(lifeTableCounty, lifeTableState) %>%
   
   
 LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping = 1, barYear = 2020) {
+  
+  if (myLHJ %in% cityLHJs) {
+    stop(cityMessage)
+  }
    
  
 #---BAR PART------------------------------------------------------------------------------------------------------

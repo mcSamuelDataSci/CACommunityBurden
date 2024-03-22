@@ -11,7 +11,7 @@
 
 
 # Load standards ============================================================================
-server <- TRUE
+server <- F
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
@@ -56,9 +56,32 @@ colSums(is.na(datAlamedaLA))
 datAlameda <- datAlamedaLA %>% 
   filter(county == "Alameda")
 
+misspellBerkeley <- datAlameda %>% 
+  filter(grepl("ber", cityText), cityText != "berkeley") %>% 
+  distinct(cityText) %>% 
+  pull()
+
+datAlameda <- datAlameda %>% 
+  mutate(cityText = ifelse(cityText %in% misspellBerkeley, "berkeley", cityText))
+
 datLA <- datAlamedaLA %>% 
   filter(county == "Los Angeles")
 
+misspellLongBeach <- datLA %>% 
+  filter(grepl("long", cityText), cityText != "longbeach") %>%
+  distinct(cityText) %>% 
+  pull()
+  
+datLA <- datLA %>% 
+  mutate(cityText = ifelse(cityText %in% misspellLongBeach, "longbeach", cityText))
+
+misspellPasadena <- datLA %>% 
+  filter(grepl("pas", cityText), !grepl("ru|south|s[.]|so|east|spas|pasadenas", cityText)) %>% 
+  distinct(cityText) %>% 
+  pull()
+
+datLA <- datLA %>% 
+  mutate(cityText = ifelse(cityText %in% misspellPasadena, "pasadena", cityText))
 
 ## Alameda County ==========================================================
 
@@ -89,7 +112,8 @@ datAlameda_city_notCode <- datAlameda %>%
 datAlameda_code_notCity <- datAlameda %>% 
   filter(
     ((cityText != berkeley) & (cityCode == berkeleyCode))
-  )
+  ) %>% 
+  mutate(city_lhj = "Berkeley")
 
 datAlameda_notCode_notCity <- datAlameda %>% 
   filter(
@@ -112,6 +136,7 @@ table(datAlameda_final$city_lhj, useNA = "ifany")
 # 1. If (cityText == "longbeach") & (cityCode == "43000") -> "Long Beach"
 # 2. If (cityText == "longbeach") & (cityCode != "43000") -> "Long Beach"
 #   - 123 cases. All correspond to cityCodes of "00000" or "99999". All seem to be in Long Beach after inspecting residence addresses
+# 3. If (cityText != "longbeach") & (cityCode == "43000") -> NO SUCH CASES
 # 3. If (cityText != "longbeach") & (cityCode == "43000") -> "Los Angeles HD"
 #   - Only 1 case. Does not seem to be in Long Beach
 
@@ -135,7 +160,14 @@ datLALB_code_notCity <- datLA %>%
   filter(
     ((cityText != lb) & (cityCode == lbCode))
   ) %>% 
-  mutate(city_lhj = "Los Angeles HD")
+  mutate(city_lhj = "Long Beach")
+
+# 3. 
+# datLALB_code_notCity <- datLA %>% 
+#   filter(
+#     ((cityText != lb) & (cityCode == lbCode))
+#   ) %>% 
+#   mutate(city_lhj = "Los Angeles HD")
 
 datLALB_final <- bind_rows(datLALB_cityCode, datLALB_city_notCode, datLALB_code_notCity)
 
@@ -170,7 +202,7 @@ datLAPasadena_code_notCity <- datLA %>%
   filter(
     ((cityText != pasadena) & (cityCode == pasadenaCode))
   ) %>% 
-  mutate(city_lhj = "Los Angeles HD")
+  mutate(city_lhj = ifelse(cityText == "raymond", "Los Angeles HD", "Pasadena"))
 
 # Bind rows
 datLAPasadena_final <- bind_rows(datLAPasadena_cityCode, datLAPasadena_city_notCode, datLAPasadena_code_notCity)
@@ -193,14 +225,13 @@ table(datLA_final$city_lhj, useNA = "ifany")
 
 datAlamedaLA_final <- bind_rows(datAlameda_final, datLA_final)
 nrow(datAlamedaLA_final) == nrow(datAlamedaLA)
-length(unique(datAlamedaLA_final$SFN)) == nrow(datAlamedaLA)
 table(datAlamedaLA_final$county, datAlamedaLA_final$city_lhj, useNA = "ifany")
 
 cbdDat0_final <- cbdDat0_00_04 %>% 
   bind_rows(filter(cbdDat0_05, !county %in% lhjCounty)) %>% 
   bind_rows(datAlamedaLA_final)
 nrow(cbdDat0_final) == nrow(cbdDat0)
-length(unique(cbdDat0_final$SFN)) == (nrow(cbdDat0_05) + 1) # 2000-2004 does not have SFNs
+
 
 table(filter(cbdDat0_final, year > 2004)$county, filter(cbdDat0_final, year > 2004)$city_lhj, useNA = "ifany") 
 

@@ -37,6 +37,10 @@ if (1==2) {
 
 
 anyprimary1 <- function(myCounty = "CALIFORNIA",  myPosition = "nPrimary", myN = 10, mySex = "Total"){
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
 
   #   
 # primary_any_NOPREG <- primary_any %>% filter(birth == "FALSE") %>%

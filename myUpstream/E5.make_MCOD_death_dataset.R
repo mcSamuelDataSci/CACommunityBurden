@@ -1,11 +1,11 @@
-server <- T
+server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
 library(readxl)
 library(purrr)
 
-dat <- readRDS("data/mcod_processed_deaths.RDS")
+dat <- readRDS(paste0(securePlace, "myData/mcod_processed_deaths.RDS"))
 
 
 # CHECK -- SHOULD RETURN 0 ROWS
@@ -16,14 +16,14 @@ dat %>%
 # Part 1: Get Ndeaths for each Cause - Primary and Other -----------------------------------------------
 
 primaryNdeaths <- dat %>%
-  count(year, county, sex, causeCode = causeCode_primary, name = "Ndeaths_primary")
+  count(year, county, causeCode = causeCode_primary, name = "Ndeaths_primary")
 
 otherNdeaths_list <- lapply(paste0("causeCode_", 222:240), function(x) {
   
   dat %>%
     mutate(rowN = row_number()) %>%
     rename(causeCode = !!as.symbol(x)) %>%
-    select(rowN, year, county, sex, causeCode) %>% 
+    select(rowN, year, county, causeCode) %>% 
     filter(!is.na(causeCode)) %>% 
     mutate(causeCode = as.character(causeCode))
   
@@ -31,16 +31,43 @@ otherNdeaths_list <- lapply(paste0("causeCode_", 222:240), function(x) {
 
 otherNdeaths <- otherNdeaths_list %>%
   bind_rows() %>%
-  distinct(rowN, year, county, sex, causeCode) %>%
-  count(year, county, sex, causeCode, name = "Ndeaths_other")
+  distinct(rowN, year, county, causeCode) %>%
+  count(year, county, causeCode, name = "Ndeaths_other")
 
 
 primary_other_Ndeaths <- full_join(primaryNdeaths, otherNdeaths) %>%
   replace_na(list(Ndeaths_primary = 0, Ndeaths_other = 0))
 
+# Part 2 - For each secondary cause of death, what were the primary causes? ---------------------------
+
+causeCodes <- deathCauseLink %>% 
+  filter(nchar(causeCode) == 3) %>% 
+  pull(causeCode)
+
+primaryNdeaths_perCause <- lapply(causeCodes, function(x) {
+  
+  tDat <- dat %>% 
+    filter(if_any(starts_with("causeCode_2"), ~. == x))
+  
+  if (nrow(tDat) == 0) {
+    return()
+  } else {
+    tDat %>% 
+      count(year, county, causeCode = causeCode_primary, name = "Ndeaths_primary") %>% 
+      mutate(causeCode_other = x) %>% 
+      group_by(year, county, causeCode_other) %>% 
+      nest(dataPrimary = c(causeCode, Ndeaths_primary)) %>% 
+      rename(causeCode = causeCode_other)
+  } 
+  
+  
+  
+}) %>% 
+  bind_rows()
 
 
-# Part 2 - For each primary cause of death, what were the secondary causes? ---------------------------
+
+# Part 3 - For each primary cause of death, what were the secondary causes? ---------------------------
 
 createDF_otherNdeaths <- function(myData) {
   
@@ -64,7 +91,7 @@ createDF_otherNdeaths <- function(myData) {
 
 startTime <- Sys.time()
 otherNdeaths_perCause <- dat %>%
-  group_by(year, county, sex, causeCode_primary) %>%
+  group_by(year, county, causeCode_primary) %>%
   nest(data = starts_with("causeCode_2")) %>%
   mutate(data = map(data, ~ createDF_otherNdeaths(.x)))
 endTime <- Sys.time()
@@ -72,14 +99,15 @@ endTime - startTime
 # Took 31 minutes to run!!!!
 
 
-save(primary_other_Ndeaths, otherNdeaths_perCause, file = "data/intermediateMCOD_Objects.RData") # Save just in case.....
+save(primary_other_Ndeaths, primaryNdeaths_perCause, otherNdeaths_perCause, file = paste0(securePlace, "myData/intermediateMCOD_Objects.RData")) # Save just in case.....
 
 
 # Checks -------------------------------------------------------------
 nrow(primary_other_Ndeaths) - nrow(otherNdeaths_perCause)
 
 junk <- primary_other_Ndeaths %>%
-  full_join(mutate(select(otherNdeaths_perCause, year, county, sex, causeCode = causeCode_primary), junk = "x")) 
+  full_join(mutate(select(otherNdeaths_perCause, year, county, causeCode = causeCode_primary), junk = "x")) %>% 
+  full_join(mutate(select(primaryNdeaths_perCause, year, county, causeCode), junk1 = "x")) 
 
 colSums(is.na(junk))
 
@@ -87,8 +115,17 @@ colSums(is.na(junk))
 # All groups in primary_other_Ndeaths are in otherNdeaths_perCause
 
 final <- primary_other_Ndeaths %>%
-  full_join(rename(otherNdeaths_perCause, causeCode = causeCode_primary))  %>% # For rows not in otherNdeaths_perCause, it automatically sets the values in the data column (that contains data frames) to NULL 
-  arrange(year, county, sex, causeCode)
+  full_join(rename(otherNdeaths_perCause, causeCode = causeCode_primary))  %>% # For rows not in otherNdeaths_perCause, it automatically sets the values in the data column (that contains data frames) to NULL
+  full_join(primaryNdeaths_perCause) %>% 
+  arrange(year, county, causeCode)
+
+final %>% 
+  filter(Ndeaths_primary == 0) %>% 
+  View()
+
+final %>% 
+  filter(Ndeaths_other == 0) %>% 
+  View()
 
 
-saveRDS(final, "data/datCounty_MCOD.RDS")
+saveRDS(final, paste0(ccbData, "real/datCounty_MCOD.RDS"))

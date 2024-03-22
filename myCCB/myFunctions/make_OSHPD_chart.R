@@ -1,6 +1,10 @@
 #OSHPD Chart 1 = ggplot version
 
 oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myLiveborn = FALSE) {
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
 
   
 if (1==2) {

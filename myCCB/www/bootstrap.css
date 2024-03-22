@@ -6921,7 +6921,6 @@ button.btn.checkbtn.btn-default.active {
 }
 
 
-
 /* State of Public Health Dropdown  */
 
 /* Style The Dropdown Button */
@@ -6972,6 +6971,16 @@ button.btn.checkbtn.btn-default.active {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 #sophDropdown.dropdown:hover .dropbtn {
   background-color: #694D75;
+}
+
+.btnSOPHR {
+  background-color: #694D75;
+  color: white !important;
+  padding: 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 /* --------------------------------------------------- */

@@ -1,0 +1,25 @@
+---
+title: "OPP Life Table Project Documentation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# General CCB LE work
+
+## Process raw data
+
+## Core LT calcuation functions
+
+## Run functions and generate LT output files
+
+
+# HPI tract-level work
+
+## Small area estimation work
+
+## Geocoding work

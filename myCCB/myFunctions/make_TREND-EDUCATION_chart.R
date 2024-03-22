@@ -11,6 +11,10 @@ if(1==2){
 
 
 trendEducation <- function(myLHJ="CALIFORNIA",myCause="A",mySex,myMeasure = "cDeathRate",myLogTrans=FALSE) {
+  
+  if (myLHJ %in% cityLHJs) {
+    stop(cityMessage)
+  }
 
 minYear <- 2012
 

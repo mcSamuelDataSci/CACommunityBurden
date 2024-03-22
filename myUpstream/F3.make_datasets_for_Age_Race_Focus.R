@@ -10,7 +10,7 @@ raceLink <- raceLink %>% distinct(raceCode, raceNameShort)
 
 #==========================================================================================================
 
-popCounty        <- readRDS(paste0(ccbUpstream,"/upData/popCounty.RDS")) %>% ungroup()  
+popCounty        <- readRDS(paste0(ccbUpstream,"/upData/lhj-population-ars.RDS")) %>% ungroup()  
 
 
 popRace3Year     <-  popCounty %>% filter(year %in% yearGrp3_hosp_ed_num, ageGroup == "Total", sex == "Total", raceCode != "Total") %>%

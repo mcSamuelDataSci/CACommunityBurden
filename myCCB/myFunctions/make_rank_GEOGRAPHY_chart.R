@@ -114,6 +114,10 @@
 
 
 rankGeo <- function(myLHJ, myCause="A", myMeasure = "YLL", myYear=2015,mySex="Total", myCI=TRUE,myRefLine=FALSE) {
+  
+  if (myLHJ %in% cityLHJs) {
+    stop(cityMessage)
+  }
 
 
   if (1==2){

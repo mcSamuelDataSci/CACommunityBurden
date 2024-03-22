@@ -9,9 +9,9 @@ server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
-myDrive  <- "f:"                            
-myPlace  <- paste0(myDrive,"/0.CBD/myCBD")  
-upPlace  <- paste0(myDrive,"/0.CBD/myUpstream")  
+myDrive  <- ifelse(server, "/mnt/projects/FusionData", "g:/FusionData")
+myPlace  <- paste0(myDrive,"/0.CCB/myCCB")  
+upPlace  <- paste0(myDrive,"/0.CCB/myUpstream")  
 
 library(tigris)     # Other geographies: block_groups, blocks, counties, county_subdivisions, places, pumas, school_districts, states, zctas
 library(dplyr)
@@ -50,10 +50,10 @@ bad <- c("06081990100","06001990000","06037137000","06075980401")
 
 # -- Read, process, and write CA Tract File -------------------------------------------------------------------------------
 
-options(tigris_class = "sf")  # Read shape files as Simiple Features objects
+options(tigris_class = "sf")  # Read shape files as Simile Features objects
 
 
-#shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundry tiger files from Census
+#shape_Tract  <- tracts(state = "CA", cb = TRUE)  # 8043 tracts  # Obtain tracts boundary tiger files from Census
 #                                                 # now 8041!!
 
 

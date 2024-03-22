@@ -1,4 +1,9 @@
 make_demoPop_Pyramid <- function(myCounty, myYear) {
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
+  
   # print(myYear)
   roundUpNice <- function(x, nice=c(1:10)) {
     if(length(x) != 1) stop("'x' must be of length 1")
@@ -51,6 +56,10 @@ make_demoPop_Pyramid <- function(myCounty, myYear) {
 # Pie chart - Race Pop
 
 make_demoPop_RacePie <- function(myCounty, myYear) {
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
   
   tDat <- filter(popData_RacePie, county == myCounty, year == myYear) 
   
@@ -106,6 +115,10 @@ make_demoPop_RacePie <- function(myCounty, myYear) {
 # Race Age Pop
 
 make_demoPop_RaceAge <- function(myCounty, myYear) {
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
   
   plotTitle <- ifelse(myCounty == "CALIFORNIA", 
                       paste0("Population by Race/Ethnicity & Age Group \nin ", myCounty, ", ", myYear), 
@@ -165,6 +178,10 @@ make_demoPop_RaceAge <- function(myCounty, myYear) {
 
 # Trends function
 make_demoPop_trend <- function(myCounty, trendType = "Total") {
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
   
   
   if (myCounty == "CALIFORNIA") plotTitle <- paste0(trendType, " Population Trend \nin ", myCounty)

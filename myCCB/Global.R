@@ -259,7 +259,8 @@ news_and_updates <- paste('\n<li>Welcome to the CCB! App updates are listed belo
 
 # WARNING MESSAGES
 multiRaceWarning <- "** Note: Multirace data are NOT RELIABLE due to changing data collection practices"
-
+cityMessage <- "These data are not yet available for Local Health Department city jurisdictions of Berkeley, Long Beach, Pasadena and their corresponding county Local Health Departments of Alameda HD and Los Angeles HD."
+cityLHJs <- c("Alameda HD", "Berkeley", "Los Angeles HD", "Long Beach", "Pasadena")
 
 # - 7. CREATE VECTORS FOR SHINY INPUTS -------------------------------------------------------------------------------------------------------------
 

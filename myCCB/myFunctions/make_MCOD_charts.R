@@ -1,6 +1,5 @@
 if (FALSE) {
   myCounty <- "Alameda"
-  mySex <- "Total"
   myYear <- 2021
   mySort <- "Ndeaths_primary"
   mySort <- "Ndeaths_other"
@@ -16,6 +15,10 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
                         mySort, 
                         topN = 15, 
                         myCause) {
+  
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
   
   if (grepl("Ndeaths", mySort)) { measureCol1 <- "Ndeaths_primary"; measureCol2 <- "Ndeaths_other"; titleX <- "Number of Deaths" }
   if (mySort %in% c("pPrimary", "pOther")) { measureCol1 <- "pPrimary"; measureCol2 <- "pOther"; titleX <- "Percent"}
@@ -44,7 +47,7 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
   
   
   tDat_download <- datCounty_mcod %>%
-    filter(year == myYear, county == myCounty, sex == "Total") 
+    filter(year == myYear, county == myCounty) 
   
   if (mySort %in% c("pPrimary", "pOther")) {
     tDat_download <- tDat_download %>% arrange(-!!as.symbol(mySort), desc(Ndeaths_total))
@@ -114,12 +117,16 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
                           myCause = "C01", 
                           leadingPrimary = TRUE) {
   
+  if (myCounty %in% cityLHJs) {
+    stop(cityMessage)
+  }
+  
   # CauseNameShort
   myCauseNameShort <- deathCauseLink %>% filter(causeCode == myCause) %>% pull(causeNameShort)
   titleCounty <- ifelse(myCounty == "CALIFORNIA", myCounty, paste(myCounty, "County"))
   
   tDat <- datCounty_mcod %>% 
-    filter(sex == "Total", year == myYear, county == myCounty, causeCode == myCause)
+    filter(year == myYear, county == myCounty, causeCode == myCause)
   
   # Error messages
   if (leadingPrimary) {

@@ -58,7 +58,7 @@
 # 6. Save data 
 # 7. Data quality checks
 
-
+# Update 2/21/2024: Added Berkeley, Pasadena, Long Beach, Alameda HD, Los Angeles HD
 
 # Ethan's Notes:
 # - 'nx' and 'dx' are standard notations used in LE literature, and refers to population and death respectively
@@ -121,7 +121,7 @@ range_5year <- 2002:(myYear - 2) # Used for 5-year estimates
 ## 1.3 Set Paths ----------------------------------------------------------
 
 CCB         <- TRUE
-server      <- TRUE
+server      <- F
 myDrive     <- getwd()
 myPlace     <- paste0(myDrive,"/myCCB/") 
 
@@ -226,8 +226,15 @@ dxMSSA <- dx %>%
 ageLowerLimit <- c(0, 1, seq(5, 85, by = 5))
 ageUpperLimit <- c(0, seq(4, 84, by = 5), 199)
 
+dxCities <- dx %>% 
+  filter(city_lhj %in% c("Berkeley", "Alameda HD", "Long Beach", "Pasadena", "Los Angeles HD")) %>% 
+  mutate(county = city_lhj)
+
+dx <- bind_rows(dx, dxCities)
+
 dxCounty <- dx %>%
   filter(!is.na(age), !is.na(year)) %>% # Remove missing age, year
+  select(-GEOID) %>% 
   mutate(agell = ageChop(INAGE = age, # Using standard age chop function to create age lower limits
                          myCuts = TRUE,
                          my_lAge = ageLowerLimit,
@@ -240,23 +247,28 @@ dxCounty <- dx %>%
                          my_uAge = ageUpperLimit,
                          my_ageName = ageUpperLimit, 
                          ourServer = server)) %>% 
-  left_join(fipsCounty, by = "county") %>% # Bring in county fips code
-  mutate(GEOID = sprintf("%05d000000", FIPSCounty)) %>% # Overwrite GEOID column to only include county fips
+  # left_join(fipsCounty, by = "county") %>% # Bring in county fips code
+  # mutate(GEOID = sprintf("%05d000000", FIPSCounty)) %>% # Overwrite GEOID column to only include county fips
   bind_rows(mutate(., sex = "Total")) %>% # Add total sex to data frame
   bind_rows(mutate(., raceCode = "Total")) %>% # Add total race to data frame
-  group_by(year,GEOID,sex, raceCode, agell,ageul) %>%
+  group_by(year,GEOID = county,sex, raceCode, agell,ageul) %>%
   summarise(Dx = n()) %>% 
   ungroup() %>% 
   filter(sex %in% c("Female", "Male", "Total"), !raceCode %in% c("Other", "Unknown")) # Remove Unknown/missing sex, unknown/other/missing race
 
 ### 3.2.3 State-level --------------
 
+
+
 dxState <- dxCounty %>%
+  filter(GEOID %in% c(NA, fipsCounty$county)) %>% 
   group_by(year, sex, raceCode, agell,ageul) %>%
   summarise(Dx = sum(Dx)) %>%
-  mutate(GEOID = "06000000000")
+  mutate(GEOID = "CALIFORNIA")
 
-dxCounty <- dxCounty %>% filter(!is.na(GEOID), !grepl("NA", GEOID)) # Remove missing counties from county-level death data frame
+dxCounty <- dxCounty %>% filter(!is.na(GEOID) 
+                                #!grepl("NA", GEOID)
+                                ) # Remove missing counties from county-level death data frame
 
 
 # 4 Merge Population and Death data frames -------------------------------------------------------------------------------------------------------------------------------------------
@@ -366,15 +378,17 @@ dqCheck <- mxState %>%
   mutate(rate = 100000*Dx/Nx) %>% 
   full_join(
     dx %>% 
-      filter(!is.na(age)) %>% 
+      select(-GEOID) %>% 
+      rename(GEOID = county) %>% 
+      filter(!is.na(age), GEOID %in% c(NA, fipsCounty$county)) %>% 
       count(year, name = "Dx1") %>% 
       full_join (
         nxCounty %>% 
-          filter(sex == "Total", raceCode == "Total") %>% 
+          filter(sex == "Total", raceCode == "Total", GEOID %in% fipsCounty$county) %>% 
           group_by(year) %>% 
           summarise(Nx1 = sum(Nx))
       ) %>% 
-      mutate(rate1 = 1000000*Dx1/Nx1)
+      mutate(rate1 = 100000*Dx1/Nx1)
   ) %>% 
   mutate(eqDx = Dx == Dx1, 
          eqNx = Nx == Nx1, 
@@ -492,6 +506,13 @@ calcLT <- function(myData, groupByCols = c("GEOID", "year", "nyrs", "sex", "race
     ) %>% 
     unnest(data) %>% 
     ungroup()
+}
+
+# Save Data
+if (F) {
+  saveRDS(mxMSSA, paste0(ccbUpstream, "lifeTables/dataMid/mxMSSA.RDS"))
+  saveRDS(mxCounty, paste0(ccbUpstream, "lifeTables/dataMid/mxCounty.RDS"))
+  saveRDS(mxState, paste0(ccbUpstream, "lifeTables/dataMid/mxState.RDS"))
 }
 
 ## 5.3 Calculate life expectancy ----------------------------------------

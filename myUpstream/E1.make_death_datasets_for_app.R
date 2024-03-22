@@ -258,16 +258,16 @@ popStandard         <- ageMap    %>% mutate(ageGroup = ageLabel)
 popStandard_EDU     <- ageMap_EDU  %>% mutate(ageG_EDU = ageLabel)
 
 
-# Pop 65
-popCounty65        <- readRDS(path(ccbUpstream,"upData/popCounty65.RDS")) %>% ungroup() 
-popCountySex65     <- filter(popCounty65,ageGroup == "Total", raceCode == "Total") %>% select(-ageGroup, -raceCode) # no need for ageGroup
-popCountySexAgeG65 <- filter(popCounty65,ageGroup != "Total", raceCode == "Total") %>% select(-raceCode)
-
-popCountyRACE65_3year        <- readRDS(path(ccbUpstream,"upData/popCounty65_RE_3year.RDS")) %>% ungroup() 
-popCountySexRACE65_3year     <- filter(popCountyRACE65_3year,ageGroup == "Total")
-popCountySexAgeGRACE65_3year <- filter(popCountyRACE65_3year,ageGroup != "Total")
-
-popStandard65         <- ageMap    %>% mutate(ageGroup = paste0(lAge," - ",uAge))  %>% filter(lAge < 65)
+# Pop 65 - No longer generated
+# popCounty65        <- readRDS(path(ccbUpstream,"upData/popCounty65.RDS")) %>% ungroup() 
+# popCountySex65     <- filter(popCounty65,ageGroup == "Total", raceCode == "Total") %>% select(-ageGroup, -raceCode) # no need for ageGroup
+# popCountySexAgeG65 <- filter(popCounty65,ageGroup != "Total", raceCode == "Total") %>% select(-raceCode)
+# 
+# popCountyRACE65_3year        <- readRDS(path(ccbUpstream,"upData/popCounty65_RE_3year.RDS")) %>% ungroup() 
+# popCountySexRACE65_3year     <- filter(popCountyRACE65_3year,ageGroup == "Total")
+# popCountySexAgeGRACE65_3year <- filter(popCountyRACE65_3year,ageGroup != "Total")
+# 
+# popStandard65         <- ageMap    %>% mutate(ageGroup = paste0(lAge," - ",uAge))  %>% filter(lAge < 65)
 
 
 
@@ -416,6 +416,13 @@ cbdDat0 %>%
   filter(n > 1) %>% 
   pull(SFN) 
 
+#Investigate any duplicate SFNs
+if (F) {
+  cbdDat0 %>% 
+    filter(sex == "Total", !year %in% 2000:2004) %>% 
+    filter(SFN == "3112021081573") %>% 
+    View()
+}
 
 table(cbdDat0$icdCODE,useNA = "ifany")
 cbdDat0$icdCODE[cbdDat0$ICD10 %in% c("","000","0000")] <- "cZ02"  # >3500 records have no ICD10 code -- label them as cZ for now
@@ -533,23 +540,23 @@ ageadjust.direct.SAM <- function (count, population, rate = NULL, stdpop, conf.l
 
 # -- COUNTY -------------------------------------------------------------------
 
-c.t1      <- calculateYLLmeasures(c("county","year","sex","lev0"),"lev0")
-c.t2      <- calculateYLLmeasures(c("county","year","sex","lev1"),"lev1")
-c.t3      <- calculateYLLmeasures(c("county","year","sex","lev2"),"lev2")
-c.t4      <- calculateYLLmeasures(c("county","year","sex","lev3"),"lev3")
+c.t1      <- calculateYLLmeasures(c("county","year","sex", "lev0"),"lev0")
+c.t2      <- calculateYLLmeasures(c("county","year","sex", "lev1"),"lev1")
+c.t3      <- calculateYLLmeasures(c("county","year","sex", "lev2"),"lev2")
+c.t4      <- calculateYLLmeasures(c("county","year","sex", "lev3"),"lev3")
 datCounty <- bind_rows(c.t1,c.t2,c.t3,c.t4)
 
-s.t1      <- calculateYLLmeasures(c(         "year","sex","lev0"),"lev0")
-s.t2      <- calculateYLLmeasures(c(         "year","sex","lev1"),"lev1")
-s.t3      <- calculateYLLmeasures(c(         "year","sex","lev2"),"lev2")
-s.t4      <- calculateYLLmeasures(c(         "year","sex","lev3"),"lev3")
+s.t1      <- calculateYLLmeasures(c(         "year","sex", "lev0"),"lev0")
+s.t2      <- calculateYLLmeasures(c(         "year","sex", "lev1"),"lev1")
+s.t3      <- calculateYLLmeasures(c(         "year","sex", "lev2"),"lev2")
+s.t4      <- calculateYLLmeasures(c(         "year","sex", "lev3"),"lev3")
 datState  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
 datState$county = STATE
 
-l.t1      <- calculateYLLmeasures(c("city_lhj", "year","sex","lev0"),"lev0")
-l.t2      <- calculateYLLmeasures(c("city_lhj", "year","sex","lev1"),"lev1")
-l.t3      <- calculateYLLmeasures(c("city_lhj", "year","sex","lev2"),"lev2")
-l.t4      <- calculateYLLmeasures(c("city_lhj", "year","sex","lev3"),"lev3")
+l.t1      <- calculateYLLmeasures(c("city_lhj", "year","sex", "lev0"),"lev0")
+l.t2      <- calculateYLLmeasures(c("city_lhj", "year","sex", "lev1"),"lev1")
+l.t3      <- calculateYLLmeasures(c("city_lhj", "year","sex", "lev2"),"lev2")
+l.t4      <- calculateYLLmeasures(c("city_lhj", "year","sex", "lev3"),"lev3")
 datCityLHJ  <- bind_rows(l.t1,l.t2,l.t3,l.t4) %>% 
   filter(!is.na(city_lhj)) %>% 
   rename(county = city_lhj)

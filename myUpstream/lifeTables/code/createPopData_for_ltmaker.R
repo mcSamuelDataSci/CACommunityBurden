@@ -34,13 +34,11 @@
 # Notes:
 # - State and county population data are from the California Department Department of Finance (DOF). 
 #   - 2000-2009 data are California and Counties Population by Age, Race/Hispanics, and Gender: 2000-2010 - https://dof.ca.gov/forecasting/Demographics/estimates/
-#   - 2010- data are Complete State and County Projections (Table P-3) - https://dof.ca.gov/forecasting/demographics/Projections/
+#   - 2010-2019 data are Complete State and County Projections (Table P-3) - https://dof.ca.gov/forecasting/demographics/Projections/
 # - MSSA population data are aggregations of Census Tract pop data pulled from ACS 5-year surveys, using Table B01001 - https://data.census.gov/cedsci/table?q=b01001&tid=ACSDT5Y2019.B01001
 #   - Medical Service Study Areas (MSSAs) is a unique California geographic designation based on aggregation of census tracts, constructed by the California Health Care Access and Information (HCAI)
 #   - There are 542 MSSAs in California
 #   - 2010 Census Tract boundaries are used for all years; Therefore, 2019 ACS 5-Year estimates are used for 2020-
-
-
 
 # 1 Setup -----------------------------------------------------------------------------------------------------------------------------------
 
@@ -56,7 +54,6 @@ myYear <- 2022
 
 ## 1.3 Set paths, source standards, read in linkage file -------------
 
-CCB         <- TRUE
 server      <- FALSE
 myDrive     <- getwd()
 myPlace     <- paste0(myDrive,"/myCCB/") 
@@ -67,65 +64,34 @@ countyLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
   select(countyName, FIPSCounty) %>%
   mutate(fips = as.numeric(paste0("6", FIPSCounty)))
 
-
 # 2 Read in and process state, county population data ------------------------------------------------------
 
 ## 2.1 Read in 2000- DOF's county-level population data -----------------
 
-dofData <- readRDS(paste0(fusionPlace, "Population Data/dof_pop_2000plus.RDS")) %>% # File created further upstream
-  select(-county) # Data file has county fips, so county names are not needed here
+dofData <- readRDS(paste0(ccbUpstream, "upData/lhj-population-ars-le.RDS"))
 
+## 2.2 Process state, county-level population 
 
-## 2.2 Process state, county-level population by passing through standard custom populationExtract function ----------
-
-
-# Add comments about the function (JASPO - CLEAN UP POP EXTRACT)
-source(paste0(standardsPlace,"populationExtract.R"))
-
-# - Grabbing county + California
-# - Grabbing race (using raceCode naming standard) + Total
-# - Grabbing sex + Total
-# - Using life expectancy age groups which can be found in ageLink.xlsx + grabbing Total (which will be filtered out)
-# - Grabbing years 2000-myYear
-popCounty <- populationExtract(County = T, 
-                               Race   = T,
-                               Sex    = T, 
-                               Age    = T,
-                               Year      = 2000:myYear,
-                               ageGroups = "ageLE", 
-                               ageLabels,
-                               raceLabel = "raceCode", 
-                               CA    = T, 
-                               Total = T,
-                               multiYear = F, 
-                               popData = dofData, 
-                               server = server)
-
-# Further processing
-popCounty1 <- popCounty %>%
-  ungroup() %>%
-  filter(ageGroup != "Total") %>%
-  left_join(countyLink, by = c("county" = "countyName")) %>%
-  mutate(GEOID = ifelse(county == "CALIFORNIA", "06000000000", 
-                        paste0("0", fips, "000000")), 
-         agell = as.integer(sub("\\-.*", "", ageGroup)), 
-         ageul = as.integer(sub(".*-", "", ageGroup))) %>%
-  select(GEOID, year, sex, raceCode, agell, ageul, Nx = population)
+popCounty <- dofData %>% 
+  ungroup() %>% 
+  filter(ageGroup != "Total", year %in% 2000:myYear) %>% 
+  mutate(agell = as.integer(sub("\\-.*", "", ageGroup)), 
+         ageul = as.integer(sub(".*-", "", ageGroup))) %>% 
+  select(GEOID = county, year, sex, raceCode, agell, ageul, Nx = population)
 
 ## 2.3 Finalize county-level population data ------------
-nxCounty <- popCounty1 %>%
-  filter(GEOID != "06000000000") 
+nxCounty <- popCounty %>%
+  filter(GEOID != "CALIFORNIA") 
 
 # Data Quality check: Ensure all combinations exist
 
-dqCheck <- c(table(nxCounty$year, nxCounty$sex, nxCounty$agell, nxCounty$raceCode) == 58)
+dqCheck <- c(table(nxCounty$year, nxCounty$sex, nxCounty$agell, nxCounty$raceCode) == 63)
 
-print(paste0("Data Quality Check: There are population data for all 58 counties per year-sex-ageGroup-race combination: ", all(dqCheck)))
+print(paste0("Data Quality Check: There are population data for all 63 LHJs per year-sex-ageGroup-race combination: ", all(dqCheck)))
 
 ## 2.4 Finalize state-level population data ---------------
-nxState <- popCounty1 %>%
-  filter(GEOID == "06000000000") 
-
+nxState <- popCounty %>%
+  filter(GEOID == "CALIFORNIA") 
 
 # 3 Read in and process MSSA population data ------------------------------------------------------
 
@@ -138,17 +104,20 @@ nxState <- popCounty1 %>%
 
 nxMSSA <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))
 
+isRecentYear <- max(nxMSSA$year) == myYear
+
 # Uses last year's pop estimates for current year
-t_nxMSSA <- nxMSSA %>%
-  filter(year == (myYear - 1)) %>%
-  mutate(year = myYear)
-
-# Bind current year to nxMSSA
-nxMSSA_final <- bind_rows(nxMSSA, t_nxMSSA)
-
+if (!isRecentYear) {
+  t_nxMSSA <- nxMSSA %>%
+    filter(year == (myYear - 1)) %>%
+    mutate(year = myYear)
+  
+  # Bind current year to nxMSSA
+  nxMSSA <- bind_rows(nxMSSA, t_nxMSSA)
+}
 
 # Checks
-unique(nxMSSA_final$year)
+unique(nxMSSA$year)
 unique(nxCounty$year)
 unique(nxState$year)
 
@@ -175,4 +144,4 @@ all.equal(checkState, checkState2)
 
 saveRDS(nxCounty, paste0(ccbUpstream, "lifeTables/dataIn/nxCounty.RDS"))
 saveRDS(nxState, paste0(ccbUpstream, "lifeTables/dataIn/nxState.RDS"))
-saveRDS(nxMSSA_final, paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))
+saveRDS(nxMSSA, paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))

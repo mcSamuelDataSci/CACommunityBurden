@@ -294,6 +294,7 @@ shinyUI(
                            HTML("<div id='sophDropdown' class='dropdown'>
                              <button class='dropbtn'>STATE OF PUBLIC HEALTH<br/>UPDATES</button>
                              <div id = 'sophDropdownContent' class='dropdown-content'>
+                               <a href='https://www.cdph.ca.gov/Programs/OPP/Pages/State-of-Public-Health-Report.aspx' target = '_blank' rel = 'noopener noreferrer'>2024 California State of Public Health Report</a>
                                <a href='SOPH/2023/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2023 Full Update</a>
                                <a href='SOPH/2022/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2022 Full Update</a>
                                <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Full Update</a>

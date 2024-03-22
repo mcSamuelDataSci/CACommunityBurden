@@ -2,6 +2,10 @@
 cbdMap <- function(myLHJ     = "Alameda", myCause     = "A01",   myMeasure = "YLLper",       myYear = 2015,
                     mySex     = "Total",   myStateCut  = TRUE,  myGeo     = "Community", 
                     myLabName = FALSE,     myCutSystem ="fisher") {
+  
+  if (myLHJ %in% cityLHJs) {
+    stop(cityMessage)
+  }
 
   
   if (1==2){

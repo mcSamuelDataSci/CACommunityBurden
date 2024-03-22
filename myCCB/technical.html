@@ -165,6 +165,8 @@ pre code {
 
 
 <p><strong>TECHNICAL DOCUMENTATION</strong></p>
+<hr>
+<p><strong>Table of Contents</strong></p>
 <ul>
 <li><a href="#notes">Notes</a>
 <ul>
@@ -208,8 +210,11 @@ pre code {
 </li>
 <li><a href="#icd-10-cm-grouping">Grouping of ICD-10-CM Codes</a><br />
 </li>
-<li><a href="#modifications-icd-10-cm">Modifications to Specific Conditions</a><br />
-</li>
+<li><a href="#modifications-icd-10-cm">Modifications to Specific Conditions</a>
+<ul>
+<li><a href="#drug-overdose-hosp">Drug Overdose</a></li>
+<li><a href="#alcohol-related-hosp">Alcohol-related Conditions</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#geography-issues">Geography/GIS (State, County, Census Tract) Issues</a>
 <ul>
@@ -231,7 +236,8 @@ pre code {
 <li><a href="#life-expectancy">Life Expectancy</a></li>
 </ul></li>
 </ul>
-<p><br></p>
+<br>
+<hr>
 <p><strong>Notes</strong> <a id="notes"></a></p>
 <ul>
 <li>Note Regarding Data De-Identification: <a id="note-data-deidentification"></a>
@@ -487,7 +493,7 @@ pre code {
 <ul>
 <li>Elevating “Congestive Health Failure” from “Other Cardiovascular disease” to a unique condition within the “Cardiovascular Disease” group</li>
 <li>Eliminating the “Respiratory infections” category, with its two subcategories of “Lower respiratory infections” and “Upper respiratory infections”; in favor of the unique conditions of “influenza”, “Pneumonia”, and, as of 2020, “COVID-19”, with the very few remaining respiratory infections included in the catch-all “Other Infectious Diseases/Nutritional Deficiencies” condition.</li>
-<li><a id="alzheimers"></a>In order to distinguish between deaths caused by the “Public Health Level” condition “Alzheimer’s disease and other dementias”, after consulting with clinicians and referencing <a href="https://pubmed.ncbi.nlm.nih.gov/31112120/">a research paper</a>, we have created the following “Detail Level” subgroups:
+<li><a id="alzheimers"></a>In order to distinguish between deaths caused by the “Public Health Level” condition “<strong>Alzheimer’s disease and other dementias</strong>”, after consulting with clinicians and referencing <a href="https://pubmed.ncbi.nlm.nih.gov/31112120/">a research paper</a>, we have created the following “Detail Level” subgroups:
 <ul>
 <li>Alzheimer’s
 <ul>
@@ -514,7 +520,7 @@ pre code {
 </ul></li>
 <li>Note: Frontotemporal Dementia (G31.0) is not included as a “Detailed Level” group, because there are few deaths from this cause, but is included in the total “Public Health Level” condition “Alzheimer’s disease and other dementias”</li>
 </ul></li>
-<li><a id="drug-overdose"></a>In order to make drug- and poisoning-related conditions in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on discussion with the CDPH Substance and Addition Prevention Branch (SAPB) and on the CDC <a href="https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf">“Consensus Recommendations for National and State Poisoning Surveillance – ISW7 2012”</a>.
+<li><a id="drug-overdose"></a>In order to make <strong>drug- and poisoning-related conditions</strong> in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on discussion with the CDPH Substance and Addition Prevention Branch (SAPB) and on the CDC <a href="https://cdn.ymaws.com/www.cste.org/resource/resmgr/injury/isw7.pdf">“Consensus Recommendations for National and State Poisoning Surveillance – ISW7 2012”</a>.
 <ul>
 <li>The “Drug overdose (poisoning/substance use disorders)” condition includes “accidental poisonings by drugs” codes (X40-X44) <strong>and</strong> “substance use disorder codes” (F11-F16, F18, F19), but not alcohol use disorder (F10) which is included in the separate detailed level “Alcohol use disorders” condition. This conditions also includes “newborn (suspected to be) affected by maternal use of drugs of addiction” (P044).</li>
 <li>“Drug overdose (poisoning/substance use disorders)” <strong>does not include</strong>:
@@ -525,7 +531,7 @@ pre code {
 </ul></li>
 <li>The separate “Poisonings (non-drug)” conditions includes poisoning with non-drug-related substances (X46-X49).</li>
 </ul></li>
-<li><a id="alcohol-related"></a>In order to make alcohol-related conditions in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on discussion with the CDPH Injury and Violence Prevention Branch (IVPB) and on the CDC <a href="https://www.cdc.gov/alcohol/ardi/alcohol-related-icd-codes.html">Alcohol-Related Disease Impact (ARDI)</a> ICD-10 codes (using 100% Alcohol-attributable code only).
+<li><a id="alcohol-related"></a>In order to make <strong>alcohol-related conditions</strong> in the CCB as meaningful as possible for public health, and to maintain the condition list as mutually exclusive and exhaustive, we have modified these conditions from WHO and IHME standards based on discussion with the CDPH Injury and Violence Prevention Branch (IVPB) and on the CDC <a href="https://www.cdc.gov/alcohol/ardi/alcohol-related-icd-codes.html">Alcohol-Related Disease Impact (ARDI)</a> ICD-10 codes (using 100% Alcohol-attributable code only).
 <ul>
 <li><p>“Alcohol-related conditions” is under the broad “Injury” condition group, and includes alcoholic liver disease codes, Alcoholic psychosis, Alcohol abuse, Alcohol dependence syndrome, Alcohol poisoning, and a number of other infrequent conditions included in the list below.</p></li>
 <li><p>Because the majority of alcohol-related deaths are due to “alcoholic liver disease”, and because of the utility of looking at “alcoholic liver disease” in relation to other liver disease deaths, there are two detail level causes listed under Alcohol-related deaths:</p>
@@ -632,8 +638,9 @@ pre code {
 <ul>
 <li>The CSS list was then modified for several conditions, with input from CDPH subject matter experts, to make the conditions more consistent with California public health programmatic areas and/or priority or emerging public health conditions. Modifications include:
 <ul>
-<li><p>In order to make drug overdose ED visits and hospitalizations in the CCB as meaningful as possible for public health, we used the definition of “All Drugs” ED visits and hospitalizations from the <a href="https://skylab.cdph.ca.gov/ODdash/?tab=Home">California Overdose Surveillance Dashboard</a> as a starting point, and made some modifications to it, based on careful review and on the CCB need for the condition list to be mutually exclusive and exhaustive.</p></li>
-<li><p>As with the California Overdose Surveillance Dashboard:</p>
+<li><a id="drug-overdose-hosp"></a>In order to make <strong>drug overdose</strong> ED visits and hospitalizations in the CCB as meaningful as possible for public health, we used the definition of “All Drugs” ED visits and hospitalizations from the <a href="https://skylab.cdph.ca.gov/ODdash/?tab=Home">California Overdose Surveillance Dashboard</a> as a starting point, and made some modifications to it, based on careful review and on the CCB need for the condition list to be mutually exclusive and exhaustive.
+<ul>
+<li>As with the California Overdose Surveillance Dashboard:
 <ul>
 <li>Accidental- and undetermined-intent drug poisoning are included in “Drug overdose”.<br />
 </li>
@@ -643,9 +650,11 @@ pre code {
 <li>Intentional self-harm and assault are not included in “Drug overdose”. They are included in “Suicide and intentional self-inflicted injury” and “Assault by drug”, respectively.</li>
 </ul></li>
 </ul></li>
-<li><p>Starting from the CCS system, we expanded the definition of alcohol-related disorders based on CDC <a href="https://www.cdc.gov/alcohol/ardi/alcohol-related-icd-codes.html">Alcohol-Related Disease Impact (ARDI)</a> ICD-10-CM codes (100% alcohol-attributable chronic causes) to map alcohol-related disorders ED visits and hospitalizations.<br />
-</p></li>
-<li><p>The table below shows the full list of causes and their corresponding ICD-10-CM codes that make up “alcohol-related disorders”.</p>
+</ul></li>
+<li><a id="alcohol-related-hosp"></a>Starting from the CCS system, we expanded the definition of <strong>alcohol-related disorders</strong> based on CDC <a href="https://www.cdc.gov/alcohol/ardi/alcohol-related-icd-codes.html">Alcohol-Related Disease Impact (ARDI)</a> ICD-10-CM codes (100% alcohol-attributable chronic causes) to map alcohol-related disorders ED visits and hospitalizations.
+<ul>
+<li>The table below shows the full list of causes and their corresponding ICD-10-CM codes that make up “alcohol-related disorders”.</li>
+</ul>
 <table>
 <thead>
 <tr class="header">

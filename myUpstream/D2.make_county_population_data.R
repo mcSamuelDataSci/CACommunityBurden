@@ -1,199 +1,425 @@
-# ====================================================================================================
-# "countyPopulationProcessor.R" file                                                                 |
-#                                                                                                    |
-#            Subsets and processes data, and saves as County by year total population file           |
-#            Adds stratification by age group, and saves another file (for age adjustment)           |
-#            Generates total 2015 CA pop by age to use as "Standard Population" for age adjustment   |
-#                                                                                                    |
-#                                                                                                    |   
-# ====================================================================================================
+# Documentation ===========================================================================================
 
-# -- Set most recent year --------------------------------------------------------------------------------------------------------------
+# Author: Jaspreet Kang
+# Date: 01/26/2024
 
-myYear <- 2023
-isRecent_multiYear <- T # T if using recent multi-year groups; F if not
+# About:
+# New script for creating state level, county level, city lhj level, and health department level age-race-sex population denominator data
 
-# -- Set locations and load packages ---------------------------------------------------------------------------------------------------
+# Steps:
+# 1. Read in and process DOF P3 2000-2009 data and 2010-2060 data (pre-Decennial 2020 file release July 2021)
+# 2. Extract City and County age-race-sex population data from Decennial 2000, 2010, and 2020.
+# 3. Get Census City ARS Strata Proportion:
+#   - Census City ARS Strata Proportion = (Census City ARS Strata Population) / (Census County ARS Strata Population)
+# 4. Calculate City ARS Strata Population 
+#   - City ARS Strata Population = (Census City ARS Strata Proportion) * (DOF P3 County ARS Strata Population)
+# 5. Calculate Health Department ARS Strata Population
+#   - Health Department ARS Strata Population = (DOF P3 County ARS Strata Population) - (City ARS Strata Population)
 
+# Notes:
+# State level = California
+# County level = 58 California counties
+# City LHJ level = Berkeley, Long Beach, Pasadena
+# Health Department level = Alameda HD, Los Angeles HD
+# Census has R/E group 'Other' whereas DOF does not. 'Other' is combined with 'White'
+
+# Global constants ==================================================================================
+recentYear <- 2023 
+useRecentDOF <- T # TRUE to use DOF's recent P3 informed by Decennial 2023 for 2020+ denominators; FALSE to use DOF P3 pre-decennial for 2020+ denominators
+
+# Load standards ====================================================================================
 server <- F
-# CCB <- F
-
-if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (!server) source("G:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+
+# Set paths ===================================================================================
+popPlace <- paste0(fusionPlace, "Population Data/")
+
+## linkage files =================================================================================
+countyLink1 <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>% 
+  select(countyName, CountyCode=cdphcaCountyTxt,FIPSCounty)%>%
+  mutate(fips = as.numeric(paste0("6", FIPSCounty))) %>% 
+  select(-FIPSCounty)
+
+countyLink2 <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>% 
+  select(county = countyName, fips = FIPSCounty) %>% 
+  mutate(fips = as.numeric(paste0("6", fips)))
+
+ageLink <- read_xlsx(paste0(standardsPlace, "ageLink.xlsx"), sheet = "standard")
+ageLinkLE <- read_xlsx(paste0(standardsPlace, "ageLink.xlsx"), sheet = "ageLE")
+raceLink <- read_xlsx(paste0(standardsPlace, "raceLink.xlsx"))
+raceLink_dof <- raceLink %>% 
+  select(raceCode, race7) %>% 
+  filter(!is.na(race7))
+
+yearLink <- readxl::read_xlsx(paste0(ccbInfo, "Year to Year-Group Linkage.xlsx")) %>% 
+  select(year, yearGroup3, midYear3)
+
+# Read in and process DOF data ===============================================================================
+
+## 2000-2009 ----------------------
+p3_2000_2009 <- read_csv(paste0(popPlace, "Intercensal_2000-2010_DBInput.csv")) %>% 
+  mutate(year  = as.numeric(str_sub(Year,5,9)),
+         month = as.numeric(str_sub(Year,1,1))) %>%    # 2000 has both April and July estimates; 2010 only April; all others only July
+  filter(month == 7)  %>%
+  select(CountyCode, year, sex=Gender, race7=RaceCode, age=Age, population=Population) %>% # CountyCode - 2 digit character
+  full_join(countyLink1,by="CountyCode") %>%                                                # "01", "02" ... "58", "59"
+  filter(CountyCode != "59") %>% select(-CountyCode) %>%                                   #  58 - Yuba
+  mutate(race7 = ifelse(race7== 6,99,race7))  %>%                                          #  59 - California  -- CHECK THIS
+  mutate(race7 = ifelse(race7== 7, 6,race7))  %>%
+  mutate(race7 = ifelse(race7==99, 7,race7))  %>% 
+  select(county = countyName, year, sex, race7, age, population) %>% 
+  filter(year != 2010)
+
+## 2010- ---------------------
+# Vintage 2020 (2021.7.14) version
+p3_10_ <- read_csv(paste0(popPlace, "P3_2010-2060.csv")) %>%
+  left_join(countyLink2, by = "fips") %>% 
+  mutate(sex = str_to_title(sex)) %>% 
+  select(county, year, sex, race7, age = agerc, population = perwt)
+
+if (useRecentDOF) {
+  p3_10_ <- p3_10_ %>% 
+    filter(year %in% 2010:2019)
+  
+  p3_20_ <- read_csv(paste0(popPlace, "p3_2020-2060.csv")) %>% 
+    filter(year %in% 2020:recentYear) %>% 
+    left_join(countyLink2, by = "fips") %>% 
+    mutate(sex = str_to_title(sex)) %>% 
+    select(county, year, sex, race7, age = agerc, population = perwt)
+  
+  p3_10_ <- bind_rows(p3_10_, p3_20_)
+} else {
+  p3_10_ <- p3_10_ %>% 
+    filter(year %in% 2010:recentYear)
+}
+
+## P3 Final ----------------------
+p3_final <- bind_rows(p3_2000_2009, p3_10_) %>% 
+  left_join(raceLink_dof) %>% 
+  select(-race7) %>% 
+  mutate(age = case_when(age >= 100 ~ "100+", 
+                         TRUE ~ as.character(age))) %>% 
+  group_by(county, year, sex, age, raceCode) %>% 
+  summarise(population = sum(population)) %>% 
+  ungroup()
+
+# Extract and process Census Decennial =============================================================================
+
+library(tidycensus) 
+
+# Get 2000, 2010, 2020 Decennial table IDs for Sex By Age by Race/Ethnicity ---------------------------------
+
+## 2000 ---------------------------------
+censusVars2000 <- tidycensus::load_variables(year = 2000, dataset = "sf1")
+
+censusVars2000_total <- censusVars2000 %>% 
+  filter(name == "P001001")
+
+censusVars2000_race <- censusVars2000 %>% 
+  filter(grepl("SEX BY AGE", concept)) %>% 
+  filter(grepl("HISPANIC OR LATINO", concept)) %>% 
+  filter(grepl("209", concept)) %>% 
+  mutate(tableID = substr(name, 1, 7))
+
+## 2010 -----------------------------------
+censusVars2010 <- tidycensus::load_variables(year = 2010, dataset = "sf1")
+
+censusVars2010_total <- censusVars2010 %>% 
+  filter(name == "P001001")
+
+censusVars2010_race <- censusVars2010 %>% 
+  filter(grepl("SEX BY AGE [(]", concept)) %>% 
+  filter(grepl("HISPANIC OR LATINO", concept)) %>% 
+  filter(grepl("PCT", name)) %>% 
+  mutate(tableID = substr(name, 1, 7))
+
+## 2020 -----------------------------------
+censusVars2020 <- tidycensus::load_variables(year = 2020, dataset = "dhc") 
+
+censusVars2020_total <- censusVars2020 %>% 
+  filter(name == "P1_001N")
+
+censusVars2020_race <- censusVars2020 %>% 
+  filter(grepl("SEX BY SINGLE-YEAR AGE [(]", concept)) %>% 
+  filter(grepl("HISPANIC OR LATINO", concept)) %>% 
+  mutate(tableID = substr(name, 1, 6))
 
 
-# -- Get links -------------------------------------------------------------------------------------------------------------------------
+# Function to create Census Linkages ---------------------
+createCensusLink <- function(myData) {
+  
+  tDat <- myData %>% 
+    mutate(raceCode = case_when(grepl("WHITE", concept) ~ "White", 
+                               grepl("BLACK", concept) ~ "Black", 
+                               grepl("ALASKA", concept) ~ "AIAN", 
+                               grepl("ASIAN", concept) ~ "Asian", 
+                               grepl("HAWAIIAN", concept) ~ "NHPI", 
+                               grepl("OTHER", concept) ~ "Other", 
+                               grepl("TWO", concept) ~ "Multi", 
+                               TRUE ~ "Hisp"), 
+           sex = case_when(grepl("Female", label) ~ "Female", 
+                           grepl("Male", label) ~ "Male", 
+                           TRUE ~ "Total"))
+  
+  if (substr(tDat$label[1], 2, 2) == "!") {
+    tDat <- tDat %>% 
+      mutate(label = sub(".* [!][!]", "", label), 
+             label = gsub("[:]", "", label))
+  }
+  
+  tDat %>% 
+    mutate(age = case_when(grepl("Under", label) ~ "0",
+                           label %in% c("Total", "Total!!Male", "Total!!Female") ~ "Total", 
+                           TRUE ~ gsub(".*ale[!][!](.+) year.*", "\\1", label)), 
+           age = case_when(age %in% c("100 to 104", "105 to 109", "110") ~ "100+",
+                           TRUE ~ age)) %>% 
+    select(tableID, name, sex, age, raceCode)
+  
+  
+}
 
-# raceLink 
-
-countyLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
-               select(countyName, CountyCode=cdphcaCountyTxt,FIPSCounty)%>%
-               mutate(fips = as.numeric(paste0("6", FIPSCounty))) %>% 
-               select(-FIPSCounty)
-
-if (isRecent_multiYear) yearMap   <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "main"))
-if (!isRecent_multiYear) yearMap   <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "old"))
-
-# -- Get raw popualtion data  --------------------------------------------------------------------------------------------------------
-
-
-# from: https://www.dof.ca.gov/forecasting/demographics/Estimates/Race-Ethnic/2000-2010/
-
-dof_pop_2000_2009 <- read_csv(paste0(fusionPlace, "Population Data/Intercensal_2000-2010_DBInput.csv")) %>%
-                       mutate(year  = as.numeric(str_sub(Year,5,9)),
-                              month = as.numeric(str_sub(Year,1,1))) %>%    # 2000 has both April and July estimates; 2010 only April; all others only July
-                       filter(month == 7)  %>%
-                       select(CountyCode, year, sex=Gender, race7=RaceCode, age=Age, population=Population) %>% # CountyCode - 2 digit character
-                       full_join(countyLink,by="CountyCode") %>%                                                # "01", "02" ... "58", "59"
-                       filter(CountyCode != "59") %>% select(-CountyCode) %>%                                   #  58 - Yuba
-                       mutate(race7 = ifelse(race7== 6,99,race7))  %>%                                          #  59 - California  -- CHECK THIS
-                       mutate(race7 = ifelse(race7== 7, 6,race7))  %>%
-                       mutate(race7 = ifelse(race7==99, 7,race7))  
-
-# from: https://www.dof.ca.gov/forecasting/demographics/Projections/  - P3.complete
-dof_pop_2010_myYear <- read_csv(paste0(fusionPlace, "Population Data/P3_Complete.csv")) %>%
-                       filter(year <= myYear) %>%
-                       select(fips, year, sex, race7, age= agerc, population=perwt)   %>%     # fips - 4 digit character 
-                       full_join(countyLink,by="fips") %>%                                    # "6001" - "6115"
-                       mutate(sex = str_to_title(sex))
-
-dof_pop_2000_myYear <- bind_rows(dof_pop_2000_2009,dof_pop_2010_myYear) %>% select(-CountyCode)  %>% rename(county = countyName)
-
-#check totals  
-checkPop <- dof_pop_2000_myYear %>% group_by(year) %>% summarise(totPop=sum(population))
-
-# -- Save 2000-most recent year DOF pop file -------------------------------------
-
-fileName <- paste0(fusionPlace, "Population Data/dof_pop_2000plus.RDS")
-
-saveRDS(dof_pop_2000_myYear, file = fileName)
-
-# junk1 <- dof_pop_2000_2009 %>% filter(year==2010) %>% rename(pop2010_2000_2010_file = population)
-# junk2 <- dof_pop_2010_2020 %>% filter(year==2010) %>% rename(pop2010_2010_2020_file = population)
-# junk3 <- full_join(junk1,junk2,by=c("countyName","fips","year", "sex", "race7", "age"))
-# ggplot(data=junk3,aes(x=pop2010_2000_2010_file,y=pop2010_2010_2020_file)) + geom_point()
-# junk4 <- junk3 %>% filter(abs(pop2010_2000_2010_file - pop2010_2010_2020_file) > 500)
-# sum(junk1$pop2010_2000_2010_file)
-# sum(junk2$pop2010_2010_2020_file)
+## Create Census Linkages --------------------------------------------------------
+census2000_link <- createCensusLink(censusVars2000_race)
+census2010_link <- createCensusLink(censusVars2010_race) 
+census2020_link <- createCensusLink(censusVars2020_race) 
 
 
+## Function to pull decennial data ----------------------------------------------
+pullDecennial <- function(myYear, myGeography, mySumFile = "sf1") {
+  
+  if (myYear == 2000) {
+    censusLink <- census2000_link
+  } else if (myYear == 2010) {
+    censusLink <- census2010_link
+  } else if (myYear == 2020) {
+    censusLink <- census2020_link
+  }
+  
+  tableIDs <- unique(censusLink$tableID)
+  
+  lapply(tableIDs, function(x, myYear1 = myYear) {
+    
+    print(myYear1)
+    
+    tDat <- get_decennial(geography = myGeography, table = x, year = myYear1, state = 06, sumfile = mySumFile) %>% 
+      left_join(select(censusLink, -tableID), by = c("variable" = "name")) %>% 
+      mutate(year = myYear1) %>% 
+      select(year, GEOID, NAME, sex, age, raceCode, population = value)
+    
+    
+  }) %>% 
+    bind_rows()
+  
+  
+}
 
 
+## Census 2000, 2010, 2020 ------------------------------
+census2000_ars_city <- pullDecennial(myYear = 2000, myGeography = "place")
+census2000_ars_county <- pullDecennial(myYear = 2000, myGeography = "county")
 
-# -- Process and save data ------------------------------------------------------------------------------------------------------------
+census2010_ars_city <- pullDecennial(myYear = 2010, myGeography = "place")
+census2010_ars_county <- pullDecennial(myYear = 2010, myGeography = "county")
 
-# Bring in function for aggregating population data
-source(paste0(standardsPlace,"populationExtract.R"))
+census2020_ars_city <- pullDecennial(myYear = 2020, myGeography = "place", mySumFile = "dhc")
+census2020_ars_county <- pullDecennial(myYear = 2020, myGeography = "county", mySumFile = "dhc")
 
-# For the function, we can't have county column since the function links fips code to county
-dof_pop_2000_myYear <- select(dof_pop_2000_myYear, -county)
+## Bind  and save datadata ------------------------------
+censusFinal_city <- bind_rows(census2000_ars_city, census2010_ars_city, census2020_ars_city) %>% 
+  group_by(year, GEOID, NAME, sex, age, raceCode) %>% 
+  summarise(population = sum(population)) %>% 
+  ungroup()
 
-popCounty <- populationExtract(County    = T, 
-                               Race      = T,
-                               Sex       = T, 
-                               Age       = T,
-                               Year      = 2000:myYear,
-                               ageGroups = "standard", 
-                               ageLabels,
-                               raceLabel = "raceCode", 
-                               CA        = T, 
-                               Total     = T,
-                               multiYear = F, 
-                               popData   = dof_pop_2000_myYear, 
-                               server = server)
+censusFinal_county <- bind_rows(census2000_ars_county, census2010_ars_county, census2020_ars_county) %>% 
+  group_by(year, GEOID, NAME, sex, age, raceCode) %>% 
+  summarise(population = sum(population)) %>% 
+  ungroup()
 
+# Make County LHJ Population Data ===========================================================================================
 
-popCounty_RE_3year  <- popCounty %>% 
-                         mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) %>%
-                         group_by(yearG3, county, sex, ageGroup, raceCode) %>%    
-                         summarize(population  = sum(population)) %>%
-                         ungroup() %>% filter(!is.na(yearG3))
+# County estimates ----------------------------------
+countyARS <- p3_final
 
-# -----------------------------------------------------------------------------
-
-popCounty65 <- populationExtract(County  = T, 
-                               Race      = T,
-                               Sex       = T, 
-                               Age       = T,
-                               Year      = 2000:myYear,
-                               ageGroups = "standard", 
-                               ageLabels,
-                               raceLabel = "raceCode", 
-                               CA        = T, 
-                               Total     = T,
-                               multiYear = F, 
-                               popData   = filter(dof_pop_2000_myYear, age < 65), 
-                               server = server)  
+# City estimates ----------------------------------
+censusCityARS <- censusFinal_city %>%  
+  filter(NAME %in% c("Berkeley city, California", "Pasadena city, California", "Long Beach city, California"), 
+         raceCode != "Total", sex != "Total", age != "Total") %>% 
+  mutate(NAME = sub(" city, California", "", NAME), 
+         county = ifelse(NAME == "Berkeley", "Alameda", "Los Angeles"), 
+         raceCode = ifelse(raceCode == "Other", "White", raceCode)) %>% # Discuss with Michael.
+  group_by(year, NAME, county, sex, age, raceCode) %>% 
+  summarise(populationCity = sum(population)) %>% 
+  ungroup()
 
 
+censusCountyARS <- censusFinal_county %>% 
+  filter(NAME %in% c("Alameda County, California", "Los Angeles County, California"), 
+         raceCode != "Total", sex != "Total", age != "Total") %>% 
+  mutate(NAME = sub(" County, California", "", NAME), 
+         raceCode = ifelse(raceCode == "Other", "White", raceCode)) %>% # Discuss with Michael.
+  group_by(year, county = NAME, sex, age, raceCode) %>% 
+  summarise(populationCounty = sum(population)) %>% 
+  ungroup()
 
-popCounty65_RE_3year     <- popCounty65 %>%  
-                              mutate( yearG3 = yearMap[match(year,yearMap[,"year"]),"yearGroup3"]) %>% 
-                              group_by(yearG3, county, sex, ageGroup, raceCode) %>%   
-                              summarize(population  = sum(population)) %>%
-                              ungroup() %>%  filter(!is.na(yearG3))
+censusCityCountyARS <- censusCityARS %>% 
+  left_join(censusCountyARS, by = c("year", "county", "sex", "age", "raceCode")) %>% 
+  mutate(cityCountyProp = populationCity / populationCounty, 
+         cityCountyProp = ifelse(is.nan(cityCountyProp), 0, cityCountyProp)) # Discuss with Michael. All NANs are 0/0
+
+joinCityCounty <- function(myYear) {
+  myYears <- myYear:(myYear+9)
+  
+  tCity <- censusCityCountyARS %>% filter(year == myYear) %>% select(-year)
+  tCounty <- countyARS %>% filter(year %in% myYears)
+  tCity %>% 
+    left_join(tCounty, by = c("county", "sex", "age", "raceCode"), relationship = "many-to-many") 
+}
+
+cityARS_final <- bind_rows(
+  joinCityCounty(2000),
+  joinCityCounty(2010),
+  joinCityCounty(2020)
+) %>% 
+  mutate(population = cityCountyProp * population) %>%
+  select(county = NAME, year, sex, age, raceCode, population)
+
+table(cityARS_final$county, cityARS_final$year, useNA = "ifany")
+length(unique(cityARS_final$sex)) * length(unique(cityARS_final$age)) * length(unique(cityARS_final$raceCode))
+
+# Health Department estimates ----------------------
+hdARS <- cityARS_final %>% 
+  mutate(county = ifelse(county == "Berkeley", "Berkeley", "Pasadena/Long Beach")) %>% 
+  group_by(city = county, year, sex, age, raceCode) %>% 
+  summarise(city_population = sum(population)) %>% 
+  ungroup() %>% 
+  mutate(county = ifelse(city == "Berkeley", "Alameda", "Los Angeles")) %>% 
+  left_join(rename(countyARS, county_population = population)) %>% 
+  mutate(population = county_population - city_population,
+         # POP = ifelse(POP < 0, 0, POP),
+         county = ifelse(city == "Berkeley", "Alameda HD", "Los Angeles HD"))%>% 
+  select(county, year, sex, age, raceCode, population)
 
 
-saveRDS(popCounty,          file = paste0(ccbUpstream,"upData/popCounty.RDS"))
-saveRDS(popCounty_RE_3year, file = paste0(ccbUpstream,"/upData/popCounty_RE_3year.RDS"))
+# Append and save --------------------------------
+lhjARS <- bind_rows(countyARS, cityARS_final, hdARS) %>% 
+  select(county, year, sex, age, raceCode, population) %>% 
+  arrange(county, year, sex, age, raceCode)
 
-saveRDS(popCounty65,          file = paste0(ccbUpstream,"/upData/popCounty65.RDS"))
-saveRDS(popCounty65_RE_3year, file = paste0(ccbUpstream,"/upData/popCounty65_RE_3year.RDS"))
+# Checks -----------------------------------------
+
+colSums(is.na(lhjARS))
+
+count(lhjARS, county, year) %>% 
+  View()
+table(lhjARS$county, lhjARS$year, useNA = "ifany")
+
+## Convert age into age groups =================================
+
+getAgeGroups <- function(myCuts, myLabels) {
+  lhjARS %>% 
+    mutate(age = case_when(age == "100+" ~ 100, 
+                           TRUE ~ as.numeric(age)), 
+           ageGroup = cut(age, myCuts, labels = myLabels, include.lowest = T, right = F)) %>% 
+    group_by(county, year, sex, ageGroup, raceCode) %>% 
+    summarise(population = sum(population)) %>% 
+    ungroup()
+}
+
+lhjARS_final <- getAgeGroups(c(ageLink$lAge, 999), 
+                             ageLink$ageName)
+
+lhjARS_le <- getAgeGroups(c(ageLinkLE$lAge, 999), 
+                             ageLinkLE$ageName)
+
+# Get totals ===================================================
+
+getTotals <- function(myData) {
+  
+  lhjCA <- myData %>% 
+    filter(!county %in% c("Berkeley", "Long Beach", "Pasadena", "Alameda HD", "Los Angeles HD")) %>% 
+    mutate(county = "CALIFORNIA") %>% 
+    group_by(county, year, sex, ageGroup, raceCode) %>% 
+    summarise(population = sum(population)) %>% 
+    ungroup()
+  
+  myData <- bind_rows(myData, lhjCA)
+  
+  lhjSex <- myData %>% 
+    mutate(sex = "Total") %>% 
+    group_by(county, year, sex, ageGroup, raceCode) %>% 
+    summarise(population = sum(population)) %>% 
+    ungroup()
+  
+  myData <- bind_rows(myData, lhjSex)
+  
+  lhjRace <- myData %>% 
+    mutate(raceCode = "Total") %>% 
+    group_by(county, year, sex, ageGroup, raceCode) %>% 
+    summarise(population = sum(population)) %>% 
+    ungroup()
+  
+  myData <- bind_rows(myData, lhjRace)
+  
+  lhjAge <- myData %>% 
+    mutate(ageGroup = "Total") %>% 
+    group_by(county, year, sex, ageGroup, raceCode) %>% 
+    summarise(population = sum(population)) %>% 
+    ungroup()
+  
+  myData <- bind_rows(myData, lhjAge)
+  
+  return(myData)
+  
+}
+
+lhjARS_final <- getTotals(lhjARS_final)
+lhjARS_le <- getTotals(lhjARS_le)
+
+# Save data - 1 year ==============================================
+saveRDS(lhjARS_final, paste0(ccbUpstream, "upData/lhj-population-ars.RDS"))
+saveRDS(lhjARS_le, paste0(ccbUpstream, "upData/lhj-population-ars-le.RDS"))
 
 
+# Produce 3 year estimates ========================================
+lhjARS_final <- readRDS(paste0(ccbUpstream, "upData/lhj-population-ars.RDS"))
+lhjARS_le <- readRDS(paste0(ccbUpstream, "upData/lhj-population-ars-le.RDS"))
 
-# Region
-regionLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx")) %>%
-  select(county = countyName, region = FUSION)
+lhjARS_final3 <- lhjARS_final %>% 
+  left_join(yearLink) %>% 
+  group_by(county, yearG3 = yearGroup3, sex, ageGroup, raceCode) %>% 
+  summarise(population = sum(population)) %>% 
+  ungroup()
 
-popRegion <- popCounty %>%
+lhjARS_le3 <- lhjARS_le %>% 
+  left_join(yearLink) %>% 
+  group_by(county, yearG3 = yearGroup3, sex, ageGroup, raceCode) %>% 
+  summarise(population = sum(population)) %>% 
+  ungroup()
+
+# Save data - 3 year ==============================================
+saveRDS(lhjARS_final3, paste0(ccbUpstream, "upData/lhj-population-ars-3year.RDS"))
+saveRDS(lhjARS_le3, paste0(ccbUpstream, "upData/lhj-population-ars-le-3year.RDS"))
+
+
+# Region ==========================================================
+
+regionLink <- readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx"))%>%
+  select(county = countyName, region = RPHO)
+
+popRegion <- lhjARS_final %>%
   ungroup() %>%
   left_join(regionLink, by = "county") %>%
-  mutate(region = ifelse(county == "CALIFORNIA", "CALIFORNIA", region)) %>%
+  mutate(region = ifelse(county == "CALIFORNIA", "CALIFORNIA", region))
+
+table(popRegion$county, popRegion$region, useNA = "ifany") # NAs should only be present in the 3 city jurisdictions and 2 HDs
+
+popRegion <- popRegion %>%
+  filter(!is.na(region)) %>% 
   group_by(year, region, raceCode, ageGroup, sex) %>%
   summarise(population = sum(population, na.rm = T))
 
-# options(scipen = 99)
+colSums(is.na(popRegion))
+table(popRegion$region)
 
 saveRDS(popRegion,          file = paste0(ccbUpstream,"upData/popRegion.RDS"))
-
-# = DCDC ============================================================================================================
-
-# Prior to January 2021, county population data was based on a data set complied by CID/DCDC/STD Control
-#   these data, code, and documentation are in the "Archive DCDC-STD Data and Documentation" folder.
-#   Key aspects of our processing code for that is kept here:
-
-# special file location becuase file is too big for GitHub
-# tDat        <- read.delim(file=paste0(myDrive,"/0.CBD.Other/Resources/populationData/1980_2025.txt"),sep="\t", header = TRUE, stringsAsFactors = FALSE)
-# tDat        <- filter(tDat, YEAR >=2000 & YEAR <= 2020)
-# saveRDS(tDat, file= paste0(upPlace,"/upData/tDat_2000_2020.rds"))
-
-
-# tDat0 <- readRDS(file= paste0(myPath, "Population Data/DCDC/tDat_2000_2020.rds")) %>%
-#   filter(!(COUNTY %in% c("California", "Alameda HD", "Berkeley", "Pasadena", "Long Beach", "Los Angeles HD"))) %>%  # NOTE: California totals already included with county = "California
-#   rename(year=YEAR, county= COUNTY, sex = SEX, agerc = AGE, raceE = RE, perwt = POP) %>%
-#   mutate(sex = c("Male","Female")[match(sex,c("M","F"))]) %>%
-#   filter(year %in% 2000:2020) %>%
-#   left_join(select(raceLink, race7, DCDC), by = c("raceE" = "DCDC")) %>% # JASPO EDIT - TAKE OUT, AND UNCOMMENT BELOW IF NEW RACECODES CAUSES MAJOR ISSUES
-#   select(-raceE)
-# 
-# tDat0  <- tDat0 %>%  left_join(countyLink, by = c("county" = "countyName"))
-
-
-# === National Institutes of Health - SEER Data ==========================================================================================
-# U.S. Population Data - 1969-2017
-# county population estimates by age, sex, race, and Hispanic origin
-# https://seer.cancer.gov/popdata/
-
-
-# === California DEPARTMENT OF FINANCE DATA ==========================================================================================
-
-
-# temp <- read_csv("F:/0.CBD.Other/Resources/populationData/DOF/P3_complete.csv")
-# http://www.dof.ca.gov/Forecasting/Demographics/Projections/
-# http://www.dof.ca.gov/Forecasting/Demographics/Projections/P3_Dictionary.txt
-
-# tDatDOF  <- read_csv("https://data.ca.gov/sites/default/files/dof_dru_pop_1970_2050_csya_wide.csv",col_types="_ciiiii") 
-
-
-

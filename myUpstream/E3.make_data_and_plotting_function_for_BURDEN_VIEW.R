@@ -349,7 +349,7 @@ plotMeasures <- function(IDnum=4, myCounty = "Los Angeles",myObserv = 10, decrea
     tPlot <- tPlot + geom_text(hjust=0, aes(x=xValues,y=plot_width*.72, label=paste0(xRaceValue)),size=work.dat$xSize3)
   }
   
-  tPlot + theme(plot.margin = margin(0,0,0,0,"cm"))
+  tPlot + theme(plot.margin = ggplot2::margin(0,0,0,0,"cm"))
   
 }
 
