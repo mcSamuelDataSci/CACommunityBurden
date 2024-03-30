@@ -258,10 +258,8 @@ dxCounty <- dx %>%
 
 ### 3.2.3 State-level --------------
 
-
-
 dxState <- dxCounty %>%
-  filter(GEOID %in% c(NA, fipsCounty$county)) %>% 
+  filter(GEOID %in% c(NA, fipsCounty$county)) %>% # Removes cities and hds
   group_by(year, sex, raceCode, agell,ageul) %>%
   summarise(Dx = sum(Dx)) %>%
   mutate(GEOID = "CALIFORNIA")

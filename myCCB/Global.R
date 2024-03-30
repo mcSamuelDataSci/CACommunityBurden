@@ -213,6 +213,8 @@ source(path(ccbFunctions, "make_LifeCourse_viz.R"))
 source(path(ccbFunctions, "make_MCOD_charts.R"))
 source(path(ccbFunctions, "make_burdenView.R"))
 
+# Shuo Life Course - Source life table functions
+
 # HELPER FUNCTIONS
 source(paste0(ccbFunctions, "helperFunctions/wrapLabels.R"))
 source(paste0(ccbFunctions, "helperFunctions/dottedSelectInput.R"))

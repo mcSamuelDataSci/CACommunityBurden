@@ -434,6 +434,16 @@ shinyUI(
                                                    reactableOutput("lifeCourse")
                                                  )
                                         ),
+                                        
+                                        # Shuo Life Course - First step
+                                        # tabPanel(title = "LIFE COURSE - Disparities", value = "lifeCourseDisparitiesTab",
+                                        #          br(),
+                                        #          fluidRow(style = "background-color: white;margin-left: 10px; margin-right: 10px;",
+                                        #                   htmlOutput("lifeCourse_info"),
+                                        #                   reactableOutput("lifeCourse")
+                                        #          )
+                                        # ),
+                                        
                                         tabPanel(title = "MULTIPLE CAUSES OF DEATH", value = "mcodTab",
                                                  br(),
                                                  fluidRow(

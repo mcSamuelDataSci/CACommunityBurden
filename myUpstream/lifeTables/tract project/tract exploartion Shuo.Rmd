@@ -1,0 +1,91 @@
+---
+title: "Tract"
+author: "Shuo"
+date: "3/26/2024"
+output: html_document
+---
+
+
+```{r}
+server <- T
+if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
+
+```
+
+
+```{r}
+tractTest <- readRDS(paste0(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS")) 
+
+tractSave <- tractTest %>% 
+               filter(yearG5 == "2018-2022", sex == "Total") %>%
+               select(county,GEOID, ageGroup, raceCode)
+
+
+
+tractExplore0 <- tractSave %>%  
+  group_by(county,GEOID, ageGroup) %>%
+  summarize(N = n()) %>% ungroup() %>%
+  mutate(ageGroup = factor(ageGroup, levels= ageLink$ageName))
+
+
+tractExplore <- tractExplore0 %>% tidyr::complete(GEOID, ageGroup, fill=list(N=0))
+```
+
+```{r}
+ggplot(filter(tractExplore), aes(x=ageGroup, y=N)) + geom_boxplot() 
+
+
+ggplot(filter(tractExplore, GEOID !=""), aes(x=ageGroup, y=N)) + geom_boxplot() 
+
+
+ggplot(filter(tractExplore, GEOID !=""), aes(x=ageGroup, y=N)) + geom_boxplot() + scale_y_log10()
+```
+
+
+```{r}
+## Percent of deaths with missing GEOID by county
+popCounty <- readRDS("/mnt/projects/FusionData/0.CCB/myUpstream/upData/popCounty.RDS")
+
+popCountyTot <- popCounty %>% 
+  filter(year == 2020, raceCode == "Total", ageGroup == "Total", sex == "Total") %>% 
+  group_by(year, county) %>% 
+  summarize(population = sum(population))
+```
+
+
+```{r}
+tractMissing <- tractExplore %>% 
+  mutate(GEOID_missing = ifelse((GEOID == ""), "missing_GEOID", "not_missing_GEOID"))
+
+tractMissing <- tractMissing %>% 
+  filter(!is.na(county)) %>% 
+  group_by(county, GEOID_missing) %>% 
+  summarize(N = sum(N)) %>% 
+  ungroup() %>% 
+  group_by(county) %>% 
+  mutate(pct = N/sum(N)*100) %>% 
+  ungroup()
+
+tractMissing <- tractMissing %>% 
+  pivot_wider(values_from = c("N", "pct"), names_from = "GEOID_missing")
+
+
+tractMissing <- left_join(tractMissing, popCountyTot, by = "county")
+```
+
+
+```{r}
+## Plot percet missing GEOID vs. population
+missingPlot <- ggplot(data = tractMissing, aes(x = log(population, base = 10), y = pct_missing_GEOID)) +
+  geom_point() +
+  labs(title = "Percent of Deaths with Missing GEOID vs. County Population, 2018-2022", 
+       x = "County Population (log10)", y = "% Deaths with Missing GEOID") +
+  theme_bw() +
+  theme(axis.title = element_text(size = 12), 
+        plot.title = element_text(size = 13))
+  
+
+missingPlot
+```
+

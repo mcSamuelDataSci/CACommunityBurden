@@ -595,7 +595,8 @@ observeEvent(current$tab,{
   # If County is selected:
   # Updated myYear_lifeCourse to year groupings
   # Update radio button to select 3, and disable 1
-  
+
+  # Shuo Life Course
 observe({
   if (current$tab == "lifeCourseTab") {
     if (input$myLHJ == "CALIFORNIA") {
@@ -648,6 +649,8 @@ lifeCourseInfoStep <- reactive(
 
 
 # Life Course table ---------
+# Shuo Life Course - Last step
+  
 lifeCourseStep <- reactive(makeLifeCourse(myLHJ = input$myLHJ, 
                                           myYearGrouping = input$myYearGrouping_lifeCourse, 
                                           myYear = input$myYear_lifeCourse, 

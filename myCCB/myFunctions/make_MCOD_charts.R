@@ -16,10 +16,6 @@ mcodRankMeasure <- function(myCounty = "CALIFORNIA",
                         topN = 15, 
                         myCause) {
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
-  
   if (grepl("Ndeaths", mySort)) { measureCol1 <- "Ndeaths_primary"; measureCol2 <- "Ndeaths_other"; titleX <- "Number of Deaths" }
   if (mySort %in% c("pPrimary", "pOther")) { measureCol1 <- "pPrimary"; measureCol2 <- "pOther"; titleX <- "Percent"}
   

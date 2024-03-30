@@ -1,8 +1,6 @@
 make_demoPop_Pyramid <- function(myCounty, myYear) {
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
+
   
   # print(myYear)
   roundUpNice <- function(x, nice=c(1:10)) {

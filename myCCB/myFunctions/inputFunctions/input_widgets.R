@@ -30,7 +30,7 @@ hidden(
                   round=TRUE,sep="",step=1),  #can use value=c(2017,2017)
       
       # myYear ======================
-      sliderInput("myYear_mcod","Year:",value=maxYear,min=2019,max=2021,animate = TRUE,
+      sliderInput("myYear_mcod","Year:",value=maxYear,min=2019,max=maxYear,animate = TRUE,
                   round=TRUE,sep="",step=1),
       
       # myYearDemo ======================
@@ -38,6 +38,7 @@ hidden(
                   round=TRUE,sep="",step=1),
       
       # myYear - Life Course ==============
+      # Shuo Life Course
       sliderTextInput(inputId = "myYear_lifeCourse", label = "Year(s):", choices = as.character(minYear:maxYear), selected = as.character(maxYear)),
       
       # mySex ======================

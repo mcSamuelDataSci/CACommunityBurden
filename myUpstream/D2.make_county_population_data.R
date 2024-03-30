@@ -25,7 +25,7 @@
 
 # Global constants ==================================================================================
 recentYear <- 2023 
-useRecentDOF <- T # TRUE to use DOF's recent P3 informed by Decennial 2023 for 2020+ denominators; FALSE to use DOF P3 pre-decennial for 2020+ denominators
+useRecentDOF <- F # TRUE to use DOF's recent P3 informed by Decennial 2023 for 2020+ denominators; FALSE to use DOF P3 pre-decennial for 2020+ denominators
 
 # Load standards ====================================================================================
 server <- F
@@ -104,137 +104,10 @@ p3_final <- bind_rows(p3_2000_2009, p3_10_) %>%
   summarise(population = sum(population)) %>% 
   ungroup()
 
-# Extract and process Census Decennial =============================================================================
+# Read in Census Decennial data =============================================================================
 
-library(tidycensus) 
-
-# Get 2000, 2010, 2020 Decennial table IDs for Sex By Age by Race/Ethnicity ---------------------------------
-
-## 2000 ---------------------------------
-censusVars2000 <- tidycensus::load_variables(year = 2000, dataset = "sf1")
-
-censusVars2000_total <- censusVars2000 %>% 
-  filter(name == "P001001")
-
-censusVars2000_race <- censusVars2000 %>% 
-  filter(grepl("SEX BY AGE", concept)) %>% 
-  filter(grepl("HISPANIC OR LATINO", concept)) %>% 
-  filter(grepl("209", concept)) %>% 
-  mutate(tableID = substr(name, 1, 7))
-
-## 2010 -----------------------------------
-censusVars2010 <- tidycensus::load_variables(year = 2010, dataset = "sf1")
-
-censusVars2010_total <- censusVars2010 %>% 
-  filter(name == "P001001")
-
-censusVars2010_race <- censusVars2010 %>% 
-  filter(grepl("SEX BY AGE [(]", concept)) %>% 
-  filter(grepl("HISPANIC OR LATINO", concept)) %>% 
-  filter(grepl("PCT", name)) %>% 
-  mutate(tableID = substr(name, 1, 7))
-
-## 2020 -----------------------------------
-censusVars2020 <- tidycensus::load_variables(year = 2020, dataset = "dhc") 
-
-censusVars2020_total <- censusVars2020 %>% 
-  filter(name == "P1_001N")
-
-censusVars2020_race <- censusVars2020 %>% 
-  filter(grepl("SEX BY SINGLE-YEAR AGE [(]", concept)) %>% 
-  filter(grepl("HISPANIC OR LATINO", concept)) %>% 
-  mutate(tableID = substr(name, 1, 6))
-
-
-# Function to create Census Linkages ---------------------
-createCensusLink <- function(myData) {
-  
-  tDat <- myData %>% 
-    mutate(raceCode = case_when(grepl("WHITE", concept) ~ "White", 
-                               grepl("BLACK", concept) ~ "Black", 
-                               grepl("ALASKA", concept) ~ "AIAN", 
-                               grepl("ASIAN", concept) ~ "Asian", 
-                               grepl("HAWAIIAN", concept) ~ "NHPI", 
-                               grepl("OTHER", concept) ~ "Other", 
-                               grepl("TWO", concept) ~ "Multi", 
-                               TRUE ~ "Hisp"), 
-           sex = case_when(grepl("Female", label) ~ "Female", 
-                           grepl("Male", label) ~ "Male", 
-                           TRUE ~ "Total"))
-  
-  if (substr(tDat$label[1], 2, 2) == "!") {
-    tDat <- tDat %>% 
-      mutate(label = sub(".* [!][!]", "", label), 
-             label = gsub("[:]", "", label))
-  }
-  
-  tDat %>% 
-    mutate(age = case_when(grepl("Under", label) ~ "0",
-                           label %in% c("Total", "Total!!Male", "Total!!Female") ~ "Total", 
-                           TRUE ~ gsub(".*ale[!][!](.+) year.*", "\\1", label)), 
-           age = case_when(age %in% c("100 to 104", "105 to 109", "110") ~ "100+",
-                           TRUE ~ age)) %>% 
-    select(tableID, name, sex, age, raceCode)
-  
-  
-}
-
-## Create Census Linkages --------------------------------------------------------
-census2000_link <- createCensusLink(censusVars2000_race)
-census2010_link <- createCensusLink(censusVars2010_race) 
-census2020_link <- createCensusLink(censusVars2020_race) 
-
-
-## Function to pull decennial data ----------------------------------------------
-pullDecennial <- function(myYear, myGeography, mySumFile = "sf1") {
-  
-  if (myYear == 2000) {
-    censusLink <- census2000_link
-  } else if (myYear == 2010) {
-    censusLink <- census2010_link
-  } else if (myYear == 2020) {
-    censusLink <- census2020_link
-  }
-  
-  tableIDs <- unique(censusLink$tableID)
-  
-  lapply(tableIDs, function(x, myYear1 = myYear) {
-    
-    print(myYear1)
-    
-    tDat <- get_decennial(geography = myGeography, table = x, year = myYear1, state = 06, sumfile = mySumFile) %>% 
-      left_join(select(censusLink, -tableID), by = c("variable" = "name")) %>% 
-      mutate(year = myYear1) %>% 
-      select(year, GEOID, NAME, sex, age, raceCode, population = value)
-    
-    
-  }) %>% 
-    bind_rows()
-  
-  
-}
-
-
-## Census 2000, 2010, 2020 ------------------------------
-census2000_ars_city <- pullDecennial(myYear = 2000, myGeography = "place")
-census2000_ars_county <- pullDecennial(myYear = 2000, myGeography = "county")
-
-census2010_ars_city <- pullDecennial(myYear = 2010, myGeography = "place")
-census2010_ars_county <- pullDecennial(myYear = 2010, myGeography = "county")
-
-census2020_ars_city <- pullDecennial(myYear = 2020, myGeography = "place", mySumFile = "dhc")
-census2020_ars_county <- pullDecennial(myYear = 2020, myGeography = "county", mySumFile = "dhc")
-
-## Bind  and save datadata ------------------------------
-censusFinal_city <- bind_rows(census2000_ars_city, census2010_ars_city, census2020_ars_city) %>% 
-  group_by(year, GEOID, NAME, sex, age, raceCode) %>% 
-  summarise(population = sum(population)) %>% 
-  ungroup()
-
-censusFinal_county <- bind_rows(census2000_ars_county, census2010_ars_county, census2020_ars_county) %>% 
-  group_by(year, GEOID, NAME, sex, age, raceCode) %>% 
-  summarise(population = sum(population)) %>% 
-  ungroup()
+censusFinal_city <- readRDS(paste0(ccbUpstream, "upData/decennial-city-ars.RDS"))
+censusFinal_county <- readRDS(paste0(ccbUpstream, "upData/decennial-county-ars.RDS"))
 
 # Make County LHJ Population Data ===========================================================================================
 
@@ -246,8 +119,9 @@ censusCityARS <- censusFinal_city %>%
   filter(NAME %in% c("Berkeley city, California", "Pasadena city, California", "Long Beach city, California"), 
          raceCode != "Total", sex != "Total", age != "Total") %>% 
   mutate(NAME = sub(" city, California", "", NAME), 
-         county = ifelse(NAME == "Berkeley", "Alameda", "Los Angeles"), 
-         raceCode = ifelse(raceCode == "Other", "White", raceCode)) %>% # Discuss with Michael.
+         county = ifelse(NAME == "Berkeley", "Alameda", "Los Angeles") 
+         # raceCode = ifelse(raceCode == "Other", "White", raceCode) # Discuss with Michael.
+         ) %>% 
   group_by(year, NAME, county, sex, age, raceCode) %>% 
   summarise(populationCity = sum(population)) %>% 
   ungroup()
@@ -256,8 +130,9 @@ censusCityARS <- censusFinal_city %>%
 censusCountyARS <- censusFinal_county %>% 
   filter(NAME %in% c("Alameda County, California", "Los Angeles County, California"), 
          raceCode != "Total", sex != "Total", age != "Total") %>% 
-  mutate(NAME = sub(" County, California", "", NAME), 
-         raceCode = ifelse(raceCode == "Other", "White", raceCode)) %>% # Discuss with Michael.
+  mutate(NAME = sub(" County, California", "", NAME) 
+         # raceCode = ifelse(raceCode == "Other", "White", raceCode) # Discuss with Michael.
+         ) %>% 
   group_by(year, county = NAME, sex, age, raceCode) %>% 
   summarise(populationCounty = sum(population)) %>% 
   ungroup()
@@ -310,8 +185,8 @@ lhjARS <- bind_rows(countyARS, cityARS_final, hdARS) %>%
 
 colSums(is.na(lhjARS))
 
-count(lhjARS, county, year) %>% 
-  View()
+# count(lhjARS, county, year) %>% 
+#   View()
 table(lhjARS$county, lhjARS$year, useNA = "ifany")
 
 ## Convert age into age groups =================================
@@ -331,6 +206,28 @@ lhjARS_final <- getAgeGroups(c(ageLink$lAge, 999),
 
 lhjARS_le <- getAgeGroups(c(ageLinkLE$lAge, 999), 
                              ageLinkLE$ageName)
+
+
+# For DEMOGRAPHICS Tab
+if (F) {
+  ageDF <- data.frame(lAge = seq(0, 95, by = 5), 
+                      uAge = seq(4, 99, by = 5)) %>%
+    mutate(ageName = paste0(lAge, " - ", uAge)) %>%
+    tibble::add_row(lAge = 100, uAge = 120, ageName = "100+")
+  
+  ageDF2 <- data.frame(lAge = c(0, 15, 25, 35, 45, 65, 75), 
+                       uAge = c(14, 24, 34, 44, 64, 74, 120)) %>%
+    mutate(ageName = paste0(lAge, " - ", uAge), 
+           ageName = ifelse(ageName == "75 - 120", "75+", ageName))
+  
+  lhjARS_demoTab1 <- getAgeGroups(c(ageDF$lAge, 999), 
+                                  ageDF$ageName)
+  
+  lhjARS_demoTab2 <- getAgeGroups(c(ageDF2$lAge, 999), 
+                                  ageDF2$ageName)
+}
+
+
 
 # Get totals ===================================================
 
@@ -376,9 +273,19 @@ getTotals <- function(myData) {
 lhjARS_final <- getTotals(lhjARS_final)
 lhjARS_le <- getTotals(lhjARS_le)
 
+if (F) {
+  lhjARS_demoTab1 <- getTotals(lhjARS_demoTab1)
+  lhjARS_demoTab2 <- getTotals(lhjARS_demoTab2)
+}
+
 # Save data - 1 year ==============================================
 saveRDS(lhjARS_final, paste0(ccbUpstream, "upData/lhj-population-ars.RDS"))
 saveRDS(lhjARS_le, paste0(ccbUpstream, "upData/lhj-population-ars-le.RDS"))
+
+if (F) {
+  saveRDS(lhjARS_demoTab1, paste0(ccbUpstream, "upData/lhj-population-ars-demoTab1.RDS"))
+  saveRDS(lhjARS_demoTab2, paste0(ccbUpstream, "upData/lhj-population-ars-demoTab2.RDS")) 
+}
 
 
 # Produce 3 year estimates ========================================

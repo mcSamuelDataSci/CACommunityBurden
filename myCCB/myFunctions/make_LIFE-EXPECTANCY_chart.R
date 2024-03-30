@@ -29,10 +29,6 @@ lifeTableSet   <- bind_rows(lifeTableCounty, lifeTableState) %>%
   
   
 LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping = 1, barYear = 2020) {
-  
-  if (myLHJ %in% cityLHJs) {
-    stop(cityMessage)
-  }
    
  
 #---BAR PART------------------------------------------------------------------------------------------------------
