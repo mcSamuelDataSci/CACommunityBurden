@@ -19,7 +19,7 @@ tractTest <- readRDS(paste0(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS")
 
 tractSave <- tractTest %>% 
                filter(yearG5 == "2018-2022", sex == "Total") %>%
-               select(county,GEOID, ageGroup, raceCode)
+               select(county, region, GEOID, ageGroup, raceCode, lev1)
 
 
 
@@ -58,7 +58,7 @@ popCountyTot <- popCounty %>%
 tractMissing <- tractExplore %>% 
   mutate(GEOID_missing = ifelse((GEOID == ""), "missing_GEOID", "not_missing_GEOID"))
 
-tractMissing <- tractMissing %>% 
+countyMissing <- tractMissing %>% 
   filter(!is.na(county)) %>% 
   group_by(county, GEOID_missing) %>% 
   summarize(N = sum(N)) %>% 
@@ -67,17 +67,17 @@ tractMissing <- tractMissing %>%
   mutate(pct = N/sum(N)*100) %>% 
   ungroup()
 
-tractMissing <- tractMissing %>% 
+countyMissing <- countyMissing %>% 
   pivot_wider(values_from = c("N", "pct"), names_from = "GEOID_missing")
 
 
-tractMissing <- left_join(tractMissing, popCountyTot, by = "county")
+countyMissing <- left_join(countyMissing, popCountyTot, by = "county")
 ```
 
 
 ```{r}
 ## Plot percet missing GEOID vs. population
-missingPlot <- ggplot(data = tractMissing, aes(x = log(population, base = 10), y = pct_missing_GEOID)) +
+missingPlot <- ggplot(data = countyMissing, aes(x = log(population, base = 10), y = pct_missing_GEOID)) +
   geom_point() +
   labs(title = "Percent of Deaths with Missing GEOID vs. County Population, 2018-2022", 
        x = "County Population (log10)", y = "% Deaths with Missing GEOID") +
@@ -87,5 +87,118 @@ missingPlot <- ggplot(data = tractMissing, aes(x = log(population, base = 10), y
   
 
 missingPlot
+```
+
+
+
+## % missing GEOID by age and race/ethnicity
+```{r}
+tractExploreRE <- tractSave %>%  
+  group_by(GEOID, county, region, raceCode) %>%
+  summarize(N = n()) %>% 
+  ungroup() %>% 
+  mutate(GEOID_missing = ifelse((GEOID == ""), "missing_GEOID", "not_missing_GEOID"))
+
+
+REMissing <- tractExploreRE %>% 
+  filter(!is.na(region)) %>% 
+  group_by(raceCode, region, GEOID_missing) %>% 
+  summarize(N = sum(N)) %>% 
+  ungroup() %>% 
+  group_by(raceCode, region) %>% 
+  mutate(pct = N/sum(N)*100) %>% 
+  ungroup() 
+
+REMissing <- REMissing %>% 
+  pivot_wider(values_from = c("N", "pct"), names_from = "GEOID_missing")
+
+  
+REMissing <- REMissing %>% arrange(-pct_missing_GEOID)
+```
+
+
+
+```{r, fig.height = 7.5, fig.width = 9}
+REMissingPlot <- REMissing %>% 
+  ggplot(aes(x = pct_missing_GEOID, y = raceCode, fill = raceCode)) +
+  geom_bar(stat = "identity") +
+  scale_y_discrete(limits=rev) +
+  facet_wrap(~region) +
+  labs(x = "% Missing GEOID", y = "") +
+  theme_bw() +
+  theme(strip.text = element_text(size = 11), 
+        legend.position = "none")
+
+REMissingPlot
+```
+
+
+## Missing GEOID by age group
+```{r}
+tractExploreAge <- tractSave %>%  
+  group_by(GEOID, county, region, ageGroup) %>%
+  summarize(N = n()) %>% 
+  ungroup() %>%
+  mutate(ageGroup = factor(ageGroup, levels= ageLink$ageName), 
+         GEOID_missing = ifelse((GEOID == ""), "missing_GEOID", "not_missing_GEOID"))
+
+
+tractExploreAge <- tractExploreAge %>% tidyr::complete(GEOID, ageGroup, fill=list(N=0))
+
+
+
+AgeMissing <- tractExploreAge %>% 
+  filter(!is.na(region), !is.na(ageGroup)) %>% 
+  group_by(ageGroup, region, GEOID_missing) %>% 
+  summarize(N = sum(N)) %>% 
+  ungroup() %>% 
+  group_by(ageGroup, region) %>% 
+  mutate(pct = N/sum(N)*100) %>% 
+  ungroup() 
+
+AgeMissing <- AgeMissing %>% 
+  pivot_wider(values_from = c("N", "pct"), names_from = "GEOID_missing")
+
+
+```
+
+
+```{r, fig.height = 7.5, fig.width = 9}
+AgeMissingPlot <- AgeMissing %>% 
+  ggplot(aes(x = pct_missing_GEOID, y = ageGroup)) +
+  geom_bar(stat = "identity", fill = "#222255") +
+  facet_wrap(~region) +
+  labs(x = "% Missing GEOID", y = "Age Group") +
+  theme_bw() +
+  theme(strip.text = element_text(size = 11), 
+        legend.position = "none")
+
+AgeMissingPlot
+```
+
+
+## % Missing by Broad Condition Groups
+```{r}
+tractExploreCondition <- tractSave %>%  
+  group_by(GEOID, county, region, lev1) %>%
+  summarize(N = n()) %>% 
+  ungroup() %>% 
+  mutate(GEOID_missing = ifelse((GEOID == ""), "missing_GEOID", "not_missing_GEOID"))
+
+
+tractExploreCondition <- left_join(tractExploreCondition, deathCauseLink %>% select(topLevCode, topLevName), deathCauseLink, by = c("lev1" = "topLevCode"))
+
+
+ConditionMissing <- tractExploreCondition %>% 
+  filter(!is.na(region)) %>% 
+  group_by(raceCode, region, GEOID_missing) %>% 
+  summarize(N = sum(N)) %>% 
+  ungroup() %>% 
+  group_by(raceCode, region) %>% 
+  mutate(pct = N/sum(N)*100) %>% 
+  ungroup() 
+
+REMissing <- REMissing %>% 
+  pivot_wider(values_from = c("N", "pct"), names_from = "GEOID_missing")
 ```
 

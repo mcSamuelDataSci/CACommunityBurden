@@ -113,10 +113,6 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
                           myCause = "C01", 
                           leadingPrimary = TRUE) {
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
-  
   # CauseNameShort
   myCauseNameShort <- deathCauseLink %>% filter(causeCode == myCause) %>% pull(causeNameShort)
   titleCounty <- ifelse(myCounty == "CALIFORNIA", myCounty, paste(myCounty, "County"))
@@ -131,11 +127,11 @@ mcodRankCause <- function(myCounty = "CALIFORNIA",
     
   } else {
     if (nrow(tDat)==0) stop(paste0("There are no cases where ", myCauseNameShort, " appears as a primary or secondary cause of death in ", titleCounty, " in ", myYear, ". Please select a new cause."))
-    if (is.null(tDat$dataOther[[1]]) & tDat$Ndeaths_primary == 0) stop(paste0("There are no cases where ", myCauseNameShort, " appears as a primary cause of death in ", titleCounty, " in ", myYear))
-    if (is.null(tDat$dataOther[[1]]) & tDat$Ndeaths_primary > 0) stop(paste0("There are no secondary causes of death where ", myCauseNameShort, " is listed as a primary cause of death in ", titleCounty, " in ", myYear))
+    if (is.null(tDat$data[[1]]) & tDat$Ndeaths_primary == 0) stop(paste0("There are no cases where ", myCauseNameShort, " appears as a primary cause of death in ", titleCounty, " in ", myYear))
+    if (is.null(tDat$data[[1]]) & tDat$Ndeaths_primary > 0) stop(paste0("There are no secondary causes of death where ", myCauseNameShort, " is listed as a primary cause of death in ", titleCounty, " in ", myYear))
   }
   
-  tDat <- if(leadingPrimary) tDat$dataPrimary[[1]] else tDat$dataOther[[1]]
+  tDat <- if(leadingPrimary) tDat$dataPrimary[[1]] else tDat$data[[1]]
   
   # Titles
   mySubTitle <- paste0(titleCounty, ", ", myYear)

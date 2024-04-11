@@ -12,7 +12,9 @@ testDat2 <- stateDat %>% filter(                raceCode == "Total", year == 202
 testDat3 <- stateDat %>% filter(                raceCode == "Total", year == 2020)
 
 
-tractTest <- readRDS(paste0(ccbData,"real/datTract.RDS")) %>% filter(causeCode == "0", yearG5 == "2018-2022", sex == "Total")
+tractTest <- readRDS(paste0(ccbData,"real/datTract.RDS")) %>% 
+  filter(causeCode == "0", yearG5 == "2018-2022", sex == "Total") %>%
+  select(GEOID,Ndeaths,population,ageGroup)
 
 
 

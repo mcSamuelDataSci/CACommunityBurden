@@ -4,7 +4,7 @@
 
 
 
-geoMap          <- as.data.frame(read_excel(paste0(ccbInfo,"/County Codes to County Names Linkage.xlsx"))) %>%
+geoMap          <- as.data.frame(read_excel(paste0(standardsPlace,"/countyLink.xlsx"))) %>%
                      select(FIPSCounty,county=countyName)
 
 lifeTableCounty <- readRDS(paste0(ccbData,"/e0ciCounty.RDS")) %>%
