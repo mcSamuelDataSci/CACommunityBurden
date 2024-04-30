@@ -100,6 +100,9 @@ isRecent_multiYear <- T
 # Specify the years for the quarterly data
 forQuarter_selectYears <- 2017:2023
 
+# Specify the years for the monthly data
+forMonth_selectYears <- 2020:2023
+
 # Specify the years for RE_1year
 RE_1year_years <- 2000:2023
 
@@ -129,13 +132,13 @@ criticalNum <- 11
 # and get error "Error: Can't use matrix or array for column indexing"
 
 # leMap      <- as.data.frame(read_excel(paste0(ccbInfo,"Age to Life-Expectancy Linkage.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
-geoMap     <- as.data.frame(read_excel(paste0(ccbInfo,"County Codes to County Names Linkage.xlsx")))
-mssaLink   <- read.csv(paste0(ccbInfo,"Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census  #### WAS cbdLinkCA
+geoMap     <- as.data.frame(read_excel(paste0(standardsPlace,"countyLink.xlsx")))
+mssaLink   <- read.csv(paste0(standardsPlace,"Tract to Community Linkage.csv"),colClasses = "character")  # file linking MSSAs to census  #### WAS cbdLinkCA
 comName    <- unique(mssaLink[,c("comID","comName")])                                    # dataframe linking comID and comName
-ageMap     <- as.data.frame(read_excel(paste0(ccbInfo,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
-ageMap_EDU  <- as.data.frame(read_excel(paste0(ccbInfo,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "dataEducation"))
+ageMap     <- as.data.frame(read_excel(paste0(standardsPlace,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+ageMap_EDU  <- as.data.frame(read_excel(paste0(standardsPlace,"Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "dataEducation"))
 raceLink <- as.data.frame(read_excel(paste0(standardsPlace,"raceLink.xlsx")))  %>% select(raceCode,CHSI)
-regionLink <- as.data.frame(readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx"))) %>% select(county = countyName, region = FUSION)
+regionLink <- as.data.frame(readxl::read_xlsx(paste0(standardsPlace, "countyLink.xlsx"))) %>% select(county = countyName, region = RPHO)
 
 if (isRecent_multiYear) yearMap <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "main"))
 if (!isRecent_multiYear) yearMap <- as.data.frame(read_excel(paste0(ccbInfo,"Year to Year-Group Linkage.xlsx"), sheet = "old"))
@@ -651,7 +654,7 @@ datRegion <- calculateRates(datRegion,1)
 
 cbdDat0_SAVE <- cbdDat0
 
-cbdDat0 <- filter(cbdDat0, year %in% forQuarter_selectYears)
+cbdDat0 <- filter(cbdDat0, year %in% forMonth_selectYears)
 
 c.t1      <- calculateYLLmeasures(c("county","year", "month", "sex","lev0"),"lev0")
 c.t2      <- calculateYLLmeasures(c("county","year", "month", "sex","lev1"),"lev1")
@@ -666,7 +669,15 @@ s.t4      <- calculateYLLmeasures(c(         "year", "month", "sex","lev3"),"lev
 datState_M  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
 datState_M$county = STATE
 
-datCounty_M <- bind_rows(datCounty_M,datState_M)
+l.t1      <- calculateYLLmeasures(c("city_lhj", "year", "month", "sex", "lev0"),"lev0")
+l.t2      <- calculateYLLmeasures(c("city_lhj", "year", "month", "sex", "lev1"),"lev1")
+l.t3      <- calculateYLLmeasures(c("city_lhj", "year", "month", "sex", "lev2"),"lev2")
+l.t4      <- calculateYLLmeasures(c("city_lhj", "year", "month", "sex", "lev3"),"lev3")
+datCityLHJ  <- bind_rows(l.t1,l.t2,l.t3,l.t4) %>% 
+  filter(!is.na(city_lhj)) %>% 
+  rename(county = city_lhj)
+
+datCounty_M <- bind_rows(datCounty_M,datCityLHJ,datState_M)
 
 # MERGE Death and Population files
 datCounty_M <-  merge(datCounty_M,popCountySex,by = c("year","county","sex")) #%>%
@@ -698,6 +709,14 @@ s.t3      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","
 s.t4      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","lev3"),"lev3")
 datState_Q  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
 datState_Q$county = STATE
+
+l.t1      <- calculateYLLmeasures(c("city_lhj", "year","quarter","sex","raceCode", "lev0"),"lev0")
+l.t2      <- calculateYLLmeasures(c("city_lhj", "year","quarter","sex","raceCode", "lev1"),"lev1")
+l.t3      <- calculateYLLmeasures(c("city_lhj", "year","quarter","sex","raceCode", "lev2"),"lev2")
+l.t4      <- calculateYLLmeasures(c("city_lhj", "year","quarter","sex","raceCode", "lev3"),"lev3")
+datCityLHJ  <- bind_rows(l.t1,l.t2,l.t3,l.t4) %>% 
+  filter(!is.na(city_lhj)) %>% 
+  rename(county = city_lhj)
 
 datCounty_Q <- bind_rows(datCounty_Q,datState_Q)
 
@@ -731,6 +750,8 @@ s.t3      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","
 s.t4      <- calculateYLLmeasures(c(         "year","quarter","sex","raceCode","lev3"),"lev3")
 datState_Q  <- bind_rows(s.t1,s.t2,s.t3,s.t4)
 datState_Q$region = STATE
+
+
 
 datRegion_Q <- bind_rows(datRegion_Q,datState_Q)
 
@@ -933,7 +954,50 @@ datCounty_RE <- merge(datCounty_RE, popCountySexRACE_3year, by = c("yearG3","cou
 datCounty_RE <- calculateRates(datCounty_RE,1)
 
 # NOTE: "1" used above for number of years, because both numerators (deaths) and denominators 
-# (population data) are already BOTH aggregated over THREE year 
+# (population data) are already BOTH aggregated over THREE year
+
+# -- RACE-ETHNICITY COUNTY 3-YEAR ----------------------------------------------
+
+cbdDat0_SAVE <- cbdDat0
+
+cbdDat0 <- filter(cbdDat0, year %in% RE_1year_years)
+cbdDat0_RACE <- mutate(cbdDat0, raceCode = "Total")
+cbdDat0 <- bind_rows(cbdDat0, cbdDat0_RACE)
+
+cbdDat0 <- cbdDat0 %>% 
+  bind_rows(
+    mutate(., ageGroup = "Total")
+  )
+
+c.t2.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode", "ageGroup", "lev1"),"lev1")
+c.t3.RE      <- calculateYLLmeasures(c("county","yearG3","sex","raceCode", "ageGroup", "lev2"),"lev2")
+datCounty_LT <- bind_rows(c.t2.RE,c.t3.RE)
+
+s.t2.RE      <- calculateYLLmeasures(c(         "yearG3","sex","raceCode", "ageGroup", "lev1"),"lev1")
+s.t3.RE      <- calculateYLLmeasures(c(         "yearG3","sex","raceCode", "ageGroup", "lev2"),"lev2")
+datState.LT  <- bind_rows(s.t2.RE,s.t3.RE)
+datState.LT$county = STATE
+
+s.t2.RE      <- calculateYLLmeasures(c(         "year","sex","raceCode", "ageGroup", "lev1"),"lev1")
+s.t3.RE      <- calculateYLLmeasures(c(         "year","sex","raceCode", "ageGroup", "lev2"),"lev2")
+datState.LT1  <- bind_rows(s.t2.RE,s.t3.RE) %>% mutate(year = as.character(year))
+datState.LT1$county = STATE
+
+l.t2.RE      <- calculateYLLmeasures(c("city_lhj", "yearG3","sex","raceCode", "ageGroup", "lev1"),"lev1")
+l.t3.RE      <- calculateYLLmeasures(c("city_lhj", "yearG3","sex","raceCode", "ageGroup", "lev2"),"lev2")
+datCityLHJ_LT  <- bind_rows(l.t2.RE,l.t3.RE) %>% 
+  filter(!is.na(city_lhj)) %>% 
+  rename(county = city_lhj)
+
+datCounty_LT <- bind_rows(datCounty_LT, datCityLHJ_LT, datState.LT) %>%
+  rename(year = yearG3) %>% 
+  bind_rows(datState.LT1)
+
+datCounty_RE <- merge(datCounty_LT, popCountySexRACE_3year, by = c("yearG3","county","sex","raceCode"))
+datCounty_RE <- calculateRates(datCounty_RE,1)
+
+# NOTE: "1" used above for number of years, because both numerators (deaths) and denominators 
+# (population data) are already BOTH aggregated over THREE year
 
 # -- RACE-ETHNICITY STATE 1-YEAR ----------------------------------------------
 
@@ -1052,6 +1116,7 @@ raceCode <- data.frame(raceCode = sort(unique(cbdDat0$raceCode)),               
 # rural <- data.frame(ruca = unique(popRuralSex$ruca), stringsAsFactors = FALSE)
 
 yearForQuarterly <- data.frame(year = forQuarter_selectYears) # forQuarter_selectYears assigned at the top of script. Run into memory issues when too many years are selected
+yearForMonthly <- data.frame(year = forMonth_selectYears)
 yearForRE1 <- data.frame(year = RE_1year_years)
 raceCodeForQuarterly <- raceCode %>% tibble::add_row(raceCode = "Total") # For the quarterly dataset, we need to add Total race to crossjoin in fullmat
 
@@ -1071,7 +1136,7 @@ fullMatCounty_RE_Q     <- sqldf(" select * from  county cross join yearForQuarte
 fullMatRegion_RE_Q     <- sqldf(" select * from  region cross join yearForQuarterly cross join quarter cross join CAUSE1 cross join sex cross join ageGroup cross join raceCodeForQuarterly") %>% mutate(tester=0)
 
 # For monthly data
-fullMatCounty_M     <- sqldf(" select * from  county cross join yearForQuarterly cross join month cross join CAUSE1 cross join sex cross join ageGroup") %>% mutate(tester=0)
+fullMatCounty_M     <- sqldf(" select * from  county cross join yearForMonthly cross join month cross join CAUSE1 cross join sex cross join ageGroup") %>% mutate(tester=0)
 
 # For R/E 1-year data (includes Total Race)
 fullMatCounty_RE_1year <- sqldf(" select * from  county cross join yearForRE1 cross join CAUSE1 cross join sex cross join ageGroup cross join raceCodeForQuarterly") %>% mutate(tester=0)
@@ -1243,7 +1308,7 @@ regionAA <- regionAA[!(regionAA$oDeaths==0),c("region","year","sex","causeCode",
 
 cbdDat0_SAVE <- cbdDat0
 
-cbdDat0 <- filter(cbdDat0, year %in% forQuarter_selectYears)
+cbdDat0 <- filter(cbdDat0, year %in% forMonth_selectYears)
 
 tA1      <- cbdDat0 %>% group_by(county,year, month, sex, ageGroup,causeCode=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
 tA2      <- cbdDat0 %>% group_by(county,year, month, sex, ageGroup,causeCode=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) 
@@ -1254,7 +1319,12 @@ tA6      <- cbdDat0 %>% group_by(       year, month, sex, ageGroup,causeCode=lev
 tA7      <- cbdDat0 %>% group_by(       year, month, sex, ageGroup,causeCode=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
 tA8      <- cbdDat0 %>% group_by(       year, month, sex, ageGroup,causeCode=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% mutate(county=STATE)
 
-datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8)  %>% ungroup()  # UNGROUP HERE!!!!
+tA9 <- cbdDat0 %>% filter(!is.na(city_lhj)) %>% group_by(city_lhj, year, month,sex, ageGroup,causeCode=lev0) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% rename(county=city_lhj)
+tA10 <- cbdDat0 %>% filter(!is.na(city_lhj)) %>% group_by(city_lhj, year, month,sex, ageGroup,causeCode=lev1) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% rename(county=city_lhj)
+tA11 <- cbdDat0 %>% filter(!is.na(city_lhj)) %>% group_by(city_lhj, year, month,sex, ageGroup,causeCode=lev2) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% rename(county=city_lhj)
+tA12 <- cbdDat0 %>% filter(!is.na(city_lhj)) %>% group_by(city_lhj, year, month,sex, ageGroup,causeCode=lev3) %>% summarize(Ndeaths = n(), YLL = sum(yll,na.rm=TRUE) ) %>% rename(county=city_lhj)
+
+datAA1 <- bind_rows(tA1,tA2,tA3,tA4,tA5,tA6,tA7,tA8,tA9,tA10,tA11,tA12)  %>% ungroup()  # UNGROUP HERE!!!!
 
 # DATA CLEANING ISSUES as above
 datAA1 <- filter(datAA1,!is.na(ageGroup))    

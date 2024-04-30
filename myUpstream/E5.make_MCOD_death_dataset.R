@@ -100,7 +100,7 @@ endTime - startTime
 
 
 save(primary_other_Ndeaths, primaryNdeaths_perCause, otherNdeaths_perCause, file = paste0(securePlace, "myData/intermediateMCOD_Objects.RData")) # Save just in case.....
-
+load(paste0(securePlace, "myData/intermediateMCOD_Objects.RData"))
 
 # Checks -------------------------------------------------------------
 nrow(primary_other_Ndeaths) - nrow(otherNdeaths_perCause)

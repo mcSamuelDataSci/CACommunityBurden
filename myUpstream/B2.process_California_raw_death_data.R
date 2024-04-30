@@ -1,7 +1,7 @@
 # Standards and Global Constants =================================================================
 
-yearYTD <- 2023
-yearAnnual <- 2022
+yearYTD <- 2024
+yearAnnual <- 2023
 
 server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
@@ -101,7 +101,7 @@ addOOS <- function(myYear, exportDate = TRUE, exportDynamic = "F241", exportMast
   
 }
 
-ca23 <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_010123_123123.csv"), colClasses = "character") %>% filter(F24 == "2023") %>% 
+ca23 <- read.csv(paste0(.sl,"rawDeathData/Samuel_CCDF_2023.csv"), colClasses = "character") %>% filter(F24 == "2023") %>% 
   mutate(oos = FALSE)
 ca22 <- addOOS(2022, TRUE, "F241", "F251")
 ca21 <- addOOS(2021, TRUE, "F241", "F247")
@@ -169,7 +169,7 @@ death.datA <- death.datA %>%
 #   a. For records where F62 is not blank, F62 will be used.
 #   b. For records where F62 is blank, F61 will be used (out-of-state records).
 
-fipsCounty <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/County Codes to County Names Linkage.xlsx")))
+fipsCounty <- as.data.frame(read_excel(paste0(standardsPlace,"countyLink.xlsx")))
 
 # Step 1
 death.datA_1 <- death.datA %>%

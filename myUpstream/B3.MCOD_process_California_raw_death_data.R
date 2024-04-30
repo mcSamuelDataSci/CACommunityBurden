@@ -49,16 +49,16 @@ death.datA  <- bind_rows(rawDeathData_list) %>%
 
 # Join data ============================================================================================
 
-death.datB <- cbdDat1 %>% 
-  left_join(death.datA, by = "SFN")
-
-dataCA <- death.datB %>% 
-  mutate(county = "CALIFORNIA")
-
-cities <- c("Berkeley", "Alameda HD", "Long Beach", "Pasadena", "Los Angeles HD")
-dataCities <- death.datB %>% 
-  filter(city_lhj %in% cities) %>% 
-  mutate(county = city_lhj)
+# death.datB <- cbdDat1 %>% 
+#   left_join(death.datA, by = "SFN")
+# 
+# dataCA <- death.datB %>% 
+#   mutate(county = "CALIFORNIA")
+# 
+# cities <- c("Berkeley", "Alameda HD", "Long Beach", "Pasadena", "Los Angeles HD")
+# dataCities <- death.datB %>% 
+#   filter(city_lhj %in% cities) %>% 
+#   mutate(county = city_lhj)
 
 # Map ICD Codes to Cause Codes
 
@@ -121,7 +121,7 @@ dataFinal <- death.datC %>%
 # THIS FILTERS ON RECORDS WHERE AT LEAST ONE CONTRIBUTORY CCB CAUSE CODE MATCHES THE PRIMARY CAUSE CODE.
 # THIS HAS BEEN ADDRESSED IN THE CODE RIGHT ABOVE, SO THIS RETURN AN EMPTY (MEANING 0 ROWS) DATAFRAME
 dataFinal %>%
-  filter(county == "CALIFORNIA", year == 2021) %>% 
+  filter(county == "CALIFORNIA", year == 2022) %>% 
   filter(if_any(.cols = starts_with("causeCode_2"), .fns = ~. == causeCode_primary))
 
 
