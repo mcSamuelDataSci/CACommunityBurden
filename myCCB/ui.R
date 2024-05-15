@@ -294,12 +294,19 @@ shinyUI(
                            HTML("<div id='sophDropdown' class='dropdown'>
                              <button class='dropbtn'>STATE OF PUBLIC HEALTH<br/>UPDATES</button>
                              <div id = 'sophDropdownContent' class='dropdown-content'>
+                               <a href='SOPH/2024/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2024 Update - SHA Core Module</a>
+                               <div class='dropdown-divider'></div>
                                <a href='https://www.cdph.ca.gov/Programs/OPP/Pages/State-of-Public-Health-Report.aspx' target = '_blank' rel = 'noopener noreferrer'>2024 California State of Public Health Report</a>
-                               <a href='SOPH/2023/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2023 Full Update</a>
-                               <a href='SOPH/2022/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2022 Full Update</a>
-                               <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Full Update</a>
-                               <a href='SOPH/2020/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2020 Handout</a>
-                               <a href='SOPH/2019/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2019 Handout</a>
+                               <div class='dropdown-divider'></div>
+                               <a href='SOPH/2023/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2023 Update - SHA Core Module</a>
+                               <div class='dropdown-divider'></div>
+                               <a href='SOPH/2022/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2022 Update - SHA Core Module</a>
+                               <div class='dropdown-divider'></div>
+                               <a href='SOPH/2021/Full Report.html' target = '_blank' rel = 'noopener noreferrer'>2021 Update - SHA Core Module</a>
+                               <div class='dropdown-divider'></div>
+                               <a href='SOPH/2020/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2020 State of Public Health Handout</a>
+                               <div class='dropdown-divider'></div>
+                               <a href='SOPH/2019/Handout.pdf' target = '_blank' rel = 'noopener noreferrer'>2019 State of Public Health Handout</a>
                              </div>
                              </div>"
                            ),
@@ -311,6 +318,7 @@ shinyUI(
                              <button class='dropbtn'>EXCESS MORTALITY<br/>DATA BRIEF UPDATES</button>
                              <div id = 'xmdaDropdownContent' class='dropdown-content'>
                                <a href='xMDA/2022_Excess_Mortality_SUPPLEMENT.html' target = '_blank' rel = 'noopener noreferrer'>2022 Data Brief Supplement</a>
+                               <div class='dropdown-divider'></div>
                                <a href='xMDA/2020_Excess_Mortality.html' target = '_blank' rel = 'noopener noreferrer'>2020/2021 Data Brief</a>
                              </div>
                              </div>"

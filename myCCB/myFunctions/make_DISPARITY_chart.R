@@ -91,7 +91,7 @@ if (myAddRR) racePlot   <- racePlot + geom_text(aes(y=placeLabels3,label=paste("
  
 #--AGE ------------------------------------------------------------------------------------------------------------------------
 
-ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/myInfo/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
+ageMap     <- as.data.frame(read_excel(paste0(myPlace,"/Standards/Age Group Standard and US Standard 2000 Population.xlsx"),sheet = "data"))
 
 myMeasure <- "cDeathRate"
 

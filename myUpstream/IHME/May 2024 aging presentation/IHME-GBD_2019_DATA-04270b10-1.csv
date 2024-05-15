@@ -1,0 +1,201 @@
+measure,location,sex,age,cause,metric,year,val,upper,lower
+YLDs (Years Lived with Disability),California,Both,85+ years,Chronic respiratory diseases,Number,2019,31935.03815549117,36936.591070348004,26310.005320277065
+YLDs (Years Lived with Disability),California,Both,85+ years,Chronic respiratory diseases,Rate,2019,4149.238549358271,4799.0776402005895,3418.3922930414224
+YLDs (Years Lived with Disability),California,Both,65-74 years,Chronic respiratory diseases,Number,2019,77212.87604625305,91154.85656339573,62505.477642464924
+YLDs (Years Lived with Disability),California,Both,65-74 years,Chronic respiratory diseases,Rate,2019,2255.253132700004,2662.4740114883193,1825.6757354775389
+YLDs (Years Lived with Disability),California,Both,55-59 years,Unintentional injuries,Number,2019,26333.965008475512,37385.106996764844,18188.248341535265
+YLDs (Years Lived with Disability),California,Both,55-59 years,Unintentional injuries,Rate,2019,1017.8029684142982,1444.9276006688283,702.9724975450134
+YLDs (Years Lived with Disability),California,Both,60-64 years,Unintentional injuries,Number,2019,27633.320518975444,38590.58779963237,18969.764016079636
+YLDs (Years Lived with Disability),California,Both,60-64 years,Unintentional injuries,Rate,2019,1183.695028218674,1653.0581941136443,812.5847683377688
+YLDs (Years Lived with Disability),California,Both,65-74 years,Unintentional injuries,Number,2019,52123.07469686914,72065.11964991373,35999.360909103016
+YLDs (Years Lived with Disability),California,Both,65-74 years,Unintentional injuries,Rate,2019,1522.4238950204845,2104.8961672080536,1051.4784013072972
+YLDs (Years Lived with Disability),California,Both,75-84 years,Unintentional injuries,Number,2019,39104.12376458171,53874.357885134086,27802.62114415648
+YLDs (Years Lived with Disability),California,Both,75-84 years,Unintentional injuries,Rate,2019,2334.899338903463,3216.8270376584337,1660.0888980428176
+YLDs (Years Lived with Disability),California,Both,55-59 years,Digestive diseases,Number,2019,8756.937180661596,12929.348693853139,5788.9563669874315
+YLDs (Years Lived with Disability),California,Both,55-59 years,Digestive diseases,Rate,2019,338.45403279856777,499.7169805622469,223.7421129877073
+YLDs (Years Lived with Disability),California,Both,60-64 years,Digestive diseases,Number,2019,8739.608188007005,12508.766659451814,5950.7227380419245
+YLDs (Years Lived with Disability),California,Both,60-64 years,Digestive diseases,Rate,2019,374.3679936553158,535.8228626115762,254.90389092006254
+YLDs (Years Lived with Disability),California,Both,85+ years,Unintentional injuries,Number,2019,29699.109710799232,40877.04888180709,20784.152365866707
+YLDs (Years Lived with Disability),California,Both,85+ years,Unintentional injuries,Rate,2019,3858.730034818504,5311.0513342296545,2700.432227207516
+YLDs (Years Lived with Disability),California,Both,85+ years,Digestive diseases,Number,2019,3531.231210548276,4710.014518835273,2545.6389930715945
+YLDs (Years Lived with Disability),California,Both,85+ years,Digestive diseases,Rate,2019,458.8039191988441,611.9602461232091,330.7484209467285
+YLDs (Years Lived with Disability),California,Both,65-74 years,Digestive diseases,Number,2019,14860.487912921077,20847.277485084287,10339.63393443827
+YLDs (Years Lived with Disability),California,Both,65-74 years,Digestive diseases,Rate,2019,434.04887416691633,608.912532002286,302.0026324060852
+YLDs (Years Lived with Disability),California,Both,75-84 years,Digestive diseases,Number,2019,8064.560943480094,10970.05759377388,5672.036282089761
+YLDs (Years Lived with Disability),California,Both,75-84 years,Digestive diseases,Rate,2019,481.5333065341166,655.019925203777,338.67614180587185
+YLDs (Years Lived with Disability),California,Both,55-59 years,Self-harm and interpersonal violence,Number,2019,3343.63956323128,4539.308419557492,2352.485506750479
+YLDs (Years Lived with Disability),California,Both,55-59 years,Self-harm and interpersonal violence,Rate,2019,129.23106230561876,175.44344660922337,90.92313790010851
+YLDs (Years Lived with Disability),California,Both,60-64 years,Self-harm and interpersonal violence,Number,2019,2993.457303884201,4057.0504236300358,2127.4566039996926
+YLDs (Years Lived with Disability),California,Both,60-64 years,Self-harm and interpersonal violence,Rate,2019,128.22709906901852,173.78694726121148,91.13127766082852
+YLDs (Years Lived with Disability),California,Both,85+ years,Self-harm and interpersonal violence,Number,2019,801.0090814442094,1093.0113167729205,570.4343587268428
+YLDs (Years Lived with Disability),California,Both,85+ years,Self-harm and interpersonal violence,Rate,2019,104.07307932221428,142.01218950662914,74.11509012713991
+YLDs (Years Lived with Disability),California,Both,85+ years,Neurological disorders,Number,2019,38644.53812045417,50326.61654712308,27923.679223390536
+YLDs (Years Lived with Disability),California,Both,85+ years,Neurological disorders,Rate,2019,5020.986870621995,6538.809705482979,3628.0528524649453
+YLDs (Years Lived with Disability),California,Both,65-74 years,Neurological disorders,Number,2019,36061.51348610264,57329.374317349306,21617.806460707743
+YLDs (Years Lived with Disability),California,Both,65-74 years,Neurological disorders,Rate,2019,1053.293769431906,1674.490805749586,631.4183364107366
+YLDs (Years Lived with Disability),California,Both,75-84 years,Neurological disorders,Number,2019,34627.08814536163,46088.80025050406,24653.413820023405
+YLDs (Years Lived with Disability),California,Both,75-84 years,Neurological disorders,Rate,2019,2067.5764455304547,2751.952962393832,1472.0503642182018
+YLDs (Years Lived with Disability),California,Both,85+ years,Neoplasms,Number,2019,9843.40296096376,12654.638196799107,7249.842421739656
+YLDs (Years Lived with Disability),California,Both,85+ years,Neoplasms,Rate,2019,1278.9283928090551,1644.1850602677919,941.9536468561465
+YLDs (Years Lived with Disability),California,Both,65-74 years,Neoplasms,Number,2019,35202.58471355198,49458.240334201335,23526.15048894231
+YLDs (Years Lived with Disability),California,Both,65-74 years,Neoplasms,Rate,2019,1028.205961487793,1444.5887417109113,687.1577294799346
+YLDs (Years Lived with Disability),California,Both,75-84 years,Neoplasms,Number,2019,23054.493620036003,30521.305362348256,16013.271691581838
+YLDs (Years Lived with Disability),California,Both,75-84 years,Neoplasms,Rate,2019,1376.5791617336338,1822.420984089783,956.149221280369
+YLDs (Years Lived with Disability),California,Both,55-59 years,Mental disorders,Number,2019,57096.39442194733,73696.62598183376,43080.73955600621
+YLDs (Years Lived with Disability),California,Both,55-59 years,Mental disorders,Rate,2019,2206.7652823913186,2848.3612195234305,1665.0627654238212
+YLDs (Years Lived with Disability),California,Both,60-64 years,Mental disorders,Number,2019,46448.134156906846,60107.18085648427,34400.260745808395
+YLDs (Years Lived with Disability),California,Both,60-64 years,Mental disorders,Rate,2019,1989.6423751828977,2574.7383884323385,1473.5622375268986
+YLDs (Years Lived with Disability),California,Both,85+ years,Mental disorders,Number,2019,8788.613684253141,11301.879158000223,6527.051832189925
+YLDs (Years Lived with Disability),California,Both,85+ years,Mental disorders,Rate,2019,1141.8822960714226,1468.4245077220908,848.0432978948928
+YLDs (Years Lived with Disability),California,Both,65-74 years,Mental disorders,Number,2019,58513.54914282046,74524.4377445202,43673.595438395554
+YLDs (Years Lived with Disability),California,Both,65-74 years,Mental disorders,Rate,2019,1709.0784823335862,2176.7285495926258,1275.629376500785
+YLDs (Years Lived with Disability),California,Both,55-59 years,Neurological disorders,Number,2019,24659.960192984476,48765.277562954616,9967.622976681045
+YLDs (Years Lived with Disability),California,Both,55-59 years,Neurological disorders,Rate,2019,953.1029860987505,1884.769127746163,385.2468190959988
+YLDs (Years Lived with Disability),California,Both,60-64 years,Neurological disorders,Number,2019,21157.797680700616,38948.50085044181,9617.214212201372
+YLDs (Years Lived with Disability),California,Both,60-64 years,Neurological disorders,Rate,2019,906.3109120564884,1668.3896812755575,411.9609382621823
+YLDs (Years Lived with Disability),California,Both,65-74 years,Self-harm and interpersonal violence,Number,2019,4284.166665818331,5814.7492681287395,3057.5567558529797
+YLDs (Years Lived with Disability),California,Both,65-74 years,Self-harm and interpersonal violence,Rate,2019,125.13301911339164,169.8386612999215,89.30588789251709
+YLDs (Years Lived with Disability),California,Both,75-84 years,Self-harm and interpersonal violence,Number,2019,1952.3165495542025,2659.1331796783534,1392.8102836577402
+YLDs (Years Lived with Disability),California,Both,75-84 years,Self-harm and interpersonal violence,Rate,2019,116.57242720301518,158.7763055545266,83.16442097280657
+YLDs (Years Lived with Disability),California,Both,55-59 years,Enteric infections,Number,2019,2046.0650928562702,2859.1303434410925,1379.2980554633036
+YLDs (Years Lived with Disability),California,Both,55-59 years,Enteric infections,Rate,2019,79.08004451315038,110.50486889084684,53.30961952470101
+YLDs (Years Lived with Disability),California,Both,60-64 years,Enteric infections,Number,2019,1823.2787813036725,2600.219682734768,1218.5737888221113
+YLDs (Years Lived with Disability),California,Both,60-64 years,Enteric infections,Rate,2019,78.10158127770958,111.38245614080115,52.19856710147572
+YLDs (Years Lived with Disability),California,Both,55-59 years,Cardiovascular diseases,Number,2019,15724.976169931771,20778.628240054186,10808.888385340688
+YLDs (Years Lived with Disability),California,Both,55-59 years,Cardiovascular diseases,Rate,2019,607.7674751542166,803.0902105132177,417.7615744654417
+YLDs (Years Lived with Disability),California,Both,60-64 years,Cardiovascular diseases,Number,2019,21949.41755306668,28615.459692375465,15415.577618743717
+YLDs (Years Lived with Disability),California,Both,60-64 years,Cardiovascular diseases,Rate,2019,940.2205721899988,1225.765732525603,660.3383973307078
+YLDs (Years Lived with Disability),California,Both,75-84 years,Mental disorders,Number,2019,23061.606864724334,29409.39339923342,17400.181320679072
+YLDs (Years Lived with Disability),California,Both,75-84 years,Mental disorders,Rate,2019,1377.0038921385456,1756.0289451522638,1038.9613153600997
+YLDs (Years Lived with Disability),California,Both,75-84 years,Chronic respiratory diseases,Number,2019,58251.71378867915,67115.42958421535,47640.76532199066
+YLDs (Years Lived with Disability),California,Both,75-84 years,Chronic respiratory diseases,Rate,2019,3478.1980753235166,4007.448756807161,2844.6204836310026
+YLDs (Years Lived with Disability),California,Both,55-59 years,Diabetes and kidney diseases,Number,2019,42456.56200462104,57839.49889036571,29821.285009087736
+YLDs (Years Lived with Disability),California,Both,55-59 years,Diabetes and kidney diseases,Rate,2019,1640.9384163403113,2235.486135234964,1152.5872535491533
+YLDs (Years Lived with Disability),California,Both,60-64 years,Diabetes and kidney diseases,Number,2019,52143.75311330363,70817.41492933762,36354.877230557286
+YLDs (Years Lived with Disability),California,Both,60-64 years,Diabetes and kidney diseases,Rate,2019,2233.618694883072,3033.519692488403,1557.2897726771807
+YLDs (Years Lived with Disability),California,Both,85+ years,Diabetes and kidney diseases,Number,2019,24647.263345031355,32566.59232449137,17960.2470380719
+YLDs (Years Lived with Disability),California,Both,85+ years,Diabetes and kidney diseases,Rate,2019,3202.3564433977185,4231.294781490028,2333.5293668203053
+YLDs (Years Lived with Disability),California,Both,55-59 years,Other non-communicable diseases,Number,2019,31003.535549880078,44913.008156784366,20616.062051068096
+YLDs (Years Lived with Disability),California,Both,55-59 years,Other non-communicable diseases,Rate,2019,1198.2810223925683,1735.8796143185514,796.8070568118824
+YLDs (Years Lived with Disability),California,Both,60-64 years,Other non-communicable diseases,Number,2019,31095.97902018482,44401.091947182504,21227.57424859389
+YLDs (Years Lived with Disability),California,Both,60-64 years,Other non-communicable diseases,Rate,2019,1332.02072977474,1901.9557113764047,909.2998462471776
+YLDs (Years Lived with Disability),California,Both,65-74 years,Sense organ diseases,Number,2019,77391.51834170416,111235.72934605177,52797.54326197162
+YLDs (Years Lived with Disability),California,Both,65-74 years,Sense organ diseases,Rate,2019,2260.470961863724,3249.0012018925026,1542.1239427617945
+YLDs (Years Lived with Disability),California,Both,75-84 years,Sense organ diseases,Number,2019,62447.32404387778,85782.8576532338,43786.69836304859
+YLDs (Years Lived with Disability),California,Both,75-84 years,Sense organ diseases,Rate,2019,3728.71711700149,5122.077119784504,2614.494923250229
+YLDs (Years Lived with Disability),California,Both,65-74 years,Nutritional deficiencies,Number,2019,3003.190792910337,5052.153675669032,1695.484005300028
+YLDs (Years Lived with Disability),California,Both,65-74 years,Nutritional deficiencies,Rate,2019,87.71795315265325,147.56457714525638,49.52212390204307
+YLDs (Years Lived with Disability),California,Both,75-84 years,Nutritional deficiencies,Number,2019,1849.831090565545,3430.7016536663555,974.4508126887881
+YLDs (Years Lived with Disability),California,Both,75-84 years,Nutritional deficiencies,Rate,2019,110.4530411280209,204.84650343644586,58.18426138477448
+YLDs (Years Lived with Disability),California,Both,55-59 years,HIV/AIDS and sexually transmitted infections,Number,2019,2586.052326259929,4607.075216915744,1177.1381437146379
+YLDs (Years Lived with Disability),California,Both,55-59 years,HIV/AIDS and sexually transmitted infections,Rate,2019,99.95045308577441,178.06262102860762,45.49617562417401
+YLDs (Years Lived with Disability),California,Both,60-64 years,HIV/AIDS and sexually transmitted infections,Number,2019,2202.6160663615674,4046.874677354186,963.6449660429528
+YLDs (Years Lived with Disability),California,Both,60-64 years,HIV/AIDS and sexually transmitted infections,Rate,2019,94.35079237170982,173.35106116251166,41.27849038228028
+YLDs (Years Lived with Disability),California,Both,85+ years,HIV/AIDS and sexually transmitted infections,Number,2019,123.20671617012384,201.90126335849735,68.43481378167836
+YLDs (Years Lived with Disability),California,Both,85+ years,HIV/AIDS and sexually transmitted infections,Rate,2019,16.00793629191323,26.232519310366516,8.891561866265357
+YLDs (Years Lived with Disability),California,Both,85+ years,Enteric infections,Number,2019,392.5368702695733,525.4348487366365,275.18075812480356
+YLDs (Years Lived with Disability),California,Both,85+ years,Enteric infections,Rate,2019,51.00132043796863,68.26841787190443,35.75353829526395
+YLDs (Years Lived with Disability),California,Both,65-74 years,Enteric infections,Number,2019,2457.7193192383265,3320.1599331600714,1717.3456812579561
+YLDs (Years Lived with Disability),California,Both,65-74 years,Enteric infections,Rate,2019,71.78568495090443,96.97606764238192,50.16066524015689
+YLDs (Years Lived with Disability),California,Both,65-74 years,HIV/AIDS and sexually transmitted infections,Number,2019,2381.5226687340382,4449.352436661986,1036.2380514386675
+YLDs (Years Lived with Disability),California,Both,65-74 years,HIV/AIDS and sexually transmitted infections,Rate,2019,69.56011398981106,129.9578067168149,30.26670202428511
+YLDs (Years Lived with Disability),California,Both,75-84 years,HIV/AIDS and sexually transmitted infections,Number,2019,541.6715884285577,960.2675870878409,269.04102906862596
+YLDs (Years Lived with Disability),California,Both,75-84 years,HIV/AIDS and sexually transmitted infections,Rate,2019,32.34310123757754,57.3373838462688,16.06438555411936
+YLDs (Years Lived with Disability),California,Both,85+ years,Respiratory infections and tuberculosis,Number,2019,601.1531293598704,900.3506117563358,383.35479552952074
+YLDs (Years Lived with Disability),California,Both,85+ years,Respiratory infections and tuberculosis,Rate,2019,78.10630212065169,116.98027251598353,49.80831674437623
+YLDs (Years Lived with Disability),California,Both,65-74 years,Respiratory infections and tuberculosis,Number,2019,3211.1479611187606,4980.010302060972,1863.1895349254687
+YLDs (Years Lived with Disability),California,Both,65-74 years,Respiratory infections and tuberculosis,Rate,2019,93.79201850398822,145.4573953167274,54.420509254666435
+YLDs (Years Lived with Disability),California,Both,75-84 years,Respiratory infections and tuberculosis,Number,2019,1376.9510726839453,2173.4138379399374,828.761242303827
+YLDs (Years Lived with Disability),California,Both,75-84 years,Respiratory infections and tuberculosis,Rate,2019,82.21747068589632,129.77410167584358,49.485166536750235
+YLDs (Years Lived with Disability),California,Both,75-84 years,Enteric infections,Number,2019,1051.7007900824901,1415.1404282238166,736.3643231249175
+YLDs (Years Lived with Disability),California,Both,75-84 years,Enteric infections,Rate,2019,62.796841946168655,84.49774939869944,43.96816513796284
+YLDs (Years Lived with Disability),California,Both,55-59 years,Other infectious diseases,Number,2019,356.2430568668389,559.3200066929049,217.79568442761035
+YLDs (Years Lived with Disability),California,Both,55-59 years,Other infectious diseases,Rate,2019,13.768729495894567,21.617616751686395,8.41776367694347
+YLDs (Years Lived with Disability),California,Both,55-59 years,Respiratory infections and tuberculosis,Number,2019,2618.836237216626,4111.057260019683,1510.1089966266659
+YLDs (Years Lived with Disability),California,Both,55-59 years,Respiratory infections and tuberculosis,Rate,2019,101.21754529453281,158.89161701333225,58.36543866072126
+YLDs (Years Lived with Disability),California,Both,60-64 years,Respiratory infections and tuberculosis,Number,2019,2244.4907163019834,3597.031950942298,1297.6268181633181
+YLDs (Years Lived with Disability),California,Both,60-64 years,Respiratory infections and tuberculosis,Rate,2019,96.14452595174883,154.0816940096051,55.58486581764177
+YLDs (Years Lived with Disability),California,Both,60-64 years,Other infectious diseases,Number,2019,299.4646177482967,461.1382827507067,176.59012006467637
+YLDs (Years Lived with Disability),California,Both,60-64 years,Other infectious diseases,Rate,2019,12.827802540510874,19.753221196796908,7.564376746166236
+YLDs (Years Lived with Disability),California,Both,85+ years,Other infectious diseases,Number,2019,102.8349478329194,155.1994880719163,63.31858865386608
+YLDs (Years Lived with Disability),California,Both,85+ years,Other infectious diseases,Rate,2019,13.361084076119313,20.1646760405682,8.226823705498076
+YLDs (Years Lived with Disability),California,Both,65-74 years,Other infectious diseases,Number,2019,444.32437387387847,680.4626308073398,279.65707616582284
+YLDs (Years Lived with Disability),California,Both,65-74 years,Other infectious diseases,Rate,2019,12.977938232915491,19.87512392226206,8.168294323434955
+YLDs (Years Lived with Disability),California,Both,75-84 years,Other infectious diseases,Number,2019,226.2239735919315,350.6966537947816,132.1620722521822
+YLDs (Years Lived with Disability),California,Both,75-84 years,Other infectious diseases,Rate,2019,13.507787811942688,20.940026428689652,7.891370664319319
+YLDs (Years Lived with Disability),California,Both,55-59 years,Maternal and neonatal disorders,Number,2019,3243.2082130967874,4316.284890183039,2396.6747707930535
+YLDs (Years Lived with Disability),California,Both,55-59 years,Maternal and neonatal disorders,Rate,2019,125.34940884948924,166.8236276738487,92.63104493576002
+YLDs (Years Lived with Disability),California,Both,60-64 years,Maternal and neonatal disorders,Number,2019,2465.1913932846287,3256.059795366067,1827.9416671051993
+YLDs (Years Lived with Disability),California,Both,60-64 years,Maternal and neonatal disorders,Rate,2019,105.59841311270227,139.47588342526228,78.30131966009573
+YLDs (Years Lived with Disability),California,Both,55-59 years,Nutritional deficiencies,Number,2019,2603.7142227844956,5234.376406219852,1253.380650428197
+YLDs (Years Lived with Disability),California,Both,55-59 years,Nutritional deficiencies,Rate,2019,100.6330821811174,202.30769815079756,48.442934671944904
+YLDs (Years Lived with Disability),California,Both,60-64 years,Nutritional deficiencies,Number,2019,2155.2671987816198,4081.4481519661776,1118.6646610559258
+YLDs (Years Lived with Disability),California,Both,60-64 years,Nutritional deficiencies,Rate,2019,92.32256637159227,174.83204315229304,47.918880998269664
+YLDs (Years Lived with Disability),California,Both,85+ years,Maternal and neonatal disorders,Number,2019,34.241363099515155,58.230773981024605,20.12649687207655
+YLDs (Years Lived with Disability),California,Both,85+ years,Maternal and neonatal disorders,Rate,2019,4.44889350259481,7.565776843122101,2.614984716114997
+YLDs (Years Lived with Disability),California,Both,65-74 years,Maternal and neonatal disorders,Number,2019,2484.663639762034,3249.086881599544,1903.567089618019
+YLDs (Years Lived with Disability),California,Both,65-74 years,Maternal and neonatal disorders,Rate,2019,72.57268145176218,94.90014804982056,55.59986704282331
+YLDs (Years Lived with Disability),California,Both,75-84 years,Maternal and neonatal disorders,Number,2019,422.1291840213761,540.6413077295543,316.15607571103953
+YLDs (Years Lived with Disability),California,Both,75-84 years,Maternal and neonatal disorders,Rate,2019,25.20524839367699,32.281583384947204,18.877615481481065
+YLDs (Years Lived with Disability),California,Both,85+ years,Nutritional deficiencies,Number,2019,720.5766066770866,1256.0478519353615,401.39354746768265
+YLDs (Years Lived with Disability),California,Both,85+ years,Nutritional deficiencies,Rate,2019,93.6226917792563,163.19511320805228,52.152046053848274
+YLDs (Years Lived with Disability),California,Both,55-59 years,Substance use disorders,Number,2019,18533.44102986701,25213.307919082505,13039.113220595385
+YLDs (Years Lived with Disability),California,Both,55-59 years,Substance use disorders,Rate,2019,716.3141323024792,974.4897752893119,503.9593596004546
+YLDs (Years Lived with Disability),California,Both,60-64 years,Substance use disorders,Number,2019,12741.168536618028,17519.647482026,8783.730203113488
+YLDs (Years Lived with Disability),California,Both,60-64 years,Substance use disorders,Rate,2019,545.7779798896981,750.4678855506172,376.25799489062405
+YLDs (Years Lived with Disability),California,Both,85+ years,Musculoskeletal disorders,Number,2019,46888.06005803199,64044.872324491174,33453.48199345826
+YLDs (Years Lived with Disability),California,Both,85+ years,Musculoskeletal disorders,Rate,2019,6092.046777904337,8321.187901628176,4346.526107834077
+YLDs (Years Lived with Disability),California,Both,55-59 years,Musculoskeletal disorders,Number,2019,162171.04157565505,216982.59180749807,113972.41401882388
+YLDs (Years Lived with Disability),California,Both,55-59 years,Musculoskeletal disorders,Rate,2019,6267.881325634659,8386.337794738505,4405.013117787905
+YLDs (Years Lived with Disability),California,Both,60-64 years,Musculoskeletal disorders,Number,2019,161994.639365085,220549.88407677753,113576.54221214492
+YLDs (Years Lived with Disability),California,Both,60-64 years,Musculoskeletal disorders,Rate,2019,6939.167845675817,9447.427828176398,4865.140555456088
+YLDs (Years Lived with Disability),California,Both,65-74 years,Musculoskeletal disorders,Number,2019,265305.79957153334,356415.08161595964,189638.67416059805
+YLDs (Years Lived with Disability),California,Both,65-74 years,Musculoskeletal disorders,Rate,2019,7749.1186217278,10410.261481186302,5539.01416294308
+YLDs (Years Lived with Disability),California,Both,75-84 years,Musculoskeletal disorders,Number,2019,132997.75496439505,178381.6741734792,94497.1236113061
+YLDs (Years Lived with Disability),California,Both,75-84 years,Musculoskeletal disorders,Rate,2019,7941.2691104276055,10651.133768080861,5642.404181631651
+YLDs (Years Lived with Disability),California,Both,85+ years,Substance use disorders,Number,2019,1884.0144030580047,2510.7176076923965,1339.4561085379894
+YLDs (Years Lived with Disability),California,Both,85+ years,Substance use disorders,Rate,2019,244.78521524391303,326.2111738732519,174.03213654102368
+YLDs (Years Lived with Disability),California,Both,65-74 years,Substance use disorders,Number,2019,12346.189063669295,16703.85614384234,8559.844428600556
+YLDs (Years Lived with Disability),California,Both,65-74 years,Substance use disorders,Rate,2019,360.6106000515688,487.8904377814423,250.01809220863603
+YLDs (Years Lived with Disability),California,Both,75-84 years,Substance use disorders,Number,2019,3964.3252384468187,5329.040160818821,2830.23637918316
+YLDs (Years Lived with Disability),California,Both,75-84 years,Substance use disorders,Rate,2019,236.70906000025556,318.1959126202394,168.99284306891255
+YLDs (Years Lived with Disability),California,Both,65-74 years,Diabetes and kidney diseases,Number,2019,98743.53032547876,131478.27993164555,69261.00753577391
+YLDs (Years Lived with Disability),California,Both,65-74 years,Diabetes and kidney diseases,Rate,2019,2884.1259062412623,3840.2507182898926,2022.9929542508314
+YLDs (Years Lived with Disability),California,Both,75-84 years,Diabetes and kidney diseases,Number,2019,55462.95887138113,73851.0219038117,40014.49905153931
+YLDs (Years Lived with Disability),California,Both,75-84 years,Diabetes and kidney diseases,Rate,2019,3311.682081972947,4409.629614990547,2389.257663577052
+YLDs (Years Lived with Disability),California,Both,85+ years,Other non-communicable diseases,Number,2019,12747.8403714844,17737.893986788233,8860.917372481394
+YLDs (Years Lived with Disability),California,Both,85+ years,Other non-communicable diseases,Rate,2019,1656.2945825487834,2304.639598551938,1151.2765309865879
+YLDs (Years Lived with Disability),California,Both,65-74 years,Other non-communicable diseases,Number,2019,52054.78810590869,74343.07933143833,35293.40545987007
+YLDs (Years Lived with Disability),California,Both,65-74 years,Other non-communicable diseases,Rate,2019,1520.4293630710113,2171.431387380984,1030.858676723077
+YLDs (Years Lived with Disability),California,Both,75-84 years,Other non-communicable diseases,Number,2019,28485.08152517987,39894.06805511157,19486.350452362003
+YLDs (Years Lived with Disability),California,Both,75-84 years,Other non-communicable diseases,Rate,2019,1700.838469675531,2382.066753082919,1163.5260532310235
+YLDs (Years Lived with Disability),California,Both,55-59 years,Neoplasms,Number,2019,11718.798082104451,16977.636754902345,7579.144964852045
+YLDs (Years Lived with Disability),California,Both,55-59 years,Neoplasms,Rate,2019,452.92941911234726,656.1825794269042,292.9325774066281
+YLDs (Years Lived with Disability),California,Both,60-64 years,Neoplasms,Number,2019,16238.472963245445,23040.48166662374,10603.012067325995
+YLDs (Years Lived with Disability),California,Both,60-64 years,Neoplasms,Rate,2019,695.5877669228316,986.957162018154,454.1883650796856
+YLDs (Years Lived with Disability),California,Both,85+ years,Cardiovascular diseases,Number,2019,44288.23397061369,57008.024568492074,32096.703256068697
+YLDs (Years Lived with Disability),California,Both,85+ years,Cardiovascular diseases,Rate,2019,5754.257965158284,7406.908111731128,4170.243286040785
+YLDs (Years Lived with Disability),California,Both,65-74 years,Cardiovascular diseases,Number,2019,62549.92616070902,81404.85028992835,45116.600058665645
+YLDs (Years Lived with Disability),California,Both,65-74 years,Cardiovascular diseases,Rate,2019,1826.9739989945438,2377.6933723251054,1317.7770189278751
+YLDs (Years Lived with Disability),California,Both,75-84 years,Cardiovascular diseases,Number,2019,61048.61165714614,78173.06300470092,44586.66327748946
+YLDs (Years Lived with Disability),California,Both,75-84 years,Cardiovascular diseases,Rate,2019,3645.200282645165,4667.697816951389,2662.260666861283
+YLDs (Years Lived with Disability),California,Both,55-59 years,Sense organ diseases,Number,2019,26901.60142756521,39511.2038872299,17670.614710291422
+YLDs (Years Lived with Disability),California,Both,55-59 years,Sense organ diseases,Rate,2019,1039.742012995834,1527.1008596351585,682.9660516390707
+YLDs (Years Lived with Disability),California,Both,60-64 years,Sense organ diseases,Number,2019,34175.67681134266,49747.64289690048,22342.80444529617
+YLDs (Years Lived with Disability),California,Both,60-64 years,Sense organ diseases,Rate,2019,1463.9420079760441,2130.979428339886,957.0716092623869
+YLDs (Years Lived with Disability),California,Both,85+ years,Sense organ diseases,Number,2019,41223.07530589646,54211.4354087418,29381.00458830201
+YLDs (Years Lived with Disability),California,Both,85+ years,Sense organ diseases,Rate,2019,5356.0096703035815,7043.554371809009,3817.3994426774443
+YLDs (Years Lived with Disability),California,Both,55-59 years,Transport injuries,Number,2019,9682.937321753941,12922.858122457681,6989.350115948058
+YLDs (Years Lived with Disability),California,Both,55-59 years,Transport injuries,Rate,2019,374.243770198633,499.46612115574004,270.13711353414493
+YLDs (Years Lived with Disability),California,Both,60-64 years,Transport injuries,Number,2019,9680.421461800135,12948.813343641568,7082.304257402464
+YLDs (Years Lived with Disability),California,Both,60-64 years,Transport injuries,Rate,2019,414.6684705345365,554.6726085877009,303.3760757076787
+YLDs (Years Lived with Disability),California,Both,85+ years,Transport injuries,Number,2019,4267.987401394231,5662.14405699718,3061.114044224054
+YLDs (Years Lived with Disability),California,Both,85+ years,Transport injuries,Rate,2019,554.5287833324653,735.6680232828483,397.72278756750063
+YLDs (Years Lived with Disability),California,Both,65-74 years,Transport injuries,Number,2019,15915.218888632067,21007.15729537454,11666.874027693282
+YLDs (Years Lived with Disability),California,Both,65-74 years,Transport injuries,Rate,2019,464.8557221815277,613.5823417733477,340.7689953682076
+YLDs (Years Lived with Disability),California,Both,75-84 years,Transport injuries,Number,2019,8682.631385997083,11528.430083443289,6312.213127246112
+YLDs (Years Lived with Disability),California,Both,75-84 years,Transport injuries,Rate,2019,518.4381679322845,688.3602338842604,376.9009720446388
+YLDs (Years Lived with Disability),California,Both,55-59 years,Chronic respiratory diseases,Number,2019,25133.96928194172,31271.36838378527,19048.118539175903
+YLDs (Years Lived with Disability),California,Both,55-59 years,Chronic respiratory diseases,Rate,2019,971.4233513624233,1208.6327128159353,736.2063246321217
+YLDs (Years Lived with Disability),California,Both,60-64 years,Chronic respiratory diseases,Number,2019,30179.629944730754,37237.52599668064,23670.281366589592
+YLDs (Years Lived with Disability),California,Both,60-64 years,Chronic respiratory diseases,Rate,2019,1292.7681960814793,1595.0987271025501,1013.9351277357114

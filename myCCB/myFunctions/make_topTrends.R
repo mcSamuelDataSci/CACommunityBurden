@@ -54,8 +54,8 @@ topCauses_trends <- function(
     if (nrow(plot_df)==0) stop("Sorry friend, data are suppressed per the California Health and Human Services Agency Data De-Identification Guidelines, or there are no cases that meet this criteria.")
     
     # REMOVES INJURY TOP LEV 2022 DATA POINT SINCE MANY ARE CLASSIFIED AS Z01. REMOVE CODE BELOW WHEN READY TO SHOW 
-    plot_df <- plot_df %>% 
-      mutate(measure = ifelse(year == 2022 & topLevCode == "E", NA, measure))
+    # plot_df <- plot_df %>% 
+    #   mutate(measure = ifelse(year == 2022 & topLevCode == "E", NA, measure))
     
     tPlot <- ggplot(filter(plot_df, year %in% yearRange), aes(x = year, y = measure, color = topLevName)) +
       scale_color_manual(values = topLevColors, drop = T, limits = force) +

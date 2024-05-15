@@ -6955,9 +6955,10 @@ button.btn.checkbtn.btn-default.active {
 /* Links inside the dropdown */
 #sophDropdownContent.dropdown-content a {
   color: black;
-  padding: 16px;
+  padding: 8px 16px;
   text-decoration: none;
   display: block;
+  text-align: center;
 }
 
 /* Change color of dropdown links on hover */
@@ -7004,9 +7005,10 @@ button.btn.checkbtn.btn-default.active {
 /* Links inside the dropdown */
 #xmdaDropdownContent.dropdown-content a {
   color: black;
-  padding: 16px;
+  padding: 8px 16px;
   text-decoration: none;
   display: block;
+  text-align: center;
 }
 
 /* Change color of dropdown links on hover */
@@ -7020,6 +7022,14 @@ button.btn.checkbtn.btn-default.active {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 #xmdaDropdown.dropdown:hover .dropbtn {
   background-color: #694D75;
+}
+
+.dropdown-divider {
+  border-top: 2px solid #694d750d;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 15px;
 }
 
 
