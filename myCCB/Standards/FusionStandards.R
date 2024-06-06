@@ -2,18 +2,34 @@
 # if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 # if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
-
+library(pacman)
 
 #.... source this file....  in auto....
-library(readxl)
-library(readr)
-library(dplyr)
-library(stringr)
-library(ggplot2)
-library(fs)
-library(scales)
-#library(RColorBrewer)
-library(tidyr)
+
+p_load(
+  readxl,
+  readr,
+  dplyr,
+  stringr,
+  ggplot2,
+  fs,
+  scales , 
+  tidyr)
+#RColorBrewer)
+# library(summarytools)
+
+
+
+
+# library(readxl)
+# library(readr)
+# library(dplyr)
+# library(stringr)
+# library(ggplot2)
+# library(fs)
+# library(scales)
+# #library(RColorBrewer)
+# library(tidyr)
 # library(summarytools)
 
 # 
@@ -282,6 +298,10 @@ deathCauseLink   <-
   select(causeCode, causeName, causeNameShort, causeList, topLevCode, topLevName) %>%
   arrange(causeCode) %>%
   as.data.frame()
+
+
+# deathCauseLink <- deathCauseLink %>% select(-causeList)
+# write_csv(deathCauseLink, "deathCauseLink.csv")
 
 
 

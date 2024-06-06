@@ -102,6 +102,9 @@ nxState <- popCounty %>%
 # - Because of this, the code below simply reads in nxMSSA.RDS and uses the prior year's pop estimates (which are 2019 ACS 5Y estimates) for current year
 
 
+
+# Census tract level extraction here: ACS? SEER? by race - not??
+
 nxMSSA <- readRDS(paste0(ccbUpstream, "lifeTables/dataIn/nxMSSA.RDS"))
 
 isRecentYear <- max(nxMSSA$year) == myYear

@@ -70,6 +70,7 @@ library(classInt) # Used in maps
 library(plotly)
 library(markdown)
 library(directlabels)
+library(RColorBrewer)
 library(scales)
 library(visNetwork) # used in IHME tab
 library(DT)

@@ -1,4 +1,4 @@
-server <- T
+server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
@@ -7,7 +7,12 @@ if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandar
 
 
 # General Infectious Disease - Infectious Disease Branch IDB---------------------------------------------------------------------------------------------------
+
+idb.url <- "https://data.chhs.ca.gov/dataset/03e61434-7db8-4a53-a3e2-1d4d36d6848d/resource/75019f89-b349-4d5e-825d-8b5960fc028c/download/odp_idb_2001_2022_ddg_compliant.csv"
 idb.url <- "https://data.chhs.ca.gov/dataset/03e61434-7db8-4a53-a3e2-1d4d36d6848d/resource/75019f89-b349-4d5e-825d-8b5960fc028c/download/idb_odp_2001-2019.csv"
+idb.dat <- read_csv(idb.url)
+
+
 idb.dat <- read_csv(idb.url) %>%
              mutate(Rate=as.numeric(str_remove(Rate, "[*]")),
                   County=str_to_title(County) ) %>%

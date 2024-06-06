@@ -5,3 +5,7 @@
 0.CCB.Rproj
 myAnalyses/
 Partner Resources/Thumbs.db
+myUpstream/CID/CID.Rproj
+myUpstream/CID/app_data.R
+myUpstream/CID/makeCIDdata.R
+myUpstream/CID/trainApp/
