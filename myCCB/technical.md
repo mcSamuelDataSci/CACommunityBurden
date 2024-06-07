@@ -176,7 +176,7 @@
         -   “Alzheimer’s disease” = “Alzheimer disease and other dementias”
         -   “Lung Cancer” = “Trachea, bronchus and lung cancers”
     -   A diagram of the Conditions List is [here](https://skylab.cdph.ca.gov/communityBurden/_w_260397a5/icd10_to_condition_IMAGE.pdf), and shows the current structure, the levels, and all the conditions therein.
-    -   Documentation of the mapping of all ICD-10 codes to this Condition List and notation of all modifications to the original WHO system are documented and described in the CCB resource [here](https://rst4-01.cdph.ca.gov/s/a244a4d32e2df7ef520fb/rmd_output/1/icd10_to_CAUSE.xlsx).
+    -   Documentation of the mapping of all ICD-10 codes to this Condition List and notation of all modifications to the original WHO system are documented and described in the CCB resource [here](myInfo/icd10_to_CAUSE.xlsx).
     -   The Condition List is regularly updated and refined based on input from partners and on emerging priority conditions. We welcome your input on the condition list by emailing [ccb@cdph.ca.gov](mailto:ccb@cdph.ca.gov)
 
    
