@@ -17,6 +17,8 @@
 #
 # =============================================================================
 
+# Note: Link below fixes the error "Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
+tmap_options(check.and.fix = TRUE)
 
 # - 1. LOAD STANDARDS & SET PATHS ----------------------------------------------------------------------------------------------------
 
