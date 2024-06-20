@@ -75,7 +75,7 @@ hidden(
       
       selectInput("measure", label = "Measure:", choices = c("YLDs (Years Lived with Disability)", 
                                                              "DALYs (Disability-Adjusted Life Years)", 
-                                                             "Prevalence"), selected = "YLDs (Years Lived with Disability)"),
+                                                             "Prevalence")),
       # myScale input
       # "myN_lifeCourse" input
       

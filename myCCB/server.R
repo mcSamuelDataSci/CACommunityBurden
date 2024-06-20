@@ -1118,12 +1118,21 @@ observe({
   }
 })
 
+
+ihme_measure_val <- reactiveVal("YLDs (Years Lived with Disability)")
+observe({
+  ihme_measure_val(input$measure)
+})
+
 observeEvent(input$display, {
   
   if (input$display == "Risk") {
-    updateSelectInput(session, "measure", choices = c("DALYs (Disability-Adjusted Life Years)", "YLDs (Years Lived with Disability)"))
+    if (ihme_measure_val() == "Prevalence") ihme_measure_val("YLDs (Years Lived with Disability)")
+    updateSelectInput(session, "measure", choices = c("YLDs (Years Lived with Disability)", "DALYs (Disability-Adjusted Life Years)"), selected = ihme_measure_val())
   } else if (input$display == "Cause") {
-    updateSelectInput(session, "measure", choices = sort(unique(ihmeLink$measure$measure_name)))
+    updateSelectInput(session, "measure", choices = c("YLDs (Years Lived with Disability)", 
+                                                      "DALYs (Disability-Adjusted Life Years)", 
+                                                      "Prevalence"), selected = ihme_measure_val())
   }
 })
 
