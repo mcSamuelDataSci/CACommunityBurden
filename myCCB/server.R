@@ -112,7 +112,7 @@ onclick("sdohI",      updatePanels(navsID = "sdoh",             tabID = "socialD
 onclick("dispI",      updatePanels(navsID = "disparities",      tabID = "disparitiesTab"))
 onclick("sdohI",      updatePanels(navsID = "sdoh",             tabID = "sdohTab"))
 onclick("hospI",      updatePanels(navsID = "hospitalizations", tabID = "hospitalizations"))
-onclick("riskI",      updatePanels(navsID = "ranks",            tabID = "riskByCauseTab"))
+onclick("riskI",      updatePanels(navsID = "ranks",            tabID = "ihmeTab"))
 
   
 # Tab help display -------------------------------------------------------------------------------
@@ -187,7 +187,8 @@ tabHelpList <- list("dataTableTab"           = appTextL$conditionTableTab,
                     "lifeExpectancyTab"      = appTextL$lifeExpectancyTab,
                     "hospitalDischargeTab"   = HospitalizationsTab, # created in Global.R
                     "hospitalPrimaryAnyTab"  = HospitalPrimaryAnyTab, # created in Global.R
-                    "riskByCauseTab"         = appTextL$ihmeTab,
+                    # "riskByCauseTab"         = appTextL$ihmeTab,
+                    "ihmeTab"         = appTextL$ihmeTab,
                     "disparitiesTab"         = appTextL$disparitiesTab,
                     "ageRaceFocusTab"        = appTextL$ageRaceFocusTab,
                     "deathHospEDTab"         = appTextL$deathHospEDTab,
@@ -1068,41 +1069,85 @@ observe({
   
 })
 
-# IHME ----------------------------------------------------------------------------------------------------
+# IHME Old ----------------------------------------------------------------------------------------------------
 # Arrows Data and plot
-output$arrowsTitles <- renderText({
-  paste0('<div style="margin-bottom:-1em;">',
-         '<h4 style="white-space:nowrap;">', paste(METRICS[[input$metric]]$name, "of", MEASURES[[input$measure]]$short_name, "for", SEXES[[input$sex]], "in all of California"), '</h4>',
-         '<div style="float:left; margin-left: 70px; font-weight: bold;">', input$yearRange[1], " Rankings", '</div>',
-         '<div style="position:relative; left: 250px; font-weight: bold;">', input$yearRange[2], " Rankings", '</div>',
-         '</div>')
+# output$arrowsTitles <- renderText({
+#   paste0('<div style="margin-bottom:-1em;">',
+#          '<h4 style="white-space:nowrap;">', paste(METRICS[[input$metric]]$name, "of", MEASURES[[input$measure]]$short_name, "for", SEXES[[input$sex]], "in all of California"), '</h4>',
+#          '<div style="float:left; margin-left: 70px; font-weight: bold;">', input$yearRange[1], " Rankings", '</div>',
+#          '<div style="position:relative; left: 250px; font-weight: bold;">', input$yearRange[2], " Rankings", '</div>',
+#          '</div>')
+# })
+# 
+# output$arrowsLegend <- renderText({   # TODO: lineheight styling, legend text reactive
+#   paste0('<div style="overflow:hidden;">',
+#          '<div style="background-color: #C6E2FF; float:left; margin-right:5px; border: 1px solid black; height: 15px; width:15px;"> </div>',
+#          '<div style="line-height:1; display: block;">', "Legend box text", '</div>',
+#          '<div style="background-color: #E9A291; float:left; margin-right:5px; border: 1px solid black; height: 20px; width:15px;"> </div>',
+#          '<div style="line-height:1; display: block;">', "Legend box text numero dos", '</div>',
+#          '</div>'
+#   )
+#   
+# })
+# 
+# output$network <- renderVisNetwork({
+#   nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
+#                                   input$yearRange[1], input$yearRange[2], input$display)
+#   vis_network(nodes_and_edges, input$display)
+# })
+# 
+# # RiskByCause Data and plot
+# FilteredRiskByCause <- reactive({
+#   return(FilterRiskByCause( input$level, input$year, input$sex, input$metric, input$measure))
+# })
+# 
+# output$riskByCause <- renderPlotly({
+#   RiskByCausePlot(FilteredRiskByCause())
+# })
+
+
+# IHME Tab New ----------------------------------------------------------------------------------------------------
+
+observe({
+  if (current$tab == "ihmeTab") {
+    if (input$ihmeGroup == "Year") {
+      shinyjs::hide("year")
+    } else {
+      shinyjs::show("year")
+    }
+  }
 })
 
-output$arrowsLegend <- renderText({   # TODO: lineheight styling, legend text reactive
-  paste0('<div style="overflow:hidden;">',
-         '<div style="background-color: #C6E2FF; float:left; margin-right:5px; border: 1px solid black; height: 15px; width:15px;"> </div>',
-         '<div style="line-height:1; display: block;">', "Legend box text", '</div>',
-         '<div style="background-color: #E9A291; float:left; margin-right:5px; border: 1px solid black; height: 20px; width:15px;"> </div>',
-         '<div style="line-height:1; display: block;">', "Legend box text numero dos", '</div>',
-         '</div>'
-  )
+
+ihme_measure_val <- reactiveVal("YLDs (Years Lived with Disability)")
+observe({
+  ihme_measure_val(input$measure)
+})
+
+observeEvent(input$display, {
   
+  if (input$display == "Risk") {
+    if (ihme_measure_val() == "Prevalence") ihme_measure_val("YLDs (Years Lived with Disability)")
+    updateSelectInput(session, "measure", choices = c("YLDs (Years Lived with Disability)", "DALYs (Disability-Adjusted Life Years)"), selected = ihme_measure_val())
+  } else if (input$display == "Cause") {
+    updateSelectInput(session, "measure", choices = c("YLDs (Years Lived with Disability)", 
+                                                      "DALYs (Disability-Adjusted Life Years)", 
+                                                      "Prevalence"), selected = ihme_measure_val())
+  }
 })
 
-output$network <- renderVisNetwork({
-  nodes_and_edges <- create_nodes(input$level, input$measure, input$sex, input$metric,
-                                  input$yearRange[1], input$yearRange[2], input$display)
-  vis_network(nodes_and_edges, input$display)
-})
+ihmeStep <- reactive(makeIHME_chart(
+  myFacet = input$ihmeGroup, 
+  myMeasure = input$measure, 
+  myMetric = input$metric,
+  myYear = input$year,
+  myType = input$display,
+  myLevel = input$level,
+  myN = input$myN_lifeCourse,
+  myScales = input$myScale
+))
 
-# RiskByCause Data and plot
-FilteredRiskByCause <- reactive({
-  return(FilterRiskByCause( input$level, input$year, input$sex, input$metric, input$measure))
-})
-
-output$riskByCause <- renderPlotly({
-  RiskByCausePlot(FilteredRiskByCause())
-})
+output$ihme <- renderPlot(ihmeStep()$plotL)
 
 
 # ---------------------------------------------------------------------------------------------------------

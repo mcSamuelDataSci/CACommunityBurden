@@ -17,7 +17,6 @@
 #
 # =============================================================================
 
-
 # - 1. LOAD STANDARDS & SET PATHS ----------------------------------------------------------------------------------------------------
 
 ## Shuo test
@@ -82,9 +81,11 @@ library(purrr)
 library(reactable)
 library(reactablefmtr, pos = length(search()))
 library(tidyselect)
+library(ggh4x) # Used in IHME Rank chart
+library(tidytext) # Used in IHME rank chart
 
-# This resolves the error message for creating a map: "Error: Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
-# tmap_options(check.and.fix = TRUE)
+# Note: Line below fixes the error "Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
+tmap_options(check.and.fix = TRUE)
 
 # - 4. READ DATASETS & INFO ------------------------------------------------------------------------------------------------------
 
@@ -154,12 +155,14 @@ sdohCounty        <- readRDS(path(ccbData, "sdohCounty.RDS"))
 
 
 # IHME DATASETS
-riskByCauseData <- readRDS(path(ccbData, "risk-by-cause.RDS"))
-
-endpoints <- read.csv(path(ccbInfo, "IHME_API_endpoints.csv"), header = TRUE)
-
-ihmeData <- readRDS(paste0(ccbData, "v2IHME.RDS")) %>%
-  subset(., year_id >= 1990)
+# riskByCauseData <- readRDS(path(ccbData, "risk-by-cause.RDS"))
+# 
+# endpoints <- read.csv(path(ccbInfo, "IHME_API_endpoints.csv"), header = TRUE)
+# 
+# ihmeData <- readRDS(paste0(ccbData, "v2IHME.RDS")) %>%
+#   subset(., year_id >= 1990)
+ihmeCause <- readRDS(paste0(ccbData, "ihme_cause.RDS"))
+ihmeRisk <- readRDS(paste0(ccbData, "ihme_risk.RDS"))
 
 # BURDEN VIEW
 load(path(ccbData, whichData, "burdenViewData.RData"))
@@ -215,7 +218,7 @@ source(path(ccbFunctions, "make_topTrends.R"))
 source(path(ccbFunctions, "make_LifeCourse_viz.R"))
 source(path(ccbFunctions, "make_MCOD_charts.R"))
 source(path(ccbFunctions, "make_burdenView.R"))
-
+source(path(ccbFunctions, "make_rank_IHME_chart.R"))
 # Shuo Life Course - Source life table functions
 
 # HELPER FUNCTIONS
@@ -224,8 +227,8 @@ source(paste0(ccbFunctions, "helperFunctions/dottedSelectInput.R"))
 source(paste0(ccbFunctions, "helperFunctions/stopQuietly.R"))
 
 # IHME FUNCTIONS
-source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
-source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
+# source(paste0(myPlace,"/IHMEwork/arrows_Global.Part.R"))
+# source(paste0(myPlace,"/IHMEwork/riskByCause_Global.Function.R"))
 
 
 # - 6. APP TEXT ---------------------------------------------------------------------------------------------------------------------------------------
@@ -386,6 +389,32 @@ sdohLink <- readxl::read_excel(paste0(standardsPlace, "sdohLink.xlsx")) %>%
   filter(inCCB == "x")
 
 sdohVec <- setNames(sdohLink$sdohCode, sdohLink$sdohName)
+
+# IHME TAB
+ihmeSheets <- c("measure", "sex", "age", "cause", "metric", "risk")
+ihmeLink <- lapply(ihmeSheets, function(x) {
+  readxl::read_excel(paste0(ccbInfo, "ihmeLink.xlsx"), sheet = x)
+})
+names(ihmeLink) <- ihmeSheets
+
+ihmeCause <- ihmeCause %>% 
+  left_join(ihmeLink$measure) %>% 
+  left_join(ihmeLink$sex) %>% 
+  left_join(ihmeLink$age) %>% 
+  left_join(ihmeLink$cause) %>% 
+  left_join(ihmeLink$metric) %>% 
+  select(-ends_with("_id"))
+
+ihmeRisk <- ihmeRisk %>% 
+  left_join(ihmeLink$measure) %>% 
+  left_join(ihmeLink$sex) %>% 
+  left_join(ihmeLink$age) %>% 
+  left_join(ihmeLink$risk) %>% 
+  left_join(ihmeLink$metric) %>% 
+  select(-ends_with("_id")) %>% 
+  rename(cause_name = rei_name)
+
+ihmeYears <- sort(unique(ihmeCause$year))
 
 # sdohVec  <- c("hpi2score", 
 #               "insured", 

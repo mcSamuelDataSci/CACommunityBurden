@@ -68,8 +68,7 @@
 | MULTIPLE CAUSES OF DEATH                      | mcod                   |
 | AGE RACE FOCUS                                | ageracefocus           |
 | DEATH HOSP ED                                 | deathhosped            |
-| ATTRIBUTABLE RISKS - IHME                     | risksihme              |
-| TWO-YEAR IHME RANKINGS                        | ihmerankings           |
+| IHME                                          | ihmerankings           |
 | SEX TREND                                     | sextrend               |
 | AGE TREND                                     | agetrend               |
 | RACE TREND                                    | racetrend              |

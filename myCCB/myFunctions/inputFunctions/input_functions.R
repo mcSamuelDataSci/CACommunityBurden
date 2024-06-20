@@ -7,7 +7,7 @@
 # Constants =========================================================================
 
 # List of all show/hide inputs (except 'textHomeTab', and 'textNotHomeTab', which are handled in server)
-INPUTS <- c("tabHelp", "display","yearRange","level","year","sex","metric","measure","myCAUSE","myLHJ", "myGeo", "myGeo_sdoh", "myYear", "myYear_lifeCourse", "myYear_mcod", "myYearRank", "myYearRange", "myYearDemo", "mySex",
+INPUTS <- c("tabHelp", "display","yearRange","ihmeGroup", "level", "display", "year","sex","metric","measure","myCAUSE","myLHJ", "myGeo", "myGeo_sdoh", "myYear", "myYear_lifeCourse", "myYear_mcod", "myYearRank", "myYearRange", "myYearDemo", "mySex",
             "myRace", "mySexMult",
             "myLev", "myLevShort", "myBroadGroups", "myStateCut","myN", "myN_lifeCourse", "myN_topTrends", "myObserv", "myMeasure","myMeasureShort", "myMeanAge_sort", "myYearGrouping", "myYearGrouping_race_age", "myYearGrouping_lifeCourse", "myCutSystem","myLabName","myCI","myRefLine",
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
@@ -43,8 +43,9 @@ TAB_INPUTS <- list("homeTab"=c(),
                  # "MDC/DRGTab"=c("myLHJ", "mySex", "myN","myVar"),
                    "hospitalPrimaryAnyTab"=c("ourDownloads", "myLHJ", "myPosition"),
                  # "hospitalMapTab"=c("myCAUSE", "myLHJ", "mySex"),
-                   "arrowsTab"=c("display", "level", "measure", "yearRange", "sex", "metric"),
-                   "riskByCauseTab"=c("level", "year", "sex", "metric", "measure"), 
+                   # "arrowsTab"=c("display", "level", "measure", "yearRange", "sex", "metric"),
+                   # "riskByCauseTab"=c("level", "year", "sex", "metric", "measure"),
+                 "ihmeTab" = c("ihmeGroup", "level", "display", "year", "metric", "measure", "myScale", "myN_lifeCourse"),
                    "demographicsTab" = c("myLHJ", "myYearDemo"),
                    "causeOfDeathTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv"),
                    "nonFatalMeasuresTab" = c("ourBurdenViewDownload", "myLHJ", "myObserv"),

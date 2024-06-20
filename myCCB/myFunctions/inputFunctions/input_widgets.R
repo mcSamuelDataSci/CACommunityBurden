@@ -62,6 +62,24 @@ hidden(
       checkboxInput("myStateCut", label=list("State-based cutpoints", actionButton("stateCutHelp", label=helpIcon, style=myInputHelpButtonSty)),
                    value=TRUE),
       
+      # IHME ===================
+      selectInput("ihmeGroup", label = "Display by:", choices = c("Sex", "Age Group", "Year")),
+      
+      sliderInput("level", label = "Level:", min = 1, max = 3, value = 2),
+      
+      radioButtons("display", label = "Display:", choices = c("Cause", "Risk"), inline=TRUE),
+      
+      selectInput("year", label = "Year:", choices = ihmeYears, selected = max(ihmeYears)),
+      
+      radioButtons("metric",label = "Metric:", choices = sort(unique(ihmeLink$metric$metric_name)), selected = "Rate", inline=TRUE),
+      
+      selectInput("measure", label = "Measure:", choices = c("YLDs (Years Lived with Disability)", 
+                                                             "DALYs (Disability-Adjusted Life Years)", 
+                                                             "Prevalence")),
+      # myScale input
+      # "myN_lifeCourse" input
+      
+      
       # myN ======================
       numericInput( "myN",  "How Many:", value=10,min=1,max= 50),
       
@@ -210,22 +228,24 @@ hidden(
       selectInput("myprimetype", "Variable", choice = c("any", "primary")),
       
       # IHME inputs ======================
-      sliderInput( "level", label = "Level:", min = 0, max = 4, value = 2),
+      # sliderInput( "level", label = "Level:", min = 0, max = 4, value = 2),
+
+      # sliderInput( "year", label = "Year:", min = min(VALID_YEARS), max = max(VALID_YEARS), value = max(VALID_YEARS), sep = "", step = 1), # animate = animationOptiointerval = 3000)
       
-      sliderInput( "year", label = "Year:", min = min(VALID_YEARS), max = max(VALID_YEARS), value = max(VALID_YEARS), sep = "", step = 1), # animate = animationOptiointerval = 3000)
+      # sliderTextInput( "yearRange", label = "Years:", choices = as.character(VALID_YEARS), selected = range(VALID_YEARS)),  # grid=TRUE
       
-      sliderTextInput( "yearRange", label = "Years:", choices = as.character(VALID_YEARS), selected = range(VALID_YEARS)),  # grid=TRUE
+      # radioButtons("display",label = "Display:",choices = c("Cause" = "cause", "Risk" = "risk"), inline=TRUE),
       
-      radioButtons("display",label = "Display:",choices = c("Cause" = "cause", "Risk" = "risk"), inline=TRUE),
+      # radioButtons("sex", "Sex:", choices=c("Both" = 3,"Female" = 2,"Male" = 1), inline=TRUE),
       
-      radioButtons("sex", "Sex:", choices=c("Both" = 3,"Female" = 2,"Male" = 1), inline=TRUE),
+      # radioButtons("metric",label = "Metric:",choices = c("Number" = 1, "Percent" = 2, "Rate" = 3), inline=TRUE),
       
-      radioButtons("metric",label = "Metric:",choices = c("Number" = 1, "Percent" = 2, "Rate" = 3), inline=TRUE),
+      # selectInput( "measure", label = "Measure:", choices = c("Deaths" = 1,
+      #                                                         "Disability Adjusted Life Years (DALYs)" = 2,
+      #                                                         "Years Lived with Disability (YLDs)" = 3,
+      #                                                         "Years of Life Lost (YLLs)" = 4), selected = 1),
       
-      selectInput( "measure", label = "Measure:", choices = c("Deaths" = 1,
-                                                              "Disability Adjusted Life Years (DALYs)" = 2,
-                                                              "Years Lived with Disability (YLDs)" = 3,
-                                                              "Years of Life Lost (YLLs)" = 4), selected = 1),
+      # ========================================
       
       actionBttn(
         inputId = "updateLifeCourse",
