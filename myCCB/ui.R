@@ -490,19 +490,23 @@ shinyUI(
                                                  plotOutput("deathHospED", width="100%", height=1700)
                                         ),
                                         
-                                        tabPanel(title = "Attributable Risks - IHME", value = "riskByCauseTab",
-                                                 plotlyOutput("riskByCause", height = 600)
-                                        ),
-                                        tabPanel(title = "Two-Year IHME Rankings", value = "arrowsTab",
-                                                 htmlOutput("arrowsTitles"),
-                                                 visNetworkOutput("network")
-                                                 # fluidRow(
-                                                 #   column(10, visNetworkOutput("network")),
-                                                 #   column(2, 
-                                                 #          htmlOutput("arrowsLegend")
-                                                 #) 
-                                                 #)
-                                        )
+                                        # # Comment out old IHME tabs
+                                        # tabPanel(title = "Attributable Risks - IHME", value = "riskByCauseTab",
+                                        #          plotlyOutput("riskByCause", height = 600)
+                                        # ),
+                                        # tabPanel(title = "Two-Year IHME Rankings", value = "arrowsTab",
+                                        #          htmlOutput("arrowsTitles"),
+                                        #          visNetworkOutput("network")
+                                        #          # fluidRow(
+                                        #          #   column(10, visNetworkOutput("network")),
+                                        #          #   column(2, 
+                                        #          #          htmlOutput("arrowsLegend")
+                                        #          #) 
+                                        #          #)
+                                        # )
+                                        
+                                        # New IHME Tabs
+                                        tabPanel(title = "IHME", value = "ihmeTab", plotOutput("ihme", width="100%", height=900))
                             )
                    ),
                    
