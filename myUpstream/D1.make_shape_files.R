@@ -17,7 +17,7 @@ library(tigris)     # Other geographies: block_groups, blocks, counties, county_
 library(dplyr)
 library(sf)         # simple features GIS
 library(fs)         # just for path function
-#library(rmapshaper) # to remove islands (not yet working)
+library(rmapshaper) # to remove islands (not yet working)
 library(readr)
 
 
@@ -25,11 +25,6 @@ library(readr)
 # EXPERIMENT with make SMALLER shape files
 # sf <- rmapshaper::ms_simplify(input = sf, weighting = 2, keep_shapes = TRUE)
 # http://mapshaper.org/
-
-
-
-
-
 
 
 #-- Read Info file --------------------------------------------------------------------------------

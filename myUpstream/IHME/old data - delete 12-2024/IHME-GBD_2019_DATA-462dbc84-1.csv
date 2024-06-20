@@ -1,0 +1,115 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,rei_id,rei_name,metric_id,metric_name,year,val,upper,lower
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,558,Mental disorders,169,All risk factors,1,Number,2019,61892.046203458856,104835.20564186164,28220.700156629362
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,558,Mental disorders,169,All risk factors,2,Percent,2019,0.07213934888679455,0.11785540676898623,0.03789163774569126
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,558,Mental disorders,169,All risk factors,3,Rate,2019,155.22671309711035,262.92917082027907,70.77818225967583
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,410,Neoplasms,169,All risk factors,1,Number,2019,662361.4350095507,792195.8898257528,551449.5286580736
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,410,Neoplasms,169,All risk factors,2,Percent,2019,0.42124398554948617,0.4605602522083338,0.38545399969303057
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,410,Neoplasms,169,All risk factors,3,Rate,2019,1661.2181167969204,1986.8459947575634,1383.048437131165
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,508,Chronic respiratory diseases,169,All risk factors,1,Number,2019,347250.6182514973,395958.0813994582,300442.7803131488
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,508,Chronic respiratory diseases,169,All risk factors,2,Percent,2019,0.5339331410985217,0.5709730386445471,0.49640361445225667
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,508,Chronic respiratory diseases,169,All risk factors,3,Rate,2019,870.9127488679967,993.0722163850696,753.5175862251756
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,491,Cardiovascular diseases,169,All risk factors,1,Number,2019,1331346.0427598613,1536130.2663331593,1147953.270504762
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,491,Cardiovascular diseases,169,All risk factors,2,Percent,2019,0.8085780429552332,0.8361725193555567,0.7795560735610255
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,491,Cardiovascular diseases,169,All risk factors,3,Rate,2019,3339.047307195172,3852.6509746992283,2879.093904631223
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,640,Other non-communicable diseases,169,All risk factors,1,Number,2019,678.0802789429742,878.8119877037092,501.9664286886465
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,640,Other non-communicable diseases,169,All risk factors,2,Percent,2019,0.0012522550802078175,0.0018070238300799684,0.0008621570015826497
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,640,Other non-communicable diseases,169,All risk factors,3,Rate,2019,1.7006413484905494,2.204081213168252,1.2589436541537256
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,688,Transport injuries,169,All risk factors,1,Number,2019,84138.11285191803,106710.91305319218,66307.88526920658
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,688,Transport injuries,169,All risk factors,2,Percent,2019,0.30161937697097635,0.3614739745187057,0.24886694504482793
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,688,Transport injuries,169,All risk factors,3,Rate,2019,211.02037346225458,267.6334892917607,166.30174172822933
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,526,Digestive diseases,169,All risk factors,1,Number,2019,211122.91486694248,252196.0273120222,172211.4391459286
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,526,Digestive diseases,169,All risk factors,2,Percent,2019,0.5211668928071431,0.5755398564038158,0.46040933498280356
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,526,Digestive diseases,169,All risk factors,3,Rate,2019,529.5012549196524,632.5135906333396,431.91035514433594
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,957,Enteric infections,169,All risk factors,1,Number,2019,4890.5746901450875,7663.831221647661,2955.930435098155
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,957,Enteric infections,169,All risk factors,2,Percent,2019,0.10819237434221635,0.16048114228206323,0.072273238676199
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,957,Enteric infections,169,All risk factors,3,Rate,2019,12.26567678521374,19.221069640462076,7.41354331824234
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,961,Other infectious diseases,169,All risk factors,1,Number,2019,306.7976211648895,385.3795270423966,239.79950472723897
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,961,Other infectious diseases,169,All risk factors,2,Percent,2019,0.012300574314319197,0.016117338504475043,0.008002479451462773
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,961,Other infectious diseases,169,All risk factors,3,Rate,2019,0.7694556771137564,0.9665409523068429,0.6014228193192954
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,955,HIV/AIDS and sexually transmitted infections,169,All risk factors,1,Number,2019,45694.08091454365,58834.547974223395,36859.22784343394
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,955,HIV/AIDS and sexually transmitted infections,169,All risk factors,2,Percent,2019,0.9193225309212837,0.9344074832084567,0.9009890605920585
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,955,HIV/AIDS and sexually transmitted infections,169,All risk factors,3,Rate,2019,114.60183373225796,147.5584353532422,92.44381364651016
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,973,Substance use disorders,169,All risk factors,1,Number,2019,671527.939267665,805965.7080377643,546519.4413531822
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,973,Substance use disorders,169,All risk factors,2,Percent,2019,1.0,1.0,1.0
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,973,Substance use disorders,169,All risk factors,3,Rate,2019,1684.2079258896772,2021.3810239270442,1370.6836617753079
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,386,Nutritional deficiencies,169,All risk factors,1,Number,2019,34118.211986128066,50567.201702432496,22922.08611550265
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,386,Nutritional deficiencies,169,All risk factors,2,Percent,2019,0.8661224637864232,0.8955340639407903,0.8343230894512778
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,386,Nutritional deficiencies,169,All risk factors,3,Rate,2019,85.5692811633223,126.82373571854119,57.489133148736386
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,542,Neurological disorders,169,All risk factors,1,Number,2019,91376.24734748446,203977.83355944097,40641.89783722199
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,542,Neurological disorders,169,All risk factors,2,Percent,2019,0.141928044884041,0.25309085540049603,0.0667680164563986
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,542,Neurological disorders,169,All risk factors,3,Rate,2019,229.17378566336518,511.58122231111525,101.93083929656811
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,669,Sense organ diseases,169,All risk factors,1,Number,2019,31809.21037754318,44568.745223327416,21887.89141438105
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,669,Sense organ diseases,169,All risk factors,2,Percent,2019,0.09990047530954274,0.1123750381931844,0.0892017177569486
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,669,Sense organ diseases,169,All risk factors,3,Rate,2019,79.7782506154172,111.77946525046427,54.8953484218617
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,626,Musculoskeletal disorders,169,All risk factors,1,Number,2019,292153.6145173979,398282.09404298465,206319.205878146
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,626,Musculoskeletal disorders,169,All risk factors,2,Percent,2019,0.18695328286419194,0.21982851396858735,0.15644058508805173
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,626,Musculoskeletal disorders,169,All risk factors,3,Rate,2019,732.7281627092422,998.9008949630056,517.4534393642466
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,696,Unintentional injuries,169,All risk factors,1,Number,2019,129621.1483575994,173594.22200837024,97443.01383093864
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,696,Unintentional injuries,169,All risk factors,2,Percent,2019,0.312014827067304,0.35537856685781744,0.27136566136302476
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,696,Unintentional injuries,169,All risk factors,3,Rate,2019,325.09290032648204,435.378407209673,244.38937923509113
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,717,Self-harm and interpersonal violence,169,All risk factors,1,Number,2019,69693.07822300354,100245.05336590549,42674.39603863589
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,717,Self-harm and interpersonal violence,169,All risk factors,2,Percent,2019,0.20626424467098992,0.2825249971777981,0.12725523415650158
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,717,Self-harm and interpersonal violence,169,All risk factors,3,Rate,2019,174.79188557789328,251.41696054257014,107.0283927712768
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,956,Respiratory infections and tuberculosis,169,All risk factors,1,Number,2019,53986.21791285383,66158.36237963985,43854.94744436202
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,956,Respiratory infections and tuberculosis,169,All risk factors,2,Percent,2019,0.31159213432339355,0.36802048488671024,0.2553542338556738
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,956,Respiratory infections and tuberculosis,169,All risk factors,3,Rate,2019,135.39870909435712,165.926734791087,109.98924356865759
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,974,Diabetes and kidney diseases,169,All risk factors,1,Number,2019,665298.0698878185,789652.5725781731,548466.6710484738
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,974,Diabetes and kidney diseases,169,All risk factors,2,Percent,2019,0.9995938838010678,0.999693789229323,0.9994820396574264
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,974,Diabetes and kidney diseases,169,All risk factors,3,Rate,2019,1668.5832664030818,1980.4672950550662,1375.5673598235444
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,962,Maternal and neonatal disorders,169,All risk factors,1,Number,2019,121799.57636596053,137893.72212417607,107090.90341515084
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,962,Maternal and neonatal disorders,169,All risk factors,2,Percent,2019,0.806185912914535,0.8266221507007008,0.7832205254009352
+2,DALYs (Disability-Adjusted Life Years),527,California,3,Both,22,All Ages,962,Maternal and neonatal disorders,169,All risk factors,3,Rate,2019,305.47621311075625,345.8407106415224,268.58651409080403
+1,Deaths,527,California,3,Both,22,All Ages,542,Neurological disorders,169,All risk factors,1,Number,2019,5832.843153787308,17126.925882870128,1134.301561190093
+1,Deaths,527,California,3,Both,22,All Ages,542,Neurological disorders,169,All risk factors,2,Percent,2019,0.25566217417627,0.39744190472497365,0.11187484416345944
+1,Deaths,527,California,3,Both,22,All Ages,542,Neurological disorders,169,All risk factors,3,Rate,2019,14.628908338189435,42.95473446646499,2.8448550953647285
+1,Deaths,527,California,3,Both,22,All Ages,386,Nutritional deficiencies,169,All risk factors,1,Number,2019,362.1082983724256,433.27579810026197,295.8353788220203
+1,Deaths,527,California,3,Both,22,All Ages,386,Nutritional deficiencies,169,All risk factors,2,Percent,2019,0.9296892395935845,0.9639048995106311,0.9019958908559832
+1,Deaths,527,California,3,Both,22,All Ages,386,Nutritional deficiencies,169,All risk factors,3,Rate,2019,0.9081761613885392,1.0866659309103972,0.7419621145085747
+1,Deaths,527,California,3,Both,22,All Ages,491,Cardiovascular diseases,169,All risk factors,1,Number,2019,76390.3944705165,88558.13009157058,64438.73618217923
+1,Deaths,527,California,3,Both,22,All Ages,491,Cardiovascular diseases,169,All risk factors,2,Percent,2019,0.80947443463785,0.8421686799542868,0.7720499640802018
+1,Deaths,527,California,3,Both,22,All Ages,491,Cardiovascular diseases,169,All risk factors,3,Rate,2019,191.5889128446243,222.10588105216954,161.61387168893657
+1,Deaths,527,California,3,Both,22,All Ages,410,Neoplasms,169,All risk factors,1,Number,2019,31791.65567396157,37924.79844623229,26270.860497272362
+1,Deaths,527,California,3,Both,22,All Ages,410,Neoplasms,169,All risk factors,2,Percent,2019,0.4363104650184209,0.47886235754425055,0.4002871418388127
+1,Deaths,527,California,3,Both,22,All Ages,410,Neoplasms,169,All risk factors,3,Rate,2019,79.73422300438273,95.11628987554866,65.88793835994414
+1,Deaths,527,California,3,Both,22,All Ages,526,Digestive diseases,169,All risk factors,1,Number,2019,6998.446780315924,8440.433976840883,5628.3400800402405
+1,Deaths,527,California,3,Both,22,All Ages,526,Digestive diseases,169,All risk factors,2,Percent,2019,0.5290277415323749,0.581513297916594,0.4709748186131095
+1,Deaths,527,California,3,Both,22,All Ages,526,Digestive diseases,169,All risk factors,3,Rate,2019,17.552269752438495,21.168807685420536,14.116009801087321
+1,Deaths,527,California,3,Both,22,All Ages,508,Chronic respiratory diseases,169,All risk factors,1,Number,2019,11535.417093943755,13940.8381928048,9353.768320416459
+1,Deaths,527,California,3,Both,22,All Ages,508,Chronic respiratory diseases,169,All risk factors,2,Percent,2019,0.5962291589573546,0.6401892833809759,0.5471315976021407
+1,Deaths,527,California,3,Both,22,All Ages,508,Chronic respiratory diseases,169,All risk factors,3,Rate,2019,28.931098413046932,34.96395131894697,23.45947178215905
+1,Deaths,527,California,3,Both,22,All Ages,957,Enteric infections,169,All risk factors,1,Number,2019,109.42198555051088,175.13330105594292,66.22436267380237
+1,Deaths,527,California,3,Both,22,All Ages,957,Enteric infections,169,All risk factors,2,Percent,2019,0.09760802891967066,0.15075665549866232,0.061610568108601695
+1,Deaths,527,California,3,Both,22,All Ages,957,Enteric infections,169,All risk factors,3,Rate,2019,0.27443292312116363,0.43923845379733895,0.16609226508705777
+1,Deaths,527,California,3,Both,22,All Ages,696,Unintentional injuries,169,All risk factors,1,Number,2019,1830.5627310897748,2227.941549295804,1467.1604989980774
+1,Deaths,527,California,3,Both,22,All Ages,696,Unintentional injuries,169,All risk factors,2,Percent,2019,0.3692588947828414,0.41031013676434386,0.3198420256744654
+1,Deaths,527,California,3,Both,22,All Ages,696,Unintentional injuries,169,All risk factors,3,Rate,2019,4.591094547610152,5.5877300054484955,3.679673169904998
+1,Deaths,527,California,3,Both,22,All Ages,961,Other infectious diseases,169,All risk factors,1,Number,2019,5.324617735897911,7.17292612710644,3.794230978976381
+1,Deaths,527,California,3,Both,22,All Ages,961,Other infectious diseases,169,All risk factors,2,Percent,2019,0.008000114337557776,0.010981312085478213,0.004669222307956775
+1,Deaths,527,California,3,Both,22,All Ages,961,Other infectious diseases,169,All risk factors,3,Rate,2019,0.013354266991350835,0.017989868073498835,0.009516020873855372
+1,Deaths,527,California,3,Both,22,All Ages,962,Maternal and neonatal disorders,169,All risk factors,1,Number,2019,823.5267115939258,925.7735042464868,722.4651476500503
+1,Deaths,527,California,3,Both,22,All Ages,962,Maternal and neonatal disorders,169,All risk factors,2,Percent,2019,0.8113135240511659,0.836160225634015,0.7848923656876368
+1,Deaths,527,California,3,Both,22,All Ages,962,Maternal and neonatal disorders,169,All risk factors,3,Rate,2019,2.0654244354463303,2.3218618053792026,1.811959647097087
+1,Deaths,527,California,3,Both,22,All Ages,626,Musculoskeletal disorders,169,All risk factors,1,Number,2019,27.26301853418637,56.518512890244544,7.213925307390497
+1,Deaths,527,California,3,Both,22,All Ages,626,Musculoskeletal disorders,169,All risk factors,2,Percent,2019,0.02606716106422952,0.04818773447681479,0.007708779206903381
+1,Deaths,527,California,3,Both,22,All Ages,626,Musculoskeletal disorders,169,All risk factors,3,Rate,2019,0.06837629414053598,0.14174976468299474,0.018092694985607203
+1,Deaths,527,California,3,Both,22,All Ages,640,Other non-communicable diseases,169,All risk factors,1,Number,2019,7.6336041715505765,9.89337555399966,5.6509725219987565
+1,Deaths,527,California,3,Both,22,All Ages,640,Other non-communicable diseases,169,All risk factors,2,Percent,2019,0.0011386435677969433,0.001563745468538117,0.0008050668070382821
+1,Deaths,527,California,3,Both,22,All Ages,640,Other non-communicable diseases,169,All risk factors,3,Rate,2019,0.01914525948518354,0.024812819463655864,0.014172772499852078
+1,Deaths,527,California,3,Both,22,All Ages,956,Respiratory infections and tuberculosis,169,All risk factors,1,Number,2019,3382.5245962522513,4176.794923331512,2698.0357889857796
+1,Deaths,527,California,3,Both,22,All Ages,956,Respiratory infections and tuberculosis,169,All risk factors,2,Percent,2019,0.3881419311237125,0.4378085031390076,0.33542212829554
+1,Deaths,527,California,3,Both,22,All Ages,956,Respiratory infections and tuberculosis,169,All risk factors,3,Rate,2019,8.483451545943952,10.47550027830903,6.766737457118143
+1,Deaths,527,California,3,Both,22,All Ages,974,Diabetes and kidney diseases,169,All risk factors,1,Number,2019,17415.90104725325,20401.080857597826,14646.135117753667
+1,Deaths,527,California,3,Both,22,All Ages,974,Diabetes and kidney diseases,169,All risk factors,2,Percent,2019,0.9989572299955203,0.999152767882526,0.9987382909753825
+1,Deaths,527,California,3,Both,22,All Ages,974,Diabetes and kidney diseases,169,All risk factors,3,Rate,2019,43.679491001196986,51.166392443110304,36.732852658182274
+1,Deaths,527,California,3,Both,22,All Ages,688,Transport injuries,169,All risk factors,1,Number,2019,1286.2945965183646,1646.3134929634543,981.2988822023042
+1,Deaths,527,California,3,Both,22,All Ages,688,Transport injuries,169,All risk factors,2,Percent,2019,0.2979986561863438,0.3583636742736254,0.24156513588272793
+1,Deaths,527,California,3,Both,22,All Ages,688,Transport injuries,169,All risk factors,3,Rate,2019,3.226057216394973,4.128993108420746,2.46112076419958
+1,Deaths,527,California,3,Both,22,All Ages,717,Self-harm and interpersonal violence,169,All risk factors,1,Number,2019,1346.9703137018698,2026.628735527272,730.5650983466427
+1,Deaths,527,California,3,Both,22,All Ages,717,Self-harm and interpersonal violence,169,All risk factors,2,Percent,2019,0.20004415422457814,0.2838672500104769,0.1123063051120747
+1,Deaths,527,California,3,Both,22,All Ages,717,Self-harm and interpersonal violence,169,All risk factors,3,Rate,2019,3.378233347593544,5.082832715691843,1.8322745146771229
+1,Deaths,527,California,3,Both,22,All Ages,973,Substance use disorders,169,All risk factors,1,Number,2019,6398.281128695821,7767.605319261654,5218.718330865431
+1,Deaths,527,California,3,Both,22,All Ages,973,Substance use disorders,169,All risk factors,2,Percent,2019,1.0,1.0,1.0
+1,Deaths,527,California,3,Both,22,All Ages,973,Substance use disorders,169,All risk factors,3,Rate,2019,16.047040128772117,19.4813375272966,13.088668783334036
+1,Deaths,527,California,3,Both,22,All Ages,955,HIV/AIDS and sexually transmitted infections,169,All risk factors,1,Number,2019,727.2070555760422,766.0766071804957,689.6057283168802
+1,Deaths,527,California,3,Both,22,All Ages,955,HIV/AIDS and sexually transmitted infections,169,All risk factors,2,Percent,2019,0.9195984551062546,0.9331898732409333,0.9014062626267572
+1,Deaths,527,California,3,Both,22,All Ages,955,HIV/AIDS and sexually transmitted infections,169,All risk factors,3,Rate,2019,1.8238524641279066,1.9213382172290987,1.7295474476264132

@@ -1,0 +1,4 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,metric_id,metric_name,year,val,upper,lower
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,409,Non-communicable diseases,3,Rate,2021,13498.982768147549,17303.24174890777,10173.27333620753
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,295,"Communicable, maternal, neonatal, and nutritional diseases",3,Rate,2021,618.30005931544,869.76870593728,423.56256185658
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,687,Injuries,3,Rate,2021,950.41514397885,1294.69803297764,673.30419876694

@@ -1,0 +1,23 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,metric_id,metric_name,year,val,upper,lower
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,962,Maternal and neonatal disorders,3,Rate,2021,158.26032013617,210.11804699464003,112.25066876617001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,696,Unintentional injuries,3,Rate,2021,643.0740685334599,888.74083187853,445.20981428992997
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,688,Transport injuries,3,Rate,2021,232.36723429288998,313.75703094578,166.28144850393
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,717,Self-harm and interpersonal violence,3,Rate,2021,74.97384115249,96.96569144059,56.53320982572
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,386,Nutritional deficiencies,3,Rate,2021,121.08672831371999,203.76889986630002,44.06396653918
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,344,Neglected tropical diseases and malaria,3,Rate,2021,39.18698583024,75.71029599841,18.69051876052
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,956,Respiratory infections and tuberculosis,3,Rate,2021,237.03390014728998,418.94849378761,134.04619252932
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,410,Neoplasms,3,Rate,2021,301.60367149472,400.82477453642,218.97493265161
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,626,Musculoskeletal disorders,3,Rate,2021,3288.01415364635,4355.99905124534,2426.02035460225
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,955,HIV/AIDS and sexually transmitted infections,3,Rate,2021,48.84065790671,80.5779067988,26.50346936861
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,491,Cardiovascular diseases,3,Rate,2021,564.90782641922,728.9758757012199,410.91765185817
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,640,Other non-communicable diseases,3,Rate,2021,820.2717046933501,1145.3146705399001,563.0865123551399
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,508,Chronic respiratory diseases,3,Rate,2021,712.79250597489,894.05643898816,557.59027550984
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,526,Digestive diseases,3,Rate,2021,270.47720403156,376.72221072992,191.88630304716
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,542,Neurological disorders,3,Rate,2021,1259.79892438062,2169.0424807867303,659.16130155366
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,558,Mental disorders,3,Rate,2021,2731.3143902462402,3594.8445896072103,2021.7643213724102
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,957,Enteric infections,3,Rate,2021,1.21724243187,1.6762275833499998,0.8550198080600001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,973,Substance use disorders,3,Rate,2021,954.4576601009601,1230.4124220782498,675.4497737561301
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,961,Other infectious diseases,3,Rate,2021,12.67422454941,18.07715014183,8.33033879536
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,974,Diabetes and kidney diseases,3,Rate,2021,1050.7842379173699,1403.14369707669,754.42648027312
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,653,Skin and subcutaneous diseases,3,Rate,2021,638.34248280141,886.4125757816701,430.28714547795005
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,669,Sense organ diseases,3,Rate,2021,906.2180064408201,1250.34506130572,634.37919375034

@@ -1,0 +1,20 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,rei_id,rei_name,metric_id,metric_name,year,val,upper,lower
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,89,Other environmental risks,3,Rate,2021,26.246822218509998,49.50813850517,5.35545581443
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,92,Child and maternal malnutrition,3,Rate,2021,214.30100804246,296.44754593276,142.91255130398
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,103,Drug use,3,Rate,2021,710.6758888382001,924.7170468304901,495.09197901706
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,110,Dietary risks,3,Rate,2021,464.86097462988005,769.06320498254,140.01311736824002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,82,"Unsafe water, sanitation, and handwashing",3,Rate,2021,0.13248837848,0.26097722236000004,0.060547281929999995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,85,Air pollution,3,Rate,2021,104.3446940971,172.47149220278,52.35854555944
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,98,Tobacco,3,Rate,2021,518.61329928626,763.54196902845,327.0103800783
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,102,Alcohol use,3,Rate,2021,399.45522623343004,554.8127421107799,275.49466544154
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,105,High fasting plasma glucose,3,Rate,2021,1092.88090190853,1442.97900686653,783.0029158264201
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,109,Low bone mineral density,3,Rate,2021,199.74604856937,273.76477346825,140.96412334276002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,108,High body-mass index,3,Rate,2021,1296.81223236038,2191.08951643263,481.36448609083
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,126,Occupational risks,3,Rate,2021,355.47858095229003,464.03766054719,265.15697182435997
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,135,Intimate partner violence,3,Rate,2021,50.095309652510004,110.0852522702,4.312448745249999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,367,High LDL cholesterol,3,Rate,2021,72.47732503004,117.27479959525,30.06625610026
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,107,High systolic blood pressure,3,Rate,2021,211.51869172472,284.80701334133,142.84423589458999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,341,Kidney dysfunction,3,Rate,2021,226.13914137029,293.94173121168,160.71342678541
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,381,Childhood sexual abuse and bullying,3,Rate,2021,170.85408126782,292.92280789833,88.56659494815
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,125,Low physical activity,3,Rate,2021,69.9769080721,122.56350918088,28.04017921033
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,170,Unsafe sex,3,Rate,2021,49.98968743724,80.08575377465,28.43230113157

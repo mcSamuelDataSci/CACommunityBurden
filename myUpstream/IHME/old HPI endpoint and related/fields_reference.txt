@@ -1,0 +1,17 @@
+1   cause_id: 294:954
+2   measure_id: (1: Deaths), (2: DALYs), (3: YLDs), (4: YLLs)
+3   year_id: 2001:2016
+4   location_id: (527: California)
+5   sex: (1: Male), (2: Female), (3: Both)
+6   age_group_id: (22: All ages)
+7   metric_id: (1: Number), (2: Percent), (3: Rate)
+8   val:
+9   upper:
+10  lower:
+11  cause_name:
+12  acause:
+13  sort_order:
+14  level:
+15  parent_id:
+
+etiology: (187: Influenza) **Not Included at this time

@@ -1,0 +1,174 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,metric_id,metric_name,year,val,upper,lower
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,298,HIV/AIDS,3,Rate,2021,36.23908297707,65.00342714767,15.70608677694
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,302,Diarrheal diseases,3,Rate,2021,1.20970028744,1.66706959503,0.84981265809
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,515,Asthma,3,Rate,2021,367.47326924273,532.16086130982,240.78202363032
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,328,Upper respiratory infections,3,Rate,2021,91.2565251055,135.45709438418,54.63059952788
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,695,Other transport injuries,3,Rate,2021,26.463014783909998,37.290974431280006,18.4253518044
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,697,Falls,3,Rate,2021,406.98885170972,564.53896908274,281.26969767335
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,530,Paralytic ileus and intestinal obstruction,3,Rate,2021,4.01049752796,5.418708404909999,2.59159940725
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,339,Pertussis,3,Rate,2021,0.09476895946,0.20930731084,0.03646424757
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,341,Measles,3,Rate,2021,2.021245e-05,3.205242e-05,1.156052e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,516,Interstitial lung disease and pulmonary sarcoidosis,3,Rate,2021,18.03919757514,24.92257719023,11.89274410021
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,297,Tuberculosis,3,Rate,2021,1.35647854072,1.88070143985,0.87385969974
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,510,Pneumoconiosis,3,Rate,2021,1.0249617581900001,1.49127224149,0.6852575104499999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,432,Cervical cancer,3,Rate,2021,4.08012721347,5.6183009389,2.78746574654
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,321,Other intestinal infectious diseases,3,Rate,2021,0.00096648297,0.00140476768,0.0006659227199999999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,322,Lower respiratory infections,3,Rate,2021,1.7252242782399998,2.38404803301,1.1494019344400002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,441,Colon and rectum cancer,3,Rate,2021,27.895929480409997,37.23918453553,20.1627893575
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,521,Cirrhosis and other chronic liver diseases,3,Rate,2021,8.75824671996,12.06788718903,5.99293364954
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,329,Otitis media,3,Rate,2021,14.19189710842,22.62787697381,8.274044960220001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,347,Leishmaniasis,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,709,Animal contact,3,Rate,2021,9.09744973425,14.22805107912,5.66880696557
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,447,Nasopharynx cancer,3,Rate,2021,0.51201329743,0.70325490542,0.34659456435999997
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,631,Neck pain,3,Rate,2021,279.59246508702,398.38352543875,188.53819174853
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,639,Other musculoskeletal disorders,3,Rate,2021,1068.00064790036,1438.9595822210101,756.33088292351
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,520,Other chronic respiratory diseases,3,Rate,2021,6.968023883969999,8.07448485964,5.83680558439
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,698,Drowning,3,Rate,2021,0.63744595928,0.857958678,0.44985481775
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,700,Poisonings,3,Rate,2021,9.792262962739999,13.64221440871,6.82291666907
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,337,Encephalitis,3,Rate,2021,0.25806568959000004,0.35024407563000004,0.18366251511
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,340,Tetanus,3,Rate,2021,7.720936e-05,0.00018732824,2.5891190000000003e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,535,Pancreatitis,3,Rate,2021,6.10810189096,9.98935632915,3.20874419618
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,541,Other digestive diseases,3,Rate,2021,4.89843264845,6.7213103892,3.39815713615
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,462,Non-melanoma skin cancer,3,Rate,2021,21.557051668070002,31.748680867999997,14.02157589905
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,718,Self-harm,3,Rate,2021,17.75432067596,24.16141756479,12.51307303544
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,471,Kidney cancer,3,Rate,2021,6.625802236509999,8.97287563141,4.48948867508
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,699,"Fire, heat, and hot substances",3,Rate,2021,34.09486558802,58.50513683463,18.47608479855
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,992,Upper digestive system diseases,3,Rate,2021,117.93315515642,200.03597405837,67.44796700676
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,346,Chagas disease,3,Rate,2021,2.02417177214,3.0402928008,1.28765755363
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,332,Meningitis,3,Rate,2021,0.55445964216,0.73738133031,0.38799179351
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,338,Diphtheria,3,Rate,2021,2.45615e-06,4.164780000000001e-06,1.36948e-06
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,354,Lymphatic filariasis,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,484,Hodgkin lymphoma,3,Rate,2021,1.27069333413,1.7751739532200002,0.8723262392300001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,486,Multiple myeloma,3,Rate,2021,1.80655104622,2.5330063202899997,1.22145659331
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,342,Varicella and herpes zoster,3,Rate,2021,3.2085222022,4.89739173212,1.81850032407
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,359,Rabies,3,Rate,2021,5.2399e-06,8.0529e-06,3.32467e-06
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,353,Cystic echinococcosis,3,Rate,2021,0.08093945248000001,0.12947491778,0.046693552959999995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,355,Onchocerciasis,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,532,Inflammatory bowel disease,3,Rate,2021,46.05271026343,62.202878011239996,31.55604569916
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,534,Gallbladder and biliary diseases,3,Rate,2021,73.62437812451999,108.00819935634,47.05915698097
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,658,Scabies,3,Rate,2021,2.90181538948,4.6257741815,1.63564104014
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,708,Adverse effects of medical treatment,3,Rate,2021,12.753579269669999,19.75278305996,7.6805360475099995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,492,Rheumatic heart disease,3,Rate,2021,7.408121166009999,10.380317905730001,4.887150145850001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,360,Intestinal nematode infections,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,546,Multiple sclerosis,3,Rate,2021,23.30702208236,30.35238321642,16.5948834668
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,663,Pruritus,3,Rate,2021,11.2576273555,20.7495766256,5.48974547125
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,712,Foreign body,3,Rate,2021,14.578700276930002,21.893528767819998,9.513254133170001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,351,Schistosomiasis,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,499,Cardiomyopathy and myocarditis,3,Rate,2021,13.377896303870001,19.0038864242,9.03939849678
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,533,Vascular intestinal disorders,3,Rate,2021,1.9210444087,2.75583887128,1.29208415479
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,345,Malaria,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,543,Alzheimer's disease and other dementias,3,Rate,2021,338.42537947297,448.49526417493996,235.10567813373999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,365,Other neglected tropical diseases,3,Rate,2021,3.5919453199,5.64343630499,2.14407383428
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,366,Maternal disorders,3,Rate,2021,4.25050258829,6.4359180055700005,2.4213625147899998
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,557,Other neurological disorders,3,Rate,2021,32.2537822858,57.41751265485,17.36902421981
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,843,Ebola,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,507,Other cardiovascular and circulatory diseases,3,Rate,2021,90.44486995353999,139.29999565578998,56.627542273829995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,356,Trachoma,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,729,Exposure to forces of nature,3,Rate,2021,0.16668244114,0.23016593857,0.12136266933
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,509,Chronic obstructive pulmonary disease,3,Rate,2021,319.28705351484,369.97130972634,270.42049503627
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,358,Yellow fever,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,724,Interpersonal violence,3,Rate,2021,50.749022384700005,66.64953156546001,38.23922278253
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,350,African trypanosomiasis,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,352,Cysticercosis,3,Rate,2021,33.48992404583,69.73846601345001,13.52561148887
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1056,Other unintentional injuries,3,Rate,2021,73.59884703961,104.98963488881,49.75087678178
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,560,Alcohol use disorders,3,Rate,2021,252.5895748154,350.19167989855,172.92400400719
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,544,Parkinson's disease,3,Rate,2021,27.920553035,36.98094099783,20.31534541669
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,380,Neonatal disorders,3,Rate,2021,154.00981754788,203.6892386649,109.39595857571999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,554,Motor neuron disease,3,Rate,2021,2.30883763183,3.04248868628,1.66984574381
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,357,Dengue,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,567,Depressive disorders,3,Rate,2021,922.56657524146,1301.53420638651,592.05603382948
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,689,Road injuries,3,Rate,2021,205.90421950897002,278.27281680326,147.39404174487998
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,387,Protein-energy malnutrition,3,Rate,2021,50.18354823965,104.51573803424,0.00236317938
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,388,Iodine deficiency,3,Rate,2021,2.64429928302,4.9369069556900005,1.10971394968
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,578,Attention-deficit/hyperactivity disorder,3,Rate,2021,23.03818922657,37.81929501908,12.38308684872
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,854,Police conflict and executions,3,Rate,2021,5.6283890981,8.00714934723,3.9861561392800002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,935,Zika virus,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,364,Food-borne trematodiases,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,936,Guinea worm disease,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,570,Bipolar disorder,3,Rate,2021,127.59253181008,182.87244414758,85.14699612587
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,588,Acute glomerulonephritis,3,Rate,2021,0.00586590835,0.0086118893,0.0036260983400000003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,393,Sexually transmitted infections excluding HIV,3,Rate,2021,12.601574929629999,22.7098410135,6.3658901093299995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,572,Eating disorders,3,Rate,2021,98.01374733384,152.24574523555,59.913600185250004
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,529,Appendicitis,3,Rate,2021,2.5243527066800002,3.52416227414,1.5718070754600002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,531,"Inguinal, femoral, and abdominal hernia",3,Rate,2021,4.64628458446,6.475730843789999,3.02612516245
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,575,Autism spectrum disorders,3,Rate,2021,194.9303646969,272.36391409224,133.88603521336998
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,704,Exposure to mechanical forces,3,Rate,2021,72.73627643341,108.20862221028,48.26604422622
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,390,Dietary iron deficiency,3,Rate,2021,49.88158487674,79.2358883973,30.061516037470003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,400,Acute hepatitis,3,Rate,2021,2.85063793496,4.0863017076000006,1.80919772079
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,945,Conflict and terrorism,3,Rate,2021,0.84210899372,1.2124949354,0.58375740804
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,958,Typhoid and paratyphoid,3,Rate,2021,0.00203319843,0.00325054481,0.00115239795
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,579,Conduct disorder,3,Rate,2021,50.07070778588,77.03876709683,27.122461795590002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,585,Other mental disorders,3,Rate,2021,157.94896119668002,230.53836118567997,102.26424178799
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,389,Vitamin A deficiency,3,Rate,2021,0.024937605970000002,0.04767310147,0.010711949450000001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,391,Other nutritional deficiencies,3,Rate,2021,18.35235830832,38.07296117462,6.062424e-05
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,589,Chronic kidney disease,3,Rate,2021,179.748631077,235.54375800636998,125.75627794502999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,959,Invasive Non-typhoidal Salmonella (iNTS),3,Rate,2021,0.00454246303,0.01358760348,0.0004913865899999999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,405,Leprosy,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,628,Osteoarthritis,3,Rate,2021,433.53298001691,875.4757593651101,209.42080743734
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,603,Gynecological diseases,3,Rate,2021,249.39221937489998,348.38498073643,170.86448892535
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,408,Other unspecified infectious diseases,3,Rate,2021,5.70767024307,8.750437007739999,3.5572565806300003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,972,Headache disorders,3,Rate,2021,735.0411900396,1555.90926405983,161.69763145958999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,545,Idiopathic epilepsy,3,Rate,2021,100.54215983304,235.71895801851,25.26600076261
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,414,Stomach cancer,3,Rate,2021,2.7144237482699998,3.68543137756,1.89224100064
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,594,Urinary diseases and male infertility,3,Rate,2021,40.33906273328,57.23419548415,26.2029660702
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,411,Esophageal cancer,3,Rate,2021,1.48380401212,2.04094213338,1.02050008698
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,417,Liver cancer,3,Rate,2021,2.64931445416,3.55839797846,1.8219008846400002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,426,"Tracheal, bronchus, and lung cancer",3,Rate,2021,10.968756868109999,14.4936388083,7.89589254497
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,559,Schizophrenia,3,Rate,2021,256.77214292405,324.13007932783,188.46483725544
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,561,Drug use disorders,3,Rate,2021,701.86808528555,915.47033498962,488.74704864556
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,435,Uterine cancer,3,Rate,2021,14.59771466815,20.06548643928,10.12448093366
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,627,Rheumatoid arthritis,3,Rate,2021,45.98098254365,62.95243039163,31.97852210851
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,630,Low back pain,3,Rate,2021,1389.3443403255599,1802.38091484945,1016.3570057676101
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,438,Prostate cancer,3,Rate,2021,59.02138386683,82.89885982669,38.302602503349995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,444,Lip and oral cavity cancer,3,Rate,2021,4.03482923429,5.39932207837,2.77244733268
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,423,Larynx cancer,3,Rate,2021,1.9330588403800002,2.7062813835600004,1.31382311014
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,429,Breast cancer,3,Rate,2021,57.8679842627,78.25263051454,39.81185624602
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,613,Hemoglobinopathies and hemolytic anemias,3,Rate,2021,10.01639763937,15.131746476490001,6.26425633403
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1004,Pulmonary Arterial Hypertension,3,Rate,2021,0.23390467086,0.34817424512,0.15359261345
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,450,Other pharynx cancer,3,Rate,2021,2.08419812657,2.95599147066,1.44549289584
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,456,Pancreatic cancer,3,Rate,2021,2.99853636356,4.05607861497,2.03098034973
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,654,Dermatitis,3,Rate,2021,180.84981512119,288.74481048654997,105.87383297446999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,842,Environmental heat and cold exposure,3,Rate,2021,8.62910711866,12.56289851856,5.483239687939999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,459,Malignant skin melanoma,3,Rate,2021,11.18101468571,15.826520796829998,7.66512543933
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,641,Congenital birth defects,3,Rate,2021,62.95171412556,85.18859503757001,45.510754790789996
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,465,Ovarian cancer,3,Rate,2021,3.86791200683,5.5542814254,2.57254281872
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,980,Bacterial skin diseases,3,Rate,2021,7.13252834671,10.072471043699998,4.77578778052
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,619,"Endocrine, metabolic, blood, and immune disorders",3,Rate,2021,88.71551232133,137.43059862549998,53.2674773997
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,981,Blindness and vision loss,3,Rate,2021,216.2750257682,331.20078427845,136.19825729973002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,453,Gallbladder and biliary tract cancer,3,Rate,2021,1.18442341815,1.57674894127,0.8136415231699999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1011,Soft tissue and other extraosseous sarcomas,3,Rate,2021,1.9155189495499998,2.56101592349,1.34008570939
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,659,Fungal skin diseases,3,Rate,2021,16.738311264460002,33.79736740493,6.90413473816
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,661,Acne vulgaris,3,Rate,2021,63.17557488874,99.6550660499,39.964736928629996
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,474,Bladder cancer,3,Rate,2021,12.222463743150001,16.78153593939,8.45701930614
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1013,Neuroblastoma and other peripheral nervous cell tumors,3,Rate,2021,0.08086034365,0.11439750519,0.053936088070000006
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,480,Thyroid cancer,3,Rate,2021,4.9680483006300005,6.80229074867,3.3548394505
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,468,Testicular cancer,3,Rate,2021,2.24080329127,3.25128537617,1.4161687073
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,571,Anxiety disorders,3,Rate,2021,883.69413083577,1304.60450195495,550.68106443587
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,668,Other skin and subcutaneous diseases,3,Rate,2021,76.23287292504,140.7192125687,36.96264387986
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,485,Non-Hodgkin lymphoma,3,Rate,2021,14.993987092160001,20.09047446485,10.48672586971
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,632,Gout,3,Rate,2021,71.56273777284001,101.29286536257999,49.54091322582
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,477,Brain and central nervous system cancer,3,Rate,2021,2.98410333268,3.89469497583,2.11668204058
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,487,Leukemia,3,Rate,2021,6.69825943893,8.7879936169,4.79178348847
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1008,Eye cancer,3,Rate,2021,0.45540313701,0.65319692387,0.29985070046
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,483,Mesothelioma,3,Rate,2021,0.24332801473000001,0.32822933558,0.16371030381
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,490,Other neoplasms,3,Rate,2021,9.24396206635,13.598197073889999,5.95980808282
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,655,Psoriasis,3,Rate,2021,96.27266395755,127.42469451670999,70.17652740438001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,493,Ischemic heart disease,3,Rate,2021,52.563432874650005,71.16218060386,36.56706405825
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1048,COVID-19,3,Rate,2021,128.50377511441,304.86470023122,49.115496749390005
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,679,Other sense organ diseases,3,Rate,2021,48.950344364180005,71.61756754166001,31.31802765649
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,489,Other malignant neoplasms,3,Rate,2021,4.4787864741500005,6.12192637929,3.12109912122
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,660,Viral skin diseases,3,Rate,2021,116.24608280807001,173.61275919208998,74.35210347448
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,582,Idiopathic developmental intellectual disability,3,Rate,2021,16.68703919496,31.898671312900003,4.91177545994
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,587,Diabetes mellitus,3,Rate,2021,871.0297409320099,1178.11222936574,613.60181422562
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,498,Hypertensive heart disease,3,Rate,2021,17.89026824891,24.98071447893,11.40830113878
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,500,Atrial fibrillation and flutter,3,Rate,2021,122.42644688441,162.34201059668,85.25723309402
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,503,Endocarditis,3,Rate,2021,0.71357362531,1.01916228736,0.45840739239999995
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,494,Stroke,3,Rate,2021,226.02217936629,289.13148596695,163.68941953006
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,665,Decubitus ulcer,3,Rate,2021,6.894651629059999,9.3731704482,4.95625272608
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,1012,Malignant neoplasm of bone and articular cartilage,3,Rate,2021,0.74262447835,0.98855777036,0.51419742541
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,502,Lower extremity peripheral arterial disease,3,Rate,2021,12.59137747745,23.94674559038,6.05382113738
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,680,Oral disorders,3,Rate,2021,368.8567984989,554.26496185545,217.73665887004
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,504,Non-rheumatic valvular heart disease,3,Rate,2021,21.23575584789,36.06133181498,11.94777051475
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,662,Alopecia areata,3,Rate,2021,12.04103457654,17.11877542058,7.92606790093
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,664,Urticaria,3,Rate,2021,48.59950453903,67.37012677348,32.39782800086
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,674,Age-related and other hearing loss,3,Rate,2021,640.9926363084301,886.2543334984899,452.07600138802

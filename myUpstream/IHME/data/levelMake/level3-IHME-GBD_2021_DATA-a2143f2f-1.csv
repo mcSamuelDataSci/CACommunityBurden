@@ -1,0 +1,40 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,rei_id,rei_name,metric_id,metric_name,year,val,upper,lower
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,332,Chewing tobacco,3,Rate,2021,0.12797693163999999,0.21992758574000001,0.06613656085
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,91,Lead exposure,3,Rate,2021,25.77828381523,49.187180152879996,5.01790531392
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,363,Bullying victimization,3,Rate,2021,120.71017806809,233.85776927391998,49.88719459979001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,97,Zinc deficiency,3,Rate,2021,0.00015813667,0.00099955475,-0.00031633042000000003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,112,Diet low in vegetables,3,Rate,2021,10.94332220317,18.44213546659,5.6081173816
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,116,Diet high in red meat,3,Rate,2021,100.84332213446,227.14975594879,-8.9579488569
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,121,Diet low in seafood omega-3 fatty acids,3,Rate,2021,3.7991830770300004,7.31269054764,0.72932873256
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,122,Diet low in polyunsaturated fatty acids,3,Rate,2021,0.39464464757,1.62226713155,-0.73215142512
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,129,"Occupational particulate matter, gases, and fumes",3,Rate,2021,26.38521288909,33.314996310190004,20.36629265236
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,134,Childhood sexual abuse,3,Rate,2021,52.390862416480005,92.45774941431,25.47394385761
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,333,Diet low in legumes,3,Rate,2021,2.75124478545,7.56497897617,-2.1009922110400003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,339,Low birth weight and short gestation,3,Rate,2021,113.54796110996999,150.26155558693,79.09711051800001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,95,Iron deficiency,3,Rate,2021,50.47525394155,80.04365163976999,30.40766354978
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,83,Unsafe water source,3,Rate,2021,0.05205908145,0.16751061911999998,0.0063842540599999996
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,84,Unsafe sanitation,3,Rate,2021,0.06402304211,0.12404001067999999,0.02946169846
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,90,Residential radon,3,Rate,2021,0.46853840328,1.82239108443,-0.17337031865000002
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,93,Suboptimal breastfeeding,3,Rate,2021,0.05617226923,0.0912955379,0.033551767010000004
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,96,Vitamin A deficiency,3,Rate,2021,0.02521812615,0.047572446309999995,0.01093168309
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,99,Smoking,3,Rate,2021,493.19680867552006,720.70574702513,316.92962868343
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,113,Diet low in whole grains,3,Rate,2021,74.27079805102001,144.18502496003,11.062869834739999
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,100,Secondhand smoke,3,Rate,2021,30.686420726719998,53.954292308430006,11.32395213384
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,117,Diet high in processed meat,3,Rate,2021,211.66101978914,376.82015938825003,49.630928141800005
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,111,Diet low in fruits,3,Rate,2021,36.14822427446,60.245692418729995,16.68876355621
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,115,Diet low in milk,3,Rate,2021,2.1199873118,3.9498307666,0.53390073856
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,119,Diet low in fiber,3,Rate,2021,14.00570876309,25.35742169434,5.06251546404
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,123,Diet high in trans fatty acids,3,Rate,2021,0.0,0.0,0.0
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,114,Diet low in nuts and seeds,3,Rate,2021,0.61181467646,1.2550396684899998,0.15585713468
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,128,Occupational asthmagens,3,Rate,2021,27.44716710101,40.14362025088,17.89036166316
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,130,Occupational noise,3,Rate,2021,64.56519677887,91.27926025752,43.60326294193
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,118,Diet high in sugar-sweetened beverages,3,Rate,2021,99.2377153747,164.26611393424,45.46752838695
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,147,Diet low in calcium,3,Rate,2021,0.69708994831,1.11046406783,0.46059682623000003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,132,Occupational ergonomic factors,3,Rate,2021,176.63900401769,236.76871878407,127.01968656698001
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,124,Diet high in sodium,3,Rate,2021,22.7885984262,71.61161308625,0.34594373777000004
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,127,Occupational carcinogens,3,Rate,2021,3.2165067266399996,4.41059980016,2.19384606293
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,131,Occupational injuries,3,Rate,2021,57.22549343898,88.46892331741,36.32728758711
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,239,Child growth failure,3,Rate,2021,50.200598290669994,104.55511061425,0.01208735061
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,238,No access to handwashing facility,3,Rate,2021,0.02002209695,0.06419061307,-0.0036969092500000003
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,380,Particulate matter pollution,3,Rate,2021,97.22209139616,164.29046411043,48.870212739059994
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,404,Nitrogen dioxide pollution,3,Rate,2021,7.122602700940001,30.577645489619997,-6.80845895314

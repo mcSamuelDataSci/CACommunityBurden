@@ -1,5 +1,5 @@
 
-server <- F
+server <- T
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
@@ -111,7 +111,7 @@ hospData <- readRDS(paste0(ccbData,"real/age_race_focus_data/hosp_ED_year.RDS"))
 # -- IMHE DATA -----------------------------------------------
 
 
-myLevel <- c('2','2,3,4')
+# myLevel <- c('2','2,3,4')
 #myLevel <- c(2, 3)
 
 # dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
@@ -125,34 +125,69 @@ myLevel <- c('2','2,3,4')
 #                                mutate(measure = val,
 #                                mValues = id_name)
 
+# dataIHME     <- read_csv(paste0(ccbUpstream,"IHME/IHME_manual.csv"))
+# 
+# dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD  
+#                                       year    == 2019,
+#                                       display    == "cause",
+#                                       #    level      %in% myLevel,
+#                                       sex_id     == 3,   # Both
+#                                       metric_id  == 3)  %>%    # Rate 
+#   mutate(measure = round(val, 3),
+#          mValues = cause_name)
+# 
+# 
+# 
+# #dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
+# 
+# 
+# dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #DALY  
+#                                       year    == 2019,
+#                                       display    == "risk",
+#                                       #   level      %in% myLevel,
+#                                       sex_id     == 3,   # Both
+#                                       metric_id  == 3)  %>%  # Rate
+#   mutate(measure = round(val, 3),
+#          mValues = rei_name)
 
+xSheets <- c("measure", "sex", "age", "metric", "cause", "risk")
+ihmeLink <- lapply(xSheets, function(x) readxl::read_excel(paste0(ccbInfo, "ihmeLink.xlsx"), sheet = x))
+names(ihmeLink) <- xSheets
 
-
-
-dataIHME     <- read_csv(paste0(ccbUpstream,"IHME/IHME_manual.csv"))
-
-dat.YLD.cause <- dataIHME %>%  filter(measure_id ==  3,    #YLD  
-                                      year    == 2019,
-                                      display    == "cause",
-                                      #    level      %in% myLevel,
-                                      sex_id     == 3,   # Both
-                                      metric_id  == 3)  %>%    # Rate 
+dat.YLD.cause <- readRDS(paste0(ccbData, "ihme_cause.RDS")) %>% 
+  left_join(ihmeLink$measure) %>% 
+  left_join(ihmeLink$sex) %>% 
+  left_join(ihmeLink$age) %>% 
+  left_join(ihmeLink$metric) %>% 
+  left_join(ihmeLink$cause) %>% 
+  select(!ends_with("id")) %>% 
+  filter(measure_name == "YLDs (Years Lived with Disability)", 
+         sex_name == "Both", 
+         age_name == "All ages", 
+         metric_name == "Rate", 
+         level == "lev2", 
+         year == 2021) %>% 
   mutate(measure = round(val, 3),
          mValues = cause_name)
 
 
-
-#dataIHME     <- readRDS(paste0(ccbData,"v2IHME.RDS"))
-
-
-dat.DALY.risk <- dataIHME %>%  filter(measure_id ==  2,    #DALY  
-                                      year    == 2019,
-                                      display    == "risk",
-                                      #   level      %in% myLevel,
-                                      sex_id     == 3,   # Both
-                                      metric_id  == 3)  %>%  # Rate
+dat.DALY.risk <- readRDS(paste0(ccbData, "ihme_risk.RDS")) %>% 
+  left_join(ihmeLink$measure) %>% 
+  left_join(ihmeLink$sex) %>% 
+  left_join(ihmeLink$age) %>% 
+  left_join(ihmeLink$metric) %>% 
+  left_join(ihmeLink$risk) %>% 
+  select(!ends_with("id")) %>% 
+  filter(measure_name == "DALYs (Disability-Adjusted Life Years)", 
+         sex_name == "Both", 
+         age_name == "All ages", 
+         metric_name == "Rate", 
+         level == "lev2", 
+         year == 2021) %>% 
   mutate(measure = round(val, 3),
          mValues = rei_name)
+
+
 
 
 # --APP Constants ------------------------------------------------------
@@ -182,7 +217,7 @@ metric <-     c("Number",
                 "Number",
                 "Number",
                 "Rate",
-                "Number")
+                "Rate")
 
 dataSets   <- list(ccbDeaths, ccbYLL,   ccbChange, ccbRace, hospData, edData, cidData , dat.YLD.cause, dat.DALY.risk)
 

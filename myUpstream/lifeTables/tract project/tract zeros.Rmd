@@ -7,26 +7,24 @@ output: html_document
 
 
 ```{r}
-server <- T
+server <- F
 if (!server) source("g:/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 if (server) source("/mnt/projects/FusionData/0.CCB/myCCB/Standards/FusionStandards.R")
 
-
 source(paste0(myPlace,"/Standards/ageChop.R"))
-
 ```
 
 
 ```{r}
 tract0  <- readRDS(paste0(securePlace,"myData/cbdDat0-INVESTIGATION-FILE.RDS")) 
               
-
-ageLink <- read_excel(paste0(standardsPlace, "ageLink.xlsx"),sheet="age11")
+ageLink <- read_excel(paste0(standardsPlace, "ageLink.xlsx"),sheet="ageLE_tract")
 
 # 2017 to 2022 = 6 years
+# what about tracts with no deaths at all?
 tract1  <- tract0  %>%
                filter(year %in% 2017:2022 , sex == "Total", ! is.na(GEOID), GEOID != "", ! is.na(age)) %>%
-               mutate(ageGroup11 = ageChop(age,"age11")) %>% 
+               mutate(ageGroup11 = ageChop(age,"ageLE_tract")) %>% 
                mutate(ageGroup11 = factor(ageGroup11, levels= ageLink$ageName))  %>% 
                select(GEOID, ageGroup11)
 
@@ -37,8 +35,19 @@ tractDat <- tract1 %>%
                tidyr::complete(GEOID, ageGroup11, fill=list(N=0)) %>% 
                mutate(isZero = ifelse(N==0,1,0))
 
-summarytools::ctable(tractDat$ageGroup11, tractDat$isZero)  #, totals=FALSE
+summarytools::ctable(tractDat$ageGroup11, as.character(tractDat$isZero))  #, totals=FALSE
 
  tractDat  %>%
   group_by(ageGroup11) %>% summarise(zeros=sum(isZero))
+ 
+ 
+tractNozeros <-  tractDat %>% group_by(GEOID) %>% filter(max(isZero)==0)
+
+
+tractsNo <- unique(tractNozeros$GEOID) 
+ 
+saveRDS(tractsNo, "tractsNo.RDS" )
+
+summarytools::view(summarytools::ctable(tractDat$ageGroup11, as.character(tractDat$isZero)))  #, totals=FALSE
+
 ```

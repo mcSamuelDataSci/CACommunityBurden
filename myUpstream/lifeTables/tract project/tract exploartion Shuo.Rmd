@@ -72,6 +72,8 @@ countyMissing <- countyMissing %>%
 
 
 countyMissing <- left_join(countyMissing, popCountyTot, by = "county")
+
+saveRDS(countyMissing, file = paste0(ccbUpstream, "lifeTables/tract project/countyMissing.RDS"))
 ```
 
 

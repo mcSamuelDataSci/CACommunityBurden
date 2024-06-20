@@ -1,0 +1,4 @@
+measure_id,measure_name,location_id,location_name,sex_id,sex_name,age_id,age_name,cause_id,cause_name,rei_id,rei_name,metric_id,metric_name,year,val,upper,lower
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,104,Metabolic risks,3,Rate,2021,2226.97562012349,3144.1538083453097,1442.5752473646598
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,202,Environmental/occupational risks,3,Rate,2021,484.07673057374996,648.7878482620899,345.22716655182
+3,YLDs (Years Lived with Disability),527,California,3,Both,22,All ages,294,All causes,203,Behavioral risks,3,Rate,2021,2512.98158166948,3264.5302583900498,1855.0662812225698
