@@ -1,9 +1,3 @@
----
-editor_options:
-  markdown:
-    wrap: 72
----
-
 # California Community Burden of Disease (CCB) Condition List
 
 The "California Community Burden of Disease Condition List" is the
@@ -66,9 +60,6 @@ file is below:
                 Health" level cause "A02 - HIV/ and other Sexually
                 transmitted diseases (STDs)".
 
-```{=html}
-<!-- -->
-```
 -   **Sample-death-data.csv**
 
     -   25,000 death records containing ICD-10 codes, county of
