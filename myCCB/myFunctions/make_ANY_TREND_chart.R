@@ -222,7 +222,7 @@ tplot <-  ggplot(data=dat.1,
                              expand = expansion(mult = c(0, 0), add = c(1, 3))) +
           scale_y_continuous(trans = myTrans, limits = c(myMin, NA)) +
 
-          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex = myLineLabelCex, 'last.bumpup',font="bold")) +
+          geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x + 0.2), "last.points", cex = myLineLabelCex, 'bumpup',font="bold")) +
           # geom_dl(aes(label = get(myLineLabel)), method = list(dl.trans(x = x - 0.2), "first.points",size = myLineLabelSize,'first.bumpup' ,font="bold"))  +
   
           labs(y = deathMeasuresNames[deathMeasures == myMeasure], x = "Year"

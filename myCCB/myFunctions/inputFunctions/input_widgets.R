@@ -41,6 +41,31 @@ hidden(
       # Shuo Life Course
       sliderTextInput(inputId = "myYear_lifeCourse", label = "Year(s):", choices = as.character(minYear:maxYear), selected = as.character(maxYear)),
       
+      ## chinwag --
+      radioButtons("myYearGrouping_lifeCourse", label = "Years to Group:", choices = c(1, 5), inline = TRUE),
+      
+      sliderTextInput(inputId = "myYear_lifeCourseNew", label = "Year:", choices = as.character(unique(datLifeCourse1y$year)), selected = max(datLifeCourse1y$year)),
+
+      radioButtons("myMeasure_lifeCourse", label = "Measure", choices = c("Crude Death Rate", "Ranking"), selected = "Ranking"),
+      
+      radioButtons("bySex", label = "Disaggregated by Sex", choices = c("Yes", "No"), selected = "No"),
+      
+      selectInput("myRace_lifeCourse", label = "Race and Ethnicity", choices = raceList, selected = "Total"),
+      
+      pickerInput("myRaceMulti_lifeCourse", label = "Race and Ethnicity (Multi-Select)", options = list(`actions-box` = TRUE),
+                  choices = raceList, selected = c("Black", "White"), multiple = TRUE),
+      
+      pickerInput("myAge_lifeCourse", label = "Age Group (Multi-Select)", options = list(`actions-box` = TRUE),
+                  choices = ageSort, selected = c("55 - 64", "65 - 74"), multiple = TRUE),
+      
+      sliderInput("myN_lifeCourseNew", label = "Number of Causes", min = 1, max = 10, value = 5),
+      
+      checkboxInput("myLogTrans_lifeCourse",  label = "Log Transform of Y Axis for Crude Death Rate", value=TRUE),
+      
+      checkboxInput("myLabelRepel", label = "Avoid Label Overlap for Crude Death Rate", value=TRUE),
+      
+      ## -- chinwag
+      
       # mySex ======================
       radioButtons("mySex", "Sex:", choices=c("Total","Female","Male"), inline=TRUE),
       
@@ -116,7 +141,7 @@ hidden(
       
       radioButtons("myYearGrouping_race_age", "Years to Group:", choices=c(1,3), inline = TRUE),
       
-      radioButtons("myYearGrouping_lifeCourse", "Years to Group:", choices=c(1,3), inline = TRUE),
+      #radioButtons("myYearGrouping_lifeCourse", "Years to Group:", choices=c(1,3), inline = TRUE),
    
       # myData ======================
       selectInput("myData","Data Type:", choices=c("Deaths", "Hospitalizations","Emergency Department")),  

@@ -11,6 +11,7 @@
     -   [Note Regarding "Race and Ethnicity" for Death Data](#note-race-and-ethnicity-death)    
     -   [Note Regarding "Race and Ethnicity" for Hospitalization and Emergency Department Data](#note-race-and-ethnicity-hospitalization-ed)    
     -   [Note Regarding "Communities"](#note-communities)  
+    -   [Note Regarding County, City, and Local Health Jurisdiction (LHJ) Designation](#note-LHJ)
 - [Data Sources and Other Key Inputs:](#data-sources)  
     -   [Death Data](#death-data)  
     -   [Hospitalizations and Emergency Department Data](#hospitalization-and-ed-data)  
@@ -96,6 +97,17 @@
 
 <br>
 
+-   Note Regarding County, City, and Local Health Jurisdiction (LHJ) Designation: <a id="note-LHJ"></a>
+    -   In California, local public health responsibility and authority resides with local health jurisdictions (LHJs). There are 61 LHJs in California: 58 county jurisdictions and 3 cities jurisdictions of Berkeley, Long Beach and Pasadena.  
+    -   The CCB provides data for all 61 LHJs **and** data for the whole County of Alameda (which includes Alameda County LHJ and the City of Berkeley LHJ) and the whole County of Los Angeles (which includes Los Angeles County LHJ, the City of Long Beach LHJ, and the City of Pasadena LHJ).  
+    -   **Except** for Alameda and Los Angeles, all county LHJs are labeled/titled with the name of the county.  For Alameda and Los Angeles health jurisdictions (or “departments”), the labels used are  Alameda HD and Los Angeles HD respectively. The label “Alameda” and “Los Angels” refers to the whole county.
+    -   LHJ Hospitalizations and Emergency Department (ED) Data:
+        -   Hospitalization and Emergency Department (ED) visits data from Health Care Access and Information (HCAI) include the patient’s county and zip code of residence; however, they **do not** include the patient’s city of residence. Therefore, for the three city LHJs, the city of residence is approximated based on the patient’s ZIP Code of residence. Since ZIP Code boundaries can cross city boundaries, and do so for a small proportion of residents in the three city LHJs, hospitalizations and ED visits data for these LHJs may be slightly overestimated or underestimated. The following ZIP Codes are used for identifying patients from the three city jurisdictions:    
+            -   Berkeley: 94702, 94703, 94704, 94705, 94707, 94708, 94709, 94710
+            -   Long Beach: 90802, 90803, 90804, 90805, 90806, 90807, 90808, 90810, 90813, 90814, 90815, 90822, 90831, 90840
+            -   Pasadena: 91101, 91103, 91104, 91105, 91106, 91107.
+
+<br>
 <hr>
 
 **Data Sources and Other Key Inputs:** <a id="data-sources"></a>
@@ -176,7 +188,7 @@
         -   “Alzheimer’s disease” = “Alzheimer disease and other dementias”
         -   “Lung Cancer” = “Trachea, bronchus and lung cancers”
     -   A diagram of the Conditions List is [here](https://skylab.cdph.ca.gov/communityBurden/_w_260397a5/icd10_to_condition_IMAGE.pdf), and shows the current structure, the levels, and all the conditions therein.
-    -   Documentation of the mapping of all ICD-10 codes to this Condition List and notation of all modifications to the original WHO system are documented and described in the CCB resource [here](myInfo/icd10_to_CAUSE.xlsx).
+    -   Documentation of the mapping of all ICD-10 codes to this Condition List and notation of all modifications to the original WHO system are documented and described in the CCB resource [here](https://github.com/mcSamuelDataSci/CACommunityBurden/blob/master/myCCB/myInfo/icd10_to_CAUSE.xlsx).
     -   The Condition List is regularly updated and refined based on input from partners and on emerging priority conditions. We welcome your input on the condition list by emailing [ccb@cdph.ca.gov](mailto:ccb@cdph.ca.gov)
 
    

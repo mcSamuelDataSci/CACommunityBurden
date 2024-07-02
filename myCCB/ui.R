@@ -435,13 +435,13 @@ shinyUI(
                                         tabPanel(title = "RANK BY GEOGRAPHY - Deaths", value = "rankByGeographyTab",
                                                  plotOutput("rankGeo", width="100%", height=1700)
                                         ),
-                                        tabPanel(title = "LIFE COURSE - Deaths", value = "lifeCourseTab",
-                                                 br(),
-                                                 fluidRow(style = "background-color: white;margin-left: 10px; margin-right: 10px;",
-                                                   htmlOutput("lifeCourse_info"),
-                                                   reactableOutput("lifeCourse")
-                                                 )
-                                        ),
+                                        # tabPanel(title = "LIFE COURSE - Deaths", value = "lifeCourseTab",
+                                        #          br(),
+                                        #          fluidRow(style = "background-color: white;margin-left: 10px; margin-right: 10px;",
+                                        #            htmlOutput("lifeCourse_info"),
+                                        #            reactableOutput("lifeCourse")
+                                        #          )
+                                        # ),
                                         
                                         # Shuo Life Course - First step
                                         # tabPanel(title = "LIFE COURSE - Disparities", value = "lifeCourseDisparitiesTab",
@@ -451,6 +451,17 @@ shinyUI(
                                         #                   reactableOutput("lifeCourse")
                                         #          )
                                         # ),
+                                        
+                                        ## chinwag --
+                                        tabPanel(title = "LIFE COURSE", value = "lifeCourseTab",
+                                                 br(), plotOutput("lifeCourse")
+                                        ), 
+                                        
+                                        tabPanel(title = "LIFE COURSE - DISPARITIES", value = "lifeCourseDisparitiesTab",
+                                                 br(), plotOutput("lifeCourseDisparities")
+                                        ), 
+                                        
+                                        ## -- chinwag
                                         
                                         tabPanel(title = "MULTIPLE CAUSES OF DEATH", value = "mcodTab",
                                                  br(),

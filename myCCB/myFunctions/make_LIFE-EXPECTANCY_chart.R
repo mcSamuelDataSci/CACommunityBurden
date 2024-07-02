@@ -140,7 +140,7 @@ LEtrend <- function(myLHJ="CALIFORNIA", mySexMult, myRace, myCI, myYearGrouping 
                   geom_dl(aes(label = lineLabel,color=raceNameShort), method = list(dl.trans(x = x + 0.2), "last.points", 
                                                                             #size = myLineLabelSize, # use this instead of cex
                                                                             cex=myLineLabelCex, 
-                                                                            'last.bumpup',font="bold")) 
+                                                                            'bumpup',font="bold")) 
  
 if (myCI) {
     tplot <- tplot +

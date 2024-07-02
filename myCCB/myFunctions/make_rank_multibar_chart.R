@@ -36,9 +36,9 @@ makePlotRank <- function(myDataSet     = NA,
                          myFillManual  = T # Set true if the bars should be filled by topLev (which will then have a legend). Setting to F defaults to blue bars
 ){
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
+  # if (myCounty %in% cityLHJs) {
+  #   stop(cityMessage)
+  # }
   
   if  ( myData %in% c("Hospitalizations","Emergency Department") & 
         (myStrata == "Race/Ethnicity") & 
@@ -193,9 +193,9 @@ makePlotRank <- function(myDataSet     = NA,
 
 deathHospEDchart <- function(myStrata = "Age Group", mySort = "85+", myCounty = "Los Angeles", myMeasure = "cRate", myLiveborn  = FALSE) {
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
+  # if (myCounty %in% cityLHJs) {
+  #   stop(cityMessage)
+  # }
   
   t.chart <- function(dataSet,source, legend =FALSE, myTopN = 10) {
     

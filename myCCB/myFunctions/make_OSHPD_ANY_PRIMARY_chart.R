@@ -38,9 +38,9 @@ if (1==2) {
 
 anyprimary1 <- function(myCounty = "CALIFORNIA",  myPosition = "nPrimary", myN = 10, mySex = "Total"){
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
+  # if (myCounty %in% cityLHJs) {
+  #   stop(cityMessage)
+  # }
 
   #   
 # primary_any_NOPREG <- primary_any %>% filter(birth == "FALSE") %>%
@@ -84,7 +84,7 @@ myPlot <- ggplot(plot_data.1, aes(x = reorder(causeName,get(myPosition)), y = va
          axis.text.x = element_text(angle = 90, hjust = 1), 
         axis.title=element_blank(), axis.text = element_text(size = rel(1.5)), 
         legend.text = element_text(size = rel(1.2)), legend.title = element_text(size = rel(1.2)))  +
-  labs(title=paste("Rankings of PRIMARY and all OTHER Conditions associated with Hospitalizaions, California, ",currentYear_hosp_ed)) 
+  labs(title=paste0("Rankings of PRIMARY and all OTHER Conditions associated with Hospitalizaions, ", myCounty, ", ", currentYear_hosp_ed)) 
   
 
 list(plotL = myPlot, dataL = plot_data.1)

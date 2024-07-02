@@ -6,30 +6,30 @@ library(pacman)
 
 #.... source this file....  in auto....
 
-p_load(
-  readxl,
-  readr,
-  dplyr,
-  stringr,
-  ggplot2,
-  fs,
-  scales , 
-  tidyr)
+# p_load(
+#   readxl,
+#   readr,
+#   dplyr,
+#   stringr,
+#   ggplot2,
+#   fs,
+#   scales , 
+#   tidyr)
 #RColorBrewer)
 # library(summarytools)
 
 
 
 
-# library(readxl)
-# library(readr)
-# library(dplyr)
-# library(stringr)
-# library(ggplot2)
-# library(fs)
-# library(scales)
-# #library(RColorBrewer)
-# library(tidyr)
+library(readxl)
+library(readr)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(fs)
+library(scales)
+#library(RColorBrewer)
+library(tidyr)
 # library(summarytools)
 
 # 

@@ -13,7 +13,8 @@ INPUTS <- c("tabHelp", "display","yearRange","ihmeGroup", "level", "display", "y
             "myData", "myStrata", "mySort", "myMeasureAgeRaceFocus","myOlderFocus", "myScale", "myLiveborn",
             "myLogTrans","myMultiRace","myLifeRace","myX","myAddN","myAddRate","myAddRR","myOSHPDtype","myOSHPDtype_mdcdrg","myPosition","myprimetype","myGeoHelpText",
             "myMultiRaceHelpText", "ourDownloads", "rankCauseDownloads", "suppressionNote", "recentYearNote", "myCompare","ourOnlyPNGDownload", "ourBurdenViewDownload", 
-            "updateLifeCourse")
+            "updateLifeCourse", "myYear_lifeCourseNew", "myYearGrouping_lifeCourse", "myMeasure_lifeCourse", "bySex", "myRace_lifeCourse", "myRaceMulti_lifeCourse", 
+            "myAge_lifeCourse", "myN_lifeCourseNew", "myLogTrans_lifeCourse", "myLabelRepel")
 
 # Tab to inputs mapping: Associates each tab with it's input widgets
 TAB_INPUTS <- list("homeTab"=c(),
@@ -27,7 +28,13 @@ TAB_INPUTS <- list("homeTab"=c(),
                    "rankByCauseTab"=c("ourDownloads", "myLHJ", "mySex", "myLev", "myN", "myMeasureShort", "myMeanAge_sort", "suppressionNote", "recentYearNote"),
                    "rankByCauseAndSexTab"=c("tabHelp", "myLev", "myN", "myMeasure"),
                    "rankByGeographyTab"=c("ourDownloads","myCAUSE", "myLHJ", "mySex", "myMeasure", "myRefLine", "suppressionNote", "recentYearNote"),
-                   "lifeCourseTab" = c("ourDownloads", "myLHJ", "myYear_lifeCourse", "myYearGrouping_lifeCourse", "myN_lifeCourse", "updateLifeCourse", "suppressionNote", "recentYearNote"),
+                   #"lifeCourseTab" = c("ourDownloads", "myLHJ", "myYear_lifeCourse", "myYearGrouping_lifeCourse", "myN_lifeCourse", "updateLifeCourse", "suppressionNote", "recentYearNote"),
+                   ## chinwag --
+                   "lifeCourseTab" = c("ourDownloads", "myYear_lifeCourseNew", "myYearGrouping_lifeCourse", "myLHJ", "myMeasure_lifeCourse", "myRace_lifeCourse", "myN_lifeCourseNew", "bySex", 
+                                       "myLogTrans_lifeCourse", "myLabelRepel", "suppressionNote", "recentYearNote"), 
+                   "lifeCourseDisparitiesTab" = c("ourDownloads", "myYear_lifeCourseNew", "myYearGrouping_lifeCourse", "myLHJ", "myMeasure_lifeCourse", "myRaceMulti_lifeCourse", 
+                                                  "bySex", "myAge_lifeCourse", "myLogTrans_lifeCourse", "myLabelRepel", "suppressionNote", "recentYearNote"),
+                   ## -- chinwag
                    "mcodTab" = c("ourDownloads", "myLHJ", "myYear_mcod"),
                    "ageRaceFocusTab" = c("ourDownloads", "myLHJ", "myData", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","myOlderFocus","myScale", "suppressionNote"),
                    "deathHospEDTab" = c("ourDownloads", "myLHJ", "myStrata","mySort", "myMeasureAgeRaceFocus", "myLiveborn","suppressionNote"),

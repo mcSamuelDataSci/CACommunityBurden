@@ -83,6 +83,8 @@ library(reactablefmtr, pos = length(search()))
 library(tidyselect)
 library(ggh4x) # Used in IHME Rank chart
 library(tidytext) # Used in IHME rank chart
+library(ggrepel) # chinwag
+library(showtext) # chinwag
 
 # Note: Line below fixes the error "Shape contains invalid polygons. Please fix it or set tmap_options(check.and.fix = TRUE) and rerun the plot"
 tmap_options(check.and.fix = TRUE)
@@ -106,6 +108,9 @@ datCounty_5year     <- readRDS(path(ccbData, whichData, "datCounty_5year.RDS"))
 datCounty_EDU       <- readRDS(path(ccbData, whichData, "datCounty_EDU.RDS")) 
 datState_AGE        <- readRDS(path(ccbData, whichData, "datState_AGE.RDS"))
 datState_RE       <- readRDS(path(ccbData, whichData, "datState_RE.RDS"))
+datLifeCourse1y       <- readRDS(path(ccbData, whichData, "datLifeCourse1y.RDS")) ## chinwag
+datLifeCourse5y     <- readRDS(path(ccbData, whichData, "datLifeCourse5y.RDS")) ## chinwag
+
 
 datCounty_mcod <- readRDS(path(ccbData, whichData, "datCounty_MCOD.RDS")) %>%
   filter(!grepl("Z", causeCode)) %>%
@@ -215,10 +220,11 @@ source(paste0(ccbFunctions, "make_OSHPD_ANY_PRIMARY_chart.R"))
 source(path(ccbFunctions, "make_rank_multibar_chart.R"))
 source(path(ccbFunctions, "make_DEMOGRAPHICS_charts_V2.R"))
 source(path(ccbFunctions, "make_topTrends.R"))
-source(path(ccbFunctions, "make_LifeCourse_viz.R"))
+#source(path(ccbFunctions, "make_LifeCourse_viz.R"))
 source(path(ccbFunctions, "make_MCOD_charts.R"))
 source(path(ccbFunctions, "make_burdenView.R"))
 source(path(ccbFunctions, "make_rank_IHME_chart.R"))
+source(path(ccbFunctions, "make_LifeCourse.R")) # chinwag
 # Shuo Life Course - Source life table functions
 
 # HELPER FUNCTIONS

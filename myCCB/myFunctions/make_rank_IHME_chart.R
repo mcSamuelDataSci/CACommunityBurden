@@ -48,12 +48,26 @@ makeIHME_chart <- function(
     myYear <- ihmeYears
   }
   
+  
+  
   # Filter data ====================
   tDat <- ihmeData %>% 
     filter(measure_name == myMeasure, metric_name == myMetric, level == paste0("lev", myLevel),
            sex_name %in% mySex, age_name %in% myAge, year %in% myYear)%>%
     rename(facet = !!as.symbol(facetCol)) %>% 
     slice_max(val, by = facet, n = myN)
+  
+  # Color palette ====================
+  uniqueCauses <- unique(tDat$cause_name)
+  
+  tColors <- c(
+    brewer.pal(n = 12, "Set3"),
+    brewer.pal(n = 8, "Set2")
+  )
+  tColors <- rep(tColors, 20)
+
+  tColors <- setNames(tColors[1:length(uniqueCauses)], uniqueCauses)
+  
   
   if (myFacet == "Age Group") {
     tDat <- tDat %>% 
@@ -92,14 +106,16 @@ makeIHME_chart <- function(
   }
   
   tPlot <- ggplot(tDat, aes(x = val, y = reorder_within(cause_name, val, facet), label = cause_name)) +
-    geom_col(fill = "#56B4E9") +
+    geom_col(aes(fill = cause_name)) +
     scale_y_reordered() +
-    scale_x_continuous(labels = scales::comma) +
+    scale_x_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
     labs(x = title_xaxis, y = myType, title = title_main) +
     geom_text(x = 0, hjust = 0, size = myConditionSize) +
+    scale_fill_manual(values = tColors) +
     ggh4x::facet_nested_wrap(facets = vars(facet), scales = myScales) +
     theme(axis.text.y = element_blank(), 
-          axis.ticks.y = element_blank())
+          axis.ticks.y = element_blank(), 
+          legend.position = "none")
   
   list(plotL = tPlot)
   

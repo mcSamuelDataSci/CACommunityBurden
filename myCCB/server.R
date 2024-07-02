@@ -524,7 +524,13 @@ observeEvent(current$tab,{
   output$CHANGE2     <- renderPlot({createBurdenView(myIdNum=3, myCounty=input$myLHJ, myObserv=input$myObserv, decrease = T, myCustomTitle = paste0("Decrease in Death Rates, ", currentYear-10, "-", currentYear))})
   output$DISPARITY1  <- renderPlot({createBurdenView(myIdNum=4, myCounty=input$myLHJ, myObserv=input$myObserv)})
   
-  output$CASES1      <- renderPlot({createBurdenView(myIdNum=7, myCounty=input$myLHJ, myObserv=input$myObserv)})
+  # Only show reportable disease rankings if selected on county (unavailable for city lhjs)
+  output$CASES1      <- renderPlot({
+    if(!shiny::req(input$myLHJ) %in% cityLHJs) {
+      createBurdenView(myIdNum=7, myCounty=input$myLHJ, myObserv=input$myObserv)
+    }
+    })
+  
   output$HOSP1       <- renderPlot({createBurdenView(myIdNum=5, myCounty=input$myLHJ, myObserv=input$myObserv)})
   output$ED1         <- renderPlot({createBurdenView(myIdNum=6, myCounty=input$myLHJ, myObserv=input$myObserv)})
   
@@ -598,69 +604,198 @@ observeEvent(current$tab,{
   # Update radio button to select 3, and disable 1
 
   # Shuo Life Course
-observe({
-  if (current$tab == "lifeCourseTab") {
-    if (input$myLHJ == "CALIFORNIA") {
-      shinyjs::show("myYearGrouping_lifeCourse")
-      if (input$myYearGrouping_lifeCourse == 1) {
-        updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = as.character(minYear:maxYear), selected = as.character(maxYear))
-      } else {
-        updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = distinct( filter(chartYearMap, !is.na(midYear3)), yearGroup3 )$yearGroup3, selected = yearGrp3)
-      }
-      
-      
-    } else {
-      updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = distinct( filter(chartYearMap, !is.na(midYear3)), yearGroup3 )$yearGroup3, selected = yearGrp3)
-      shinyjs::hide("myYearGrouping_lifeCourse")
-    }
-  }
   
-})
+  ## chinwag --   
+  observe({
+    if (current$tab %in% c("lifeCourseTab", "lifeCourseDisparitiesTab")) {
+      shinyjs::show("myYear_lifeCourseNew")
+      if (input$myYearGrouping_lifeCourse == 5) {
+        shinyjs::hide("myYear_lifeCourseNew")
+      } 
+    }  
+  })
+  ## -- chinwag
   
-## Text/titles ----------
-lifeCourseInfoStep <- reactive(
-  HTML(paste0(
-    "<h1 style='color:#000;background:#FFFFFF;text-align:center;font-size:26px;font-style:normal;font-weight:bold;margin-top:0px;margin-right:0px;margin-bottom:0px;margin-left:0px'>
-    Leading Causes of Death Across the Life Course in ", input$myLHJ, ", ", input$myYear_lifeCourse, "</h1> 
-    <h2 style='color:#000;background:#FFFFFF;text-align:center;font-size:18px;font-style:normal;font-weight:normal;text-decoration:;letter-spacing:px;word-spacing:px;text-transform:;text-shadow:;margin-top:12px;margin-right:0px;margin-bottom:6px;margin-left:0px'>
-         <div>
-         <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #0072B2; font-size: 18px'></i>
-         Communicable
-       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #4A4A4A; font-size: 18px'></i>
-         Cancer
-       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #D55E00; font-size: 18px'></i>
-         Cardiovascular
-       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #117733; font-size: 18px'></i>
-         Other Chronic
-       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #56B4E9; font-size: 18px'></i>
-         Injury
-       <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #E69F00; font-size: 18px'></i>
-       Perinatal
-       </div>
-         </h2>
-    "
-  ))
-) %>% 
-    bindCache(input$myLHJ, input$myYear_lifeCourse) %>% 
-    bindEvent(input$updateLifeCourse, ignoreInit = F, ignoreNULL = F)
-    
-    
-  output$lifeCourse_info <- renderUI(lifeCourseInfoStep())  
+# observe({
+#   if (current$tab == "lifeCourseTab") {
+#     if (input$myLHJ == "CALIFORNIA") {
+#       shinyjs::show("myYearGrouping_lifeCourse")
+#       if (input$myYearGrouping_lifeCourse == 1) {
+#         updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = as.character(minYear:maxYear), selected = as.character(maxYear))
+#       } else {
+#         updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = distinct( filter(chartYearMap, !is.na(midYear3)), yearGroup3 )$yearGroup3, selected = yearGrp3)
+#       }
+#       
+#       
+#     } else {
+#       updateSliderTextInput(session, "myYear_lifeCourse", label = "Year(s):", choices = distinct( filter(chartYearMap, !is.na(midYear3)), yearGroup3 )$yearGroup3, selected = yearGrp3)
+#       shinyjs::hide("myYearGrouping_lifeCourse")
+#     }
+#   }
+#   
+# })
+#   
+# ## Text/titles ----------
+# lifeCourseInfoStep <- reactive(
+#   HTML(paste0(
+#     "<h1 style='color:#000;background:#FFFFFF;text-align:center;font-size:26px;font-style:normal;font-weight:bold;margin-top:0px;margin-right:0px;margin-bottom:0px;margin-left:0px'>
+#     Leading Causes of Death Across the Life Course in ", input$myLHJ, ", ", input$myYear_lifeCourse, "</h1> 
+#     <h2 style='color:#000;background:#FFFFFF;text-align:center;font-size:18px;font-style:normal;font-weight:normal;text-decoration:;letter-spacing:px;word-spacing:px;text-transform:;text-shadow:;margin-top:12px;margin-right:0px;margin-bottom:6px;margin-left:0px'>
+#          <div>
+#          <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #0072B2; font-size: 18px'></i>
+#          Communicable
+#        <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #4A4A4A; font-size: 18px'></i>
+#          Cancer
+#        <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #D55E00; font-size: 18px'></i>
+#          Cardiovascular
+#        <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #117733; font-size: 18px'></i>
+#          Other Chronic
+#        <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #56B4E9; font-size: 18px'></i>
+#          Injury
+#        <i class='fa fa-square' role='presentation' aria-label='square icon' style='color: #E69F00; font-size: 18px'></i>
+#        Perinatal
+#        </div>
+#          </h2>
+#     "
+#   ))
+# ) %>% 
+#     bindCache(input$myLHJ, input$myYear_lifeCourse) %>% 
+#     bindEvent(input$updateLifeCourse, ignoreInit = F, ignoreNULL = F)
+#     
+#     
+#   output$lifeCourse_info <- renderUI(lifeCourseInfoStep())  
   
 
 
 # Life Course table ---------
 # Shuo Life Course - Last step
   
-lifeCourseStep <- reactive(makeLifeCourse(myLHJ = input$myLHJ, 
-                                          myYearGrouping = input$myYearGrouping_lifeCourse, 
-                                          myYear = input$myYear_lifeCourse, 
-                                          myN = input$myN_lifeCourse)) %>% 
-  bindCache(input$myLHJ, input$myYearGrouping_lifeCourse, input$myYear_lifeCourse, input$myN_lifeCourse) %>% 
-  bindEvent(input$updateLifeCourse, ignoreInit = F, ignoreNULL = F)
+# lifeCourseStep <- reactive(makeLifeCourse(myLHJ = input$myLHJ, 
+#                                           myYearGrouping = input$myYearGrouping_lifeCourse, 
+#                                           myYear = input$myYear_lifeCourse, 
+#                                           myN = input$myN_lifeCourse)) %>% 
+#   bindCache(input$myLHJ, input$myYearGrouping_lifeCourse, input$myYear_lifeCourse, input$myN_lifeCourse) %>% 
+#   bindEvent(input$updateLifeCourse, ignoreInit = F, ignoreNULL = F)
+# 
+# output$lifeCourse <- renderReactable(lifeCourseStep())
 
-output$lifeCourse <- renderReactable(lifeCourseStep())
-
+  
+  # Life Course Chart ---------------------------------------------------------------------------------------------------
+  ## chinwag --
+  lifeCourseRateStep <- reactive(makelifeCourseRate_chart(myLHJ = input$myLHJ, myYear = input$myYear_lifeCourseNew,
+                                                          myYearGrouping = input$myYearGrouping_lifeCourse, 
+                                                          myRace = input$myRace_lifeCourse, bySex = input$bySex, myAge = ageSort, myN = input$myN_lifeCourseNew, 
+                                                          logScale = input$myLogTrans_lifeCourse, repel = input$myLabelRepel, tab = "main"))
+  
+  
+  lifeCourseRankStep <- reactive(makelifeCourseRank_chart(myLHJ = input$myLHJ, myYear = input$myYear_lifeCourseNew,
+                                                          myYearGrouping = input$myYearGrouping_lifeCourse, myRace = input$myRace_lifeCourse, 
+                                                          bySex = input$bySex, myAge = ageSort, myN = input$myN_lifeCourseNew, tab = "main"))
+  
+  # select between rate and rank charts
+  lifeCourseStep <- reactive({
+    switch(input$myMeasure_lifeCourse, 
+           "Crude Death Rate" = lifeCourseRateStep(),
+           "Ranking" = lifeCourseRankStep())
+  })
+  
+  
+  output$lifeCourse <- renderPlot({
+    showtext_begin()
+    lifeCourseStep()
+    print(lifeCourseStep()$plotL)
+    showtext_end()
+  }, width = 1450, height = function(){ifelse(input$bySex == "Yes", 1020, 720)}) 
+  
+  
+  observeEvent(current$tab,{
+    if(current$tab %in% c("lifeCourseTab") ) {
+      
+      output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",Sys.Date(),".png")},
+                                       content = function(file) {
+                                         showtext_auto()
+                                         png(file, width = 1450, height = ifelse(input$bySex == "Yes", 1020, 720), units = "px", pointsize = 10, res=100)
+                                         print(lifeCourseStep()$plotLD)
+                                         showtext_auto(FALSE)
+                                         dev.off() }, contentType = "png" )
+      
+      
+      output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",Sys.Date(),".csv")  },
+                                        content = function(file) {
+                                          write.csv(lifeCourseStep()$dataL, file,row.names = FALSE) } )
+      
+    } } )
+  
+  
+  
+  lifeCourseDisparitiesRateStep <- reactive(makelifeCourseRate_chart(myLHJ = input$myLHJ, myYear = input$myYear_lifeCourseNew,
+                                                                     myYearGrouping = input$myYearGrouping_lifeCourse, 
+                                                                     myRace = input$myRaceMulti_lifeCourse, bySex = input$bySex, myAge = input$myAge_lifeCourse, myN = 5, 
+                                                                     logScale = input$myLogTrans_lifeCourse, repel = input$myLabelRepel, tab = "disparity"))
+  
+  lifeCourseDisparitiesRankStep <- reactive(makelifeCourseRank_chart(myLHJ = input$myLHJ, myYear = input$myYear_lifeCourseNew, 
+                                                                     myYearGrouping = input$myYearGrouping_lifeCourse, myRace = input$myRaceMulti_lifeCourse, 
+                                                                     bySex = input$bySex, myAge = input$myAge_lifeCourse, myN = 5, tab = "disparity"))
+  
+  
+  # select between rate and rank charts
+  lifeCourseDisparitiesStep <- reactive({
+    switch(input$myMeasure_lifeCourse, 
+           "Crude Death Rate" = lifeCourseDisparitiesRateStep(),
+           "Ranking" = lifeCourseDisparitiesRankStep())
+  })
+  
+  disparities_width <- function() {
+    case_when(
+      length(input$myRaceMulti_lifeCourse) == 1 ~ length(input$myAge_lifeCourse)*200,
+      length(input$myRaceMulti_lifeCourse) == 2 ~ length(input$myAge_lifeCourse)*360,
+      length(input$myRaceMulti_lifeCourse) == 3 ~ length(input$myAge_lifeCourse)*500,
+      length(input$myRaceMulti_lifeCourse) == 4 ~ length(input$myAge_lifeCourse)*640,
+      length(input$myRaceMulti_lifeCourse) == 5 ~ length(input$myAge_lifeCourse)*780,
+      length(input$myRaceMulti_lifeCourse) == 6 ~ length(input$myAge_lifeCourse)*920,
+      length(input$myRaceMulti_lifeCourse) == 7 ~ length(input$myAge_lifeCourse)*1060,
+      length(input$myRaceMulti_lifeCourse) == 8 ~ length(input$myAge_lifeCourse)*1210
+    )
+  }
+  
+  
+  
+  output$lifeCourseDisparities <- renderPlot({
+    showtext_begin()
+    lifeCourseDisparitiesStep()
+    print(lifeCourseDisparitiesStep()$plotL)
+    showtext_end()
+  }, width = disparities_width, height = function(){ifelse(input$bySex == "Yes", 900, 740)})
+  
+  observeEvent(current$tab,{
+    if(current$tab %in% c("lifeCourseDisparitiesTab") ) {
+      
+      output$ourPNG <- downloadHandler(filename=function(){paste0(current$tab,"-",Sys.Date(),".png")},
+                                       content = function(file) {
+                                         showtext_auto()
+                                         png(file, width = case_when(
+                                           length(input$myRaceMulti_lifeCourse) == 1 ~ length(input$myAge_lifeCourse)*200,
+                                           length(input$myRaceMulti_lifeCourse) == 2 ~ length(input$myAge_lifeCourse)*360,
+                                           length(input$myRaceMulti_lifeCourse) == 3 ~ length(input$myAge_lifeCourse)*500,
+                                           length(input$myRaceMulti_lifeCourse) == 4 ~ length(input$myAge_lifeCourse)*640,
+                                           length(input$myRaceMulti_lifeCourse) == 5 ~ length(input$myAge_lifeCourse)*780,
+                                           length(input$myRaceMulti_lifeCourse) == 6 ~ length(input$myAge_lifeCourse)*920,
+                                           length(input$myRaceMulti_lifeCourse) == 7 ~ length(input$myAge_lifeCourse)*1060,
+                                           length(input$myRaceMulti_lifeCourse) == 8 ~ length(input$myAge_lifeCourse)*1210
+                                         ), height = ifelse(input$bySex == "Yes", 900, 740), units = "px", pointsize = 10, res=100) 
+                                         print(lifeCourseDisparitiesStep()$plotLD)
+                                         showtext_auto(FALSE)
+                                         dev.off() }, contentType = "png" )
+      
+      
+      output$ourData <- downloadHandler(filename = function() {  paste0(current$tab,"-",Sys.Date(),".csv")  },
+                                        content = function(file) {
+                                          write.csv(lifeCourseDisparitiesStep()$dataL, file,row.names = FALSE) } )
+      
+    } } )
+  ## -- chinwag
+  
+  
 # MCOD ----------------------------------------------------------------------------------------------------------
   
 mcodRankMeasureStep <- reactive(mcodRankMeasure(myCounty = input$myLHJ, myYear = input$myYear_mcod, mySort = input$myMcodMeasure, topN = input$myN_mcod, myCause = input$myCAUSE_mcod))  

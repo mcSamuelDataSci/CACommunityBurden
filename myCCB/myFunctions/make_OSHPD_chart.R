@@ -2,9 +2,9 @@
 
 oshpdPlot1 <- function(myCounty = "CALIFORNIA", myOSHPDtype = "Number of Hospitalizations", mySex = "Total", myN = 10, myLiveborn = FALSE) {
   
-  if (myCounty %in% cityLHJs) {
-    stop(cityMessage)
-  }
+  # if (myCounty %in% cityLHJs) {
+  #   stop(cityMessage)
+  # }
 
   
 if (1==2) {
@@ -63,7 +63,7 @@ if (1==2) {
 # Creating ggplot facet grid plot
 myPlot <- ggplot(plotData, aes(x = names, y = measure)) + coord_flip() +
      geom_bar(stat = "identity", fill = "blue") +
-     labs(title=paste("Rankings of Causes of Hospitalizaions, Lengths of Stay, and Associated Charges, California, ",currentYear_hosp_ed)) +
+     labs(title=paste0("Rankings of Causes of Hospitalizaions, Lengths of Stay, and Associated Charges, ", myCounty, ", ", currentYear_hosp_ed)) +
      facet_grid(. ~ type, scales = "free_x", labeller=labeller(type = label_wrap_gen(5))) +
        #theme_bw( ) + #need to specify theme first, before changing/removing axis titles/labels etc. If theme_bw() is put at end, it negates all of these changes   # base_size = 25
      scale_y_continuous(labels = comma) + #numbers shown with commas rather than scientific notation
