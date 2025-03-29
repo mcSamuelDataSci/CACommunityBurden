@@ -1,12 +1,8 @@
 # Changelog
 
-------------------------------------------------------------------------
-
-All notable changes to the CCB Condition List will be documented in this file.
+All notable changes to the CCB Condition List are documented in this file.
 
 # March 28, 2025
-
-------------------------------------------------------------------------
 
 The CCB Condition List was updated with the following changes:
 
