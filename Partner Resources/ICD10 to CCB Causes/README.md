@@ -1,3 +1,7 @@
+# Changelog
+
+Please view "changelog.md" to see the history of updates made to the CCB Condition List.
+
 # California Community Burden of Disease (CCB) Condition List
 
 The "California Community Burden of Disease Condition List" is the
@@ -85,4 +89,4 @@ file is below:
 
 
 ### *Date Created: July 1, 2024*
-### *Last Modified: July 1, 2024*
+### *Last Modified: March 28, 2025*
