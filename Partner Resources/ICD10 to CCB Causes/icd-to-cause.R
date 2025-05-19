@@ -7,7 +7,18 @@ library(ggplot2) # Create charts
 
 # Read in files =============================================================================
 icdCause <- read_excel("ICD10-to-CCB-Cause.xlsx",sheet=2) # read 2nd sheet of crosswalk file
-sampleData <- read.csv("sample-death-data.csv", header = TRUE) # Sampled Death data with three columns: ICD10, County, Sex
+var_names <- read_excel("death.File.Vars.xlsx") # Link Sequence IDs to variable names
+
+sampleData <- read.csv("sample-death-data.csv", header = TRUE) # Sampled Death data with three columns: F19 (Sex), F24 (Year), F144 (ICD10)
+
+
+# Standardize variable names=================================================================
+
+# Match column names from 'sampleData' to var_names'
+new_names <- var_names$varName[match(names(sampleData), var_names$seqID1)]
+
+# Rename columns
+names(sampleData) <- new_names
 
 # Link ICD10 Codes to CCB Causes ===============================================================
 
