@@ -9,7 +9,8 @@ library(ggplot2) # Create charts
 icdCause <- read_excel("ICD10-to-CCB-Cause.xlsx",sheet=2) # read 2nd sheet of crosswalk file
 var_names <- read_excel("death.File.Vars.xlsx") # Link Sequence IDs to variable names
 
-sampleData <- read.csv("sample-death-data.csv", header = TRUE) # Sampled Death data with three columns: F19 (Sex), F24 (Year), F144 (ICD10)
+# Sampled Death data with four columns: F19 (Sex), F12 (Age), F24 (Year), F144 (ICD10)
+sampleData <- read.csv("sample-death-data.csv", header = TRUE) 
 
 
 # Standardize variable names=================================================================
@@ -25,7 +26,15 @@ names(sampleData) <- new_names
 #  Perform a left-join based on a regular expression match between the "ICD10" column in sampleData and "icd10_regex" column in icdCause
 # "See Example.pptx" to learn more about regular expressions
 linkedData <- sampleData %>% 
-  regex_left_join(icdCause, by = c("ICD10" = "icd10_regex"))
+  regex_left_join(select(icdCause, cause_code, icd10_regex), by = c("ICD10" = "icd10_regex")) %>% 
+  select(-icd10_regex)
+
+# For "Sudden Unexplained Death Syndrome" (SUDS):
+# IDC10 codes R99 and W75 are mapped to SUDS only for <1 year olds
+# If age == 0 and ICD10 = R99|W75, change cause code to P05 (SUID)
+linkedData <- linkedData %>% 
+  mutate(cause_code = ifelse(age == 0 & !is.na(age) & grepl("R99|W75", ICD10), "P05", cause_code)) %>% 
+  left_join(icdCause, by = "cause_code")
 
 # Check ==================
 nrow(sampleData) == nrow(linkedData) # Should return TRUE; otherwise duplicates were created
