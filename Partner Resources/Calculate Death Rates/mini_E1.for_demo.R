@@ -1,23 +1,14 @@
-# ============================================================================
-# "makeDatasets.R" file   
-#
-#=============================================================================
+# Purpose ==========================================================================
+# Calculate crude and age-adjusted rates
+ 
 
-# Generate DEMO data:
-# library(dplyr)
-# secureDataFile <- "g:/FusionData/0.Secure.Data/myData/ccb_processed_deaths.RDS"
-# cbdDat0 <- readRDS(secureDataFile)
-# cbdDat1 <- cbdDat0 %>%
-#             filter(year == 2021) %>%
-#             select(age, sex, county) %>%
-#             slice_sample(prop = .1)
-# saveRDS(cbdDat1,"ca_deaths_sample_2021.RDS")
-             
+# Load packages ============================================
 
+library(dplyr) # Data wrangling
+library(readxl) # Read in xlsx files
+library(tidyr) # Data reshaping
 
 #== LOAD DATA MAPPING FILES and DEFINE CONSTANTS ================================================
-
-library(readxl)
 
 myPath   <- "Info/"
 leMap    <- as.data.frame(read_excel(paste0(myPath,"Age to Life-Expectancy Linkage.xlsx"), sheet="LifeExpLink", range = cell_cols("A:B")))
@@ -27,53 +18,73 @@ ageMap   <- as.data.frame(read_excel(paste0(myPath,"Age Group Standard and US St
 yF     <- 100000  # rate constant 
 STATE  <- "CALIFORNIA"
 
-
 #== LOAD AND PROCESS POPULATION DATA ============================================================
 
-library(dplyr)
+# Read in state and county level population data
+# Note: This population denominator file is outdated and provided as an example only. 
+popCounty <- readRDS(paste0(myPath, "popCounty.RDS")) %>%
+  ungroup()   %>% #  ungrouping important for subsequent data set merging
+  filter(year == 2021)
 
-popCounty        <- readRDS(paste0(myPath, "popCounty.RDS")) %>%
-                         ungroup()   %>% #  ungrouping important for subsequent data set merging
-                         filter(year == 2021)
+# Add "Total75" ageGroup - Population < 75 used for YLL
+popCounty_75 <- popCounty %>% 
+  filter(!ageGroup %in% c("85+", "75 - 84", "Total")) %>% 
+  group_by(county, year, sex, raceCode) %>% 
+  summarise(population = sum(population)) %>% 
+  ungroup() %>% 
+  mutate(ageGroup = "Total75")
 
-popCountySex     <- filter(popCounty,ageGroup == "Total", raceCode == "Total") %>% select(-ageGroup, -raceCode) # no need for ageGroup
-popCountySexAgeG <- filter(popCounty,ageGroup != "Total", raceCode == "Total") %>% select(-raceCode)
+popCounty <- bind_rows(popCounty, popCounty_75)
 
-popStandard      <- ageMap  %>% mutate(ageGroup = ageLabel)
+# Population by sex - Used for crude rates
+popCountySex <- popCounty %>% 
+  filter(ageGroup %in% c("Total", "Total75"), 
+         raceCode == "Total"
+  ) %>%
+  pivot_wider(names_from = ageGroup, values_from = population) %>% 
+  rename(population = Total, population75 = Total75) %>% 
+  select(-raceCode)
 
+# Population by sex by age - Used for age-adjusted rates
+popCountySexAgeG <- popCounty %>% 
+  filter(!ageGroup %in% c("Total", "Total75"), 
+         raceCode == "Total"
+  ) %>% 
+  select(-raceCode)
+
+# Age-specific standard populations used for age-adjustment
+popStandard <- ageMap  %>% 
+  mutate(ageGroup = ageLabel)
 
 # == LOAD AND PROCESS DEATH DATA =================================================================
 
- cbdDat0_X <- readRDS("ca_deaths_sample_2021.RDS")
+cbdDat0_X <- readRDS("ca_deaths_sample_2021.RDS")
 
-  
-  # -- RECODES AND CALCULATIONS -------------------------------------------------
+# -- RECODES AND CALCULATIONS -------------------------------------------------
  
- cbdDat0_D       <- mutate(cbdDat0_X,
-                             sex     = c("Male","Female")[match(sex,c("M","F"))],
-                             age     = as.numeric(age),                                                  
-                             yll     = ifelse(age > 75, 0, 75-age)
-                           # yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],  # IHME Method
-                           )
+cbdDat0_D <- mutate(cbdDat0_X,
+                    sex     = c("Male","Female")[match(sex,c("M","F"))],
+                    age     = as.numeric(age),                                                  
+                    yll     = ifelse(age > 75, 0, 75-age)
+                    # yll     = leMap[match(cbdDat0$age,leMap[,"Age"]),"LE"],  # IHME Method
+                    )
 
 # Duplicate data with sex = Total and then combine
- cbdDat0_DSex   <- mutate(cbdDat0_D, sex = "Total")
- cbdDat0_D      <- bind_rows(cbdDat0_D,cbdDat0_DSex)
-  
-  
-    # -- Add Age-Group variable ---------------------------------------------------
+cbdDat0_DSex   <- mutate(cbdDat0_D, sex = "Total")
+cbdDat0_D      <- bind_rows(cbdDat0_D,cbdDat0_DSex)
 
- # create age group variable using one of many possible approaches
+# -- Add Age-Group variable ---------------------------------------------------
+
+# create age group variable using one of many possible approaches
  
-  aL                  <-  ageMap$lAge       # lower age ranges
-  aU                  <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" for lower limit
-  aLabs               <- ageMap$ageLabel 
-  aMark               <- findInterval(cbdDat0_D$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
-  cbdDat0_D$ageGroup  <- aLabs[aMark]                                     # make new "ageGroup" variable based on two objects above 
+aL                  <-  ageMap$lAge       # lower age ranges
+aU                  <- c(-1,ageMap$uAge)  # upper age ranges, plus inital value of "-1" for lower limit
+aLabs               <- ageMap$ageLabel 
+aMark               <- findInterval(cbdDat0_D$age,aU,left.open = TRUE)  # vector indicating age RANGE value of each INDIVIDUAL age value
+cbdDat0_D$ageGroup  <- aLabs[aMark]                                     # make new "ageGroup" variable based on two objects above 
 
 
 # DEATH MEASURES FUNCTIONS =========================================================================
-# ==================================================================================================
 
 calculateYLLmeasures <- function(group_vars){
   
@@ -109,7 +120,7 @@ pois.approx_sam <- function (x, pt = 1, conf.level = 0.95) {
 
 calculateRates <- function(inData,yearN){
   transform(inData, 
-            YLLper      = yF*YLL/(yearN*population),
+            YLLper      = yF*YLL/(yearN*population75),
             cDeathRate  = yF*Ndeaths/(yearN*population),
             rateSE      = yF*pois.approx_sam(Ndeaths,yearN*population, conf.level = 0.95)$se,
             rateLCI     = yF*pois.approx_sam(Ndeaths,yearN*population, conf.level = 0.95)$lower,
@@ -149,12 +160,12 @@ ageadjust.direct.SAM <- function (count, population, rate = NULL, stdpop, conf.l
 
 
 # == CALCULATE CRUDE RATES ========================================================================
-# -- COUNTY -------------------------------------------------------------------
 
+
+# -- COUNTY -------------------------------------------------------------------
 
 myVector <- c("county","sex")
 myVector <- c("county","sex", "year", "condition", "race") #etc.
-
 
 datCounty <- calculateYLLmeasures(c("county","sex"))
 datState  <- calculateYLLmeasures(c(         "sex")) %>% mutate(county = STATE)
@@ -169,8 +180,7 @@ datCounty <- calculateRates(datCounty,1)
 
 # == CALCULATE AGE-ADJUSTED RATES==================================================================
 
-# -- makes dataframeS of all possible combinations -----------------------------
-# ------------------------------------------------------------------------------
+# -- makes data frames of all possible combinations -----------------------------
 sex      <- data.frame(sex      = c("Male","Female","Total"),       stringsAsFactors = FALSE)
 ageGroup <- data.frame(ageGroup = sort(unique(cbdDat0_D$ageGroup)), stringsAsFactors = FALSE)
 county   <- data.frame(county   = c(geoMap$countyName,STATE),       stringsAsFactors = FALSE) 
@@ -186,57 +196,63 @@ tA2      <- cbdDat0_D %>% group_by(        sex, ageGroup) %>% summarize(Ndeaths 
 datAA1 <- bind_rows(tA1,tA2)  %>% ungroup()  
 
 # DATA CLEANING ISSUES 
+datAA1 <- filter(datAA1,!is.na(sex)) # remove records with missing sex
 datAA1 <- filter(datAA1,!is.na(ageGroup)) # remove records with missing age
 datAA1 <- filter(datAA1,!is.na(county))   # remove records with missing county
 
-ageCounty   <- full_join(fullMatCounty,datAA1 ,by = c("county","sex","ageGroup"))   %>%    # merge death data and "fullMatCounty"
-               full_join(popCountySexAgeG, by = c("county","sex","ageGroup") )      %>%    # merge population
-               full_join(popStandard[,c("ageGroup","US2000POP")],  by="ageGroup")          # merge standard population
+ageCounty <- full_join(fullMatCounty,datAA1 ,by = c("county","sex","ageGroup")) %>% # merge death data and "fullMatCounty"
+  full_join(popCountySexAgeG, by = c("county","sex","ageGroup")) %>% # merge population
+  full_join(popStandard[,c("ageGroup","US2000POP")], by="ageGroup") # merge standard population
  
 ageCounty$Ndeaths[is.na(ageCounty$Ndeaths)] <- 0    # if NA deaths in strata change to "0"
 ageCounty$YLL[is.na(ageCounty$YLL)]         <- 0    # if NA deaths in strata change to "0"
 
-
-countyAA <- ageCounty %>% group_by(county,sex) %>%
+# Calculate age-adjusted rate, lower conf int., upper conf int., SE
+countyAA <- ageCounty %>% 
+  group_by(county, sex) %>%
   summarize(oDeaths       = sum(Ndeaths,na.rm=TRUE),
             aRate         = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000,
             aLCI          = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[3]*100000,
             aUCI          = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[4]*100000, 
-            aSE           = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000, 
-            YLL.adj.rate  = ageadjust.direct.SAM(count=YLL,     population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*100000) # CONFIRM
+            aSE           = ageadjust.direct.SAM(count=Ndeaths, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[5]*100000) # CONFIRM
 
-
-countyAA <- countyAA[!(countyAA$oDeaths==0),c("county","sex","aRate","aLCI","aUCI","aSE","YLL.adj.rate")]  # remove strata with no deaths and select columns  
+# Calculate age-adjusted YLL rate
+countyAA_adj_yll <- ageCounty %>% 
+  filter(!ageGroup %in% c("75 - 84", "85+")) %>% # Remove oldest age groups 
+  group_by(county, sex) %>%
+  summarize(YLL.adj.rate   = ageadjust.direct.SAM(count=YLL, population=population, rate = NULL, stdpop=US2000POP, conf.level = 0.95)[2]*yF) %>% 
+  select(county, sex, YLL.adj.rate)
+  
+# Join
+countyAA <- full_join(countyAA, countyAA_adj_yll) %>% 
+  filter(oDeaths != 0) %>% # remove strata with no deaths
+  select(county, sex, aRate, aLCI, aUCI, aSE, YLL.adj.rate)
 
 # == MERGE CRUDE AND AGJECT RATES AND CLEAN UP ====================================================
-
 
 datCounty <- merge(datCounty,countyAA ,by = c("county","sex"),all=TRUE)
 
 # SMR Calculations --------
 
 datState  <- datCounty  %>% 
-               filter(county == STATE) %>%
-               mutate(stateCrudeRate = cDeathRate,
-               stateAdjustedRate = aRate) %>%
-               select(year,sex,stateCrudeRate,stateAdjustedRate)
+  filter(county == STATE) %>%
+  mutate(stateCrudeRate = cDeathRate,
+         stateAdjustedRate = aRate) %>%
+  select(year,sex,stateCrudeRate,stateAdjustedRate)
 
 datCounty  <- datCounty %>%
-               left_join(datState,by = c("year","sex")) %>%
-                mutate(SMRcrude = cDeathRate / stateCrudeRate,
-                       SMR      = aRate      / stateAdjustedRate)
-
+  left_join(datState,by = c("year","sex")) %>%
+  mutate(SMRcrude = cDeathRate / stateCrudeRate,
+         SMR      = aRate      / stateAdjustedRate) %>% 
+  select(-stateCrudeRate,-stateAdjustedRate)
 
 # == CELL SUPRESSION WITH COMPLEMENTARY CELL SUPRESSION==============================================
 
-
 source(paste0("Info/","suppressionFunction.R"))
-
 
 gBy       <-  c("county")         # FOR MAIN
 datCounty <- mutate(datCounty, supIndicator = mySuppress(datCounty,gBy,"Ndeaths"))
 
-
-
 datCounty <- filter(datCounty, 
-                    supIndicator != 1)  # %>%   select(-supIndicator)
+                    supIndicator != 1) %>%   
+  select(-supIndicator)
